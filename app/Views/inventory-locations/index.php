@@ -1,0 +1,106 @@
+<h2>Inventory Locations</h2>
+
+<a href="<?= URLROOT ?>/inventorylocations/create" class="btn btn-primary mb-3">
+    Add Location
+</a>
+
+<table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Code</th>
+            <th>Ware House</th>
+            <th>Address/Location</th>
+            <th>Storekeeper</th>
+            <th>Mobile Number</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+<?php if (empty($locations)): ?>
+
+    <tr>
+        <td colspan="7" class="text-center py-5">
+
+            <i class="fas fa-warehouse fa-3x text-secondary mb-3"></i>
+
+            <h5 class="mt-3 text-muted">
+                No inventory locations available.
+            </h5>
+
+            <p class="text-muted mb-3">
+                Add your first warehouse or storage location to begin managing inventory.
+            </p>
+
+            <a href="<?= URLROOT ?>/inventorylocations/create"
+               class="btn btn-primary">
+
+                <i class="fas fa-plus"></i>
+                Add Location
+
+            </a>
+
+        </td>
+    </tr>
+
+<?php else: ?>
+
+    <?php foreach ($locations as $loc) : ?>
+
+        <tr>
+
+            <td><?= $loc->id ?></td>
+
+            <td>
+                <a href="<?= URLROOT ?>/inventorylocations/details/<?= $loc->id ?>">
+                    <?= htmlspecialchars($loc->code) ?>
+                </a>
+            </td>
+
+            <td><?= htmlspecialchars($loc->name) ?></td>
+
+            <td><?= htmlspecialchars($loc->notes) ?></td>
+
+            <td><?= htmlspecialchars($loc->storekeeper) ?></td>
+
+            <td><?= htmlspecialchars($loc->mobile) ?></td>
+
+            <td>
+
+                <a href="<?= URLROOT ?>/inventorylocations/edit/<?= $loc->id ?>"
+                   class="btn btn-sm btn-warning">
+                    Edit
+                </a>
+
+                <?php if ($loc->total_stock <= 0): ?>
+
+                    <a href="<?= URLROOT ?>/inventorylocations/delete/<?= $loc->id ?>"
+                       class="btn btn-sm btn-danger"
+                       onclick="return confirm('Delete this location?')">
+                        Delete
+                    </a>
+
+                <?php else: ?>
+
+                    <button class="btn btn-sm btn-secondary"
+                            disabled
+                            title="Location contains stock">
+                        Contains Stock!
+                    </button>
+
+                <?php endif; ?>
+
+            </td>
+
+        </tr>
+
+    <?php endforeach; ?>
+
+<?php endif; ?>
+
+</tbody>
+
+</table>
