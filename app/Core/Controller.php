@@ -56,7 +56,7 @@ class Controller
             extract($data);
 
             // make cusomized company settings globally available
-            $settingsModel = $this->model('SettingsModel');
+            $settingsModel = $this->model('Settings');
             $settings = $settingsModel->get();
 
             if ($useLayout) {

@@ -31,22 +31,25 @@ class Database
     }
 
 
-    public function transaction(callable $callback)
-    {
-        $this->beginTransaction();
+  public function transaction(callable $callback)
+{
+    $this->beginTransaction();
 
-        try {
+    try {
 
-            $callback($this);
+        $result = $callback($this);
 
-            $this->commit();
-        } catch (Throwable $e) {
+        $this->commit();
 
-            $this->rollBack();
+        return $result;
 
-            throw $e;
-        }
+    } catch (Throwable $e) {
+
+        $this->rollBack();
+
+        throw $e;
     }
+}
 
     public function exists()
     {

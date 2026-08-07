@@ -9,8 +9,8 @@ class Model
 {
     protected Database $db;
 
-    public function __construct(Database $db = null)
-    {
-        $this->db = $db ?? new Database();
-    }
+  public function __construct(?Database $db = null)
+{
+    $this->db = $db ?? new Database();
+}
 }

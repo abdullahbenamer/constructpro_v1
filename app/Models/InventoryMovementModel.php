@@ -7,8 +7,7 @@ class InventoryMovementModel extends Model
 
     public function addMovement($data)
     {
-       $locationStockModel =
-    new InventoryLocationStockModel($this->db);
+       $locationStockModel = new InventoryLocationStockModel($this->db);
         // =========================
         // CLEAN INPUT
         // =========================
@@ -83,25 +82,7 @@ class InventoryMovementModel extends Model
             $quantity = $new_balance - $current_stock;
         }
 
-        // UPDATE: inventory_location_stock, inventory.quantity
-
-        if ($type === 'IN') {
-
-            $locationStockModel->addStock(
-                $inventory_id,
-                $location_id,
-                $quantity
-            );
-        } elseif ($type === 'OUT') {
-
-            $locationStockModel->removeStock(
-                $inventory_id,
-                $location_id,
-                $quantity
-            );
-        }
-     
-        // =========================
+               // =========================
         // SAVE MOVEMENT
         // =========================
 
@@ -131,8 +112,7 @@ class InventoryMovementModel extends Model
                 $created_by
             ]
         );
-
-        $locationStockModel->syncInventoryQuantity($inventory_id);
+      
         return true;
     }
 

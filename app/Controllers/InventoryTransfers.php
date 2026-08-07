@@ -25,62 +25,68 @@ class InventoryTransfers extends Controller
     public function create()
     {
         $inventoryModel = $this->model('Inventory');
-        $locationModel = $this->model('InventoryLocation');
-        $stockModel = $this->model('InventoryLocationStock');
-        $transferModel = $this->model('InventoryTransfer');
+        $locationModel  = $this->model('InventoryLocation');
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $inventory_id = (int)$_POST['inventory_id'];
 
             $from_location_id = (int)$_POST['from_location_id'];
-            $to_location_id   = (int)$_POST['to_location_id'];
 
-            if ($from_location_id === $to_location_id) {
+            $to_location_id = (int)$_POST['to_location_id'];
 
-                $_SESSION['error'] = 'Source and destination locations cannot be the same.';
-                header('Location: ' . URLROOT . '/inventorytransfers/create');
-                exit;
-            }
+            $quantity = (float)$_POST['quantity'];
 
-            $quantity =
-                (float)$_POST['quantity'];
+            $reference = trim($_POST['reference'] ?? '');
 
-            $reference =
-                trim($_POST['reference'] ?? '');
+            $notes = trim($_POST['notes'] ?? '');
+            
+            $service = new InventoryService(
 
-            $notes =
-                trim($_POST['notes'] ?? '');
+                $this->model('InventoryLocationStock'),
+                $this->model('InventoryMovement'),
+                $this->model('InventoryTransfer')
 
-            if ($quantity <= 0) {
-                $_SESSION['error'] = "Invalid quantity";
+            );
+
+            try {
+
+                $service->transfer([
+
+                    'inventory_id'      => $inventory_id,
+
+                    'from_location_id'  => $from_location_id,
+
+                    'to_location_id'    => $to_location_id,
+
+                    'quantity'          => $quantity,
+
+                    'reference'         => $reference,
+
+                    'notes'             => $notes,
+
+                    'created_by'        => $_SESSION['user_id']
+
+                ]);
+
+                FlashHelper::success(
+                    'Transfer completed successfully.'
+                );
+
                 header('Location: ' . URLROOT . '/inventorytransfers');
                 exit;
-            }
+            } catch (Exception $e) {
 
-            $result = $transferModel->createTransfer([
-                'inventory_id'      => $inventory_id,
-                'from_location_id'  => $from_location_id,
-                'to_location_id'    => $to_location_id,
-                'quantity'          => $quantity,
-                'reference'         => $reference,
-                'notes'             => $notes
-            ]);
-
-            if (!$result['success']) {
-
-                FlashHelper::error($result['message']);
+                FlashHelper::error(
+                    $e->getMessage()
+                );
 
                 header('Location: ' . URLROOT . '/inventorytransfers/create');
                 exit;
             }
-
-            FlashHelper::success('Transfer completed successfully.');
-
-            header('Location: ' . URLROOT . '/inventorytransfers');
-            exit;
-          
         }
+
+        // GET request
 
         $data['inventory'] =
             $inventoryModel->getAll();
@@ -93,103 +99,6 @@ class InventoryTransfers extends Controller
             $data
         );
     }
-
-    public function createTransfer($data)
-{
-    // Models needed
-    $stockModel = new InventoryLocationStockModel();
-    $movementModel = new InventoryMovementModel();
-
-    try {
-
-        // =====================================
-        // START TRANSACTION
-        // =====================================
-
-        $this->db->query("START TRANSACTION");
-
-        // =====================================
-        // MOVE STOCK
-        // =====================================
-        
-        $result = $stockModel->transferStock(
-            $data['inventory_id'],
-            $data['from_location_id'],
-            $data['to_location_id'],
-            $data['quantity']
-        );
-
-        if (!$result) {
-
-            $this->db->query("ROLLBACK");
-
-            return [
-                'success' => false,
-                'message' => 'Not enough stock in source warehouse.'
-            ];
-        }
-
-        // =====================================
-        // SAVE TRANSFER
-        // =====================================
-
-        $this->create($data);
-
-        $transfer_id = $this->db->lastInsertId();
-
-        // =====================================
-        // INVENTORY MOVEMENT (OUT)
-        // =====================================
-
-        $movementModel->addMovement([
-
-            'inventory_id' => $data['inventory_id'],
-            'location_id'  => $data['from_location_id'],
-            'type'         => 'OUT',
-            'quantity'     => $data['quantity'],
-            'reference'    => $data['reference'],
-            'notes'        => 'Warehouse Transfer #' . $transfer_id,
-            'created_by'   => $_SESSION['user_id']
-
-        ]);
-
-        // =====================================
-        // INVENTORY MOVEMENT (IN)
-        // =====================================
-
-        $movementModel->addMovement([
-
-            'inventory_id' => $data['inventory_id'],
-            'location_id'  => $data['to_location_id'],
-            'type'         => 'IN',
-            'quantity'     => $data['quantity'],
-            'reference'    => $data['reference'],
-            'notes'        => 'Warehouse Transfer #' . $transfer_id,
-            'created_by'   => $_SESSION['user_id']
-
-        ]);
-
-        // =====================================
-        // COMMIT
-        // =====================================
-
-        $this->db->query("COMMIT");
-
-        return [
-            'success' => true,
-            'transfer_id' => $transfer_id
-        ];
-    }
-    catch (Exception $e) {
-
-        $this->db->query("ROLLBACK");
-
-        return [
-            'success' => false,
-            'message' => $e->getMessage()
-        ];
-    }
-}
 
     public function getLocationStock()
     {
