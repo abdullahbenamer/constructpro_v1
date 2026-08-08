@@ -22,15 +22,7 @@ class ProjectLedgerModel extends Model
         ]);
     }
 
-    // public function getLedger($project_id)
-    // {
-    //     return $this->db->query("
-    //         SELECT *
-    //         FROM project_ledger
-    //         WHERE project_id = ?
-    //         ORDER BY id ASC
-    //     ", [$project_id])->fetchAll();
-    // }
+    
     public function getLedger($project_id)
 {
     return $this->db->query("

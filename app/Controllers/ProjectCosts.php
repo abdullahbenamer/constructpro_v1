@@ -39,7 +39,6 @@ class ProjectCosts extends Controller
         $this->view('project-costs/index', $data);
     }
 
-
   public function create($project_id = null)
 {
     if (!$project_id) {
@@ -47,136 +46,72 @@ class ProjectCosts extends Controller
         exit;
     }
 
-    $model = $this->model('ProjectCost');
-    $movementModel = $this->model('InventoryMovement');
-    $projectModel = $this->model('Project');
-    $inventoryModel = $this->model('Inventory');
-    $locationModel = $this->model('InventoryLocation');
-    $locationStockModel = $this->model('InventoryLocationStock');
+    // ============================================
+    // HANDLE FORM SUBMISSION
+    // ============================================
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        // =========================
-        // INPUT DATA
-        // =========================
-        $data = [
-            'project_id'   => $project_id,
-            'cost_type'    => $_POST['cost_type'] ?? null,
-            'description'  => trim($_POST['description'] ?? ''),
-            'quantity'     => (float)($_POST['quantity'] ?? 0),
-            'unit_price'   => (float)($_POST['unit_price'] ?? 0),
-            'inventory_id' => !empty($_POST['inventory_id']) ? (int)$_POST['inventory_id'] : null,
-            'location_id'  => !empty($_POST['location_id']) ? (int)$_POST['location_id'] : null
-        ];
+        try {
 
-        // =========================
-        // BASIC VALIDATION
-        // =========================
-        if (!$data['cost_type']) {
-            FlashHelper::error('Cost type is required.');
-            $this->redirect($project_id);
-        }
+            $this->service('ProjectCost')->create([
 
-        if ($data['quantity'] <= 0) {
-            FlashHelper::error('Quantity must be greater than 0.');
-            $this->redirect($project_id);
-        }
+                'project_id'   => $project_id,
 
-        if ($data['cost_type'] !== 'materials' && $data['unit_price'] <= 0) {
-            FlashHelper::error('Unit price must be greater than 0.');
-            $this->redirect($project_id);
-        }
+                'cost_type'    => $_POST['cost_type'] ?? null,
 
-        // =========================
-        // MATERIALS VALIDATION
-        // =========================
-        $item = null;
+                'description'  => trim($_POST['description'] ?? ''),
 
-        if ($data['cost_type'] === 'materials') {
+                'quantity'     => (float)($_POST['quantity'] ?? 0),
 
-            if (!$data['inventory_id']) {
-                FlashHelper::error('Please select a material item.');
-                $this->redirect($project_id);
-            }
+                'unit_price'   => (float)($_POST['unit_price'] ?? 0),
 
-            if (!$data['location_id']) {
-                FlashHelper::error('Please select a location.');
-                $this->redirect($project_id);
-            }
+                'inventory_id' => !empty($_POST['inventory_id'])
+                                    ? (int)$_POST['inventory_id']
+                                    : null,
 
-            $item = $inventoryModel->getById($data['inventory_id']);
+                'location_id'  => !empty($_POST['location_id'])
+                                    ? (int)$_POST['location_id']
+                                    : null
 
-            if (!$item) {
-                FlashHelper::error('Invalid inventory item.');
-                $this->redirect($project_id);
-            }
+            ]);
 
-            $stock = $locationStockModel->getStock(
-                $data['inventory_id'],
-                $data['location_id']
+            FlashHelper::success(
+                'Project cost added successfully.'
             );
 
-            $available = $stock->quantity ?? 0;
+            header(
+                'Location: ' .
+                URLROOT .
+                '/project-costs/' .
+                $project_id
+            );
 
-            if ($available < $data['quantity']) {
-                FlashHelper::error('Not enough stock in selected location.');
-                $this->redirect($project_id);
-            }
+            exit;
 
-            // override price from inventory
-            $data['unit_price'] = (float)$item->cost_price;
-        } else {
-            $data['inventory_id'] = null;
-            $data['location_id'] = null;
+        } catch (Exception $e) {
+
+            FlashHelper::error(
+                $e->getMessage()
+            );
+
+            header(
+                'Location: ' .
+                URLROOT .
+                '/project-costs/create/' .
+                $project_id
+            );
+
+            exit;
         }
-
-        // =========================
-        // SAVE COST
-        // =========================
-        $cost_id = $model->create($data);
-
-        // =========================
-        // LEDGER ENTRY (SINGLE SOURCE)
-        // =========================
-        $total_cost = $data['quantity'] * $data['unit_price'];
-
-        $ledger = $this->model('ProjectLedgerService');
-
-        $ledger->addEntry([
-            'project_id'  => $project_id,
-            'entry_type'  => 'cost',
-            'ref_table'   => 'project_costs',
-            'ref_id'      => $cost_id,
-            'description' => $data['description'],
-            'debit'       => $total_cost,
-            'credit'      => 0
-        ]);
-
-        // =========================
-        // STOCK MOVEMENT
-        // =========================
-        if ($data['cost_type'] === 'materials') {
-
-            $movementModel->addMovement([
-                'inventory_id' => $data['inventory_id'],
-                'location_id'  => $data['location_id'],
-                'type'         => 'OUT',
-                'quantity'     => $data['quantity'],
-                'reference'    => 'PROJECT #' . $project_id,
-                'notes'        => $data['description']
-            ]);
-        }
-
-        // =========================
-        // REDIRECT
-        // =========================
-        header('Location: ' . URLROOT . '/project-costs/' . $project_id);
-        exit;
     }
 
-    // =========================
-    // LOAD VIEW
-    // =========================
+    // ============================================
+    // DISPLAY FORM (GET)
+    // ============================================
+
+    $projectModel = $this->model('Project');
+
     $project = $projectModel->getById($project_id);
 
     if (!$project) {
@@ -184,22 +119,22 @@ class ProjectCosts extends Controller
         exit;
     }
 
-    $data['project'] = $project;
+    $inventoryModel = $this->model('Inventory');
+    $locationModel  = $this->model('InventoryLocation');
+
+    $data['project']    = $project;
     $data['project_id'] = $project_id;
-    $data['inventory'] = $inventoryModel->getAll();
-    $data['locations'] = $locationModel->getAll();
+    $data['inventory']  = $inventoryModel->getAll();
+    $data['locations']  = $locationModel->getAll();
 
-    $this->view('project-costs/create', $data);
+    $this->view(
+        'project-costs/create',
+        $data
+    );
 }
 
-private function redirect($project_id)
-{
-    header('Location: ' . URLROOT . '/project-costs/create/' . $project_id);
-    exit;
-}
-
-
-    // EDIT Project Costs
+   
+        // EDIT Project Costs
     public function edit($id)
     {
         $costModel = $this->model('ProjectCost');
@@ -442,46 +377,46 @@ private function redirect($project_id)
         }
 
         // show on the Dashboard
-       $summary = $model->getFinanceSummary($project_id);
+        $summary = $model->getFinanceSummary($project_id);
 
-$summary['budget_used'] =
-    $project->budget > 0
-        ? ($summary['costs'] / $project->budget) * 100
-        : 0;
+        $summary['budget_used'] =
+            $project->budget > 0
+            ? ($summary['costs'] / $project->budget) * 100
+            : 0;
 
-$summary['budget_remaining'] =
-    $project->budget - $summary['costs'];
+        $summary['budget_remaining'] =
+            $project->budget - $summary['costs'];
 
-$startDate = strtotime($project->created_at);
-$endDate   = strtotime($project->deadline);
-$today     = time();
+        $startDate = strtotime($project->created_at);
+        $endDate   = strtotime($project->deadline);
+        $today     = time();
 
-$totalDays = max(1, ($endDate - $startDate) / 86400);
-$elapsedDays = ($today - $startDate) / 86400;
+        $totalDays = max(1, ($endDate - $startDate) / 86400);
+        $elapsedDays = ($today - $startDate) / 86400;
 
-$summary['timeline_used'] =
-    max(0, min(100, ($elapsedDays / $totalDays) * 100));
+        $summary['timeline_used'] =
+            max(0, min(100, ($elapsedDays / $totalDays) * 100));
 
-$summary['days_remaining'] =
-    max(0, ceil(($endDate - $today) / 86400));
+        $summary['days_remaining'] =
+            max(0, ceil(($endDate - $today) / 86400));
 
-/*
+        /*
 |--------------------------------------------------------------------------
 | NEW KPI
 |--------------------------------------------------------------------------
 */
 
-$summary['advance_funding'] =
-    $project->budget > 0
-        ? ($summary['advances'] / $project->budget) * 100
-        : 0;
+        $summary['advance_funding'] =
+            $project->budget > 0
+            ? ($summary['advances'] / $project->budget) * 100
+            : 0;
 
-$data = [
-    'project' => $project,
-    'summary' => $summary
-];
+        $data = [
+            'project' => $project,
+            'summary' => $summary
+        ];
 
-$this->view('project-costs/finance_dashboard', $data);
+        $this->view('project-costs/finance_dashboard', $data);
     }
 
 
@@ -540,11 +475,10 @@ $this->view('project-costs/finance_dashboard', $data);
 
         $data['summary'] = $ledgerModel->getProjectSummary($project_id);
 
-        // $this->view('project-costs/ledger_report', $data);
-        //  require APPROOT . '/app/Views/project-costs/ledger_report.php';
-
-       $this->view('project-costs/ledger_report', $data,
-    false
-);
-    }  
+        $this->view(
+            'project-costs/ledger_report',
+            $data,
+            false
+        );
+    }
 }

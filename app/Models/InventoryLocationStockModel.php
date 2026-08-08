@@ -319,7 +319,13 @@ public function getAllGlobalStock()
             ]
         );
     }
+/*
+|--------------------------------------------------------------------------
+| Synchronize Global Inventory Quantity
+|--------------------------------------------------------------------------
+*/
 
+$this->syncInventoryQuantity($inventory_id);
     return true;
 }
 

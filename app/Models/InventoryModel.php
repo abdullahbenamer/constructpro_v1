@@ -4,13 +4,19 @@ require_once '../app/Core/Model.php';
 class InventoryModel extends Model
 {
     public function getLowStockAlerts()
-    {
-        return $this->db->query("
-            SELECT * FROM inventory 
-            WHERE quantity < min_stock 
-            ORDER BY quantity
-        ")->fetchAll();
-    }
+{
+    return $this->db->query("
+        SELECT
+            i.*,
+            COALESCE(SUM(ls.quantity),0) AS current_stock
+        FROM inventory i
+        LEFT JOIN inventory_location_stock ls
+            ON ls.inventory_id = i.id
+        GROUP BY i.id
+        HAVING current_stock < i.min_stock
+        ORDER BY current_stock ASC
+    ")->fetchAll();
+}
 
     // used for POS show only location inventory
 public function getByLocation($location_id)
@@ -119,19 +125,41 @@ public function getStockByLocation($location_id)
 
 public function getAll()
 {
-    return $this->db->query(
-        "
+    return $this->db->query("
         SELECT
+
             i.*,
-            COALESCE(SUM(ls.quantity),0) AS quantity
+
+            COALESCE(SUM(ls.quantity),0) AS quantity,
+
+            COALESCE(SUM(ls.quantity),0) AS available_qty
+
         FROM inventory i
+
         LEFT JOIN inventory_location_stock ls
             ON ls.inventory_id = i.id
+
         GROUP BY i.id
+
         ORDER BY i.name
-        "
-    )->fetchAll();
+    ")->fetchAll();
 }
+
+// public function getAll()
+// {
+//     return $this->db->query(
+//         "
+//         SELECT
+//             i.*,
+//             COALESCE(SUM(ls.quantity),0) AS quantity
+//         FROM inventory i
+//         LEFT JOIN inventory_location_stock ls
+//             ON ls.inventory_id = i.id
+//         GROUP BY i.id
+//         ORDER BY i.name
+//         "
+//     )->fetchAll();
+// }
 
     public function getInventoryValue()
 {

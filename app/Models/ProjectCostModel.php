@@ -10,38 +10,6 @@ class ProjectCostModel extends Model {
         return (float)($result->total ?? 0);
     }
 
-
-    
-    
-    // public function getProjectCosts($project_id) {
-    //     return $this->db->query(
-    //         "SELECT * FROM project_costs WHERE project_id = ? ORDER BY created_at DESC", 
-    //         [$project_id]
-    //     )->fetchAll();
-    // }
-
-//     public function getProjectCosts($project_id)
-// {
-//     return $this->db->query(
-//         "
-//         SELECT
-//             pc.*,
-//             i.name AS item_name,
-//             i.sku
-
-//         FROM project_costs pc
-
-//         LEFT JOIN inventory i
-//             ON i.id = pc.inventory_id
-
-//         WHERE pc.project_id = ?
-
-//         ORDER BY pc.created_at DESC
-//         ",
-//         [$project_id]
-//     )->fetchAll();
-// }
-    
 public function getProjectCosts($project_id)
 {
     return $this->db->query(
@@ -80,12 +48,7 @@ public function getProjectCosts($project_id)
         ")->fetchAll();
     }
     
-    // public function getTotalCosts() {
-    //     $result = $this->db->query("SELECT COALESCE(SUM(quantity * unit_price), 0) as total FROM project_costs")->fetch();
-    //     return (float)($result->total ?? 0);
-    // }
-
-        public function getTotalCosts()
+           public function getTotalCosts()
 {
     return $this->db->query("
         SELECT COALESCE(SUM(total_cost),0) AS total

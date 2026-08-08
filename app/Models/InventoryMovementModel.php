@@ -7,7 +7,7 @@ class InventoryMovementModel extends Model
 
     public function addMovement($data)
     {
-       $locationStockModel = new InventoryLocationStockModel($this->db);
+        $locationStockModel = new InventoryLocationStockModel($this->db);
         // =========================
         // CLEAN INPUT
         // =========================
@@ -41,48 +41,38 @@ class InventoryMovementModel extends Model
             die("Invalid movement type");
         }
 
+ /*
+|--------------------------------------------------------------------------
+| Balance After Movement
+|--------------------------------------------------------------------------
+| Stock has already been updated by the Inventory Engine.
+| Therefore we simply read the current location balance.
+|--------------------------------------------------------------------------
+*/
+
+$stock = $locationStockModel->getStock(
+    $inventory_id,
+    $location_id
+);
+
+$new_balance = (float)($stock->quantity ?? 0);
+
+/*
+|--------------------------------------------------------------------------
+| Adjustment movements
+|--------------------------------------------------------------------------
+| For adjustments, store the movement quantity as the difference.
+|--------------------------------------------------------------------------
+*/
+
+if ($type === 'ADJUSTMENT') {
+
+    $previousBalance = $new_balance;
+
+    $quantity = $data['quantity'] - $previousBalance;
+
+}
         // =========================
-        // GET ITEM
-        // =========================
-
-        $item = $this->db->query(
-            "SELECT * FROM inventory WHERE id = ?",
-            [$inventory_id]
-        )->fetch();
-
-        if (!$item) {
-            die("Inventory item not found");
-        }
-
-        $current_stock = (float)$item->quantity;
-
-        // =========================
-        // CALCULATE NEW BALANCE
-        // =========================
-
-        $new_balance = $current_stock;
-
-        if ($type === 'IN') {
-
-            $new_balance += $quantity;
-        } elseif ($type === 'OUT') {
-
-            // Prevent negative stock
-            if ($current_stock < $quantity) {
-                die("Not enough stock");
-            }
-
-            $new_balance -= $quantity;
-        } elseif ($type === 'ADJUSTMENT') {
-
-            // Adjustment means SET ABSOLUTE STOCK
-            $new_balance = $quantity;
-
-            // Store adjustment difference in movement
-            $quantity = $new_balance - $current_stock;
-        }
-
-               // =========================
         // SAVE MOVEMENT
         // =========================
 
@@ -112,7 +102,7 @@ class InventoryMovementModel extends Model
                 $created_by
             ]
         );
-      
+
         return true;
     }
 
@@ -182,10 +172,10 @@ class InventoryMovementModel extends Model
             [$inventory_id]
         )->fetchAll();
     }
-    
-public function getOpenPurchaseOrders()
-{
-    return $this->db->query("
+
+    public function getOpenPurchaseOrders()
+    {
+        return $this->db->query("
         SELECT
             po.*,
             s.company_name
@@ -203,31 +193,30 @@ public function getOpenPurchaseOrders()
 
         ORDER BY po.id DESC
     ")->fetchAll();
-}
-
-public function receiveGoods($data)
-{
-    return $this->addMovement([
-
-        'inventory_id' => $data['inventory_id'],
-
-        'location_id'  => $data['location_id'],
-
-        'type' => 'IN',
-
-        'quantity' => $data['quantity'],
-
-        'unit_cost' => $data['unit_cost'],
-
-        'supplier_id' => $data['supplier_id'],
-
-        'reference' => $data['reference'],
-
-        'notes' => $data['notes'],
-
-        'movement_by' => $_SESSION['user_id']
-
-    ]);
-}
-
     }
+
+    public function receiveGoods($data)
+    {
+        return $this->addMovement([
+
+            'inventory_id' => $data['inventory_id'],
+
+            'location_id'  => $data['location_id'],
+
+            'type' => 'IN',
+
+            'quantity' => $data['quantity'],
+
+            'unit_cost' => $data['unit_cost'],
+
+            'supplier_id' => $data['supplier_id'],
+
+            'reference' => $data['reference'],
+
+            'notes' => $data['notes'],
+
+            'movement_by' => $_SESSION['user_id']
+
+        ]);
+    }
+}
