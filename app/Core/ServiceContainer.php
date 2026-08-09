@@ -4,8 +4,7 @@ require_once '../app/Core/Database.php';
 
 class ServiceContainer
 {
-    private Controller $controller;
-
+    
     /**
      * Shared Database connection
      */
@@ -36,7 +35,7 @@ class ServiceContainer
                 ProjectCostModel::class,
                 InventoryLocationStockModel::class,
                 InventoryMovementModel::class,
-                ProjectLedgerServiceModel::class,
+                ProjectLedgerModel::class,
                 InventoryModel::class
             ]
         ],
@@ -72,18 +71,16 @@ class ServiceContainer
 
     ];
 
-    public function __construct(Controller $controller)
-    {
-        $this->controller = $controller;
+  public function __construct()
+{
+    /*
+    |---------------------------------------------
+    | ONE Database connection for the entire request
+    |---------------------------------------------
+    */
 
-        /*
-        |--------------------------------------------------------------------------
-        | ONE Database connection for the entire request
-        |--------------------------------------------------------------------------
-        */
-
-        $this->db = new Database();
-    }
+    $this->db = new Database();
+}
 
     /**
      * Resolve Service

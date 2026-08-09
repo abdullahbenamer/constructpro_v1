@@ -420,31 +420,6 @@ class ProjectCosts extends Controller
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public function finance($project_id)
     {
         AuthHelper::can('project.finance.view');

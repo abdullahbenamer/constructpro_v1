@@ -100,7 +100,7 @@
                 margin: 10mm;
             }
 
-                   .no-print {
+            .no-print {
                 display: none !important;
             }
         }
@@ -109,22 +109,22 @@
 
 <body>
     <!-- Logo -->
-     <div style="display:flex; justify-content:space-between; align-items:left; margin-bottom:20px;">
+    <div style="display:flex; justify-content:space-between; align-items:left; margin-bottom:20px;">
 
-    <div>
-        <?php if (!empty($settings->logo)): ?>
-            <img src="<?= URLROOT ?>/<?= $settings->logo ?>"
-                 style="height:100px;">
-        <?php endif; ?>
+        <div>
+            <?php if (!empty($settings->logo)): ?>
+                <img src="<?= URLROOT ?>/<?= $settings->logo ?>"
+                    style="height:100px;">
+            <?php endif; ?>
+        </div>
+
+        <div style="text-align:left;">
+            <h2><?= htmlspecialchars($settings->company_name) ?></h2>
+            <div><?= htmlspecialchars($settings->address) ?></div>
+            <div><?= htmlspecialchars($settings->contacts) ?></div>
+        </div>
+
     </div>
-
-    <div style="text-align:left;">
-        <h2><?= htmlspecialchars($settings->company_name) ?></h2>
-        <div><?= htmlspecialchars($settings->address) ?></div>
-        <div><?= htmlspecialchars($settings->contacts) ?></div>
-    </div>
-
-</div>
     <div class="header">
         <div class="company">CONSTRUCT PRO</div>
 
@@ -200,7 +200,6 @@
                         ? 'balance-negative'
                         : 'balance-positive';
                     ?>
-
                     <td class="<?= $balanceClass ?>">
                         <?= number_format($row->balance_after, 2) ?>
                     </td>
@@ -219,7 +218,7 @@
         <?= date('Y-m-d H:i') ?>
 
     </div>
-<!-- <script>
+    <!-- <script>
 window.onload = function () {
     window.print();
 };

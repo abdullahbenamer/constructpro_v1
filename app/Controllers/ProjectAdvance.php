@@ -8,7 +8,7 @@ class ProjectAdvance extends Controller
 
     $projectModel = $this->model('Project');
     $advanceModel = $this->model('ProjectAdvance');
-    $ledger = $this->model('ProjectLedgerService');
+    $ledger = $this->model('ProjectLedger');
 
     $data['project'] = $projectModel->getById($project_id);
 

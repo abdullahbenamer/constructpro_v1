@@ -4,23 +4,46 @@ require_once '../config/constants.php';
 
 class Controller
 {
-   protected ServiceContainer $services;
-   
+    protected ServiceContainer $services;
+
     protected $settings;
 
     // GLOBAL AUTH CHECK
-    public function __construct()
-    {
-        
-               $this->services = new ServiceContainer($this);
-        
-       
-    }
-
-   public function service(string $service)
+   public function __construct()
 {
-    return $this->services->make($service);
+    /*
+    |---------------------------------------------
+    | Initialize Service Container
+    |---------------------------------------------
+    */
+
+    $this->services = new ServiceContainer();
+
+    /*
+    |-------------------------------------
+    | Global Authentication Check
+    |-------------------------------------
+    */
+
+    if (!isset($_SESSION['user_id'])) {
+
+        $allowed = ['auth'];
+
+        $currentController = strtolower($_GET['url'] ?? 'home');
+        $controller = explode('/', $currentController)[0];
+
+        if (!in_array($controller, $allowed)) {
+
+            header('Location: ' . URLROOT . '/auth/login');
+            exit;
+        }
+    }
 }
+
+    public function service(string $service)
+    {
+        return $this->services->make($service);
+    }
 
     public function model($model)
     {
@@ -68,6 +91,4 @@ class Controller
             require_once '../app/Views/errors/404.php';
         }
     }
-
-
 }

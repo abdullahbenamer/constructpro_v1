@@ -1,18 +1,21 @@
 <?php
 
-class ProjectCostService extends Model
+// require_once '../app/Services/BaseService.php';
+require_once __DIR__ . '/BaseService.php';
+
+class ProjectCostService extends BaseService
 {
     private ProjectCostModel $costModel;
     private InventoryLocationStockModel $stockModel;
     private InventoryMovementModel $movementModel;
-    private ProjectLedgerServiceModel $ledgerService;
+    private ProjectLedgerModel $ledgerService;
     private InventoryModel $inventoryModel;
 
     public function __construct(
         ProjectCostModel $costModel,
         InventoryLocationStockModel $stockModel,
         InventoryMovementModel $movementModel,
-        ProjectLedgerServiceModel $ledgerService,
+        ProjectLedgerModel $ledgerService,
         InventoryModel $inventoryModel
     ) {
         parent::__construct();
@@ -28,61 +31,78 @@ public function create(array $data): int
 {
     $data = $this->validate($data);
 
+    return $this->transaction(function () use ($data) {
+
+        $this->deductInventory($data);
+
+        $costId = $this->costModel->create($data);
+
+        $this->recordInventoryMovement(
+            $data,
+            'OUT'
+        );
+
+        $this->recordLedger(
+            $costId,
+            $data
+        );
+
+        return $costId;
+    });
+}
+    public function update(int $id, array $data): bool
+    {
+    }
+
+   public function delete(int $id): void
+{
     $this->db->beginTransaction();
 
     try {
 
-        /*
-        |--------------------------------------------------------------------------
-        | Inventory
-        |--------------------------------------------------------------------------
-        */
+        $data = $this->normalize(
 
-        $this->deductInventory($data);
+    $this->loadCost($id));
 
         /*
         |--------------------------------------------------------------------------
-        | Project Cost
+        | Restore Inventory
         |--------------------------------------------------------------------------
         */
 
-        $costId = $this->costModel->create($data);
+if ($this->isMaterial($data)) {
+
+    $this->restoreInventory($data);
+
+    $this->recordInventoryMovement(
+
+        $data,
+
+        'IN'
+
+    );
+}
 
         /*
         |--------------------------------------------------------------------------
-        | Inventory History
+        | Reverse Ledger
         |--------------------------------------------------------------------------
         */
 
-        $this->recordInventoryMovement(
-
-            $costId,
-
-            $data,
-
-            'OUT'
-
-        );
+        $this->ledgerService->reverseCost($id);
 
         /*
         |--------------------------------------------------------------------------
-        | Ledger
+        | Delete Cost
         |--------------------------------------------------------------------------
         */
 
-        $this->recordLedger(
-
-            $costId,
-
-            $data
-
-        );
+        $this->costModel->delete($id);
 
         $this->db->commit();
 
-        return $costId;
-
-    } catch (Throwable $e) {
+    }
+    catch(Throwable $e){
 
         $this->db->rollBack();
 
@@ -90,13 +110,21 @@ public function create(array $data): int
     }
 }
 
-    public function update(int $id, array $data): bool
-    {
-    }
+private function normalize(object $cost): array
+{
+    return [
 
-    public function delete(int $id): bool
-    {
-    }
+        'project_id'   => $cost->project_id,
+        'cost_type'    => $cost->cost_type,
+        'description'  => $cost->description,
+        'quantity'     => $cost->quantity,
+        'unit_price'   => $cost->unit_price,
+        'inventory_id' => $cost->inventory_id,
+        'location_id'  => $cost->location_id
+
+    ];
+}
+
 private function validate(array $data): array
 {
     if (empty($data['cost_type'])) {
@@ -168,7 +196,7 @@ private function validate(array $data): array
 
    private function isMaterial(array $data): bool
 {
-    return $data['cost_type'] === 'materials';
+    return strtolower($data['cost_type']) === 'materials';
 }
 
     
@@ -215,7 +243,6 @@ private function restoreInventory(array $data): void
 }
 
 private function recordInventoryMovement(
-    int $costId,
     array $data,
     string $type
 ): void
@@ -248,7 +275,7 @@ private function recordLedger(
     array $data
 ): void
 {
-    $total = $data['quantity'] * $data['unit_price'];
+    $total = $this->total($data);
 
     $this->ledgerService->addEntry([
 
@@ -273,6 +300,27 @@ private function recordLedger(
         'balance_after' => 0
 
     ]);
+}
+
+private function loadCost(int $id)
+{
+    $cost = $this->costModel->getById($id);
+
+    if (!$cost) {
+        throw new Exception(
+            'Project cost not found.'
+        );
+    }
+
+    return $cost;
+}
+
+
+private function total(array $data): float
+{
+    return
+        $data['quantity']
+        * $data['unit_price'];
 }
 
 }
