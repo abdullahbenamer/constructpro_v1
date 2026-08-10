@@ -3,18 +3,22 @@ require_once '../app/Core/Model.php';
 class ProjectLedgerModel extends Model
 {
     
-public function addEntry($data)
+public function addEntry(array $data): bool
 {
     $lastBalance = $this->getLastBalance(
-        $data['project_id']
+        (int)$data['project_id']
     );
+
+    $debit  = (float)($data['debit'] ?? 0);
+    $credit = (float)($data['credit'] ?? 0);
 
     $newBalance =
         $lastBalance
-        + $data['credit']
-        - $data['debit'];
+        + $credit
+        - $debit;
 
-    $this->db->query("
+    $this->db->query(
+        "
         INSERT INTO project_ledger
         (
             project_id,
@@ -27,28 +31,39 @@ public function addEntry($data)
             balance_after
         )
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    ", [
-        $data['project_id'],
-        $data['entry_type'],
-        $data['ref_table'],
-        $data['ref_id'],
-        $data['description'],
-        $data['debit'],
-        $data['credit'],
-        $newBalance
-    ]);
+        ",
+        [
+            $data['project_id'],
+            $data['entry_type'],
+            $data['ref_table'],
+            $data['ref_id'],
+            $data['description'],
+            $debit,
+            $credit,
+            $newBalance
+        ]
+    );
+
+    return true;
 }
 
-    public function getLastBalance($project_id)
-    {
-        return $this->db->query("
-            SELECT balance_after
-            FROM project_ledger
-            WHERE project_id = ?
-            ORDER BY id DESC
-            LIMIT 1
-        ", [$project_id])->fetch()->balance_after ?? 0;
-    }
+   public function getLastBalance(int $project_id): float
+{
+    $row = $this->db->query(
+        "
+        SELECT balance_after
+        FROM project_ledger
+        WHERE project_id = ?
+        ORDER BY id DESC
+        LIMIT 1
+        ",
+        [$project_id]
+    )->fetch();
+
+    return $row
+        ? (float)$row->balance_after
+        : 0.0;
+}
 
    public function getLedger($project_id)
 {
@@ -78,8 +93,40 @@ public function reverseCost(int $costId): void
     $entry = $this->getCostEntry($costId);
 
     if (!$entry) {
-        return;
+        throw new Exception(
+            'Original project cost ledger entry not found.'
+        );
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Prevent duplicate reversal
+    |--------------------------------------------------------------------------
+    */
+
+    $existing = $this->db->query(
+        "
+        SELECT id
+        FROM project_ledger
+        WHERE ref_table = 'project_costs'
+          AND ref_id = ?
+          AND entry_type = 'cost_reversal'
+        LIMIT 1
+        ",
+        [$costId]
+    )->fetch();
+
+    if ($existing) {
+        throw new Exception(
+            'This project cost has already been reversed.'
+        );
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Create Reversal
+    |--------------------------------------------------------------------------
+    */
 
     $this->addEntry([
 
@@ -91,26 +138,31 @@ public function reverseCost(int $costId): void
 
         'ref_id'      => $costId,
 
-        'description' => 'Reverse: ' . $entry->description,
+        'description' =>
+            'Reversal: ' . $entry->description,
 
         'debit'       => 0,
 
-        'credit'      => $entry->debit
+        'credit'      => (float)$entry->debit
 
     ]);
 }
 
 public function getCostEntry(int $costId)
 {
-    return $this->db->query("
+    return $this->db->query(
+        "
         SELECT *
         FROM project_ledger
         WHERE ref_table = 'project_costs'
           AND ref_id = ?
         ORDER BY id DESC
         LIMIT 1
-    ", [$costId])->fetch();
+        ",
+        [$costId]
+    )->fetch();
 }
+
 
 public function getProjectSummary($project_id)
 {
@@ -123,4 +175,6 @@ public function getProjectSummary($project_id)
         WHERE project_id = ?
     ", [$project_id])->fetch();
 }
+
+
 }

@@ -307,32 +307,62 @@ class ProjectCosts extends Controller
         $this->view('project-costs/edit', $data);
     }
 
-    public function delete($id)
-    {
+   public function delete($id)
+{
+    try {
 
-        $costModel = $this->model('ProjectCost');
-        $movementModel = $this->model('InventoryMovement');
+        $cost = $this->model('ProjectCost')->getById($id);
 
-        $cost = $costModel->getById($id);
+        if (!$cost) {
+            FlashHelper::error('Project cost not found.');
 
-        if ($cost && $cost->cost_type == 'materials' && $cost->inventory_id) {
+            header(
+                'Location: ' .
+                URLROOT .
+                '/project-costs'
+            );
 
-            // 🔁 Restore stock
-            $movementModel->addMovement([
-                'inventory_id' => $cost->inventory_id,
-                'location_id' => $cost->location_id,
-                'type' => 'IN',
-                'quantity' => $cost->quantity,
-                'reference' => 'DELETE PROJECT #' . $cost->project_id,
-                'notes' => 'Restore deleted material'
-            ]);
+            exit;
         }
 
-        $costModel->delete($id);
+        $project_id = $cost->project_id;
 
-        header('Location: ' . URLROOT . '/project-costs/' . $cost->project_id);
+        /*
+        |--------------------------------------------------------------------------
+        | Project Cost Service
+        |--------------------------------------------------------------------------
+        */
+
+        $this->service('ProjectCost')->delete((int)$id);
+
+        FlashHelper::success(
+            'Project cost deleted successfully.'
+        );
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/project-costs/' .
+            $project_id
+        );
+
+        exit;
+
+    } catch (Throwable $e) {
+
+        FlashHelper::error(
+            $e->getMessage()
+        );
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/project-costs'
+        );
+
         exit;
     }
+}
 
     public function getInventoryLocations(int $inventory_id)
     {

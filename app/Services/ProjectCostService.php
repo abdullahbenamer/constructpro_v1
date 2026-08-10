@@ -54,15 +54,19 @@ public function create(array $data): int
     {
     }
 
-   public function delete(int $id): void
+public function delete(int $id): void
 {
-    $this->db->beginTransaction();
+    $this->transaction(function () use ($id) {
 
-    try {
+        /*
+        |--------------------------------------------------------------------------
+        | Load Cost
+        |--------------------------------------------------------------------------
+        */
 
         $data = $this->normalize(
-
-    $this->loadCost($id));
+            $this->loadCost($id)
+        );
 
         /*
         |--------------------------------------------------------------------------
@@ -70,22 +74,19 @@ public function create(array $data): int
         |--------------------------------------------------------------------------
         */
 
-if ($this->isMaterial($data)) {
+        if ($this->isMaterial($data)) {
 
-    $this->restoreInventory($data);
+            $this->restoreInventory($data);
 
-    $this->recordInventoryMovement(
-
-        $data,
-
-        'IN'
-
-    );
-}
+            $this->recordInventoryMovement(
+                $data,
+                'IN'
+            );
+        }
 
         /*
         |--------------------------------------------------------------------------
-        | Reverse Ledger
+        | Reverse Project Ledger
         |--------------------------------------------------------------------------
         */
 
@@ -93,21 +94,13 @@ if ($this->isMaterial($data)) {
 
         /*
         |--------------------------------------------------------------------------
-        | Delete Cost
+        | Delete Operational Cost
         |--------------------------------------------------------------------------
+
         */
 
         $this->costModel->delete($id);
-
-        $this->db->commit();
-
-    }
-    catch(Throwable $e){
-
-        $this->db->rollBack();
-
-        throw $e;
-    }
+    });
 }
 
 private function normalize(object $cost): array
