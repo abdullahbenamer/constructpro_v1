@@ -15,6 +15,18 @@ class Dashboard extends Controller
         $costModel      = $this->model('ProjectCost');
         $financeModel   = $this->model('ProjectAdvance');
         $reportModel    = $this->model('Report');
+        $portfolio      = $reportModel->getPortfolioDashboard();
+        $data['portfolio'] = $portfolio;
+
+        $data['total_portfolio_budget'] =
+            (float)$portfolio->total_budget;
+
+        $data['total_project_costs'] =
+            (float)$portfolio->total_costs;
+
+        $data['remaining_budget'] =
+            $data['total_portfolio_budget']
+            - $data['total_project_costs'];
 
         // ==================================================
         // PROJECTS
@@ -23,9 +35,6 @@ class Dashboard extends Controller
         $all_projects = $projectModel->getProjects();
 
         $data['total_projects'] = count($all_projects);
-
-        $data['total_portfolio_budget'] =
-            $projectModel->getTotalBudget();
 
         // Active Projects
         $active_projects = array_filter($all_projects, function ($p) {
@@ -38,21 +47,6 @@ class Dashboard extends Controller
 
         $data['active_projects'] =
             array_values($active_projects);
-
-        // ==================================================
-        // PROJECT COSTS
-        // ==================================================
-
-        $total_project_costs = 0;
-
-        foreach ($data['active_projects'] as $project) {
-
-            $total_project_costs +=
-                $costModel->getTotalCost($project->id);
-        }
-
-        $data['total_project_costs'] =
-            $total_project_costs;
 
         // Remaining Portfolio Budget
 
@@ -110,12 +104,12 @@ class Dashboard extends Controller
 
         error_log(
             "Dashboard Debug - " .
-            "Projects: {$data['total_projects']}, " .
-            "Active: " . count($data['active_projects']) . ", " .
-            "Low Stock: " . count($data['low_stock']) . ", " .
-            "Customers: " . count($data['customers']) . ", " .
-            "Services: " . count($data['upcoming_services']) . ", " .
-            "Project Costs: {$data['total_project_costs']}"
+                "Projects: {$data['total_projects']}, " .
+                "Active: " . count($data['active_projects']) . ", " .
+                "Low Stock: " . count($data['low_stock']) . ", " .
+                "Customers: " . count($data['customers']) . ", " .
+                "Services: " . count($data['upcoming_services']) . ", " .
+                "Project Costs: {$data['total_project_costs']}"
         );
 
         // ==================================================

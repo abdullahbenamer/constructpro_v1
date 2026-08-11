@@ -1,5 +1,7 @@
 <h2><i class="fas fa-edit"></i> Edit Cost Item #<?= $cost->id ?></h2>
-
+<div class="alert alert-danger my-3">
+    <strong>Note:</strong> Changing material item, warehouse, or cost type requires deleting the existing cost and creating a new cost.
+</div>
 <form method="POST">
 
     <input type="hidden"
@@ -32,7 +34,7 @@
         <div class="col-md-5">
             <label class="form-label">Description</label>
             <input type="text" name="description"
-                value="<?= htmlspecialchars($cost->item_name ?? $cost->description) ?>"
+               value="<?= htmlspecialchars($cost->description ?? '') ?>"
                 class="form-control" required>
         </div>
 
@@ -47,12 +49,28 @@
         <!-- PRICE -->
         <div class="col-md-2">
             <label class="form-label" id="priceLabel">Unit Cost ($)</label>
-            <input type="number" name="unit_price"
-                value="<?= $cost->unit_price ?>"
-                step="0.01"
-                id="unitPrice"
-                class="form-control"
-                required>
+            <?php if ($cost->cost_type === 'materials'): ?>
+
+<input type="number"
+       value="<?= $cost->unit_price ?>"
+       class="form-control"
+       step="0.01"
+       readonly>
+
+<input type="hidden"
+       name="unit_price"
+       value="<?= $cost->unit_price ?>">
+
+<?php else: ?>
+
+<input type="number"
+       name="unit_price"
+       value="<?= $cost->unit_price ?>"
+       step="0.01"
+       class="form-control"
+       required>
+
+<?php endif; ?>
         </div>
 
     </div>

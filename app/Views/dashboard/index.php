@@ -80,16 +80,17 @@
 
     <!-- budget remaining progress bar -->
     <?php
-    $totalBudget = $total_portfolio_budget ?? 0;
-    $totalCosts  = $total_project_costs ?? 0;
 
-    $remainingBudget = max(0, $totalBudget - $totalCosts);
+    $totalBudget = (float)($total_portfolio_budget ?? 0);
+    $totalCosts  = (float)($total_project_costs ?? 0);
+
+    $remainingBudget = $totalBudget - $totalCosts;
 
     $usedPercent = ($totalBudget > 0)
         ? min(100, ($totalCosts / $totalBudget) * 100)
         : 0;
 
-    $remainingPercent = 100 - $usedPercent;
+    $remainingPercent = max(0, 100 - $usedPercent);
 
     // Progress bar color
     $barClass = 'bg-success';
@@ -101,19 +102,33 @@
     }
     ?>
 
-       <!-- Portfolio Budget -->
+    <!-- Portfolio Budget -->
     <div class="col-md-3">
         <div class="card bg-primary text-white">
             <div class="card-body">
                 <h5>Total Portfolio Budget</h5>
                 <h2>
-                    LYD <?= number_format(round(($total_portfolio_budget ?? 0) / 1000) * 1000, 0) ?>
+                   LYD <?= number_format($totalBudget, 0) ?>
                 </h2>
             </div>
         </div>
     </div>
 
+
+
+    <!-- PortfolioProjects Costs -->
     <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <h5>Total Portfolio Projects Cost</h5>
+                <h2 class="mb-3">
+                    LYD <?= number_format($totalCosts, 0) ?>
+                </h2>
+            </div>
+        </div>
+    </div>
+
+        <div class="col-md-3">
         <div class="card">
             <div class="card-body">
 
@@ -122,9 +137,8 @@
                 </h5>
 
                 <h3 class="mb-3">
-                    LYD <?= number_format(round(($remainingBudget ?? 0) / 1000) * 1000, 0) ?>
+                    LYD <?= number_format($remainingBudget, 0) ?>
                 </h3>
-
                 <div class="progress" style="height:22px;">
 
                     <div class="progress-bar <?= $barClass ?>"
@@ -144,18 +158,6 @@
 
                 </small>
 
-            </div>
-        </div>
-    </div>
- 
-    <!-- Project Costs -->
-    <div class="col-md-3">
-        <div class="card bg-warning text-white">
-            <div class="card-body">
-                <h5>Total Portfolio Projects Cost</h5>
-                <h2 class="mb-3">
-                    LYD <?= number_format(round(($total_project_costs ?? 0) / 1000) * 1000, 0) ?>
-                </h2>
             </div>
         </div>
     </div>
