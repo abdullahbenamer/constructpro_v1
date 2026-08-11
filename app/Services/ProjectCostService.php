@@ -50,9 +50,249 @@ public function create(array $data): int
         return $costId;
     });
 }
-    public function update(int $id, array $data): bool
-    {
+   public function update(int $id, array $data): bool
+{
+    /*
+    |--------------------------------------------------------------------------
+    | LOAD EXISTING COST
+    |--------------------------------------------------------------------------
+    */
+
+    $cost = $this->loadCost($id);
+
+    $old = $this->normalize($cost);
+
+    /*
+    |--------------------------------------------------------------------------
+    | IMMUTABLE FIELDS
+    |--------------------------------------------------------------------------
+    |
+    | These values ALWAYS come from the existing database record.
+    | The user cannot change them through POST.
+    |
+    */
+
+    $data['project_id']   = $old['project_id'];
+    $data['cost_type']    = $old['cost_type'];
+    $data['inventory_id'] = $old['inventory_id'];
+    $data['location_id']  = $old['location_id'];
+
+    /*
+    |--------------------------------------------------------------------------
+    | CLEAN EDITABLE FIELDS
+    |--------------------------------------------------------------------------
+    */
+
+    $data['description'] =
+        trim($data['description'] ?? '');
+
+    $data['quantity'] =
+        (float)($data['quantity'] ?? 0);
+
+    $data['unit_price'] =
+        (float)($data['unit_price'] ?? 0);
+
+    /*
+    |--------------------------------------------------------------------------
+    | VALIDATE
+    |--------------------------------------------------------------------------
+    */
+
+    if ($data['quantity'] <= 0) {
+
+        throw new Exception(
+            'Quantity must be greater than zero.'
+        );
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | MATERIAL COST
+    |--------------------------------------------------------------------------
+    |
+    | Material unit cost always comes from inventory cost_price.
+    |
+    */
+
+    if ($this->isMaterial($old)) {
+
+        $item = $this->inventoryModel->getById(
+            $old['inventory_id']
+        );
+
+        if (!$item) {
+
+            throw new Exception(
+                'Inventory item not found.'
+            );
+        }
+
+        $data['unit_price'] =
+            (float)$item->cost_price;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | NON-MATERIAL COST
+    |--------------------------------------------------------------------------
+    */
+
+    else {
+
+        if ($data['unit_price'] <= 0) {
+
+            throw new Exception(
+                'Unit price must be greater than zero.'
+            );
+        }
+
+        /*
+        | Non-material costs have no inventory.
+        */
+
+        $data['inventory_id'] = null;
+        $data['location_id']  = null;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | CALCULATE QUANTITY DIFFERENCE
+    |--------------------------------------------------------------------------
+    */
+
+    $quantityDifference =
+        $data['quantity'] - $old['quantity'];
+
+    /*
+    |--------------------------------------------------------------------------
+    | TRANSACTION
+    |--------------------------------------------------------------------------
+    */
+
+    return $this->transaction(function () use (
+        $id,
+        $old,
+        $data,
+        $quantityDifference
+    ) {
+
+        /*
+        |--------------------------------------------------------------------------
+        | MATERIAL STOCK ADJUSTMENT
+        |--------------------------------------------------------------------------
+        */
+
+        if ($this->isMaterial($old)) {
+
+            /*
+            | Quantity increased
+            | Example: 10 → 15
+            | Need OUT 5
+            */
+
+            if ($quantityDifference > 0) {
+
+                $success = $this->stockModel->adjustStock(
+
+                    $old['inventory_id'],
+
+                    $old['location_id'],
+
+                    -$quantityDifference
+
+                );
+
+                if (!$success) {
+
+                    throw new Exception(
+                        'Not enough stock in the selected warehouse.'
+                    );
+                }
+
+                $this->recordInventoryMovement(
+
+                    [
+                        'project_id'   => $old['project_id'],
+                        'cost_type'    => $old['cost_type'],
+                        'description'  => $data['description'],
+                        'quantity'     => $quantityDifference,
+                        'unit_price'   => $data['unit_price'],
+                        'inventory_id' => $old['inventory_id'],
+                        'location_id'  => $old['location_id']
+                    ],
+
+                    'OUT'
+                );
+            }
+
+            /*
+            | Quantity decreased
+            | Example: 10 → 7
+            | Return 3 to stock
+            */
+
+            elseif ($quantityDifference < 0) {
+
+                $returnQuantity =
+                    abs($quantityDifference);
+
+                $this->stockModel->adjustStock(
+
+                    $old['inventory_id'],
+
+                    $old['location_id'],
+
+                    $returnQuantity
+
+                );
+
+                $this->recordInventoryMovement(
+
+                    [
+                        'project_id'   => $old['project_id'],
+                        'cost_type'    => $old['cost_type'],
+                        'description'  => $data['description'],
+                        'quantity'     => $returnQuantity,
+                        'unit_price'   => $data['unit_price'],
+                        'inventory_id' => $old['inventory_id'],
+                        'location_id'  => $old['location_id']
+                    ],
+
+                    'IN'
+                );
+            }
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | UPDATE PROJECT COST
+        |--------------------------------------------------------------------------
+        */
+
+        $this->costModel->update(
+            $id,
+            $data
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | UPDATE PROJECT LEDGER
+        |--------------------------------------------------------------------------
+        */
+
+        $this->ledgerService->updateCostEntry(
+
+            $id,
+
+            $data['description'],
+
+            $this->total($data)
+
+        );
+
+        return true;
+    });
+}
 
 public function delete(int $id): void
 {

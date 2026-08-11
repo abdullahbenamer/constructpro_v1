@@ -70,7 +70,7 @@
                       <thead>
                           <tr>
                               <th>Type</th>
-                              <th>Description</th>
+                             <th>Item / Description</th>
                               <th>SKU/Barcode</th>
                               <th>Source Location</th>
                               <th>Qty</th>
@@ -84,7 +84,19 @@
                           <?php foreach ($costs ?? [] as $cost) : ?>
                               <tr>
                                   <td><span class="badge bg-info"><?= ucfirst($cost->cost_type) ?></span></td>
-                                  <td><?= htmlspecialchars($cost->item_name ?? $cost->description) ?></td>
+                                <td>
+    <?php if (!empty($cost->item_name)): ?>
+        <strong>
+            <?= htmlspecialchars($cost->item_name) ?>
+        </strong>
+    <?php endif; ?>
+
+    <?php if (!empty($cost->description)): ?>
+        <div class="text-muted small">
+            <?= htmlspecialchars($cost->description) ?>
+        </div>
+    <?php endif; ?>
+</td>
                                   <td><?= htmlspecialchars($cost->sku ?? 'N/A') ?></td>
                                   <td>
     <?php if (!empty($cost->location_code)): ?>

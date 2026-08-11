@@ -176,5 +176,104 @@ public function getProjectSummary($project_id)
     ", [$project_id])->fetch();
 }
 
+public function updateCostEntry(
+    int $costId,
+    string $description,
+    float $total
+): bool
+{
+    /*
+    |--------------------------------------------------------------------------
+    | Find the ledger entry belonging to this project cost
+    |--------------------------------------------------------------------------
+    */
+
+    $entry = $this->db->query(
+        "
+        SELECT id, project_id
+        FROM project_ledger
+        WHERE ref_table = 'project_costs'
+          AND ref_id = ?
+        LIMIT 1
+        ",
+        [$costId]
+    )->fetch();
+
+    if (!$entry) {
+
+        throw new Exception(
+            'Project ledger entry for this cost was not found.'
+        );
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Update ledger entry
+    |--------------------------------------------------------------------------
+    */
+
+    $this->db->query(
+        "
+        UPDATE project_ledger
+        SET
+            description = ?,
+            debit = ?
+        WHERE id = ?
+        ",
+        [
+            $description,
+            $total,
+            $entry->id
+        ]
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Recalculate stored balances
+    |--------------------------------------------------------------------------
+    */
+
+    $this->recalculateBalances(
+        $entry->project_id
+    );
+
+    return true;
+}
+
+public function recalculateBalances(int $project_id): void
+{
+    $rows = $this->db->query(
+        "
+        SELECT
+            id,
+            debit,
+            credit
+        FROM project_ledger
+        WHERE project_id = ?
+        ORDER BY id ASC
+        ",
+        [$project_id]
+    )->fetchAll();
+
+    $balance = 0;
+
+    foreach ($rows as $row) {
+
+        $balance += (float)$row->credit;
+        $balance -= (float)$row->debit;
+
+        $this->db->query(
+            "
+            UPDATE project_ledger
+            SET balance_after = ?
+            WHERE id = ?
+            ",
+            [
+                $balance,
+                $row->id
+            ]
+        );
+    }
+}
 
 }

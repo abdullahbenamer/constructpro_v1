@@ -133,179 +133,90 @@ class ProjectCosts extends Controller
     );
 }
 
-   
-        // EDIT Project Costs
-    public function edit($id)
-    {
-        $costModel = $this->model('ProjectCost');
-        $movementModel = $this->model('InventoryMovement');
-        $inventoryModel = $this->model('Inventory');
-        $locationModel = $this->model('InventoryLocation');
+// EDIT Project Costs
+public function edit($id)
+{
+    $costModel = $this->model('ProjectCost');
+    $inventoryModel = $this->model('Inventory');
+    $locationModel = $this->model('InventoryLocation');
 
-        $cost = $costModel->getById($id);
+    // ==================================================
+    // LOAD EXISTING COST
+    // ==================================================
 
-        if (!$cost) {
-            header('Location: ' . URLROOT . '/project-costs');
-            exit;
-        }
+    $cost = $costModel->getById($id);
 
-        // =========================
-        // HANDLE POST
-        // =========================
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            // ✅ Normalize
-            $new_type = $_POST['cost_type'];
-            $new_inventory = ($new_type === 'materials' && !empty($_POST['inventory_id']))
-                ? $_POST['inventory_id']
-                : null;
-
-            $new_qty = (float)$_POST['quantity'];
-
-            $old_qty = (float)$cost->quantity;
-            $old_inventory = $cost->inventory_id;
-            $old_type = $cost->cost_type;
-
-            if ($new_type === 'materials' && $new_inventory) {
-
-                if (empty($_POST['location_id'])) {
-                    FlashHelper::error(
-                        'Location is required'
-                    );
-
-                    header(
-                        'Location: ' .
-                            URLROOT .
-                            '/project-costs/create/' .
-                            $project_id
-                    );
-                    exit;
-                }
-            }
-
-            // =========================
-            // STOCK LOGIC
-            // =========================
-
-            // 🔁 CASE 1: materials → materials
-            if ($old_type === 'materials' && $new_type === 'materials') {
-
-                if ($old_inventory == $new_inventory) {
-
-                    $difference = $new_qty - $old_qty;
-
-                    if ($difference > 0 && $old_inventory) {
-                        $movementModel->addMovement([
-                            'inventory_id' => $old_inventory,
-                            'location_id' => $cost->location_id,
-                            'type' => 'OUT',
-                            'quantity' => $difference,
-                            'reference' => 'EDIT PROJECT #' . $cost->project_id,
-                            'notes' => 'Increase usage'
-                        ]);
-                    }
-
-                    if ($difference < 0 && $old_inventory) {
-                        $movementModel->addMovement([
-                            'inventory_id' => $old_inventory,
-                            'location_id' => $cost->location_id,
-                            'type' => 'IN',
-                            'quantity' => abs($difference),
-                            'reference' => 'EDIT PROJECT #' . $cost->project_id,
-                            'notes' => 'Return stock'
-                        ]);
-                    }
-                } else {
-                    // Change item
-
-                    if ($old_inventory) {
-                        $movementModel->addMovement([
-                            'inventory_id' => $old_inventory,
-                            'location_id' => $cost->location_id,
-                            'type' => 'IN',
-                            'quantity' => $old_qty,
-                            'reference' => 'EDIT PROJECT #' . $cost->project_id,
-                            'notes' => 'Restore old item'
-                        ]);
-                    }
-
-                    if ($new_inventory) {
-                        $movementModel->addMovement([
-                            'inventory_id' => $new_inventory,
-                            'location_id' => $_POST['location_id'],
-                            'type' => 'OUT',
-                            'quantity' => $new_qty,
-                            'reference' => 'EDIT PROJECT #' . $cost->project_id,
-                            'notes' => 'Use new item'
-                        ]);
-                    }
-                }
-            }
-
-            // 🔁 CASE 2: materials → non-material
-            elseif ($old_type === 'materials' && $new_type !== 'materials') {
-
-                if ($old_inventory) {
-                    $movementModel->addMovement([
-                        'inventory_id' => $old_inventory,
-                        'location_id' => $cost->location_id,
-                        'type' => 'IN',
-                        'quantity' => $old_qty,
-                        'reference' => 'EDIT PROJECT #' . $cost->project_id,
-                        'notes' => 'Removed material'
-                    ]);
-                }
-            }
-
-            // 🔁 CASE 3: non-material → materials
-            elseif ($old_type !== 'materials' && $new_type === 'materials' && $new_inventory) {
-
-                $movementModel->addMovement([
-                    'inventory_id' => $new_inventory,
-                    'location_id' => $_POST['location_id'],
-                    'type' => 'OUT',
-                    'quantity' => $new_qty,
-                    'reference' => 'EDIT PROJECT #' . $cost->project_id,
-                    'notes' => 'New material added'
-                ]);
-            }
-
-            // =========================
-            // AUTO COST PRICE (🔥 IMPORTANT)
-            // =========================
-            if ($new_type === 'materials' && $new_inventory) {
-
-                $item = $inventoryModel->getById($new_inventory);
-
-                if ($item) {
-                    $_POST['unit_price'] = (float)$item->cost_price;
-                }
-            }
-            // =========================
-            // UPDATE DATA
-            // =========================
-            $_POST['inventory_id'] = $new_inventory;
-            // UPDATE location_id
-            $_POST['location_id'] =
-                ($new_type === 'materials')
-                ? ($_POST['location_id'] ?? null)
-                : null;
-            $costModel->update($id, $_POST);
-
-            header('Location: ' . URLROOT . '/project-costs/' . $cost->project_id);
-            exit;
-        }
-
-        // =========================
-        // LOAD FORM
-        // =========================
-        $data['cost'] = $cost;
-        $data['project_id'] = $cost->project_id;
-        $data['inventory'] = $inventoryModel->getAll();
-        $data['locations'] = $locationModel->getAll();
-
-        $this->view('project-costs/edit', $data);
+    if (!$cost) {
+        header('Location: ' . URLROOT . '/project-costs');
+        exit;
     }
+
+    // ==================================================
+    // HANDLE POST
+    // ==================================================
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        try {
+
+            $this->service('ProjectCost')->update(
+                (int)$id,
+                [
+                    'description' => trim(
+                        $_POST['description'] ?? ''
+                    ),
+
+                    'quantity' => (float)(
+                        $_POST['quantity'] ?? 0
+                    ),
+
+                    'unit_price' => (float)(
+                        $_POST['unit_price'] ?? 0
+                    )
+                ]
+            );
+
+            FlashHelper::success(
+                'Project cost updated successfully.'
+            );
+
+        } catch (Throwable $e) {
+
+            FlashHelper::error(
+                $e->getMessage()
+            );
+        }
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/project-costs/' .
+            $cost->project_id
+        );
+
+        exit;
+    }
+
+    // ==================================================
+    // LOAD EDIT FORM
+    // ==================================================
+
+    $data['cost'] = $cost;
+
+    $data['project_id'] =
+        $cost->project_id;
+
+    $data['inventory'] =
+        $inventoryModel->getAll();
+
+    $data['locations'] =
+        $locationModel->getAll();
+
+    $this->view(
+        'project-costs/edit',
+        $data
+    );
+}
 
    public function delete($id)
 {

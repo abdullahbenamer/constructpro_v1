@@ -12,13 +12,13 @@
            name="cost_type"
            value="<?= $cost->cost_type ?>">
 
-    <input type="hidden"
+    <!-- <input type="hidden"
            name="inventory_id"
-           value="<?= $cost->inventory_id ?>">
+           value="<?//= $cost->inventory_id ?>">
 
     <input type="hidden"
            name="location_id"
-           value="<?= $cost->location_id ?>">
+           value="<?//= $cost->location_id ?>"> -->
 
     <div class="row">
 

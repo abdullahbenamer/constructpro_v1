@@ -1,318 +1,173 @@
-Folder PATH listing for volume New Volume
-Volume serial number is FDF6-4650
-D:.
-|   .gitattributes
-|   constructpro_v1 (1).sql
-|   constructpro_v1.sql
-|   folder_structure.txt
-|   
-+---app
-|   |   README.txt
-|   |   
-|   +---Controllers
-|   |       Admin.php
-|   |       Auth.php
-|   |       Costs.php
-|   |       Customers.php
-|   |       Dashboard.php
-|   |       GoodsReceipts.php
-|   |       Inventory.php
-|   |       InventoryLocations.php
-|   |       InventoryMovements.php
-|   |       InventoryReservations.php
-|   |       InventoryTransfers.php
-|   |       ProjectAdvance.php
-|   |       ProjectCosts.php
-|   |       Projects.php
-|   |       PurchaseOrders.php
-|   |       Purchases.php
-|   |       Reports.php
-|   |       Resource.php
-|   |       ResourceCategory.php
-|   |       ResourceRequisitionItems.php
-|   |       ResourceRequisitions.php
-|   |       Services.php
-|   |       SupplierPayments.php
-|   |       Suppliers.php
-|   |       Technicians.php
-|   |       Units.php
-|   |       Users.php
-|   |       
-|   +---Core
-|   |       App.php
-|   |       AuthHelper.php
-|   |       Controller.php
-|   |       CrudController.php
-|   |       Database.php
-|   |       FlashHelper.php
-|   |       Model.php
-|   |       
-|   +---errors
-|   |       forbidden.php
-|   |       
-|   +---Helpers
-|   |       PriceHelper.php
-|   |       PriorityHelper.php
-|   |       
-|   +---Models
-|   |       BrandModel.php
-|   |       CountryModel.php
-|   |       CustomerModel.php
-|   |       GoodsReceiptItemModel.php
-|   |       GoodsReceiptModel.php
-|   |       InventoryLocationModel.php
-|   |       InventoryLocationStockModel.php
-|   |       InventoryModel.php
-|   |       InventoryMovementModel.php
-|   |       InventoryReservationModel.php
-|   |       InventoryTransferModel.php
-|   |       PermissionModel.php
-|   |       ProfitModel.php
-|   |       ProjectAdvanceModel.php
-|   |       ProjectCostModel.php
-|   |       ProjectDocumentModel.php
-|   |       ProjectFinanceModel.php
-|   |       ProjectLedgerModel.php
-|   |       ProjectModel.php
-|   |       PurchaseModel.php
-|   |       PurchaseOrderItemModel.php
-|   |       PurchaseOrderModel.php
-|   |       ReportModel.php
-|   |       ResourceCategoryModel.php
-|   |       ResourceModel.php
-|   |       ResourceRequisitionItemModel.php
-|   |       ResourceRequisitionModel.php
-|   |       RoleModel.php
-|   |       ServiceCostModel.php
-|   |       ServiceModel.php
-|   |       SettingsModel.php
-|   |       SupplierLedgerModel.php
-|   |       SupplierModel.php
-|   |       SupplierPaymentAllocationModel.php
-|   |       SupplierPaymentModel.php
-|   |       TechnicianModel.php
-|   |       UnitModel.php
-|   |       UserModel.php
-|   |       
-|   +---Services
-|   |       AccountsPayableService.php
-|   |       GoodsReceiptService.php
-|   |       SupplierPaymentService.php
-|   |       
-|   \---Views
-|       |   footer.php
-|       |   header.php
-|       |   
-|       +---admin
-|       |   |   dashboard.php
-|       |   |   
-|       |   +---assign-permissions
-|       |   |       index.php
-|       |   |       
-|       |   +---permissions
-|       |   |       edit.php
-|       |   |       index.php
-|       |   |       
-|       |   +---roles
-|       |   |       assign_permissions.php
-|       |   |       edit.php
-|       |   |       index.php
-|       |   |       
-|       |   +---settings
-|       |   |       index.php
-|       |   |       
-|       |   \---users
-|       |           create.php
-|       |           detailsTEMP.php
-|       |           edit.php
-|       |           index.php
-|       |           
-|       +---auth
-|       |       login.php
-|       |       
-|       +---costs
-|       |       index.php
-|       |       
-|       +---customers
-|       |       create.php
-|       |       customer_info.php
-|       |       details.php
-|       |       edit.php
-|       |       index.php
-|       |       
-|       +---dashboard
-|       |       index.php
-|       |       
-|       +---errors
-|       |       404.php
-|       |       
-|       +---good-receipts
-|       |       create.php
-|       |       
-|       +---inventory
-|       |       create.php
-|       |       edit.php
-|       |       index.php
-|       |       movements.php
-|       |       movement_add.php
-|       |       receive.php
-|       |       view.php
-|       |       
-|       +---inventory-locations
-|       |       create.php
-|       |       edit.php
-|       |       index.php
-|       |       view.php
-|       |       
-|       +---inventory-reservations
-|       |       create.php
-|       |       edit.php
-|       |       index.php
-|       |       
-|       +---inventory-transfers
-|       |       create.php
-|       |       index.php
-|       |       
-|       +---pos
-|       |       index.php
-|       |       print.php
-|       |       profit.php
-|       |       receipt.php
-|       |       
-|       +---profit
-|       |       index.php
-|       |       
-|       +---project-costs
-|       |       advance_create.php
-|       |       advance_list.php
-|       |       create.php
-|       |       edit.php
-|       |       finance_dashboard.php
-|       |       index.php
-|       |       ledger.php
-|       |       ledger_report.php
-|       |       
-|       +---projects
-|       |       archive.php
-|       |       create.php
-|       |       documents.php
-|       |       edit.php
-|       |       index.php
-|       |       upload_document.php
-|       |       
-|       +---purchase-orders
-|       |       create.php
-|       |       details.php
-|       |       index.php
-|       |       items.php
-|       |       
-|       +---purchases
-|       |       index.php
-|       |       
-|       +---reports
-|       |       index.php
-|       |       portfolio.php
-|       |       
-|       +---resource-categories
-|       |       create.php
-|       |       edit.php
-|       |       index.php
-|       |       
-|       +---resource-requisition-items
-|       |       create.php
-|       |       edit.php
-|       |       
-|       +---resource-requisitions
-|       |       create.php
-|       |       details.php
-|       |       edit.php
-|       |       index.php
-|       |       
-|       +---services
-|       |       create.php
-|       |       edit.php
-|       |       index.php
-|       |       
-|       +---supplier-payments
-|       |       create.php
-|       |       
-|       +---suppliers
-|       |       create.php
-|       |       details.php
-|       |       edit.php
-|       |       index.php
-|       |       supplier_info.php
-|       |       
-|       +---technicians
-|       |       details.php
-|       |       
-|       +---units
-|       |       create.php
-|       |       edit.php
-|       |       index.php
-|       |       
-|       \---users
-|               details.php
-|               
-+---config
-|       constants.php
-|       constants.php.bak
-|       
-+---DOCUMENTATION
-|       CONSTRUCTPRO ERP DEVELOPMENT SPECIFICATIONS V1.docx
-|       CONSTRUCTPRO ERP SYSTEM ARCHITECTURE DOCUMENT V1.docx
-|       
-\---public
-    |   .htaccess
-    |   index.php
-    |   
-    +---assets
-    |   |   beep.mp3
-    |   |   cost-type.js
-    |   |   inventory.js
-    |   |   permissions.js
-    |   |   pos-init.js
-    |   |   
-    |   \---qz
-    |           qz-tray.js
-    |           
-    +---images
-    |       logo.png
-    |       
-    \---uploads
-        |   1782371337_ba-logo-logo.png
-        |   
-        \---projects
-            +---28
-            |       6a3eb94c6622a_HND Enginerring Units.xlsx
-            |       
-            +---30
-            +---32
-            |       6a3f8245bb18c_supplication.pdf
-            |       6a3f8245bc1d9_????? ???? ???? ?????? ?????? ??????? ?? ?????? ?????????.pdf
-            |       
-            +---35
-            |       6a420ea94eb17_Nufus Adres.pdf
-            |       6a420ea94fb80_QZ Tray Raw Print (2).pdf
-            |       6a420ea9502e7_QZ Tray Raw Print (3).pdf
-            |       6a420ea951a93_customers.xlsx
-            |       
-            +---38
-            |       6a4dd000d405a_hr.JPG
-            |       6a4dd000d4a2a_pexels-rodolfo-clix-1036936.jpg
-            |       6a4dd0f392100_Nufus Adres for me.pdf
-            |       6a4e8f40112fa_CV ???? ????.pdf
-            |       6a569850b04dd_ICMPD_Legal Guide Libya_AR.pdf
-            |       
-            +---39
-            |       6a56993a92d30_Training workshops -Digital Transformation and AI - Iopener training group.pdf
-            |       6a5e8c2ad7e6a_Jeepny Agreement.pdf
-            |       6a5e8c2ad8934_life.pdf
-            |       6a5e8c2ad90d3_Mari kita bahas beberapa kasus perceraian di antara para sahabat Rasulullah ?.pdf
-            |       
-            +---40
-            |       6a569b8973c81_??? ????????.pdf
-            |       
-            \---41
-                    6a61c2dd68d02_JV_Agreement_SILC-REVISON AND NOTES.pdf
-                    
+PROJECT PORTFOLIO DASHBOARD
+Total Projects: 1
+Total Budget: 1,500,000.00
+Total Cash Out: (Costs) 1,800.00
+Net Position: 98,200.00
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Description, Quantity, Unit Cost
+
+but not:
+Inventory Item or Warehouse Location
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+		
+Item:Switch 1 Gang	
+Warehouse: main
+Global inventory quantity: 12,349.00 units
+Warehouse quantity (Main WH): 11,900.00
+
+---------
+Project cost:
+
+item Quantity:     10
+source Warehouse:    main
+----------------
+
+after creating cost (Inventory Movements):
+type          = OUT
+quantity      = 10
+Main Warehouse balance_after = 11,890
+Global quantity after = 12,339
+
+-----------------
+
+After editing Qty:
+Project cost:
+
+item Quantity:     15 (+5)
+
+
+
+
+
+
+Global inventory: 85
+Main warehouse: 11
+New IN movement: 10
+IN balance_after: 11
+Project cost deleted: only from view
+Ledger reversal created: no
+Reversal credit: no
+-----------------
+
+more details
+Item:Contactor 25A 220V,	
+Warehouse: main
+Global inventory quantity: 85
+Warehouse quantity:11
+---------------
+Type = IN	
+Qty = 10	
+Balance After = 11
+---------------
+Ledger still same (not restored)
+entry_type = cost
+debit      = 10 × 6.5 = 65
+credit     = 0
+
+PROJECT COST = correct, cost of materials removed from view , but ledger not updated.
+-----------
+
+Item:Contactor 25A 220V,	
+Global inventory quantity: 85
+Main Warehouse quantity:11
+
+
+
+let me finish what we already started,
+STEP 4 — TEST
+Before we implement update(), test these scenarios:
+Material Cost
+--------------
+Create a material cost: Ok 90 of 182 units
+Verify warehouse stock decreases: location Ok , but global stay as it is
+Verify an OUT inventory movement is created: created but show as Balance After 2.00 while in fact should be 92.00
+Verify a project_costs record is created: ok created, not show in dashboard
+Verify a project_ledger record is created: ok created.
+
+
+------------------
+Non-Material Cost
+Create a labor/transport/misc cost. ok
+Verify no inventory stock changes. of course no inventory stock changes
+Verify no inventory movement is created. of course no inventory movement is created
+Verify project_costs and project_ledger records are created. ok  project_costs and project_ledger records are created.
+
+----------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Global inventory: 85
+Main warehouse: 11
+New IN movement: 10
+IN balance_after: 11
+Project cost deleted: only from view
+Ledger reversal created: no
+Reversal credit: no
+-----------------
+
+more details
+Item:Contactor 25A 220V,	
+Warehouse: main
+Global inventory quantity: 85
+Warehouse quantity:11
+---------------
+Type = IN	
+Qty = 10	
+Balance After = 11
+---------------
+Ledger still same (not restored)
+entry_type = cost
+debit      = 10 × 6.5 = 65
+credit     = 0
+
+PROJECT COST = correct, cost of materials removed from view , but ledger not updated.
+-----------
+
+how i find Controller method that loads /projects
