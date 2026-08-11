@@ -41,7 +41,7 @@ class InventoryMovementModel extends Model
             die("Invalid movement type");
         }
 
- /*
+        /*
 |--------------------------------------------------------------------------
 | Balance After Movement
 |--------------------------------------------------------------------------
@@ -50,58 +50,92 @@ class InventoryMovementModel extends Model
 |--------------------------------------------------------------------------
 */
 
-$stock = $locationStockModel->getStock(
-    $inventory_id,
-    $location_id
-);
-
-$new_balance = (float)($stock->quantity ?? 0);
-
-/*
+        /*
 |--------------------------------------------------------------------------
-| Adjustment movements
+| Balance After Movement
 |--------------------------------------------------------------------------
-| For adjustments, store the movement quantity as the difference.
+| Stock has already been updated by the Inventory Engine.
+| Therefore we simply read the current location balance.
 |--------------------------------------------------------------------------
 */
 
-if ($type === 'ADJUSTMENT') {
+        $stock = $locationStockModel->getStock(
+            $inventory_id,
+            $location_id
+        );
 
-    $previousBalance = $new_balance;
+        $new_balance = (float)($stock->quantity ?? 0);
 
-    $quantity = $data['quantity'] - $previousBalance;
 
-}
+        /*
+|--------------------------------------------------------------------------
+| Global Inventory Balance After Movement
+|--------------------------------------------------------------------------
+| Global inventory has also already been updated by the
+| Inventory Engine.
+| Therefore we simply read the current global balance.
+|--------------------------------------------------------------------------
+*/
+
+        $inventoryModel = new InventoryModel($this->db);
+
+        $inventory = $inventoryModel->getById($inventory_id);
+
+        if (!$inventory) {
+            throw new Exception(
+                'Inventory item not found.'
+            );
+        }
+
+        $global_balance_after =
+            (float)$inventory->quantity;
+
+        /*
+|-----------------------------------------------------------------
+| Adjustment movements
+|-----------------------------------------------------------------
+| For adjustments, store the movement quantity as the difference.
+|-----------------------------------------------------------------
+*/
+
+        if ($type === 'ADJUSTMENT') {
+
+            $previousBalance = $new_balance;
+
+            $quantity = $data['quantity'] - $previousBalance;
+        }
         // =========================
         // SAVE MOVEMENT
         // =========================
 
-        $this->db->query(
-            "INSERT INTO inventory_movements    
-            (
-                inventory_id,
-                location_id,
-                type,
-                quantity,
-                supplier_id,
-                balance_after,
-                reference,
-                notes,
-                created_by
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            [
-                $inventory_id,
-                $location_id,
-                $type,
-                $quantity,
-                $supplier_id,
-                $new_balance,
-                $reference ?: null,
-                $notes ?: null,
-                $created_by
-            ]
-        );
+      $this->db->query(
+    "INSERT INTO inventory_movements    
+    (
+        inventory_id,
+        location_id,
+        type,
+        quantity,
+        supplier_id,
+        balance_after,
+        global_balance_after,
+        reference,
+        notes,
+        created_by
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    [
+        $inventory_id,
+        $location_id,
+        $type,
+        $quantity,
+        $supplier_id,
+        $new_balance,
+        $global_balance_after,
+        $reference ?: null,
+        $notes ?: null,
+        $created_by
+    ]
+);
 
         return true;
     }
@@ -134,12 +168,18 @@ if ($type === 'ADJUSTMENT') {
     }
 
     public function getAllMovements()
-    {
-        return $this->db->query("
+{
+    return $this->db->query("
         SELECT 
             im.*,
-            i.name as item_name,
-            u.full_name as user_name
+
+            i.name AS item_name,
+
+            u.full_name AS user_name,
+
+            l.code AS location_code,
+            l.name AS location_name
+
         FROM inventory_movements im
 
         LEFT JOIN inventory i
@@ -148,9 +188,13 @@ if ($type === 'ADJUSTMENT') {
         LEFT JOIN users u
             ON u.id = im.created_by
 
+        LEFT JOIN inventory_locations l
+            ON l.id = im.location_id
+
         ORDER BY im.created_at DESC
+
     ")->fetchAll();
-    }
+}
 
     public function getMovementsDetailed($inventory_id)
     {

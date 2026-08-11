@@ -14,7 +14,9 @@
                 <th>User</th>
                 <th>Type</th>
                 <th>Qty</th>
-                <th>Balance After</th>
+                <th>Source Location</th>
+                <th>WH Balance After</th>
+                <th>Global Balance After</th>
                 <th>Reference</th>
                 <th>Notes</th>
             </tr>
@@ -35,8 +37,8 @@
                     </td>
 
                     <td>
-    <?= htmlspecialchars($move->user_name ?? 'System') ?>
-</td>
+                        <?= htmlspecialchars($move->user_name ?? 'System') ?>
+                    </td>
 
                     <td>
                         <?php if ($move->type == 'IN') : ?>
@@ -57,9 +59,33 @@
                     </td>
 
                     <td>
-                        <?= number_format($move->balance_after, 2) ?>
-                    </td>
+    <?php if (!empty($move->location_code)): ?>
 
+        <span class="badge bg-secondary">
+            <?= htmlspecialchars($move->location_code) ?>
+        </span>
+
+        <?php if (!empty($move->location_name)): ?>
+            <br>
+            <small>
+                <?= htmlspecialchars($move->location_name) ?>
+            </small>
+        <?php endif; ?>
+
+    <?php else: ?>
+
+        <span class="text-muted">N/A</span>
+
+    <?php endif; ?>
+</td>
+
+<td>
+    <?= number_format($move->balance_after, 2) ?>
+</td>
+
+<td>
+    <?= number_format($move->global_balance_after, 2) ?>
+</td>
                     <td>
                         <?= htmlspecialchars($move->reference ?? '-') ?>
                     </td>
