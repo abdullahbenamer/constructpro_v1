@@ -1,150 +1,280 @@
 <?php
 
-class GoodsReceiptService extends Model
+require_once '../app/Services/BaseService.php';
+
+class GoodsReceiptService extends BaseService
 {
     private PurchaseOrderModel $poModel;
     private GoodsReceiptModel $grnModel;
     private GoodsReceiptItemModel $grnItemModel;
-    private InventoryMovementModel $movementModel;
+    private InventoryService $inventoryService;
     private SupplierLedgerModel $ledgerModel;
 
-    public function __construct(
-        PurchaseOrderModel $poModel,
-        GoodsReceiptModel $grnModel,
-        GoodsReceiptItemModel $grnItemModel,
-        InventoryMovementModel $movementModel,
-        SupplierLedgerModel $ledgerModel
-    ) {
-        parent::__construct();
+  public function __construct(
+    PurchaseOrderModel $poModel,
+    GoodsReceiptModel $grnModel,
+    GoodsReceiptItemModel $grnItemModel,
+    SupplierLedgerModel $ledgerModel,
+    InventoryService $inventoryService
+) {
+    parent::__construct();
 
-        $this->poModel       = $poModel;
-        $this->grnModel      = $grnModel;
-        $this->grnItemModel  = $grnItemModel;
-        $this->movementModel = $movementModel;
-        $this->ledgerModel   = $ledgerModel;
-    }
+    $this->poModel           = $poModel;
+    $this->grnModel          = $grnModel;
+    $this->grnItemModel      = $grnItemModel;
+    $this->ledgerModel       = $ledgerModel;
+    $this->inventoryService  = $inventoryService;
+}
 
     /**
      * ERP Goods Receipt Workflow
      */
     public function receive(array $data): int
     {
-        try {
-
-            $this->db->beginTransaction();
+        return $this->transaction(function () use ($data) {
 
             /*
             |--------------------------------------------------------------------------
-            | 1. Calculate totals
+            | 1. VALIDATE INPUT
             |--------------------------------------------------------------------------
             */
-            $total = (float)$data['quantity'] * (float)$data['unit_cost'];
 
-            /*
-            |--------------------------------------------------------------------------
-            | 2. Create GRN Header
-            |--------------------------------------------------------------------------
-            */
-            $grnId = $this->grnModel->create([
-                'grn_number'        => $this->grnModel->nextNumber(),
-                'purchase_order_id' => $data['po_id'],
-                'supplier_id'       => $data['supplier_id'],
-                'receipt_date'      => date('Y-m-d'),
-                'subtotal'          => $total,
-                'total_amount'      => $total,
-                'remarks'           => $data['notes'] ?? ''
-            ]);
+            $poId        = (int)($data['po_id'] ?? 0);
+            $supplierId  = (int)($data['supplier_id'] ?? 0);
+            $inventoryId = (int)($data['inventory_id'] ?? 0);
+            $locationId  = (int)($data['location_id'] ?? 0);
+            $quantity    = (float)($data['quantity'] ?? 0);
+            $unitCost    = (float)($data['unit_cost'] ?? 0);
 
-            /*
-            |--------------------------------------------------------------------------
-            | 3. Validate PO item
-            |--------------------------------------------------------------------------
-            */
-            $poItem = $this->poModel->getPOItem(
-                $data['po_id'],
-                $data['inventory_id']
-            );
+            if ($poId <= 0) {
+                throw new Exception('Invalid purchase order.');
+            }
 
-            if (!$poItem) {
-                throw new Exception("PO item not found.");
+            if ($supplierId <= 0) {
+                throw new Exception('Invalid supplier.');
+            }
+
+            if ($inventoryId <= 0) {
+                throw new Exception('Invalid inventory item.');
+            }
+
+            if ($locationId <= 0) {
+                throw new Exception('Invalid warehouse location.');
+            }
+
+            if ($quantity <= 0) {
+                throw new Exception(
+                    'Received quantity must be greater than zero.'
+                );
+            }
+
+            if ($unitCost < 0) {
+                throw new Exception(
+                    'Unit cost cannot be negative.'
+                );
             }
 
             /*
             |--------------------------------------------------------------------------
-            | 4. Create GRN Item
+            | 2. VALIDATE PO ITEM BEFORE CREATING GRN
             |--------------------------------------------------------------------------
             */
+
+            $poItem = $this->poModel->getPOItem(
+    $poId,
+    $inventoryId
+);
+
+if (!$poItem) {
+    throw new Exception(
+        'PO item not found.'
+    );
+}
+
+$orderedQuantity  = (float)$poItem->quantity;
+$receivedQuantity = (float)($poItem->received_quantity ?? 0);
+$remainingQuantity = $orderedQuantity - $receivedQuantity;
+
+if ($remainingQuantity <= 0) {
+    throw new Exception(
+        'This PO item has already been fully received.'
+    );
+}
+
+if ($quantity > $remainingQuantity) {
+    throw new Exception(
+        'Cannot receive ' . number_format($quantity, 2) .
+        ' units. Only ' .
+        number_format($remainingQuantity, 2) .
+        ' units remain on the purchase order.'
+    );
+}
+
+            /*
+            |--------------------------------------------------------------------------
+            | 3. CALCULATE TOTAL
+            |--------------------------------------------------------------------------
+            */
+
+            $total = $quantity * $unitCost;
+
+            /*
+            |--------------------------------------------------------------------------
+            | 4. CREATE GRN HEADER
+            |--------------------------------------------------------------------------
+            */
+
+            $grnId = $this->grnModel->create([
+
+                'grn_number' =>
+                    $this->grnModel->nextNumber(),
+
+                'purchase_order_id' =>
+                    $poId,
+
+                'supplier_id' =>
+                    $supplierId,
+
+                'receipt_date' =>
+                    date('Y-m-d'),
+
+                'subtotal' =>
+                    $total,
+
+                'total_amount' =>
+                    $total,
+
+                'remarks' =>
+                    $data['notes'] ?? ''
+
+            ]);
+
+            /*
+            |--------------------------------------------------------------------------
+            | 5. CREATE GRN ITEM
+            |--------------------------------------------------------------------------
+            */
+
             $this->grnItemModel->create([
-                'goods_receipt_id'       => $grnId,
-                'purchase_order_item_id' => $poItem->id,
-                'inventory_id'           => $data['inventory_id'],
-                'quantity'               => $data['quantity'],
-                'unit_cost'              => $data['unit_cost'],
-                'total_cost'             => $total
+
+                'goods_receipt_id' =>
+                    $grnId,
+
+                'purchase_order_item_id' =>
+                    $poItem->id,
+
+                'inventory_id' =>
+                    $inventoryId,
+
+                'quantity' =>
+                    $quantity,
+
+                'unit_cost' =>
+                    $unitCost,
+
+                'total_cost' =>
+                    $total
+
             ]);
 
             /*
             |--------------------------------------------------------------------------
-            | 5. Inventory Movement (IN)
+            | 6. RECEIVE INVENTORY
             |--------------------------------------------------------------------------
+            |
+            | InventoryService is responsible for:
+            |
+            |   Warehouse stock +
+            |   Global inventory synchronization +
+            |   IN movement
+            |
             */
-            $this->movementModel->addMovement([
-                'inventory_id' => $data['inventory_id'],
-                'location_id'  => $data['location_id'],
-                'type'         => 'IN',
-                'quantity'     => $data['quantity'],
-                'unit_cost'    => $data['unit_cost'],
-                'supplier_id'  => $data['supplier_id'],
-                'reference'    => 'GRN-' . $grnId,
-                'notes'        => $data['notes'] ?? '',
-                'created_by'   => $_SESSION['user_id'] ?? null
+
+            $this->inventoryService->receive([
+
+                'inventory_id' =>
+                    $inventoryId,
+
+                'location_id' =>
+                    $locationId,
+
+                'quantity' =>
+                    $quantity,
+
+                'unit_cost' =>
+                    $unitCost,
+
+                'supplier_id' =>
+                    $supplierId,
+
+                'reference' =>
+                    'GRN-' . $grnId,
+
+                'notes' =>
+                    $data['notes'] ?? '',
+
+                'created_by' =>
+                    $_SESSION['user_id'] ?? null
+
             ]);
 
             /*
             |--------------------------------------------------------------------------
-            | 6. Update Purchase Order Received Qty
+            | 7. UPDATE PO RECEIVED QUANTITY
             |--------------------------------------------------------------------------
             */
+
             $this->poModel->receiveItem(
-                $data['po_id'],
-                $data['inventory_id'],
-                $data['quantity']
+                $poId,
+                $inventoryId,
+                $quantity
             );
 
             /*
             |--------------------------------------------------------------------------
-            | 7. Update PO Status (partial/full received)
+            | 8. UPDATE PO RECEIVING STATUS
             |--------------------------------------------------------------------------
             */
-            $this->poModel->updateReceivingStatus($data['po_id']);
+
+            $this->poModel->updateReceivingStatus(
+                $poId
+            );
 
             /*
             |--------------------------------------------------------------------------
-            | 8. Supplier Ledger Entry (ERP accounting core)
+            | 9. SUPPLIER LEDGER
             |--------------------------------------------------------------------------
             */
+
             $this->ledgerModel->add([
-                'supplier_id'    => $data['supplier_id'],
-                'type'           => 'GRN',
-                'reference_type' => 'GoodsReceipt',
-                'reference_id'   => $grnId,
-                'amount'         => $total,
-                'direction'      => 'DEBIT'
+
+                'supplier_id' =>
+                    $supplierId,
+
+                'type' =>
+                    'GRN',
+
+                'reference_type' =>
+                    'GoodsReceipt',
+
+                'reference_id' =>
+                    $grnId,
+
+                'amount' =>
+                    $total,
+
+                'direction' =>
+                    'DEBIT'
+
             ]);
 
             /*
             |--------------------------------------------------------------------------
-            | 9. Commit transaction
+            | 10. RETURN GRN ID
             |--------------------------------------------------------------------------
             */
-            $this->db->commit();
 
             return $grnId;
-
-        } catch (Exception $e) {
-
-            $this->db->rollBack();
-            throw $e;
-        }
+        });
     }
 }

@@ -33,42 +33,58 @@ class InventoryMovements extends Controller
         $this->view('inventory/movement_add', $data);
     }
 
-    public function receive()
-    {
-
-        AuthHelper::can('inventory.edit');
-
-        $purchaseOrderModel = $this->model('PurchaseOrder');
-        $inventoryModel = $this->model('Inventory');
-        $movementModel = $this->model('InventoryMovement');
-        $supplierModel = $this->model('Supplier');
-        $locationModel = $this->model('InventoryLocation');
-
-        require_once '../app/Services/GoodsReceiptService.php';
-        
- if ($_SERVER['REQUEST_METHOD'] === 'POST')
+ public function receive()
 {
-  require_once '../app/Services/GoodsReceiptService.php';
+    AuthHelper::can('inventory.edit');
 
-$service = new GoodsReceiptService(
-    $this->model('PurchaseOrder'),
-    $this->model('GoodsReceipt'),
-    $this->model('GoodsReceiptItem'),
-    $this->model('InventoryMovement'),
-    $this->model('SupplierLedger')
-);
+    $purchaseOrderModel = $this->model('PurchaseOrder');
+    $inventoryModel     = $this->model('Inventory');
+    $supplierModel      = $this->model('Supplier');
+    $locationModel      = $this->model('InventoryLocation');
 
-$service->receive($_POST);
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-header("Location: " . URLROOT . "/inventorymovements");
-exit;
+    try {
+
+        $service = $this->service('GoodsReceipt');
+
+        $service->receive($_POST);
+
+        FlashHelper::success(
+            'Goods received successfully.'
+        );
+
+    } catch (Throwable $e) {
+
+        FlashHelper::error(
+            $e->getMessage()
+        );
+    }
+
+    header(
+        'Location: ' .
+        URLROOT .
+        '/inventorymovements'
+    );
+
+    exit;
 }
 
-        $data['inventory'] = $inventoryModel->getAll();
-        $data['suppliers'] = $supplierModel->getAll();
-        $data['locations'] = $locationModel->getAll();
-        $data['purchaseOrders'] = $purchaseOrderModel->getOpenPurchaseOrders();
+    $data['inventory'] =
+        $inventoryModel->getAll();
 
-        $this->view('inventory/receive', $data);
-    }
+    $data['suppliers'] =
+        $supplierModel->getAll();
+
+    $data['locations'] =
+        $locationModel->getAll();
+
+    $data['purchaseOrders'] =
+        $purchaseOrderModel->getOpenPurchaseOrders();
+
+    $this->view(
+        'inventory/receive',
+        $data
+    );
+}
 }

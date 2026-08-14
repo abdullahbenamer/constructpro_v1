@@ -4,7 +4,7 @@ require_once '../app/Core/Database.php';
 
 class ServiceContainer
 {
-    
+
     /**
      * Shared Database connection
      */
@@ -42,12 +42,16 @@ class ServiceContainer
 
         'GoodsReceipt' => [
             'class' => GoodsReceiptService::class,
+
             'dependencies' => [
                 PurchaseOrderModel::class,
                 GoodsReceiptModel::class,
                 GoodsReceiptItemModel::class,
-                InventoryMovementModel::class,
                 SupplierLedgerModel::class
+            ],
+
+            'services' => [
+                'Inventory'
             ]
         ],
 
@@ -67,20 +71,29 @@ class ServiceContainer
                 SupplierLedgerModel::class,
                 SupplierPaymentModel::class
             ]
+        ],
+
+        'Inventory' => [
+            'class' => InventoryService::class,
+            'dependencies' => [
+                InventoryLocationStockModel::class,
+                InventoryMovementModel::class,
+                InventoryTransferModel::class
+            ]
         ]
 
     ];
 
-  public function __construct()
-{
-    /*
+    public function __construct()
+    {
+        /*
     |---------------------------------------------
     | ONE Database connection for the entire request
     |---------------------------------------------
     */
 
-    $this->db = new Database();
-}
+        $this->db = new Database();
+    }
 
     /**
      * Resolve Service
@@ -106,7 +119,6 @@ class ServiceContainer
         if (!isset($this->definitions[$service])) {
 
             throw new Exception("Unknown service '{$service}'.");
-
         }
 
         $definition = $this->definitions[$service];
@@ -126,16 +138,26 @@ class ServiceContainer
             if (!class_exists($class)) {
 
                 require_once '../app/Models/' . $class . '.php';
-
             }
 
             $dependencies[] = new $class($this->db);
         }
 
         /*
-        |--------------------------------------------------------------------------
+|--------------------------------------------------------------------------
+| Build service dependencies
+|--------------------------------------------------------------------------
+*/
+
+        foreach ($definition['services'] ?? [] as $serviceName) {
+
+            $dependencies[] = $this->make($serviceName);
+        }
+
+        /*
+        |--------------------------------------------------------
         | Load service if needed
-        |--------------------------------------------------------------------------
+        |--------------------------------------------------------
         */
 
         $serviceClass = $definition['class'];
@@ -143,7 +165,6 @@ class ServiceContainer
         if (!class_exists($serviceClass)) {
 
             require_once '../app/Services/' . $serviceClass . '.php';
-
         }
 
         $this->instances[$service] =

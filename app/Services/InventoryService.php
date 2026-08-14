@@ -1,6 +1,7 @@
 <?php
- require_once '../app/Core/Model.php';
-class InventoryService extends Model
+require_once '../app/Services/BaseService.php';
+
+class InventoryService extends BaseService
 {
     private InventoryLocationStockModel $stockModel;
     private InventoryMovementModel $movementModel;
@@ -19,21 +20,133 @@ class InventoryService extends Model
     }
 
     /**
-     * Receive stock into a warehouse.
-     */
-    public function receive(array $data): bool
-    {
-        throw new Exception('Not implemented');
+ * Receive stock into a warehouse.
+ */
+
+public function receive(array $data): bool
+{
+    $inventoryId = (int)($data['inventory_id'] ?? 0);
+    $locationId  = (int)($data['location_id'] ?? 0);
+    $quantity    = (float)($data['quantity'] ?? 0);
+
+    if ($inventoryId <= 0) {
+        throw new Exception('Invalid inventory item.');
     }
+
+    if ($locationId <= 0) {
+        throw new Exception('Invalid warehouse location.');
+    }
+
+    if ($quantity <= 0) {
+        throw new Exception('Invalid quantity.');
+    }
+
+    $success = $this->stockModel->adjustStock(
+        $inventoryId,
+        $locationId,
+        $quantity
+    );
+
+    if (!$success) {
+        throw new Exception(
+            'Unable to add stock to the warehouse.'
+        );
+    }
+
+    $this->movementModel->addMovement([
+        'inventory_id' => $inventoryId,
+        'location_id'  => $locationId,
+        'type'         => 'IN',
+        'quantity'     => $quantity,
+        'unit_cost'    => $data['unit_cost'] ?? 0,
+        'supplier_id'  => $data['supplier_id'] ?? null,
+        'reference'    => $data['reference'] ?? null,
+        'notes'        => $data['notes'] ?? '',
+        'created_by'   => $data['created_by']
+            ?? $_SESSION['user_id']
+            ?? null
+    ]);
+
+    return true;
+}
 
     /**
      * Issue stock from a warehouse.
      */
-    public function issue(array $data): bool
-    {
-        throw new Exception('Not implemented');
-    }
+  /**
+ * Issue stock from a warehouse.
+ */
+public function issue(array $data): bool
+{
+    return $this->transaction(function () use ($data) {
 
+        $inventoryId = (int)($data['inventory_id'] ?? 0);
+        $locationId  = (int)($data['location_id'] ?? 0);
+        $quantity    = (float)($data['quantity'] ?? 0);
+
+        if ($inventoryId <= 0) {
+            throw new Exception('Invalid inventory item.');
+        }
+
+        if ($locationId <= 0) {
+            throw new Exception('Invalid warehouse location.');
+        }
+
+        if ($quantity <= 0) {
+            throw new Exception('Invalid quantity.');
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | REMOVE PHYSICAL STOCK
+        |--------------------------------------------------------------------------
+        */
+
+        $success = $this->stockModel->adjustStock(
+            $inventoryId,
+            $locationId,
+            -$quantity
+        );
+
+        if (!$success) {
+            throw new Exception(
+                'Not enough stock in the selected warehouse.'
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | RECORD MOVEMENT
+        |--------------------------------------------------------------------------
+        */
+
+        $this->movementModel->addMovement([
+
+            'inventory_id' => $inventoryId,
+
+            'location_id' => $locationId,
+
+            'type' => 'OUT',
+
+            'quantity' => $quantity,
+
+            'unit_cost' => (float)($data['unit_cost'] ?? 0),
+
+            'supplier_id' => $data['supplier_id'] ?? null,
+
+            'reference' => $data['reference'] ?? null,
+
+            'notes' => $data['notes'] ?? '',
+
+            'created_by' =>
+                $data['created_by']
+                ?? $this->currentUserId()
+
+        ]);
+
+        return true;
+    });
+}
     /**
      * Transfer stock between warehouses.
      */
@@ -133,10 +246,100 @@ class InventoryService extends Model
     /**
      * Inventory adjustment.
      */
-    public function adjust(array $data): bool
-    {
-        throw new Exception('Not implemented');
-    }
+    /**
+ * Inventory adjustment.
+ *
+ * Positive quantity = increase stock
+ * Negative quantity = decrease stock
+ */
+public function adjust(array $data): bool
+{
+    return $this->transaction(function () use ($data) {
+
+        $inventoryId = (int)($data['inventory_id'] ?? 0);
+        $locationId  = (int)($data['location_id'] ?? 0);
+        $delta       = (float)($data['delta'] ?? 0);
+
+        if ($inventoryId <= 0) {
+            throw new Exception('Invalid inventory item.');
+        }
+
+        if ($locationId <= 0) {
+            throw new Exception('Invalid warehouse location.');
+        }
+
+        if ($delta == 0) {
+            throw new Exception(
+                'Adjustment quantity cannot be zero.'
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | ADJUST PHYSICAL STOCK
+        |--------------------------------------------------------------------------
+        */
+
+        $success = $this->stockModel->adjustStock(
+            $inventoryId,
+            $locationId,
+            $delta
+        );
+
+        if (!$success) {
+
+            if ($delta < 0) {
+                throw new Exception(
+                    'Adjustment would result in insufficient stock.'
+                );
+            }
+
+            throw new Exception(
+                'Unable to adjust inventory stock.'
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | MOVEMENT TYPE
+        |--------------------------------------------------------------------------
+        */
+
+        $movementQuantity = abs($delta);
+
+        /*
+        |--------------------------------------------------------------------------
+        | RECORD MOVEMENT
+        |--------------------------------------------------------------------------
+        */
+
+        $this->movementModel->addMovement([
+
+            'inventory_id' => $inventoryId,
+
+            'location_id' => $locationId,
+
+            'type' => 'ADJUSTMENT',
+
+            'quantity' => $movementQuantity,
+
+            'unit_cost' => (float)($data['unit_cost'] ?? 0),
+
+            'supplier_id' => $data['supplier_id'] ?? null,
+
+            'reference' => $data['reference'] ?? null,
+
+            'notes' => $data['notes'] ?? 'Inventory adjustment',
+
+            'created_by' =>
+                $data['created_by']
+                ?? $this->currentUserId()
+
+        ]);
+
+        return true;
+    });
+}
 
     /**
      * Current available quantity.
