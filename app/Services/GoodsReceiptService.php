@@ -10,21 +10,21 @@ class GoodsReceiptService extends BaseService
     private InventoryService $inventoryService;
     private SupplierLedgerModel $ledgerModel;
 
-  public function __construct(
-    PurchaseOrderModel $poModel,
-    GoodsReceiptModel $grnModel,
-    GoodsReceiptItemModel $grnItemModel,
-    SupplierLedgerModel $ledgerModel,
-    InventoryService $inventoryService
-) {
-    parent::__construct();
+    public function __construct(
+        PurchaseOrderModel $poModel,
+        GoodsReceiptModel $grnModel,
+        GoodsReceiptItemModel $grnItemModel,
+        SupplierLedgerModel $ledgerModel,
+        InventoryService $inventoryService
+    ) {
+        parent::__construct();
 
-    $this->poModel           = $poModel;
-    $this->grnModel          = $grnModel;
-    $this->grnItemModel      = $grnItemModel;
-    $this->ledgerModel       = $ledgerModel;
-    $this->inventoryService  = $inventoryService;
-}
+        $this->poModel           = $poModel;
+        $this->grnModel          = $grnModel;
+        $this->grnItemModel      = $grnItemModel;
+        $this->ledgerModel       = $ledgerModel;
+        $this->inventoryService  = $inventoryService;
+    }
 
     /**
      * ERP Goods Receipt Workflow
@@ -74,45 +74,111 @@ class GoodsReceiptService extends BaseService
                 );
             }
 
+            ///////////////////////////////////////////////////////////
+
             /*
-            |--------------------------------------------------------------------------
-            | 2. VALIDATE PO ITEM BEFORE CREATING GRN
-            |--------------------------------------------------------------------------
-            */
+|--------------------------------------------------------------------------
+| 2. VALIDATE PURCHASE ORDER
+|--------------------------------------------------------------------------
+*/
+
+            $po = $this->poModel->getById($poId);
+
+            if (!$po) {
+                throw new Exception(
+                    'Purchase Order not found.'
+                );
+            }
+
+            /*
+|--------------------------------------------------------------------------
+| PO must be available for receiving
+|--------------------------------------------------------------------------
+|
+| draft     = not approved yet
+| approved  = available
+| partial   = available
+| received  = fully received
+| cancelled = cancelled
+|
+*/
+
+            if (!in_array(
+                $po->status,
+                ['approved', 'partial'],
+                true
+            )) {
+                throw new Exception(
+                    'This Purchase Order is not available for receiving.'
+                );
+            }
+
+            if ($supplierId !== (int)$po->supplier_id) {
+                throw new Exception(
+                    'The selected supplier does not match the Purchase Order supplier.'
+                );
+            }
+
+
+            /*
+|--------------------------------------------------------------------------
+| 3. VALIDATE PO ITEM
+|--------------------------------------------------------------------------
+*/
 
             $poItem = $this->poModel->getPOItem(
-    $poId,
-    $inventoryId
-);
+                $poId,
+                $inventoryId
+            );
 
-if (!$poItem) {
-    throw new Exception(
-        'PO item not found.'
-    );
-}
+            if (!$poItem) {
+                throw new Exception(
+                    'The selected inventory item does not belong to this Purchase Order.'
+                );
+            }
 
-$orderedQuantity  = (float)$poItem->quantity;
-$receivedQuantity = (float)($poItem->received_quantity ?? 0);
-$remainingQuantity = $orderedQuantity - $receivedQuantity;
 
-if ($remainingQuantity <= 0) {
-    throw new Exception(
-        'This PO item has already been fully received.'
-    );
-}
+            /*
+|--------------------------------------------------------------------------
+| 4. VALIDATE REMAINING QUANTITY
+|--------------------------------------------------------------------------
+*/
 
-if ($quantity > $remainingQuantity) {
-    throw new Exception(
-        'Cannot receive ' . number_format($quantity, 2) .
-        ' units. Only ' .
-        number_format($remainingQuantity, 2) .
-        ' units remain on the purchase order.'
-    );
-}
+            $orderedQuantity =
+                (float)$poItem->quantity;
+
+            $receivedQuantity =
+                (float)($poItem->received_quantity ?? 0);
+
+            $remainingQuantity =
+                $orderedQuantity - $receivedQuantity;
+
+
+            if ($remainingQuantity <= 0) {
+
+                throw new Exception(
+                    'This PO item has already been fully received.'
+                );
+            }
+
+
+            if ($quantity > $remainingQuantity) {
+
+                throw new Exception(
+                    'Cannot receive ' .
+                        number_format($quantity, 2) .
+                        ' units. Only ' .
+                        number_format($remainingQuantity, 2) .
+                        ' units remain on the purchase order.'
+                );
+            }
+
+
+            /////////////////////////////////////////
 
             /*
             |--------------------------------------------------------------------------
-            | 3. CALCULATE TOTAL
+            | 5. CALCULATE TOTAL
             |--------------------------------------------------------------------------
             */
 
@@ -120,66 +186,66 @@ if ($quantity > $remainingQuantity) {
 
             /*
             |--------------------------------------------------------------------------
-            | 4. CREATE GRN HEADER
+            | 6. CREATE GRN HEADER
             |--------------------------------------------------------------------------
             */
 
             $grnId = $this->grnModel->create([
 
                 'grn_number' =>
-                    $this->grnModel->nextNumber(),
+                $this->grnModel->nextNumber(),
 
                 'purchase_order_id' =>
-                    $poId,
+                $poId,
 
                 'supplier_id' =>
-                    $supplierId,
+                $supplierId,
 
                 'receipt_date' =>
-                    date('Y-m-d'),
+                date('Y-m-d'),
 
                 'subtotal' =>
-                    $total,
+                $total,
 
                 'total_amount' =>
-                    $total,
+                $total,
 
                 'remarks' =>
-                    $data['notes'] ?? ''
+                $data['notes'] ?? ''
 
             ]);
 
             /*
             |--------------------------------------------------------------------------
-            | 5. CREATE GRN ITEM
+            | 7. CREATE GRN ITEM
             |--------------------------------------------------------------------------
             */
 
             $this->grnItemModel->create([
 
                 'goods_receipt_id' =>
-                    $grnId,
+                $grnId,
 
                 'purchase_order_item_id' =>
-                    $poItem->id,
+                $poItem->id,
 
                 'inventory_id' =>
-                    $inventoryId,
+                $inventoryId,
 
                 'quantity' =>
-                    $quantity,
+                $quantity,
 
                 'unit_cost' =>
-                    $unitCost,
+                $unitCost,
 
                 'total_cost' =>
-                    $total
+                $total
 
             ]);
 
             /*
             |--------------------------------------------------------------------------
-            | 6. RECEIVE INVENTORY
+            | 8. RECEIVE INVENTORY
             |--------------------------------------------------------------------------
             |
             | InventoryService is responsible for:
@@ -193,34 +259,34 @@ if ($quantity > $remainingQuantity) {
             $this->inventoryService->receive([
 
                 'inventory_id' =>
-                    $inventoryId,
+                $inventoryId,
 
                 'location_id' =>
-                    $locationId,
+                $locationId,
 
                 'quantity' =>
-                    $quantity,
+                $quantity,
 
                 'unit_cost' =>
-                    $unitCost,
+                $unitCost,
 
                 'supplier_id' =>
-                    $supplierId,
+                $supplierId,
 
                 'reference' =>
-                    'GRN-' . $grnId,
+                'GRN-' . $grnId,
 
                 'notes' =>
-                    $data['notes'] ?? '',
+                $data['notes'] ?? '',
 
                 'created_by' =>
-                    $_SESSION['user_id'] ?? null
+                $_SESSION['user_id'] ?? null
 
             ]);
 
             /*
             |--------------------------------------------------------------------------
-            | 7. UPDATE PO RECEIVED QUANTITY
+            | 9. UPDATE PO RECEIVED QUANTITY
             |--------------------------------------------------------------------------
             */
 
@@ -232,7 +298,7 @@ if ($quantity > $remainingQuantity) {
 
             /*
             |--------------------------------------------------------------------------
-            | 8. UPDATE PO RECEIVING STATUS
+            | 10. UPDATE PO RECEIVING STATUS
             |--------------------------------------------------------------------------
             */
 
@@ -242,35 +308,35 @@ if ($quantity > $remainingQuantity) {
 
             /*
             |--------------------------------------------------------------------------
-            | 9. SUPPLIER LEDGER
+            | 11. SUPPLIER LEDGER
             |--------------------------------------------------------------------------
             */
 
             $this->ledgerModel->add([
 
                 'supplier_id' =>
-                    $supplierId,
+                $supplierId,
 
                 'type' =>
-                    'GRN',
+                'GRN',
 
                 'reference_type' =>
-                    'GoodsReceipt',
+                'GoodsReceipt',
 
                 'reference_id' =>
-                    $grnId,
+                $grnId,
 
                 'amount' =>
-                    $total,
+                $total,
 
                 'direction' =>
-                    'DEBIT'
+                'DEBIT'
 
             ]);
 
             /*
             |--------------------------------------------------------------------------
-            | 10. RETURN GRN ID
+            | 12. RETURN GRN ID
             |--------------------------------------------------------------------------
             */
 

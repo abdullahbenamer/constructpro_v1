@@ -20,6 +20,13 @@ class ServiceContainer
      */
     private array $definitions = [
 
+    'PurchaseOrder' => [
+    'class' => PurchaseOrderService::class,
+    'dependencies' => [
+        PurchaseOrderModel::class
+    ]
+],
+
         'InventoryTransfer' => [
             'class' => InventoryTransferService::class,
             'dependencies' => [

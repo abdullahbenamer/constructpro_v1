@@ -254,4 +254,34 @@ $itemModel->create([
 
         exit;
     }
+
+    public function cancel($id)
+{
+    AuthHelper::can('purchase_orders.edit');
+
+    try {
+
+        $service = $this->service('PurchaseOrder');
+
+        $service->cancel((int)$id);
+
+        FlashHelper::success(
+            'Purchase Order cancelled successfully.'
+        );
+
+    } catch (Throwable $e) {
+
+        FlashHelper::error(
+            $e->getMessage()
+        );
+    }
+
+    header(
+        'Location: ' .
+        URLROOT .
+        '/purchaseorders'
+    );
+
+    exit;
+}
 }

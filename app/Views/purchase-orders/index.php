@@ -66,7 +66,17 @@
 
 <?php endif; ?>
 
+<?php if (in_array($po->status, ['draft', 'approved', 'partial'], true)): ?>
 
+    <a href="<?= URLROOT ?>/purchaseorders/cancel/<?= $po->id ?>"
+       class="btn btn-sm btn-danger"
+       onclick="return confirm('Cancel this Purchase Order? This action cannot be undone.')">
+
+        Cancel
+
+    </a>
+
+<?php endif; ?>
                 </td>
 
             </tr>

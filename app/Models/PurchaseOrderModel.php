@@ -185,6 +185,18 @@ class PurchaseOrderModel extends Model
     );
 }
 
+public function cancel($id)
+{
+    return $this->db->query(
+        "
+        UPDATE purchase_orders
+        SET status = 'cancelled'
+        WHERE id = ?
+        ",
+        [$id]
+    );
+}
+
 public function isEditable($id)
 {
     $po = $this->getById($id);
