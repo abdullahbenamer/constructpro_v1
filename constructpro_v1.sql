@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 06, 2026 at 02:48 PM
+-- Generation Time: Aug 15, 2026 at 11:43 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -150,6 +150,21 @@ CREATE TABLE `goods_receipts` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `goods_receipts`
+--
+
+INSERT INTO `goods_receipts` (`id`, `grn_number`, `purchase_order_id`, `supplier_id`, `receipt_date`, `subtotal`, `total_amount`, `remarks`, `created_by`, `created_at`) VALUES
+(20, 'GRN-20260813191758', 31, 1, '2026-08-13', 60.00, 60.00, '', 1, '2026-08-13 17:17:58'),
+(21, 'GRN-20260814063449', 32, 4, '2026-08-14', 15.00, 15.00, '', 1, '2026-08-14 04:34:49'),
+(22, 'GRN-20260814114636', 33, 2, '2026-08-14', 96.00, 96.00, 'Partial receiving 8 of 20', 1, '2026-08-14 09:46:36'),
+(23, 'GRN-20260814115031', 33, 2, '2026-08-14', 120.00, 120.00, 'Next Partial 10 of 12 units', 1, '2026-08-14 09:50:31'),
+(24, 'GRN-20260814115350', 33, 2, '2026-08-14', 24.00, 24.00, '2 of the rest 2 to another WH , Item not listed in.', 1, '2026-08-14 09:53:50'),
+(25, 'GRN-20260814144334', 34, 3, '2026-08-14', 324.00, 324.00, '', 1, '2026-08-14 12:43:34'),
+(26, 'GRN-20260814144909', 34, 3, '2026-08-14', 36.00, 36.00, '', 1, '2026-08-14 12:49:09'),
+(27, 'GRN-20260814145510', 35, 3, '2026-08-14', 285.00, 285.00, '', 1, '2026-08-14 12:55:10'),
+(28, 'GRN-20260815112258', 38, 2, '2026-08-15', 15.20, 15.20, '', 1, '2026-08-15 09:22:58');
+
 -- --------------------------------------------------------
 
 --
@@ -165,6 +180,21 @@ CREATE TABLE `goods_receipt_items` (
   `unit_cost` decimal(15,2) NOT NULL,
   `total_cost` decimal(15,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `goods_receipt_items`
+--
+
+INSERT INTO `goods_receipt_items` (`id`, `goods_receipt_id`, `purchase_order_item_id`, `inventory_id`, `quantity`, `unit_cost`, `total_cost`) VALUES
+(12, 20, 33, 8, 100.00, 0.60, 60.00),
+(13, 21, 34, 7, 10.00, 1.50, 15.00),
+(14, 22, 35, 108, 8.00, 12.00, 96.00),
+(15, 23, 35, 108, 10.00, 12.00, 120.00),
+(16, 24, 35, 108, 2.00, 12.00, 24.00),
+(17, 25, 36, 6, 18.00, 18.00, 324.00),
+(18, 26, 36, 6, 2.00, 18.00, 36.00),
+(19, 27, 37, 7, 95.00, 3.00, 285.00),
+(20, 28, 40, 8, 8.00, 1.90, 15.20);
 
 -- --------------------------------------------------------
 
@@ -198,16 +228,17 @@ CREATE TABLE `inventory` (
 INSERT INTO `inventory` (`id`, `name`, `category`, `sku`, `quantity`, `location_id`, `min_stock`, `cost_price`, `base_unit`, `allow_fraction`, `sale_unit`, `units_per_sale`, `price_per_base`, `price_per_sale`, `brand_id`, `country_id`) VALUES
 (1, 'MCB 1P 16A', 'MCB', 'MCB-1P-16A-SCH', 964.00, NULL, 20, 1.20, 'unit', 0, 'piece', 1, 2.50, 2.50, 5, 9),
 (2, 'MCB 1P 20A', 'MCB', 'MCB-1P-20A-ABB', 158.00, NULL, 20, 1.10, 'unit', 0, 'piece', 1, 2.40, 2.40, 6, 3),
-(3, 'MCB 1P 32A', 'Switchgear', 'MCB-1P-32A-CHNT', 1370.00, NULL, 20, 1.50, 'unit', 0, 'piece', 1, 2.10, 2.10, 14, 5),
+(3, 'MCB 1P 32A', 'Switchgear', 'MCB-1P-32A-CHNT', 1230.00, NULL, 20, 1.50, 'unit', 0, 'piece', 1, 2.10, 2.10, 14, 5),
 (4, 'MCB 3P 63A', 'Switchgear', 'MCB-3P-63A-SCH', 5219.00, NULL, 10, 7.35, 'unit', 0, 'piece', 1, 9.80, 9.80, 5, 9),
-(5, 'Contactor 25A 220V', 'Contactor', 'CT-25A-LS', 99.00, NULL, 10, 6.50, 'unit', 0, 'piece', 1, 12.00, 12.00, 12, 5),
-(6, 'Contactor 40A 220V', 'Contactor', 'CT-40A-LS', 1009.00, NULL, 10, 8.20, 'unit', 0, 'piece', 1, 15.50, 15.50, 12, 5),
-(7, 'Wall Socket 13A UK', 'Socket', 'SOC-13A-HVL', 860.00, NULL, 50, 0.80, 'unit', 0, 'piece', 1, 1.50, 1.50, 16, 10),
-(8, 'Switch 1 Gang', 'Switch', 'SW-1G-HAG', 12349.00, NULL, 100, 0.60, 'unit', 0, 'piece', 1, 1.50, 1.50, 9, 1),
-(9, 'PVC Cable 2.5mm²', 'Cable', 'PVC-2.5-SOUTH', 12688.00, NULL, 200, 0.30, 'meter', 1, 'roll', 100, 0.60, 60.00, 3, 3),
-(10, 'Terminal Block 2.5mm', 'Terminal', 'TB-2.5-WAGO', 789.00, NULL, 100, 0.20, 'unit', 0, 'piece', 1, 0.50, 0.50, 21, 1),
-(105, 'Cement', 'Switchgear', 'cem-1234', 600.00, 1, 100, 75.00, 'unit', 0, NULL, 1, 100.00, 100.00, 34, 12),
-(106, 'Man Boot', 'Switchgear', 'MB-123', 605.00, 3, 50, 450.00, 'unit', 0, NULL, 1, 570.00, 570.00, 4, 8);
+(5, 'Contactor 25A 220V', 'Contactor', 'CT-25A-LS', 85.00, NULL, 10, 6.50, 'unit', 0, 'piece', 1, 12.00, 12.00, 12, 5),
+(6, 'Contactor 40A 220V', 'Contactor', 'CT-40A-LS', 1021.00, NULL, 10, 8.20, 'unit', 0, 'piece', 1, 15.50, 15.50, 12, 5),
+(7, 'Wall Socket 13A UK', 'Socket', 'SOC-13A-HVL', 965.00, NULL, 50, 0.80, 'unit', 0, 'piece', 1, 1.50, 1.50, 16, 10),
+(8, 'Switch 1 Gang', 'Switch', 'SW-1G-HAG', 12450.00, NULL, 100, 0.60, 'unit', 0, 'piece', 1, 1.50, 1.50, 9, 1),
+(9, 'PVC Cable 2.5mm²', 'Cable', 'PVC-2.5-SOUTH', 12590.00, NULL, 200, 0.30, 'meter', 1, 'roll', 100, 0.60, 60.00, 3, 3),
+(10, 'Terminal Block 2.5mm', 'Terminal', 'TB-2.5-WAGO', 784.00, NULL, 100, 0.20, 'unit', 0, 'piece', 1, 0.50, 0.50, 21, 1),
+(105, 'Cement', 'Switchgear', 'cem-1234', 500.00, 1, 100, 75.00, 'unit', 0, NULL, 1, 100.00, 100.00, 34, 12),
+(106, 'Man Boot', 'Switchgear', 'MB-123', 506.00, 3, 50, 450.00, 'unit', 0, NULL, 1, 570.00, 570.00, 4, 8),
+(108, 'New Item', 'Instrumentation', 'ni-999', 20.00, 20, 2, 12.00, 'unit', 0, NULL, 1, 0.00, 0.00, 14, 6);
 
 -- --------------------------------------------------------
 
@@ -232,8 +263,8 @@ CREATE TABLE `inventory_locations` (
 
 INSERT INTO `inventory_locations` (`id`, `code`, `name`, `notes`, `address`, `storekeeper_id`, `mobile`, `created_at`) VALUES
 (1, 'MAIN WH', 'MAIN WAREHOUSE', 'Central Main Warehouse', 'Central Main Warehouse', 12, '092609876', '2026-06-12 06:27:59'),
-(2, 'TAJORA', 'TAJORA WH', 'مخزن النشيع', 'مخزن النشيع', NULL, '098723654', '2026-06-12 06:27:59'),
-(3, 'JANZOUR', 'JANZOUR WAREHOUSE', 'Janzour Center', 'Janzour Center', NULL, '0942787698', '2026-06-12 06:27:59'),
+(2, 'TAJORA', 'TAJORA WH', 'مخزن النشيع', 'مخزن النشيع', 12, '098723654', '2026-06-12 06:27:59'),
+(3, 'JANZOUR', 'JANZOUR WAREHOUSE', 'Janzour Center', 'Janzour Center', 15, '0942787698', '2026-06-12 06:27:59'),
 (4, 'MUSRATA', 'MUSRATA WAREHOUSE', 'Musrata, Tripoli Street', 'Musrata, Tripoli Street', 15, '0938765989', '2026-06-12 06:27:59'),
 (19, 'EX-WH', 'Extra Warehouse', 'Virtual store', 'Zintan south', 12, '0911987654', '2026-07-22 03:33:42'),
 (20, 'WH123', 'Znata branch', 'some notes here', 'Tripoli', 11, '09165348765', '2026-07-22 07:30:27');
@@ -264,43 +295,50 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (60, 2, 2, 43.00),
 (61, 2, 3, 5.00),
 (62, 2, 4, 40.00),
-(65, 3, 1, 290.00),
+(65, 3, 1, 108.00),
 (66, 3, 2, 690.00),
-(67, 3, 3, 350.00),
+(67, 3, 3, 300.00),
 (68, 3, 4, 40.00),
 (71, 4, 1, 90.00),
 (72, 4, 2, 25.00),
 (73, 4, 3, 79.00),
 (74, 4, 4, 5025.00),
-(77, 5, 1, 21.00),
+(77, 5, 1, 11.00),
 (78, 5, 2, 25.00),
 (79, 5, 3, 22.00),
 (80, 5, 4, 27.00),
-(83, 6, 1, 27.00),
+(83, 6, 1, 19.00),
 (84, 6, 2, 20.00),
 (85, 6, 3, 0.00),
 (86, 6, 4, 962.00),
 (89, 7, 1, 450.00),
-(90, 7, 2, 120.00),
+(90, 7, 2, 130.00),
 (91, 7, 3, 210.00),
 (92, 7, 4, 80.00),
-(95, 8, 1, 12100.00),
-(96, 8, 2, 49.00),
+(95, 8, 1, 11893.00),
+(96, 8, 2, 149.00),
 (97, 8, 3, 100.00),
 (98, 8, 4, 100.00),
-(101, 9, 1, 698.00),
+(101, 9, 1, 600.00),
 (102, 9, 2, 1000.00),
 (103, 9, 3, 600.00),
 (104, 9, 4, 10390.00),
 (107, 10, 1, 130.00),
 (108, 10, 2, 218.00),
-(109, 10, 3, 241.00),
+(109, 10, 3, 236.00),
 (110, 10, 4, 200.00),
 (113, 105, 1, 400.00),
 (114, 105, 4, 100.00),
-(115, 106, 3, 605.00),
+(115, 106, 3, 490.00),
 (116, 3, 19, 0.00),
-(117, 106, 19, 0.00);
+(117, 106, 19, 16.00),
+(118, 3, 20, 92.00),
+(119, 8, 20, 200.00),
+(120, 108, 20, 18.00),
+(121, 108, 2, 2.00),
+(122, 6, 20, 20.00),
+(123, 7, 20, 95.00),
+(124, 8, 19, 8.00);
 
 -- --------------------------------------------------------
 
@@ -319,11 +357,42 @@ CREATE TABLE `inventory_movements` (
   `supplier` varchar(255) DEFAULT NULL,
   `movement_by` int(11) DEFAULT NULL,
   `balance_after` decimal(12,2) DEFAULT NULL,
+  `global_balance_after` decimal(12,2) DEFAULT NULL,
   `reference` varchar(255) DEFAULT NULL,
   `notes` text DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `inventory_movements`
+--
+
+INSERT INTO `inventory_movements` (`id`, `inventory_id`, `location_id`, `type`, `quantity`, `unit_cost`, `supplier_id`, `supplier`, `movement_by`, `balance_after`, `global_balance_after`, `reference`, `notes`, `created_by`, `created_at`) VALUES
+(217, 3, 3, 'OUT', 50.00, NULL, NULL, NULL, NULL, 300.00, NULL, 'PROJECT #43', 'MCB 1P 32A', 1, '2026-08-09 13:16:03'),
+(218, 3, 3, 'IN', 50.00, NULL, NULL, NULL, NULL, 300.00, NULL, 'DELETE PROJECT #43', 'Restore deleted material', 1, '2026-08-09 13:19:43'),
+(219, 5, 1, 'OUT', 10.00, NULL, NULL, NULL, NULL, 11.00, NULL, 'PROJECT #43', 'Contactor 25A 220V', 1, '2026-08-09 14:51:23'),
+(220, 5, 1, 'IN', 10.00, NULL, NULL, NULL, NULL, 11.00, NULL, 'DELETE PROJECT #43', 'Restore deleted material', 1, '2026-08-10 09:55:49'),
+(221, 5, 1, 'OUT', 10.00, NULL, NULL, NULL, NULL, 1.00, NULL, 'PROJECT #43', 'Contactor 25A 220V', 1, '2026-08-10 11:07:51'),
+(222, 5, 1, 'IN', 10.00, NULL, NULL, NULL, NULL, 11.00, NULL, 'PROJECT #43', 'Contactor 25A 220V', 1, '2026-08-10 11:10:18'),
+(223, 106, 3, 'OUT', 4.00, NULL, NULL, NULL, NULL, 490.00, NULL, 'PROJECT #43', 'Man Boot', 1, '2026-08-10 13:03:38'),
+(224, 6, 1, 'OUT', 8.00, NULL, NULL, NULL, NULL, 19.00, NULL, 'PROJECT #43', 'Contactor 40 Am 220 Volt', 1, '2026-08-11 07:57:29'),
+(225, 8, 1, 'OUT', 10.00, NULL, NULL, NULL, NULL, 11890.00, NULL, 'PROJECT #43', 'Switch 1 Gang', 1, '2026-08-11 09:33:10'),
+(226, 8, 1, 'OUT', 5.00, NULL, NULL, NULL, NULL, 11885.00, NULL, 'PROJECT #43', 'Switch 1 Gang for room lights', 1, '2026-08-11 09:39:31'),
+(227, 8, 1, 'IN', 8.00, NULL, NULL, NULL, NULL, 11893.00, NULL, 'PROJECT #43', 'Switch 1 Gang 7 for room lights', 1, '2026-08-11 09:58:53'),
+(228, 9, 1, 'OUT', 98.00, NULL, NULL, NULL, NULL, 600.00, 12590.00, 'PROJECT #43', 'PVC Cable 2.5mm²', 1, '2026-08-11 10:49:17'),
+(229, 10, 3, 'OUT', 5.00, NULL, NULL, NULL, NULL, 236.00, 784.00, 'PROJECT #43', 'Terminal Block 2.5mm', 1, '2026-08-11 12:40:40'),
+(230, 105, 4, 'OUT', 10.00, NULL, NULL, NULL, NULL, 90.00, 490.00, 'PROJECT #43', 'Cement for slap', 1, '2026-08-12 04:40:48'),
+(231, 105, 4, 'IN', 10.00, NULL, NULL, NULL, NULL, 100.00, 500.00, 'PROJECT #43', 'Cement for slap', 1, '2026-08-12 04:41:37'),
+(232, 8, 2, 'IN', 100.00, NULL, 1, NULL, NULL, 149.00, 12442.00, 'GRN-20', NULL, 1, '2026-08-13 17:17:58'),
+(233, 7, 2, 'IN', 10.00, NULL, 4, NULL, NULL, 130.00, 870.00, 'GRN-21', NULL, 1, '2026-08-14 04:34:49'),
+(234, 108, 20, 'IN', 8.00, NULL, 2, NULL, NULL, 8.00, 8.00, 'GRN-22', 'Partial receiving 8 of 20', 1, '2026-08-14 09:46:36'),
+(235, 108, 20, 'IN', 10.00, NULL, 2, NULL, NULL, 18.00, 18.00, 'GRN-23', 'Next Partial 10 of 12 units', 1, '2026-08-14 09:50:31'),
+(236, 108, 2, 'IN', 2.00, NULL, 2, NULL, NULL, 2.00, 20.00, 'GRN-24', '2 of the rest 2 to another WH , Item not listed in.', 1, '2026-08-14 09:53:50'),
+(237, 6, 20, 'IN', 18.00, NULL, 3, NULL, NULL, 18.00, 1019.00, 'GRN-25', NULL, 1, '2026-08-14 12:43:34'),
+(238, 6, 20, 'IN', 2.00, NULL, 3, NULL, NULL, 20.00, 1021.00, 'GRN-26', NULL, 1, '2026-08-14 12:49:09'),
+(239, 7, 20, 'IN', 95.00, NULL, 3, NULL, NULL, 95.00, 965.00, 'GRN-27', NULL, 1, '2026-08-14 12:55:10'),
+(240, 8, 19, 'IN', 8.00, NULL, 2, NULL, NULL, 8.00, 12450.00, 'GRN-28', NULL, 1, '2026-08-15 09:22:58');
 
 -- --------------------------------------------------------
 
@@ -366,18 +435,6 @@ CREATE TABLE `inventory_transfers` (
   `reversal_transfer_id` int(11) DEFAULT NULL,
   `status` enum('COMPLETED','REVERSED','','') NOT NULL DEFAULT 'COMPLETED'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `inventory_transfers`
---
-
-INSERT INTO `inventory_transfers` (`id`, `inventory_id`, `from_location_id`, `to_location_id`, `quantity`, `reference`, `notes`, `created_by`, `created_at`, `reversed_at`, `reversed_by`, `reversal_transfer_id`, `status`) VALUES
-(20, 3, 3, 19, 20.00, '20 MCB 1 P 32A from Janzour to EX-WH', 'MCB 1 P 32A from Janzour to EX-WH, qty 20', 1, '2026-07-25 10:41:39', '2026-07-25 22:59:58', 1, NULL, 'COMPLETED'),
-(21, 106, 3, 19, 55.00, 'Man boot from Janzour to ex-wh, qty 55', '55 Man boot from Janzour to ex-wh', 1, '2026-07-26 04:05:43', '2026-07-26 06:06:38', 1, NULL, 'COMPLETED'),
-(22, 8, 1, 2, 101.00, '101 FROM 12100 TO TAJOURA', 'TRANSFER 101 FROM 12100 MAIN WH TO TAJOURA', 1, '2026-07-31 12:45:25', '2026-07-31 15:17:15', 1, NULL, 'COMPLETED'),
-(23, 8, 1, 2, 101.00, 'another transfer of 101 of Swich 1 gang', 'transfer of 101 of Swich 1 gang', 1, '2026-08-01 16:32:25', '2026-08-01 18:35:06', 1, NULL, 'COMPLETED'),
-(24, 5, 1, 3, 4.00, '4 p', '0nly 4 p', 1, '2026-08-01 16:44:05', NULL, NULL, NULL, 'COMPLETED'),
-(25, 105, 1, 3, 100.00, '100 cement main to janjour', '', 1, '2026-08-01 17:09:28', NULL, NULL, NULL, 'COMPLETED');
 
 -- --------------------------------------------------------
 
@@ -481,9 +538,7 @@ CREATE TABLE `projects` (
 --
 
 INSERT INTO `projects` (`id`, `customer_id`, `title`, `project_type`, `description`, `deadline`, `status`, `budget`, `created_at`, `is_archived`, `site_location`, `start_date`, `project_manager_id`, `contract_number`, `project_code`, `priority`) VALUES
-(38, 5, 'Hospital renovation', 'maintenance', 'Hospital renovation project', '2027-01-28', 'planning', 1200000.00, '2026-07-07 13:12:52', 0, 'Tripoli east', '2026-07-26', 14, '', 'mis342', 'medium'),
-(39, 2, 'New Power Plant establishment', 'electrical', 'New Power Plant Establishment', '2026-11-30', 'in_progress', 3750000.00, '2026-07-14 20:10:24', 0, 'Misrata', '2026-07-21', NULL, '8765123', 'elec-628', 'high'),
-(41, 5, 'one project to switchgear', 'electrical', 'one project to switchgear', '2026-11-26', 'in_progress', 500000.00, '2026-07-19 13:36:44', 0, 'tripoli', '2026-07-26', 14, '1876455', 'SWG19877', 'high');
+(43, 2, 'building School', 'construction', 'building School 1,500,000', '2026-10-28', 'planning', 1500000.00, '2026-08-08 20:59:33', 0, 'sirte', '2026-08-16', 1, '386', 'sc-386', 'high');
 
 -- --------------------------------------------------------
 
@@ -504,6 +559,13 @@ CREATE TABLE `project_advances` (
   `status` enum('received','reversed') DEFAULT 'received',
   `attachment` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `project_advances`
+--
+
+INSERT INTO `project_advances` (`id`, `project_id`, `amount`, `payment_method`, `reference`, `notes`, `received_by`, `advance_date`, `created_at`, `status`, `attachment`) VALUES
+(14, 43, 100000.00, 'Cash', 'test', 'test note', 1, '2026-08-09', '2026-08-09 14:27:45', 'received', NULL);
 
 -- --------------------------------------------------------
 
@@ -547,7 +609,13 @@ CREATE TABLE `project_costs` (
 --
 
 INSERT INTO `project_costs` (`id`, `project_id`, `inventory_id`, `location_id`, `cost_type`, `description`, `quantity`, `unit_price`, `created_at`) VALUES
-(142, 38, 6, 1, 'materials', 'Contactor 40A 220V', 1100.00, 8.20, '2026-07-31 13:14:36');
+(151, 43, 106, 3, 'materials', 'Man Boot', 4.00, 450.00, '2026-08-10 13:03:38'),
+(152, 43, NULL, NULL, 'transport', 'carrying Blocks from to', 2.00, 250.00, '2026-08-11 06:19:01'),
+(153, 43, 6, 1, 'materials', 'Contactor 40 Am 220 Volts', 8.00, 8.20, '2026-08-11 07:57:29'),
+(154, 43, 8, 1, 'materials', 'Switch 1 Gang - room lights Fixture', 7.00, 0.60, '2026-08-11 09:33:10'),
+(155, 43, 9, 1, 'materials', 'PVC Cable 2.5mm²', 98.00, 0.30, '2026-08-11 10:49:17'),
+(156, 43, 10, 3, 'materials', 'Terminal Block 2.5mm', 5.00, 0.20, '2026-08-11 12:40:40'),
+(157, 43, NULL, NULL, 'subcontract', 'finishing basement for the fence', 100.00, 100.00, '2026-08-11 12:52:45');
 
 -- --------------------------------------------------------
 
@@ -626,7 +694,23 @@ CREATE TABLE `project_ledger` (
 --
 
 INSERT INTO `project_ledger` (`id`, `project_id`, `entry_type`, `ref_table`, `ref_id`, `description`, `debit`, `credit`, `balance_after`, `created_at`) VALUES
-(40, 38, 'cost', 'project_costs', 142, 'Contactor 40A 220V', 9020.00, 0.00, -9020.00, '2026-07-31 13:14:36');
+(44, 43, 'cost', 'project_costs', 146, 'MCB 1P 32A', 75.00, 0.00, -75.00, '2026-08-09 13:16:03'),
+(45, 43, 'cost', 'project_costs', 147, 'renovation office', 1000.00, 0.00, -1075.00, '2026-08-09 14:25:20'),
+(46, 43, 'advance', 'project_advances', 14, 'test', 0.00, 100000.00, 98925.00, '2026-08-09 14:27:45'),
+(47, 43, 'cost', 'project_costs', 148, 'Contactor 25A 220V', 65.00, 0.00, 98860.00, '2026-08-09 14:51:23'),
+(48, 43, 'cost', 'project_costs', 149, '2 masonary', 200.00, 0.00, 98660.00, '2026-08-10 09:51:27'),
+(49, 43, 'cost', 'project_costs', 150, 'Contactor 25A 220V', 65.00, 0.00, 98595.00, '2026-08-10 11:07:51'),
+(50, 43, '', 'project_costs', 150, 'Reversal: Contactor 25A 220V', 0.00, 65.00, 98660.00, '2026-08-10 11:10:18'),
+(51, 43, 'cost', 'project_costs', 151, 'Man Boot', 1800.00, 0.00, 96860.00, '2026-08-10 13:03:38'),
+(52, 43, '', 'project_costs', 149, 'Reversal: 2 masonary', 0.00, 200.00, 97060.00, '2026-08-10 13:11:52'),
+(53, 43, 'cost', 'project_costs', 152, 'carrying Blocks from to', 500.00, 0.00, 96560.00, '2026-08-11 06:19:01'),
+(54, 43, 'cost', 'project_costs', 153, 'Contactor 40 Am 220 Volt', 65.60, 0.00, 96494.40, '2026-08-11 07:57:29'),
+(55, 43, 'cost', 'project_costs', 154, 'Switch 1 Gang - room lights Fixture', 4.20, 0.00, 96490.20, '2026-08-11 09:33:10'),
+(56, 43, 'cost', 'project_costs', 155, 'PVC Cable 2.5mm²', 29.40, 0.00, 96460.80, '2026-08-11 10:49:17'),
+(57, 43, 'cost', 'project_costs', 156, 'Terminal Block 2.5mm', 1.00, 0.00, 96459.80, '2026-08-11 12:40:40'),
+(58, 43, 'cost', 'project_costs', 157, 'finishing basement for the fence', 10000.00, 0.00, 86459.80, '2026-08-11 12:52:45'),
+(59, 43, 'cost', 'project_costs', 158, 'Cement for slap', 750.00, 0.00, 85709.80, '2026-08-12 04:40:48'),
+(60, 43, 'cost', 'project_costs', 158, 'Reversal: Cement for slap', 0.00, 750.00, 86459.80, '2026-08-12 04:41:37');
 
 -- --------------------------------------------------------
 
@@ -703,6 +787,20 @@ CREATE TABLE `purchase_orders` (
   `receiving_status` enum('OPEN','PARTIAL','RECEIVED') DEFAULT 'OPEN'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `purchase_orders`
+--
+
+INSERT INTO `purchase_orders` (`id`, `po_number`, `supplier_id`, `status`, `order_date`, `expected_date`, `subtotal`, `tax_amount`, `discount_amount`, `total_amount`, `notes`, `created_by`, `approved_by`, `approved_at`, `received_at`, `created_at`, `receiving_status`) VALUES
+(31, 'PO-260813084310', 1, 'received', '2026-08-09', '2026-08-13', 60.00, 0.00, 0.00, 60.00, 'PO for test', 1, 1, '2026-08-13 08:48:55', '2026-08-13 19:17:58', '2026-08-13 06:43:10', 'RECEIVED'),
+(32, 'PO-260814062956', 4, 'received', '2026-08-12', '2026-08-14', 15.00, 0.00, 0.00, 15.00, '10 units', 1, 1, '2026-08-14 06:34:05', '2026-08-14 06:34:49', '2026-08-14 04:29:56', 'RECEIVED'),
+(33, 'PO-260814114032', 2, 'received', '2026-08-09', '2026-08-13', 240.00, 0.00, 0.00, 240.00, 'partial receiving test', 1, 1, '2026-08-14 11:44:43', '2026-08-14 11:53:50', '2026-08-14 09:40:32', 'RECEIVED'),
+(34, 'PO-260814144219', 3, 'received', '2026-08-09', '2026-08-13', 360.00, 0.00, 0.00, 360.00, '', 1, 1, '2026-08-14 14:43:01', '2026-08-14 14:49:09', '2026-08-14 12:42:19', 'RECEIVED'),
+(35, 'PO-260814145340', 3, 'partial', '2026-08-11', '2026-08-14', 300.00, 0.00, 0.00, 300.00, '', 1, 1, '2026-08-14 14:54:15', NULL, '2026-08-14 12:53:40', 'PARTIAL'),
+(36, 'PO-260815072043', 1, 'cancelled', '2026-08-10', '2026-08-14', 114.00, 0.00, 0.00, 114.00, 'Draft Cancel', 1, NULL, NULL, NULL, '2026-08-15 05:20:43', 'OPEN'),
+(37, 'PO-260815074138', 4, 'cancelled', '2026-08-11', '2026-08-15', 260.00, 0.00, 0.00, 260.00, 'Approved cancel', 1, 1, '2026-08-15 07:42:06', NULL, '2026-08-15 05:41:38', 'OPEN'),
+(38, 'PO-260815112115', 2, 'cancelled', '2026-08-10', '2026-08-14', 38.00, 0.00, 0.00, 38.00, 'Cancel partial receive', 1, 1, '2026-08-15 11:22:38', NULL, '2026-08-15 09:21:15', 'PARTIAL');
+
 -- --------------------------------------------------------
 
 --
@@ -720,6 +818,20 @@ CREATE TABLE `purchase_order_items` (
   `notes` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `purchase_order_items`
+--
+
+INSERT INTO `purchase_order_items` (`id`, `purchase_order_id`, `inventory_id`, `quantity`, `received_quantity`, `unit_cost`, `total_cost`, `notes`, `created_at`) VALUES
+(33, 31, 8, 100.00, 100.00, 0.60, 0.00, NULL, '2026-08-13 06:48:39'),
+(34, 32, 7, 10.00, 10.00, 1.50, 0.00, NULL, '2026-08-14 04:30:43'),
+(35, 33, 108, 20.00, 20.00, 12.00, 0.00, NULL, '2026-08-14 09:44:29'),
+(36, 34, 6, 20.00, 20.00, 18.00, 0.00, NULL, '2026-08-14 12:42:46'),
+(37, 35, 7, 100.00, 95.00, 3.00, 0.00, NULL, '2026-08-14 12:54:06'),
+(38, 36, 4, 20.00, 0.00, 5.70, 0.00, NULL, '2026-08-15 05:21:06'),
+(39, 37, 8, 100.00, 0.00, 2.60, 0.00, NULL, '2026-08-15 05:41:56'),
+(40, 38, 8, 20.00, 8.00, 1.90, 0.00, NULL, '2026-08-15 09:21:39');
 
 -- --------------------------------------------------------
 
@@ -1147,6 +1259,21 @@ CREATE TABLE `supplier_ledger` (
   `direction` enum('DEBIT','CREDIT') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `supplier_ledger`
+--
+
+INSERT INTO `supplier_ledger` (`id`, `supplier_id`, `type`, `reference_type`, `reference_id`, `amount`, `direction`, `created_at`) VALUES
+(11, 1, 'GRN', 'GoodsReceipt', 20, 60.00, 'DEBIT', '2026-08-13 17:17:58'),
+(12, 4, 'GRN', 'GoodsReceipt', 21, 15.00, 'DEBIT', '2026-08-14 04:34:49'),
+(13, 2, 'GRN', 'GoodsReceipt', 22, 96.00, 'DEBIT', '2026-08-14 09:46:36'),
+(14, 2, 'GRN', 'GoodsReceipt', 23, 120.00, 'DEBIT', '2026-08-14 09:50:31'),
+(15, 2, 'GRN', 'GoodsReceipt', 24, 24.00, 'DEBIT', '2026-08-14 09:53:50'),
+(16, 3, 'GRN', 'GoodsReceipt', 25, 324.00, 'DEBIT', '2026-08-14 12:43:34'),
+(17, 3, 'GRN', 'GoodsReceipt', 26, 36.00, 'DEBIT', '2026-08-14 12:49:09'),
+(18, 3, 'GRN', 'GoodsReceipt', 27, 285.00, 'DEBIT', '2026-08-14 12:55:10'),
+(19, 2, 'GRN', 'GoodsReceipt', 28, 15.20, 'DEBIT', '2026-08-15 09:22:58');
 
 -- --------------------------------------------------------
 
@@ -1700,19 +1827,19 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `goods_receipts`
 --
 ALTER TABLE `goods_receipts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `goods_receipt_items`
 --
 ALTER TABLE `goods_receipt_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
 
 --
 -- AUTO_INCREMENT for table `inventory_locations`
@@ -1724,13 +1851,13 @@ ALTER TABLE `inventory_locations`
 -- AUTO_INCREMENT for table `inventory_location_stock`
 --
 ALTER TABLE `inventory_location_stock`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT for table `inventory_movements`
 --
 ALTER TABLE `inventory_movements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=241;
 
 --
 -- AUTO_INCREMENT for table `inventory_reservations`
@@ -1742,7 +1869,7 @@ ALTER TABLE `inventory_reservations`
 -- AUTO_INCREMENT for table `inventory_transfers`
 --
 ALTER TABLE `inventory_transfers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `location_switch_log`
@@ -1760,13 +1887,13 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `project_advances`
 --
 ALTER TABLE `project_advances`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `project_construction_details`
@@ -1778,7 +1905,7 @@ ALTER TABLE `project_construction_details`
 -- AUTO_INCREMENT for table `project_costs`
 --
 ALTER TABLE `project_costs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=159;
 
 --
 -- AUTO_INCREMENT for table `project_documents`
@@ -1802,7 +1929,7 @@ ALTER TABLE `project_inspection_details`
 -- AUTO_INCREMENT for table `project_ledger`
 --
 ALTER TABLE `project_ledger`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `project_settlements`
@@ -1826,13 +1953,13 @@ ALTER TABLE `purchase_items`
 -- AUTO_INCREMENT for table `purchase_orders`
 --
 ALTER TABLE `purchase_orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `purchase_order_items`
 --
 ALTER TABLE `purchase_order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `resources`
@@ -1910,7 +2037,7 @@ ALTER TABLE `suppliers`
 -- AUTO_INCREMENT for table `supplier_ledger`
 --
 ALTER TABLE `supplier_ledger`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `supplier_payments`

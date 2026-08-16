@@ -131,4 +131,25 @@ public function create($data)
         WHERE supplier_id=?
     ",[$supplier_id])->fetch()->total;
 }
+
+public function getAll()
+{
+    return $this->db->query("
+        SELECT
+            gr.*,
+            po.po_number,
+           s.company_name AS company_name
+
+        FROM goods_receipts gr
+
+        INNER JOIN purchase_orders po
+            ON po.id = gr.purchase_order_id
+
+        INNER JOIN suppliers s
+            ON s.id = gr.supplier_id
+
+        ORDER BY gr.created_at DESC, gr.id DESC
+    ")->fetchAll();
+}
+
 }

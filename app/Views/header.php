@@ -258,6 +258,17 @@ $role_name = $_SESSION['role_name'] ?? '';
                                     </li>
                                 <?php endif; ?>
 
+                                <?php if (AuthHelper::canView('goods-returns.create')) : ?>
+                                    <li>
+                                        <a class="dropdown-item" href="<?= URLROOT ?>/goods-returns/create">
+
+                                            <i class="fas fa-undo-alt"></i>
+                                            Return Goods (from Warehouse)
+
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
+
                                 <?php if (AuthHelper::canView('suppliers.view')) : ?>
                                     <li>
                                         <a class="dropdown-item" href="<?= URLROOT ?>/suppliers">

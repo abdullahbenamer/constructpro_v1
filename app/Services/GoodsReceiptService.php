@@ -172,10 +172,7 @@ class GoodsReceiptService extends BaseService
                         ' units remain on the purchase order.'
                 );
             }
-
-
-            /////////////////////////////////////////
-
+         
             /*
             |--------------------------------------------------------------------------
             | 5. CALCULATE TOTAL
@@ -232,6 +229,9 @@ class GoodsReceiptService extends BaseService
                 'inventory_id' =>
                 $inventoryId,
 
+                'location_id' =>
+                $locationId,
+
                 'quantity' =>
                 $quantity,
 
@@ -240,7 +240,6 @@ class GoodsReceiptService extends BaseService
 
                 'total_cost' =>
                 $total
-
             ]);
 
             /*

@@ -87,7 +87,22 @@ class ServiceContainer
                 InventoryMovementModel::class,
                 InventoryTransferModel::class
             ]
-        ]
+        ],
+
+     'GoodsReturn' => [
+    'class' => GoodsReturnService::class,
+
+    'dependencies' => [
+        GoodsReceiptItemModel::class,
+        GoodsReturnModel::class,
+        GoodsReturnItemModel::class,
+        SupplierLedgerModel::class
+    ],
+
+    'services' => [
+        'Inventory'
+    ]
+],
 
     ];
 

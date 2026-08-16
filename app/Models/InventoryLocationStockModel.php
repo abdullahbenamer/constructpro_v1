@@ -25,7 +25,39 @@ class InventoryLocationStockModel extends Model
         )->fetchAll();
     }
 
+/*
+|--------------------------------------------------------------------------
+| GET ALL LOCATIONS WITH CURRENT STOCK FOR AN ITEM
+|--------------------------------------------------------------------------
+| Used by Goods Return.
+|
+| Returns every warehouse, including warehouses where the item
+| does not yet have an inventory_location_stock row.
+|--------------------------------------------------------------------------
+*/
 
+public function getItemLocationsForReturn($inventory_id)
+{
+    return $this->db->query(
+        "
+        SELECT
+            l.id AS location_id,
+            l.code,
+            l.name,
+            COALESCE(ils.quantity, 0) AS quantity
+
+        FROM inventory_locations l
+
+        LEFT JOIN inventory_location_stock ils
+            ON ils.location_id = l.id
+            AND ils.inventory_id = ?
+
+        ORDER BY
+            l.code
+        ",
+        [$inventory_id]
+    )->fetchAll();
+}
  /*
     |--------------------------------------------------------------------------
     | GET ITEM STOCK BY LOCATION for TRANSFER Logic Only
