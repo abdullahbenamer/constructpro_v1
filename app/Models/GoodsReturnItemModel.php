@@ -31,30 +31,53 @@ public function create(array $data)
     ]);
 }
 
-    public function getByReturn($returnId)
-    {
-        return $this->db->query("
-            SELECT
-                gri.*,
-                i.name,
-                i.sku,
-                i.base_unit,
-                l.code AS location_code,
-                l.name AS location_name
+ public function getByReturn($returnId)
+{
+    return $this->db->query("
+        SELECT
 
-            FROM goods_return_items gri
+            gri.*,
 
-            INNER JOIN inventory i
-                ON i.id = gri.inventory_id
+            i.name,
+            i.sku,
+            i.base_unit,
 
-            INNER JOIN inventory_locations l
-                ON l.id = gri.location_id
+            /*
+            |----------------------------------------------------------
+            | Original GRN receiving location
+            |----------------------------------------------------------
+            */
+            grl.code AS original_location_code,
+            grl.name AS original_location_name,
 
-            WHERE gri.goods_return_id = ?
+            /*
+            |----------------------------------------------------------
+            | Actual warehouse from which goods were returned
+            |----------------------------------------------------------
+            */
+            rl.code AS return_location_code,
+            rl.name AS return_location_name
 
-            ORDER BY gri.id
-        ", [$returnId])->fetchAll();
-    }
+        FROM goods_return_items gri
+
+        INNER JOIN inventory i
+            ON i.id = gri.inventory_id
+
+        INNER JOIN goods_receipt_items grri
+            ON grri.id = gri.goods_receipt_item_id
+
+        LEFT JOIN inventory_locations grl
+            ON grl.id = grri.location_id
+
+        INNER JOIN inventory_locations rl
+            ON rl.id = gri.location_id
+
+        WHERE gri.goods_return_id = ?
+
+        ORDER BY gri.id
+
+    ", [$returnId])->fetchAll();
+}
 
     /*
     |--------------------------------------------------------------------------

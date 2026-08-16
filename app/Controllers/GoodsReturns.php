@@ -22,6 +22,43 @@ class GoodsReturns extends Controller
         );
     }
 
+    public function details($id)
+{
+    AuthHelper::can('inventory.view');
+
+    $returnModel =
+        $this->model('GoodsReturn');
+
+    $returnItemModel =
+        $this->model('GoodsReturnItem');
+
+    $return =
+        $returnModel->getById((int)$id);
+
+    if (!$return) {
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/goodsreturns'
+        );
+
+        exit;
+    }
+
+    $data['return'] =
+        $return;
+
+    $data['items'] =
+        $returnItemModel->getByReturn(
+            (int)$id
+        );
+
+    $this->view(
+        'goods-returns/details',
+        $data
+    );
+}
 
     /*
     |--------------------------------------------------------------------------
