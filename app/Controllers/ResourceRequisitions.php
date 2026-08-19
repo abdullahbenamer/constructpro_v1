@@ -213,7 +213,7 @@ public function submit($id)
     }
 
     // Prevent empty requisitions from submitting
-    $itemModel = $this->model('ResourceRequisitionItemModel');
+    $itemModel = $this->model('ResourceRequisitionItem');
 
     $items = $itemModel->getByRequisition($id);
 

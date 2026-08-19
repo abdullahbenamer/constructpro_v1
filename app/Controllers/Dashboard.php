@@ -64,9 +64,7 @@ class Dashboard extends Controller
         $data['customers'] =
             $customerModel->getCustomers('active');
 
-        $data['upcoming_services'] =
-            $serviceModel->getUpcomingServices();
-
+       
         // ==================================================
         // GLOBAL FINANCE
         // ==================================================
@@ -108,7 +106,7 @@ class Dashboard extends Controller
                 "Active: " . count($data['active_projects']) . ", " .
                 "Low Stock: " . count($data['low_stock']) . ", " .
                 "Customers: " . count($data['customers']) . ", " .
-                "Services: " . count($data['upcoming_services']) . ", " .
+                // "Resource Requisitions: " . count($data['resource_requisitions']) . ", " .
                 "Project Costs: {$data['total_project_costs']}"
         );
 

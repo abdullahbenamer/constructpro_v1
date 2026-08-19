@@ -112,21 +112,11 @@
                         name="priority"
                         class="form-select">
 
-                        <option value="LOW">
-                            LOW
-                        </option>
-
-                        <option value="NORMAL" selected>
-                            NORMAL
-                        </option>
-
-                        <option value="HIGH">
-                            HIGH
-                        </option>
-
-                        <option value="URGENT">
-                            URGENT
-                        </option>
+                        <option value="LOW">LOW</option>
+                        <option value="NORMAL" selected>NORMAL</option>
+                        <option value="HIGH">HIGH</option>
+                        <option value="URGENT">URGENT</option>
+                        <option value="CRITICAL">CRITICAL</option>
 
                     </select>
 

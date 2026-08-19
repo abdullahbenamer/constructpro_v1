@@ -998,18 +998,19 @@ CREATE TABLE `resource_requisition_comments` (
 CREATE TABLE `resource_requisition_items` (
   `id` int(11) NOT NULL,
   `requisition_id` int(11) NOT NULL,
-  `resource_type` enum('MATERIAL','SERVICE','MANPOWER','EQUIPMENT','LOGISTICS','VEHICLE','RENTAL','OTHER') NOT NULL,
+  `resource_source` enum('INVENTORY','RESOURCE') NOT NULL,
+  `inventory_id` int(11) DEFAULT NULL,
   `resource_id` int(11) DEFAULT NULL,
   `description` varchar(255) NOT NULL,
   `uom` varchar(30) DEFAULT NULL,
-  `quantity` decimal(15,2) DEFAULT 1.00,
-  `estimated_unit_cost` decimal(15,2) DEFAULT 0.00,
-  `estimated_total` decimal(15,2) DEFAULT 0.00,
+  `quantity` decimal(15,2) NOT NULL DEFAULT 1.00,
+  `estimated_unit_cost` decimal(15,2) NOT NULL DEFAULT 0.00,
+  `estimated_total` decimal(15,2) NOT NULL DEFAULT 0.00,
   `remarks` text DEFAULT NULL,
-  `status` enum('OPEN','PARTIAL','FULFILLED','CANCELLED') DEFAULT 'OPEN',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `resource_source` enum('INVENTORY','RESOURCE') DEFAULT 'RESOURCE'
+  `status` enum('OPEN','PARTIAL','FULFILLED','CANCELLED') NOT NULL DEFAULT 'OPEN',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 -- --------------------------------------------------------
 
@@ -1697,13 +1698,6 @@ ALTER TABLE `resource_requisition_comments`
   ADD KEY `fk_rr_comment_req` (`requisition_id`),
   ADD KEY `fk_rr_comment_user` (`user_id`);
 
---
--- Indexes for table `resource_requisition_items`
---
-ALTER TABLE `resource_requisition_items`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_rri_header` (`requisition_id`),
-  ADD KEY `fk_req_items_resource` (`resource_id`);
 
 --
 -- Indexes for table `roles`
@@ -1997,11 +1991,6 @@ ALTER TABLE `resource_requisition_attachments`
 ALTER TABLE `resource_requisition_comments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT for table `resource_requisition_items`
---
-ALTER TABLE `resource_requisition_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -2269,13 +2258,6 @@ ALTER TABLE `resource_requisition_comments`
   ADD CONSTRAINT `fk_rr_comment_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
--- Constraints for table `resource_requisition_items`
---
-ALTER TABLE `resource_requisition_items`
-  ADD CONSTRAINT `fk_req_items_resource` FOREIGN KEY (`resource_id`) REFERENCES `resources` (`id`),
-  ADD CONSTRAINT `fk_rri_header` FOREIGN KEY (`requisition_id`) REFERENCES `resource_requisitions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `services`
 --
 ALTER TABLE `services`
@@ -2305,7 +2287,51 @@ ALTER TABLE `supplier_payment_allocations`
 ALTER TABLE `user_locations`
   ADD CONSTRAINT `fk_user_locations_location` FOREIGN KEY (`location_id`) REFERENCES `inventory_locations` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_user_locations_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
+
+
+--
+
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `resource_requisition_items`
+--
+ALTER TABLE `resource_requisition_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_rri_requisition` (`requisition_id`),
+  ADD KEY `idx_rri_inventory` (`inventory_id`),
+  ADD KEY `idx_rri_resource` (`resource_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `resource_requisition_items`
+--
+ALTER TABLE `resource_requisition_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `resource_requisition_items`
+--
+ALTER TABLE `resource_requisition_items`
+  ADD CONSTRAINT `fk_rri_inventory` FOREIGN KEY (`inventory_id`) REFERENCES `inventory` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_rri_requisition` FOREIGN KEY (`requisition_id`) REFERENCES `resource_requisitions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_rri_resource` FOREIGN KEY (`resource_id`) REFERENCES `resources` (`id`) ON UPDATE CASCADE;
+
+
 COMMIT;
+
+
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

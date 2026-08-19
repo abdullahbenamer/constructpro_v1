@@ -1,10 +1,8 @@
 <div class="container-fluid mt-4">
 
-
     <!-- PAGE HEADER -->
 
     <div class="d-flex justify-content-between align-items-center mb-3">
-
 
         <div>
 
@@ -12,148 +10,114 @@
 
                 <i class="fas fa-edit"></i>
 
-                Edit Requisition Item
+                Edit Requisition Item #<?= $data['item']->id ?>
 
             </h4>
 
-
             <small class="text-muted">
 
-                Update resource requisition item
+                Update quantity, description, and remarks
 
             </small>
-
 
         </div>
 
 
-
-        <a href="<?= URLROOT ?>/ResourceRequisitions/details/<?= $data['item']->requisition_id ?>"
+        <a
+            href="<?= URLROOT ?>/ResourceRequisitions/details/<?= $data['item']->requisition_id ?>"
             class="btn btn-secondary">
-
 
             <i class="fas fa-arrow-left"></i>
 
             Back
 
-
         </a>
-
 
     </div>
 
 
+    <!-- WARNING -->
+
+    <div class="alert alert-danger">
+
+        <strong>Note:</strong>
+
+        Changing the material/resource or resource type requires
+        deleting the existing item and creating a new item.
+
+    </div>
 
 
-
-    <!-- FORM CARD -->
-
+    <!-- FORM -->
 
     <div class="card shadow-sm">
 
-
         <div class="card-header">
-
 
             <strong>
 
                 <i class="fas fa-box"></i>
 
-                Item Details
+                Requisition Item
 
             </strong>
-
 
         </div>
 
 
-
-
         <div class="card-body">
 
-
-            <form method="POST"
+            <form
+                method="POST"
                 action="<?= URLROOT ?>/ResourceRequisitionItems/update/<?= $data['item']->id ?>">
 
 
+                <!--
+                |--------------------------------------------------------------------------
+                | RESOURCE TYPE / DESCRIPTION / QUANTITY
+                |--------------------------------------------------------------------------
+                -->
 
                 <div class="row">
 
+                    <!-- RESOURCE TYPE -->
 
-
-                    <!-- RESOURCE -->
-
-                    <div class="col-md-6 mb-3">
-
+                    <div class="col-md-3 mb-3">
 
                         <label class="form-label">
 
-                            Resource
+                            Resource Type
 
                         </label>
 
+                        <div>
 
+                            <?php if ($data['item']->resource_source === 'INVENTORY'): ?>
 
-                        <select name="resource_id"
-                            id="resource_id"
-                            class="form-select select2"
-                            required>
+                                <span class="badge bg-primary fs-6">
 
+                                    MATERIAL
 
+                                </span>
 
-                            <option value="">
+                            <?php else: ?>
 
-                                -- Select Resource --
+                                <span class="badge bg-secondary fs-6">
 
-                            </option>
+                                    NON MATERIAL
 
+                                </span>
 
+                            <?php endif; ?>
 
-                            <?php foreach ($data['resources'] as $resource): ?>
-
-
-                                <option value="<?= $resource->id ?>"
-
-                                    data-description="<?= htmlspecialchars($resource->description) ?>"
-
-                                    data-unit="<?= $resource->unit_name ?>"
-
-                                    <?= ($resource->id == $data['item']->resource_id)
-                                        ? 'selected'
-                                        : '' ?>>
-
-
-                                    <?= $resource->resource_code ?>
-
-                                    -
-
-                                    <?= $resource->resource_name ?>
-
-
-                                </option>
-
-
-
-                            <?php endforeach; ?>
-
-
-                        </select>
-
-
+                        </div>
 
                     </div>
 
 
-
-
-
-
-
                     <!-- DESCRIPTION -->
 
-
-                    <div class="col-md-6 mb-3">
-
+                    <div class="col-md-5 mb-3">
 
                         <label class="form-label">
 
@@ -161,81 +125,45 @@
 
                         </label>
 
-
-                        <input type="text"
-
+                        <input
+                            type="text"
                             name="description"
-
-                            id="description"
-
                             class="form-control"
-
                             value="<?= htmlspecialchars(
-                                        !empty($data['item']->description)
-                                            ? $data['item']->description
-                                            : $data['item']->resource_description
-                                    ) ?>"
-
-                            readonly>
-
-
+                                $data['item']->description
+                                ?? $data['item']->resource_name
+                                ?? ''
+                            ) ?>"
+                            required>
 
                     </div>
-
-
-
-
-                </div>
-
-
-
-
-
-
-
-                <div class="row">
-
 
 
                     <!-- QUANTITY -->
 
-
-                    <div class="col-md-4 mb-3">
-
+                    <div class="col-md-2 mb-3">
 
                         <label class="form-label">
 
-                            Requested Quantity
+                            Quantity
 
                         </label>
 
-
-                        <input type="number"
-
+                        <input
+                            type="number"
                             name="quantity"
-
                             class="form-control"
-
                             step="0.01"
-
                             min="0.01"
-
-                            value="<?= $data['item']->quantity ?>"
-
+                            value="<?= htmlspecialchars($data['item']->quantity) ?>"
                             required>
-
 
                     </div>
 
 
-
-
-
                     <!-- UOM -->
 
-
-                    <div class="col-md-4 mb-3">
-
+                    <div class="col-md-2 mb-3">
 
                         <label class="form-label">
 
@@ -243,38 +171,57 @@
 
                         </label>
 
-
-                        <input type="text"
-
-                            name="uom"
-
-                            id="uom"
-
+                        <input
+                            type="text"
                             class="form-control"
-
-                            value="<?= !empty($data['item']->uom)
-        ? $data['item']->uom
-        : $data['item']->unit_name ?>"
-
+                            value="<?= htmlspecialchars(
+                                $data['item']->uom
+                                ?? $data['item']->unit_name
+                                ?? ''
+                            ) ?>"
                             readonly>
 
-
                     </div>
-
-
 
                 </div>
 
 
+                <!--
+                |--------------------------------------------------------------------------
+                | RESOURCE / INVENTORY
+                |--------------------------------------------------------------------------
+                -->
 
+                <div class="row">
 
+                    <div class="col-md-8 mb-3">
+
+                        <label class="form-label">
+
+                            <?= $data['item']->resource_source === 'INVENTORY'
+                                ? 'Inventory Item'
+                                : 'Resource' ?>
+
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            value="<?= htmlspecialchars(
+                                ($data['item']->resource_code ?? '') .
+                                ' - ' .
+                                ($data['item']->resource_name ?? '')
+                            ) ?>"
+                            readonly>
+
+                    </div>
+
+                </div>
 
 
                 <!-- REMARKS -->
 
-
                 <div class="mb-3">
-
 
                     <label class="form-label">
 
@@ -282,90 +229,46 @@
 
                     </label>
 
-
-                    <textarea name="remarks"
-
+                    <textarea
+                        name="remarks"
                         class="form-control"
-
-                        rows="4"><?= htmlspecialchars($data['item']->remarks) ?></textarea>
-
+                        rows="4"><?= htmlspecialchars(
+                            $data['item']->remarks ?? ''
+                        ) ?></textarea>
 
                 </div>
 
 
-
-
-
+                <!-- ACTIONS -->
 
                 <div class="text-end">
 
-
-                    <button type="submit"
-
-                        class="btn btn-primary">
-
+                    <button
+                        type="submit"
+                        class="btn btn-success">
 
                         <i class="fas fa-save"></i>
 
-                        Save Changes
-
+                        Update Item
 
                     </button>
 
 
-
-
-                    <a href="<?= URLROOT ?>/ResourceRequisitions/details/<?= $data['item']->requisition_id ?>"
-
+                    <a
+                        href="<?= URLROOT ?>/ResourceRequisitions/details/<?= $data['item']->requisition_id ?>"
                         class="btn btn-secondary">
-
 
                         Cancel
 
-
                     </a>
-
-
 
                 </div>
 
 
-
-
             </form>
-
-
 
         </div>
 
     </div>
 
 </div>
-
-<!-- <script>
-    $(document).ready(function() {
-
-        $('#resource_id').select2({
-
-            placeholder: "-- Select Resource --",
-
-            allowClear: true,
-
-            width: '100%'
-
-        });
-
-        $('#resource_id').on('change', function() {
-
-           let option = $(this).find(':selected');
-
-            $('#description').val(
-
-                option.data('description') || ''
-            );
-            $('#uom').val(
-                option.data('unit') || ''
-            );
-        });
-    });
-</script> -->

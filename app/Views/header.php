@@ -293,13 +293,14 @@ $role_name = $_SESSION['role_name'] ?? '';
                         </li>
 
                     <?php endif; ?>
-                    <?php if (AuthHelper::canView('services.view')) : ?>
+
+                    <!-- <?php //if (AuthHelper::canView('services.view')) : ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= URLROOT ?>/services">
+                            <a class="nav-link" href="<?//= URLROOT ?>/services">
                                 <i class="fas fa-tools"></i> Services
                             </a>
                         </li>
-                    <?php endif; ?>
+                    <?php //endif; ?> -->
 
                     <!-- Finance -->
                     <?php if (AuthHelper::canView('finance.view')) : ?>

@@ -15,7 +15,6 @@ class ResourceRequisitionItemModel
   public function getByRequisition($requisition_id)
 {
     return $this->db->query(
-
         "
         SELECT
 
@@ -39,12 +38,18 @@ class ResourceRequisitionItemModel
                 ELSE u.unit_name
             END AS uom,
 
-            rc.category_name
+            rc.category_name,
+
+            CASE
+                WHEN ri.resource_source = 'INVENTORY'
+                THEN 'MATERIAL'
+                ELSE r.resource_type
+            END AS resource_type
 
         FROM resource_requisition_items ri
 
         LEFT JOIN inventory i
-            ON i.id = ri.resource_id
+            ON i.id = ri.inventory_id
            AND ri.resource_source = 'INVENTORY'
 
         LEFT JOIN resources r
@@ -61,122 +66,199 @@ class ResourceRequisitionItemModel
 
         ORDER BY ri.id ASC
         ",
-
         [
             $requisition_id
         ]
-
     )->fetchAll();
 }
-
 
     /**
      * Add requisition item
      */
-    public function create($data)
-    {
-        return $this->db->query(
-            "
-    INSERT INTO resource_requisition_items
-    (
-        requisition_id,
-        resource_id,
-        resource_source,
-        description,
-        quantity,
-        uom,
-        remarks
-    )
-    VALUES (?, ?, ?, ?, ?, ?, ?)
-    ",
-            [
-                $data['requisition_id'],
-                $data['resource_id'],
-                $data['resource_source'],
-                $data['description'],
-                $data['quantity'],
-                $data['uom'],
-                $data['remarks']
-            ]
-        );
-    }
+
+public function create(array $data)
+{
+    return $this->db->query(
+        "
+        INSERT INTO resource_requisition_items
+        (
+            requisition_id,
+            resource_source,
+            inventory_id,
+            resource_id,
+            description,
+            quantity,
+            uom,
+            remarks
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ",
+        [
+            $data['requisition_id'],
+
+            $data['resource_source'],
+
+            $data['inventory_id'] ?? null,
+
+            $data['resource_id'] ?? null,
+
+            $data['description'],
+
+            $data['quantity'],
+
+            $data['uom'],
+
+            $data['remarks']
+        ]
+    );
+}
 
 
     /**
      * GET ITEM BY ID
      */
 
-    public function getById($id)
-    {
-        return $this->db->query(
-            "
+  /**
+ * GET ITEM BY ID
+ */
+public function getById($id)
+{
+    return $this->db->query(
+        "
         SELECT
 
             ri.*,
 
-            r.resource_code,
+            /*
+            |--------------------------------------------------------------------------
+            | RESOURCE / INVENTORY CODE
+            |--------------------------------------------------------------------------
+            */
 
-            r.resource_name,
+            CASE
+                WHEN ri.resource_source = 'INVENTORY'
+                THEN i.sku
+                ELSE r.resource_code
+            END AS resource_code,
 
-            r.description AS resource_description,
 
-            u.unit_name
+            /*
+            |--------------------------------------------------------------------------
+            | RESOURCE / INVENTORY NAME
+            |--------------------------------------------------------------------------
+            */
+
+            CASE
+                WHEN ri.resource_source = 'INVENTORY'
+                THEN i.name
+                ELSE r.resource_name
+            END AS resource_name,
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | DESCRIPTION
+            |--------------------------------------------------------------------------
+            */
+
+            CASE
+                WHEN ri.resource_source = 'INVENTORY'
+                THEN i.name
+                ELSE r.description
+            END AS resource_description,
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | UOM
+            |--------------------------------------------------------------------------
+            */
+
+            CASE
+                WHEN ri.resource_source = 'INVENTORY'
+                THEN i.base_unit
+                ELSE u.unit_name
+            END AS unit_name,
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | CATEGORY
+            |--------------------------------------------------------------------------
+            */
+
+            rc.category_name
 
         FROM resource_requisition_items ri
 
+        /*
+        |--------------------------------------------------------------------------
+        | INVENTORY
+        |--------------------------------------------------------------------------
+        */
+
+        LEFT JOIN inventory i
+            ON i.id = ri.resource_id
+           AND ri.resource_source = 'INVENTORY'
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | RESOURCE
+        |--------------------------------------------------------------------------
+        */
+
         LEFT JOIN resources r
             ON r.id = ri.resource_id
+           AND ri.resource_source = 'RESOURCE'
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | RESOURCE UNIT
+        |--------------------------------------------------------------------------
+        */
 
         LEFT JOIN units u
             ON u.id = r.unit_id
 
-        WHERE ri.id='$id'
-        "
-        )->fetch();
-    }
+
+        /*
+        |--------------------------------------------------------------------------
+        | RESOURCE CATEGORY
+        |--------------------------------------------------------------------------
+        */
+
+        LEFT JOIN resource_categories rc
+            ON rc.id = r.category_id
 
 
+        WHERE ri.id = ?
 
+        LIMIT 1
+        ",
+        [$id]
+    )->fetch();
+}
 
     /**
      * UPDATE ITEM
      */
-    public function update($id, $data)
-    {
-
-        return $this->db->query(
-
-            "
+   public function update($id, $data)
+{
+    return $this->db->query(
+        "
         UPDATE resource_requisition_items
 
         SET
-
-
-            resource_id = '{$data['resource_id']}',
-
-
             description = '{$data['description']}',
-
-
             quantity = '{$data['quantity']}',
-
-
-            uom = '{$data['uom']}',
-
-
             remarks = '{$data['remarks']}'
 
-
-
         WHERE id = '$id'
-
         "
-
-        );
-    }
-
-
-
+    );
+}   
 
     /**
      * DELETE ITEM
