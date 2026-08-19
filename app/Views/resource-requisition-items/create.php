@@ -49,13 +49,20 @@
                     name="requisition_id"
                     value="<?= $data['requisition_id']; ?>">
 
-                <!-- ACTUAL VALUES STORED IN DATABASE -->
-                <input type="hidden" name="resource_source" id="resource_source">
+                <input
+                    type="hidden"
+                    name="resource_source"
+                    id="resource_source">
 
-                <input type="hidden" name="inventory_id" id="inventory_id">
+                <input
+                    type="hidden"
+                    name="inventory_id"
+                    id="inventory_id">
 
-                <input type="hidden" name="resource_id" id="resource_id">
-
+                <input
+                    type="hidden"
+                    name="non_inventory_resource"
+                    id="non_inventory_resource">
 
                 <div class="row">
 
@@ -82,18 +89,11 @@
 
 
                         <!-- MATERIAL ITEMS -->
-                        <div
-                            class="mb-3 mt-3"
-                            id="inventoryBlock">
+                        <div class="mb-3" id="inventoryBlock">
 
                             <label class="form-label">
-
                                 Material Item
-
-                                <span class="text-danger">*</span>
-
                             </label>
-
 
                             <select
                                 id="inventorySelect"
@@ -103,21 +103,20 @@
                                     -- Select Material --
                                 </option>
 
-
                                 <?php foreach ($data['inventory'] as $item): ?>
 
                                     <option
                                         value="<?= (int)$item->id ?>"
                                         data-source="INVENTORY"
-                                        data-unit="<?= htmlspecialchars($item->base_unit ?? '') ?>"
-                                        data-description="<?= htmlspecialchars($item->name ?? '') ?>">
+                                        data-unit="<?= htmlspecialchars($item->base_unit) ?>"
+                                        data-description="<?= htmlspecialchars($item->name) ?>">
 
-                                        <?= htmlspecialchars($item->sku ?? '') ?>
+                                        <?= htmlspecialchars($item->sku) ?>
                                         -
-                                        <?= htmlspecialchars($item->name ?? '') ?>
+                                        <?= htmlspecialchars($item->name) ?>
 
                                         (Available:
-                                        <?= number_format((float)($item->available_qty ?? 0), 2) ?>
+                                        <?= number_format((float)$item->available_qty, 2) ?>
                                         )
 
                                     </option>
@@ -126,29 +125,19 @@
 
                             </select>
 
-
                             <small class="text-danger">
-
                                 Search by SKU or material name.
-
                             </small>
 
                         </div>
 
 
                         <!-- NON MATERIAL ITEMS -->
-                        <div
-                            class="mb-3 mt-3"
-                            id="resourceBlock">
+                        <div class="mb-3" id="resourceBlock">
 
                             <label class="form-label">
-
                                 Resource
-
-                                <span class="text-danger">*</span>
-
                             </label>
-
 
                             <select
                                 id="resourceSelect"
@@ -158,18 +147,17 @@
                                     -- Select Resource --
                                 </option>
 
-
                                 <?php foreach ($data['resources'] as $resource): ?>
 
                                     <option
                                         value="<?= (int)$resource->id ?>"
                                         data-source="RESOURCE"
-                                        data-unit="<?= htmlspecialchars($resource->unit_name ?? '') ?>"
-                                        data-description="<?= htmlspecialchars($resource->resource_name ?? '') ?>">
+                                        data-unit="<?= htmlspecialchars($resource->unit_name) ?>"
+                                        data-description="<?= htmlspecialchars($resource->resource_name) ?>">
 
-                                        <?= htmlspecialchars($resource->resource_code ?? '') ?>
+                                        <?= htmlspecialchars($resource->resource_code) ?>
                                         -
-                                        <?= htmlspecialchars($resource->resource_name ?? '') ?>
+                                        <?= htmlspecialchars($resource->resource_name) ?>
 
                                     </option>
 
@@ -177,11 +165,8 @@
 
                             </select>
 
-
-                            <small class="text-muted mt-1 d-block">
-
+                            <small class="text-muted">
                                 Search by resource code or name.
-
                             </small>
 
                         </div>
@@ -325,8 +310,7 @@
         |--------------------------------------------------------------------------
         */
 
-        const type =
-            document.getElementById('resourceType');
+        const type = document.getElementById('resourceType');
 
         const inventoryBlock =
             document.getElementById('inventoryBlock');
@@ -340,8 +324,14 @@
         const resourceSelect =
             document.getElementById('resourceSelect');
 
-        const hiddenSource =
+        const resourceSource =
             document.getElementById('resource_source');
+
+        const inventoryId =
+            document.getElementById('inventory_id');
+
+        const nonInventoryResource =
+            document.getElementById('non_inventory_resource');
 
         const description =
             document.getElementById('description');
@@ -352,95 +342,132 @@
 
         /*
         |--------------------------------------------------------------------------
-        | INITIALIZE SELECT2
+        | SAFETY CHECK
         |--------------------------------------------------------------------------
         */
 
-        /*
-        |--------------------------------------------------------------------------
-        | INITIALIZE INVENTORY SELECT2
-        |--------------------------------------------------------------------------
-        */
+        if (!type) {
+            console.error('resourceType not found.');
+            return;
+        }
 
-        $('#inventorySelect').select2({
+        if (!inventorySelect) {
+            console.error('inventorySelect not found.');
+            return;
+        }
 
-            width: '100%',
-
-            placeholder: '-- Select Material --',
-
-            allowClear: true,
-
-            minimumResultsForSearch: 0
-
-        });
+        if (!resourceSelect) {
+            console.error('resourceSelect not found.');
+            return;
+        }
 
 
         /*
         |--------------------------------------------------------------------------
-        | INVENTORY SEARCH PLACEHOLDER
+        | INITIALIZE SELECT2 IF AVAILABLE
         |--------------------------------------------------------------------------
         */
 
-        $('#inventorySelect').on('select2:open', function() {
+        if (
+            typeof window.jQuery !== 'undefined' &&
+            typeof jQuery.fn.select2 === 'function'
+        ) {
 
-            setTimeout(function() {
+            $('#inventorySelect').select2({
 
-                $('.select2-container--open .select2-search__field')
-                    .attr('placeholder', 'Search Material...');
+                width: '100%',
 
-            }, 0);
+                placeholder: '-- Search by SKU or material name --',
 
-        });
+                allowClear: true,
+
+                minimumResultsForSearch: 0
+
+            });
+
+
+            $('#resourceSelect').select2({
+
+                width: '100%',
+
+                placeholder: '-- Search Resource --',
+
+                allowClear: true,
+
+                minimumResultsForSearch: 0
+
+            });
+
+
+            /*
+            | Search placeholder - MATERIAL
+            */
+
+            $('#inventorySelect').on(
+                'select2:open',
+                function() {
+
+                    setTimeout(function() {
+
+                        const field =
+                            document.querySelector(
+                                '.select2-container--open .select2-search__field'
+                            );
+
+                        if (field) {
+
+                            field.placeholder =
+                                'Search by SKU or material name...';
+
+                            field.style.color = 'red';
+
+                        }
+
+                    }, 10);
+
+                }
+            );
+
+
+            /*
+            | Search placeholder - RESOURCE
+            */
+
+            $('#resourceSelect').on(
+                'select2:open',
+                function() {
+
+                    setTimeout(function() {
+
+                        const field =
+                            document.querySelector(
+                                '.select2-container--open .select2-search__field'
+                            );
+
+                        if (field) {
+
+                            field.placeholder =
+                                'Search Resource...';
+
+                            field.style.color = 'red';
+
+                        }
+
+                    }, 10);
+
+                }
+            );
+
+        }
 
 
         /*
         |--------------------------------------------------------------------------
-        | INITIALIZE RESOURCE SELECT2
+        | CLEAR DETAILS
         |--------------------------------------------------------------------------
         */
 
-        $('#resourceSelect').select2({
-
-            width: '100%',
-
-            placeholder: '-- Select Resource --',
-
-            allowClear: true,
-
-            minimumResultsForSearch: 0
-
-        });
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | RESOURCE SEARCH PLACEHOLDER
-        |--------------------------------------------------------------------------
-        */
-
-        $('#resourceSelect').on('select2:open', function() {
-
-            setTimeout(function() {
-
-                $('.select2-container--open .select2-search__field')
-                    .attr('placeholder', 'Search Resource...');
-
-            }, 0);
-
-        });
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | CLEAR ITEM DETAILS
-        |--------------------------------------------------------------------------
-        */
-
-        function clearItemDetails() {
-
-            document.getElementById('inventory_id').value = '';
-
-            document.getElementById('resource_id').value = '';
+        function clearDetails() {
 
             description.value = '';
 
@@ -448,32 +475,48 @@
 
         }
 
+
         /*
         |--------------------------------------------------------------------------
-        | UPDATE INVENTORY
+        | UPDATE MATERIAL
         |--------------------------------------------------------------------------
         */
 
-        function updateInventory() {
+      function updateInventory() {
 
-            let option =
-                inventorySelect.options[
-                    inventorySelect.selectedIndex
-                ];
+    const selectedId =
+        inventorySelect.value;
 
-            hiddenSource.value = 'INVENTORY';
+    resourceSource.value = 'INVENTORY';
 
-            document.getElementById('inventory_id').value =
-                inventorySelect.value;
+    inventoryId.value =
+        selectedId || '';
 
-            document.getElementById('resource_id').value = '';
+    nonInventoryResource.value = '';
 
-            description.value =
-                option.dataset.description || '';
+    if (!selectedId) {
 
-            uom.value =
-                option.dataset.unit || '';
-        }
+        description.value = '';
+        uom.value = '';
+
+        return;
+    }
+
+    const option =
+        inventorySelect.options[
+            inventorySelect.selectedIndex
+        ];
+
+    if (!option) {
+        return;
+    }
+
+    description.value =
+        option.getAttribute('data-description') || '';
+
+    uom.value =
+        option.getAttribute('data-unit') || '';
+}
 
 
         /*
@@ -481,126 +524,348 @@
         | UPDATE NON-MATERIAL RESOURCE
         |--------------------------------------------------------------------------
         */
+function updateResource() {
 
-        function updateResource() {
+    const selectedId =
+        resourceSelect.value;
 
-            let option =
-                resourceSelect.options[
-                    resourceSelect.selectedIndex
-                ];
+    resourceSource.value = 'RESOURCE';
 
-            hiddenSource.value = 'RESOURCE';
+    nonInventoryResource.value =
+        selectedId || '';
 
-            document.getElementById('resource_id').value =
-                resourceSelect.value;
+    inventoryId.value = '';
 
-            document.getElementById('inventory_id').value = '';
+    if (!selectedId) {
 
-            description.value =
-                option.dataset.description || '';
+        description.value = '';
+        uom.value = '';
 
-            uom.value =
-                option.dataset.unit || '';
-        }
+        return;
+    }
+
+    const option =
+        resourceSelect.options[
+            resourceSelect.selectedIndex
+        ];
+
+    if (!option) {
+        return;
+    }
+
+    description.value =
+        option.getAttribute('data-description') || '';
+
+    uom.value =
+        option.getAttribute('data-unit') || '';
+}
 
 
         /*
         |--------------------------------------------------------------------------
-        | RESOURCE TYPE SWITCH
+        | CLEAR MATERIAL
         |--------------------------------------------------------------------------
         */
 
-        function toggleResourceType() {
+        function clearInventory() {
 
-            if (type.value === 'INVENTORY') {
+            inventorySelect.value = '';
 
-                /*
-                |------------------------------------------------------------------
-                | SHOW MATERIAL
-                |------------------------------------------------------------------
-                */
-
-                inventoryBlock.style.display = '';
-
-                resourceBlock.style.display = 'none';
-
-
-                hiddenSource.value = 'INVENTORY';
-
-
-                /*
-                | Clear non-material selection
-                */
-
-                $('#resourceSelect')
-                    .val(null)
-                    .trigger('change');
-
-
-                /*
-                | Update current material
-                */
-
-                updateInventory();
-
-            } else {
-
-                /*
-                |------------------------------------------------------------------
-                | SHOW NON-MATERIAL RESOURCE
-                |------------------------------------------------------------------
-                */
-
-                inventoryBlock.style.display = 'none';
-
-                resourceBlock.style.display = '';
-
-
-                hiddenSource.value = 'RESOURCE';
-
-
-                /*
-                | Clear material selection
-                */
-
-                $('#inventorySelect')
-                    .val(null)
-                    .trigger('change');
-
-
-                /*
-                | Update current resource
-                */
-
-                updateResource();
-
-            }
+            inventoryId.value = '';
 
         }
 
 
         /*
         |--------------------------------------------------------------------------
-        | EVENTS
+        | CLEAR NON-MATERIAL
+        |--------------------------------------------------------------------------
+        */
+
+        function clearResource() {
+
+            resourceSelect.value = '';
+
+            nonInventoryResource.value = '';
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SHOW MATERIAL
+        |--------------------------------------------------------------------------
+        */
+
+        function showMaterial() {
+
+            /*
+            | Use the native hidden property.
+            | This does NOT depend on Bootstrap CSS.
+            */
+
+            inventoryBlock.hidden = false;
+
+            resourceBlock.hidden = true;
+
+
+            /*
+            | Clear non-material
+            */
+
+            clearResource();
+
+
+            /*
+            | Set source
+            */
+
+            resourceSource.value =
+                'INVENTORY';
+
+
+            /*
+            | Update material
+            */
+
+            updateInventory();
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SHOW NON-MATERIAL
+        |--------------------------------------------------------------------------
+        */
+
+        function showResource() {
+
+            /*
+            | Use the native hidden property.
+            */
+
+            inventoryBlock.hidden = true;
+
+            resourceBlock.hidden = false;
+
+
+            /*
+            | Clear material
+            */
+
+            clearInventory();
+
+
+            /*
+            | Set source
+            */
+
+            resourceSource.value =
+                'RESOURCE';
+
+
+            /*
+            | Update resource
+            */
+
+            updateResource();
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | RESOURCE TYPE CHANGE
         |--------------------------------------------------------------------------
         */
 
         type.addEventListener(
             'change',
-            toggleResourceType
+            function() {
+
+                if (
+                    type.value === 'INVENTORY'
+                ) {
+
+                    showMaterial();
+
+                } else {
+
+                    showResource();
+
+                }
+
+            }
         );
+    
+/*
+|--------------------------------------------------------------------------
+| MATERIAL SELECT2 CHANGE
+|--------------------------------------------------------------------------
+*/
+
+$('#inventorySelect').on('change', function () {
+
+    if (type.value === 'INVENTORY') {
+
+        updateInventory();
+
+    }
+
+});
 
 
-        $('#inventorySelect').on(
-            'change',
-            updateInventory
-        );
+/*
+|--------------------------------------------------------------------------
+| NON-MATERIAL SELECT2 CHANGE
+|--------------------------------------------------------------------------
+*/
+
+$('#resourceSelect').on('change', function () {
+
+    if (type.value === 'RESOURCE') {
+
+        updateResource();
+
+    }
+
+});
+
+        /*
+        |--------------------------------------------------------------------------
+        | FORM SUBMIT
+        |--------------------------------------------------------------------------
+        */
+
+        const form =
+            inventorySelect.closest('form');
 
 
-        $('#resourceSelect').on(
-            'change',
-            updateResource
-        );
+        if (form) {
+
+            form.addEventListener(
+                'submit',
+                function(event) {
+
+                    /*
+                    |--------------------------------------------------------------
+                    | MATERIAL
+                    |--------------------------------------------------------------
+                    */
+
+                    if (
+                        type.value === 'INVENTORY'
+                    ) {
+
+                        const selectedId =
+                            inventorySelect.value;
+
+
+                        if (!selectedId) {
+
+                            event.preventDefault();
+
+                            alert(
+                                'Please select a material item.'
+                            );
+
+                            if (
+                                typeof window.jQuery !== 'undefined' &&
+                                typeof jQuery.fn.select2 === 'function'
+                            ) {
+
+                                $('#inventorySelect')
+                                    .select2('open');
+
+                            } else {
+
+                                inventorySelect.focus();
+
+                            }
+
+                            return;
+
+                        }
+
+
+                        /*
+                        | Force correct POST values
+                        */
+
+                        resourceSource.value =
+                            'INVENTORY';
+
+                        inventoryId.value =
+                            selectedId;
+
+                        nonInventoryResource.value =
+                            '';
+
+                        updateInventory();
+
+                    }
+
+
+                    /*
+                    |--------------------------------------------------------------
+                    | NON-MATERIAL
+                    |--------------------------------------------------------------
+                    */
+                    else {
+
+                        const selectedId =
+                            resourceSelect.value;
+
+
+                        if (!selectedId) {
+
+                            event.preventDefault();
+
+                            alert(
+                                'Please select a non-material resource.'
+                            );
+
+                            if (
+                                typeof window.jQuery !== 'undefined' &&
+                                typeof jQuery.fn.select2 === 'function'
+                            ) {
+
+                                $('#resourceSelect')
+                                    .select2('open');
+
+                            } else {
+
+                                resourceSelect.focus();
+
+                            }
+
+                            return;
+
+                        }
+
+
+                        /*
+                        | Force correct POST values
+                        */
+
+                        resourceSource.value =
+                            'RESOURCE';
+
+                        inventoryId.value =
+                            '';
+
+                        nonInventoryResource.value =
+                            selectedId;
+
+                        updateResource();
+
+                    }
+
+                }
+            );
+
+        }
 
 
         /*
@@ -609,7 +874,17 @@
         |--------------------------------------------------------------------------
         */
 
-        toggleResourceType();
+        if (
+            type.value === 'INVENTORY'
+        ) {
+
+            showMaterial();
+
+        } else {
+
+            showResource();
+
+        }
 
     });
 </script>

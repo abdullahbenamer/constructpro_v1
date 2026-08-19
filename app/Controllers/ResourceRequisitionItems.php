@@ -75,24 +75,15 @@ public function store()
         );
         exit;
     }
-
+//   echo '<pre>';
+//     print_r($_POST);
+//     echo '</pre>';
+//     exit;
     $requisitionId = (int)($_POST['requisition_id'] ?? 0);
 
     $this->validateDraftRequisition($requisitionId);
 
-    $source = $_POST['resource_source'] ?? '';
-
-    if (!in_array($source, ['INVENTORY', 'RESOURCE'], true)) {
-        $_SESSION['error'] = 'Invalid resource source.';
-
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitions/details/' .
-            $requisitionId
-        );
-        exit;
-    }
+    $resourceSource = $_POST['resource_source'] ?? '';
 
     /*
     |--------------------------------------------------------------------------
@@ -100,14 +91,12 @@ public function store()
     |--------------------------------------------------------------------------
     */
 
-    $inventoryId = null;
-    $resourceId  = null;
+    if ($resourceSource === 'INVENTORY') {
 
-    if ($source === 'INVENTORY') {
+        $resourceId =
+            (int)($_POST['inventory_id'] ?? 0);
 
-        $inventoryId = (int)($_POST['inventory_id'] ?? 0);
-
-        if ($inventoryId <= 0) {
+        if ($resourceId <= 0) {
             $_SESSION['error'] =
                 'Please select a material item.';
 
@@ -117,12 +106,14 @@ public function store()
                 '/ResourceRequisitionItems/create/' .
                 $requisitionId
             );
+
             exit;
         }
 
-    } else {
+    } elseif ($resourceSource === 'RESOURCE') {
 
-        $resourceId = (int)($_POST['resource_id'] ?? 0);
+        $resourceId =
+            (int)($_POST['non_inventory_resource'] ?? 0);
 
         if ($resourceId <= 0) {
             $_SESSION['error'] =
@@ -134,8 +125,23 @@ public function store()
                 '/ResourceRequisitionItems/create/' .
                 $requisitionId
             );
+
             exit;
         }
+
+    } else {
+
+        $_SESSION['error'] =
+            'Invalid resource source.';
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/ResourceRequisitionItems/create/' .
+            $requisitionId
+        );
+
+        exit;
     }
 
     /*
@@ -144,20 +150,13 @@ public function store()
     |--------------------------------------------------------------------------
     */
 
-    $itemModel = $this->model(
-        'ResourceRequisitionItem'
-    );
-
     $data = [
 
         'requisition_id' =>
             $requisitionId,
 
         'resource_source' =>
-            $source,
-
-        'inventory_id' =>
-            $inventoryId,
+            $resourceSource,
 
         'resource_id' =>
             $resourceId,
@@ -175,43 +174,8 @@ public function store()
             trim($_POST['remarks'] ?? '')
     ];
 
-    /*
-    |--------------------------------------------------------------------------
-    | BASIC VALIDATION
-    |--------------------------------------------------------------------------
-    */
-
-    if ($data['description'] === '') {
-        $_SESSION['error'] =
-            'Description is required.';
-
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitionItems/create/' .
-            $requisitionId
-        );
-        exit;
-    }
-
-    if ($data['quantity'] <= 0) {
-        $_SESSION['error'] =
-            'Quantity must be greater than zero.';
-
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitionItems/create/' .
-            $requisitionId
-        );
-        exit;
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | SAVE
-    |--------------------------------------------------------------------------
-    */
+    $itemModel =
+        $this->model('ResourceRequisitionItem');
 
     if ($itemModel->create($data)) {
 

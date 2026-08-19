@@ -12,52 +12,106 @@ class ResourceRequisitionItemModel
     }
 
 
-  public function getByRequisition($requisition_id)
-{
-    return $this->db->query(
-        "
+    public function getByRequisition($requisition_id)
+    {
+        return $this->db->query(
+            "
         SELECT
 
             ri.*,
 
+            /*
+            |--------------------------------------------------------------------------
+            | RESOURCE / INVENTORY NAME
+            |--------------------------------------------------------------------------
+            */
+
             CASE
                 WHEN ri.resource_source = 'INVENTORY'
-                THEN i.name
+                    THEN i.name
                 ELSE r.resource_name
             END AS resource_name,
 
+            /*
+            |--------------------------------------------------------------------------
+            | RESOURCE / INVENTORY CODE
+            |--------------------------------------------------------------------------
+            */
+
             CASE
                 WHEN ri.resource_source = 'INVENTORY'
-                THEN i.sku
+                    THEN i.sku
                 ELSE r.resource_code
             END AS resource_code,
 
+            /*
+            |--------------------------------------------------------------------------
+            | UOM
+            |--------------------------------------------------------------------------
+            */
+
             CASE
                 WHEN ri.resource_source = 'INVENTORY'
-                THEN i.base_unit
+                    THEN i.base_unit
                 ELSE u.unit_name
             END AS uom,
 
+            /*
+            |--------------------------------------------------------------------------
+            | RESOURCE CATEGORY
+            |--------------------------------------------------------------------------
+            */
+
             rc.category_name,
 
-            CASE
-                WHEN ri.resource_source = 'INVENTORY'
-                THEN 'MATERIAL'
-                ELSE r.resource_type
-            END AS resource_type
+            /*
+            |--------------------------------------------------------------------------
+            | CURRENT GLOBAL INVENTORY AVAILABILITY
+            |--------------------------------------------------------------------------
+            */
+
+           CASE
+    WHEN ri.resource_source = 'INVENTORY'
+        THEN i.quantity
+    ELSE NULL
+END AS available_qty
 
         FROM resource_requisition_items ri
 
+        /*
+        |--------------------------------------------------------------------------
+        | INVENTORY
+        |--------------------------------------------------------------------------
+        */
+
         LEFT JOIN inventory i
-            ON i.id = ri.inventory_id
+            ON i.id = ri.resource_id
            AND ri.resource_source = 'INVENTORY'
+
+        /*
+        |--------------------------------------------------------------------------
+        | RESOURCE
+        |--------------------------------------------------------------------------
+        */
 
         LEFT JOIN resources r
             ON r.id = ri.resource_id
            AND ri.resource_source = 'RESOURCE'
 
+        /*
+        |--------------------------------------------------------------------------
+        | UNIT
+        |--------------------------------------------------------------------------
+        */
+
         LEFT JOIN units u
             ON u.id = r.unit_id
+
+        /*
+        |--------------------------------------------------------------------------
+        | CATEGORY
+        |--------------------------------------------------------------------------
+        */
 
         LEFT JOIN resource_categories rc
             ON rc.id = r.category_id
@@ -66,20 +120,19 @@ class ResourceRequisitionItemModel
 
         ORDER BY ri.id ASC
         ",
-        [
-            $requisition_id
-        ]
-    )->fetchAll();
-}
-
+            [
+                $requisition_id
+            ]
+        )->fetchAll();
+    }
     /**
      * Add requisition item
      */
 
-public function create(array $data)
-{
-    return $this->db->query(
-        "
+    public function create(array $data)
+    {
+        return $this->db->query(
+            "
         INSERT INTO resource_requisition_items
         (
             requisition_id,
@@ -93,38 +146,38 @@ public function create(array $data)
         )
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ",
-        [
-            $data['requisition_id'],
+            [
+                $data['requisition_id'],
 
-            $data['resource_source'],
+                $data['resource_source'],
 
-            $data['inventory_id'] ?? null,
+                $data['inventory_id'] ?? null,
 
-            $data['resource_id'] ?? null,
+                $data['resource_id'] ?? null,
 
-            $data['description'],
+                $data['description'],
 
-            $data['quantity'],
+                $data['quantity'],
 
-            $data['uom'],
+                $data['uom'],
 
-            $data['remarks']
-        ]
-    );
-}
+                $data['remarks']
+            ]
+        );
+    }
 
 
     /**
      * GET ITEM BY ID
      */
 
-  /**
- * GET ITEM BY ID
- */
-public function getById($id)
-{
-    return $this->db->query(
-        "
+    /**
+     * GET ITEM BY ID
+     */
+    public function getById($id)
+    {
+        return $this->db->query(
+            "
         SELECT
 
             ri.*,
@@ -237,17 +290,17 @@ public function getById($id)
 
         LIMIT 1
         ",
-        [$id]
-    )->fetch();
-}
+            [$id]
+        )->fetch();
+    }
 
     /**
      * UPDATE ITEM
      */
-   public function update($id, $data)
-{
-    return $this->db->query(
-        "
+    public function update($id, $data)
+    {
+        return $this->db->query(
+            "
         UPDATE resource_requisition_items
 
         SET
@@ -257,8 +310,8 @@ public function getById($id)
 
         WHERE id = '$id'
         "
-    );
-}   
+        );
+    }
 
     /**
      * DELETE ITEM

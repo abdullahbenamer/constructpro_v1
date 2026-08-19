@@ -29,38 +29,38 @@
 
 
         <div>
-<?php if (
-    $data['requisition']->status == 'DRAFT'
-    &&
-    !empty($data['items'])
-): ?>
+            <?php if (
+                $data['requisition']->status == 'DRAFT'
+                &&
+                !empty($data['items'])
+            ): ?>
 
-<a href="<?= URLROOT ?>/ResourceRequisitions/submit/<?= $data['requisition']->id ?>"
-   class="btn btn-success"
-   onclick="return confirm('Submit this requisition?\n\nAfter submission it can no longer be edited.')">
+                <a href="<?= URLROOT ?>/ResourceRequisitions/submit/<?= $data['requisition']->id ?>"
+                    class="btn btn-success"
+                    onclick="return confirm('Submit this requisition?\n\nAfter submission it can no longer be edited.')">
 
-    <i class="fas fa-paper-plane"></i>
-    Submit Requisition
+                    <i class="fas fa-paper-plane"></i>
+                    Submit Requisition
 
-</a>
+                </a>
 
             <?php endif; ?>
 
             <!-- APPROVE / REJECT -->
 
-<?php if (
-    $data['requisition']->status == 'SUBMITTED'
-    &&
-    AuthHelper::canView('resource_requisitions.approve')
-): ?>
+            <?php if (
+                $data['requisition']->status == 'SUBMITTED'
+                &&
+                AuthHelper::canView('resource_requisitions.approve')
+            ): ?>
 
-<a href="<?= URLROOT ?>/ResourceRequisitions/approve/<?= $data['requisition']->id ?>"
-   class="btn btn-success">
-    <i class="fas fa-check-circle"></i>
-    Approval Decision
-</a>
+                <a href="<?= URLROOT ?>/ResourceRequisitions/approve/<?= $data['requisition']->id ?>"
+                    class="btn btn-success">
+                    <i class="fas fa-check-circle"></i>
+                    Approval Decision
+                </a>
 
-<?php endif; ?>
+            <?php endif; ?>
 
             <?php if ($data['requisition']->status == 'DRAFT'): ?>
 
@@ -175,7 +175,7 @@
 
                             <?= $data['requisition']->status ?>
 
-                       </span>
+                        </span>
 
                     </div>
 
@@ -293,83 +293,84 @@
                     </div>
                 </div>
             </div>
-          <div class="row">
+            <div class="row">
 
-    <!-- REQUESTED BY -->
+                <!-- REQUESTED BY -->
 
-    <div class="col-md-4 mb-3">
+                <div class="col-md-4 mb-3">
 
-        <label class="text-muted">
+                    <label class="text-muted">
 
-            Requested By
+                        Requested By
 
-        </label>
+                    </label>
 
-        <div>
+                    <div>
 
-            <?php if (!empty($data['requisition']->requested_by)): ?>
+                        <?php if (!empty($data['requisition']->requested_by)): ?>
 
-<a href="<?= URLROOT ?>/users/details/<?= $data['requisition']->requested_by ?>"  class="link-primary text-decoration-none fw-semibold">
-    <?= htmlspecialchars($data['requisition']->requested_by_name ?? '-') ?>
-</a>
+                            <a href="<?= URLROOT ?>/users/details/<?= $data['requisition']->requested_by ?>" class="link-primary text-decoration-none fw-semibold">
+                                <?= htmlspecialchars($data['requisition']->requested_by_name ?? '-') ?>
+                            </a>
 
-            <?php else: ?>
+                        <?php else: ?>
 
-               N/A
+                            N/A
+
+                        <?php endif; ?>
+
+                    </div>
+                    <br>
+
+                    Submitted By:
+                    <div><?php if (!empty($data['requisition']->submitted_by)): ?>
+
+                            <a href="<?= URLROOT ?>/users/details/<?= $data['requisition']->submitted_by ?>"
+                                class="link-primary text-decoration-none">
+
+                                <?= htmlspecialchars($data['requisition']->submitted_by_name ?? '-') ?>
+
+                            </a>
+
+                        <?php else: ?>
+
+                            <span class="text-muted">Not Submitted</span>
+
+                        <?php endif; ?>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- REQUISITION ITEMS -->
+
+    <div class="card shadow-sm mt-4">
+
+        <div class="card-header d-flex justify-content-between align-items-center">
+
+            <strong>
+                <i class="fas fa-list"></i>
+                Requisition Items
+            </strong>
+
+
+            <?php if ($data['requisition']->status == 'DRAFT'): ?>
+
+                <a href="<?= URLROOT ?>/ResourceRequisitionItems/create/<?= $data['requisition']->id ?>"
+                    class="btn btn-primary">
+
+                    <i class="fas fa-plus"></i>
+                    Add Item
+
+                </a>
 
             <?php endif; ?>
 
+
         </div>
-<br>
-
-Submitted By:
-        <div><?php if (!empty($data['requisition']->submitted_by)): ?>
-
-<a href="<?= URLROOT ?>/users/details/<?= $data['requisition']->submitted_by ?>"
-   class="link-primary text-decoration-none">
-
-    <?= htmlspecialchars($data['requisition']->submitted_by_name ?? '-') ?>
-
-</a>
-
-<?php else: ?>
-
-<span class="text-muted">Not Submitted</span>
-
-<?php endif; ?></div>
-
-    </div>
-
-</div>
-        </div>
-    </div>
-
-   <!-- REQUISITION ITEMS -->
-
-<div class="card shadow-sm mt-4">
-
-    <div class="card-header d-flex justify-content-between align-items-center">
-
-        <strong>
-            <i class="fas fa-list"></i>
-            Requisition Items
-        </strong>
-
-
-        <?php if ($data['requisition']->status == 'DRAFT'): ?>
-
-            <a href="<?= URLROOT ?>/ResourceRequisitionItems/create/<?= $data['requisition']->id ?>"
-               class="btn btn-primary">
-
-                <i class="fas fa-plus"></i>
-                Add Item
-
-            </a>
-
-        <?php endif; ?>
-
-
-    </div>
 
         <div class="card-body">
 
@@ -385,7 +386,9 @@ Submitted By:
 
                             <th>Resource</th>
 
-                            <th width="120">Quantity</th>
+                            <th width="120">Requested</th>
+
+                            <th width="150">Available</th>
 
                             <th width="120">Unit</th>
 
@@ -427,26 +430,71 @@ Submitted By:
 
 
                                         <br>
-                                      <small class="text-muted">
+                                        <small class="text-muted">
                                             Category:
                                             <?= $item->category_name ?? '-' ?>
                                         </small>
                                     </td>
-                                    <td><?= $item->quantity ?></td>
-                                    <td><?= $item->uom ?></td>
+                                    <td>
+                                        <?= number_format((float)$item->quantity, 2) ?>
+                                    </td>
+
+                                    <td>
+
+                                        <?php if ($item->resource_source === 'INVENTORY'): ?>
+
+                                            <?php
+                                            $available = (float)($item->available_qty ?? 0);
+                                            $requested = (float)$item->quantity;
+                                            ?>
+
+                                            <?php if ($available >= $requested): ?>
+
+                                                <span class="fw-bold text-success">
+                                                    Available: <?= number_format($available, 2) ?>
+                                                </span>
+
+                                            <?php elseif ($available > 0): ?>
+
+                                                <span class="fw-bold text-danger">
+                                                    Available: <?= number_format($available, 2) ?>
+                                                </span>
+
+                                            <?php else: ?>
+
+                                                <span class="fw-bold text-danger">
+                                                    OUT OF STOCK
+                                                </span>
+
+                                            <?php endif; ?>
+
+                                        <?php else: ?>
+
+                                            <span class="text-muted">
+                                                N/A
+                                            </span>
+
+                                        <?php endif; ?>
+
+                                    </td>
+
+                                    <td>
+                                        <?= htmlspecialchars($item->uom ?? '-') ?>
+                                    </td>
+                                    
                                     <td><?= $item->remarks ?></td>
                                     <td>
                                         <?php if ($data['requisition']->status == 'DRAFT'): ?>
                                             <a href="<?= URLROOT ?>/ResourceRequisitionItems/edit/<?= $item->id ?>"
                                                 class="btn btn-sm btn-warning">
                                                 <!-- <i class="fas fa-edit"></i> -->
-                                                 Edit
+                                                Edit
                                             </a>
                                             <a href="<?= URLROOT ?>/ResourceRequisitionItems/delete/<?= $item->id ?>"
                                                 class="btn btn-sm btn-danger"
                                                 onclick="return confirm('Delete this item?');">
                                                 <!-- <i class="fas fa-trash"></i> -->
-                                                 Delete
+                                                Delete
                                             </a>
                                         <?php else: ?>
                                             <span class="text-muted">
@@ -464,7 +512,7 @@ Submitted By:
 
                             <tr>
 
-                                <td colspan="6" class="text-center text-muted">
+                               <td colspan="7" class="text-center text-muted">
 
                                     No requisition items have been added.
 
