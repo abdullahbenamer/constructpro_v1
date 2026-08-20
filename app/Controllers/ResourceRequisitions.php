@@ -168,11 +168,13 @@ class ResourceRequisitions extends Controller
     }
 
     $items = $itemModel->getByRequisition($id);
+    $history = $model->getApprovalHistory($id);
 
     $data = [
-        'requisition' => $requisition,
-        'items'       => $items
-    ];
+    'requisition' => $requisition,
+    'items'       => $items,
+    'history'     => $history
+];
 
     $this->view('resource-requisitions/details', $data);
 }
@@ -285,14 +287,13 @@ public function submit($id)
         exit;
     }
 
-    public function approve($id)
+public function approve($id)
 {
     AuthHelper::can('resource_requisitions.approve');
 
     $model = $this->model('ResourceRequisition');
 
     $requisition = $model->getById($id);
-
 
     if (!$requisition) {
 
@@ -303,11 +304,13 @@ public function submit($id)
         exit;
     }
 
+    if ($requisition->status !== 'SUBMITTED') {
 
-    if ($requisition->status != 'SUBMITTED') {
+        $_SESSION['error'] =
+            'Only submitted requisitions can be approved or rejected.';
 
         header(
-            'Location: ' . 
+            'Location: ' .
             URLROOT .
             '/ResourceRequisitions/details/' .
             $id
@@ -316,25 +319,14 @@ public function submit($id)
         exit;
     }
 
+    $data = [
+        'requisition' => $requisition
+    ];
 
-    $model->approve(
-        $id,
-        $_SESSION['user_id']
+    $this->view(
+        'resource-requisitions/approve',
+        $data
     );
-
-
-    $_SESSION['success'] =
-        'Requisition approved successfully.';
-
-
-    header(
-        'Location: ' .
-        URLROOT .
-        '/ResourceRequisitions/details/' .
-        $id
-    );
-
-    exit;
 }
 
 public function reject($id)
@@ -362,4 +354,137 @@ public function reject($id)
 
     exit;
 }
+
+/**
+ * PROCESS APPROVAL DECISION
+ */
+public function processApproval($id)
+{
+    AuthHelper::can('resource_requisitions.approve');
+
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/ResourceRequisitions/details/' .
+            $id
+        );
+
+        exit;
+    }
+
+    $model = $this->model('ResourceRequisition');
+
+    $requisition = $model->getById($id);
+
+    if (!$requisition) {
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/ResourceRequisitions'
+        );
+
+        exit;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | VALIDATE STATUS
+    |--------------------------------------------------------------------------
+    */
+
+    if ($requisition->status !== 'SUBMITTED') {
+
+        $_SESSION['error'] =
+            'Only submitted requisitions can be approved or rejected.';
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/ResourceRequisitions/details/' .
+            $id
+        );
+
+        exit;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | VALIDATE ACTION
+    |--------------------------------------------------------------------------
+    */
+
+    $action = $_POST['action'] ?? '';
+
+    if (!in_array($action, ['APPROVE', 'REJECT'])) {
+
+        $_SESSION['error'] =
+            'Invalid approval action.';
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/ResourceRequisitions/approve/' .
+            $id
+        );
+
+        exit;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | REMARKS
+    |--------------------------------------------------------------------------
+    */
+
+    $remarks = trim($_POST['remarks'] ?? '');
+
+    /*
+    |--------------------------------------------------------------------------
+    | PROCESS DECISION
+    |--------------------------------------------------------------------------
+    */
+
+    if ($action === 'APPROVE') {
+
+        $model->approve(
+            $id,
+            $_SESSION['user_id'],
+            $remarks
+        );
+
+        $_SESSION['success'] =
+            'Resource requisition approved successfully.';
+
+    } else {
+
+        $model->reject(
+            $id,
+            $_SESSION['user_id'],
+            $remarks
+        );
+
+        $_SESSION['success'] =
+            'Resource requisition rejected.';
+
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | REDIRECT
+    |--------------------------------------------------------------------------
+    */
+
+    header(
+        'Location: ' .
+        URLROOT .
+        '/ResourceRequisitions/details/' .
+        $id
+    );
+
+    exit;
+}
+
 }

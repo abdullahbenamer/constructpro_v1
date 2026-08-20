@@ -153,9 +153,11 @@ WHERE rr.id = ?
     /**
  * SUBMIT REQUISITION
  */
+
 public function submit($id, $user_id)
 {
-    return $this->db->query(
+    // Update requisition status
+    $result = $this->db->query(
         "
         UPDATE resource_requisitions
         SET
@@ -163,6 +165,7 @@ public function submit($id, $user_id)
             submitted_by = ?,
             submitted_at = NOW()
         WHERE id = ?
+          AND status = 'DRAFT'
         ",
         [
             $user_id,
@@ -170,6 +173,33 @@ public function submit($id, $user_id)
         ]
     );
 
+    // Record submission in approval history
+    $this->db->query(
+        "
+        INSERT INTO resource_requisition_approvals
+        (
+            requisition_id,
+            action,
+            action_by,
+            remarks,
+            action_date
+        )
+        VALUES
+        (
+            ?,
+            'SUBMITTED',
+            ?,
+            NULL,
+            NOW()
+        )
+        ",
+        [
+            $id,
+            $user_id
+        ]
+    );
+
+    return $result;
 }
 
     /*
@@ -186,66 +216,176 @@ public function submit($id, $user_id)
         ", [$id]);
     }
 
-    public function approve($id, $user_id)
+    public function approve($id, $user_id, $remarks = null)
 {
+    /*
+    |--------------------------------------------------------------------------
+    | UPDATE REQUISITION
+    |--------------------------------------------------------------------------
+    */
 
-    return $this->db->query(
+    $result = $this->db->query(
 
         "
         UPDATE resource_requisitions
-
         SET
 
             status = 'APPROVED',
 
             approved_by = ?,
 
-            approved_at = NOW()
+            approved_at = NOW(),
+
+            approval_remarks = ?
 
         WHERE id = ?
-
+          AND status = 'SUBMITTED'
         ",
 
         [
 
             $user_id,
+            $remarks,
             $id
 
         ]
 
     );
 
+    /*
+    |--------------------------------------------------------------------------
+    | RECORD APPROVAL HISTORY
+    |--------------------------------------------------------------------------
+    */
+
+    $this->db->query(
+
+        "
+        INSERT INTO resource_requisition_approvals
+        (
+            requisition_id,
+            action,
+            action_by,
+            remarks,
+            action_date
+        )
+        VALUES
+        (
+            ?,
+            'APPROVED',
+            ?,
+            ?,
+            NOW()
+        )
+        ",
+
+        [
+
+            $id,
+            $user_id,
+            $remarks
+
+        ]
+
+    );
+
+    return $result;
 }
 
-public function reject($id, $user_id)
+public function reject($id, $user_id, $remarks = null)
 {
+    /*
+    |--------------------------------------------------------------------------
+    | UPDATE REQUISITION
+    |--------------------------------------------------------------------------
+    */
 
-    return $this->db->query(
+    $result = $this->db->query(
 
         "
         UPDATE resource_requisitions
-
         SET
 
             status = 'REJECTED',
 
             approved_by = ?,
 
-            approved_at = NOW()
+            approved_at = NOW(),
+
+            approval_remarks = ?
 
         WHERE id = ?
-
+          AND status = 'SUBMITTED'
         ",
 
         [
 
             $user_id,
+            $remarks,
             $id
 
         ]
 
     );
 
+    /*
+    |--------------------------------------------------------------------------
+    | RECORD REJECTION HISTORY
+    |--------------------------------------------------------------------------
+    */
+
+    $this->db->query(
+
+        "
+        INSERT INTO resource_requisition_approvals
+        (
+            requisition_id,
+            action,
+            action_by,
+            remarks,
+            action_date
+        )
+        VALUES
+        (
+            ?,
+            'REJECTED',
+            ?,
+            ?,
+            NOW()
+        )
+        ",
+
+        [
+
+            $id,
+            $user_id,
+            $remarks
+
+        ]
+
+    );
+
+    return $result;
+}
+
+public function getApprovalHistory($requisition_id)
+{
+    return $this->db->query("
+        SELECT
+            rra.*,
+            u.full_name AS action_by_name
+
+        FROM resource_requisition_approvals rra
+
+        LEFT JOIN users u
+            ON u.id = rra.action_by
+
+        WHERE rra.requisition_id = ?
+
+        ORDER BY rra.action_date ASC, rra.id ASC
+    ", [
+        $requisition_id
+    ])->fetchAll();
 }
 
 }
