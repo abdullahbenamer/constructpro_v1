@@ -16,7 +16,7 @@
 
             <small class="text-muted">
 
-                Update quantity, description, and remarks
+                You can Edit/Update quantity, description, and remarks Only
 
             </small>
 
