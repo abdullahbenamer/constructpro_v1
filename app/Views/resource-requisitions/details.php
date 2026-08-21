@@ -345,6 +345,17 @@
         </div>
     </div>
 
+    <br>
+    <!-- Fulfill Materials -->
+
+    <div><a href="<?= URLROOT ?>/ResourceRequisitionFulfillments/create/<?= $data['requisition']->id ?>"
+   class="btn btn-success">
+
+    <i class="fas fa-boxes"></i>
+    Fulfill Materials
+
+</a></div>
+
     <!-- REQUISITION ITEMS -->
 
     <div class="card shadow-sm mt-4">

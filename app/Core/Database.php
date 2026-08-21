@@ -30,27 +30,6 @@ class Database
         }
     }
 
-
-  public function transaction(callable $callback)
-{
-    $this->beginTransaction();
-
-    try {
-
-        $result = $callback($this);
-
-        $this->commit();
-
-        return $result;
-
-    } catch (Throwable $e) {
-
-        $this->rollBack();
-
-        throw $e;
-    }
-}
-
     public function exists()
     {
         return $this->stmt->rowCount() > 0;
@@ -114,21 +93,54 @@ class Database
         return $this->dbh ? $this->dbh->lastInsertId() : null;
     }
 
-    public function beginTransaction()
-    {
-        return $this->dbh->beginTransaction();
-    }
+// ------- Transaction Section -------
 
-    public function commit()
-    {
-        return $this->dbh->commit();
-    }
+   public function beginTransaction()
+{
+    return $this->dbh->beginTransaction();
+}
 
-    public function rollBack()
-    {
-        return $this->dbh->rollBack();
-    }
+public function commit()
+{
+    return $this->dbh->commit();
+}
 
+public function rollBack()
+{
+    return $this->dbh->rollBack();
+}
+
+public function inTransaction()
+{
+    return $this->dbh->inTransaction();
+}
+
+public function transaction(callable $callback)
+{
+    $this->beginTransaction();
+
+    try {
+
+        $result = $callback($this);
+
+        $this->commit();
+
+        return $result;
+
+    } catch (Throwable $e) {
+
+        if ($this->inTransaction()) {
+            $this->rollBack();
+        }
+
+        throw $e;
+    }
+}
+
+// ------ Transaction Section End -------
+
+
+    
     public function bind($param, $value, $type = null)
     {
         if ($type === null) {
