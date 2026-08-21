@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 15, 2026 at 11:43 AM
+-- Generation Time: Aug 21, 2026 at 11:43 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -163,7 +163,11 @@ INSERT INTO `goods_receipts` (`id`, `grn_number`, `purchase_order_id`, `supplier
 (25, 'GRN-20260814144334', 34, 3, '2026-08-14', 324.00, 324.00, '', 1, '2026-08-14 12:43:34'),
 (26, 'GRN-20260814144909', 34, 3, '2026-08-14', 36.00, 36.00, '', 1, '2026-08-14 12:49:09'),
 (27, 'GRN-20260814145510', 35, 3, '2026-08-14', 285.00, 285.00, '', 1, '2026-08-14 12:55:10'),
-(28, 'GRN-20260815112258', 38, 2, '2026-08-15', 15.20, 15.20, '', 1, '2026-08-15 09:22:58');
+(28, 'GRN-20260815112258', 38, 2, '2026-08-15', 15.20, 15.20, '', 1, '2026-08-15 09:22:58'),
+(29, 'GRN-20260815143839', 39, 1, '2026-08-15', 50.00, 50.00, 'Switch 1 Gang\r\nABB Libya\r\nQuantity: 10\r\nWarehouse: WH-123\r\nUnit Cost: 5.00', 1, '2026-08-15 12:38:39'),
+(30, 'GRN-20260815145615', 35, 3, '2026-08-15', 15.00, 15.00, '', 1, '2026-08-15 12:56:15'),
+(31, 'GRN-20260816131441', 40, 1, '2026-08-16', 340.00, 340.00, '10 received of cement in WH-123', 1, '2026-08-16 11:14:41'),
+(32, 'GRN-20260816145525', 41, 2, '2026-08-16', 240.00, 240.00, '', 1, '2026-08-16 12:55:25');
 
 -- --------------------------------------------------------
 
@@ -176,6 +180,7 @@ CREATE TABLE `goods_receipt_items` (
   `goods_receipt_id` int(11) NOT NULL,
   `purchase_order_item_id` int(11) NOT NULL,
   `inventory_id` int(11) NOT NULL,
+  `location_id` int(11) DEFAULT NULL,
   `quantity` decimal(15,2) NOT NULL,
   `unit_cost` decimal(15,2) NOT NULL,
   `total_cost` decimal(15,2) NOT NULL
@@ -185,16 +190,80 @@ CREATE TABLE `goods_receipt_items` (
 -- Dumping data for table `goods_receipt_items`
 --
 
-INSERT INTO `goods_receipt_items` (`id`, `goods_receipt_id`, `purchase_order_item_id`, `inventory_id`, `quantity`, `unit_cost`, `total_cost`) VALUES
-(12, 20, 33, 8, 100.00, 0.60, 60.00),
-(13, 21, 34, 7, 10.00, 1.50, 15.00),
-(14, 22, 35, 108, 8.00, 12.00, 96.00),
-(15, 23, 35, 108, 10.00, 12.00, 120.00),
-(16, 24, 35, 108, 2.00, 12.00, 24.00),
-(17, 25, 36, 6, 18.00, 18.00, 324.00),
-(18, 26, 36, 6, 2.00, 18.00, 36.00),
-(19, 27, 37, 7, 95.00, 3.00, 285.00),
-(20, 28, 40, 8, 8.00, 1.90, 15.20);
+INSERT INTO `goods_receipt_items` (`id`, `goods_receipt_id`, `purchase_order_item_id`, `inventory_id`, `location_id`, `quantity`, `unit_cost`, `total_cost`) VALUES
+(12, 20, 33, 8, NULL, 100.00, 0.60, 60.00),
+(13, 21, 34, 7, NULL, 10.00, 1.50, 15.00),
+(14, 22, 35, 108, NULL, 8.00, 12.00, 96.00),
+(15, 23, 35, 108, NULL, 10.00, 12.00, 120.00),
+(16, 24, 35, 108, NULL, 2.00, 12.00, 24.00),
+(17, 25, 36, 6, NULL, 18.00, 18.00, 324.00),
+(18, 26, 36, 6, NULL, 2.00, 18.00, 36.00),
+(19, 27, 37, 7, NULL, 95.00, 3.00, 285.00),
+(20, 28, 40, 8, NULL, 8.00, 1.90, 15.20),
+(21, 29, 41, 8, NULL, 10.00, 5.00, 50.00),
+(22, 30, 37, 7, 20, 5.00, 3.00, 15.00),
+(23, 31, 42, 105, 20, 10.00, 34.00, 340.00),
+(24, 32, 43, 108, 20, 20.00, 12.00, 240.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `goods_returns`
+--
+
+CREATE TABLE `goods_returns` (
+  `id` int(11) NOT NULL,
+  `return_number` varchar(50) NOT NULL,
+  `supplier_id` int(11) NOT NULL,
+  `goods_receipt_id` int(11) NOT NULL,
+  `purchase_order_id` int(11) NOT NULL,
+  `return_date` date NOT NULL,
+  `reason` varchar(255) DEFAULT NULL,
+  `notes` text DEFAULT NULL,
+  `total_amount` decimal(15,2) NOT NULL DEFAULT 0.00,
+  `created_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `goods_returns`
+--
+
+INSERT INTO `goods_returns` (`id`, `return_number`, `supplier_id`, `goods_receipt_id`, `purchase_order_id`, `return_date`, `reason`, `notes`, `total_amount`, `created_by`, `created_at`) VALUES
+(1, 'RTS-20260816132132', 1, 31, 40, '2026-08-16', 'Test returning 10 cement bags', '', 340.00, 1, '2026-08-16 11:21:32'),
+(2, 'RTS-260816150111', 2, 32, 41, '2026-08-16', 'test partial return', 'test partial return', 96.00, 1, '2026-08-16 13:01:11'),
+(3, 'RTS-260816151329', 2, 32, 41, '2026-08-16', 'fully partial return PO received qty', '', 144.00, 1, '2026-08-16 13:13:29'),
+(4, 'RTS-260816153055', 3, 30, 35, '2026-08-16', '', '', 6.00, 1, '2026-08-16 13:30:55'),
+(5, 'RTS-260816154044', 3, 30, 35, '2026-08-16', '', '', 3.00, 1, '2026-08-16 13:40:44');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `goods_return_items`
+--
+
+CREATE TABLE `goods_return_items` (
+  `id` int(11) NOT NULL,
+  `goods_return_id` int(11) NOT NULL,
+  `goods_receipt_item_id` int(11) NOT NULL,
+  `inventory_id` int(11) NOT NULL,
+  `location_id` int(11) NOT NULL,
+  `quantity` decimal(15,2) NOT NULL,
+  `unit_cost` decimal(15,2) NOT NULL DEFAULT 0.00,
+  `total_cost` decimal(15,2) NOT NULL DEFAULT 0.00,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `goods_return_items`
+--
+
+INSERT INTO `goods_return_items` (`id`, `goods_return_id`, `goods_receipt_item_id`, `inventory_id`, `location_id`, `quantity`, `unit_cost`, `total_cost`, `created_at`) VALUES
+(1, 1, 23, 105, 20, 10.00, 34.00, 340.00, '2026-08-16 11:21:32'),
+(2, 2, 24, 108, 20, 8.00, 12.00, 96.00, '2026-08-16 13:01:11'),
+(3, 3, 24, 108, 20, 12.00, 12.00, 144.00, '2026-08-16 13:13:29'),
+(4, 4, 22, 7, 20, 2.00, 3.00, 6.00, '2026-08-16 13:30:55'),
+(5, 5, 22, 7, 20, 1.00, 3.00, 3.00, '2026-08-16 13:40:44');
 
 -- --------------------------------------------------------
 
@@ -226,18 +295,18 @@ CREATE TABLE `inventory` (
 --
 
 INSERT INTO `inventory` (`id`, `name`, `category`, `sku`, `quantity`, `location_id`, `min_stock`, `cost_price`, `base_unit`, `allow_fraction`, `sale_unit`, `units_per_sale`, `price_per_base`, `price_per_sale`, `brand_id`, `country_id`) VALUES
-(1, 'MCB 1P 16A', 'MCB', 'MCB-1P-16A-SCH', 964.00, NULL, 20, 1.20, 'unit', 0, 'piece', 1, 2.50, 2.50, 5, 9),
+(1, 'MCB 1P 16A', 'MCB', 'MCB-1P-16A-SCH', 960.00, NULL, 20, 1.20, 'unit', 0, 'piece', 1, 2.50, 2.50, 5, 9),
 (2, 'MCB 1P 20A', 'MCB', 'MCB-1P-20A-ABB', 158.00, NULL, 20, 1.10, 'unit', 0, 'piece', 1, 2.40, 2.40, 6, 3),
 (3, 'MCB 1P 32A', 'Switchgear', 'MCB-1P-32A-CHNT', 1230.00, NULL, 20, 1.50, 'unit', 0, 'piece', 1, 2.10, 2.10, 14, 5),
 (4, 'MCB 3P 63A', 'Switchgear', 'MCB-3P-63A-SCH', 5219.00, NULL, 10, 7.35, 'unit', 0, 'piece', 1, 9.80, 9.80, 5, 9),
 (5, 'Contactor 25A 220V', 'Contactor', 'CT-25A-LS', 85.00, NULL, 10, 6.50, 'unit', 0, 'piece', 1, 12.00, 12.00, 12, 5),
 (6, 'Contactor 40A 220V', 'Contactor', 'CT-40A-LS', 1021.00, NULL, 10, 8.20, 'unit', 0, 'piece', 1, 15.50, 15.50, 12, 5),
-(7, 'Wall Socket 13A UK', 'Socket', 'SOC-13A-HVL', 965.00, NULL, 50, 0.80, 'unit', 0, 'piece', 1, 1.50, 1.50, 16, 10),
-(8, 'Switch 1 Gang', 'Switch', 'SW-1G-HAG', 12450.00, NULL, 100, 0.60, 'unit', 0, 'piece', 1, 1.50, 1.50, 9, 1),
+(7, 'Wall Socket 13A UK', 'Socket', 'SOC-13A-HVL', 967.00, NULL, 50, 0.80, 'unit', 0, 'piece', 1, 1.50, 1.50, 16, 10),
+(8, 'Switch 1 Gang', 'Switch', 'SW-1G-HAG', 12460.00, NULL, 100, 0.60, 'unit', 0, 'piece', 1, 1.50, 1.50, 9, 1),
 (9, 'PVC Cable 2.5mm²', 'Cable', 'PVC-2.5-SOUTH', 12590.00, NULL, 200, 0.30, 'meter', 1, 'roll', 100, 0.60, 60.00, 3, 3),
-(10, 'Terminal Block 2.5mm', 'Terminal', 'TB-2.5-WAGO', 784.00, NULL, 100, 0.20, 'unit', 0, 'piece', 1, 0.50, 0.50, 21, 1),
+(10, 'Terminal Block 2.5mm', 'Terminal', 'TB-2.5-WAGO', 747.00, NULL, 100, 0.20, 'unit', 0, 'piece', 1, 0.50, 0.50, 21, 1),
 (105, 'Cement', 'Switchgear', 'cem-1234', 500.00, 1, 100, 75.00, 'unit', 0, NULL, 1, 100.00, 100.00, 34, 12),
-(106, 'Man Boot', 'Switchgear', 'MB-123', 506.00, 3, 50, 450.00, 'unit', 0, NULL, 1, 570.00, 570.00, 4, 8),
+(106, 'Man Boot', 'Switchgear', 'MB-123', 496.00, 3, 50, 450.00, 'unit', 0, NULL, 1, 570.00, 570.00, 4, 8),
 (108, 'New Item', 'Instrumentation', 'ni-999', 20.00, 20, 2, 12.00, 'unit', 0, NULL, 1, 0.00, 0.00, 14, 6);
 
 -- --------------------------------------------------------
@@ -287,7 +356,7 @@ CREATE TABLE `inventory_location_stock` (
 --
 
 INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `quantity`) VALUES
-(53, 1, 1, 171.00),
+(53, 1, 1, 167.00),
 (54, 1, 2, 279.00),
 (55, 1, 3, 465.00),
 (56, 1, 4, 49.00),
@@ -325,20 +394,21 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (104, 9, 4, 10390.00),
 (107, 10, 1, 130.00),
 (108, 10, 2, 218.00),
-(109, 10, 3, 236.00),
+(109, 10, 3, 199.00),
 (110, 10, 4, 200.00),
 (113, 105, 1, 400.00),
 (114, 105, 4, 100.00),
 (115, 106, 3, 490.00),
 (116, 3, 19, 0.00),
-(117, 106, 19, 16.00),
+(117, 106, 19, 6.00),
 (118, 3, 20, 92.00),
-(119, 8, 20, 200.00),
+(119, 8, 20, 210.00),
 (120, 108, 20, 18.00),
 (121, 108, 2, 2.00),
 (122, 6, 20, 20.00),
-(123, 7, 20, 95.00),
-(124, 8, 19, 8.00);
+(123, 7, 20, 97.00),
+(124, 8, 19, 8.00),
+(125, 105, 20, 0.00);
 
 -- --------------------------------------------------------
 
@@ -392,7 +462,19 @@ INSERT INTO `inventory_movements` (`id`, `inventory_id`, `location_id`, `type`, 
 (237, 6, 20, 'IN', 18.00, NULL, 3, NULL, NULL, 18.00, 1019.00, 'GRN-25', NULL, 1, '2026-08-14 12:43:34'),
 (238, 6, 20, 'IN', 2.00, NULL, 3, NULL, NULL, 20.00, 1021.00, 'GRN-26', NULL, 1, '2026-08-14 12:49:09'),
 (239, 7, 20, 'IN', 95.00, NULL, 3, NULL, NULL, 95.00, 965.00, 'GRN-27', NULL, 1, '2026-08-14 12:55:10'),
-(240, 8, 19, 'IN', 8.00, NULL, 2, NULL, NULL, 8.00, 12450.00, 'GRN-28', NULL, 1, '2026-08-15 09:22:58');
+(240, 8, 19, 'IN', 8.00, NULL, 2, NULL, NULL, 8.00, 12450.00, 'GRN-28', NULL, 1, '2026-08-15 09:22:58'),
+(241, 8, 20, 'IN', 10.00, NULL, 1, NULL, NULL, 210.00, 12460.00, 'GRN-29', 'Switch 1 Gang\r\nABB Libya\r\nQuantity: 10\r\nWarehouse: WH-123\r\nUnit Cost: 5.00', 1, '2026-08-15 12:38:39'),
+(242, 7, 20, 'IN', 5.00, NULL, 3, NULL, NULL, 100.00, 970.00, 'GRN-30', NULL, 1, '2026-08-15 12:56:15'),
+(243, 105, 20, 'IN', 10.00, NULL, 1, NULL, NULL, 10.00, 510.00, 'GRN-31', '10 received of cement in WH-123', 1, '2026-08-16 11:14:41'),
+(244, 105, 20, 'OUT', 10.00, NULL, 1, NULL, NULL, 0.00, 500.00, 'RTS-20260816132132', 'Return to supplier: Test returning 10 cement bags', 1, '2026-08-16 11:21:32'),
+(245, 108, 20, 'IN', 20.00, NULL, 2, NULL, NULL, 38.00, 40.00, 'GRN-32', NULL, 1, '2026-08-16 12:55:25'),
+(246, 108, 20, 'OUT', 8.00, NULL, 2, NULL, NULL, 30.00, 32.00, 'RTS-260816150111', 'Return to supplier: test partial return', 1, '2026-08-16 13:01:11'),
+(247, 108, 20, 'OUT', 12.00, NULL, 2, NULL, NULL, 18.00, 20.00, 'RTS-260816151329', 'Return to supplier: fully partial return PO received qty', 1, '2026-08-16 13:13:29'),
+(248, 7, 20, 'OUT', 2.00, NULL, 3, NULL, NULL, 98.00, 968.00, 'RTS-260816153055', 'Return to supplier', 1, '2026-08-16 13:30:55'),
+(249, 7, 20, 'OUT', 1.00, NULL, 3, NULL, NULL, 97.00, 967.00, 'RTS-260816154044', 'Return to supplier', 1, '2026-08-16 13:40:44'),
+(250, 1, 1, 'OUT', 4.00, 1.20, NULL, NULL, 1, 167.00, 960.00, 'RR-FUL-', 'Resource requisition fulfillment', 1, '2026-08-21 04:45:59'),
+(251, 106, 19, 'OUT', 10.00, 450.00, NULL, NULL, 1, 6.00, 496.00, 'RR-FUL-', 'Resource requisition fulfillment', 1, '2026-08-21 04:52:00'),
+(252, 10, 3, 'OUT', 37.00, 0.20, NULL, NULL, 1, 199.00, 747.00, 'RR-FUL-20260821113536-277', 'Resource requisition fulfillment', 1, '2026-08-21 09:35:36');
 
 -- --------------------------------------------------------
 
@@ -506,7 +588,9 @@ INSERT INTO `permissions` (`id`, `name`, `description`) VALUES
 (39, 'suppliers.view', 'View suppliers'),
 (40, 'suppliers.create', 'Create suppliers'),
 (42, 'pos.change_location', 'Allow user to change POS warehouse/location'),
-(43, 'resource_requisitions.approve', 'Approve Resource Requisitions');
+(43, 'resource_requisitions.approve', 'Approve Resource Requisitions'),
+(44, 'goods_returns.create', NULL),
+(45, 'resource_requisitions.fulfill', 'User can Fulfill Resources Requestions for projects');
 
 -- --------------------------------------------------------
 
@@ -615,7 +699,10 @@ INSERT INTO `project_costs` (`id`, `project_id`, `inventory_id`, `location_id`, 
 (154, 43, 8, 1, 'materials', 'Switch 1 Gang - room lights Fixture', 7.00, 0.60, '2026-08-11 09:33:10'),
 (155, 43, 9, 1, 'materials', 'PVC Cable 2.5mm²', 98.00, 0.30, '2026-08-11 10:49:17'),
 (156, 43, 10, 3, 'materials', 'Terminal Block 2.5mm', 5.00, 0.20, '2026-08-11 12:40:40'),
-(157, 43, NULL, NULL, 'subcontract', 'finishing basement for the fence', 100.00, 100.00, '2026-08-11 12:52:45');
+(157, 43, NULL, NULL, 'subcontract', 'finishing basement for the fence', 100.00, 100.00, '2026-08-11 12:52:45'),
+(159, 43, 1, 1, 'materials', '', 4.00, 1.20, '2026-08-21 04:45:59'),
+(160, 43, 106, 19, 'materials', 'Man Boot', 10.00, 450.00, '2026-08-21 04:52:00'),
+(161, 43, 10, 3, 'materials', 'Terminal Block 2.5mm', 37.00, 0.20, '2026-08-21 09:35:36');
 
 -- --------------------------------------------------------
 
@@ -796,10 +883,13 @@ INSERT INTO `purchase_orders` (`id`, `po_number`, `supplier_id`, `status`, `orde
 (32, 'PO-260814062956', 4, 'received', '2026-08-12', '2026-08-14', 15.00, 0.00, 0.00, 15.00, '10 units', 1, 1, '2026-08-14 06:34:05', '2026-08-14 06:34:49', '2026-08-14 04:29:56', 'RECEIVED'),
 (33, 'PO-260814114032', 2, 'received', '2026-08-09', '2026-08-13', 240.00, 0.00, 0.00, 240.00, 'partial receiving test', 1, 1, '2026-08-14 11:44:43', '2026-08-14 11:53:50', '2026-08-14 09:40:32', 'RECEIVED'),
 (34, 'PO-260814144219', 3, 'received', '2026-08-09', '2026-08-13', 360.00, 0.00, 0.00, 360.00, '', 1, 1, '2026-08-14 14:43:01', '2026-08-14 14:49:09', '2026-08-14 12:42:19', 'RECEIVED'),
-(35, 'PO-260814145340', 3, 'partial', '2026-08-11', '2026-08-14', 300.00, 0.00, 0.00, 300.00, '', 1, 1, '2026-08-14 14:54:15', NULL, '2026-08-14 12:53:40', 'PARTIAL'),
+(35, 'PO-260814145340', 3, 'received', '2026-08-11', '2026-08-14', 300.00, 0.00, 0.00, 300.00, '', 1, 1, '2026-08-14 14:54:15', '2026-08-15 14:56:15', '2026-08-14 12:53:40', 'RECEIVED'),
 (36, 'PO-260815072043', 1, 'cancelled', '2026-08-10', '2026-08-14', 114.00, 0.00, 0.00, 114.00, 'Draft Cancel', 1, NULL, NULL, NULL, '2026-08-15 05:20:43', 'OPEN'),
 (37, 'PO-260815074138', 4, 'cancelled', '2026-08-11', '2026-08-15', 260.00, 0.00, 0.00, 260.00, 'Approved cancel', 1, 1, '2026-08-15 07:42:06', NULL, '2026-08-15 05:41:38', 'OPEN'),
-(38, 'PO-260815112115', 2, 'cancelled', '2026-08-10', '2026-08-14', 38.00, 0.00, 0.00, 38.00, 'Cancel partial receive', 1, 1, '2026-08-15 11:22:38', NULL, '2026-08-15 09:21:15', 'PARTIAL');
+(38, 'PO-260815112115', 2, 'cancelled', '2026-08-10', '2026-08-14', 38.00, 0.00, 0.00, 38.00, 'Cancel partial receive', 1, 1, '2026-08-15 11:22:38', NULL, '2026-08-15 09:21:15', 'PARTIAL'),
+(39, 'PO-260815143456', 1, 'received', '2026-08-11', '2026-08-14', 16.00, 0.00, 0.00, 16.00, 'return items test', 1, 1, '2026-08-15 14:35:55', '2026-08-15 14:38:39', '2026-08-15 12:34:56', 'RECEIVED'),
+(40, 'PO-260816131303', 1, 'received', '2026-08-14', '2026-08-16', 340.00, 0.00, 0.00, 340.00, 'test return of 10 units', 1, 1, '2026-08-16 13:13:30', '2026-08-16 13:14:41', '2026-08-16 11:13:03', 'RECEIVED'),
+(41, 'PO-260816144258', 2, 'received', '2026-08-16', '2026-08-17', 240.00, 0.00, 0.00, 240.00, '', 1, 1, '2026-08-16 14:53:54', '2026-08-16 14:55:25', '2026-08-16 12:42:58', 'RECEIVED');
 
 -- --------------------------------------------------------
 
@@ -828,10 +918,13 @@ INSERT INTO `purchase_order_items` (`id`, `purchase_order_id`, `inventory_id`, `
 (34, 32, 7, 10.00, 10.00, 1.50, 0.00, NULL, '2026-08-14 04:30:43'),
 (35, 33, 108, 20.00, 20.00, 12.00, 0.00, NULL, '2026-08-14 09:44:29'),
 (36, 34, 6, 20.00, 20.00, 18.00, 0.00, NULL, '2026-08-14 12:42:46'),
-(37, 35, 7, 100.00, 95.00, 3.00, 0.00, NULL, '2026-08-14 12:54:06'),
+(37, 35, 7, 100.00, 100.00, 3.00, 0.00, NULL, '2026-08-14 12:54:06'),
 (38, 36, 4, 20.00, 0.00, 5.70, 0.00, NULL, '2026-08-15 05:21:06'),
 (39, 37, 8, 100.00, 0.00, 2.60, 0.00, NULL, '2026-08-15 05:41:56'),
-(40, 38, 8, 20.00, 8.00, 1.90, 0.00, NULL, '2026-08-15 09:21:39');
+(40, 38, 8, 20.00, 8.00, 1.90, 0.00, NULL, '2026-08-15 09:21:39'),
+(41, 39, 8, 10.00, 10.00, 1.60, 0.00, NULL, '2026-08-15 12:35:40'),
+(42, 40, 105, 10.00, 10.00, 34.00, 0.00, NULL, '2026-08-16 11:13:21'),
+(43, 41, 108, 20.00, 20.00, 12.00, 0.00, NULL, '2026-08-16 12:43:28');
 
 -- --------------------------------------------------------
 
@@ -857,17 +950,6 @@ CREATE TABLE `resources` (
 --
 
 INSERT INTO `resources` (`id`, `resource_code`, `resource_name`, `resource_name_a`, `resource_type`, `unit_id`, `description`, `status`, `created_at`, `category_id`) VALUES
-(1, 'CON', 'test', 'تجربة', 'MATERIAL', 1, 'description description description description description description description description description description description description description.', 'ACTIVE', '2026-07-12 06:37:58', 1),
-(2, 'MAT-0001', 'Portland Cement', 'أسمنت بورتلاندي', 'MATERIAL', 1, '50kg bag', 'ACTIVE', '2026-07-13 07:52:15', 1),
-(3, 'MAT-0002', 'River Sand', 'رمل', 'MATERIAL', 2, 'Fine washed sand', 'ACTIVE', '2026-07-13 07:52:15', 1),
-(4, 'MAT-0003', 'Gravel 3/4\"', 'حصى 3/4', 'MATERIAL', 2, 'Concrete aggregate', 'ACTIVE', '2026-07-13 07:52:15', 1),
-(5, 'MAT-0004', 'Hollow Block 20x20x40', 'طوب إسمنتي', 'MATERIAL', 3, 'Standard hollow block', 'ACTIVE', '2026-07-13 07:52:15', 1),
-(6, 'MAT-0005', 'Reinforcing Steel 16mm', 'حديد تسليح 16 مم', 'MATERIAL', 4, 'High tensile steel bar', 'ACTIVE', '2026-07-13 07:52:15', 2),
-(7, 'MAT-0006', 'Binding Wire', 'سلك ربط', 'MATERIAL', 5, 'GI binding wire', 'ACTIVE', '2026-07-13 07:52:15', 2),
-(8, 'MAT-0007', 'Marine Plywood 12mm', 'خشب أبلكاش بحري', 'MATERIAL', 6, 'Formwork plywood', 'ACTIVE', '2026-07-13 07:52:15', 3),
-(9, 'MAT-0008', 'Common Nail 3\"', 'مسامير 3 بوصة', 'MATERIAL', 5, 'Steel nails', 'ACTIVE', '2026-07-13 07:52:15', 3),
-(10, 'MAT-0009', 'PVC Pipe 2\"', 'أنبوب PVC 2 بوصة', 'MATERIAL', 4, 'Water supply pipe', 'ACTIVE', '2026-07-13 07:52:15', 4),
-(11, 'MAT-0010', 'Electrical Wire 2.5mm²', 'سلك كهربائي 2.5 مم', 'MATERIAL', 4, 'Copper electrical wire', 'ACTIVE', '2026-07-13 07:52:15', 5),
 (12, 'EQP-0001', 'Concrete Mixer', 'خلاطة خرسانة', 'EQUIPMENT', 7, 'Portable concrete mixer', 'ACTIVE', '2026-07-13 07:52:15', 6),
 (13, 'EQP-0002', 'Plate Compactor', 'دكاكة تربة', 'EQUIPMENT', 7, 'Soil compaction machine', 'ACTIVE', '2026-07-13 07:52:15', 6),
 (14, 'EQP-0003', 'Excavator', 'حفارة', 'EQUIPMENT', 8, 'Hydraulic excavator', 'ACTIVE', '2026-07-13 07:52:15', 6),
@@ -932,7 +1014,7 @@ CREATE TABLE `resource_requisitions` (
   `request_date` date NOT NULL,
   `required_date` date DEFAULT NULL,
   `priority` enum('LOW','NORMAL','HIGH','URGENT','CRITICAL') DEFAULT 'NORMAL',
-  `status` enum('DRAFT','SUBMITTED','APPROVED','REJECTED','CANCELLED') DEFAULT 'DRAFT',
+  `status` enum('DRAFT','SUBMITTED','APPROVED','PARTIAL','FULFILLED','REJECTED','CANCELLED') DEFAULT 'DRAFT',
   `remarks` text DEFAULT NULL,
   `submitted_by` int(11) DEFAULT NULL,
   `submitted_at` datetime DEFAULT NULL,
@@ -944,6 +1026,17 @@ CREATE TABLE `resource_requisitions` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `resource_requisitions`
+--
+
+INSERT INTO `resource_requisitions` (`id`, `req_number`, `project_id`, `request_date`, `required_date`, `priority`, `status`, `remarks`, `submitted_by`, `submitted_at`, `requested_by`, `approved_by`, `approved_at`, `approval_remarks`, `approval_notes`, `created_at`, `updated_at`) VALUES
+(14, 'REQ-260821065002', 43, '2026-08-21', '2026-08-24', 'HIGH', 'FULFILLED', 'test fulfill', 1, '2026-08-21 06:50:56', 1, 1, '2026-08-21 06:51:23', 'Ok go a head', NULL, '2026-08-21 04:50:02', '2026-08-21 04:52:00'),
+(15, 'REQ-260821090323', 43, '2026-08-21', '2026-08-25', 'NORMAL', 'APPROVED', 'non material RR test', 1, '2026-08-21 09:04:40', 1, 1, '2026-08-21 09:05:06', '', NULL, '2026-08-21 07:03:23', '2026-08-21 07:05:06'),
+(16, 'REQ-260821091044', 43, '2026-08-21', '2026-08-24', 'NORMAL', 'APPROVED', '', 1, '2026-08-21 09:12:36', 1, 1, '2026-08-21 09:12:44', '', NULL, '2026-08-21 07:10:44', '2026-08-21 07:12:44'),
+(17, 'REQ-260821095950', 43, '2026-08-21', '2026-08-28', 'NORMAL', 'PARTIAL', '', 1, '2026-08-21 10:00:18', 1, 1, '2026-08-21 10:00:30', '', NULL, '2026-08-21 07:59:50', '2026-08-21 09:35:36'),
+(18, 'REQ-260821113809', 43, '2026-08-21', '2026-08-22', 'NORMAL', 'APPROVED', '', 1, '2026-08-21 11:38:30', 1, 1, '2026-08-21 11:38:44', '', NULL, '2026-08-21 09:38:09', '2026-08-21 09:38:44');
 
 -- --------------------------------------------------------
 
@@ -959,6 +1052,22 @@ CREATE TABLE `resource_requisition_approvals` (
   `remarks` text DEFAULT NULL,
   `action_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `resource_requisition_approvals`
+--
+
+INSERT INTO `resource_requisition_approvals` (`id`, `requisition_id`, `action`, `action_by`, `remarks`, `action_date`) VALUES
+(7, 14, 'SUBMITTED', 1, NULL, '2026-08-21 06:50:56'),
+(8, 14, 'APPROVED', 1, 'Ok go a head', '2026-08-21 06:51:23'),
+(9, 15, 'SUBMITTED', 1, NULL, '2026-08-21 09:04:40'),
+(10, 15, 'APPROVED', 1, '', '2026-08-21 09:05:06'),
+(11, 16, 'SUBMITTED', 1, NULL, '2026-08-21 09:12:36'),
+(12, 16, 'APPROVED', 1, '', '2026-08-21 09:12:44'),
+(13, 17, 'SUBMITTED', 1, NULL, '2026-08-21 10:00:18'),
+(14, 17, 'APPROVED', 1, '', '2026-08-21 10:00:30'),
+(15, 18, 'SUBMITTED', 1, NULL, '2026-08-21 11:38:30'),
+(16, 18, 'APPROVED', 1, '', '2026-08-21 11:38:44');
 
 -- --------------------------------------------------------
 
@@ -992,6 +1101,59 @@ CREATE TABLE `resource_requisition_comments` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `resource_requisition_fulfillments`
+--
+
+CREATE TABLE `resource_requisition_fulfillments` (
+  `id` int(11) NOT NULL,
+  `requisition_id` int(11) NOT NULL,
+  `fulfillment_no` varchar(50) NOT NULL,
+  `fulfillment_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `fulfilled_by` int(11) NOT NULL,
+  `remarks` text DEFAULT NULL,
+  `status` enum('COMPLETED','CANCELLED') NOT NULL DEFAULT 'COMPLETED',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `resource_requisition_fulfillments`
+--
+
+INSERT INTO `resource_requisition_fulfillments` (`id`, `requisition_id`, `fulfillment_no`, `fulfillment_date`, `fulfilled_by`, `remarks`, `status`, `created_at`) VALUES
+(3, 14, '', '2026-08-21 00:00:00', 1, '', 'COMPLETED', '2026-08-21 04:52:00'),
+(10, 17, 'RR-FUL-20260821113536-277', '2026-08-21 00:00:00', 1, '', 'COMPLETED', '2026-08-21 09:35:36');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `resource_requisition_fulfillment_items`
+--
+
+CREATE TABLE `resource_requisition_fulfillment_items` (
+  `id` int(11) NOT NULL,
+  `fulfillment_id` int(11) NOT NULL,
+  `requisition_item_id` int(11) NOT NULL,
+  `inventory_id` int(11) DEFAULT NULL,
+  `location_id` int(11) DEFAULT NULL,
+  `fulfilled_quantity` decimal(15,2) NOT NULL DEFAULT 0.00,
+  `unit_cost` decimal(15,2) DEFAULT NULL,
+  `remarks` text DEFAULT NULL,
+  `inventory_movement_id` int(11) DEFAULT NULL,
+  `project_cost_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `resource_requisition_fulfillment_items`
+--
+
+INSERT INTO `resource_requisition_fulfillment_items` (`id`, `fulfillment_id`, `requisition_item_id`, `inventory_id`, `location_id`, `fulfilled_quantity`, `unit_cost`, `remarks`, `inventory_movement_id`, `project_cost_id`, `created_at`) VALUES
+(2, 3, 14, 106, 19, 10.00, 450.00, NULL, 251, 160, '2026-08-21 04:52:00'),
+(3, 10, 18, 10, 3, 37.00, 0.20, NULL, 252, 161, '2026-08-21 09:35:36');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `resource_requisition_items`
 --
 
@@ -1004,6 +1166,7 @@ CREATE TABLE `resource_requisition_items` (
   `description` varchar(255) NOT NULL,
   `uom` varchar(30) DEFAULT NULL,
   `quantity` decimal(15,2) NOT NULL DEFAULT 1.00,
+  `fulfilled_quantity` decimal(15,2) NOT NULL DEFAULT 0.00,
   `estimated_unit_cost` decimal(15,2) NOT NULL DEFAULT 0.00,
   `estimated_total` decimal(15,2) NOT NULL DEFAULT 0.00,
   `remarks` text DEFAULT NULL,
@@ -1011,6 +1174,17 @@ CREATE TABLE `resource_requisition_items` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `resource_requisition_items`
+--
+
+INSERT INTO `resource_requisition_items` (`id`, `requisition_id`, `resource_source`, `inventory_id`, `resource_id`, `description`, `uom`, `quantity`, `fulfilled_quantity`, `estimated_unit_cost`, `estimated_total`, `remarks`, `status`, `created_at`) VALUES
+(14, 14, 'INVENTORY', NULL, 106, 'Man Boot', 'unit', 10.00, 0.00, 0.00, 0.00, '10 Man Boots', 'FULFILLED', '2026-08-21 04:50:43'),
+(15, 15, 'RESOURCE', NULL, 15, 'Tower Crane', 'Gram', 15.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-08-21 07:03:41'),
+(16, 15, 'RESOURCE', NULL, 13, 'Plate Compactor', 'Kilogram', 12.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-08-21 07:04:07'),
+(17, 16, 'INVENTORY', NULL, 108, 'New Item', 'unit', 10.00, 0.00, 0.00, 0.00, '10 of 20 New Item', 'OPEN', '2026-08-21 07:12:31'),
+(18, 17, 'INVENTORY', NULL, 10, 'Terminal Block 2.5mm', 'unit', 500.00, 0.00, 0.00, 0.00, '500 units', 'PARTIAL', '2026-08-21 08:00:14'),
+(19, 18, 'RESOURCE', NULL, 15, 'Tower Crane', 'Gram', 3.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-08-21 09:38:24');
 
 -- --------------------------------------------------------
 
@@ -1274,7 +1448,16 @@ INSERT INTO `supplier_ledger` (`id`, `supplier_id`, `type`, `reference_type`, `r
 (16, 3, 'GRN', 'GoodsReceipt', 25, 324.00, 'DEBIT', '2026-08-14 12:43:34'),
 (17, 3, 'GRN', 'GoodsReceipt', 26, 36.00, 'DEBIT', '2026-08-14 12:49:09'),
 (18, 3, 'GRN', 'GoodsReceipt', 27, 285.00, 'DEBIT', '2026-08-14 12:55:10'),
-(19, 2, 'GRN', 'GoodsReceipt', 28, 15.20, 'DEBIT', '2026-08-15 09:22:58');
+(19, 2, 'GRN', 'GoodsReceipt', 28, 15.20, 'DEBIT', '2026-08-15 09:22:58'),
+(20, 1, 'GRN', 'GoodsReceipt', 29, 50.00, 'DEBIT', '2026-08-15 12:38:39'),
+(21, 3, 'GRN', 'GoodsReceipt', 30, 15.00, 'DEBIT', '2026-08-15 12:56:15'),
+(22, 1, 'GRN', 'GoodsReceipt', 31, 340.00, 'DEBIT', '2026-08-16 11:14:41'),
+(23, 1, '', 'GoodsReturn', 1, 340.00, 'CREDIT', '2026-08-16 11:21:32'),
+(24, 2, 'GRN', 'GoodsReceipt', 32, 240.00, 'DEBIT', '2026-08-16 12:55:25'),
+(25, 2, '', 'GoodsReturn', 2, 96.00, 'CREDIT', '2026-08-16 13:01:11'),
+(26, 2, '', 'GoodsReturn', 3, 144.00, 'CREDIT', '2026-08-16 13:13:29'),
+(27, 3, '', 'GoodsReturn', 4, 6.00, 'CREDIT', '2026-08-16 13:30:55'),
+(28, 3, '', 'GoodsReturn', 5, 3.00, 'CREDIT', '2026-08-16 13:40:44');
 
 -- --------------------------------------------------------
 
@@ -1476,7 +1659,28 @@ ALTER TABLE `goods_receipt_items`
   ADD PRIMARY KEY (`id`),
   ADD KEY `goods_receipt_id` (`goods_receipt_id`),
   ADD KEY `purchase_order_item_id` (`purchase_order_item_id`),
-  ADD KEY `inventory_id` (`inventory_id`);
+  ADD KEY `inventory_id` (`inventory_id`),
+  ADD KEY `idx_grn_item_location` (`location_id`);
+
+--
+-- Indexes for table `goods_returns`
+--
+ALTER TABLE `goods_returns`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `return_number` (`return_number`),
+  ADD KEY `idx_goods_returns_supplier` (`supplier_id`),
+  ADD KEY `idx_goods_returns_grn` (`goods_receipt_id`),
+  ADD KEY `idx_goods_returns_po` (`purchase_order_id`);
+
+--
+-- Indexes for table `goods_return_items`
+--
+ALTER TABLE `goods_return_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_return_items_return` (`goods_return_id`),
+  ADD KEY `idx_return_items_grn_item` (`goods_receipt_item_id`),
+  ADD KEY `idx_return_items_inventory` (`inventory_id`),
+  ADD KEY `idx_return_items_location` (`location_id`);
 
 --
 -- Indexes for table `inventory`
@@ -1698,6 +1902,35 @@ ALTER TABLE `resource_requisition_comments`
   ADD KEY `fk_rr_comment_req` (`requisition_id`),
   ADD KEY `fk_rr_comment_user` (`user_id`);
 
+--
+-- Indexes for table `resource_requisition_fulfillments`
+--
+ALTER TABLE `resource_requisition_fulfillments`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uq_fulfillment_no` (`fulfillment_no`),
+  ADD KEY `idx_fulfillment_requisition` (`requisition_id`),
+  ADD KEY `idx_fulfilled_by` (`fulfilled_by`);
+
+--
+-- Indexes for table `resource_requisition_fulfillment_items`
+--
+ALTER TABLE `resource_requisition_fulfillment_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_fulfillment` (`fulfillment_id`),
+  ADD KEY `idx_requisition_item` (`requisition_item_id`),
+  ADD KEY `idx_inventory` (`inventory_id`),
+  ADD KEY `idx_location` (`location_id`),
+  ADD KEY `idx_inventory_movement` (`inventory_movement_id`),
+  ADD KEY `idx_project_cost` (`project_cost_id`);
+
+--
+-- Indexes for table `resource_requisition_items`
+--
+ALTER TABLE `resource_requisition_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_rri_requisition` (`requisition_id`),
+  ADD KEY `idx_rri_inventory` (`inventory_id`),
+  ADD KEY `idx_rri_resource` (`resource_id`);
 
 --
 -- Indexes for table `roles`
@@ -1821,13 +2054,25 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `goods_receipts`
 --
 ALTER TABLE `goods_receipts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `goods_receipt_items`
 --
 ALTER TABLE `goods_receipt_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `goods_returns`
+--
+ALTER TABLE `goods_returns`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `goods_return_items`
+--
+ALTER TABLE `goods_return_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `inventory`
@@ -1845,13 +2090,13 @@ ALTER TABLE `inventory_locations`
 -- AUTO_INCREMENT for table `inventory_location_stock`
 --
 ALTER TABLE `inventory_location_stock`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT for table `inventory_movements`
 --
 ALTER TABLE `inventory_movements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=241;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=253;
 
 --
 -- AUTO_INCREMENT for table `inventory_reservations`
@@ -1875,7 +2120,7 @@ ALTER TABLE `location_switch_log`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `projects`
@@ -1899,7 +2144,7 @@ ALTER TABLE `project_construction_details`
 -- AUTO_INCREMENT for table `project_costs`
 --
 ALTER TABLE `project_costs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=159;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=162;
 
 --
 -- AUTO_INCREMENT for table `project_documents`
@@ -1947,13 +2192,13 @@ ALTER TABLE `purchase_items`
 -- AUTO_INCREMENT for table `purchase_orders`
 --
 ALTER TABLE `purchase_orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `purchase_order_items`
 --
 ALTER TABLE `purchase_order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `resources`
@@ -1971,13 +2216,13 @@ ALTER TABLE `resource_categories`
 -- AUTO_INCREMENT for table `resource_requisitions`
 --
 ALTER TABLE `resource_requisitions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `resource_requisition_approvals`
 --
 ALTER TABLE `resource_requisition_approvals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `resource_requisition_attachments`
@@ -1991,6 +2236,23 @@ ALTER TABLE `resource_requisition_attachments`
 ALTER TABLE `resource_requisition_comments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
+--
+-- AUTO_INCREMENT for table `resource_requisition_fulfillments`
+--
+ALTER TABLE `resource_requisition_fulfillments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `resource_requisition_fulfillment_items`
+--
+ALTER TABLE `resource_requisition_fulfillment_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `resource_requisition_items`
+--
+ALTER TABLE `resource_requisition_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -2026,7 +2288,7 @@ ALTER TABLE `suppliers`
 -- AUTO_INCREMENT for table `supplier_ledger`
 --
 ALTER TABLE `supplier_ledger`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `supplier_payments`
@@ -2085,9 +2347,27 @@ ALTER TABLE `goods_receipts`
 -- Constraints for table `goods_receipt_items`
 --
 ALTER TABLE `goods_receipt_items`
+  ADD CONSTRAINT `fk_grn_item_location` FOREIGN KEY (`location_id`) REFERENCES `inventory_locations` (`id`),
   ADD CONSTRAINT `goods_receipt_items_ibfk_1` FOREIGN KEY (`goods_receipt_id`) REFERENCES `goods_receipts` (`id`),
   ADD CONSTRAINT `goods_receipt_items_ibfk_2` FOREIGN KEY (`purchase_order_item_id`) REFERENCES `purchase_order_items` (`id`),
   ADD CONSTRAINT `goods_receipt_items_ibfk_3` FOREIGN KEY (`inventory_id`) REFERENCES `inventory` (`id`);
+
+--
+-- Constraints for table `goods_returns`
+--
+ALTER TABLE `goods_returns`
+  ADD CONSTRAINT `fk_goods_returns_grn` FOREIGN KEY (`goods_receipt_id`) REFERENCES `goods_receipts` (`id`),
+  ADD CONSTRAINT `fk_goods_returns_po` FOREIGN KEY (`purchase_order_id`) REFERENCES `purchase_orders` (`id`),
+  ADD CONSTRAINT `fk_goods_returns_supplier` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`);
+
+--
+-- Constraints for table `goods_return_items`
+--
+ALTER TABLE `goods_return_items`
+  ADD CONSTRAINT `fk_return_items_grn_item` FOREIGN KEY (`goods_receipt_item_id`) REFERENCES `goods_receipt_items` (`id`),
+  ADD CONSTRAINT `fk_return_items_inventory` FOREIGN KEY (`inventory_id`) REFERENCES `inventory` (`id`),
+  ADD CONSTRAINT `fk_return_items_location` FOREIGN KEY (`location_id`) REFERENCES `inventory_locations` (`id`),
+  ADD CONSTRAINT `fk_return_items_return` FOREIGN KEY (`goods_return_id`) REFERENCES `goods_returns` (`id`);
 
 --
 -- Constraints for table `inventory`
@@ -2258,6 +2538,31 @@ ALTER TABLE `resource_requisition_comments`
   ADD CONSTRAINT `fk_rr_comment_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
+-- Constraints for table `resource_requisition_fulfillments`
+--
+ALTER TABLE `resource_requisition_fulfillments`
+  ADD CONSTRAINT `fk_fulfillment_requisition` FOREIGN KEY (`requisition_id`) REFERENCES `resource_requisitions` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_fulfillment_user` FOREIGN KEY (`fulfilled_by`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `resource_requisition_fulfillment_items`
+--
+ALTER TABLE `resource_requisition_fulfillment_items`
+  ADD CONSTRAINT `fk_fulfillment_inventory` FOREIGN KEY (`inventory_id`) REFERENCES `inventory` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_fulfillment_inventory_movement` FOREIGN KEY (`inventory_movement_id`) REFERENCES `inventory_movements` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_fulfillment_item_header` FOREIGN KEY (`fulfillment_id`) REFERENCES `resource_requisition_fulfillments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_fulfillment_location` FOREIGN KEY (`location_id`) REFERENCES `inventory_locations` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_fulfillment_project_cost` FOREIGN KEY (`project_cost_id`) REFERENCES `project_costs` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_fulfillment_requisition_item` FOREIGN KEY (`requisition_item_id`) REFERENCES `resource_requisition_items` (`id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `resource_requisition_items`
+--
+ALTER TABLE `resource_requisition_items`
+  ADD CONSTRAINT `fk_rri_inventory` FOREIGN KEY (`inventory_id`) REFERENCES `inventory` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_rri_requisition` FOREIGN KEY (`requisition_id`) REFERENCES `resource_requisitions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `services`
 --
 ALTER TABLE `services`
@@ -2287,51 +2592,7 @@ ALTER TABLE `supplier_payment_allocations`
 ALTER TABLE `user_locations`
   ADD CONSTRAINT `fk_user_locations_location` FOREIGN KEY (`location_id`) REFERENCES `inventory_locations` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_user_locations_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
-
-
---
-
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `resource_requisition_items`
---
-ALTER TABLE `resource_requisition_items`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idx_rri_requisition` (`requisition_id`),
-  ADD KEY `idx_rri_inventory` (`inventory_id`),
-  ADD KEY `idx_rri_resource` (`resource_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `resource_requisition_items`
---
-ALTER TABLE `resource_requisition_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `resource_requisition_items`
---
-ALTER TABLE `resource_requisition_items`
-  ADD CONSTRAINT `fk_rri_inventory` FOREIGN KEY (`inventory_id`) REFERENCES `inventory` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_rri_requisition` FOREIGN KEY (`requisition_id`) REFERENCES `resource_requisitions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_rri_resource` FOREIGN KEY (`resource_id`) REFERENCES `resources` (`id`) ON UPDATE CASCADE;
-
-
 COMMIT;
-
-
-
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
