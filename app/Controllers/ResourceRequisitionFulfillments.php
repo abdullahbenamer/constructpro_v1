@@ -255,19 +255,13 @@ class ResourceRequisitionFulfillments extends Controller
         if (empty($items)) {
 
             $_SESSION['error'] =
-                'There are no remaining material items to fulfill.';
-
+                'There are no remaining items to fulfill.';
 
             header(
-
                 'Location: ' .
-
                     URLROOT .
-
                     '/ResourceRequisitions/details/' .
-
                     $requisition_id
-
             );
 
             exit;
@@ -286,15 +280,40 @@ class ResourceRequisitionFulfillments extends Controller
                 $requisition_id
             );
 
-        foreach ($items as $item) {
+       /*
+|--------------------------------------------------------------------------
+| LOAD INVENTORY LOCATIONS
+|--------------------------------------------------------------------------
+|
+| Only INVENTORY items require a warehouse/location.
+|
+*/
+// foreach ($items as $item) {
 
-            $item->locations =
-                $this->fulfillmentModel
+//     echo '<pre>';
+
+//     print_r($item);
+
+//     echo '</pre>';
+// }
+
+// exit;
+// ---------------------
+foreach ($items as $item) {
+
+    if ($item->resource_source === 'INVENTORY') {
+
+        $item->locations =
+            $this->fulfillmentModel
                 ->getItemLocations(
-                    $item->resource_id
+                    $item->inventory_id
                 );
-        }
 
+    } else {
+
+        $item->locations = [];
+    }
+}
 
         /*
         |--------------------------------------------------------------
@@ -330,363 +349,526 @@ class ResourceRequisitionFulfillments extends Controller
     |------------------------------------------------------------------
     */
 
-    public function store()
-    {
-        AuthHelper::can('projects.view');
+ public function store()
+{
+    AuthHelper::can('projects.view');
 
 
-        /*
-        |--------------------------------------------------------------
-        | ONLY POST
-        |--------------------------------------------------------------
-        */
+    /*
+    |--------------------------------------------------------------------------
+    | ONLY POST
+    |--------------------------------------------------------------------------
+    */
 
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
-            header(
+        header(
+            'Location: ' .
+            URLROOT .
+            '/ResourceRequisitions'
+        );
 
-                'Location: ' .
-
-                    URLROOT .
-
-                    '/ResourceRequisitions'
-
-            );
-
-            exit;
-        }
+        exit;
+    }
 
 
-        /*
-        |--------------------------------------------------------------
-        | REQUISITION ID
-        |--------------------------------------------------------------
-        */
+    /*
+    |--------------------------------------------------------------------------
+    | REQUISITION ID
+    |--------------------------------------------------------------------------
+    */
 
-        $requisition_id =
-            (int) ($_POST['requisition_id'] ?? 0);
-
-
-        if ($requisition_id <= 0) {
-
-            $_SESSION['error'] =
-                'Invalid requisition.';
+    $requisition_id =
+        (int) ($_POST['requisition_id'] ?? 0);
 
 
-            header(
+    if ($requisition_id <= 0) {
 
-                'Location: ' .
-
-                    URLROOT .
-
-                    '/ResourceRequisitions'
-
-            );
-
-            exit;
-        }
+        $_SESSION['error'] =
+            'Invalid requisition.';
 
 
-        /*
-        |--------------------------------------------------------------
-        | GET REQUISITION
-        |--------------------------------------------------------------
-        */
+        header(
+            'Location: ' .
+            URLROOT .
+            '/ResourceRequisitions'
+        );
 
-        $requisition =
-            $this->fulfillmentModel
+        exit;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | GET REQUISITION
+    |--------------------------------------------------------------------------
+    */
+
+    $requisition =
+        $this->fulfillmentModel
             ->getRequisition($requisition_id);
 
 
-        if (!$requisition) {
+    if (!$requisition) {
 
-            $_SESSION['error'] =
-                'Resource requisition not found.';
+        $_SESSION['error'] =
+            'Resource requisition not found.';
 
 
-            header(
+        header(
+            'Location: ' .
+            URLROOT .
+            '/ResourceRequisitions'
+        );
 
-                'Location: ' .
+        exit;
+    }
 
-                    URLROOT .
 
-                    '/ResourceRequisitions'
+    /*
+    |--------------------------------------------------------------------------
+    | VALIDATE STATUS
+    |--------------------------------------------------------------------------
+    */
 
-            );
+    if (
+        $requisition->status !== 'APPROVED'
+        &&
+        $requisition->status !== 'PARTIAL'
+    ) {
 
-            exit;
+        $_SESSION['error'] =
+            'This requisition is not available for fulfillment.';
+
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/ResourceRequisitions/details/' .
+            $requisition_id
+        );
+
+        exit;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | GET POSTED ITEMS
+    |
+    | Expected structure:
+    |
+    | items[REQUISITION_ITEM_ID][quantity]
+    | items[REQUISITION_ITEM_ID][location_id]  INVENTORY ONLY
+    | items[REQUISITION_ITEM_ID][unit_cost]
+    | items[REQUISITION_ITEM_ID][remarks]
+    |
+    |--------------------------------------------------------------------------
+    */
+
+    $postedItems =
+        $_POST['items'] ?? [];
+
+
+    if (empty($postedItems)) {
+
+        $_SESSION['error'] =
+            'Please enter at least one fulfillment quantity.';
+
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/ResourceRequisitionFulfillments/create/' .
+            $requisition_id
+        );
+
+        exit;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | PREPARE ITEMS
+    |--------------------------------------------------------------------------
+    */
+
+    $items = [];
+
+
+    foreach ($postedItems as $item_id => $item) {
+
+        $requisition_item_id =
+            (int) $item_id;
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | VALIDATE ITEM ID
+        |--------------------------------------------------------------------------
+        */
+
+        if ($requisition_item_id <= 0) {
+
+            continue;
         }
 
 
         /*
-        |--------------------------------------------------------------
-        | VALIDATE STATUS
-        |--------------------------------------------------------------
+        |--------------------------------------------------------------------------
+        | FULFILLMENT QUANTITY
+        |--------------------------------------------------------------------------
+        */
+
+        $quantity =
+            (float) ($item['quantity'] ?? 0);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SKIP ZERO QUANTITY
+        |--------------------------------------------------------------------------
+        */
+
+        if ($quantity <= 0) {
+
+            continue;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | GET ORIGINAL REQUISITION ITEM
+        |--------------------------------------------------------------------------
+        */
+
+        $reqItem =
+            $this->fulfillmentModel
+                ->getRequisitionItem(
+                    $requisition_item_id
+                );
+
+
+        if (!$reqItem) {
+
+            throw new Exception(
+                'Invalid requisition item.'
+            );
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SECURITY CHECK
+        |
+        | Make sure the item belongs to this requisition.
+        |--------------------------------------------------------------------------
         */
 
         if (
-
-            $requisition->status !== 'APPROVED'
-
-            &&
-
-            $requisition->status !== 'PARTIAL'
-
+            (int) $reqItem->requisition_id
+            !==
+            $requisition_id
         ) {
 
-            $_SESSION['error'] =
-                'This requisition is not available for fulfillment.';
-
-
-            header(
-
-                'Location: ' .
-
-                    URLROOT .
-
-                    '/ResourceRequisitions/details/' .
-
-                    $requisition_id
-
+            throw new Exception(
+                'Invalid requisition item.'
             );
-
-            exit;
         }
 
 
         /*
-        |--------------------------------------------------------------
-        | GET POSTED ITEMS
-        |
-        | Expected structure:
-        |
-        | items[REQUISITION_ITEM_ID][quantity]
-        | items[REQUISITION_ITEM_ID][location_id]
-        |
-        |--------------------------------------------------------------
+        |--------------------------------------------------------------------------
+        | VALIDATE RESOURCE SOURCE
+        |--------------------------------------------------------------------------
         */
 
-        $postedItems =
-            $_POST['items'] ?? [];
+        if (
+            $reqItem->resource_source !== 'INVENTORY'
+            &&
+            $reqItem->resource_source !== 'RESOURCE'
+        ) {
 
-
-        if (empty($postedItems)) {
-
-            $_SESSION['error'] =
-                'Please enter at least one fulfillment quantity.';
-
-
-            header(
-
-                'Location: ' .
-
-                    URLROOT .
-
-                    '/ResourceRequisitionFulfillments/create/' .
-
-                    $requisition_id
-
+            throw new Exception(
+                'Invalid resource source.'
             );
-
-            exit;
         }
 
 
         /*
-        |--------------------------------------------------------------
-        | PREPARE ITEMS
-        |--------------------------------------------------------------
+        |--------------------------------------------------------------------------
+        | PREVENT FULFILLING MORE THAN REMAINING QUANTITY
+        |--------------------------------------------------------------------------
         */
 
-        $items = [];
+      $remaining_quantity =
+    (float) $reqItem->remaining_qty;
+
+        if ($remaining_quantity <= 0) {
+
+            throw new Exception(
+                'Item "' .
+                $reqItem->description .
+                '" has already been fully fulfilled.'
+            );
+        }
 
 
-        foreach ($postedItems as $item_id => $item) {
+        if ($quantity > $remaining_quantity) {
 
-            $quantity =
-                (float) ($item['quantity'] ?? 0);
-
-
-            /*
-            |----------------------------------------------------------
-            | SKIP ZERO QUANTITY
-            |----------------------------------------------------------
-            */
-
-            if ($quantity <= 0) {
-
-                continue;
-            }
+            throw new Exception(
+                'Fulfillment quantity for "' .
+                $reqItem->description .
+                '" cannot exceed the remaining quantity of ' .
+                $remaining_quantity .
+                '.'
+            );
+        }
 
 
-            /*
-            |----------------------------------------------------------
-            | LOCATION REQUIRED FOR INVENTORY MATERIAL
-            |----------------------------------------------------------
-            */
+        /*
+        |--------------------------------------------------------------------------
+        | UNIT COST
+        |
+        | Used for both INVENTORY and RESOURCE fulfillment.
+        |--------------------------------------------------------------------------
+        */
+
+        $unit_cost =
+            isset($item['unit_cost'])
+            &&
+            $item['unit_cost'] !== ''
+
+            ? (float) $item['unit_cost']
+
+            : (float) $reqItem->estimated_unit_cost;
+
+
+        if ($unit_cost < 0) {
+
+            throw new Exception(
+                'Unit cost cannot be negative for "' .
+                $reqItem->description .
+                '".'
+            );
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | PREPARE COMMON ITEM DATA
+        |--------------------------------------------------------------------------
+        */
+
+        $preparedItem = [
+
+            'requisition_item_id' =>
+                $requisition_item_id,
+
+            'quantity' =>
+                $quantity,
+
+            'unit_cost' =>
+                $unit_cost,
+
+            'remarks' =>
+                trim(
+                    $item['remarks'] ?? ''
+                )
+        ];
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | MATERIAL / INVENTORY
+        |
+        | Only inventory materials require a warehouse location.
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            $reqItem->resource_source === 'INVENTORY'
+        ) {
 
             $location_id =
-                (int) ($item['location_id'] ?? 0);
+                (int) (
+                    $item['location_id']
+                    ?? 0
+                );
 
 
             if ($location_id <= 0) {
 
-                $_SESSION['error'] =
-                    'Please select an inventory location for every fulfilled item.';
-
-
-                header(
-
-                    'Location: ' .
-
-                        URLROOT .
-
-                        '/ResourceRequisitionFulfillments/create/' .
-
-                        $requisition_id
-
-                );
-
-                exit;
-            }
-
-
-            $items[] = [
-
-                'requisition_item_id' =>
-
-                (int) $item_id,
-
-                'quantity' =>
-
-                $quantity,
-
-                'location_id' =>
-
-                $location_id
-
-            ];
-        }
-
-
-        /*
-        |--------------------------------------------------------------
-        | NOTHING TO FULFILL
-        |--------------------------------------------------------------
-        */
-
-        if (empty($items)) {
-
-            $_SESSION['error'] =
-                'Please enter a quantity greater than zero.';
-
-
-            header(
-
-                'Location: ' .
-
-                    URLROOT .
-
-                    '/ResourceRequisitionFulfillments/create/' .
-
-                    $requisition_id
-
-            );
-
-            exit;
-        }
-
-        // Before building or submitting $data, generate 'fulfillment_no':
-
-        $fulfillment_no =
-            'RR-FUL-' .
-            date('YmdHis') .
-            '-' .
-            random_int(100, 999);
-
-        /*
-        |--------------------------------------------------------------
-        | PREPARE FULFILLMENT DATA
-        |--------------------------------------------------------------
-        */
-
-        $data = [
-
-    'requisition_id' =>
-        $requisition_id,
-
-    'fulfillment_no' =>
-        $fulfillment_no,
-
-    'fulfillment_date' =>
-        $_POST['fulfillment_date']
-        ?? date('Y-m-d H:i:s'),
-
-    'fulfilled_by' =>
-        $_SESSION['user_id'],
-
-    'remarks' =>
-        trim($_POST['remarks'] ?? ''),
-
-    'items' =>
-        $items
-
-];
-
-        /*
-        |--------------------------------------------------------------
-        | CREATE FULFILLMENT
-        |
-        | MODEL MUST HANDLE EVERYTHING INSIDE A TRANSACTION
-        |--------------------------------------------------------------
-        */
-        try {
-
-            $fulfillment_id =
-                $this->fulfillmentModel
-                ->createFulfillment($data);
-
-
-            if (
-                empty($fulfillment_id)
-                ||
-                (int) $fulfillment_id <= 0
-            ) {
-
                 throw new Exception(
-                    'Fulfillment was created but no fulfillment ID was returned.'
+                    'Please select an inventory location for material item: ' .
+                    $reqItem->description
                 );
             }
 
 
-            $_SESSION['success'] =
-                'Resource requisition fulfilled successfully.';
-
-
-            header(
-                'Location: ' .
-                    URLROOT .
-                    '/ResourceRequisitionFulfillments/details/' .
-                    (int) $fulfillment_id
-            );
-
-            exit;
-        } catch (Throwable $e) {
-
-            $_SESSION['error'] =
-                $e->getMessage();
-
-
-            header(
-                'Location: ' .
-                    URLROOT .
-                    '/ResourceRequisitionFulfillments/create/' .
-                    $requisition_id
-            );
-
-            exit;
+            $preparedItem['location_id'] =
+                $location_id;
         }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | NON-MATERIAL RESOURCE
+        |
+        | No inventory location is required.
+        |--------------------------------------------------------------------------
+        */
+
+        elseif (
+            $reqItem->resource_source === 'RESOURCE'
+        ) {
+
+            $preparedItem['location_id'] =
+                null;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ADD PREPARED ITEM
+        |--------------------------------------------------------------------------
+        */
+
+        $items[] =
+            $preparedItem;
     }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | NOTHING TO FULFILL
+    |--------------------------------------------------------------------------
+    */
+
+    if (empty($items)) {
+
+        $_SESSION['error'] =
+            'Please enter a quantity greater than zero.';
+
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/ResourceRequisitionFulfillments/create/' .
+            $requisition_id
+        );
+
+        exit;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | GENERATE FULFILLMENT NUMBER
+    |--------------------------------------------------------------------------
+    */
+
+    $fulfillment_no =
+        'RR-FUL-' .
+        date('YmdHis') .
+        '-' .
+        random_int(100, 999);
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | PREPARE FULFILLMENT DATA
+    |--------------------------------------------------------------------------
+    */
+
+    $data = [
+
+        'requisition_id' =>
+            $requisition_id,
+
+        'fulfillment_no' =>
+            $fulfillment_no,
+
+        'fulfillment_date' =>
+            $_POST['fulfillment_date']
+                ?? date('Y-m-d H:i:s'),
+
+        'fulfilled_by' =>
+            (int) $_SESSION['user_id'],
+
+        'remarks' =>
+            trim($_POST['remarks'] ?? ''),
+
+        'items' =>
+            $items
+    ];
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | CREATE FULFILLMENT
+    |
+    | Model handles the entire fulfillment process
+    | inside a database transaction.
+    |--------------------------------------------------------------------------
+    */
+
+    try {
+
+        $fulfillment_id =
+            $this->fulfillmentModel
+                ->createFulfillment(
+                    $data
+                );
+
+
+        if (
+            empty($fulfillment_id)
+            ||
+            (int) $fulfillment_id <= 0
+        ) {
+
+            throw new Exception(
+                'Fulfillment was created but no fulfillment ID was returned.'
+            );
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SUCCESS
+        |--------------------------------------------------------------------------
+        */
+
+        $_SESSION['success'] =
+            'Resource requisition fulfilled successfully.';
+
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/ResourceRequisitionFulfillments/details/' .
+            (int) $fulfillment_id
+        );
+
+        exit;
+
+    } catch (Throwable $e) {
+
+        $_SESSION['error'] =
+            $e->getMessage();
+
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/ResourceRequisitionFulfillments/create/' .
+            $requisition_id
+        );
+
+        exit;
+    }
+}
 
 
     /*

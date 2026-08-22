@@ -193,454 +193,444 @@
 
                 <div class="col-md-4 mb-3">
 
-    <label class="form-label">
-        Fulfillment Reference
-    </label>
+                    <label class="form-label">
+                        Fulfillment Reference
+                    </label>
 
-    <input
-        type="text"
-        class="form-control"
-        value="Auto-generated after processing"
-        readonly>
-
-</div>
-
-
-                    <!-- FULFILLMENT DATE -->
-
-                    <div class="col-md-4 mb-3">
-
-                        <label class="form-label">
-
-                            Fulfillment Date
-
-                            <span class="text-danger">*</span>
-
-                        </label>
-
-                        <input type="date"
-                            name="fulfillment_date"
-                            class="form-control"
-                            value="<?= date('Y-m-d') ?>"
-                            required>
-
-                    </div>
-
-
-                    <!-- MATERIAL ONLY -->
-
-                    <div class="col-md-4 mb-3">
-
-                        <label class="form-label">
-
-                            Fulfillment Type
-
-                        </label>
-
-                        <input type="text"
-                            class="form-control"
-                            value="MATERIAL / INVENTORY"
-                            readonly>
-
-                    </div>
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="Auto-generated after processing"
+                        readonly>
 
                 </div>
 
 
-                <!-- REMARKS -->
+                <!-- FULFILLMENT DATE -->
 
-                <div class="mb-0">
+                <div class="col-md-4 mb-3">
 
                     <label class="form-label">
 
-                        Remarks
+                        Fulfillment Date
+
+                        <span class="text-danger">*</span>
 
                     </label>
 
-                    <textarea name="remarks"
+                    <input type="date"
+                        name="fulfillment_date"
                         class="form-control"
-                        rows="3"
-                        placeholder="Enter fulfillment remarks or notes..."></textarea>
+                        value="<?= date('Y-m-d') ?>"
+                        required>
 
                 </div>
+
+
+                <!-- MATERIAL ONLY -->
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        Fulfillment Type
+
+                    </label>
+
+                    <input type="text"
+                        class="form-control"
+                        value="MATERIAL / INVENTORY"
+                        readonly>
+
+                </div>
+
+            </div>
+
+
+            <!-- REMARKS -->
+
+            <div class="mb-0">
+
+                <label class="form-label">
+
+                    Remarks
+
+                </label>
+
+                <textarea name="remarks"
+                    class="form-control"
+                    rows="3"
+                    placeholder="Enter fulfillment remarks or notes..."></textarea>
 
             </div>
 
         </div>
 
+</div>
 
-        <!-- ======================================================
+
+<!-- ======================================================
          MATERIAL ITEMS
         =========================================================== -->
 
-        <div class="card shadow-sm">
+<div class="card shadow-sm">
 
-            <div class="card-header bg-success text-white">
+    <div class="card-header bg-success text-white">
 
-                <strong>
+        <strong>
 
-                    <i class="fas fa-boxes"></i>
+            <i class="fas fa-boxes"></i>
 
-                    Material Items to Fulfill
+            Material Items to Fulfill
 
-                </strong>
+        </strong>
 
-            </div>
-
-
-            <div class="card-body p-0">
-
-                <?php if (!empty($data['items'])): ?>
+    </div>
 
 
-                    <div class="table-responsive">
+    <div class="card-body p-0">
 
-                        <table class="table table-bordered table-hover mb-0 align-middle">
-
-                            <thead class="table-light">
-
-                                <tr>
-
-                                    <th style="min-width: 250px;">
-
-                                        Material
-
-                                    </th>
+        <?php if (!empty($data['items'])): ?>
 
 
-                                    <th class="text-center">
+            <div class="table-responsive">
 
-                                        UOM
+                <table class="table table-bordered table-hover mb-0 align-middle">
 
-                                    </th>
+                    <thead class="table-light">
 
+                        <tr>
 
-                                    <th class="text-end">
+                            <th style="min-width: 250px;">
 
-                                        Requested
+                                Material
 
-                                    </th>
-
-
-                                    <th class="text-end">
-
-                                        Previously Fulfilled
-
-                                    </th>
+                            </th>
 
 
-                                    <th class="text-end">
+                            <th class="text-center">
 
-                                        Remaining
+                                UOM
 
-                                    </th>
-
-
-                                    <th style="min-width: 220px;">
-
-                                        Issue From Location
-
-                                    </th>
+                            </th>
 
 
-                                    <th class="text-end">
+                            <th class="text-end">
 
-                                        Available Stock
+                                Requested
 
-                                    </th>
-
-
-                                    <th style="min-width: 150px;">
-
-                                        Quantity to Fulfill
-
-                                    </th>
-
-                                </tr>
-
-                            </thead>
+                            </th>
 
 
-                            <tbody>
+                            <th class="text-end">
+
+                                Previously Fulfilled
+
+                            </th>
 
 
-                                <?php foreach ($data['items'] as $item): ?>
+                            <th class="text-end">
+
+                                Remaining
+
+                            </th>
 
 
-                                    <?php
+                            <th style="min-width: 220px;">
 
-                                    /*
+                                Issue From Location
+
+                            </th>
+
+
+                            <th class="text-end">
+
+                                Available Stock
+
+                            </th>
+
+
+                            <th style="min-width: 150px;">
+
+                                Quantity to Fulfill
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        <?php foreach ($data['items'] as $item): ?>
+
+
+                            <?php
+
+                            /*
                                     |--------------------------------------------------
                                     | NORMALIZE VALUES
                                     |--------------------------------------------------
                                     */
 
-                                    $requested_qty =
-                                        (float) (
-                                            $item->quantity ?? 0
-                                        );
+                            $requested_qty =
+                                (float) (
+                                    $item->quantity ?? 0
+                                );
 
 
-                                    $fulfilled_qty =
-                                        (float) (
-                                            $item->fulfilled_qty ?? 0
-                                        );
+                            $fulfilled_qty =
+                                (float) (
+                                    $item->fulfilled_qty ?? 0
+                                );
 
 
-                                    $remaining_qty =
-                                        (float) (
-                                            $item->remaining_qty ?? 0
-                                        );
+                            $remaining_qty =
+                                (float) (
+                                    $item->remaining_qty ?? 0
+                                );
 
 
-                                    ?>
+                            ?>
 
 
-                                    <tr
-                                        data-item-id="<?= $item->id ?>"
-                                        data-inventory-id="<?= $item->resource_id ?>">
+                            <tr
+                                data-item-id="<?= $item->id ?>"
+                                data-inventory-id="<?= $item->resource_id ?>">
 
-                                        <!-- ======================================
+                                <!-- ======================================
                                          MATERIAL
                                         ======================================= -->
 
-                                        <td>
+                                <td>
 
-                                            <strong>
+                                    <strong>
 
-                                                <?= htmlspecialchars(
-                                                    $item->inventory_name
-                                                        ?? $item->description
-                                                ) ?>
+                                        <?= htmlspecialchars(
+                                            $item->inventory_name
+                                                ?? $item->description
+                                        ) ?>
 
-                                            </strong>
+                                    </strong>
 
-                                            <br>
+                                    <br>
 
-                                            <small class="text-muted">
+                                    <small class="text-muted">
 
-                                                SKU:
+                                        SKU:
 
-                                                <?= htmlspecialchars(
-                                                    $item->sku ?? '-'
-                                                ) ?>
+                                        <?= htmlspecialchars(
+                                            $item->sku ?? '-'
+                                        ) ?>
 
-                                            </small>
+                                    </small>
 
-                                        </td>
+                                </td>
 
 
-                                        <!-- ======================================
+                                <!-- ======================================
                                          UOM
                                         ======================================= -->
 
-                                        <td>
+                                <td>
 
-                                            <?= htmlspecialchars(
-                                                $item->uom
-                                                    ?? $item->base_unit
-                                                    ?? '-'
-                                            ) ?>
+                                    <?= htmlspecialchars(
+                                        $item->uom
+                                            ?? $item->base_unit
+                                            ?? '-'
+                                    ) ?>
 
-                                        </td>
+                                </td>
 
-                                        <!-- ======================================
+                                <!-- ====================
                                          REQUESTED
-                                        ======================================= -->
+                                    ==================== -->
 
-                                        <td class="text-end">
+                                <td class="text-end">
 
-                                            <?= number_format(
-                                                $item->requested_qty,
-                                                2
-                                            ) ?>
+                                    <?= number_format((float) $item->quantity, 2) ?>
+                                </td>
 
-                                        </td>
-
-                                        <!-- ======================================
+                                <!-- ======================================
                                          PREVIOUSLY FULFILLED
                                         ======================================= -->
 
-                                        <td class="text-end">
+                                <td class="text-end">
 
-                                            <?= number_format(
-                                                $fulfilled_qty,
-                                                2
-                                            ) ?>
+                                   <?= number_format((float) $item->fulfilled_quantity, 2) ?>
 
-                                        </td>
+                                </td>
 
 
-                                        <!-- ======================================
+                                <!-- ======================================
                                          REMAINING
                                         ======================================= -->
 
-                                        <td class="text-end">
+                                <td class="text-end">
 
-                                            <strong class="text-primary">
+                                    <strong class="text-primary">
 
-                                                <?= number_format(
-                                                    $remaining_qty,
-                                                    2
-                                                ) ?>
+                                       <?= number_format((float) $item->remaining_quantity, 2) ?>
 
-                                            </strong>
+                                    </strong>
 
-                                        </td>
+                                </td>
 
 
-                                        <!-- ======================================
+                                <!-- ======================================
                                          LOCATION
                                         ======================================= -->
 
-                                        <td>
+                                <td>
 
-                                            <select
-                                                class="form-select location-select"
-                                                name="items[<?= $item->id ?>][location_id]"
-                                                data-row="<?= $item->id ?>">
+                                    <select
+                                        class="form-select location-select"
+                                        name="items[<?= $item->id ?>][location_id]"
+                                        data-row="<?= $item->id ?>">
 
-                                                <option value="">
+                                        <option value="">
 
-                                                    -- Select Location --
+                                            -- Select Location --
 
-                                                </option>
+                                        </option>
 
-                                                <?php foreach ($item->locations as $location): ?>
+                                        <?php foreach ($item->locations as $location): ?>
 
-                                                    <option
-                                                        value="<?= $location->location_id ?>"
-                                                        data-available="<?= $location->available_qty ?>">
+                                            <option
+                                                value="<?= $location->location_id ?>"
+                                                data-available="<?= $location->available_qty ?>">
 
-                                                        <?= htmlspecialchars(
-                                                            $location->location_name
-                                                        ) ?>
+                                                <?= htmlspecialchars(
+                                                    $location->location_name
+                                                ) ?>
 
-                                                        <?php if (!empty($location->location_code)): ?>
+                                                <?php if (!empty($location->location_code)): ?>
 
-                                                            (<?= htmlspecialchars(
-                                                                    $location->location_code
-                                                                ) ?>)
+                                                    (<?= htmlspecialchars(
+                                                            $location->location_code
+                                                        ) ?>)
 
-                                                        <?php endif; ?>
+                                                <?php endif; ?>
 
-                                                        — Available:
-                                                        <?= number_format(
-                                                            $location->available_qty,
-                                                            2
-                                                        ) ?>
+                                                — Available:
+                                                <?= number_format(
+                                                    $location->available_qty,
+                                                    2
+                                                ) ?>
 
-                                                    </option>
+                                            </option>
 
-                                                <?php endforeach; ?>
-                                            </select>
+                                        <?php endforeach; ?>
+                                    </select>
 
-                                        </td>
+                                </td>
 
-                                        <!-- ======================================
+                                <!-- ======================================
                                          AVAILABLE STOCK
                                         ======================================= -->
 
-                                        <td class="text-center">
+                                <td class="text-center">
 
-                                            <strong
-                                                class="available-stock"
-                                                data-row="<?= $item->id ?>">
-                                                0.00
-                                            </strong>
+                                    <strong
+                                        class="available-stock"
+                                        data-row="<?= $item->id ?>">
+                                        0.00
+                                    </strong>
 
-                                        </td>
+                                </td>
 
 
-                                        <!-- ======================================
+                                <!-- ======================================
                                          FULFILL QUANTITY
                                         ======================================= -->
 
-                                        <td>
-                                            <input
-                                                type="hidden"
-                                                name="items[<?= $item->id ?>][inventory_id]"
-                                                value="<?= $item->resource_id ?>">
-                                            <input
-                                                type="number"
-                                                class="form-control text-end fulfill-quantity"
-                                                name="items[<?= $item->id ?>][fulfilled_quantity]"
-                                                data-item-id="<?= $item->id ?>"
-                                                step="0.01"
-                                                min="0"
-                                                max="<?= $remaining_qty ?>"
-                                                placeholder="0.00">
+                                <td>
+                                    <input
+                                        type="hidden"
+                                        name="items[<?= $item->id ?>][inventory_id]"
+                                        value="<?= $item->resource_id ?>">
+                                    <input
+                                        type="number"
+                                        class="form-control text-end fulfill-quantity"
+                                        name="items[<?= $item->id ?>][fulfilled_quantity]"
+                                        data-item-id="<?= $item->id ?>"
+                                        step="0.01"
+                                        min="0"
+                                    max="<?= (float) $item->remaining_quantity ?>"
+                                        placeholder="0.00">
 
-                                        </td>
-
-
-                                    </tr>
+                                </td>
 
 
-                                <?php endforeach; ?>
+                            </tr>
 
 
-                            </tbody>
-
-                        </table>
-
-                    </div>
+                        <?php endforeach; ?>
 
 
-                <?php else: ?>
+                    </tbody>
 
-
-                    <div class="alert alert-info m-3 mb-0">
-
-                        <i class="fas fa-info-circle"></i>
-
-                        There are no material items remaining to fulfill.
-
-                    </div>
-
-
-                <?php endif; ?>
-
+                </table>
 
             </div>
 
 
-            <!-- ==================================================
+        <?php else: ?>
+
+
+            <div class="alert alert-info m-3 mb-0">
+
+                <i class="fas fa-info-circle"></i>
+
+                There are no material items remaining to fulfill.
+
+            </div>
+
+
+        <?php endif; ?>
+
+
+    </div>
+
+
+    <!-- ==================================================
              FORM FOOTER
             =================================================== -->
 
-            <div class="card-footer">
+    <div class="card-footer">
 
-                <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex justify-content-between align-items-center">
 
-                    <a href="<?= URLROOT ?>/ResourceRequisitionFulfillments/index/<?= $data['requisition']->id ?>"
-                        class="btn btn-secondary">
+            <a href="<?= URLROOT ?>/ResourceRequisitionFulfillments/index/<?= $data['requisition']->id ?>"
+                class="btn btn-secondary">
 
-                        <i class="fas fa-times"></i>
+                <i class="fas fa-times"></i>
 
-                        Cancel
+                Cancel
 
-                    </a>
+            </a>
 
 
-                    <button type="submit"
-                        class="btn btn-success"
-                        id="submitFulfillment">
+            <button type="submit"
+                class="btn btn-success"
+                id="submitFulfillment">
 
-                        <i class="fas fa-check-circle"></i>
+                <i class="fas fa-check-circle"></i>
 
-                        Process Material Fulfillment
+                Process Material Fulfillment
 
-                    </button>
-
-                </div>
-
-            </div>
+            </button>
 
         </div>
 
+    </div>
 
-    </form>
+</div>
+
+
+</form>
 
 
 </div>
