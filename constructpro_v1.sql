@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 21, 2026 at 11:43 AM
+-- Generation Time: Aug 22, 2026 at 06:51 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -303,11 +303,11 @@ INSERT INTO `inventory` (`id`, `name`, `category`, `sku`, `quantity`, `location_
 (6, 'Contactor 40A 220V', 'Contactor', 'CT-40A-LS', 1021.00, NULL, 10, 8.20, 'unit', 0, 'piece', 1, 15.50, 15.50, 12, 5),
 (7, 'Wall Socket 13A UK', 'Socket', 'SOC-13A-HVL', 967.00, NULL, 50, 0.80, 'unit', 0, 'piece', 1, 1.50, 1.50, 16, 10),
 (8, 'Switch 1 Gang', 'Switch', 'SW-1G-HAG', 12460.00, NULL, 100, 0.60, 'unit', 0, 'piece', 1, 1.50, 1.50, 9, 1),
-(9, 'PVC Cable 2.5mm²', 'Cable', 'PVC-2.5-SOUTH', 12590.00, NULL, 200, 0.30, 'meter', 1, 'roll', 100, 0.60, 60.00, 3, 3),
+(9, 'PVC Cable 2.5mm²', 'Cable', 'PVC-2.5-SOUTH', 11290.00, NULL, 200, 0.30, 'meter', 1, 'roll', 100, 0.60, 60.00, 3, 3),
 (10, 'Terminal Block 2.5mm', 'Terminal', 'TB-2.5-WAGO', 747.00, NULL, 100, 0.20, 'unit', 0, 'piece', 1, 0.50, 0.50, 21, 1),
 (105, 'Cement', 'Switchgear', 'cem-1234', 500.00, 1, 100, 75.00, 'unit', 0, NULL, 1, 100.00, 100.00, 34, 12),
 (106, 'Man Boot', 'Switchgear', 'MB-123', 496.00, 3, 50, 450.00, 'unit', 0, NULL, 1, 570.00, 570.00, 4, 8),
-(108, 'New Item', 'Instrumentation', 'ni-999', 20.00, 20, 2, 12.00, 'unit', 0, NULL, 1, 0.00, 0.00, 14, 6);
+(108, 'Shakhashir Modern', 'Instrumentation', 'ni-999', 20.00, 20, 2, 12.00, 'unit', 0, NULL, 1, 0.00, 0.00, 14, 6);
 
 -- --------------------------------------------------------
 
@@ -389,8 +389,8 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (97, 8, 3, 100.00),
 (98, 8, 4, 100.00),
 (101, 9, 1, 600.00),
-(102, 9, 2, 1000.00),
-(103, 9, 3, 600.00),
+(102, 9, 2, 300.00),
+(103, 9, 3, 0.00),
 (104, 9, 4, 10390.00),
 (107, 10, 1, 130.00),
 (108, 10, 2, 218.00),
@@ -474,7 +474,10 @@ INSERT INTO `inventory_movements` (`id`, `inventory_id`, `location_id`, `type`, 
 (249, 7, 20, 'OUT', 1.00, NULL, 3, NULL, NULL, 97.00, 967.00, 'RTS-260816154044', 'Return to supplier', 1, '2026-08-16 13:40:44'),
 (250, 1, 1, 'OUT', 4.00, 1.20, NULL, NULL, 1, 167.00, 960.00, 'RR-FUL-', 'Resource requisition fulfillment', 1, '2026-08-21 04:45:59'),
 (251, 106, 19, 'OUT', 10.00, 450.00, NULL, NULL, 1, 6.00, 496.00, 'RR-FUL-', 'Resource requisition fulfillment', 1, '2026-08-21 04:52:00'),
-(252, 10, 3, 'OUT', 37.00, 0.20, NULL, NULL, 1, 199.00, 747.00, 'RR-FUL-20260821113536-277', 'Resource requisition fulfillment', 1, '2026-08-21 09:35:36');
+(252, 10, 3, 'OUT', 37.00, 0.20, NULL, NULL, 1, 199.00, 747.00, 'RR-FUL-20260821113536-277', 'Resource requisition fulfillment', 1, '2026-08-21 09:35:36'),
+(253, 9, 3, 'OUT', 95.00, 0.30, NULL, NULL, 1, 505.00, 12495.00, 'RR-FUL-20260822063449-339', 'Resource requisition fulfillment: REQ-260821164443', 1, '2026-08-22 04:34:49'),
+(254, 9, 3, 'OUT', 505.00, 0.30, NULL, NULL, 1, 0.00, 11990.00, 'RR-FUL-20260822064201-707', 'Resource requisition fulfillment: REQ-260821164443', 1, '2026-08-22 04:42:01'),
+(255, 9, 2, 'OUT', 700.00, 0.30, NULL, NULL, 1, 300.00, 11290.00, 'RR-FUL-20260822064406-201', 'Resource requisition fulfillment: REQ-260821164443', 1, '2026-08-22 04:44:06');
 
 -- --------------------------------------------------------
 
@@ -622,7 +625,8 @@ CREATE TABLE `projects` (
 --
 
 INSERT INTO `projects` (`id`, `customer_id`, `title`, `project_type`, `description`, `deadline`, `status`, `budget`, `created_at`, `is_archived`, `site_location`, `start_date`, `project_manager_id`, `contract_number`, `project_code`, `priority`) VALUES
-(43, 2, 'building School', 'construction', 'building School 1,500,000', '2026-10-28', 'planning', 1500000.00, '2026-08-08 20:59:33', 0, 'sirte', '2026-08-16', 1, '386', 'sc-386', 'high');
+(43, 2, 'building School', 'construction', 'building School 1,500,000', '2026-10-28', 'planning', 1500000.00, '2026-08-08 20:59:33', 0, 'sirte', '2026-08-16', 1, '386', 'sc-386', 'high'),
+(44, 5, 'Power Station Renovation', 'maintenance', 'Power Station Renovation for Tajoura West Valley.', '2026-12-31', 'planning', 2370000.00, '2026-08-21 14:43:21', 0, 'Tajoura West', '2026-08-02', 14, 'PS-2016-08', 'PS-2016', 'high');
 
 -- --------------------------------------------------------
 
@@ -702,7 +706,10 @@ INSERT INTO `project_costs` (`id`, `project_id`, `inventory_id`, `location_id`, 
 (157, 43, NULL, NULL, 'subcontract', 'finishing basement for the fence', 100.00, 100.00, '2026-08-11 12:52:45'),
 (159, 43, 1, 1, 'materials', '', 4.00, 1.20, '2026-08-21 04:45:59'),
 (160, 43, 106, 19, 'materials', 'Man Boot', 10.00, 450.00, '2026-08-21 04:52:00'),
-(161, 43, 10, 3, 'materials', 'Terminal Block 2.5mm', 37.00, 0.20, '2026-08-21 09:35:36');
+(161, 43, 10, 3, 'materials', 'Terminal Block 2.5mm', 37.00, 0.20, '2026-08-21 09:35:36'),
+(162, 44, 9, 3, 'materials', 'PVC Cable 2.5mm²', 95.00, 0.30, '2026-08-22 04:34:49'),
+(163, 44, 9, 3, 'materials', 'PVC Cable 2.5mm²', 505.00, 0.30, '2026-08-22 04:42:01'),
+(164, 44, 9, 2, 'materials', 'PVC Cable 2.5mm²', 700.00, 0.30, '2026-08-22 04:44:06');
 
 -- --------------------------------------------------------
 
@@ -1036,7 +1043,8 @@ INSERT INTO `resource_requisitions` (`id`, `req_number`, `project_id`, `request_
 (15, 'REQ-260821090323', 43, '2026-08-21', '2026-08-25', 'NORMAL', 'APPROVED', 'non material RR test', 1, '2026-08-21 09:04:40', 1, 1, '2026-08-21 09:05:06', '', NULL, '2026-08-21 07:03:23', '2026-08-21 07:05:06'),
 (16, 'REQ-260821091044', 43, '2026-08-21', '2026-08-24', 'NORMAL', 'APPROVED', '', 1, '2026-08-21 09:12:36', 1, 1, '2026-08-21 09:12:44', '', NULL, '2026-08-21 07:10:44', '2026-08-21 07:12:44'),
 (17, 'REQ-260821095950', 43, '2026-08-21', '2026-08-28', 'NORMAL', 'PARTIAL', '', 1, '2026-08-21 10:00:18', 1, 1, '2026-08-21 10:00:30', '', NULL, '2026-08-21 07:59:50', '2026-08-21 09:35:36'),
-(18, 'REQ-260821113809', 43, '2026-08-21', '2026-08-22', 'NORMAL', 'APPROVED', '', 1, '2026-08-21 11:38:30', 1, 1, '2026-08-21 11:38:44', '', NULL, '2026-08-21 09:38:09', '2026-08-21 09:38:44');
+(18, 'REQ-260821113809', 43, '2026-08-21', '2026-08-22', 'NORMAL', 'APPROVED', '', 1, '2026-08-21 11:38:30', 1, 1, '2026-08-21 11:38:44', '', NULL, '2026-08-21 09:38:09', '2026-08-21 09:38:44'),
+(19, 'REQ-260821164443', 44, '2026-08-16', '2026-08-24', 'HIGH', 'FULFILLED', 'Power Station Renovation RR #1', 1, '2026-08-21 16:47:14', 1, 1, '2026-08-21 16:47:37', '', NULL, '2026-08-21 14:44:43', '2026-08-22 04:44:06');
 
 -- --------------------------------------------------------
 
@@ -1067,7 +1075,9 @@ INSERT INTO `resource_requisition_approvals` (`id`, `requisition_id`, `action`, 
 (13, 17, 'SUBMITTED', 1, NULL, '2026-08-21 10:00:18'),
 (14, 17, 'APPROVED', 1, '', '2026-08-21 10:00:30'),
 (15, 18, 'SUBMITTED', 1, NULL, '2026-08-21 11:38:30'),
-(16, 18, 'APPROVED', 1, '', '2026-08-21 11:38:44');
+(16, 18, 'APPROVED', 1, '', '2026-08-21 11:38:44'),
+(17, 19, 'SUBMITTED', 1, NULL, '2026-08-21 16:47:14'),
+(18, 19, 'APPROVED', 1, '', '2026-08-21 16:47:37');
 
 -- --------------------------------------------------------
 
@@ -1121,7 +1131,12 @@ CREATE TABLE `resource_requisition_fulfillments` (
 
 INSERT INTO `resource_requisition_fulfillments` (`id`, `requisition_id`, `fulfillment_no`, `fulfillment_date`, `fulfilled_by`, `remarks`, `status`, `created_at`) VALUES
 (3, 14, '', '2026-08-21 00:00:00', 1, '', 'COMPLETED', '2026-08-21 04:52:00'),
-(10, 17, 'RR-FUL-20260821113536-277', '2026-08-21 00:00:00', 1, '', 'COMPLETED', '2026-08-21 09:35:36');
+(10, 17, 'RR-FUL-20260821113536-277', '2026-08-21 00:00:00', 1, '', 'COMPLETED', '2026-08-21 09:35:36'),
+(11, 19, 'RR-FUL-20260821173805-200', '2026-08-21 00:00:00', 1, '', 'COMPLETED', '2026-08-21 15:38:05'),
+(12, 19, 'RR-FUL-20260821194941-533', '2026-08-21 00:00:00', 1, '', 'COMPLETED', '2026-08-21 17:49:41'),
+(13, 19, 'RR-FUL-20260822063449-339', '2026-08-22 00:00:00', 1, '', 'COMPLETED', '2026-08-22 04:34:49'),
+(14, 19, 'RR-FUL-20260822064201-707', '2026-08-22 00:00:00', 1, '', 'COMPLETED', '2026-08-22 04:42:01'),
+(15, 19, 'RR-FUL-20260822064406-201', '2026-08-22 00:00:00', 1, '', 'COMPLETED', '2026-08-22 04:44:06');
 
 -- --------------------------------------------------------
 
@@ -1149,7 +1164,10 @@ CREATE TABLE `resource_requisition_fulfillment_items` (
 
 INSERT INTO `resource_requisition_fulfillment_items` (`id`, `fulfillment_id`, `requisition_item_id`, `inventory_id`, `location_id`, `fulfilled_quantity`, `unit_cost`, `remarks`, `inventory_movement_id`, `project_cost_id`, `created_at`) VALUES
 (2, 3, 14, 106, 19, 10.00, 450.00, NULL, 251, 160, '2026-08-21 04:52:00'),
-(3, 10, 18, 10, 3, 37.00, 0.20, NULL, 252, 161, '2026-08-21 09:35:36');
+(3, 10, 18, 10, 3, 37.00, 0.20, NULL, 252, 161, '2026-08-21 09:35:36'),
+(4, 13, 20, 9, 3, 95.00, 0.30, '', 253, 162, '2026-08-22 04:34:49'),
+(5, 14, 20, 9, 3, 505.00, 0.30, '', 254, 163, '2026-08-22 04:42:01'),
+(6, 15, 20, 9, 2, 700.00, 0.30, '', 255, 164, '2026-08-22 04:44:06');
 
 -- --------------------------------------------------------
 
@@ -1184,7 +1202,8 @@ INSERT INTO `resource_requisition_items` (`id`, `requisition_id`, `resource_sour
 (16, 15, 'RESOURCE', NULL, 13, 'Plate Compactor', 'Kilogram', 12.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-08-21 07:04:07'),
 (17, 16, 'INVENTORY', NULL, 108, 'New Item', 'unit', 10.00, 0.00, 0.00, 0.00, '10 of 20 New Item', 'OPEN', '2026-08-21 07:12:31'),
 (18, 17, 'INVENTORY', NULL, 10, 'Terminal Block 2.5mm', 'unit', 500.00, 0.00, 0.00, 0.00, '500 units', 'PARTIAL', '2026-08-21 08:00:14'),
-(19, 18, 'RESOURCE', NULL, 15, 'Tower Crane', 'Gram', 3.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-08-21 09:38:24');
+(19, 18, 'RESOURCE', NULL, 15, 'Tower Crane', 'Gram', 3.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-08-21 09:38:24'),
+(20, 19, 'INVENTORY', NULL, 9, 'PVC Cable 2.5mm²', 'meter', 1300.00, 1300.00, 0.00, 0.00, 'PVC Cable 2.5mm², 1300 Mtr', 'FULFILLED', '2026-08-21 14:45:55');
 
 -- --------------------------------------------------------
 
@@ -2096,7 +2115,7 @@ ALTER TABLE `inventory_location_stock`
 -- AUTO_INCREMENT for table `inventory_movements`
 --
 ALTER TABLE `inventory_movements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=253;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=256;
 
 --
 -- AUTO_INCREMENT for table `inventory_reservations`
@@ -2126,7 +2145,7 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `project_advances`
@@ -2144,7 +2163,7 @@ ALTER TABLE `project_construction_details`
 -- AUTO_INCREMENT for table `project_costs`
 --
 ALTER TABLE `project_costs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=162;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
 
 --
 -- AUTO_INCREMENT for table `project_documents`
@@ -2216,13 +2235,13 @@ ALTER TABLE `resource_categories`
 -- AUTO_INCREMENT for table `resource_requisitions`
 --
 ALTER TABLE `resource_requisitions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `resource_requisition_approvals`
 --
 ALTER TABLE `resource_requisition_approvals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `resource_requisition_attachments`
@@ -2240,19 +2259,19 @@ ALTER TABLE `resource_requisition_comments`
 -- AUTO_INCREMENT for table `resource_requisition_fulfillments`
 --
 ALTER TABLE `resource_requisition_fulfillments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `resource_requisition_fulfillment_items`
 --
 ALTER TABLE `resource_requisition_fulfillment_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `resource_requisition_items`
 --
 ALTER TABLE `resource_requisition_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `roles`
