@@ -36,328 +36,6 @@ class ResourceRequisitionFulfillmentModel extends Model
 
     /*
 |--------------------------------------------------------------------------
-| GET FULFILLABLE MATERIAL ITEMS
-|--------------------------------------------------------------------------
-|
-| Returns only inventory/material items that still have
-| remaining quantity to fulfill.
-|
-*/
-
-public function getFulfillableMaterialItems($requisition_id)
-{
-    return $this->db->query(
-        "
-        SELECT
-
-            rri.id,
-
-            rri.requisition_id,
-
-            rri.resource_source,
-
-            /*
-            |--------------------------------------------------------------------------
-            | INVENTORY ID
-            |--------------------------------------------------------------------------
-            |
-            | Supports older requisition records where the inventory ID
-            | may have been stored in resource_id instead of inventory_id.
-            |
-            */
-
-            COALESCE(
-                rri.inventory_id,
-                rri.resource_id
-            ) AS inventory_id,
-
-            rri.resource_id,
-
-            rri.description,
-
-            rri.uom,
-
-            rri.quantity,
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | ACTUAL FULFILLED QUANTITY
-            |--------------------------------------------------------------------------
-            */
-
-            COALESCE(
-                fulfilled.fulfilled_qty,
-                0
-            ) AS fulfilled_quantity,
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | REMAINING QUANTITY
-            |--------------------------------------------------------------------------
-            */
-
-            (
-                rri.quantity
-                -
-                COALESCE(
-                    fulfilled.fulfilled_qty,
-                    0
-                )
-            ) AS remaining_quantity,
-
-
-            rri.estimated_unit_cost,
-
-            rri.estimated_total,
-
-            rri.remarks,
-
-            rri.status,
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | INVENTORY DETAILS
-            |--------------------------------------------------------------------------
-            */
-
-            i.id AS actual_inventory_id,
-
-            i.sku,
-
-            i.name AS inventory_name,
-
-            i.base_unit AS inventory_uom
-
-
-        FROM resource_requisition_items rri
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | INVENTORY
-        |--------------------------------------------------------------------------
-        */
-
-        INNER JOIN inventory i
-
-            ON i.id = COALESCE(
-                rri.inventory_id,
-                rri.resource_id
-            )
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | ACTUAL FULFILLMENT HISTORY
-        |--------------------------------------------------------------------------
-        */
-
-        LEFT JOIN
-        (
-            SELECT
-
-                requisition_item_id,
-
-                SUM(
-                    fulfilled_quantity
-                ) AS fulfilled_qty
-
-            FROM resource_requisition_fulfillment_items
-
-            GROUP BY requisition_item_id
-
-        ) fulfilled
-
-            ON fulfilled.requisition_item_id = rri.id
-
-
-        WHERE
-
-            rri.requisition_id = ?
-
-            AND rri.resource_source = 'INVENTORY'
-
-            AND rri.status IN (
-                'OPEN',
-                'PARTIAL'
-            )
-
-            AND
-            (
-                rri.quantity
-                >
-                COALESCE(
-                    fulfilled.fulfilled_qty,
-                    0
-                )
-            )
-
-
-        ORDER BY
-
-            rri.id ASC
-        ",
-        [
-            $requisition_id
-        ]
-    )->fetchAll();
-}
-
-
-/*
-|--------------------------------------------------------------------------
-| GET FULFILLABLE RESOURCE ITEMS
-|--------------------------------------------------------------------------
-|
-| Returns non-inventory resources that still have remaining
-| quantity to fulfill.
-|
-| These may include:
-|
-| EQUIPMENT
-| LABOR
-| SERVICE
-|
-*/
-
-public function getFulfillableResourceItems($requisition_id)
-{
-    return $this->db->query(
-        "
-        SELECT
-
-            rri.id,
-
-            rri.requisition_id,
-
-            rri.resource_source,
-
-            rri.inventory_id,
-
-            rri.resource_id,
-
-            rri.description,
-
-            rri.uom,
-
-            rri.quantity,
-
-            rri.estimated_unit_cost,
-
-            rri.estimated_total,
-
-            rri.remarks,
-
-            rri.status,
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | FULFILLED QUANTITY
-            |--------------------------------------------------------------------------
-            */
-
-            COALESCE(
-                fulfilled.fulfilled_qty,
-                0
-            ) AS fulfilled_quantity,
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | REMAINING QUANTITY
-            |--------------------------------------------------------------------------
-            */
-
-            (
-                rri.quantity
-                -
-                COALESCE(
-                    fulfilled.fulfilled_qty,
-                    0
-                )
-            ) AS remaining_quantity,
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | RESOURCE DETAILS
-            |--------------------------------------------------------------------------
-            */
-
-            r.resource_code,
-
-            r.resource_name,
-
-            r.resource_name_a,
-
-            r.resource_type,
-
-            r.description AS resource_description
-
-
-        FROM resource_requisition_items rri
-
-
-        INNER JOIN resources r
-
-            ON r.id = rri.resource_id
-
-
-        LEFT JOIN
-        (
-            SELECT
-
-                requisition_item_id,
-
-                SUM(
-                    fulfilled_quantity
-                ) AS fulfilled_qty
-
-            FROM resource_requisition_fulfillment_items
-
-            GROUP BY
-
-                requisition_item_id
-
-        ) fulfilled
-
-            ON fulfilled.requisition_item_id = rri.id
-
-
-        WHERE
-
-            rri.requisition_id = ?
-
-            AND rri.resource_source = 'RESOURCE'
-
-            AND rri.status IN (
-                'OPEN',
-                'PARTIAL'
-            )
-
-            AND rri.quantity >
-                COALESCE(
-                    fulfilled.fulfilled_qty,
-                    0
-                )
-
-
-        ORDER BY
-
-            rri.id ASC
-        ",
-        [
-            $requisition_id
-        ]
-    )->fetchAll();
-}
-
-    /*
-|--------------------------------------------------------------------------
 | GET FULFILLABLE REQUISITION ITEMS
 |--------------------------------------------------------------------------
 |
@@ -371,7 +49,7 @@ public function getFulfillableResourceItems($requisition_id)
 |
 */
 
-public function getFulfillableItems($requisition_id)
+  public function getFulfillableItems($requisition_id)
 {
     return $this->db->query(
         "
@@ -383,22 +61,34 @@ public function getFulfillableItems($requisition_id)
 
             rri.resource_source,
 
+
             /*
             |--------------------------------------------------------------------------
-            | RESOLVE INVENTORY ID
+            | EFFECTIVE INVENTORY ID
+            |
+            | Supports old records where INVENTORY items were stored
+            | in resource_id instead of inventory_id.
             |--------------------------------------------------------------------------
-            |
-            | Some older requisition items may have the inventory ID
-            | stored in resource_id instead of inventory_id.
-            |
             */
 
             COALESCE(
                 rri.inventory_id,
-                rri.resource_id
+                CASE
+                    WHEN rri.resource_source = 'INVENTORY'
+                    THEN rri.resource_id
+                    ELSE NULL
+                END
             ) AS inventory_id,
 
+
+            /*
+            |--------------------------------------------------------------------------
+            | ORIGINAL RESOURCE ID
+            |--------------------------------------------------------------------------
+            */
+
             rri.resource_id,
+
 
             rri.description,
 
@@ -454,7 +144,22 @@ public function getFulfillableItems($requisition_id)
 
             i.name AS inventory_name,
 
-            i.base_unit AS inventory_uom
+            i.base_unit AS inventory_uom,
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | RESOURCE DETAILS
+            |--------------------------------------------------------------------------
+            */
+
+            r.resource_code,
+
+            r.resource_name,
+
+            r.resource_type,
+
+            r.description AS resource_description
 
 
         FROM resource_requisition_items rri
@@ -462,16 +167,31 @@ public function getFulfillableItems($requisition_id)
 
         /*
         |--------------------------------------------------------------------------
-        | INVENTORY JOIN
+        | INVENTORY
         |--------------------------------------------------------------------------
         */
 
-        INNER JOIN inventory i
+        LEFT JOIN inventory i
 
-            ON i.id = COALESCE(
+            ON rri.resource_source = 'INVENTORY'
+
+            AND i.id = COALESCE(
                 rri.inventory_id,
                 rri.resource_id
             )
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | RESOURCE
+        |--------------------------------------------------------------------------
+        */
+
+        LEFT JOIN resources r
+
+            ON rri.resource_source = 'RESOURCE'
+
+            AND r.id = rri.resource_id
 
 
         /*
@@ -502,8 +222,6 @@ public function getFulfillableItems($requisition_id)
         WHERE
 
             rri.requisition_id = ?
-
-            AND rri.resource_source = 'INVENTORY'
 
             AND rri.status IN (
                 'OPEN',
@@ -1778,189 +1496,496 @@ public function getFulfillableItems($requisition_id)
     );
 }
 
+/*
+|--------------------------------------------------------------------------
+| CREATE RESOURCE FULFILLMENT
+|--------------------------------------------------------------------------
+|
+| Handles non-inventory resources such as:
+|
+| LABOR
+| EQUIPMENT
+| SERVICE
+|
+| Does NOT:
+| - deduct inventory
+| - create inventory movements
+| - require inventory location
+|
+| Does:
+| - create fulfillment header
+| - create fulfillment items
+| - update fulfilled quantities
+| - update requisition item status
+| - create project costs
+| - update requisition status
+|
+*/
 
-    /*
-    |--------------------------------------------------------------------------
-    | UPDATE REQUISITION ITEM STATUS
-    |--------------------------------------------------------------------------
-    */
+public function createResourceFulfillment($data)
+{
+    try {
 
-    public function updateRequisitionItemStatus($item_id)
-    {
-        $item =
+        /*
+        |--------------------------------------------------------------------------
+        | START TRANSACTION
+        |--------------------------------------------------------------------------
+        */
+
+        $this->db->beginTransaction();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | GET REQUISITION
+        |--------------------------------------------------------------------------
+        */
+
+        $requisition =
             $this->db->query(
                 "
-                SELECT
-                    quantity,
-                    status
+                SELECT *
+                FROM resource_requisitions
+                WHERE id = ?
+                FOR UPDATE
+                ",
+                [
+                    $data['requisition_id']
+                ]
+            )->fetch();
 
-                FROM resource_requisition_items
+
+        if (!$requisition) {
+
+            throw new Exception(
+                'Resource requisition not found.'
+            );
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | CREATE FULFILLMENT HEADER
+        |--------------------------------------------------------------------------
+        */
+
+        $this->db->query(
+            "
+            INSERT INTO resource_requisition_fulfillments
+            (
+                requisition_id,
+                fulfillment_no,
+                fulfillment_date,
+                fulfilled_by,
+                remarks
+            )
+            VALUES
+            (
+                ?, ?, ?, ?, ?
+            )
+            ",
+            [
+                $data['requisition_id'],
+                $data['fulfillment_no'],
+                $data['fulfillment_date'],
+                $data['fulfilled_by'],
+                $data['remarks']
+            ]
+        );
+
+
+        $fulfillment_id =
+            (int) $this->db->lastInsertId();
+
+
+        if ($fulfillment_id <= 0) {
+
+            throw new Exception(
+                'Failed to create resource fulfillment.'
+            );
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | PROCESS RESOURCE ITEMS
+        |--------------------------------------------------------------------------
+        */
+
+        foreach ($data['items'] as $item) {
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | BASIC VALUES
+            |--------------------------------------------------------------------------
+            */
+
+            $requisition_item_id =
+                (int) (
+                    $item['requisition_item_id']
+                    ?? 0
+                );
+
+
+            $fulfill_quantity =
+                (float) (
+                    $item['quantity']
+                    ?? 0
+                );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | SKIP ZERO QUANTITY
+            |--------------------------------------------------------------------------
+            */
+
+            if (
+                $requisition_item_id <= 0
+                ||
+                $fulfill_quantity <= 0
+            ) {
+
+                continue;
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | GET + LOCK REQUISITION ITEM
+            |--------------------------------------------------------------------------
+            */
+
+            $requisitionItem =
+                $this->db->query(
+                    "
+                    SELECT
+                        rri.*,
+                        r.resource_type
+
+                    FROM resource_requisition_items rri
+
+                    LEFT JOIN resources r
+                        ON r.id = rri.resource_id
+
+                    WHERE
+                        rri.id = ?
+
+                        AND rri.requisition_id = ?
+
+                    FOR UPDATE
+                    ",
+                    [
+                        $requisition_item_id,
+                        $data['requisition_id']
+                    ]
+                )->fetch();
+
+
+            if (!$requisitionItem) {
+
+                throw new Exception(
+                    'Invalid requisition item.'
+                );
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | ENSURE THIS IS A RESOURCE ITEM
+            |--------------------------------------------------------------------------
+            */
+
+            if (
+                $requisitionItem->resource_source
+                !==
+                'RESOURCE'
+            ) {
+
+                throw new Exception(
+                    'Invalid item. Only resource items can be processed here.'
+                );
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | CALCULATE CURRENT FULFILLMENT
+            |--------------------------------------------------------------------------
+            */
+
+            $fulfilled =
+                $this->db->query(
+                    "
+                    SELECT
+
+                        COALESCE(
+                            SUM(fulfilled_quantity),
+                            0
+                        ) AS fulfilled_qty
+
+                    FROM resource_requisition_fulfillment_items
+
+                    WHERE requisition_item_id = ?
+                    ",
+                    [
+                        $requisition_item_id
+                    ]
+                )->fetch();
+
+
+            $previously_fulfilled =
+                (float) (
+                    $fulfilled->fulfilled_qty
+                    ?? 0
+                );
+
+
+            $requested_quantity =
+                (float) $requisitionItem->quantity;
+
+
+            $remaining_quantity =
+                $requested_quantity
+                -
+                $previously_fulfilled;
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | VALIDATE QUANTITY
+            |--------------------------------------------------------------------------
+            */
+
+            if (
+                $fulfill_quantity
+                >
+                $remaining_quantity
+            ) {
+
+                throw new Exception(
+                    'Fulfillment quantity exceeds the remaining quantity for: '
+                    .
+                    $requisitionItem->description
+                );
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | DETERMINE UNIT COST
+            |--------------------------------------------------------------------------
+            */
+
+            $unit_cost =
+                isset($item['unit_cost'])
+                &&
+                $item['unit_cost'] !== ''
+                    ? (float) $item['unit_cost']
+                    : (float) (
+                        $requisitionItem->estimated_unit_cost
+                        ?? 0
+                    );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | DETERMINE PROJECT COST TYPE
+            |--------------------------------------------------------------------------
+            */
+
+            switch (
+                strtoupper(
+                    $requisitionItem->resource_type
+                    ?? ''
+                )
+            ) {
+
+                case 'LABOR':
+
+                    $cost_type = 'labor';
+
+                    break;
+
+
+                case 'SERVICE':
+
+                    $cost_type = 'subcontract';
+
+                    break;
+
+
+                case 'EQUIPMENT':
+
+                    $cost_type = 'misc';
+
+                    break;
+
+
+                default:
+
+                    $cost_type = 'misc';
+
+                    break;
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | CREATE PROJECT COST
+            |--------------------------------------------------------------------------
+            */
+
+            $dbProjectCost =
+                $this->db->query(
+                    "
+                    INSERT INTO project_costs
+                    (
+                        project_id,
+                        inventory_id,
+                        location_id,
+                        cost_type,
+                        description,
+                        quantity,
+                        unit_price
+                    )
+                    VALUES
+                    (
+                        ?, NULL, NULL, ?, ?, ?, ?
+                    )
+                    ",
+                    [
+                        $requisition->project_id,
+                        $cost_type,
+                        $requisitionItem->description,
+                        $fulfill_quantity,
+                        $unit_cost
+                    ]
+                );
+
+
+            $project_cost_id =
+                (int) $this->db->lastInsertId();
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | CREATE FULFILLMENT ITEM
+            |--------------------------------------------------------------------------
+            */
+
+            $this->db->query(
+                "
+                INSERT INTO resource_requisition_fulfillment_items
+                (
+                    fulfillment_id,
+                    requisition_item_id,
+                    inventory_id,
+                    location_id,
+                    fulfilled_quantity,
+                    unit_cost,
+                    remarks,
+                    inventory_movement_id,
+                    project_cost_id
+                )
+                VALUES
+                (
+                    ?, ?, NULL, NULL, ?, ?, ?, NULL, ?
+                )
+                ",
+                [
+                    $fulfillment_id,
+                    $requisitionItem->id,
+                    $fulfill_quantity,
+                    $unit_cost,
+                    $item['remarks'] ?? null,
+                    $project_cost_id
+                ]
+            );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | UPDATE REQUISITION ITEM
+            |--------------------------------------------------------------------------
+            */
+
+            $new_fulfilled_quantity =
+                $previously_fulfilled
+                +
+                $fulfill_quantity;
+
+
+            $new_status =
+                (
+                    $new_fulfilled_quantity
+                    >=
+                    $requested_quantity
+                )
+                    ? 'FULFILLED'
+                    : 'PARTIAL';
+
+
+            $this->db->query(
+                "
+                UPDATE resource_requisition_items
+
+                SET
+                    fulfilled_quantity = ?,
+                    status = ?
 
                 WHERE id = ?
                 ",
                 [
-                    $item_id
+                    $new_fulfilled_quantity,
+                    $new_status,
+                    $requisitionItem->id
                 ]
-            )->fetch();
-
-
-        if (!$item) {
-
-            return false;
+            );
         }
-
-
-        $fulfilled =
-            $db->query(
-                "
-        SELECT
-
-            COALESCE(
-                SUM(fulfilled_quantity),
-                0
-            ) AS fulfilled_qty
-
-        FROM resource_requisition_fulfillment_items
-
-        WHERE requisition_item_id = ?
-        ",
-                [
-                    $item_id
-                ]
-            )->fetch();
-
-
-        $fulfilled_qty =
-            (float) $fulfilled->fulfilled_qty;
-
-
-        $requested_qty =
-            (float) $item->quantity;
 
 
         /*
         |--------------------------------------------------------------------------
-        | DETERMINE STATUS
+        | UPDATE MAIN REQUISITION STATUS
         |--------------------------------------------------------------------------
         */
 
-        if ($fulfilled_qty <= 0) {
-
-            $status = 'OPEN';
-        } elseif ($fulfilled_qty < $requested_qty) {
-
-            $status = 'PARTIAL';
-        } else {
-
-            $status = 'FULFILLED';
-        }
-
-
-        return $this->db->query(
-            "
-            UPDATE resource_requisition_items
-
-            SET status = ?
-
-            WHERE id = ?
-            ",
-            [
-                $status,
-                $item_id
-            ]
-        );
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | UPDATE REQUISITION STATUS
-    |--------------------------------------------------------------------------
-    */
-
-    public function updateRequisitionStatus($requisition_id)
-    {
-        /*
-        |--------------------------------------------------------------------------
-        | COUNT MATERIAL ITEMS
-        |--------------------------------------------------------------------------
-        */
-
-        $summary =
+        $remaining =
             $this->db->query(
                 "
                 SELECT
 
-                    COUNT(*) AS total_items,
-
-                    SUM(
-                        CASE
-                            WHEN status = 'FULFILLED'
-                            THEN 1
-                            ELSE 0
-                        END
-                    ) AS fulfilled_items,
-
-                    SUM(
-                        CASE
-                            WHEN status = 'PARTIAL'
-                            THEN 1
-                            ELSE 0
-                        END
-                    ) AS partial_items
+                    COUNT(*) AS remaining_items
 
                 FROM resource_requisition_items
 
                 WHERE
+
                     requisition_id = ?
 
-                    AND resource_source = 'INVENTORY'
+                    AND status NOT IN
+                    (
+                        'FULFILLED',
+                        'CANCELLED'
+                    )
                 ",
                 [
-                    $requisition_id
+                    $data['requisition_id']
                 ]
             )->fetch();
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | DETERMINE REQUISITION STATUS
-        |--------------------------------------------------------------------------
-        */
-
-        if (
-            (int) $summary->total_items === 0
-        ) {
-
-            return false;
-        }
+        $requisition_status =
+            (
+                (int) $remaining->remaining_items === 0
+            )
+                ? 'FULFILLED'
+                : 'PARTIAL';
 
 
-        if (
-            (int) $summary->fulfilled_items
-            ===
-            (int) $summary->total_items
-        ) {
-
-            $status = 'FULFILLED';
-        } elseif (
-
-            (int) $summary->fulfilled_items > 0
-
-            ||
-
-            (int) $summary->partial_items > 0
-
-        ) {
-
-            $status = 'PARTIAL';
-        } else {
-
-            $status = 'APPROVED';
-        }
-
-
-        return $this->db->query(
+        $this->db->query(
             "
             UPDATE resource_requisitions
 
@@ -1969,59 +1994,189 @@ public function getFulfillableItems($requisition_id)
             WHERE id = ?
             ",
             [
-                $status,
-                $requisition_id
+                $requisition_status,
+                $data['requisition_id']
             ]
         );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | COMMIT
+        |--------------------------------------------------------------------------
+        */
+
+        $this->db->commit();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | RETURN FULFILLMENT ID
+        |--------------------------------------------------------------------------
+        */
+
+        return $fulfillment_id;
+
+
+    } catch (Throwable $e) {
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ROLLBACK
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            $this->db->inTransaction()
+        ) {
+
+            $this->db->rollBack();
+        }
+
+
+        throw $e;
+    }
+}
+    /*
+    |--------------------------------------------------------------------------
+    | UPDATE REQUISITION ITEM STATUS
+    |--------------------------------------------------------------------------
+    */
+
+public function updateRequisitionItemStatus($item_id)
+{
+    $item =
+        $this->db->query(
+            "
+            SELECT
+                quantity,
+                status
+
+            FROM resource_requisition_items
+
+            WHERE id = ?
+            ",
+            [
+                $item_id
+            ]
+        )->fetch();
+
+
+    if (!$item) {
+
+        return false;
     }
 
 
+    $fulfilled =
+        $this->db->query(
+            "
+            SELECT
+
+                COALESCE(
+                    SUM(fulfilled_quantity),
+                    0
+                ) AS fulfilled_qty
+
+            FROM resource_requisition_fulfillment_items
+
+            WHERE requisition_item_id = ?
+            ",
+            [
+                $item_id
+            ]
+        )->fetch();
+
+
+    $fulfilled_qty =
+        (float) $fulfilled->fulfilled_qty;
+
+
+    $requested_qty =
+        (float) $item->quantity;
+
+
+    if ($fulfilled_qty <= 0) {
+
+        $status = 'OPEN';
+
+    } elseif ($fulfilled_qty < $requested_qty) {
+
+        $status = 'PARTIAL';
+
+    } else {
+
+        $status = 'FULFILLED';
+    }
+
+
+    return $this->db->query(
+        "
+        UPDATE resource_requisition_items
+
+        SET
+            fulfilled_quantity = ?,
+            status = ?
+
+        WHERE id = ?
+        ",
+        [
+            $fulfilled_qty,
+            $status,
+            $item_id
+        ]
+    );
+}
+
+
+   
     /*
     |--------------------------------------------------------------------------
     | GET ITEM FULFILLMENT SUMMARY
     |--------------------------------------------------------------------------
     */
 
-    public function getItemFulfillmentSummary($item_id)
-    {
-        return $this->db->query(
-            "
-            SELECT
+  public function getItemFulfillmentSummary($item_id)
+{
+    return $this->db->query(
+        "
+        SELECT
 
-                rri.id,
+            rri.id,
 
-                rri.quantity AS requested_qty,
+            rri.quantity AS requested_qty,
 
-                rri.status,
+            rri.status,
 
+            COALESCE(
+                SUM(rrfi.fulfilled_quantity),
+                0
+            ) AS fulfilled_qty,
+
+            (
+                rri.quantity
+                -
                 COALESCE(
-                    SUM(rrfi.quantity),
+                    SUM(rrfi.fulfilled_quantity),
                     0
-                ) AS fulfilled_qty,
+                )
+            ) AS remaining_qty
 
-                (
-                    rri.quantity
-                    -
-                    COALESCE(
-                        SUM(rrfi.quantity),
-                        0
-                    )
-                ) AS remaining_qty
+        FROM resource_requisition_items rri
 
-            FROM resource_requisition_items rri
+        LEFT JOIN resource_requisition_fulfillment_items rrfi
+            ON rrfi.requisition_item_id = rri.id
 
-            LEFT JOIN resource_requisition_fulfillment_items rrfi
-                ON rrfi.requisition_item_id = rri.id
+        WHERE rri.id = ?
 
-            WHERE rri.id = ?
-
-            GROUP BY rri.id
-            ",
-            [
-                $item_id
-            ]
-        )->fetch();
-    }
+        GROUP BY rri.id
+        ",
+        [
+            $item_id
+        ]
+    )->fetch();
+}
 
 
     /*
@@ -2073,492 +2228,8 @@ public function getFulfillableItems($requisition_id)
         )->fetch();
     }
 
-    public function createResourceFulfillment($data)
+    public function updateRequisitionStatus($requisition_id)
 {
-    try {
-
-        /*
-        |------------------------------------------------------------------
-        | START TRANSACTION
-        |------------------------------------------------------------------
-        */
-
-        $this->db->beginTransaction();
-
-
-        /*
-        |------------------------------------------------------------------
-        | CREATE FULFILLMENT HEADER
-        |------------------------------------------------------------------
-        */
-
-        $this->db->query(
-            "
-            INSERT INTO resource_requisition_fulfillments
-            (
-                requisition_id,
-                fulfillment_no,
-                fulfillment_date,
-                fulfilled_by,
-                remarks,
-                status
-            )
-            VALUES
-            (
-                ?,
-                ?,
-                ?,
-                ?,
-                ?,
-                'COMPLETED'
-            )
-            ",
-            [
-                $data['requisition_id'],
-                $data['fulfillment_no'],
-                $data['fulfillment_date'],
-                $data['fulfilled_by'],
-                $data['remarks']
-            ]
-        );
-
-
-        /*
-        |------------------------------------------------------------------
-        | GET FULFILLMENT ID
-        |------------------------------------------------------------------
-        */
-
-        $fulfillment_id =
-            (int) $this->db->lastInsertId();
-
-
-        if ($fulfillment_id <= 0) {
-
-            throw new Exception(
-                'Failed to create resource fulfillment.'
-            );
-        }
-
-
-        /*
-        |------------------------------------------------------------------
-        | PROCESS EACH RESOURCE ITEM
-        |------------------------------------------------------------------
-        */
-
-        foreach ($data['items'] as $item) {
-
-            /*
-            |--------------------------------------------------------------
-            | GET ORIGINAL REQUISITION ITEM
-            |--------------------------------------------------------------
-            */
-
-            $requisitionItem =
-                $this->getRequisitionItem(
-                    $item['requisition_item_id']
-                );
-
-
-            if (!$requisitionItem) {
-
-                throw new Exception(
-                    'Requisition item not found.'
-                );
-            }
-
-
-            /*
-            |--------------------------------------------------------------
-            | VALIDATE RESOURCE ITEM
-            |--------------------------------------------------------------
-            */
-
-            if (
-                $requisitionItem->resource_source !==
-                'RESOURCE'
-            ) {
-
-                throw new Exception(
-                    'Invalid resource item in resource fulfillment.'
-                );
-            }
-
-
-            /*
-            |--------------------------------------------------------------
-            | CALCULATE ALREADY FULFILLED QUANTITY
-            |--------------------------------------------------------------
-            */
-
-            $previously_fulfilled =
-                (float) $requisitionItem->fulfilled_quantity;
-
-
-            /*
-            |--------------------------------------------------------------
-            | REMAINING QUANTITY
-            |--------------------------------------------------------------
-            */
-
-            $remaining_quantity =
-                (float) $requisitionItem->quantity
-                -
-                $previously_fulfilled;
-
-
-            /*
-            |--------------------------------------------------------------
-            | VALIDATE QUANTITY
-            |--------------------------------------------------------------
-            */
-
-            $fulfill_quantity =
-                (float) $item['quantity'];
-
-
-            if ($fulfill_quantity <= 0) {
-
-                throw new Exception(
-                    'Fulfillment quantity must be greater than zero.'
-                );
-            }
-
-
-            if (
-                $fulfill_quantity >
-                $remaining_quantity
-            ) {
-
-                throw new Exception(
-                    'Fulfillment quantity cannot exceed the remaining quantity.'
-                );
-            }
-
-
-            /*
-            |--------------------------------------------------------------
-            | UNIT COST
-            |--------------------------------------------------------------
-            */
-
-            $unit_cost =
-                isset($item['unit_cost'])
-                ? (float) $item['unit_cost']
-                : (float) $requisitionItem->estimated_unit_cost;
-
-
-            /*
-            |--------------------------------------------------------------
-            | INSERT FULFILLMENT ITEM
-            |
-            | RESOURCE ITEMS:
-            | inventory_id = NULL
-            | location_id = NULL
-            | inventory_movement_id = NULL
-            |--------------------------------------------------------------
-            */
-
-            $this->db->query(
-                "
-                INSERT INTO resource_requisition_fulfillment_items
-                (
-                    fulfillment_id,
-                    requisition_item_id,
-                    inventory_id,
-                    location_id,
-                    fulfilled_quantity,
-                    unit_cost,
-                    remarks,
-                    inventory_movement_id,
-                    project_cost_id
-                )
-                VALUES
-                (
-                    ?,
-                    ?,
-                    NULL,
-                    NULL,
-                    ?,
-                    ?,
-                    ?,
-                    NULL,
-                    NULL
-                )
-                ",
-                [
-                    $fulfillment_id,
-                    $requisitionItem->id,
-                    $fulfill_quantity,
-                    $unit_cost,
-                    $item['remarks'] ?? null
-                ]
-            );
-
-
-            /*
-            |--------------------------------------------------------------
-            | GET FULFILLMENT ITEM ID
-            |--------------------------------------------------------------
-            */
-
-            $fulfillment_item_id =
-                (int) $this->db->lastInsertId();
-
-
-            /*
-            |--------------------------------------------------------------
-            | NEW FULFILLED QUANTITY
-            |--------------------------------------------------------------
-            */
-
-            $new_fulfilled_quantity =
-                $previously_fulfilled
-                +
-                $fulfill_quantity;
-
-
-            /*
-            |--------------------------------------------------------------
-            | DETERMINE ITEM STATUS
-            |--------------------------------------------------------------
-            */
-
-            if (
-                $new_fulfilled_quantity >=
-                (float) $requisitionItem->quantity
-            ) {
-
-                $item_status =
-                    'FULFILLED';
-
-            } else {
-
-                $item_status =
-                    'PARTIAL';
-            }
-
-
-            /*
-            |--------------------------------------------------------------
-            | UPDATE REQUISITION ITEM
-            |--------------------------------------------------------------
-            */
-
-            $this->db->query(
-                "
-                UPDATE resource_requisition_items
-
-                SET
-
-                    fulfilled_quantity = ?,
-
-                    status = ?
-
-                WHERE id = ?
-                ",
-                [
-                    $new_fulfilled_quantity,
-                    $item_status,
-                    $requisitionItem->id
-                ]
-            );
-
-
-            /*
-|--------------------------------------------------------------
-| CREATE PROJECT COST
-|--------------------------------------------------------------
-*/
-
-$project_cost_id = null;
-
-
-/*
-|--------------------------------------------------------------
-| GET REQUISITION
-|--------------------------------------------------------------
-*/
-
-$requisition =
-    $this->getRequisition(
-        $data['requisition_id']
-    );
-
-
-if (
-    $requisition
-    &&
-    !empty($requisition->project_id)
-) {
-
-    /*
-    |----------------------------------------------------------
-    | DETERMINE PROJECT COST TYPE
-    |----------------------------------------------------------
-    */
-
-    switch ($requisitionItem->resource_type) {
-
-        case 'LABOR':
-
-            $cost_type = 'labor';
-
-            break;
-
-
-        case 'SERVICE':
-
-            $cost_type = 'subcontract';
-
-            break;
-
-
-        case 'EQUIPMENT':
-
-            $cost_type = 'misc';
-
-            break;
-
-
-        default:
-
-            $cost_type = 'misc';
-
-            break;
-    }
-
-
-    /*
-    |----------------------------------------------------------
-    | CREATE PROJECT COST
-    |
-    | total_cost is GENERATED automatically:
-    |
-    | quantity × unit_price
-    |----------------------------------------------------------
-    */
-
-    $this->db->query(
-        "
-        INSERT INTO project_costs
-        (
-            project_id,
-            inventory_id,
-            location_id,
-            cost_type,
-            description,
-            quantity,
-            unit_price
-        )
-        VALUES
-        (
-            ?,
-            NULL,
-            NULL,
-            ?,
-            ?,
-            ?,
-            ?
-        )
-        ",
-        [
-            $requisition->project_id,
-
-            $cost_type,
-
-            $requisitionItem->description,
-
-            $fulfill_quantity,
-
-            $unit_cost
-        ]
-    );
-
-
-    /*
-    |----------------------------------------------------------
-    | GET PROJECT COST ID
-    |----------------------------------------------------------
-    */
-
-    $project_cost_id =
-        (int) $this->db->lastInsertId();
-
-
-    /*
-    |----------------------------------------------------------
-    | LINK PROJECT COST TO FULFILLMENT ITEM
-    |----------------------------------------------------------
-    */
-
-    if ($project_cost_id > 0) {
-
-        $this->db->query(
-            "
-            UPDATE resource_requisition_fulfillment_items
-
-            SET project_cost_id = ?
-
-            WHERE id = ?
-            ",
-            [
-                $project_cost_id,
-                $fulfillment_item_id
-            ]
-        );
-    }
-}
-        /*
-        |------------------------------------------------------------------
-        | UPDATE MAIN REQUISITION STATUS
-        |------------------------------------------------------------------
-        */
-
-        $this->updateRequisitionStatus(
-            $data['requisition_id']
-        );
-
-
-        /*
-        |------------------------------------------------------------------
-        | COMMIT
-        |------------------------------------------------------------------
-        */
-
-        $this->db->commit();
-
-
-        return $fulfillment_id;
-
-
-    } catch (Throwable $e) {
-
-        /*
-        |------------------------------------------------------------------
-        | ROLLBACK
-        |------------------------------------------------------------------
-        */
-
-        if ($this->db->inTransaction()) {
-
-            $this->db->rollBack();
-        }
-
-
-        throw $e;
-    }
-}
-
-public function updateRequisitionStatus($requisition_id)
-{
-    /*
-    |------------------------------------------------------------------
-    | GET ALL ACTIVE ITEMS
-    |------------------------------------------------------------------
-    */
-
     $result =
         $this->db->query(
             "
@@ -2592,12 +2263,6 @@ public function updateRequisitionStatus($requisition_id)
     }
 
 
-    /*
-    |------------------------------------------------------------------
-    | DETERMINE REQUISITION STATUS
-    |------------------------------------------------------------------
-    */
-
     if (
         (int) $result->total_items > 0
         &&
@@ -2612,12 +2277,6 @@ public function updateRequisitionStatus($requisition_id)
         $status = 'PARTIAL';
     }
 
-
-    /*
-    |------------------------------------------------------------------
-    | UPDATE REQUISITION
-    |------------------------------------------------------------------
-    */
 
     $this->db->query(
         "
@@ -2635,6 +2294,192 @@ public function updateRequisitionStatus($requisition_id)
 
 
     return true;
+}
+
+public function getFulfillableMaterialItems($requisition_id)
+{
+    return $this->db->query(
+        "
+        SELECT
+
+            rri.id,
+            rri.requisition_id,
+            rri.resource_source,
+
+            COALESCE(
+                rri.inventory_id,
+                rri.resource_id
+            ) AS inventory_id,
+
+            rri.resource_id,
+            rri.description,
+            rri.uom,
+            rri.quantity,
+
+            COALESCE(
+                fulfilled.fulfilled_qty,
+                0
+            ) AS fulfilled_quantity,
+
+            (
+                rri.quantity
+                -
+                COALESCE(
+                    fulfilled.fulfilled_qty,
+                    0
+                )
+            ) AS remaining_quantity,
+
+            rri.estimated_unit_cost,
+            rri.estimated_total,
+            rri.remarks,
+            rri.status,
+
+            i.id AS actual_inventory_id,
+            i.sku,
+            i.name AS inventory_name,
+            i.base_unit AS inventory_uom
+
+        FROM resource_requisition_items rri
+
+        INNER JOIN inventory i
+
+            ON i.id = COALESCE(
+                rri.inventory_id,
+                rri.resource_id
+            )
+
+        LEFT JOIN
+        (
+            SELECT
+
+                requisition_item_id,
+
+                SUM(
+                    fulfilled_quantity
+                ) AS fulfilled_qty
+
+            FROM resource_requisition_fulfillment_items
+
+            GROUP BY requisition_item_id
+
+        ) fulfilled
+
+            ON fulfilled.requisition_item_id = rri.id
+
+        WHERE
+
+            rri.requisition_id = ?
+
+            AND rri.resource_source = 'INVENTORY'
+
+            AND rri.status IN (
+                'OPEN',
+                'PARTIAL'
+            )
+
+            AND rri.quantity >
+                COALESCE(
+                    fulfilled.fulfilled_qty,
+                    0
+                )
+
+        ORDER BY rri.id ASC
+        ",
+        [
+            $requisition_id
+        ]
+    )->fetchAll();
+}
+
+
+public function getFulfillableResourceItems($requisition_id)
+{
+    return $this->db->query(
+        "
+        SELECT
+
+            rri.id,
+            rri.requisition_id,
+            rri.resource_source,
+            rri.inventory_id,
+            rri.resource_id,
+            rri.description,
+            rri.uom,
+            rri.quantity,
+
+            COALESCE(
+                fulfilled.fulfilled_qty,
+                0
+            ) AS fulfilled_quantity,
+
+            (
+                rri.quantity
+                -
+                COALESCE(
+                    fulfilled.fulfilled_qty,
+                    0
+                )
+            ) AS remaining_quantity,
+
+            rri.estimated_unit_cost,
+            rri.estimated_total,
+            rri.remarks,
+            rri.status,
+
+            r.resource_code,
+            r.resource_name,
+            r.resource_name_a,
+            r.resource_type,
+            r.description AS resource_description
+
+        FROM resource_requisition_items rri
+
+        INNER JOIN resources r
+
+            ON r.id = rri.resource_id
+
+        LEFT JOIN
+        (
+            SELECT
+
+                requisition_item_id,
+
+                SUM(
+                    fulfilled_quantity
+                ) AS fulfilled_qty
+
+            FROM resource_requisition_fulfillment_items
+
+            GROUP BY requisition_item_id
+
+        ) fulfilled
+
+            ON fulfilled.requisition_item_id = rri.id
+
+        WHERE
+
+            rri.requisition_id = ?
+
+            AND rri.resource_source = 'RESOURCE'
+
+            AND rri.status IN (
+                'OPEN',
+                'PARTIAL'
+            )
+
+            AND rri.quantity >
+                COALESCE(
+                    fulfilled.fulfilled_qty,
+                    0
+                )
+
+        ORDER BY rri.id ASC
+        ",
+        [
+            $requisition_id
+        ]
+    )->fetchAll();
 }
 
 }

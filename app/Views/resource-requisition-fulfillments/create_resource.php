@@ -1,3 +1,4 @@
+
 <div class="container-fluid">
 
     <!-- PAGE HEADER -->
@@ -25,16 +26,14 @@
 
     <!-- FULFILLMENT FORM -->
 
- <form
-    method="POST"
-    action="<?= URLROOT ?>/ResourceRequisitionFulfillments/storeResource"
->
+    <form
+        method="POST"
+        action="<?= URLROOT ?>/ResourceRequisitionFulfillments/storeResource">
 
-<input
-    type="hidden"
-    name="requisition_id"
-    value="<?= $requisition->id ?>"
->
+        <input
+            type="hidden"
+            name="requisition_id"
+            value="<?= $requisition->id ?>">
 
         <!-- GENERAL REMARKS -->
 
@@ -56,8 +55,7 @@
                             name="remarks"
                             class="form-control"
                             rows="3"
-                            placeholder="Enter fulfillment remarks or notes..."
-                        ></textarea>
+                            placeholder="Enter fulfillment remarks or notes..."></textarea>
 
                     </div>
 
@@ -133,7 +131,7 @@
                     <tbody>
 
                         <?php foreach ($data['items'] as $item): ?>
-
+                            
                             <tr>
 
                                 <!-- RESOURCE -->
@@ -150,9 +148,7 @@
 
 
                                     <?php if (
-                                        !empty(
-                                            $item->resource_code
-                                        )
+                                        !empty($item->resource_code)
                                     ): ?>
 
                                         <br>
@@ -171,8 +167,7 @@
                                     <input
                                         type="hidden"
                                         name="items[<?= (int) $item->id ?>][resource_id]"
-                                        value="<?= (int) $item->resource_id ?>"
-                                    >
+                                        value="<?= (int) $item->resource_id ?>">
 
                                 </td>
 
@@ -228,7 +223,7 @@
 
 
                                 <!-- REMAINING -->
-
+                             
                                 <td class="text-end fw-bold text-primary">
 
                                     <?= number_format(
@@ -251,8 +246,7 @@
                                         max="<?= (float) $item->remaining_quantity ?>"
                                         step="0.01"
                                         value="0"
-                                        data-remaining="<?= (float) $item->remaining_quantity ?>"
-                                    >
+                                        data-remaining="<?= (float) $item->remaining_quantity ?>">
 
                                 </td>
 
@@ -268,12 +262,11 @@
                                         min="0"
                                         step="0.01"
                                         value="<?= number_format(
-                                            (float) $item->estimated_unit_cost,
-                                            2,
-                                            '.',
-                                            ''
-                                        ) ?>"
-                                    >
+                                                    (float) $item->estimated_unit_cost,
+                                                    2,
+                                                    '.',
+                                                    ''
+                                                ) ?>">
 
                                 </td>
 
@@ -286,8 +279,7 @@
                                         type="text"
                                         class="form-control"
                                         name="items[<?= (int) $item->id ?>][remarks]"
-                                        placeholder="Optional remarks..."
-                                    >
+                                        placeholder="Optional remarks...">
 
                                 </td>
 
@@ -308,8 +300,7 @@
 
                 <a
                     href="<?= URLROOT ?>/ResourceRequisitions/details/<?= (int) $data['requisition']->id ?>"
-                    class="btn btn-secondary"
-                >
+                    class="btn btn-secondary">
 
                     <i class="fa fa-times"></i>
 
@@ -320,8 +311,7 @@
 
                 <button
                     type="submit"
-                    class="btn btn-primary"
-                >
+                    class="btn btn-primary">
 
                     <i class="fa fa-check-circle"></i>
 
@@ -339,51 +329,47 @@
 
 
 <script>
+    document
+        .querySelectorAll('.fulfillment-qty')
+        .forEach(function(input) {
 
-document
-    .querySelectorAll('.fulfillment-qty')
-    .forEach(function (input) {
+            input.addEventListener(
+                'input',
+                function() {
 
-        input.addEventListener(
-            'input',
-            function () {
-
-                const remaining =
-                    parseFloat(
-                        this.dataset.remaining
-                    ) || 0;
-
-
-                const quantity =
-                    parseFloat(
-                        this.value
-                    ) || 0;
+                    const remaining =
+                        parseFloat(
+                            this.dataset.remaining
+                        ) || 0;
 
 
-                if (quantity > remaining) {
+                    const quantity =
+                        parseFloat(
+                            this.value
+                        ) || 0;
 
-                    alert(
-                        'Quantity cannot exceed the remaining requisition quantity.'
-                    );
+
+                    if (quantity > remaining) {
+
+                        alert(
+                            'Quantity cannot exceed the remaining requisition quantity.'
+                        );
 
 
-                    this.value =
-                        remaining;
+                        this.value =
+                            remaining;
+
+                    }
+
+
+                    if (quantity < 0) {
+
+                        this.value = 0;
+
+                    }
 
                 }
+            );
 
-
-                if (quantity < 0) {
-
-                    this.value = 0;
-
-                }
-
-            }
-        );
-
-    });
-
+        });
 </script>
-
-

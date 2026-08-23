@@ -234,7 +234,10 @@ class ResourceRequisitionFulfillments extends Controller
         $requisition_id
     );
 
-
+// echo '<pre>';
+// print_r($items);
+// echo '</pre>';
+// exit;
     /*
     |--------------------------------------------------------------------------
     | CHECK IF THERE ARE REMAINING MATERIAL ITEMS
@@ -382,7 +385,10 @@ public function createResource($requisition_id)
                 $requisition_id
             );
 
-
+// echo '<pre>';
+// print_r($items);
+// echo '</pre>';
+// exit;
     /*
     |--------------------------------------------------------------------------
     | CHECK IF THERE ARE REMAINING RESOURCE ITEMS
@@ -432,270 +438,270 @@ public function createResource($requisition_id)
     );
 }
 
-public function storeResource()
-{
-    AuthHelper::can('projects.view');
+// public function storeResource()
+// {
+//     AuthHelper::can('projects.view');
 
 
-    /*
-    |------------------------------------------------------------------
-    | ONLY POST
-    |------------------------------------------------------------------
-    */
+//     /*
+//     |------------------------------------------------------------------
+//     | ONLY POST
+//     |------------------------------------------------------------------
+//     */
 
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+//     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitions'
-        );
+//         header(
+//             'Location: ' .
+//             URLROOT .
+//             '/ResourceRequisitions'
+//         );
 
-        exit;
-    }
+//         exit;
+//     }
 
 
-    /*
-    |------------------------------------------------------------------
-    | REQUISITION ID
-    |------------------------------------------------------------------
-    */
+//     /*
+//     |------------------------------------------------------------------
+//     | REQUISITION ID
+//     |------------------------------------------------------------------
+//     */
 
-    $requisition_id =
-        (int) ($_POST['requisition_id'] ?? 0);
+//     $requisition_id =
+//         (int) ($_POST['requisition_id'] ?? 0);
 
 
-    if ($requisition_id <= 0) {
+//     if ($requisition_id <= 0) {
 
-        $_SESSION['error'] =
-            'Invalid requisition.';
+//         $_SESSION['error'] =
+//             'Invalid requisition.';
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitions'
-        );
+//         header(
+//             'Location: ' .
+//             URLROOT .
+//             '/ResourceRequisitions'
+//         );
 
-        exit;
-    }
+//         exit;
+//     }
 
 
-    /*
-    |------------------------------------------------------------------
-    | GET REQUISITION
-    |------------------------------------------------------------------
-    */
+//     /*
+//     |------------------------------------------------------------------
+//     | GET REQUISITION
+//     |------------------------------------------------------------------
+//     */
 
-    $requisition =
-        $this->fulfillmentModel
-            ->getRequisition(
-                $requisition_id
-            );
+//     $requisition =
+//         $this->fulfillmentModel
+//             ->getRequisition(
+//                 $requisition_id
+//             );
 
 
-    if (!$requisition) {
+//     if (!$requisition) {
 
-        $_SESSION['error'] =
-            'Resource requisition not found.';
+//         $_SESSION['error'] =
+//             'Resource requisition not found.';
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitions'
-        );
+//         header(
+//             'Location: ' .
+//             URLROOT .
+//             '/ResourceRequisitions'
+//         );
 
-        exit;
-    }
+//         exit;
+//     }
 
 
-    /*
-    |------------------------------------------------------------------
-    | GET POSTED ITEMS
-    |------------------------------------------------------------------
-    */
+//     /*
+//     |------------------------------------------------------------------
+//     | GET POSTED ITEMS
+//     |------------------------------------------------------------------
+//     */
 
-    $postedItems =
-        $_POST['items'] ?? [];
+//     $postedItems =
+//         $_POST['items'] ?? [];
 
 
-    /*
-    |------------------------------------------------------------------
-    | PREPARE FULFILLMENT ITEMS
-    |------------------------------------------------------------------
-    */
+//     /*
+//     |------------------------------------------------------------------
+//     | PREPARE FULFILLMENT ITEMS
+//     |------------------------------------------------------------------
+//     */
 
-    $items = [];
+//     $items = [];
 
 
-    foreach ($postedItems as $item_id => $item) {
+//     foreach ($postedItems as $item_id => $item) {
 
-        $quantity =
-            (float) ($item['quantity'] ?? 0);
+//         $quantity =
+//             (float) ($item['quantity'] ?? 0);
 
 
-        /*
-        |--------------------------------------------------------------
-        | SKIP ZERO QUANTITY
-        |--------------------------------------------------------------
-        */
+//         /*
+//         |--------------------------------------------------------------
+//         | SKIP ZERO QUANTITY
+//         |--------------------------------------------------------------
+//         */
 
-        if ($quantity <= 0) {
+//         if ($quantity <= 0) {
 
-            continue;
-        }
+//             continue;
+//         }
 
 
-        $items[] = [
+//         $items[] = [
 
-            'requisition_item_id' =>
-                (int) $item_id,
+//             'requisition_item_id' =>
+//                 (int) $item_id,
 
-            'quantity' =>
-                $quantity,
+//             'quantity' =>
+//                 $quantity,
 
-            'unit_cost' =>
-                (float) (
-                    $item['unit_cost']
-                    ??
-                    0
-                ),
+//             'unit_cost' =>
+//                 (float) (
+//                     $item['unit_cost']
+//                     ??
+//                     0
+//                 ),
 
-            'remarks' =>
-                trim(
-                    $item['remarks']
-                    ??
-                    ''
-                )
-        ];
-    }
+//             'remarks' =>
+//                 trim(
+//                     $item['remarks']
+//                     ??
+//                     ''
+//                 )
+//         ];
+//     }
 
 
-    /*
-    |------------------------------------------------------------------
-    | NOTHING TO FULFILL
-    |------------------------------------------------------------------
-    */
+//     /*
+//     |------------------------------------------------------------------
+//     | NOTHING TO FULFILL
+//     |------------------------------------------------------------------
+//     */
 
-    if (empty($items)) {
+//     if (empty($items)) {
 
-        $_SESSION['error'] =
-            'Please enter a fulfillment quantity for at least one resource item.';
+//         $_SESSION['error'] =
+//             'Please enter a fulfillment quantity for at least one resource item.';
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitionFulfillments/createResource/' .
-            $requisition_id
-        );
+//         header(
+//             'Location: ' .
+//             URLROOT .
+//             '/ResourceRequisitionFulfillments/createResource/' .
+//             $requisition_id
+//         );
 
-        exit;
-    }
+//         exit;
+//     }
 
 
-    /*
-    |------------------------------------------------------------------
-    | GENERATE FULFILLMENT NUMBER
-    |------------------------------------------------------------------
-    */
+//     /*
+//     |------------------------------------------------------------------
+//     | GENERATE FULFILLMENT NUMBER
+//     |------------------------------------------------------------------
+//     */
 
-    $fulfillment_no =
-        'RR-RES-' .
-        date('YmdHis') .
-        '-' .
-        random_int(100, 999);
+//     $fulfillment_no =
+//         'RR-RES-' .
+//         date('YmdHis') .
+//         '-' .
+//         random_int(100, 999);
 
 
-    /*
-    |------------------------------------------------------------------
-    | PREPARE DATA
-    |------------------------------------------------------------------
-    */
+//     /*
+//     |------------------------------------------------------------------
+//     | PREPARE DATA
+//     |------------------------------------------------------------------
+//     */
 
-    $data = [
+//     $data = [
 
-        'requisition_id' =>
-            $requisition_id,
+//         'requisition_id' =>
+//             $requisition_id,
 
-        'fulfillment_no' =>
-            $fulfillment_no,
+//         'fulfillment_no' =>
+//             $fulfillment_no,
 
-        'fulfillment_date' =>
-            $_POST['fulfillment_date']
-            ??
-            date('Y-m-d H:i:s'),
+//         'fulfillment_date' =>
+//             $_POST['fulfillment_date']
+//             ??
+//             date('Y-m-d H:i:s'),
 
-        'fulfilled_by' =>
-            $_SESSION['user_id'],
+//         'fulfilled_by' =>
+//             $_SESSION['user_id'],
 
-        'remarks' =>
-            trim(
-                $_POST['remarks']
-                ??
-                ''
-            ),
+//         'remarks' =>
+//             trim(
+//                 $_POST['remarks']
+//                 ??
+//                 ''
+//             ),
 
-        'items' =>
-            $items
-    ];
+//         'items' =>
+//             $items
+//     ];
 
 
-    /*
-    |------------------------------------------------------------------
-    | CREATE RESOURCE FULFILLMENT
-    |------------------------------------------------------------------
-    */
+//     /*
+//     |------------------------------------------------------------------
+//     | CREATE RESOURCE FULFILLMENT
+//     |------------------------------------------------------------------
+//     */
 
-    try {
+//     try {
 
-        $fulfillment_id =
-            $this->fulfillmentModel
-                ->createResourceFulfillment(
-                    $data
-                );
+//         $fulfillment_id =
+//             $this->fulfillmentModel
+//                 ->createResourceFulfillment(
+//                     $data
+//                 );
 
 
-        if (
-            empty($fulfillment_id)
-            ||
-            (int) $fulfillment_id <= 0
-        ) {
+//         if (
+//             empty($fulfillment_id)
+//             ||
+//             (int) $fulfillment_id <= 0
+//         ) {
 
-            throw new Exception(
-                'Resource fulfillment was created but no ID was returned.'
-            );
-        }
+//             throw new Exception(
+//                 'Resource fulfillment was created but no ID was returned.'
+//             );
+//         }
 
 
-        $_SESSION['success'] =
-            'Resource fulfillment completed successfully.';
+//         $_SESSION['success'] =
+//             'Resource fulfillment completed successfully.';
 
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitionFulfillments/details/' .
-            (int) $fulfillment_id
-        );
+//         header(
+//             'Location: ' .
+//             URLROOT .
+//             '/ResourceRequisitionFulfillments/details/' .
+//             (int) $fulfillment_id
+//         );
 
-        exit;
+//         exit;
 
 
-    } catch (Throwable $e) {
+//     } catch (Throwable $e) {
 
-        $_SESSION['error'] =
-            $e->getMessage();
+//         $_SESSION['error'] =
+//             $e->getMessage();
 
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitionFulfillments/createResource/' .
-            $requisition_id
-        );
+//         header(
+//             'Location: ' .
+//             URLROOT .
+//             '/ResourceRequisitionFulfillments/createResource/' .
+//             $requisition_id
+//         );
 
-        exit;
-    }
-}
+//         exit;
+//     }
+// }
     /*
     |------------------------------------------------------------------
     | STORE
@@ -1299,11 +1305,10 @@ public function storeResource()
 {
     AuthHelper::can('projects.view');
 
-
     /*
-    |--------------------------------------------------------------------------
+    |------------------------------------------------
     | ONLY POST
-    |--------------------------------------------------------------------------
+    |-------------------------------------------------
     */
 
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
