@@ -346,15 +346,47 @@
     </div>
 
     <br>
-    <!-- Fulfill Materials -->
+   
 
-    <div><a href="<?= URLROOT ?>/ResourceRequisitionFulfillments/create/<?= $data['requisition']->id ?>"
-   class="btn btn-success">
 
-    <i class="fas fa-boxes"></i>
-    Fulfill Materials
+<!-- FULFILLMENT ACTIONS -->
 
-</a></div>
+<?php if (
+    $data['requisition']->status === 'APPROVED'
+    ||
+    $data['requisition']->status === 'PARTIAL'
+): ?>
+
+    <div class="d-flex gap-2 mb-3">
+
+        <?php if (!empty($data['hasMaterialItems'])): ?>
+
+            <a
+                href="<?= URLROOT ?>/ResourceRequisitionFulfillments/create/<?= $data['requisition']->id ?>"
+                class="btn btn-success"
+            >
+                <i class="fas fa-boxes"></i>
+                Fulfill Materials
+            </a>
+
+        <?php endif; ?>
+
+
+        <?php if (!empty($data['hasResourceItems'])): ?>
+
+            <a
+                href="<?= URLROOT ?>/ResourceRequisitionFulfillments/createResource/<?= $data['requisition']->id ?>"
+                class="btn btn-primary"
+            >
+                <i class="fas fa-tools"></i>
+                Fulfill Resources
+            </a>
+
+        <?php endif; ?>
+
+    </div>
+
+<?php endif; ?>
 
     <!-- REQUISITION ITEMS -->
 

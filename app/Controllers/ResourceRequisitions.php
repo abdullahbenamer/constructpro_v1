@@ -108,151 +108,242 @@ class ResourceRequisitions extends Controller
 
 
     public function update($id)
-{
-    AuthHelper::can('projects.create');
+    {
+        AuthHelper::can('projects.create');
 
-    $model = $this->model('ResourceRequisition');
+        $model = $this->model('ResourceRequisition');
 
-    $requisition = $model->getById($id);
+        $requisition = $model->getById($id);
 
-    if (!$requisition) {
+        if (!$requisition) {
 
-        header('Location: ' . URLROOT . '/ResourceRequisitions');
-        exit;
-    }
+            header('Location: ' . URLROOT . '/ResourceRequisitions');
+            exit;
+        }
 
-    if ($requisition->status != 'DRAFT') {
+        if ($requisition->status != 'DRAFT') {
 
-        $_SESSION['error'] = 'Only Draft requisitions can be edited.';
+            $_SESSION['error'] = 'Only Draft requisitions can be edited.';
+
+            header('Location: ' . URLROOT . '/ResourceRequisitions/details/' . $id);
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $model->update($id, [
+
+                'project_id'    => $_POST['project_id'],
+                'request_date'  => $_POST['request_date'],
+                'required_date' => $_POST['required_date'],
+                'priority'      => $_POST['priority'],
+                'remarks'       => trim($_POST['remarks'])
+
+            ]);
+        }
 
         header('Location: ' . URLROOT . '/ResourceRequisitions/details/' . $id);
         exit;
     }
-
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-        $model->update($id, [
-
-            'project_id'    => $_POST['project_id'],
-            'request_date'  => $_POST['request_date'],
-            'required_date' => $_POST['required_date'],
-            'priority'      => $_POST['priority'],
-            'remarks'       => trim($_POST['remarks'])
-
-        ]);
-
-    }
-
-    header('Location: ' . URLROOT . '/ResourceRequisitions/details/' . $id);
-    exit;
-}
 
     /*
     |-----------------------------------
     | Details
     |-----------------------------
     */
- public function details($id)
+   public function details($id)
 {
     AuthHelper::can('projects.view');
 
-    $model = $this->model('ResourceRequisition');
-    $itemModel = $this->model('ResourceRequisitionItem');
 
-    $requisition = $model->getById($id);
+    /*
+    |--------------------------------------------------------------
+    | LOAD MODELS
+    |--------------------------------------------------------------
+    */
+
+    $model =
+        $this->model('ResourceRequisition');
+
+    $itemModel =
+        $this->model('ResourceRequisitionItem');
+
+    $fulfillmentModel =
+        $this->model('ResourceRequisitionFulfillmentModel');
+
+
+    /*
+    |--------------------------------------------------------------
+    | GET REQUISITION
+    |--------------------------------------------------------------
+    */
+
+    $requisition =
+        $model->getById($id);
+
 
     if (!$requisition) {
 
-        header('Location: ' . URLROOT . '/resourcerequisitions');
+        header(
+            'Location: ' .
+            URLROOT .
+            '/ResourceRequisitions'
+        );
+
         exit;
     }
 
-    $items = $itemModel->getByRequisition($id);
-    $history = $model->getApprovalHistory($id);
+
+    /*
+    |--------------------------------------------------------------
+    | GET REQUISITION ITEMS
+    |--------------------------------------------------------------
+    */
+
+    $items =
+        $itemModel->getByRequisition($id);
+
+
+    /*
+    |--------------------------------------------------------------
+    | GET APPROVAL HISTORY
+    |--------------------------------------------------------------
+    */
+
+    $history =
+        $model->getApprovalHistory($id);
+
+
+    /*
+    |--------------------------------------------------------------
+    | CHECK REMAINING MATERIAL ITEMS
+    |--------------------------------------------------------------
+    */
+
+    $materialItems =
+        $fulfillmentModel
+            ->getFulfillableMaterialItems($id);
+
+
+    /*
+    |--------------------------------------------------------------
+    | CHECK REMAINING RESOURCE ITEMS
+    |--------------------------------------------------------------
+    */
+
+    $resourceItems =
+        $fulfillmentModel
+            ->getFulfillableResourceItems($id);
+
+
+    /*
+    |--------------------------------------------------------------
+    | VIEW DATA
+    |--------------------------------------------------------------
+    */
 
     $data = [
-    'requisition' => $requisition,
-    'items'       => $items,
-    'history'     => $history
-];
 
-    $this->view('resource-requisitions/details', $data);
-}
+        'requisition' =>
+            $requisition,
+
+        'items' =>
+            $items,
+
+        'hasMaterialItems' =>
+            !empty($materialItems),
+
+        'hasResourceItems' =>
+            !empty($resourceItems),
+
+        'history' =>
+            $history
+
+    ];
 
 
-/**
- * SUBMIT REQUISITION
- */
+    /*
+    |--------------------------------------------------------------
+    | LOAD VIEW
+    |--------------------------------------------------------------
+    */
 
-public function submit($id)
-{
-
-    AuthHelper::can('projects.view');
-
-    $model = $this->model('ResourceRequisition');
-
-    $requisition = $model->getById($id);
-
-    if (!$requisition) {
-
-        header('Location: ' . URLROOT . '/ResourceRequisitions');
-        exit;
-
-    }
-
-    // Only Draft documents may be submitted
-    if ($requisition->status != 'DRAFT') {
-
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitions/details/' .
-            $id
-        );
-
-        exit;
-
-    }
-
-    // Prevent empty requisitions from submitting
-    $itemModel = $this->model('ResourceRequisitionItem');
-
-    $items = $itemModel->getByRequisition($id);
-
-    if (count($items) == 0) {
-
-        $_SESSION['error'] =
-            'Please add at least one item before submitting.';
-
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitions/details/' .
-            $id
-        );
-
-        exit;
-
-    }
-
-  $model->submit(
-    $id,
-    $_SESSION['user_id']
-);
-
-    $_SESSION['success'] =
-        'Resource Requisition submitted successfully.';
-
-    header(
-        'Location: ' .
-        URLROOT .
-        '/ResourceRequisitions/details/' .
-        $id
+    $this->view(
+        'resource-requisitions/details',
+        $data
     );
-
-    exit;
-
 }
+
+
+    /**
+     * SUBMIT REQUISITION
+     */
+
+    public function submit($id)
+    {
+
+        AuthHelper::can('projects.view');
+
+        $model = $this->model('ResourceRequisition');
+
+        $requisition = $model->getById($id);
+
+        if (!$requisition) {
+
+            header('Location: ' . URLROOT . '/ResourceRequisitions');
+            exit;
+        }
+
+        // Only Draft documents may be submitted
+        if ($requisition->status != 'DRAFT') {
+
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/ResourceRequisitions/details/' .
+                    $id
+            );
+
+            exit;
+        }
+
+        // Prevent empty requisitions from submitting
+        $itemModel = $this->model('ResourceRequisitionItem');
+
+        $items = $itemModel->getByRequisition($id);
+
+        if (count($items) == 0) {
+
+            $_SESSION['error'] =
+                'Please add at least one item before submitting.';
+
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/ResourceRequisitions/details/' .
+                    $id
+            );
+
+            exit;
+        }
+
+        $model->submit(
+            $id,
+            $_SESSION['user_id']
+        );
+
+        $_SESSION['success'] =
+            'Resource Requisition submitted successfully.';
+
+        header(
+            'Location: ' .
+                URLROOT .
+                '/ResourceRequisitions/details/' .
+                $id
+        );
+
+        exit;
+    }
     /*
     |----------------------------------------
     | Delete
@@ -287,204 +378,201 @@ public function submit($id)
         exit;
     }
 
-public function approve($id)
-{
-    AuthHelper::can('resource_requisitions.approve');
+    public function approve($id)
+    {
+        AuthHelper::can('resource_requisitions.approve');
 
-    $model = $this->model('ResourceRequisition');
+        $model = $this->model('ResourceRequisition');
 
-    $requisition = $model->getById($id);
+        $requisition = $model->getById($id);
 
-    if (!$requisition) {
+        if (!$requisition) {
 
-        header(
-            'Location: ' . URLROOT . '/ResourceRequisitions'
+            header(
+                'Location: ' . URLROOT . '/ResourceRequisitions'
+            );
+
+            exit;
+        }
+
+        if ($requisition->status !== 'SUBMITTED') {
+
+            $_SESSION['error'] =
+                'Only submitted requisitions can be approved or rejected.';
+
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/ResourceRequisitions/details/' .
+                    $id
+            );
+
+            exit;
+        }
+
+        $data = [
+            'requisition' => $requisition
+        ];
+
+        $this->view(
+            'resource-requisitions/approve',
+            $data
         );
-
-        exit;
     }
 
-    if ($requisition->status !== 'SUBMITTED') {
+    public function reject($id)
+    {
+        AuthHelper::can('resource_requisitions.approve');
 
-        $_SESSION['error'] =
-            'Only submitted requisitions can be approved or rejected.';
+        $model = $this->model('ResourceRequisition');
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitions/details/' .
-            $id
+        $model->reject(
+            $id,
+            $_SESSION['user_id']
         );
 
-        exit;
-    }
 
-    $data = [
-        'requisition' => $requisition
-    ];
+        $_SESSION['success'] =
+            'Requisition rejected.';
 
-    $this->view(
-        'resource-requisitions/approve',
-        $data
-    );
-}
-
-public function reject($id)
-{
-    AuthHelper::can('resource_requisitions.approve');
-
-    $model = $this->model('ResourceRequisition');
-
-    $model->reject(
-        $id,
-        $_SESSION['user_id']
-    );
-
-
-    $_SESSION['success'] =
-        'Requisition rejected.';
-
-
-    header(
-        'Location: ' .
-        URLROOT .
-        '/ResourceRequisitions/details/' .
-        $id
-    );
-
-    exit;
-}
-
-/**
- * PROCESS APPROVAL DECISION
- */
-public function processApproval($id)
-{
-    AuthHelper::can('resource_requisitions.approve');
-
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
         header(
             'Location: ' .
-            URLROOT .
-            '/ResourceRequisitions/details/' .
-            $id
+                URLROOT .
+                '/ResourceRequisitions/details/' .
+                $id
         );
 
         exit;
     }
 
-    $model = $this->model('ResourceRequisition');
+    /**
+     * PROCESS APPROVAL DECISION
+     */
+    public function processApproval($id)
+    {
+        AuthHelper::can('resource_requisitions.approve');
 
-    $requisition = $model->getById($id);
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
-    if (!$requisition) {
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/ResourceRequisitions/details/' .
+                    $id
+            );
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitions'
-        );
+            exit;
+        }
 
-        exit;
-    }
+        $model = $this->model('ResourceRequisition');
 
-    /*
+        $requisition = $model->getById($id);
+
+        if (!$requisition) {
+
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/ResourceRequisitions'
+            );
+
+            exit;
+        }
+
+        /*
     |--------------------------------------------------------------------------
     | VALIDATE STATUS
     |--------------------------------------------------------------------------
     */
 
-    if ($requisition->status !== 'SUBMITTED') {
+        if ($requisition->status !== 'SUBMITTED') {
 
-        $_SESSION['error'] =
-            'Only submitted requisitions can be approved or rejected.';
+            $_SESSION['error'] =
+                'Only submitted requisitions can be approved or rejected.';
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitions/details/' .
-            $id
-        );
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/ResourceRequisitions/details/' .
+                    $id
+            );
 
-        exit;
-    }
+            exit;
+        }
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | VALIDATE ACTION
     |--------------------------------------------------------------------------
     */
 
-    $action = $_POST['action'] ?? '';
+        $action = $_POST['action'] ?? '';
 
-    if (!in_array($action, ['APPROVE', 'REJECT'])) {
+        if (!in_array($action, ['APPROVE', 'REJECT'])) {
 
-        $_SESSION['error'] =
-            'Invalid approval action.';
+            $_SESSION['error'] =
+                'Invalid approval action.';
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitions/approve/' .
-            $id
-        );
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/ResourceRequisitions/approve/' .
+                    $id
+            );
 
-        exit;
-    }
+            exit;
+        }
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | REMARKS
     |--------------------------------------------------------------------------
     */
 
-    $remarks = trim($_POST['remarks'] ?? '');
+        $remarks = trim($_POST['remarks'] ?? '');
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | PROCESS DECISION
     |--------------------------------------------------------------------------
     */
 
-    if ($action === 'APPROVE') {
+        if ($action === 'APPROVE') {
 
-        $model->approve(
-            $id,
-            $_SESSION['user_id'],
-            $remarks
-        );
+            $model->approve(
+                $id,
+                $_SESSION['user_id'],
+                $remarks
+            );
 
-        $_SESSION['success'] =
-            'Resource requisition approved successfully.';
+            $_SESSION['success'] =
+                'Resource requisition approved successfully.';
+        } else {
 
-    } else {
+            $model->reject(
+                $id,
+                $_SESSION['user_id'],
+                $remarks
+            );
 
-        $model->reject(
-            $id,
-            $_SESSION['user_id'],
-            $remarks
-        );
+            $_SESSION['success'] =
+                'Resource requisition rejected.';
+        }
 
-        $_SESSION['success'] =
-            'Resource requisition rejected.';
-
-    }
-
-    /*
+        /*
     |--------------------------------------------------------------------------
     | REDIRECT
     |--------------------------------------------------------------------------
     */
 
-    header(
-        'Location: ' .
-        URLROOT .
-        '/ResourceRequisitions/details/' .
-        $id
-    );
+        header(
+            'Location: ' .
+                URLROOT .
+                '/ResourceRequisitions/details/' .
+                $id
+        );
 
-    exit;
-}
-
+        exit;
+    }
 }
