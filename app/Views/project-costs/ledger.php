@@ -54,8 +54,16 @@
 
                 <td><?= number_format($row->credit, 2) ?></td>
 
-                <td class="<?= $balance < 0 ? 'text-danger fw-bold' : 'text-success fw-bold' ?>"><?= number_format($balance, 2) ?>
-                </td>
+               <td class="<?= $row->balance_after < 0
+    ? 'text-danger fw-bold'
+    : 'text-success fw-bold' ?>">
+
+    <?= number_format(
+        $row->balance_after,
+        2
+    ) ?>
+
+</td>
 
                 <td><?= date('Y-m-d', strtotime($row->created_at)); ?></td>
             </tr>

@@ -39,241 +39,238 @@ class ProjectCosts extends Controller
         $this->view('project-costs/index', $data);
     }
 
-  public function create($project_id = null)
-{
-    if (!$project_id) {
-        header('Location: ' . URLROOT . '/projects');
-        exit;
-    }
-
-    // ============================================
-    // HANDLE FORM SUBMISSION
-    // ============================================
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-        try {
-
-            $this->service('ProjectCost')->create([
-
-                'project_id'   => $project_id,
-
-                'cost_type'    => $_POST['cost_type'] ?? null,
-
-                'description'  => trim($_POST['description'] ?? ''),
-
-                'quantity'     => (float)($_POST['quantity'] ?? 0),
-
-                'unit_price'   => (float)($_POST['unit_price'] ?? 0),
-
-                'inventory_id' => !empty($_POST['inventory_id'])
-                                    ? (int)$_POST['inventory_id']
-                                    : null,
-
-                'location_id'  => !empty($_POST['location_id'])
-                                    ? (int)$_POST['location_id']
-                                    : null
-
-            ]);
-
-            FlashHelper::success(
-                'Project cost added successfully.'
-            );
-
-            header(
-                'Location: ' .
-                URLROOT .
-                '/project-costs/' .
-                $project_id
-            );
-
-            exit;
-
-        } catch (Exception $e) {
-
-            FlashHelper::error(
-                $e->getMessage()
-            );
-
-            header(
-                'Location: ' .
-                URLROOT .
-                '/project-costs/create/' .
-                $project_id
-            );
-
+    public function create($project_id = null)
+    {
+        if (!$project_id) {
+            header('Location: ' . URLROOT . '/projects');
             exit;
         }
-    }
 
-    // ============================================
-    // DISPLAY FORM (GET)
-    // ============================================
+        // ============================================
+        // HANDLE FORM SUBMISSION
+        // ============================================
 
-    $projectModel = $this->model('Project');
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $project = $projectModel->getById($project_id);
+            try {
 
-    if (!$project) {
-        header('Location: ' . URLROOT . '/projects');
-        exit;
-    }
+                $this->service('ProjectCost')->create([
 
-    $inventoryModel = $this->model('Inventory');
-    $locationModel  = $this->model('InventoryLocation');
+                    'project_id'   => $project_id,
 
-    $data['project']    = $project;
-    $data['project_id'] = $project_id;
-    $data['inventory']  = $inventoryModel->getAll();
-    $data['locations']  = $locationModel->getAll();
+                    'cost_type'    => $_POST['cost_type'] ?? null,
 
-    $this->view(
-        'project-costs/create',
-        $data
-    );
-}
+                    'description'  => trim($_POST['description'] ?? ''),
 
-// EDIT Project Costs
-public function edit($id)
-{
-    $costModel = $this->model('ProjectCost');
-    $inventoryModel = $this->model('Inventory');
-    $locationModel = $this->model('InventoryLocation');
+                    'quantity'     => (float)($_POST['quantity'] ?? 0),
 
-    // ==================================================
-    // LOAD EXISTING COST
-    // ==================================================
+                    'unit_price'   => (float)($_POST['unit_price'] ?? 0),
 
-    $cost = $costModel->getById($id);
+                    'inventory_id' => !empty($_POST['inventory_id'])
+                        ? (int)$_POST['inventory_id']
+                        : null,
 
-    if (!$cost) {
-        header('Location: ' . URLROOT . '/project-costs');
-        exit;
-    }
+                    'location_id'  => !empty($_POST['location_id'])
+                        ? (int)$_POST['location_id']
+                        : null
 
-    // ==================================================
-    // HANDLE POST
-    // ==================================================
+                ]);
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                FlashHelper::success(
+                    'Project cost added successfully.'
+                );
 
-        try {
+                header(
+                    'Location: ' .
+                        URLROOT .
+                        '/project-costs/' .
+                        $project_id
+                );
 
-            $this->service('ProjectCost')->update(
-                (int)$id,
-                [
-                    'description' => trim(
-                        $_POST['description'] ?? ''
-                    ),
+                exit;
+            } catch (Exception $e) {
 
-                    'quantity' => (float)(
-                        $_POST['quantity'] ?? 0
-                    ),
+                FlashHelper::error(
+                    $e->getMessage()
+                );
 
-                    'unit_price' => (float)(
-                        $_POST['unit_price'] ?? 0
-                    )
-                ]
-            );
+                header(
+                    'Location: ' .
+                        URLROOT .
+                        '/project-costs/create/' .
+                        $project_id
+                );
 
-            FlashHelper::success(
-                'Project cost updated successfully.'
-            );
-
-        } catch (Throwable $e) {
-
-            FlashHelper::error(
-                $e->getMessage()
-            );
+                exit;
+            }
         }
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/project-costs/' .
-            $cost->project_id
+        // ============================================
+        // DISPLAY FORM (GET)
+        // ============================================
+
+        $projectModel = $this->model('Project');
+
+        $project = $projectModel->getById($project_id);
+
+        if (!$project) {
+            header('Location: ' . URLROOT . '/projects');
+            exit;
+        }
+
+        $inventoryModel = $this->model('Inventory');
+        $locationModel  = $this->model('InventoryLocation');
+
+        $data['project']    = $project;
+        $data['project_id'] = $project_id;
+        $data['inventory']  = $inventoryModel->getAll();
+        $data['locations']  = $locationModel->getAll();
+
+        $this->view(
+            'project-costs/create',
+            $data
         );
-
-        exit;
     }
 
-    // ==================================================
-    // LOAD EDIT FORM
-    // ==================================================
+    // EDIT Project Costs
+    public function edit($id)
+    {
+        $costModel = $this->model('ProjectCost');
+        $inventoryModel = $this->model('Inventory');
+        $locationModel = $this->model('InventoryLocation');
 
-    $data['cost'] = $cost;
+        // ==================================================
+        // LOAD EXISTING COST
+        // ==================================================
 
-    $data['project_id'] =
-        $cost->project_id;
-
-    $data['inventory'] =
-        $inventoryModel->getAll();
-
-    $data['locations'] =
-        $locationModel->getAll();
-
-    $this->view(
-        'project-costs/edit',
-        $data
-    );
-}
-
-   public function delete($id)
-{
-    try {
-
-        $cost = $this->model('ProjectCost')->getById($id);
+        $cost = $costModel->getById($id);
 
         if (!$cost) {
-            FlashHelper::error('Project cost not found.');
+            header('Location: ' . URLROOT . '/project-costs');
+            exit;
+        }
+
+        // ==================================================
+        // HANDLE POST
+        // ==================================================
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            try {
+
+                $this->service('ProjectCost')->update(
+                    (int)$id,
+                    [
+                        'description' => trim(
+                            $_POST['description'] ?? ''
+                        ),
+
+                        'quantity' => (float)(
+                            $_POST['quantity'] ?? 0
+                        ),
+
+                        'unit_price' => (float)(
+                            $_POST['unit_price'] ?? 0
+                        )
+                    ]
+                );
+
+                FlashHelper::success(
+                    'Project cost updated successfully.'
+                );
+            } catch (Throwable $e) {
+
+                FlashHelper::error(
+                    $e->getMessage()
+                );
+            }
 
             header(
                 'Location: ' .
-                URLROOT .
-                '/project-costs'
+                    URLROOT .
+                    '/project-costs/' .
+                    $cost->project_id
             );
 
             exit;
         }
 
-        $project_id = $cost->project_id;
+        // ==================================================
+        // LOAD EDIT FORM
+        // ==================================================
 
-        /*
+        $data['cost'] = $cost;
+
+        $data['project_id'] =
+            $cost->project_id;
+
+        $data['inventory'] =
+            $inventoryModel->getAll();
+
+        $data['locations'] =
+            $locationModel->getAll();
+
+        $this->view(
+            'project-costs/edit',
+            $data
+        );
+    }
+
+    public function delete($id)
+    {
+        try {
+
+            $cost = $this->model('ProjectCost')->getById($id);
+
+            if (!$cost) {
+                FlashHelper::error('Project cost not found.');
+
+                header(
+                    'Location: ' .
+                        URLROOT .
+                        '/project-costs'
+                );
+
+                exit;
+            }
+
+            $project_id = $cost->project_id;
+
+            /*
         |--------------------------------------------------------------------------
         | Project Cost Service
         |--------------------------------------------------------------------------
         */
 
-        $this->service('ProjectCost')->delete((int)$id);
+            $this->service('ProjectCost')->delete((int)$id);
 
-        FlashHelper::success(
-            'Project cost deleted successfully.'
-        );
+            FlashHelper::success(
+                'Project cost deleted successfully.'
+            );
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/project-costs/' .
-            $project_id
-        );
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/project-costs/' .
+                    $project_id
+            );
 
-        exit;
+            exit;
+        } catch (Throwable $e) {
 
-    } catch (Throwable $e) {
+            FlashHelper::error(
+                $e->getMessage()
+            );
 
-        FlashHelper::error(
-            $e->getMessage()
-        );
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/project-costs'
+            );
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/project-costs'
-        );
-
-        exit;
+            exit;
+        }
     }
-}
 
     public function getInventoryLocations(int $inventory_id)
     {
@@ -366,13 +363,13 @@ public function edit($id)
         AuthHelper::can('project.finance.view');
 
         $projectModel = $this->model('Project');
-        $financeModel = $this->model('ProjectFinance');
+        $ledgerModel = $this->model('ProjectLedger');
         $advanceModel = $this->model('ProjectAdvance');
 
         $data['project'] = $projectModel->getById($project_id);
 
         $data['balance'] =
-            $financeModel->getProjectSummary($project_id);
+            $ledgerModel->getProjectSummary($project_id);
 
         $data['advances'] =
             $advanceModel->getAdvancesByProject($project_id);

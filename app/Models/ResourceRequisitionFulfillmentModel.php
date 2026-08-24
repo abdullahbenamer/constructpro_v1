@@ -1,6 +1,7 @@
 <?php
 
 require_once '../app/Core/Model.php';
+require_once '../app/Models/ProjectLedgerModel.php';
 
 class ResourceRequisitionFulfillmentModel extends Model
 {
@@ -1135,7 +1136,33 @@ class ResourceRequisitionFulfillmentModel extends Model
                     $project_cost_id =
                         (int) $db->lastInsertId();
 
+/*
+|--------------------------------------------------------------------------
+| CREATE PROJECT LEDGER ENTRY
+|--------------------------------------------------------------------------
+*/
 
+$ledgerModel = new ProjectLedgerModel();
+
+$ledgerModel->addEntry([
+
+    'project_id'  => $requisition->project_id,
+
+    'entry_type'  => 'cost',
+
+    'ref_table'   => 'project_costs',
+
+    'ref_id'      => $project_cost_id,
+
+    'description' =>
+        'RR Fulfillment: ' .
+        $reqItem->description,
+
+    'debit'       =>
+        $quantity * $unit_cost,
+
+    'credit'      => 0
+]);
                     /*
                     |--------------------------------------------------------------------------
                     | CREATE FULFILLMENT ITEM
@@ -1339,7 +1366,33 @@ class ResourceRequisitionFulfillmentModel extends Model
                     $project_cost_id =
                         (int) $db->lastInsertId();
 
+/*
+|--------------------------------------------------------------------------
+| CREATE PROJECT LEDGER ENTRY
+|--------------------------------------------------------------------------
+*/
 
+$ledgerModel = new ProjectLedgerModel();
+
+$ledgerModel->addEntry([
+
+    'project_id'  => $requisition->project_id,
+
+    'entry_type'  => 'cost',
+
+    'ref_table'   => 'project_costs',
+
+    'ref_id'      => $project_cost_id,
+
+    'description' =>
+        'RR Fulfillment: ' .
+        $reqItem->description,
+
+    'debit'       =>
+        $quantity * $unit_cost,
+
+    'credit'      => 0
+]);
                     /*
                     |--------------------------------------------------------------------------
                     | CREATE FULFILLMENT ITEM

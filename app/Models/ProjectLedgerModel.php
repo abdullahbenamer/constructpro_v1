@@ -3,22 +3,22 @@ require_once '../app/Core/Model.php';
 class ProjectLedgerModel extends Model
 {
 
-    public function addEntry(array $data): bool
-    {
-        $lastBalance = $this->getLastBalance(
-            (int)$data['project_id']
-        );
+public function addEntry(array $data): bool
+{
+    $lastBalance = $this->getLastBalance(
+        (int)$data['project_id']
+    );
 
-        $debit  = (float)($data['debit'] ?? 0);
-        $credit = (float)($data['credit'] ?? 0);
+    $debit  = (float)($data['debit'] ?? 0);
+    $credit = (float)($data['credit'] ?? 0);
 
-        $newBalance =
-            $lastBalance
-            + $credit
-            - $debit;
+    $newBalance =
+        $lastBalance
+        + $credit
+        - $debit;
 
-        $this->db->query(
-            "
+    $this->db->query(
+        "
         INSERT INTO project_ledger
         (
             project_id,
@@ -32,20 +32,20 @@ class ProjectLedgerModel extends Model
         )
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ",
-            [
-                $data['project_id'],
-                $data['entry_type'],
-                $data['ref_table'],
-                $data['ref_id'],
-                $data['description'],
-                $debit,
-                $credit,
-                $newBalance
-            ]
-        );
+        [
+            $data['project_id'],
+            $data['entry_type'],
+            $data['ref_table'],
+            $data['ref_id'],
+            $data['description'],
+            $debit,
+            $credit,
+            $newBalance
+        ]
+    );
 
-        return true;
-    }
+    return true;
+}
 
     public function getLastBalance(int $project_id): float
     {

@@ -503,6 +503,41 @@ private function recordInventoryMovement(
     ]);
 }
 
+// private function recordLedger(
+//     int $costId,
+//     array $data
+// ): void
+// {
+
+// //    die('RECORD LEDGER CALLED. Cost ID = ' . $costId);
+//     $total = $this->total($data);
+
+//     $this->ledgerService->addEntry([
+
+//         'project_id'   => $data['project_id'],
+
+//         'entry_type'   => 'cost',
+
+//         'ref_table'    => 'project_costs',
+
+//         'ref_id'       => $costId,
+
+//         'description'  => $data['description'],
+
+//         'debit'        => $total,
+
+//         'credit'       => 0,
+
+//         /*
+//          * Your current model expects this.
+//          * We'll improve ledger balances later.
+//          */
+//         'balance_after' => 0
+
+//     ]);
+// }
+
+// temporary recordLedger for testing
 private function recordLedger(
     int $costId,
     array $data
@@ -510,7 +545,7 @@ private function recordLedger(
 {
     $total = $this->total($data);
 
-    $this->ledgerService->addEntry([
+    $result = $this->ledgerService->addEntry([
 
         'project_id'   => $data['project_id'],
 
@@ -526,13 +561,18 @@ private function recordLedger(
 
         'credit'       => 0,
 
-        /*
-         * Your current model expects this.
-         * We'll improve ledger balances later.
-         */
         'balance_after' => 0
 
     ]);
+
+    // die(
+    //     '<pre>' .
+    //     'ADD ENTRY RESULT: ' .
+    //     var_export($result, true) .
+    //     "\n" .
+    //     'COST ID: ' . $costId .
+    //     '</pre>'
+    // );
 }
 
 private function loadCost(int $id)

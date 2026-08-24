@@ -165,39 +165,62 @@ class Projects extends Controller
     }
 
 
-    public function ledger($project_id)
-    {
-        AuthHelper::can('projects.view');
+public function ledger($project_id)
+{
+    AuthHelper::can('projects.view');
 
-        $projectModel = $this->model('ProjectModel');
-        $financeModel = $this->model('ProjectFinance');
+    $projectModel = $this->model('Project');
+    $ledgerModel  = $this->model('ProjectLedger');
 
-        $project = $projectModel->getById($project_id);
+    $project = $projectModel->getById($project_id);
 
-        if (!$project) {
-            $_SESSION['error'] = "Project not found";
-            header("Location: " . URLROOT . "/projects");
-            exit;
-        }
+    if (!$project) {
 
-        $ledger = $financeModel->getLedger($project_id);
+        $_SESSION['error'] = "Project not found";
 
-        // running balance
-        $balance = 0;
+        header(
+            "Location: " . URLROOT . "/projects"
+        );
 
-        foreach ($ledger as &$row) {
-            $balance += ($row->money_in - $row->money_out);
-            $row->balance = $balance;
-        }
-
-        $data = [
-            'project' => $project,
-            'ledger' => $ledger,
-            'balance' => $balance
-        ];
-
-        $this->view('project-costs/ledger', $data);
+        exit;
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | GET ALL ENTRIES FROM project_ledger
+    |--------------------------------------------------------------------------
+    */
+
+    $ledger = $ledgerModel->getLedger(
+        $project_id
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | GET FINAL SUMMARY
+    |--------------------------------------------------------------------------
+    */
+
+    $summary = $ledgerModel->getProjectSummary(
+        $project_id
+    );
+
+    $data = [
+
+        'project' => $project,
+
+        'ledger' => $ledger,
+
+        'balance' => $summary->balance,
+
+        'summary' => $summary
+    ];
+
+    $this->view(
+        'project-costs/ledger',
+        $data
+    );
+}
 
     // Show archived projects
     public function archived()
