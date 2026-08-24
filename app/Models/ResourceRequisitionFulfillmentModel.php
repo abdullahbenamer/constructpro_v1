@@ -1921,7 +1921,34 @@ public function createResourceFulfillment($data)
             $project_cost_id =
                 (int) $this->db->lastInsertId();
 
+/*
+|--------------------------------------------------------------------------
+| CREATE PROJECT LEDGER ENTRY
+|--------------------------------------------------------------------------
+*/
 
+$ledgerModel = new ProjectLedgerModel();
+
+$ledgerModel->addEntry([
+
+    'project_id'  => $requisition->project_id,
+
+    'entry_type'  => 'cost',
+
+    'ref_table'   => 'project_costs',
+
+    'ref_id'      => $project_cost_id,
+
+    'description' =>
+        'RR Fulfillment: ' .
+        $requisitionItem->description,
+
+    'debit' =>
+        $fulfill_quantity * $unit_cost,
+
+    'credit' => 0
+
+]);
             /*
             |--------------------------------------------------------------------------
             | CREATE FULFILLMENT ITEM
