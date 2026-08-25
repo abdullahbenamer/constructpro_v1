@@ -75,23 +75,30 @@
                     Edit
                 </a>
 
-                <?php if ($loc->total_stock <= 0): ?>
+               <?php if ($loc->total_stock <= 0): ?>
 
-                    <a href="<?= URLROOT ?>/inventorylocations/delete/<?= $loc->id ?>"
-                       class="btn btn-sm btn-danger"
-                       onclick="return confirm('Delete this location?')">
-                        Delete
-                    </a>
+    <a href="<?= URLROOT ?>/inventorylocations/delete/<?= $loc->id ?>"
+       class="btn btn-sm btn-outline-danger"
+       onclick="return confirm('Are you sure you want to delete this location? This action cannot be undone.')">
 
-                <?php else: ?>
+        <i class="bi bi-trash"></i>
+        Delete
 
-                    <button class="btn btn-sm btn-secondary"
-                            disabled
-                            title="Location contains stock">
-                        Contains Stock!
-                    </button>
+    </a>
 
-                <?php endif; ?>
+<?php else: ?>
+
+    <button type="button"
+            class="btn btn-sm btn-warning"
+            disabled
+            title="This location cannot be deleted because it currently contains stock.">
+
+        <i class="bi bi-box-seam"></i>
+      [Contains Stock] <?= number_format($loc->total_stock, 2) ?> Items.
+
+    </button>
+
+<?php endif; ?>
 
             </td>
 

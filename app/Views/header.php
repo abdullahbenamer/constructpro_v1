@@ -313,7 +313,7 @@ $role_name = $_SESSION['role_name'] ?? '';
                                 <?php if (AuthHelper::canView('costs.view')) : ?>
                                     <li>
                                         <a class="dropdown-item" href="<?= URLROOT ?>/costs">
-                                            Project Costs
+                                            Projects Cost (Report)
                                         </a>
                                     </li>
                                 <?php endif; ?>
@@ -321,7 +321,7 @@ $role_name = $_SESSION['role_name'] ?? '';
                                 <?php if (AuthHelper::canView('reports.view')) : ?>
                                     <li>
                                         <a class="dropdown-item" href="<?= URLROOT ?>/reports">
-                                            Reports
+                                            Portfolio Dashboard
                                         </a>
                                     </li>
                                 <?php endif; ?>
