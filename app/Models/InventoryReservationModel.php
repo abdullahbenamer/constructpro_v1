@@ -213,4 +213,34 @@ public function delete($id)
 
     );
 }
+
+public function getReservedQuantity(
+    int $inventory_id,
+    int $location_id
+): float {
+
+    $result = $this->db->query(
+        "
+        SELECT
+            COALESCE(SUM(quantity), 0) AS reserved_qty
+
+        FROM inventory_reservations
+
+        WHERE inventory_id = ?
+
+        AND location_id = ?
+
+        AND status = 'ACTIVE'
+        ",
+        [
+            $inventory_id,
+            $location_id
+        ]
+    )->fetch();
+
+    return (float)(
+        $result->reserved_qty ?? 0
+    );
+}
+
 }
