@@ -31,27 +31,32 @@
 <table class="table table-bordered table-striped">
 
     <thead>
-     
-
-        <tr>
-            <th>Item</th>
-            <th>SKU</th>
-            <th>Quantity</th>
-            <th>Status</th>
-        </tr>
-    </thead>
+    <tr>
+        <th>Item</th>
+        <th>SKU</th>
+        <th class="text-end">Physical Qty</th>
+        <th class="text-end">Reserved Qty</th>
+        <th class="text-end">Available Qty</th>
+        <th>Status</th>
+    </tr>
+</thead>
 
 <tbody>
 
 <?php foreach ($items as $item): ?>
 
     <?php
+
+        // Status should be based on AVAILABLE quantity,
+        // not the physical quantity.
+
         $stockStatus =
-            ($item->quantity <= 0)
+            ($item->available_quantity <= 0)
                 ? 'out'
-                : (($item->quantity <= ($item->min_stock ?? 0))
+                : (($item->available_quantity <= ($item->min_stock ?? 0))
                     ? 'low'
                     : 'ok');
+
     ?>
 
     <tr
@@ -60,25 +65,83 @@
         data-stock="<?= $stockStatus ?>"
     >
 
-        <td><?= htmlspecialchars($item->name) ?></td>
-
-        <td><?= htmlspecialchars($item->sku) ?></td>
+        <!-- ITEM -->
 
         <td>
-            <?= $item->quantity ?>
-            <?= $item->base_unit ?>
+            <?= htmlspecialchars($item->name) ?>
         </td>
 
+        <!-- SKU -->
+
         <td>
+            <?= htmlspecialchars($item->sku) ?>
+        </td>
+
+        <!-- PHYSICAL QUANTITY -->
+
+        <td class="text-end">
+
+            <?= number_format(
+                (float) $item->quantity,
+                2
+            ) ?>
+
+            <?= htmlspecialchars(
+                $item->base_unit
+            ) ?>
+
+        </td>
+
+        <!-- RESERVED QUANTITY -->
+
+        <td class="text-end text-warning fw-bold">
+
+            <?= number_format(
+                (float) $item->reserved_quantity,
+                2
+            ) ?>
+
+        </td>
+
+        <!-- AVAILABLE QUANTITY -->
+
+        <td class="text-end text-success fw-bold">
+
+            <?= number_format(
+                (float) $item->available_quantity,
+                2
+            ) ?>
+
+        </td>
+
+        <!-- STATUS -->
+
+        <td>
+
             <?php
+
                 if ($stockStatus === 'out') {
-                    echo '<span class="badge bg-danger">Out of Stock</span>';
+
+                    echo '<span class="badge bg-danger">
+                            Fully Reserved / Out of Stock
+                          </span>';
+
                 } elseif ($stockStatus === 'low') {
-                    echo '<span class="badge bg-warning text-dark">Low Stock</span>';
+
+                    echo '<span class="badge bg-warning text-dark">
+                            Low Available Stock
+                          </span>';
+
                 } else {
-                    echo '<span class="badge bg-success">Available</span>';
+
+                    echo '<span class="badge bg-success">
+                            Available
+                          </span>';
+
                 }
+
             ?>
+
         </td>
 
     </tr>

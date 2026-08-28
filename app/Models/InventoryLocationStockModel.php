@@ -165,21 +165,59 @@ public function removeStock($inventory_id, $location_id, $qty)
         return $total;
     }
 
-    public function getLocationInventory($location_id)
+public function getLocationInventory($location_id)
 {
     return $this->db->query(
         "
         SELECT
             ils.quantity,
+
             i.id,
             i.name,
             i.sku,
-            i.base_unit
+            i.base_unit,
+            i.min_stock,
+
+            COALESCE(
+                reservations.reserved_quantity,
+                0
+            ) AS reserved_quantity,
+
+            (
+                ils.quantity
+                -
+                COALESCE(
+                    reservations.reserved_quantity,
+                    0
+                )
+            ) AS available_quantity
 
         FROM inventory_location_stock ils
 
         JOIN inventory i
             ON i.id = ils.inventory_id
+
+        LEFT JOIN
+        (
+            SELECT
+                inventory_id,
+                location_id,
+
+                SUM(quantity) AS reserved_quantity
+
+            FROM inventory_reservations
+
+            WHERE status = 'ACTIVE'
+
+            GROUP BY
+                inventory_id,
+                location_id
+
+        ) reservations
+
+            ON reservations.inventory_id = ils.inventory_id
+
+            AND reservations.location_id = ils.location_id
 
         WHERE ils.location_id = ?
 

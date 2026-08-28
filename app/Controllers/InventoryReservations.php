@@ -324,7 +324,7 @@ class InventoryReservations extends Controller
             $projectModel->getAll();
 
         $this->view(
-            'inventory_reservations/edit',
+            'inventory-reservations/edit',
             $data
         );
     }

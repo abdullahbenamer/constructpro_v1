@@ -3,35 +3,118 @@ require_once '../app/Core/Model.php';
 
 class InventoryReservationModel extends Model
 {
-    public function create($data)
-    {
-        return $this->db->query(
-            "
-            INSERT INTO inventory_reservations
-            (
-                inventory_id,
-                location_id,
-                project_id,
-                required_by_date,
-                quantity,
-                reference,
-                notes,
-                created_by
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ",
-            [
-                $data['inventory_id'],
-                $data['location_id'] ?? null,
-                $data['project_id'] ?? null,
-                $data['required_by_date'] ?? null,
-                $data['quantity'],
-                $data['reference'] ?? null,
-                $data['notes'] ?? null,
-                $_SESSION['user_id'] ?? null
-            ]
+   public function create($data)
+{
+    $inventory_id = (int)$data['inventory_id'];
+    $location_id  = (int)$data['location_id'];
+    $quantity     = (float)$data['quantity'];
+
+    /*
+    |--------------------------------------------------------------------------
+    | VALIDATE QUANTITY
+    |--------------------------------------------------------------------------
+    */
+
+    if ($quantity <= 0) {
+        throw new Exception(
+            'Reservation quantity must be greater than zero.'
         );
     }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | GET PHYSICAL STOCK
+    |--------------------------------------------------------------------------
+    */
+
+    $stockModel =
+        new InventoryLocationStockModel();
+
+    $stock = $stockModel->getStock(
+        $inventory_id,
+        $location_id
+    );
+
+    $physicalQty =
+        (float)($stock->quantity ?? 0);
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | GET ALREADY RESERVED QUANTITY
+    |--------------------------------------------------------------------------
+    */
+
+    $reservedQty =
+        $this->getReservedQuantity(
+            $inventory_id,
+            $location_id
+        );
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | CALCULATE AVAILABLE QUANTITY
+    |--------------------------------------------------------------------------
+    */
+
+    $availableQty =
+        $physicalQty - $reservedQty;
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | PREVENT OVER-RESERVATION
+    |--------------------------------------------------------------------------
+    */
+
+    if ($quantity > $availableQty) {
+
+        throw new Exception(
+            'Insufficient available stock. '
+            . 'Available to reserve: '
+            . number_format(
+                max(0, $availableQty),
+                2
+            )
+        );
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | CREATE RESERVATION
+    |--------------------------------------------------------------------------
+    */
+
+    return $this->db->query(
+        "
+        INSERT INTO inventory_reservations
+        (
+            inventory_id,
+            location_id,
+            project_id,
+            required_by_date,
+            quantity,
+            reference,
+            notes,
+            created_by
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ",
+        [
+            $inventory_id,
+            $location_id,
+            $data['project_id'],
+            $data['required_by_date'],
+            $quantity,
+            $data['reference'] ?? null,
+            $data['notes'] ?? null,
+            $_SESSION['user_id'] ?? null
+        ]
+    );
+}
 
     public function getActiveReservedQty($inventory_id)
     {
