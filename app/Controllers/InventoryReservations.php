@@ -204,23 +204,20 @@ class InventoryReservations extends Controller
             $this->service('ProjectCost')
         );
 
-
         $service->fulfill(
             (int)$id
         );
-
 
         FlashHelper::success(
             'Reservation fulfilled successfully.'
         );
 
-    } catch (Exception $e) {
+    } catch (Throwable $e) {
 
         FlashHelper::error(
             $e->getMessage()
         );
     }
-
 
     header(
         'Location: ' .
