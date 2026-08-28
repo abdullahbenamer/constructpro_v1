@@ -25,8 +25,6 @@ foreach ($stock as $inventory) {
 
 ?>
 
-<?php $totalValue = 0; ?>
-
 <!-- ---------------------------------------------- -->
 <div class="row mb-4">
 
