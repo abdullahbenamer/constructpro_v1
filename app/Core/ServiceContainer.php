@@ -47,6 +47,21 @@ class ServiceContainer
             ]
         ],
 
+        'ReservationFulfillment' => [
+    'class' => ReservationFulfillmentService::class,
+
+    'dependencies' => [
+        InventoryReservationModel::class,
+        InventoryModel::class,
+        InventoryLocationStockModel::class,
+        InventoryMovementModel::class
+    ],
+
+    'services' => [
+        'ProjectCost'
+    ]
+],
+
         'GoodsReceipt' => [
             'class' => GoodsReceiptService::class,
 
