@@ -187,41 +187,49 @@ class InventoryReservations extends Controller
     );
 }
 
-    public function fulfill($id)
-    {
-        $db = new Database();
+ public function fulfill($id)
+{
+    try {
 
-        try {
+        $service = new ReservationFulfillmentService(
 
-            $db->beginTransaction();
+            $this->model('InventoryReservation'),
 
-            $model = $this->model(
-                'InventoryReservation'
-            );
+            $this->model('Inventory'),
 
-            $success = $model->fulfill($id);
+            $this->model('InventoryLocationStock'),
 
-            if (!$success) {
-                throw new Exception(
-                    "Reservation fulfillment failed"
-                );
-            }
+            $this->model('InventoryMovement'),
 
-            $db->commit();
-        } catch (Exception $e) {
+            $this->service('ProjectCost')
+        );
 
-            $db->rollBack();
 
-            $_SESSION['error'] =
-                $e->getMessage();
-        }
+        $service->fulfill(
+            (int)$id
+        );
 
-        header(
-            'Location: ' .
-                URLROOT .
-                '/inventoryreservations'
+
+        FlashHelper::success(
+            'Reservation fulfilled successfully.'
+        );
+
+    } catch (Exception $e) {
+
+        FlashHelper::error(
+            $e->getMessage()
         );
     }
+
+
+    header(
+        'Location: ' .
+        URLROOT .
+        '/inventoryreservations'
+    );
+
+    exit;
+}
 
     public function cancel($id)
     {

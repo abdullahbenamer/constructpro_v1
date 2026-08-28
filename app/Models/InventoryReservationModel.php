@@ -227,6 +227,24 @@ ORDER BY r.created_at DESC
         );
     }
 
+    public function markFulfilled(int $id): bool
+{
+    $result = $this->db->query(
+        "
+        UPDATE inventory_reservations
+
+        SET status = 'FULFILLED'
+
+        WHERE id = ?
+
+        AND status = 'ACTIVE'
+        ",
+        [$id]
+    );
+
+    return $result->rowCount() > 0;
+}
+
     public function cancel($id)
     {
         return $this->db->query(
