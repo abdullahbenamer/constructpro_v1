@@ -54,7 +54,10 @@
     Items
 </a>
 
-<?php if ($po->status === 'draft'): ?>
+<?php if (
+    $po->status === 'draft' &&
+    (int)$po->item_count > 0
+): ?>
 
     <a href="<?= URLROOT ?>/purchaseorders/approve/<?= $po->id ?>"
        class="btn btn-sm btn-success"

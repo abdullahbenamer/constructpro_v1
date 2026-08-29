@@ -222,38 +222,95 @@ $itemModel->create([
         exit;
     }
 
-    public function approve($id)
-    {
-        $model = $this->model('PurchaseOrder');
+public function approve($id)
+{
+    AuthHelper::can('purchase_orders.edit');
 
-        $po = $model->getById($id);
+    $model = $this->model('PurchaseOrder');
 
-        if (!$po) {
-            $_SESSION['error'] = 'Purchase Order not found';
+    $po = $model->getById($id);
 
-            header('Location: ' . URLROOT . '/purchaseorders');
-            exit;
-        }
+    if (!$po) {
 
-        if ($po->status !== 'draft') {
-            $_SESSION['error'] =
-                'Only draft purchase orders can be approved';
-
-            header('Location: ' . URLROOT . '/purchaseorders');
-            exit;
-        }
-
-        $model->approve(
-            $id,
-            $_SESSION['user_id']
-        );
+        $_SESSION['error'] =
+            'Purchase Order not found.';
 
         header(
-            'Location: ' . URLROOT . '/purchaseorders/details/' . $id
+            'Location: ' .
+            URLROOT .
+            '/purchaseorders'
         );
 
         exit;
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | ONLY DRAFT PURCHASE ORDERS CAN BE APPROVED
+    |--------------------------------------------------------------------------
+    */
+
+    if ($po->status !== 'draft') {
+
+        $_SESSION['error'] =
+            'Only draft purchase orders can be approved.';
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/purchaseorders/details/' .
+            $id
+        );
+
+        exit;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | PO MUST CONTAIN AT LEAST ONE ITEM
+    |--------------------------------------------------------------------------
+    */
+
+    $items = $model->getItems($id);
+
+    if (empty($items)) {
+
+        $_SESSION['error'] =
+            'Please add at least one item before approving this Purchase Order.';
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/purchaseorders/details/' .
+            $id
+        );
+
+        exit;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | APPROVE
+    |--------------------------------------------------------------------------
+    */
+
+    $model->approve(
+        $id,
+        $_SESSION['user_id']
+    );
+
+    $_SESSION['success'] =
+        'Purchase Order approved successfully.';
+
+    header(
+        'Location: ' .
+        URLROOT .
+        '/purchaseorders/details/' .
+        $id
+    );
+
+    exit;
+}
 
     public function cancel($id)
 {

@@ -112,17 +112,17 @@
 
     </a>
 
-    <?php if ($po->status === 'draft'): ?>
+<?php if ($po->status === 'draft' && !empty($items)): ?>
 
-        <a href="<?= URLROOT ?>/purchaseorders/approve/<?= $po->id ?>"
-            class="btn btn-success"
-            onclick="return confirm('Approve this Purchase Order?')">
+    <a href="<?= URLROOT ?>/purchaseorders/approve/<?= $po->id ?>"
+        class="btn btn-success"
+        onclick="return confirm('Approve this Purchase Order?')">
 
-            Approve Purchase Order
+        Approve Purchase Order
 
-        </a>
+    </a>
 
-    <?php endif; ?>
+<?php endif; ?>
 
 </div>
 

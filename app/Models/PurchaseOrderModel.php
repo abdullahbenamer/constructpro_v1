@@ -4,24 +4,32 @@ require_once '../app/Core/Model.php';
 class PurchaseOrderModel extends Model
 {
 
-    public function getAll()
-    {
-    
+        public function getAll()
+{
     return $this->db->query(
-            "
-            SELECT
-                po.*,
-                s.company_name AS supplier_name
+        "
+        SELECT
+            po.*,
+            s.company_name AS supplier_name,
 
-            FROM purchase_orders po
+            COUNT(poi.id) AS item_count
 
-            JOIN suppliers s
-                ON s.id = po.supplier_id
+        FROM purchase_orders po
 
-            ORDER BY po.created_at DESC
-            "
-        )->fetchAll();
-    }
+        JOIN suppliers s
+            ON s.id = po.supplier_id
+
+        LEFT JOIN purchase_order_items poi
+            ON poi.purchase_order_id = po.id
+
+        GROUP BY
+            po.id
+
+        ORDER BY
+            po.created_at DESC
+        "
+    )->fetchAll();
+}
 
     /*
     |--------------------------------------------------------------------------
