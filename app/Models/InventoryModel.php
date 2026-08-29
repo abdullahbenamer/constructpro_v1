@@ -18,7 +18,6 @@ class InventoryModel extends Model
     ")->fetchAll();
 }
 
-    // used for POS show only location inventory
 public function getByLocation($location_id)
 {
     $sql = "
@@ -35,17 +34,137 @@ public function getByLocation($location_id)
   return $this->db->query($sql, $params)->fetchAll();
 }
 
+    // public function getStock($category = null)
+    // {
+    //     $sql = "
+    //     SELECT
+    //         inventory.*,
+    //        b.brand_name AS brand_name,
+    //         c.country_name AS brand_country,
+    //         c.country_code AS country_code,
+
+    //         (
+    //             SELECT COALESCE(SUM(ir.quantity), 0)
+
+    //             FROM inventory_reservations ir
+
+    //             WHERE ir.inventory_id = inventory.id
+    //             AND ir.status = 'ACTIVE'
+
+    //         ) AS reserved_qty,
+
+    //         (
+    //             inventory.quantity -
+
+    //             (
+    //                 SELECT COALESCE(SUM(ir.quantity), 0)
+
+    //                 FROM inventory_reservations ir
+
+    //                 WHERE ir.inventory_id = inventory.id
+    //                 AND ir.status = 'ACTIVE'
+    //             )
+
+    //         ) AS available_qty
+
+    //     FROM inventory
+    //     LEFT JOIN brands b ON b.id = inventory.brand_id
+    //     LEFT JOIN countries c  ON c.id = b.country_id
+
+    //     WHERE inventory.quantity >= 0
+    // ";
+
+    //     $params = [];
+
+    //     if ($category) {
+
+    //         $sql .= " AND inventory.category = ?";
+
+    //         $params[] = $category;
+    //     }
+
+    //     $sql .= " ORDER BY inventory.category, inventory.name";
+
+    //     return $this->db->query($sql, $params)->fetchAll();
+    // }
+
     public function getStock($category = null)
-    {
-        $sql = "
+{
+    $sql = "
         SELECT
             inventory.*,
-           b.brand_name AS brand_name,
+
+            b.brand_name AS brand_name,
+
             c.country_name AS brand_country,
+
             c.country_code AS country_code,
 
+
+            /*
+            |----------------------------------------------------------
+            | TOTAL PHYSICAL STOCK FROM ALL LOCATIONS
+            |----------------------------------------------------------
+            */
+
             (
-                SELECT COALESCE(SUM(ir.quantity), 0)
+                SELECT COALESCE(
+                    SUM(ils.quantity),
+                    0
+                )
+
+                FROM inventory_location_stock ils
+
+                WHERE ils.inventory_id = inventory.id
+            ) AS location_total,
+
+
+            /*
+            |----------------------------------------------------------
+            | LOCATION BREAKDOWN
+            |
+            | Example:
+            | MAIN: 250 | MUSRATA: 100 | EX-WH: 100
+            |----------------------------------------------------------
+            */
+
+            (
+                SELECT GROUP_CONCAT(
+
+                    CONCAT(
+                        il.code,
+                        ': ',
+                        FORMAT(ils.quantity, 2)
+                    )
+
+                    ORDER BY il.code
+
+                    SEPARATOR ' | '
+
+                )
+
+                FROM inventory_location_stock ils
+
+                INNER JOIN inventory_locations il
+                    ON il.id = ils.location_id
+
+                WHERE ils.inventory_id = inventory.id
+                AND ils.quantity > 0
+
+            ) AS location_breakdown,
+
+
+            /*
+            |----------------------------------------------------------
+            | ACTIVE RESERVED QUANTITY
+            |----------------------------------------------------------
+            */
+
+            (
+                SELECT COALESCE(
+                    SUM(ir.quantity),
+                    0
+                )
 
                 FROM inventory_reservations ir
 
@@ -54,40 +173,78 @@ public function getByLocation($location_id)
 
             ) AS reserved_qty,
 
+
+            /*
+            |----------------------------------------------------------
+            | AVAILABLE QUANTITY
+            |
+            | Based on actual total physical stock in locations.
+            |----------------------------------------------------------
+            */
+
             (
-                inventory.quantity -
+                (
+                    SELECT COALESCE(
+                        SUM(ils.quantity),
+                        0
+                    )
+
+                    FROM inventory_location_stock ils
+
+                    WHERE ils.inventory_id = inventory.id
+                )
+
+                -
 
                 (
-                    SELECT COALESCE(SUM(ir.quantity), 0)
+                    SELECT COALESCE(
+                        SUM(ir.quantity),
+                        0
+                    )
 
                     FROM inventory_reservations ir
 
                     WHERE ir.inventory_id = inventory.id
                     AND ir.status = 'ACTIVE'
                 )
-
             ) AS available_qty
 
+
         FROM inventory
-        LEFT JOIN brands b ON b.id = inventory.brand_id
-        LEFT JOIN countries c  ON c.id = b.country_id
+
+        LEFT JOIN brands b
+            ON b.id = inventory.brand_id
+
+        LEFT JOIN countries c
+            ON c.id = b.country_id
 
         WHERE inventory.quantity >= 0
     ";
 
-        $params = [];
+    $params = [];
 
-        if ($category) {
+    if ($category) {
 
-            $sql .= " AND inventory.category = ?";
+        $sql .= "
+            AND inventory.category = ?
+        ";
 
-            $params[] = $category;
-        }
-
-        $sql .= " ORDER BY inventory.category, inventory.name";
-
-        return $this->db->query($sql, $params)->fetchAll();
+        $params[] = $category;
     }
+
+    $sql .= "
+        ORDER BY
+            inventory.category,
+            inventory.name
+    ";
+
+    return $this->db
+        ->query(
+            $sql,
+            $params
+        )
+        ->fetchAll();
+}
 
 public function getStockByLocation($location_id)
 {
@@ -528,6 +685,88 @@ public function getMaterialItems()
         FROM inventory_stock_view
         ORDER BY name
         "
+    )->fetchAll();
+}
+
+public function getLocationBreakdown(int $inventory_id)
+{
+    return $this->db->query(
+        "
+        SELECT
+            il.id AS location_id,
+
+            il.code AS location_code,
+
+            il.name AS location_name,
+
+            ils.quantity AS physical_qty,
+
+
+            /*
+            |----------------------------------------------------------
+            | ACTIVE RESERVED QUANTITY FOR THIS ITEM + LOCATION
+            |----------------------------------------------------------
+            */
+
+            COALESCE(
+                (
+                    SELECT SUM(ir.quantity)
+
+                    FROM inventory_reservations ir
+
+                    WHERE ir.inventory_id = ils.inventory_id
+
+                    AND ir.location_id = ils.location_id
+
+                    AND ir.status = 'ACTIVE'
+                ),
+                0
+            ) AS reserved_qty,
+
+
+            /*
+            |----------------------------------------------------------
+            | AVAILABLE QUANTITY
+            |----------------------------------------------------------
+            */
+
+            (
+                ils.quantity -
+
+                COALESCE(
+                    (
+                        SELECT SUM(ir.quantity)
+
+                        FROM inventory_reservations ir
+
+                        WHERE ir.inventory_id =
+                            ils.inventory_id
+
+                        AND ir.location_id =
+                            ils.location_id
+
+                        AND ir.status = 'ACTIVE'
+                    ),
+                    0
+                )
+            ) AS available_qty
+
+
+        FROM inventory_location_stock ils
+
+        INNER JOIN inventory_locations il
+
+            ON il.id = ils.location_id
+
+
+        WHERE ils.inventory_id = ?
+
+
+        ORDER BY il.code
+        ",
+        [
+            $inventory_id
+        ]
     )->fetchAll();
 }
 

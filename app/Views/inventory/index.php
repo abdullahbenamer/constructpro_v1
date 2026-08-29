@@ -61,7 +61,7 @@ foreach ($stock as $inventory) {
                 </small>
 
                 <h3>
-                LYD <?= '&#126;' . number_format(round($inventoryValue, -3), 0) ?>
+                    LYD <?= '&#126;' . number_format(round($inventoryValue, -3), 0) ?>
 
                 </h3>
 
@@ -406,27 +406,28 @@ foreach ($stock as $inventory) {
 
                         <div class="btn-group btn-group-sm">
 
+                            <a href="<?= URLROOT ?>/inventory/stockDetails/<?= $inventory->id ?>"
+                                class="btn btn-sm btn-primary"
+                                title="View Global Stock Details">
+                                Stock Details <i class="fas fa-chart-bar"></i>
+
+                            </a>
+
                             <a href="<?= URLROOT ?>/inventory/details/<?= $inventory->id ?>" class="btn btn-info">
 
-                                View
+                                View Item
 
                             </a>
 
                             <a href="<?= URLROOT ?>/inventory/edit/<?= $inventory->id ?>" class="btn btn-warning">
 
-                                Edit
-
-                            </a>
-
-                            <a href="<?= URLROOT ?>/inventorymovements/add/<?= $inventory->id ?>" class="btn btn-success">
-
-                                Stock
+                                Edit Item
 
                             </a>
 
                             <a href="<?= URLROOT ?>/inventory/delete/<?= $inventory->id ?>" class="btn btn-danger" onclick="return confirm('Delete item?')">
 
-                                Del
+                                Delete Item
 
                             </a>
 

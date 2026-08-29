@@ -45,14 +45,14 @@
         </div>
 
         <!-- QUANTITY -->
-        <div class="col-md-4">
+        <!-- <div class="col-md-4">
             <div class="mb-3">
                 <label class="form-label">Quantity</label>
                 <input type="number" name="quantity"
-                       value="<?= $inventory->quantity ?? 0 ?>"
+                       value="<?//= $inventory->quantity ?? 0 ?>"
                        class="form-control">
             </div>
-        </div>
+        </div> -->
 
         <!-- MIN STOCK -->
         <div class="col-md-4">

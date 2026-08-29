@@ -182,4 +182,122 @@ class Inventory extends Controller
         $this->view('inventory/view', $data);
     }
 
+//* show stock details for a specific inventory item stored in different locations, including reserved quantities and available stock *//
+    public function stockDetails($id)
+{
+    AuthHelper::can('inventory.view');
+
+    $inventoryModel =
+        $this->model('Inventory');
+
+    $reservationModel =
+        $this->model('InventoryReservation');
+
+
+    /*
+    |--------------------------------------------------------------
+    | GET INVENTORY ITEM
+    |--------------------------------------------------------------
+    */
+
+    $item =
+        $inventoryModel->getById($id);
+
+    if (!$item) {
+
+        FlashHelper::error(
+            'Inventory item not found.'
+        );
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/inventory'
+        );
+
+        exit;
+    }
+
+
+    /*
+    |--------------------------------------------------------------
+    | GET LOCATION STOCK BREAKDOWN
+    |--------------------------------------------------------------
+    */
+
+    $locations =
+        $inventoryModel
+            ->getLocationBreakdown(
+                (int)$id
+            );
+
+
+    /*
+    |--------------------------------------------------------------
+    | TOTAL ACTIVE RESERVATIONS
+    |--------------------------------------------------------------
+    */
+
+    $reservedQty =
+        $reservationModel
+            ->getActiveReservedQty(
+                (int)$id
+            );
+
+
+    /*
+    |--------------------------------------------------------------
+    | CALCULATE TOTAL PHYSICAL STOCK
+    |--------------------------------------------------------------
+    */
+
+    $locationTotal = 0;
+
+    foreach ($locations as $location) {
+
+        $locationTotal +=
+            (float)$location->physical_qty;
+    }
+
+
+    /*
+    |--------------------------------------------------------------
+    | PREPARE VIEW DATA
+    |--------------------------------------------------------------
+    */
+
+    $data = [
+
+        'item' => $item,
+
+        'locations' => $locations,
+
+        // Existing stored global quantity
+        'system_qty' =>
+            (float)$item->quantity,
+
+        // Actual total from all locations
+        'location_total' =>
+            $locationTotal,
+
+        // Active reservations
+        'reserved_qty' =>
+            (float)$reservedQty,
+
+        // Actual available stock
+        'available_qty' =>
+            max(
+                0,
+                $locationTotal - $reservedQty
+            )
+
+    ];
+
+
+    $this->view(
+        'inventory/stock_details',
+        $data
+    );
+}
+
     }

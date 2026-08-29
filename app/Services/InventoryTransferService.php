@@ -130,6 +130,223 @@ class InventoryTransferService extends Model
     }
 }
 
+public function reverse(int $transferId): array
+{
+    $this->db->beginTransaction();
+
+    try {
+
+        /*
+        |------------------------------------------------------------------
+        | 1. GET ORIGINAL TRANSFER
+        |------------------------------------------------------------------
+        */
+
+        $transfer = $this->transferModel->getById($transferId);
+
+        if (!$transfer) {
+            throw new Exception(
+                'Transfer not found.'
+            );
+        }
+
+
+        /*
+        |------------------------------------------------------------------
+        | 2. VALIDATE STATUS
+        |------------------------------------------------------------------
+        */
+
+        if ($transfer->status !== 'COMPLETED') {
+            throw new Exception(
+                'Only COMPLETED transfers can be reversed.'
+            );
+        }
+
+
+        /*
+        |------------------------------------------------------------------
+        | 3. REVERSE THE PHYSICAL STOCK
+        |
+        | Original:
+        | FROM → TO
+        |
+        | Reversal:
+        | TO → FROM
+        |------------------------------------------------------------------
+        */
+
+        $ok = $this->stockModel->transferStock(
+            $transfer->inventory_id,
+            $transfer->to_location_id,
+            $transfer->from_location_id,
+            $transfer->quantity
+        );
+
+        if (!$ok) {
+            throw new Exception(
+                'Unable to reverse transfer. '
+                . 'Insufficient stock at destination location.'
+            );
+        }
+
+
+        /*
+        |------------------------------------------------------------------
+        | 4. CREATE REVERSAL TRANSFER RECORD
+        |------------------------------------------------------------------
+        */
+
+        $reversalId = $this->transferModel->create([
+
+            'inventory_id' =>
+                $transfer->inventory_id,
+
+            'from_location_id' =>
+                $transfer->to_location_id,
+
+            'to_location_id' =>
+                $transfer->from_location_id,
+
+            'quantity' =>
+                $transfer->quantity,
+
+            'reference' =>
+                $transfer->reference,
+
+            'notes' =>
+                'Reversal of Transfer #'
+                . $transferId,
+
+            'created_by' =>
+                $_SESSION['user_id'] ?? null
+
+        ]);
+
+
+        /*
+        |------------------------------------------------------------------
+        | 5. CREATE OUT MOVEMENT
+        |
+        | Reversal takes stock OUT from the original destination.
+        |------------------------------------------------------------------
+        */
+
+        $this->movementModel->addMovement([
+
+            'inventory_id' =>
+                $transfer->inventory_id,
+
+            'location_id' =>
+                $transfer->to_location_id,
+
+            'type' =>
+                'OUT',
+
+            'quantity' =>
+                $transfer->quantity,
+
+            'reference' =>
+                $transfer->reference,
+
+            'notes' =>
+                'Reversal of Transfer #'
+                . $transferId,
+
+            'created_by' =>
+                $_SESSION['user_id'] ?? null
+
+        ]);
+
+
+        /*
+        |------------------------------------------------------------------
+        | 6. CREATE IN MOVEMENT
+        |
+        | Reversal puts stock back into the original source.
+        |------------------------------------------------------------------
+        */
+
+        $this->movementModel->addMovement([
+
+            'inventory_id' =>
+                $transfer->inventory_id,
+
+            'location_id' =>
+                $transfer->from_location_id,
+
+            'type' =>
+                'IN',
+
+            'quantity' =>
+                $transfer->quantity,
+
+            'reference' =>
+                $transfer->reference,
+
+            'notes' =>
+                'Reversal of Transfer #'
+                . $transferId,
+
+            'created_by' =>
+                $_SESSION['user_id'] ?? null
+
+        ]);
+
+
+        /*
+        |------------------------------------------------------------------
+        | 7. MARK ORIGINAL TRANSFER AS REVERSED
+        |------------------------------------------------------------------
+        */
+
+        $this->db->query(
+            "
+            UPDATE inventory_transfers
+
+            SET
+                status = 'REVERSED',
+                reversed_at = NOW(),
+                reversed_by = ?,
+                reversal_transfer_id = ?
+
+            WHERE id = ?
+            AND status = 'COMPLETED'
+            ",
+            [
+                $_SESSION['user_id'] ?? null,
+                $reversalId,
+                $transferId
+            ]
+        );
+
+
+        /*
+        |------------------------------------------------------------------
+        | 8. COMMIT
+        |------------------------------------------------------------------
+        */
+
+        $this->db->commit();
+
+
+        return [
+            'success' => true,
+            'message' =>
+                'Transfer reversed successfully.',
+            'reversal_transfer_id' =>
+                $reversalId
+        ];
+
+
+    } catch (Throwable $e) {
+
+        $this->db->rollBack();
+
+        throw $e;
+    }
+}
+
     /**
      * Inventory adjustment.
      */

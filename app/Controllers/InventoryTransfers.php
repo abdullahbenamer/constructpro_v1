@@ -168,18 +168,39 @@ class InventoryTransfers extends Controller
     }
 
     public function reverse($id)
-    {
-        $model = $this->model('InventoryTransfer');
+{
+    try {
 
-        $result = $model->reverse($id);
+        $service = new InventoryTransferService(
 
-        if ($result['success']) {
-            FlashHelper::success('Transfer reversed successfully.');
-        } else {
-            FlashHelper::error($result['message']);
-        }
+            $this->model('InventoryLocationStock'),
 
-        header('Location: ' . URLROOT . '/inventorytransfers');
-        exit;
+            $this->model('InventoryMovement'),
+
+            $this->model('InventoryTransfer')
+
+        );
+
+        $result =
+            $service->reverse((int)$id);
+
+        FlashHelper::success(
+            $result['message']
+        );
+
+    } catch (Throwable $e) {
+
+        FlashHelper::error(
+            $e->getMessage()
+        );
     }
+
+    header(
+        'Location: ' .
+        URLROOT .
+        '/inventorytransfers'
+    );
+
+    exit;
+}
 }
