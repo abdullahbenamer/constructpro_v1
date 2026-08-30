@@ -23,19 +23,8 @@
             </p>
 
         </div>
-
-
-        <a href="<?= URLROOT ?>/ResourceRequisitionFulfillments/index/<?= $data['requisition']->id ?>"
-            class="btn btn-secondary">
-
-            <i class="fas fa-arrow-left"></i>
-
-            Back
-
-        </a>
-
+     
     </div>
-
 
     <!-- ==========================================================
      REQUISITION INFORMATION

@@ -21,22 +21,8 @@
             </div>
 
         </div>
-
-
-        <div>
-
-            <a
-                href="<?= URLROOT ?>/ResourceRequisitionFulfillments/index/<?= $fulfillment->requisition_id ?>"
-                class="btn btn-secondary"
-            >
-                <i class="fas fa-arrow-left me-1"></i>
-                BACK TO FULFILLMENTS
-            </a>
-
-        </div>
-
+       
     </div>
-
 
     <!-- ================================================================
          SUCCESS / ERROR MESSAGES
@@ -579,19 +565,7 @@
 
     <div class="mt-4 d-flex gap-2">
 
-        <a
-            href="<?= URLROOT ?>/ResourceRequisitionFulfillments/index/<?= $fulfillment->requisition_id ?>"
-            class="btn btn-secondary"
-        >
-
-            <i class="fas fa-arrow-left me-1"></i>
-
-            BACK TO FULFILLMENTS
-
-        </a>
-
-
-        <a
+              <a
             href="<?= URLROOT ?>/ResourceRequisitions/details/<?= $fulfillment->requisition_id ?>"
             class="btn btn-outline-primary"
         >
