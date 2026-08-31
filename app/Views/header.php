@@ -168,23 +168,6 @@ $role_name = $_SESSION['role_name'] ?? '';
                                     </li>
                                 <?php endif; ?>
 
-
-                                <!-- Receive Stock moved to procurement -->
-                                <!-- <?php //if (AuthHelper::canView('inventory-movements.create')) : 
-                                        ?>
-                                    <li>
-                                        <a class="dropdown-item" href="<? //= URLROOT 
-                                                                        ?>/inventory-movements/receive">
-
-                                            <i class="fas fa-truck-loading"></i>
-                                            Receive Stock (from PO)
-
-                                        </a>
-                                    </li>
-                                <?php //endif; 
-                                ?> -->
-
-
                                 <?php if (AuthHelper::canView('inventory-reservations.view')) : ?>
                                     <li>
                                         <a class="dropdown-item" href="<?= URLROOT ?>/inventoryreservations">
@@ -235,6 +218,15 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                             </a>
                             <ul class="dropdown-menu">
+
+                             <?php if (AuthHelper::canView('quotation.view')) : ?>
+                                    <li>
+                                        <a class="dropdown-item" href="<?= URLROOT ?>/supplierquotations">
+                                            <i class="fas fa-file-invoice-dollar"></i>
+                                           Supplier Quotations
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
 
                                 <?php if (AuthHelper::canView('purchase-orders.view')) : ?>
                                     <li>
