@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 31, 2026 at 09:06 AM
+-- Generation Time: Aug 31, 2026 at 06:19 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -1407,14 +1407,26 @@ CREATE TABLE `supplier_quotations` (
   `quotation_number` varchar(50) NOT NULL,
   `supplier_id` int(11) NOT NULL,
   `supplier_reference` varchar(100) DEFAULT NULL,
+  `procurement_reference` varchar(100) DEFAULT NULL,
   `quotation_date` date NOT NULL,
   `valid_until` date DEFAULT NULL,
+  `required_delivery_date` date DEFAULT NULL,
+  `promised_delivery_date` date DEFAULT NULL,
   `status` enum('DRAFT','ACCEPTED','CANCELLED') NOT NULL DEFAULT 'DRAFT',
+  `purchase_order_id` int(11) DEFAULT NULL,
   `notes` text DEFAULT NULL,
+  `evaluation_notes` text DEFAULT NULL,
   `attachment` varchar(255) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `supplier_quotations`
+--
+
+INSERT INTO `supplier_quotations` (`id`, `quotation_number`, `supplier_id`, `supplier_reference`, `procurement_reference`, `quotation_date`, `valid_until`, `required_delivery_date`, `promised_delivery_date`, `status`, `purchase_order_id`, `notes`, `evaluation_notes`, `attachment`, `created_by`, `created_at`) VALUES
+(1, 'SQ-260831091902', 4, '9182026', NULL, '2026-08-31', '2026-09-30', NULL, NULL, 'DRAFT', NULL, '', NULL, NULL, 1, '2026-08-31 07:19:02');
 
 -- --------------------------------------------------------
 
@@ -1432,9 +1444,19 @@ CREATE TABLE `supplier_quotation_items` (
   `quantity` decimal(15,2) NOT NULL DEFAULT 0.00,
   `unit_price` decimal(15,2) NOT NULL DEFAULT 0.00,
   `total_price` decimal(15,2) GENERATED ALWAYS AS (`quantity` * `unit_price`) STORED,
+  `quality_status` enum('MEETS','PARTIAL','DOES_NOT_MEET') DEFAULT NULL,
+  `quality_notes` text DEFAULT NULL,
   `notes` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `supplier_quotation_items`
+--
+
+INSERT INTO `supplier_quotation_items` (`id`, `supplier_quotation_id`, `inventory_id`, `description`, `specification`, `unit_id`, `quantity`, `unit_price`, `quality_status`, `quality_notes`, `notes`, `created_at`) VALUES
+(1, 1, 7, 'Socket 13A UK', 'Socket 13A UK, Box of 10 Pieces', 2, 100.00, 22.50, NULL, NULL, 'Socket 13A UK, Box of 10 Pieces', '2026-08-31 07:28:03'),
+(2, 1, 8, 'wall Swich 1 gang UK box of 10 Pieces', 'wall Swich 1 gang UK box of 10 Pieces', 2, 200.00, 15.50, NULL, NULL, 'wall Swich 1 gang UK box of 10 Pieces', '2026-08-31 07:29:53');
 
 -- --------------------------------------------------------
 
@@ -1948,7 +1970,9 @@ ALTER TABLE `supplier_quotations`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `uq_supplier_quotation_number` (`quotation_number`),
   ADD KEY `idx_supplier_id` (`supplier_id`),
-  ADD KEY `idx_created_by` (`created_by`);
+  ADD KEY `idx_created_by` (`created_by`),
+  ADD KEY `idx_procurement_reference` (`procurement_reference`),
+  ADD KEY `idx_purchase_order_id` (`purchase_order_id`);
 
 --
 -- Indexes for table `supplier_quotation_items`
@@ -2269,13 +2293,13 @@ ALTER TABLE `supplier_payment_allocations`
 -- AUTO_INCREMENT for table `supplier_quotations`
 --
 ALTER TABLE `supplier_quotations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `supplier_quotation_items`
 --
 ALTER TABLE `supplier_quotation_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `technicians`
@@ -2565,6 +2589,7 @@ ALTER TABLE `supplier_payment_allocations`
 -- Constraints for table `supplier_quotations`
 --
 ALTER TABLE `supplier_quotations`
+  ADD CONSTRAINT `fk_supplier_quotations_purchase_order` FOREIGN KEY (`purchase_order_id`) REFERENCES `purchase_orders` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `fk_supplier_quotations_supplier` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`),
   ADD CONSTRAINT `fk_supplier_quotations_user` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`);
 
