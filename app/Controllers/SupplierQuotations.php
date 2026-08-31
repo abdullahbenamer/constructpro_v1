@@ -542,185 +542,185 @@ class SupplierQuotations extends Controller
 |--------------------------------------------------------------------------
 */
 
-public function compare($reference)
-{
-    AuthHelper::can('purchase_orders.view');
+    public function compare($reference)
+    {
+        AuthHelper::can('purchase_orders.view');
 
-    $model =
-        $this->model('SupplierQuotation');
+        $model =
+            $this->model('SupplierQuotation');
 
-    $reference =
-        trim($reference);
+        $reference =
+            trim($reference);
 
-    if ($reference === '') {
+        if ($reference === '') {
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/supplierquotations'
-        );
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/supplierquotations'
+            );
 
-        exit;
-    }
+            exit;
+        }
 
-    $quotations =
-        $model->getByProcurementReference(
-            $reference
-        );
+        $quotations =
+            $model->getByProcurementReference(
+                $reference
+            );
 
-    if (empty($quotations)) {
+        if (empty($quotations)) {
 
-        FlashHelper::error(
-            'No quotations found for this procurement reference.'
-        );
+            FlashHelper::error(
+                'No quotations found for this procurement reference.'
+            );
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/supplierquotations'
-        );
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/supplierquotations'
+            );
 
-        exit;
-    }
+            exit;
+        }
 
-    $comparison = [];
+        $comparison = [];
 
-    foreach ($quotations as $quotation) {
+        foreach ($quotations as $quotation) {
 
-        $comparison[] = [
+            $comparison[] = [
 
-            'quotation' =>
+                'quotation' =>
                 $quotation,
 
-            'items' =>
+                'items' =>
                 $model->getComparisonItems(
                     $quotation->id
                 )
-        ];
+            ];
+        }
+
+        $data['procurement_reference'] =
+            $reference;
+
+        $data['comparison'] =
+            $comparison;
+
+        $this->view(
+            'supplier-quotations/compare',
+            $data
+        );
     }
 
-    $data['procurement_reference'] =
-        $reference;
-
-    $data['comparison'] =
-        $comparison;
-
-    $this->view(
-        'supplier-quotations/compare',
-        $data
-    );
-}
-
-/*
+    /*
 |--------------------------------------------------------------------------
 | CREATE PURCHASE ORDER FROM ACCEPTED QUOTATION
 |--------------------------------------------------------------------------
 */
 
-public function createPO($id)
-{
-    AuthHelper::can('purchase_orders.create');
+    public function createPO($id)
+    {
+        AuthHelper::can('purchase_orders.create');
 
-    $quotationModel =
-        $this->model('SupplierQuotation');
+        $quotationModel =
+            $this->model('SupplierQuotation');
 
-    $poModel =
-        $this->model('PurchaseOrder');
+        $poModel =
+            $this->model('PurchaseOrder');
 
-    $itemModel =
-        $this->model('PurchaseOrderItem');
+        $itemModel =
+            $this->model('PurchaseOrderItem');
 
-    $quotation =
-        $quotationModel->getById($id);
+        $quotation =
+            $quotationModel->getById($id);
 
-    if (!$quotation) {
+        if (!$quotation) {
 
-        FlashHelper::error(
-            'Quotation not found.'
-        );
+            FlashHelper::error(
+                'Quotation not found.'
+            );
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/supplierquotations'
-        );
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/supplierquotations'
+            );
 
-        exit;
-    }
+            exit;
+        }
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | MUST BE ACCEPTED
     |--------------------------------------------------------------------------
     */
 
-    if ($quotation->status !== 'ACCEPTED') {
+        if ($quotation->status !== 'ACCEPTED') {
 
-        FlashHelper::error(
-            'Only accepted quotations can be converted to a Purchase Order.'
-        );
+            FlashHelper::error(
+                'Only accepted quotations can be converted to a Purchase Order.'
+            );
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/supplierquotations/details/' .
-            $id
-        );
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/supplierquotations/details/' .
+                    $id
+            );
 
-        exit;
-    }
+            exit;
+        }
 
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | CHECK IF PO ALREADY EXISTS
     |--------------------------------------------------------------------------
     */
 
-    if (!empty($quotation->purchase_order_id)) {
+        if (!empty($quotation->purchase_order_id)) {
 
-        FlashHelper::error(
-            'A Purchase Order has already been created from this quotation.'
-        );
+            FlashHelper::error(
+                'A Purchase Order has already been created from this quotation.'
+            );
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/supplierquotations/details/' .
-            $id
-        );
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/supplierquotations/details/' .
+                    $id
+            );
 
-        exit;
-    }
+            exit;
+        }
 
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | GET QUOTATION ITEMS
     |--------------------------------------------------------------------------
     */
 
-    $items =
-        $quotationModel->getItems($id);
+        $items =
+            $quotationModel->getItems($id);
 
-    if (empty($items)) {
+        if (empty($items)) {
 
-        FlashHelper::error(
-            'Quotation contains no items.'
-        );
+            FlashHelper::error(
+                'Quotation contains no items.'
+            );
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/supplierquotations/details/' .
-            $id
-        );
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/supplierquotations/details/' .
+                    $id
+            );
 
-        exit;
-    }
+            exit;
+        }
 
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | EVERY ITEM MUST EXIST IN INVENTORY
     |--------------------------------------------------------------------------
@@ -731,147 +731,147 @@ public function createPO($id)
     |
     */
 
-    foreach ($items as $item) {
+        foreach ($items as $item) {
 
-        if (empty($item->inventory_id)) {
+            if (empty($item->inventory_id)) {
 
-            FlashHelper::error(
-                'Quotation contains an item that is not yet linked to Inventory. Please add it to Inventory first.'
-            );
+                FlashHelper::error(
+                    'Quotation contains an item that is not yet linked to Inventory. Please add it to Inventory first.'
+                );
 
-            header(
-                'Location: ' .
-                URLROOT .
-                '/supplierquotations/details/' .
-                $id
-            );
+                header(
+                    'Location: ' .
+                        URLROOT .
+                        '/supplierquotations/details/' .
+                        $id
+                );
 
-            exit;
+                exit;
+            }
         }
-    }
 
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | CREATE PO HEADER
     |--------------------------------------------------------------------------
     */
 
-    try {
+        try {
 
-        $poNumber =
-            'PO-' . date('ymdHis');
+            $poNumber =
+                'PO-' . date('ymdHis');
 
-        $poId =
-            $poModel->create([
+            $poId =
+                $poModel->create([
 
-                'po_number' =>
+                    'po_number' =>
                     $poNumber,
 
-                'supplier_id' =>
+                    'supplier_id' =>
                     $quotation->supplier_id,
 
-                'order_date' =>
+                    'order_date' =>
                     date('Y-m-d'),
 
-                'expected_date' =>
-                    $quotation->promised_delivery_date,
+                    'expected_date' =>
+                    !empty($quotation->promised_delivery_date)
+                        ? $quotation->promised_delivery_date
+                        : $quotation->required_delivery_date,
 
-                'notes' =>
+                    'notes' =>
                     'Created from Supplier Quotation ' .
-                    $quotation->quotation_number
+                        $quotation->quotation_number
 
-            ]);
+                ]);
 
 
-        /*
+            /*
         |--------------------------------------------------------------------------
         | COPY ITEMS
         |--------------------------------------------------------------------------
         */
 
-        foreach ($items as $item) {
+            foreach ($items as $item) {
 
-            $quantity =
-                (float)$item->quantity;
+                $quantity =
+                    (float)$item->quantity;
 
-            $unitPrice =
-                (float)$item->unit_price;
+                $unitPrice =
+                    (float)$item->unit_price;
 
-            $total =
-                $quantity * $unitPrice;
+                $total =
+                    $quantity * $unitPrice;
 
-            $itemModel->create([
+                $itemModel->create([
 
-                'purchase_order_id' =>
+                    'purchase_order_id' =>
                     $poId,
 
-                'inventory_id' =>
+                    'inventory_id' =>
                     $item->inventory_id,
 
-                'quantity' =>
+                    'quantity' =>
                     $quantity,
 
-                'unit_cost' =>
+                    'unit_cost' =>
                     $unitPrice,
 
-                'total_cost' =>
+                    'total_cost' =>
                     $total
 
-            ]);
-        }
+                ]);
+            }
 
 
-        /*
+            /*
         |--------------------------------------------------------------------------
         | UPDATE PO TOTAL
         |--------------------------------------------------------------------------
         */
 
-        $poModel->updateTotals($poId);
+            $poModel->updateTotals($poId);
 
 
-        /*
+            /*
         |--------------------------------------------------------------------------
         | LINK QUOTATION TO CREATED PO
         |--------------------------------------------------------------------------
         */
 
-        $quotationModel->setPurchaseOrderId(
-            $id,
-            $poId
-        );
+            $quotationModel->setPurchaseOrderId(
+                $id,
+                $poId
+            );
 
 
-        FlashHelper::success(
-            'Purchase Order created successfully from quotation.'
-        );
+            FlashHelper::success(
+                'Purchase Order created successfully from quotation.'
+            );
 
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/purchaseorders/details/' .
-            $poId
-        );
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/purchaseorders/details/' .
+                    $poId
+            );
 
-        exit;
+            exit;
+        } catch (Throwable $e) {
 
-    } catch (Throwable $e) {
+            FlashHelper::error(
+                $e->getMessage()
+            );
 
-        FlashHelper::error(
-            $e->getMessage()
-        );
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/supplierquotations/details/' .
+                    $id
+            );
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/supplierquotations/details/' .
-            $id
-        );
-
-        exit;
+            exit;
+        }
     }
-}
-
 }
