@@ -49,9 +49,7 @@ class SupplierQuotations extends Controller
                     );
                 }
 
-                if (
-                    empty($_POST['quotation_date'])
-                ) {
+                if (empty($_POST['quotation_date'])) {
                     throw new Exception(
                         'Quotation date is required.'
                     );
@@ -60,38 +58,59 @@ class SupplierQuotations extends Controller
                 $id = $model->create([
 
                     'quotation_number' =>
-                        $model->nextNumber(),
+                    $model->nextNumber(),
 
                     'supplier_id' =>
-                        $supplierId,
+                    $supplierId,
 
                     'supplier_reference' =>
-                        trim(
-                            $_POST['supplier_reference'] ?? ''
-                        ),
+                    trim(
+                        $_POST['supplier_reference'] ?? ''
+                    ),
+
+                    'procurement_reference' =>
+                    trim(
+                        $_POST['procurement_reference'] ?? ''
+                    ),
 
                     'quotation_date' =>
-                        $_POST['quotation_date'],
+                    $_POST['quotation_date'],
 
                     'valid_until' =>
-                        $_POST['valid_until'] ?? null,
+                    !empty($_POST['valid_until'])
+                        ? $_POST['valid_until']
+                        : null,
+
+                    'required_delivery_date' =>
+                    !empty($_POST['required_delivery_date'])
+                        ? $_POST['required_delivery_date']
+                        : null,
+
+                    'promised_delivery_date' =>
+                    !empty($_POST['promised_delivery_date'])
+                        ? $_POST['promised_delivery_date']
+                        : null,
 
                     'notes' =>
-                        trim(
-                            $_POST['notes'] ?? ''
-                        )
+                    trim(
+                        $_POST['notes'] ?? ''
+                    ),
+
+                    'evaluation_notes' =>
+                    trim(
+                        $_POST['evaluation_notes'] ?? ''
+                    )
 
                 ]);
 
                 header(
                     'Location: ' .
-                    URLROOT .
-                    '/supplierquotations/details/' .
-                    $id
+                        URLROOT .
+                        '/supplierquotations/details/' .
+                        $id
                 );
 
                 exit;
-
             } catch (Throwable $e) {
 
                 FlashHelper::error(
@@ -100,8 +119,8 @@ class SupplierQuotations extends Controller
 
                 header(
                     'Location: ' .
-                    URLROOT .
-                    '/supplierquotations/create'
+                        URLROOT .
+                        '/supplierquotations/create'
                 );
 
                 exit;
@@ -124,50 +143,50 @@ class SupplierQuotations extends Controller
     |--------------------------------------------------------------------------
     */
 
-public function details($id)
-{
-    AuthHelper::can('purchase_orders.view');
+    public function details($id)
+    {
+        AuthHelper::can('purchase_orders.view');
 
-    $model =
-        $this->model('SupplierQuotation');
+        $model =
+            $this->model('SupplierQuotation');
 
-    $quotation =
-        $model->getById($id);
+        $quotation =
+            $model->getById($id);
 
-    if (!$quotation) {
+        if (!$quotation) {
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/supplierquotations'
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/supplierquotations'
+            );
+
+            exit;
+        }
+
+        $inventoryModel =
+            $this->model('Inventory');
+
+        $unitModel =
+            $this->model('Unit');
+
+        $data['quotation'] =
+            $quotation;
+
+        $data['items'] =
+            $model->getItems($id);
+
+        $data['inventory'] =
+            $inventoryModel->getAll();
+
+        $data['units'] =
+            $unitModel->getAll();
+
+        $this->view(
+            'supplier-quotations/details',
+            $data
         );
-
-        exit;
     }
-
-    $inventoryModel =
-        $this->model('Inventory');
-
-    $unitModel =
-        $this->model('Unit');
-
-    $data['quotation'] =
-        $quotation;
-
-    $data['items'] =
-        $model->getItems($id);
-
-    $data['inventory'] =
-        $inventoryModel->getAll();
-
-    $data['units'] =
-        $unitModel->getAll();
-
-    $this->view(
-        'supplier-quotations/details',
-        $data
-    );
-}
 
 
     /*
@@ -184,9 +203,9 @@ public function details($id)
 
             header(
                 'Location: ' .
-                URLROOT .
-                '/supplierquotations/details/' .
-                $quotation_id
+                    URLROOT .
+                    '/supplierquotations/details/' .
+                    $quotation_id
             );
 
             exit;
@@ -203,9 +222,9 @@ public function details($id)
 
             header(
                 'Location: ' .
-                URLROOT .
-                '/supplierquotations/details/' .
-                $quotation_id
+                    URLROOT .
+                    '/supplierquotations/details/' .
+                    $quotation_id
             );
 
             exit;
@@ -241,46 +260,75 @@ public function details($id)
                     'Unit price cannot be negative.'
                 );
             }
+            $qualityStatus =
+                $_POST['quality_status'] ?? '';
+
+            if (
+                $qualityStatus !== ''
+                &&
+                !in_array(
+                    $qualityStatus,
+                    ['MEETS', 'PARTIAL', 'DOES_NOT_MEET'],
+                    true
+                )
+            ) {
+                throw new Exception(
+                    'Invalid quality status.'
+                );
+            }
 
             $model->addItem([
 
                 'supplier_quotation_id' =>
-                    $quotation_id,
+                $quotation_id,
 
                 'inventory_id' =>
-                    !empty($_POST['inventory_id'])
+                !empty($_POST['inventory_id'])
                     ? (int)$_POST['inventory_id']
                     : null,
 
                 'description' =>
-                    $description,
+                $description,
 
                 'specification' =>
-                    trim(
-                        $_POST['specification'] ?? ''
-                    ),
+                trim(
+                    $_POST['specification'] ?? ''
+                ),
 
                 'unit_id' =>
-                    !empty($_POST['unit_id'])
+                !empty($_POST['unit_id'])
                     ? (int)$_POST['unit_id']
                     : null,
 
                 'quantity' =>
-                    $quantity,
+                $quantity,
 
                 'unit_price' =>
-                    $unitPrice,
+                $unitPrice,
+
+                // 'quality_status' =>
+                // !empty($_POST['quality_status'])
+                //     ? $_POST['quality_status']
+                //     : null,
+
+                // use $qualityStatus rather than reading $_POST directly
+                'quality_status' =>
+                $qualityStatus ?: null,
+
+                'quality_notes' =>
+                trim(
+                    $_POST['quality_notes'] ?? ''
+                ),
 
                 'notes' =>
-                    trim(
-                        $_POST['item_notes'] ?? ''
-                    )
+                trim(
+                    $_POST['item_notes'] ?? ''
+                )
             ]);
 
             FlashHelper::success(
                 'Quotation item added successfully.'
             );
-
         } catch (Throwable $e) {
 
             FlashHelper::error(
@@ -290,9 +338,9 @@ public function details($id)
 
         header(
             'Location: ' .
-            URLROOT .
-            '/supplierquotations/details/' .
-            $quotation_id
+                URLROOT .
+                '/supplierquotations/details/' .
+                $quotation_id
         );
 
         exit;
@@ -319,8 +367,8 @@ public function details($id)
 
             header(
                 'Location: ' .
-                URLROOT .
-                '/supplierquotations'
+                    URLROOT .
+                    '/supplierquotations'
             );
 
             exit;
@@ -338,9 +386,9 @@ public function details($id)
 
             header(
                 'Location: ' .
-                URLROOT .
-                '/supplierquotations/details/' .
-                $item->supplier_quotation_id
+                    URLROOT .
+                    '/supplierquotations/details/' .
+                    $item->supplier_quotation_id
             );
 
             exit;
@@ -350,9 +398,9 @@ public function details($id)
 
         header(
             'Location: ' .
-            URLROOT .
-            '/supplierquotations/details/' .
-            $item->supplier_quotation_id
+                URLROOT .
+                '/supplierquotations/details/' .
+                $item->supplier_quotation_id
         );
 
         exit;
@@ -383,8 +431,8 @@ public function details($id)
 
             header(
                 'Location: ' .
-                URLROOT .
-                '/supplierquotations'
+                    URLROOT .
+                    '/supplierquotations'
             );
 
             exit;
@@ -398,9 +446,9 @@ public function details($id)
 
             header(
                 'Location: ' .
-                URLROOT .
-                '/supplierquotations/details/' .
-                $id
+                    URLROOT .
+                    '/supplierquotations/details/' .
+                    $id
             );
 
             exit;
@@ -417,9 +465,9 @@ public function details($id)
 
             header(
                 'Location: ' .
-                URLROOT .
-                '/supplierquotations/details/' .
-                $id
+                    URLROOT .
+                    '/supplierquotations/details/' .
+                    $id
             );
 
             exit;
@@ -433,9 +481,9 @@ public function details($id)
 
         header(
             'Location: ' .
-            URLROOT .
-            '/supplierquotations/details/' .
-            $id
+                URLROOT .
+                '/supplierquotations/details/' .
+                $id
         );
 
         exit;
@@ -466,8 +514,8 @@ public function details($id)
 
             header(
                 'Location: ' .
-                URLROOT .
-                '/supplierquotations'
+                    URLROOT .
+                    '/supplierquotations'
             );
 
             exit;
@@ -481,10 +529,349 @@ public function details($id)
 
         header(
             'Location: ' .
+                URLROOT .
+                '/supplierquotations'
+        );
+
+        exit;
+    }
+
+    /*
+|--------------------------------------------------------------------------
+| COMPARE QUOTATIONS
+|--------------------------------------------------------------------------
+*/
+
+public function compare($reference)
+{
+    AuthHelper::can('purchase_orders.view');
+
+    $model =
+        $this->model('SupplierQuotation');
+
+    $reference =
+        trim($reference);
+
+    if ($reference === '') {
+
+        header(
+            'Location: ' .
             URLROOT .
             '/supplierquotations'
         );
 
         exit;
     }
+
+    $quotations =
+        $model->getByProcurementReference(
+            $reference
+        );
+
+    if (empty($quotations)) {
+
+        FlashHelper::error(
+            'No quotations found for this procurement reference.'
+        );
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/supplierquotations'
+        );
+
+        exit;
+    }
+
+    $comparison = [];
+
+    foreach ($quotations as $quotation) {
+
+        $comparison[] = [
+
+            'quotation' =>
+                $quotation,
+
+            'items' =>
+                $model->getComparisonItems(
+                    $quotation->id
+                )
+        ];
+    }
+
+    $data['procurement_reference'] =
+        $reference;
+
+    $data['comparison'] =
+        $comparison;
+
+    $this->view(
+        'supplier-quotations/compare',
+        $data
+    );
+}
+
+/*
+|--------------------------------------------------------------------------
+| CREATE PURCHASE ORDER FROM ACCEPTED QUOTATION
+|--------------------------------------------------------------------------
+*/
+
+public function createPO($id)
+{
+    AuthHelper::can('purchase_orders.create');
+
+    $quotationModel =
+        $this->model('SupplierQuotation');
+
+    $poModel =
+        $this->model('PurchaseOrder');
+
+    $itemModel =
+        $this->model('PurchaseOrderItem');
+
+    $quotation =
+        $quotationModel->getById($id);
+
+    if (!$quotation) {
+
+        FlashHelper::error(
+            'Quotation not found.'
+        );
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/supplierquotations'
+        );
+
+        exit;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | MUST BE ACCEPTED
+    |--------------------------------------------------------------------------
+    */
+
+    if ($quotation->status !== 'ACCEPTED') {
+
+        FlashHelper::error(
+            'Only accepted quotations can be converted to a Purchase Order.'
+        );
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/supplierquotations/details/' .
+            $id
+        );
+
+        exit;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | CHECK IF PO ALREADY EXISTS
+    |--------------------------------------------------------------------------
+    */
+
+    if (!empty($quotation->purchase_order_id)) {
+
+        FlashHelper::error(
+            'A Purchase Order has already been created from this quotation.'
+        );
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/supplierquotations/details/' .
+            $id
+        );
+
+        exit;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | GET QUOTATION ITEMS
+    |--------------------------------------------------------------------------
+    */
+
+    $items =
+        $quotationModel->getItems($id);
+
+    if (empty($items)) {
+
+        FlashHelper::error(
+            'Quotation contains no items.'
+        );
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/supplierquotations/details/' .
+            $id
+        );
+
+        exit;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | EVERY ITEM MUST EXIST IN INVENTORY
+    |--------------------------------------------------------------------------
+    |
+    | Existing PO items require inventory_id.
+    | Therefore a quotation item marked as "New Item"
+    | cannot yet be copied to a PO.
+    |
+    */
+
+    foreach ($items as $item) {
+
+        if (empty($item->inventory_id)) {
+
+            FlashHelper::error(
+                'Quotation contains an item that is not yet linked to Inventory. Please add it to Inventory first.'
+            );
+
+            header(
+                'Location: ' .
+                URLROOT .
+                '/supplierquotations/details/' .
+                $id
+            );
+
+            exit;
+        }
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | CREATE PO HEADER
+    |--------------------------------------------------------------------------
+    */
+
+    try {
+
+        $poNumber =
+            'PO-' . date('ymdHis');
+
+        $poId =
+            $poModel->create([
+
+                'po_number' =>
+                    $poNumber,
+
+                'supplier_id' =>
+                    $quotation->supplier_id,
+
+                'order_date' =>
+                    date('Y-m-d'),
+
+                'expected_date' =>
+                    $quotation->promised_delivery_date,
+
+                'notes' =>
+                    'Created from Supplier Quotation ' .
+                    $quotation->quotation_number
+
+            ]);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | COPY ITEMS
+        |--------------------------------------------------------------------------
+        */
+
+        foreach ($items as $item) {
+
+            $quantity =
+                (float)$item->quantity;
+
+            $unitPrice =
+                (float)$item->unit_price;
+
+            $total =
+                $quantity * $unitPrice;
+
+            $itemModel->create([
+
+                'purchase_order_id' =>
+                    $poId,
+
+                'inventory_id' =>
+                    $item->inventory_id,
+
+                'quantity' =>
+                    $quantity,
+
+                'unit_cost' =>
+                    $unitPrice,
+
+                'total_cost' =>
+                    $total
+
+            ]);
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | UPDATE PO TOTAL
+        |--------------------------------------------------------------------------
+        */
+
+        $poModel->updateTotals($poId);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | LINK QUOTATION TO CREATED PO
+        |--------------------------------------------------------------------------
+        */
+
+        $quotationModel->setPurchaseOrderId(
+            $id,
+            $poId
+        );
+
+
+        FlashHelper::success(
+            'Purchase Order created successfully from quotation.'
+        );
+
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/purchaseorders/details/' .
+            $poId
+        );
+
+        exit;
+
+    } catch (Throwable $e) {
+
+        FlashHelper::error(
+            $e->getMessage()
+        );
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/supplierquotations/details/' .
+            $id
+        );
+
+        exit;
+    }
+}
+
 }

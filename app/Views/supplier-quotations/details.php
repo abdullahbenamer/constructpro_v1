@@ -1,5 +1,5 @@
 <h2>
-    Supplier Quotation
+     <i class="fas fa-file-invoice-dollar"></i> Supplier Quotation
 </h2>
 
 
@@ -31,6 +31,27 @@
                         $quotation->supplier_reference ?? '-'
                     ) ?>
                 </p>
+
+                <p>
+    <strong>Procurement Reference:</strong>
+    <?= htmlspecialchars(
+        $quotation->procurement_reference ?? '-'
+    ) ?>
+</p>
+
+<p>
+    <strong>Required Delivery:</strong>
+    <?= htmlspecialchars(
+        $quotation->required_delivery_date ?? '-'
+    ) ?>
+</p>
+
+<p>
+    <strong>Supplier Promised Delivery:</strong>
+    <?= htmlspecialchars(
+        $quotation->promised_delivery_date ?? '-'
+    ) ?>
+</p>
 
             </div>
 
@@ -75,9 +96,13 @@
 
                 </p>
 
+                
+
             </div>
 
         </div>
+
+
 
         <?php if (!empty($quotation->notes)): ?>
 
@@ -90,6 +115,23 @@
             ) ?>
 
         <?php endif; ?>
+        
+        <?php if (!empty($quotation->evaluation_notes)): ?>
+
+    <hr>
+
+    <strong>
+        Procurement / Evaluation Notes:
+    </strong>
+    <br>
+
+    <?= nl2br(
+        htmlspecialchars(
+            $quotation->evaluation_notes
+        )
+    ) ?>
+
+<?php endif; ?>
 
     </div>
 
@@ -242,6 +284,52 @@
 
                 </div>
 
+<div class="row">
+
+    <div class="col-md-4 mb-3">
+
+        <label class="form-label">
+            Quality / Specification Assessment
+        </label>
+
+        <select name="quality_status"
+                class="form-select">
+
+            <option value="">
+                -- Not Evaluated --
+            </option>
+
+            <option value="MEETS">
+                Meets Specification
+            </option>
+
+            <option value="PARTIAL">
+                Partially Meets
+            </option>
+
+            <option value="DOES_NOT_MEET">
+                Does Not Meet
+            </option>
+
+        </select>
+
+    </div>
+
+    <div class="col-md-8 mb-3">
+
+        <label class="form-label">
+            Quality / Evaluation Notes
+        </label>
+
+        <input type="text"
+               name="quality_notes"
+               class="form-control"
+               placeholder="Technical remarks, manufacturer/model confirmation, deviations, etc.">
+
+    </div>
+
+</div>
+
                 <div class="col-md-6 mb-3">
 
                     <label class="form-label">
@@ -288,6 +376,7 @@
             <th>Specification</th>
             <th>UOM</th>
             <th>Qty</th>
+            <th>Quality</th>
             <th>Unit Price</th>
             <th>Total</th>
 
@@ -365,6 +454,48 @@
                             2
                         ) ?>
                     </td>
+
+                    <td>
+
+    <?php if ($item->quality_status === 'MEETS'): ?>
+
+        <span class="badge bg-success">
+            MEETS
+        </span>
+
+    <?php elseif ($item->quality_status === 'PARTIAL'): ?>
+
+        <span class="badge bg-warning text-dark">
+            PARTIAL
+        </span>
+
+    <?php elseif ($item->quality_status === 'DOES_NOT_MEET'): ?>
+
+        <span class="badge bg-danger">
+            DOES NOT MEET
+        </span>
+
+    <?php else: ?>
+
+        <span class="text-muted">
+            Not Evaluated
+        </span>
+
+    <?php endif; ?>
+
+    <?php if (!empty($item->quality_notes)): ?>
+
+        <div class="small text-muted mt-1">
+
+            <?= htmlspecialchars(
+                $item->quality_notes
+            ) ?>
+
+        </div>
+
+    <?php endif; ?>
+
+</td>
 
                     <td>
                         <?= number_format(
@@ -473,14 +604,37 @@
 
         </a>
 
-    <?php elseif ($quotation->status === 'ACCEPTED'): ?>
+   <?php elseif ($quotation->status === 'ACCEPTED'): ?>
 
-        <!-- PO action will be added after the quotation module is tested -->
+    <span class="badge bg-success fs-6">
+        ACCEPTED
+    </span>
 
-        <span class="badge bg-success fs-6">
-            ACCEPTED
-        </span>
+    <?php if (empty($quotation->purchase_order_id)): ?>
+
+        <a
+            href="<?= URLROOT ?>/supplierquotations/createPO/<?= $quotation->id ?>"
+            class="btn btn-primary ms-2"
+            onclick="return confirm('Create a Purchase Order from this accepted quotation?')">
+
+            <i class="fas fa-file-invoice"></i>
+            Create PO
+
+        </a>
+
+    <?php else: ?>
+
+        <a
+            href="<?= URLROOT ?>/purchaseorders/details/<?= $quotation->purchase_order_id ?>"
+            class="btn btn-info ms-2">
+
+            <i class="fas fa-file-invoice"></i>
+            View PO
+
+        </a>
 
     <?php endif; ?>
+
+<?php endif; ?>
 
 </div>

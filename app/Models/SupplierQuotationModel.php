@@ -150,35 +150,39 @@ class SupplierQuotationModel extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function addItem(array $data)
-    {
-        return $this->db->query(
-            "
-            INSERT INTO supplier_quotation_items
-            (
-                supplier_quotation_id,
-                inventory_id,
-                description,
-                specification,
-                unit_id,
-                quantity,
-                unit_price,
-                notes
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ",
-            [
-                $data['supplier_quotation_id'],
-                $data['inventory_id'] ?? null,
-                $data['description'],
-                $data['specification'] ?? null,
-                $data['unit_id'] ?? null,
-                $data['quantity'],
-                $data['unit_price'],
-                $data['notes'] ?? null
-            ]
-        );
-    }
+ public function addItem(array $data)
+{
+    return $this->db->query(
+        "
+        INSERT INTO supplier_quotation_items
+        (
+            supplier_quotation_id,
+            inventory_id,
+            description,
+            specification,
+            unit_id,
+            quantity,
+            unit_price,
+            quality_status,
+            quality_notes,
+            notes
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ",
+        [
+            $data['supplier_quotation_id'],
+            $data['inventory_id'] ?? null,
+            $data['description'],
+            $data['specification'] ?? null,
+            $data['unit_id'] ?? null,
+            $data['quantity'],
+            $data['unit_price'],
+            $data['quality_status'] ?? null,
+            $data['quality_notes'] ?? null,
+            $data['notes'] ?? null
+        ]
+    );
+}
 
 
     /*
@@ -291,4 +295,113 @@ class SupplierQuotationModel extends Model
     {
         return 'SQ-' . date('ymdHis');
     }
+
+
+    /*
+|--------------------------------------------------------------------------
+| GET QUOTATIONS FOR COMPARISON
+|--------------------------------------------------------------------------
+*/
+
+public function getByProcurementReference($reference)
+{
+    return $this->db->query(
+        "
+        SELECT
+            q.*,
+            s.company_name AS supplier_name
+
+        FROM supplier_quotations q
+
+        JOIN suppliers s
+            ON s.id = q.supplier_id
+
+        WHERE q.procurement_reference = ?
+
+        ORDER BY q.created_at ASC
+        ",
+        [$reference]
+    )->fetchAll();
+}
+
+/*
+|--------------------------------------------------------------------------
+| GET COMPARISON ITEMS
+|--------------------------------------------------------------------------
+*/
+
+public function getComparisonItems($quotation_id)
+{
+    return $this->db->query(
+        "
+        SELECT
+            qi.*,
+
+            i.name AS inventory_name,
+            i.sku,
+
+            u.unit_code,
+            u.unit_name
+
+        FROM supplier_quotation_items qi
+
+        LEFT JOIN inventory i
+            ON i.id = qi.inventory_id
+
+        LEFT JOIN units u
+            ON u.id = qi.unit_id
+
+        WHERE qi.supplier_quotation_id = ?
+
+        ORDER BY qi.id ASC
+        ",
+        [$quotation_id]
+    )->fetchAll();
+}
+
+/*
+|--------------------------------------------------------------------------
+| MARK AS CONVERTED TO PO
+|--------------------------------------------------------------------------
+*/
+
+public function setPurchaseOrderId($quotation_id, $purchase_order_id)
+{
+    return $this->db->query(
+        "
+        UPDATE supplier_quotations
+
+        SET purchase_order_id = ?
+
+        WHERE id = ?
+        AND status = 'ACCEPTED'
+        ",
+        [
+            $purchase_order_id,
+            $quotation_id
+        ]
+    );
+}
+
+/*
+|--------------------------------------------------------------------------
+| CHECK IF PO ALREADY CREATED
+|--------------------------------------------------------------------------
+*/
+
+public function getPurchaseOrderId($quotation_id)
+{
+    $row = $this->db->query(
+        "
+        SELECT purchase_order_id
+        FROM supplier_quotations
+        WHERE id = ?
+        ",
+        [$quotation_id]
+    )->fetch();
+
+    return $row
+        ? (int)($row->purchase_order_id ?? 0)
+        : 0;
+}
 }
