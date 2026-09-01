@@ -124,6 +124,26 @@
 
 <?php endif; ?>
 
+<!-- Print PO -->
+<?php if (
+    in_array(
+        $po->status,
+        ['approved', 'partial', 'received'],
+        true
+    )
+): ?>
+
+    <a
+        href="<?= URLROOT ?>/purchaseorders/print/<?= $po->id ?>"
+        class="btn btn-dark"
+        target="_blank">
+
+        <i class="fas fa-print"></i>
+        Print PO
+
+    </a>
+
+<?php endif; ?>
 </div>
 
 <h4>

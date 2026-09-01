@@ -73,39 +73,53 @@ class SupplierQuotationModel extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function create(array $data)
-    {
-        $this->db->query(
-            "
-            INSERT INTO supplier_quotations
-            (
-                quotation_number,
-                supplier_id,
-                supplier_reference,
-                quotation_date,
-                valid_until,
-                status,
-                notes,
-                attachment,
-                created_by
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ",
-            [
-                $data['quotation_number'],
-                $data['supplier_id'],
-                $data['supplier_reference'] ?? null,
-                $data['quotation_date'],
-                $data['valid_until'] ?? null,
-                $data['status'] ?? 'DRAFT',
-                $data['notes'] ?? null,
-                $data['attachment'] ?? null,
-                $_SESSION['user_id'] ?? null
-            ]
-        );
+ /*
+|--------------------------------------------------------------------------
+| CREATE
+|--------------------------------------------------------------------------
+*/
 
-        return (int)$this->db->lastInsertId();
-    }
+public function create(array $data)
+{
+    $this->db->query(
+        "
+        INSERT INTO supplier_quotations
+        (
+            quotation_number,
+            supplier_id,
+            supplier_reference,
+            procurement_reference,
+            quotation_date,
+            valid_until,
+            required_delivery_date,
+            promised_delivery_date,
+            status,
+            notes,
+            evaluation_notes,
+            attachment,
+            created_by
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ",
+        [
+            $data['quotation_number'],
+            $data['supplier_id'],
+            $data['supplier_reference'] ?? null,
+            $data['procurement_reference'] ?? null,
+            $data['quotation_date'],
+            $data['valid_until'] ?? null,
+            $data['required_delivery_date'] ?? null,
+            $data['promised_delivery_date'] ?? null,
+            $data['status'] ?? 'DRAFT',
+            $data['notes'] ?? null,
+            $data['evaluation_notes'] ?? null,
+            $data['attachment'] ?? null,
+            $_SESSION['user_id'] ?? null
+        ]
+    );
+
+    return (int)$this->db->lastInsertId();
+}
 
 
     /*

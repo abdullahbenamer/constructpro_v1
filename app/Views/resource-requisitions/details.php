@@ -371,6 +371,15 @@
 
         <?php endif; ?>
 
+        <a
+    href="<?= URLROOT ?>/requisitionpurchaseorders/create/<?= $data['requisition']->id ?>"
+    class="btn btn-primary">
+
+    <i class="fas fa-shopping-cart"></i>
+    Create PO for Materials
+
+</a>
+
 
         <?php if (!empty($data['hasResourceItems'])): ?>
 

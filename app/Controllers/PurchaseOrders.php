@@ -341,4 +341,70 @@ public function approve($id)
 
     exit;
 }
+
+/*
+|--------------------------------------------------------------------------
+| PRINT PURCHASE ORDER
+|--------------------------------------------------------------------------
+*/
+
+public function print($id)
+{
+    AuthHelper::can('purchase_orders.view');
+
+    $model = $this->model('PurchaseOrder');
+
+    $po = $model->getById((int)$id);
+
+    if (!$po) {
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/purchaseorders'
+        );
+
+        exit;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | ONLY APPROVED / RECEIVED POs SHOULD BE PRINTED AS OFFICIAL PO
+    |--------------------------------------------------------------------------
+    */
+
+    if (
+        !in_array(
+            $po->status,
+            ['approved', 'partial', 'received'],
+            true
+        )
+    ) {
+
+        $_SESSION['error'] =
+            'Only approved Purchase Orders can be printed.';
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/purchaseorders/details/' .
+            $id
+        );
+
+        exit;
+    }
+
+    $data['po'] =
+        $po;
+
+    $data['items'] =
+        $model->getItems((int)$id);
+
+    $this->view(
+        'purchase-orders/print',
+        $data,
+        False // preventing from loading web page Header and footer
+    );
+}
+
 }
