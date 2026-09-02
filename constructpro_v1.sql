@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 01, 2026 at 09:46 AM
+-- Generation Time: Sep 02, 2026 at 05:54 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,7 +41,7 @@ CREATE TABLE `brands` (
 
 INSERT INTO `brands` (`id`, `brand_name`, `country_id`, `website`, `created_at`) VALUES
 (1, 'Siemens', 1, 'www.siemens.com', '2026-06-06 20:58:24'),
-(2, 'TERASAKI', 2, 'www.terasaki.com', '2026-06-06 22:47:07'),
+(2, 'Terasaki', 2, 'www.terasaki.com', '2026-06-06 22:47:07'),
 (3, 'Southwire', 3, 'www.southwire.com', '2026-06-08 19:39:47'),
 (4, 'Coleman', 4, 'www.coleman.com', '2026-06-08 19:39:47'),
 (5, 'Schneider Electric', 9, 'www.se.com', '2026-06-14 22:00:00'),
@@ -73,7 +73,12 @@ INSERT INTO `brands` (`id`, `brand_name`, `country_id`, `website`, `created_at`)
 (31, 'Anchor by Panasonic', 8, 'www.panasonic.com', '2026-06-14 22:00:00'),
 (32, 'Schneider Electric Easy9', 9, 'www.se.com', '2026-06-14 22:00:00'),
 (33, 'ABB System pro M', 3, 'www.abb.com', '2026-06-14 22:00:00'),
-(34, 'ITTIHAD', 12, 'www.ittihad.ly', '2026-06-21 21:13:14');
+(34, 'ITTIHAD', 12, 'www.ittihad.ly', '2026-06-21 21:13:14'),
+(35, 'General', 12, 'sample.com', '2026-09-01 10:55:03'),
+(36, 'Local', 12, 'sample.com', '2026-09-01 10:55:03'),
+(37, 'Tunisia', 14, 'sample.com', '2026-09-01 10:57:02'),
+(38, 'Algerian', 13, 'sample.com', '2026-09-01 10:57:34'),
+(39, 'Egypt', 15, 'sample.com', '2026-09-01 10:58:03');
 
 -- --------------------------------------------------------
 
@@ -103,7 +108,10 @@ INSERT INTO `countries` (`id`, `country_name`, `country_code`) VALUES
 (9, 'FRANCE', 'FR'),
 (10, 'INDIA', 'IN'),
 (11, 'MALAYASIA', 'MY'),
-(12, 'LIBYA', 'LY');
+(12, 'LIBYA', 'LY'),
+(13, 'Algeria', 'DZ'),
+(14, 'Tunisia', 'TN'),
+(15, 'Egypt', 'EG');
 
 -- --------------------------------------------------------
 
@@ -235,19 +243,82 @@ CREATE TABLE `inventory` (
 --
 
 INSERT INTO `inventory` (`id`, `name`, `category`, `sku`, `quantity`, `location_id`, `min_stock`, `cost_price`, `base_unit`, `allow_fraction`, `sale_unit`, `units_per_sale`, `price_per_base`, `price_per_sale`, `brand_id`, `country_id`) VALUES
-(1, 'MCB 1P 16A', 'MCB', 'MCB-1P-16A-SCH', 940.00, NULL, 20, 1.20, 'unit', 0, 'piece', 1, 2.50, 2.50, 5, 9),
-(2, 'MCB 1P 20A', 'MCB', 'MCB-1P-20A-ABB', 8.00, NULL, 20, 1.10, 'unit', 0, 'piece', 1, 2.40, 2.40, 6, 3),
-(3, 'MCB 1P 32A', 'Switchgear', 'MCB-1P-32A-CHNT', 1230.00, NULL, 20, 1.50, 'unit', 0, 'piece', 1, 2.10, 2.10, 14, 5),
-(4, 'MCB 3P 63A', 'Switchgear', 'MCB-3P-63A-SCH', 5219.00, NULL, 10, 7.35, 'unit', 0, 'piece', 1, 9.80, 9.80, 5, 9),
-(5, 'Contactor 25A 220V', 'Switchgear', 'CT-25A-LS', 36.00, NULL, 100, 6.50, 'unit', 0, 'piece', 1, 12.00, 12.00, 12, 5),
-(6, 'Contactor 40A 220V', 'Contactor', 'CT-40A-LS', 1016.00, NULL, 10, 8.20, 'unit', 0, 'piece', 1, 15.50, 15.50, 12, 5),
-(7, 'Wall Socket 13A UK', 'Socket', 'SOC-13A-HVL', 867.00, NULL, 50, 0.80, 'unit', 0, 'piece', 1, 1.50, 1.50, 16, 10),
-(8, 'Switch 1 Gang', 'Switchgear', 'SW-1G-HAG', 12460.00, NULL, 200, 0.60, 'unit', 0, 'piece', 1, 1.50, 1.50, 9, 1),
-(9, 'PVC Cable Copper 2.5mm²', 'Switchgear', 'PVC-Co-2.5-SOUTH', 11290.00, NULL, 200, 3.50, 'meter', 1, 'roll', 100, 4.75, 400.00, 3, 3),
-(10, 'Terminal Block 2.5mm', 'Terminal', 'TB-2.5-WAGO', 527.00, NULL, 100, 0.20, 'unit', 0, 'piece', 1, 0.50, 0.50, 21, 1),
-(105, 'Cement', 'Switchgear', 'cem-1234', 450.00, 1, 100, 75.00, 'unit', 0, NULL, 1, 100.00, 100.00, 34, 12),
-(106, 'Man Boot', 'Switchgear', 'MB-123', 366.00, 3, 50, 450.00, 'unit', 0, NULL, 1, 570.00, 570.00, 4, 8),
-(109, 'Hollow Blocks', 'Component', 'HB-29876', 0.00, 20, 100, 1.95, 'unit', 0, NULL, 1, 0.00, 0.00, 16, 2);
+(111, 'Portland Cement 42.5N', 'CONSTRUCTION MATERIAL', 'CEM-42-001', 500.00, NULL, 100, 12.50, 'BAG', 0, NULL, 1, 15.63, NULL, 36, 12),
+(112, 'Portland Cement 52.5N', 'CONSTRUCTION MATERIAL', 'CEM-52-001', 250.00, NULL, 50, 15.50, 'BAG', 0, NULL, 1, 19.38, NULL, 36, 12),
+(113, 'Ready Mix Concrete C25', 'CONCRETE', 'CON-C25-001', 25.00, NULL, 5, 95.00, 'M3', 1, NULL, 1, 118.75, NULL, NULL, 12),
+(114, 'Concrete Block 20cm', 'MASONRY', 'BLK-20-001', 3000.00, NULL, 500, 1.80, 'PCS', 0, NULL, 1, 2.25, NULL, NULL, 12),
+(115, 'Concrete Block 15cm', 'MASONRY', 'BLK-15-001', 2500.00, NULL, 500, 1.55, 'PCS', 0, NULL, 1, 1.94, NULL, NULL, 12),
+(116, 'Fine Sand', 'AGGREGATE', 'SND-FINE-001', 40.00, NULL, 10, 75.00, 'M3', 1, NULL, 1, 93.75, NULL, NULL, 12),
+(117, 'Coarse Aggregate 20mm', 'AGGREGATE', 'AGR-20-001', 60.00, NULL, 15, 85.00, 'M3', 1, NULL, 1, 106.25, NULL, NULL, 12),
+(118, 'Construction Gravel', 'AGGREGATE', 'GRV-001', 50.00, NULL, 10, 80.00, 'M3', 1, NULL, 1, 100.00, NULL, NULL, 12),
+(119, 'Red Brick', 'MASONRY', 'BRK-RED-001', 5000.00, NULL, 1000, 0.65, 'PCS', 0, NULL, 1, 0.81, NULL, NULL, 12),
+(120, 'Plastering Cement', 'CONSTRUCTION MATERIAL', 'PLS-CEM-001', 300.00, NULL, 50, 11.50, 'BAG', 0, NULL, 1, 14.38, NULL, 36, 12),
+(121, 'Gypsum Board 12.5mm', 'FINISHING', 'GYP-125-001', 400.00, NULL, 50, 18.00, 'PCS', 0, NULL, 1, 22.50, NULL, NULL, 12),
+(122, 'Ceramic Floor Tile 60x60', 'FINISHING', 'TIL-6060-001', 800.00, NULL, 100, 6.50, 'M2', 1, NULL, 1, 8.13, NULL, NULL, 12),
+(123, 'Ceramic Wall Tile 30x60', 'FINISHING', 'TIL-3060-001', 650.00, NULL, 100, 5.80, 'M2', 1, NULL, 1, 7.25, NULL, NULL, 12),
+(124, 'Waterproofing Membrane 4mm', 'WATERPROOFING', 'WPM-4-001', 120.00, NULL, 20, 42.00, 'ROLL', 0, NULL, 1, 52.50, NULL, NULL, 12),
+(125, 'PVC Water Tank 1000L', 'PLUMBING', 'TANK-1000-001', 20.00, NULL, 5, 450.00, 'PCS', 0, NULL, 1, 562.50, NULL, NULL, 12),
+(126, 'Rebar 8mm', 'STEEL', 'REB-08-001', 3500.00, NULL, 500, 3.20, 'M', 1, NULL, 1, 4.00, NULL, 34, 12),
+(127, 'Rebar 10mm', 'STEEL', 'REB-10-001', 2800.00, NULL, 500, 4.80, 'M', 1, NULL, 1, 6.00, NULL, 34, 12),
+(128, 'Rebar 12mm', 'STEEL', 'REB-12-001', 3200.00, NULL, 500, 6.90, 'M', 1, NULL, 1, 8.63, NULL, 34, 12),
+(129, 'Rebar 16mm', 'STEEL', 'REB-16-001', 2200.00, NULL, 400, 11.80, 'M', 1, NULL, 1, 14.75, NULL, 34, 12),
+(130, 'Rebar 20mm', 'STEEL', 'REB-20-001', 1200.00, NULL, 250, 18.20, 'M', 1, NULL, 1, 22.75, NULL, 34, 12),
+(131, 'Steel Angle 50x50x5mm', 'STRUCTURAL STEEL', 'ANG-50505-001', 400.00, NULL, 50, 28.00, 'M', 1, NULL, 1, 35.00, NULL, 34, 12),
+(132, 'Steel Channel 100mm', 'STRUCTURAL STEEL', 'CHN-100-001', 250.00, NULL, 50, 42.00, 'M', 1, NULL, 1, 52.50, NULL, 34, 12),
+(133, 'Steel Plate 6mm', 'STRUCTURAL STEEL', 'PLT-6-001', 120.00, NULL, 20, 145.00, 'M2', 1, NULL, 1, 181.25, NULL, 34, 12),
+(134, 'Binding Wire', 'STEEL ACCESSORY', 'BW-001', 80.00, NULL, 15, 4.50, 'KG', 1, NULL, 1, 5.63, NULL, NULL, 12),
+(135, 'Electrical Cable 1.5mm² Single Core', 'ELECTRICAL CABLE', 'CAB-1.5-001', 2500.00, NULL, 500, 1.15, 'M', 1, NULL, 1, 1.44, NULL, 3, 3),
+(136, 'Electrical Cable 2.5mm² Single Core', 'ELECTRICAL CABLE', 'CAB-2.5-001', 3000.00, NULL, 500, 1.75, 'M', 1, NULL, 1, 2.19, NULL, 3, 3),
+(137, 'Electrical Cable 4mm² Single Core', 'ELECTRICAL CABLE', 'CAB-4-001', 1800.00, NULL, 400, 2.80, 'M', 1, NULL, 1, 3.50, NULL, 3, 3),
+(138, 'Electrical Cable 6mm² Single Core', 'ELECTRICAL CABLE', 'CAB-6-001', 1400.00, NULL, 300, 3.95, 'M', 1, NULL, 1, 4.94, NULL, 3, 3),
+(139, 'Power Cable 4C x 16mm²', 'POWER CABLE', 'PWC-4C16-001', 600.00, NULL, 100, 18.50, 'M', 1, NULL, 1, 23.13, NULL, 19, 6),
+(140, 'Power Cable 4C x 35mm²', 'POWER CABLE', 'PWC-4C35-001', 500.00, NULL, 100, 34.50, 'M', 1, NULL, 1, 43.13, NULL, 20, 9),
+(141, 'Power Cable 4C x 70mm²', 'POWER CABLE', 'PWC-4C70-001', 300.00, NULL, 50, 58.00, 'M', 1, NULL, 1, 72.50, NULL, 19, 6),
+(142, 'Wall Socket 13A UK', 'ELECTRICAL ACCESSORY', 'WS-13A-UK-001', 1000.00, NULL, 100, 2.25, 'PCS', 0, 'BOX', 10, 2.81, 22.50, 8, 9),
+(143, 'Double Wall Socket 13A UK', 'ELECTRICAL ACCESSORY', 'WS-D13A-001', 500.00, NULL, 100, 3.40, 'PCS', 0, 'BOX', 10, 4.25, 34.00, 8, 9),
+(144, 'LED Panel Light 600x600 40W', 'LIGHTING', 'LED-PNL-40-001', 100.00, NULL, 20, 28.00, 'PCS', 0, 'BOX', 1, 35.00, 28.00, 5, 9),
+(145, 'MCB 1P 16A', 'ELECTRICAL PROTECTION', 'MCB-1P16-001', 150.00, NULL, 30, 8.50, 'PCS', 0, 'BOX', 12, 10.63, 102.00, 5, 9),
+(146, 'MCB 3P 32A', 'ELECTRICAL PROTECTION', 'MCB-3P32-001', 80.00, NULL, 15, 24.00, 'PCS', 0, 'BOX', 6, 30.00, 144.00, 5, 9),
+(147, 'Distribution Board 12-Way', 'ELECTRICAL PANEL', 'DB-12W-001', 25.00, NULL, 5, 95.00, 'PCS', 0, NULL, 1, 118.75, NULL, 5, 9),
+(148, 'Contactor 25A', 'CONTROL GEAR', 'CNT-25A-001', 40.00, NULL, 10, 32.00, 'PCS', 0, 'BOX', 1, 40.00, 32.00, 1, 1),
+(149, 'Terminal Block 6mm²', 'ELECTRICAL ACCESSORY', 'TB-6-001', 500.00, NULL, 100, 0.75, 'PCS', 0, 'BOX', 100, 0.94, 75.00, 21, 1),
+(150, 'PVC Pipe 20mm', 'PLUMBING', 'PVC-20-001', 800.00, NULL, 100, 2.40, 'M', 1, NULL, 1, 3.00, NULL, NULL, 12),
+(151, 'PVC Pipe 32mm', 'PLUMBING', 'PVC-32-001', 600.00, NULL, 100, 3.80, 'M', 1, NULL, 1, 4.75, NULL, NULL, 12),
+(152, 'PVC Pipe 50mm', 'PLUMBING', 'PVC-50-001', 450.00, NULL, 80, 5.90, 'M', 1, NULL, 1, 7.38, NULL, NULL, 12),
+(153, 'PPR Pipe 25mm', 'PLUMBING', 'PPR-25-001', 400.00, NULL, 80, 4.80, 'M', 1, NULL, 1, 6.00, NULL, NULL, 12),
+(154, 'PVC Elbow 90° 25mm', 'PLUMBING FITTING', 'ELB-25-90-001', 300.00, NULL, 50, 1.20, 'PCS', 0, 'BOX', 20, 1.50, 24.00, NULL, 12),
+(155, 'Brass Ball Valve 1\"', 'PLUMBING VALVE', 'VAL-BV-1-001', 80.00, NULL, 15, 18.00, 'PCS', 0, NULL, 1, 22.50, NULL, NULL, 12),
+(156, 'Bearing 6204', 'MECHANICAL', 'BRG-6204-001', 40.00, NULL, 10, 12.00, 'PCS', 0, 'BOX', 10, 15.00, 120.00, 6, 3),
+(157, 'Bearing 6205', 'MECHANICAL', 'BRG-6205-001', 40.00, NULL, 10, 14.50, 'PCS', 0, 'BOX', 10, 18.13, 145.00, 6, 3),
+(158, 'V-Belt A-42', 'MECHANICAL', 'VBT-A42-001', 25.00, NULL, 5, 9.50, 'PCS', 0, NULL, 1, 11.88, NULL, NULL, 12),
+(159, 'Hydraulic Hose 1/2\"', 'HYDRAULIC', 'HYD-HS-12-001', 250.00, NULL, 50, 8.50, 'M', 1, NULL, 1, 10.63, NULL, NULL, 12),
+(160, 'Hydraulic Oil ISO 46', 'LUBRICANT', 'OIL-ISO46-001', 200.00, NULL, 50, 4.80, 'LTR', 1, NULL, 1, 6.00, NULL, 7, 12),
+(161, 'Engine Oil 15W40', 'LUBRICANT', 'OIL-15W40-001', 150.00, NULL, 30, 5.50, 'LTR', 1, NULL, 1, 6.88, NULL, 34, 12),
+(162, 'Grease EP2', 'LUBRICANT', 'GRS-EP2-001', 80.00, NULL, 20, 7.25, 'KG', 1, NULL, 1, 9.06, NULL, 34, 12),
+(163, 'Hex Bolt M8x40', 'FASTENERS', 'BLT-M8-40-001', 1000.00, NULL, 200, 0.18, 'PCS', 0, 'BOX', 100, 0.23, 18.00, NULL, 12),
+(164, 'Hex Bolt M10x50', 'FASTENERS', 'BLT-M10-50-001', 1000.00, NULL, 200, 0.28, 'PCS', 0, 'BOX', 100, 0.35, 28.00, NULL, 12),
+(165, 'Hex Nut M10', 'FASTENERS', 'NUT-M10-001', 1200.00, NULL, 200, 0.12, 'PCS', 0, 'BOX', 100, 0.15, 12.00, NULL, 12),
+(166, 'Washer M10', 'FASTENERS', 'WSR-M10-001', 1500.00, NULL, 300, 0.06, 'PCS', 0, 'BOX', 100, 0.08, 6.00, NULL, 12),
+(167, 'Anchor Bolt M16', 'FASTENERS', 'ANC-M16-001', 300.00, NULL, 50, 2.80, 'PCS', 0, 'BOX', 25, 3.50, 70.00, NULL, 12),
+(168, 'Acrylic Wall Paint White', 'PAINT', 'PNT-WHT-001', 250.00, NULL, 50, 18.00, 'LTR', 1, NULL, 1, 22.50, NULL, NULL, 12),
+(169, 'Exterior Paint White', 'PAINT', 'PNT-EXT-WHT-001', 180.00, NULL, 30, 21.00, 'LTR', 1, NULL, 1, 26.25, NULL, NULL, 12),
+(170, 'Epoxy Primer', 'COATING', 'EPX-PRM-001', 100.00, NULL, 20, 24.00, 'LTR', 1, NULL, 1, 30.00, NULL, NULL, 12),
+(171, 'Silicone Sealant', 'CHEMICAL', 'SIL-001', 120.00, NULL, 20, 3.80, 'PCS', 0, 'BOX', 24, 4.75, 91.20, NULL, 12),
+(172, 'Construction Adhesive', 'CHEMICAL', 'ADH-001', 100.00, NULL, 20, 6.50, 'PCS', 0, 'BOX', 12, 8.13, 78.00, NULL, 12),
+(173, 'Safety Shoes S1P', 'SAFETY PPE', 'PPE-SHOE-S1P-001', 40.00, NULL, 10, 42.00, 'PAIR', 0, NULL, 1, 52.50, NULL, 4, 4),
+(174, 'Safety Helmet', 'SAFETY PPE', 'PPE-HELMET-001', 80.00, NULL, 20, 8.50, 'PCS', 0, 'BOX', 20, 10.63, 170.00, 4, 4),
+(175, 'Safety Goggles', 'SAFETY PPE', 'PPE-GOGGLE-001', 100.00, NULL, 20, 3.25, 'PCS', 0, 'BOX', 20, 4.06, 65.00, 4, 4),
+(176, 'Reflective Safety Vest', 'SAFETY PPE', 'PPE-VEST-001', 80.00, NULL, 20, 6.50, 'PCS', 0, 'BOX', 10, 8.13, 65.00, 4, 4),
+(177, 'Nitrile Work Gloves', 'SAFETY PPE', 'PPE-GLOVE-001', 500.00, NULL, 100, 0.75, 'PAIR', 0, 'BOX', 100, 0.94, 75.00, 4, 4),
+(178, 'Cut Resistant Gloves', 'SAFETY PPE', 'PPE-CUT-001', 100.00, NULL, 20, 4.50, 'PAIR', 0, 'BOX', 10, 5.63, 45.00, 4, 4),
+(179, 'Safety Harness', 'SAFETY PPE', 'PPE-HARNESS-001', 25.00, NULL, 5, 65.00, 'SET', 0, NULL, 1, 81.25, NULL, 4, 4),
+(180, 'Ear Protection Plugs', 'SAFETY PPE', 'PPE-EAR-001', 300.00, NULL, 50, 0.45, 'PAIR', 0, 'BOX', 100, 0.56, 45.00, 4, 4),
+(181, 'Dust Mask FFP2', 'SAFETY PPE', 'PPE-MASK-001', 500.00, NULL, 100, 0.55, 'PCS', 0, 'BOX', 50, 0.69, 27.50, 4, 4),
+(182, 'Cutting Disc 115mm', 'TOOLS / CONSUMABLE', 'DISC-115-001', 200.00, NULL, 30, 1.20, 'PCS', 0, 'BOX', 25, 1.50, 30.00, 8, 9),
+(183, 'Grinding Disc 115mm', 'TOOLS / CONSUMABLE', 'GRD-115-001', 150.00, NULL, 30, 1.50, 'PCS', 0, 'BOX', 25, 1.88, 37.50, 8, 9),
+(184, 'Welding Electrode 3.2mm', 'WELDING', 'WELD-32-001', 100.00, NULL, 20, 4.80, 'KG', 1, NULL, 1, 6.00, NULL, NULL, 12),
+(185, 'Silica Sandpaper 120 Grit', 'TOOLS / CONSUMABLE', 'SAND-120-001', 200.00, NULL, 40, 0.85, 'PCS', 0, 'BOX', 50, 1.06, 42.50, NULL, 12),
+(186, 'PVC Electrical Tape', 'ELECTRICAL CONSUMABLE', 'TAPE-PVC-001', 150.00, NULL, 30, 1.20, 'ROLL', 0, 'BOX', 20, 1.50, 24.00, NULL, 12);
 
 -- --------------------------------------------------------
 
@@ -293,40 +364,234 @@ CREATE TABLE `inventory_location_stock` (
 --
 
 INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `quantity`) VALUES
-(53, 1, 1, 167.00),
-(54, 1, 2, 279.00),
-(55, 1, 3, 445.00),
-(59, 2, 1, 0.00),
-(60, 2, 2, 3.00),
-(61, 2, 3, 5.00),
-(65, 3, 1, 108.00),
-(66, 3, 2, 690.00),
-(67, 3, 3, 200.00),
-(71, 4, 1, 90.00),
-(72, 4, 2, 25.00),
-(73, 4, 3, 79.00),
-(77, 5, 1, 11.00),
-(78, 5, 2, 16.00),
-(79, 5, 3, 2.00),
-(83, 6, 1, 14.00),
-(84, 6, 2, 20.00),
-(85, 6, 3, 0.00),
-(89, 7, 1, 350.00),
-(90, 7, 2, 130.00),
-(91, 7, 3, 210.00),
-(95, 8, 1, 11800.00),
-(96, 8, 2, 149.00),
-(97, 8, 3, 100.00),
-(101, 9, 1, 600.00),
-(102, 9, 2, 300.00),
-(103, 9, 3, 0.00),
-(107, 10, 1, 0.00),
-(108, 10, 2, 218.00),
-(109, 10, 3, 109.00),
-(113, 105, 1, 250.00),
-(115, 106, 3, 360.00),
-(121, 108, 2, 0.00),
-(127, 108, 3, 178.00);
+(256, 111, 1, 250.00),
+(257, 111, 2, 150.00),
+(258, 111, 3, 100.00),
+(259, 112, 1, 125.00),
+(260, 112, 2, 75.00),
+(261, 112, 3, 50.00),
+(262, 113, 1, 12.50),
+(263, 113, 2, 7.50),
+(264, 113, 3, 5.00),
+(265, 114, 1, 1500.00),
+(266, 114, 2, 900.00),
+(267, 114, 3, 600.00),
+(268, 115, 1, 1250.00),
+(269, 115, 2, 750.00),
+(270, 115, 3, 500.00),
+(271, 116, 1, 20.00),
+(272, 116, 2, 12.00),
+(273, 116, 3, 8.00),
+(274, 117, 1, 30.00),
+(275, 117, 2, 18.00),
+(276, 117, 3, 12.00),
+(277, 118, 1, 25.00),
+(278, 118, 2, 15.00),
+(279, 118, 3, 10.00),
+(280, 119, 1, 2500.00),
+(281, 119, 2, 1500.00),
+(282, 119, 3, 1000.00),
+(283, 120, 1, 150.00),
+(284, 120, 2, 90.00),
+(285, 120, 3, 60.00),
+(286, 121, 1, 200.00),
+(287, 121, 2, 120.00),
+(288, 121, 3, 80.00),
+(289, 122, 1, 400.00),
+(290, 122, 2, 240.00),
+(291, 122, 3, 160.00),
+(292, 123, 1, 325.00),
+(293, 123, 2, 195.00),
+(294, 123, 3, 130.00),
+(295, 124, 1, 60.00),
+(296, 124, 2, 36.00),
+(297, 124, 3, 24.00),
+(298, 125, 1, 10.00),
+(299, 125, 2, 6.00),
+(300, 125, 3, 4.00),
+(301, 126, 1, 1750.00),
+(302, 126, 2, 1050.00),
+(303, 126, 3, 700.00),
+(304, 127, 1, 1400.00),
+(305, 127, 2, 840.00),
+(306, 127, 3, 560.00),
+(307, 128, 1, 1600.00),
+(308, 128, 2, 960.00),
+(309, 128, 3, 640.00),
+(310, 129, 1, 1100.00),
+(311, 129, 2, 660.00),
+(312, 129, 3, 440.00),
+(313, 130, 1, 600.00),
+(314, 130, 2, 360.00),
+(315, 130, 3, 240.00),
+(316, 131, 1, 200.00),
+(317, 131, 2, 120.00),
+(318, 131, 3, 80.00),
+(319, 132, 1, 125.00),
+(320, 132, 2, 75.00),
+(321, 132, 3, 50.00),
+(322, 133, 1, 60.00),
+(323, 133, 2, 36.00),
+(324, 133, 3, 24.00),
+(325, 134, 1, 40.00),
+(326, 134, 2, 24.00),
+(327, 134, 3, 16.00),
+(328, 135, 1, 1250.00),
+(329, 135, 2, 750.00),
+(330, 135, 3, 500.00),
+(331, 136, 1, 1500.00),
+(332, 136, 2, 900.00),
+(333, 136, 3, 600.00),
+(334, 137, 1, 900.00),
+(335, 137, 2, 540.00),
+(336, 137, 3, 360.00),
+(337, 138, 1, 700.00),
+(338, 138, 2, 420.00),
+(339, 138, 3, 280.00),
+(340, 139, 1, 300.00),
+(341, 139, 2, 180.00),
+(342, 139, 3, 120.00),
+(343, 140, 1, 250.00),
+(344, 140, 2, 150.00),
+(345, 140, 3, 100.00),
+(346, 141, 1, 150.00),
+(347, 141, 2, 90.00),
+(348, 141, 3, 60.00),
+(349, 142, 1, 500.00),
+(350, 142, 2, 300.00),
+(351, 142, 3, 200.00),
+(352, 143, 1, 250.00),
+(353, 143, 2, 150.00),
+(354, 143, 3, 100.00),
+(355, 144, 1, 50.00),
+(356, 144, 2, 30.00),
+(357, 144, 3, 20.00),
+(358, 145, 1, 75.00),
+(359, 145, 2, 45.00),
+(360, 145, 3, 30.00),
+(361, 146, 1, 40.00),
+(362, 146, 2, 24.00),
+(363, 146, 3, 16.00),
+(364, 147, 1, 12.50),
+(365, 147, 2, 7.50),
+(366, 147, 3, 5.00),
+(367, 148, 1, 20.00),
+(368, 148, 2, 12.00),
+(369, 148, 3, 8.00),
+(370, 149, 1, 250.00),
+(371, 149, 2, 150.00),
+(372, 149, 3, 100.00),
+(373, 150, 1, 400.00),
+(374, 150, 2, 240.00),
+(375, 150, 3, 160.00),
+(376, 151, 1, 300.00),
+(377, 151, 2, 180.00),
+(378, 151, 3, 120.00),
+(379, 152, 1, 225.00),
+(380, 152, 2, 135.00),
+(381, 152, 3, 90.00),
+(382, 153, 1, 200.00),
+(383, 153, 2, 120.00),
+(384, 153, 3, 80.00),
+(385, 154, 1, 150.00),
+(386, 154, 2, 90.00),
+(387, 154, 3, 60.00),
+(388, 155, 1, 40.00),
+(389, 155, 2, 24.00),
+(390, 155, 3, 16.00),
+(391, 156, 1, 20.00),
+(392, 156, 2, 12.00),
+(393, 156, 3, 8.00),
+(394, 157, 1, 20.00),
+(395, 157, 2, 12.00),
+(396, 157, 3, 8.00),
+(397, 158, 1, 12.50),
+(398, 158, 2, 7.50),
+(399, 158, 3, 5.00),
+(400, 159, 1, 125.00),
+(401, 159, 2, 75.00),
+(402, 159, 3, 50.00),
+(403, 160, 1, 100.00),
+(404, 160, 2, 60.00),
+(405, 160, 3, 40.00),
+(406, 161, 1, 75.00),
+(407, 161, 2, 45.00),
+(408, 161, 3, 30.00),
+(409, 162, 1, 40.00),
+(410, 162, 2, 24.00),
+(411, 162, 3, 16.00),
+(412, 163, 1, 500.00),
+(413, 163, 2, 300.00),
+(414, 163, 3, 200.00),
+(415, 164, 1, 500.00),
+(416, 164, 2, 300.00),
+(417, 164, 3, 200.00),
+(418, 165, 1, 600.00),
+(419, 165, 2, 360.00),
+(420, 165, 3, 240.00),
+(421, 166, 1, 750.00),
+(422, 166, 2, 450.00),
+(423, 166, 3, 300.00),
+(424, 167, 1, 150.00),
+(425, 167, 2, 90.00),
+(426, 167, 3, 60.00),
+(427, 168, 1, 125.00),
+(428, 168, 2, 75.00),
+(429, 168, 3, 50.00),
+(430, 169, 1, 90.00),
+(431, 169, 2, 54.00),
+(432, 169, 3, 36.00),
+(433, 170, 1, 50.00),
+(434, 170, 2, 30.00),
+(435, 170, 3, 20.00),
+(436, 171, 1, 60.00),
+(437, 171, 2, 36.00),
+(438, 171, 3, 24.00),
+(439, 172, 1, 50.00),
+(440, 172, 2, 30.00),
+(441, 172, 3, 20.00),
+(442, 173, 1, 20.00),
+(443, 173, 2, 12.00),
+(444, 173, 3, 8.00),
+(445, 174, 1, 40.00),
+(446, 174, 2, 24.00),
+(447, 174, 3, 16.00),
+(448, 175, 1, 50.00),
+(449, 175, 2, 30.00),
+(450, 175, 3, 20.00),
+(451, 176, 1, 40.00),
+(452, 176, 2, 24.00),
+(453, 176, 3, 16.00),
+(454, 177, 1, 250.00),
+(455, 177, 2, 150.00),
+(456, 177, 3, 100.00),
+(457, 178, 1, 50.00),
+(458, 178, 2, 30.00),
+(459, 178, 3, 20.00),
+(460, 179, 1, 12.50),
+(461, 179, 2, 7.50),
+(462, 179, 3, 5.00),
+(463, 180, 1, 150.00),
+(464, 180, 2, 90.00),
+(465, 180, 3, 60.00),
+(466, 181, 1, 250.00),
+(467, 181, 2, 150.00),
+(468, 181, 3, 100.00),
+(469, 182, 1, 100.00),
+(470, 182, 2, 60.00),
+(471, 182, 3, 40.00),
+(472, 183, 1, 75.00),
+(473, 183, 2, 45.00),
+(474, 183, 3, 30.00),
+(475, 184, 1, 50.00),
+(476, 184, 2, 30.00),
+(477, 184, 3, 20.00),
+(478, 185, 1, 100.00),
+(479, 185, 2, 60.00),
+(480, 185, 3, 40.00),
+(481, 186, 1, 75.00),
+(482, 186, 2, 45.00),
+(483, 186, 3, 30.00);
 
 -- --------------------------------------------------------
 
@@ -352,6 +617,16 @@ CREATE TABLE `inventory_movements` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `inventory_movements`
+--
+
+INSERT INTO `inventory_movements` (`id`, `inventory_id`, `location_id`, `type`, `quantity`, `unit_cost`, `supplier_id`, `supplier`, `movement_by`, `balance_after`, `global_balance_after`, `reference`, `notes`, `created_by`, `created_at`) VALUES
+(297, 134, 1, 'OUT', 5.00, NULL, NULL, NULL, NULL, 35.00, 80.00, NULL, 'Warehouse Transfer #41', 1, '2026-09-02 08:32:56'),
+(298, 134, 3, 'IN', 5.00, NULL, NULL, NULL, NULL, 21.00, 80.00, NULL, 'Warehouse Transfer #41', 1, '2026-09-02 08:32:56'),
+(299, 134, 3, 'OUT', 5.00, NULL, NULL, NULL, NULL, 16.00, 80.00, NULL, 'Reversal of Transfer #41', 1, '2026-09-02 08:36:42'),
+(300, 134, 1, 'IN', 5.00, NULL, NULL, NULL, NULL, 40.00, 80.00, NULL, 'Reversal of Transfer #41', 1, '2026-09-02 08:36:42');
+
 -- --------------------------------------------------------
 
 --
@@ -371,6 +646,13 @@ CREATE TABLE `inventory_reservations` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `required_by_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `inventory_reservations`
+--
+
+INSERT INTO `inventory_reservations` (`id`, `inventory_id`, `location_id`, `project_id`, `quantity`, `status`, `reference`, `notes`, `created_by`, `created_at`, `required_by_date`) VALUES
+(26, 168, 1, 45, 5.00, 'ACTIVE', '', '', 1, '2026-09-02 08:35:39', '2026-09-05');
 
 -- --------------------------------------------------------
 
@@ -393,6 +675,14 @@ CREATE TABLE `inventory_transfers` (
   `reversal_transfer_id` int(11) DEFAULT NULL,
   `status` enum('COMPLETED','REVERSED','','') NOT NULL DEFAULT 'COMPLETED'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `inventory_transfers`
+--
+
+INSERT INTO `inventory_transfers` (`id`, `inventory_id`, `from_location_id`, `to_location_id`, `quantity`, `reference`, `notes`, `created_by`, `created_at`, `reversed_at`, `reversed_by`, `reversal_transfer_id`, `status`) VALUES
+(41, 134, 1, 3, 5.00, '', '', 1, '2026-09-02 08:32:56', '2026-09-02 10:36:42', 1, 42, 'REVERSED'),
+(42, 134, 3, 1, 5.00, '', 'Reversal of Transfer #41', 1, '2026-09-02 08:36:42', NULL, NULL, NULL, 'COMPLETED');
 
 -- --------------------------------------------------------
 
@@ -495,6 +785,13 @@ CREATE TABLE `projects` (
   `project_code` varchar(100) DEFAULT NULL,
   `priority` enum('low','medium','high','critical') DEFAULT 'medium'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `projects`
+--
+
+INSERT INTO `projects` (`id`, `customer_id`, `title`, `project_type`, `description`, `deadline`, `status`, `budget`, `created_at`, `is_archived`, `site_location`, `start_date`, `project_manager_id`, `contract_number`, `project_code`, `priority`) VALUES
+(45, 5, 'Construction of XYZ Building', 'construction', 'Construction of XYZ Building including facilities', '2026-12-24', 'planning', 1750000.00, '2026-09-01 09:55:13', 0, 'South Tripoli', '2026-08-15', 14, 'CT-000119', 'ABC-001', 'medium');
 
 -- --------------------------------------------------------
 
@@ -652,6 +949,13 @@ CREATE TABLE `purchase_orders` (
   `receiving_status` enum('OPEN','PARTIAL','RECEIVED') DEFAULT 'OPEN'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `purchase_orders`
+--
+
+INSERT INTO `purchase_orders` (`id`, `po_number`, `supplier_id`, `status`, `order_date`, `expected_date`, `subtotal`, `tax_amount`, `discount_amount`, `total_amount`, `notes`, `created_by`, `approved_by`, `approved_at`, `received_at`, `created_at`, `receiving_status`) VALUES
+(52, 'PO-260902155733', 4, 'draft', '2026-09-02', '2026-09-09', 1250.00, 0.00, 0.00, 1250.00, 'Created from Resource Requisition REQ-260902145633', 1, NULL, NULL, NULL, '2026-09-02 13:57:33', 'OPEN');
+
 -- --------------------------------------------------------
 
 --
@@ -669,6 +973,13 @@ CREATE TABLE `purchase_order_items` (
   `notes` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `purchase_order_items`
+--
+
+INSERT INTO `purchase_order_items` (`id`, `purchase_order_id`, `inventory_id`, `quantity`, `received_quantity`, `unit_cost`, `total_cost`, `notes`, `created_at`) VALUES
+(53, 52, 114, 500.00, 0.00, 2.50, 0.00, NULL, '2026-09-02 13:57:33');
 
 -- --------------------------------------------------------
 
@@ -733,17 +1044,17 @@ CREATE TABLE `resource_categories` (
 --
 
 INSERT INTO `resource_categories` (`id`, `category_code`, `category_name`, `category_name_a`, `description`, `status`, `created_at`) VALUES
-(1, 'CON', 'Concrete', NULL, NULL, 'ACTIVE', '2026-07-12 05:40:56'),
-(2, 'STL', 'Steel', NULL, NULL, 'ACTIVE', '2026-07-12 05:40:56'),
-(3, 'MAS', 'Masonry', NULL, NULL, 'ACTIVE', '2026-07-12 05:40:56'),
-(4, 'ELE', 'Electrical', NULL, NULL, 'ACTIVE', '2026-07-12 05:40:56'),
-(5, 'PLB', 'Plumbing', NULL, NULL, 'ACTIVE', '2026-07-12 05:40:56'),
-(6, 'HVAC', 'HVAC', NULL, NULL, 'ACTIVE', '2026-07-12 05:40:56'),
-(7, 'FIN', 'Finishes', NULL, NULL, 'ACTIVE', '2026-07-12 05:40:56'),
-(8, 'EQP', 'Equipment', NULL, NULL, 'ACTIVE', '2026-07-12 05:40:56'),
-(9, 'TLS', 'Tools', NULL, NULL, 'ACTIVE', '2026-07-12 05:40:56'),
-(10, 'LAB', 'Labor', NULL, NULL, 'ACTIVE', '2026-07-12 05:40:56'),
-(11, 'SRV', 'Services', NULL, NULL, 'ACTIVE', '2026-07-12 05:40:56');
+(1, 'CON', 'Concrete', 'خرسانة', NULL, 'ACTIVE', '2026-07-12 05:40:56'),
+(2, 'STL', 'Steel', 'حديد', NULL, 'ACTIVE', '2026-07-12 05:40:56'),
+(3, 'MAS', 'Masonry', 'بناء', NULL, 'ACTIVE', '2026-07-12 05:40:56'),
+(4, 'ELE', 'Electrical', 'كهرباء', NULL, 'ACTIVE', '2026-07-12 05:40:56'),
+(5, 'PLB', 'Plumbing', 'سباكة', NULL, 'ACTIVE', '2026-07-12 05:40:56'),
+(6, 'HVAC', 'HVAC', 'تكييف وتهوية', NULL, 'ACTIVE', '2026-07-12 05:40:56'),
+(7, 'FIN', 'Finishes', 'تشطيبات نهائية', NULL, 'ACTIVE', '2026-07-12 05:40:56'),
+(8, 'EQP', 'Equipment', 'ألات ثقيلة', NULL, 'ACTIVE', '2026-07-12 05:40:56'),
+(9, 'TLS', 'Tools', 'ادوات ومعدات', NULL, 'ACTIVE', '2026-07-12 05:40:56'),
+(10, 'LAB', 'Labor', 'عمالة', NULL, 'ACTIVE', '2026-07-12 05:40:56'),
+(11, 'SRV', 'Services', 'خدمات', NULL, 'ACTIVE', '2026-07-12 05:40:56');
 
 -- --------------------------------------------------------
 
@@ -771,6 +1082,13 @@ CREATE TABLE `resource_requisitions` (
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `resource_requisitions`
+--
+
+INSERT INTO `resource_requisitions` (`id`, `req_number`, `project_id`, `request_date`, `required_date`, `priority`, `status`, `remarks`, `submitted_by`, `submitted_at`, `requested_by`, `approved_by`, `approved_at`, `approval_remarks`, `approval_notes`, `created_at`, `updated_at`) VALUES
+(38, 'REQ-260902145633', 45, '2026-09-02', '2026-09-09', 'NORMAL', 'APPROVED', 'Test RR', 1, '2026-09-02 15:17:06', 1, 1, '2026-09-02 15:21:49', 'Test approval', NULL, '2026-09-02 12:56:33', '2026-09-02 13:21:49');
+
 -- --------------------------------------------------------
 
 --
@@ -785,6 +1103,14 @@ CREATE TABLE `resource_requisition_approvals` (
   `remarks` text DEFAULT NULL,
   `action_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `resource_requisition_approvals`
+--
+
+INSERT INTO `resource_requisition_approvals` (`id`, `requisition_id`, `action`, `action_by`, `remarks`, `action_date`) VALUES
+(45, 38, 'SUBMITTED', 1, NULL, '2026-09-02 15:17:06'),
+(46, 38, 'APPROVED', 1, 'Test approval', '2026-09-02 15:21:49');
 
 -- --------------------------------------------------------
 
@@ -874,6 +1200,13 @@ CREATE TABLE `resource_requisition_items` (
   `status` enum('OPEN','PARTIAL','FULFILLED','CANCELLED') NOT NULL DEFAULT 'OPEN',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `resource_requisition_items`
+--
+
+INSERT INTO `resource_requisition_items` (`id`, `requisition_id`, `resource_source`, `inventory_id`, `resource_id`, `description`, `uom`, `quantity`, `fulfilled_quantity`, `estimated_unit_cost`, `estimated_total`, `remarks`, `status`, `created_at`) VALUES
+(36, 38, 'INVENTORY', NULL, 114, 'Concrete Block 20cm', 'PCS', 500.00, 0.00, 0.00, 0.00, 'Concrete blocks for project works', 'OPEN', '2026-09-02 12:57:55');
 
 -- --------------------------------------------------------
 
@@ -1693,13 +2026,13 @@ ALTER TABLE `user_locations`
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `countries`
 --
 ALTER TABLE `countries`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `customers`
@@ -1735,7 +2068,7 @@ ALTER TABLE `goods_return_items`
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=187;
 
 --
 -- AUTO_INCREMENT for table `inventory_locations`
@@ -1747,25 +2080,25 @@ ALTER TABLE `inventory_locations`
 -- AUTO_INCREMENT for table `inventory_location_stock`
 --
 ALTER TABLE `inventory_location_stock`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=511;
 
 --
 -- AUTO_INCREMENT for table `inventory_movements`
 --
 ALTER TABLE `inventory_movements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=297;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=301;
 
 --
 -- AUTO_INCREMENT for table `inventory_reservations`
 --
 ALTER TABLE `inventory_reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `inventory_transfers`
 --
 ALTER TABLE `inventory_transfers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `location_switch_log`
@@ -1783,7 +2116,7 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `project_advances`
@@ -1831,13 +2164,13 @@ ALTER TABLE `purchase_items`
 -- AUTO_INCREMENT for table `purchase_orders`
 --
 ALTER TABLE `purchase_orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `purchase_order_items`
 --
 ALTER TABLE `purchase_order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `resources`
@@ -1855,13 +2188,13 @@ ALTER TABLE `resource_categories`
 -- AUTO_INCREMENT for table `resource_requisitions`
 --
 ALTER TABLE `resource_requisitions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `resource_requisition_approvals`
 --
 ALTER TABLE `resource_requisition_approvals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `resource_requisition_attachments`
@@ -1891,7 +2224,7 @@ ALTER TABLE `resource_requisition_fulfillment_items`
 -- AUTO_INCREMENT for table `resource_requisition_items`
 --
 ALTER TABLE `resource_requisition_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `roles`
