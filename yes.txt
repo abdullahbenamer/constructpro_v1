@@ -1,0 +1,87 @@
+can you populate these tables for start a database, even fictunal qty no problem, we need a master data to start with :
+
+ 
+id	brand_name  1	country_id	website
+6	ABB	3	www.abb.com
+33	ABB System pro M	3	www.abb.com
+38	Algerian	13	sample.com
+31	Anchor by Panasonic	8	www.panasonic.com
+27	Belden	3	www.belden.com
+30	C&S Electric	10	www.cselectric.co.in
+25	Carlo Gavazzi	6	www.carlogavazzi.com
+14	Chint	5	www.chint.com
+4	Coleman	4	www.coleman.com
+15	Delixi Electric	5	www.delixi-electric.com
+7	Eaton	3	www.eaton.com
+39	Egypt	15	sample.com
+17	Finolex	10	www.finolex.com
+11	Fuji Electric	8	www.fujielectric.com
+35	General	12	sample.com
+9	Hager	1	www.hager.com
+16	Havells	10	www.havells.com
+28	Hubbell	3	www.hubbell.com
+13	Hyundai Electric	5	www.hyundai-electric.com
+34	ITTIHAD	12	www.ittihad.ly
+26	LAPP	1	www.lapp.com
+8	Legrand	9	www.legrand.com
+36	Local	12	sample.com
+24	Lovato Electric	6	www.lovatoelectric.com
+12	LS Electric	5	www.ls-electric.com
+10	Mitsubishi Electric	8	www.mitsubishielectric.com
+20	Nexans	9	www.nexans.com
+22	Phoenix Contact	1	www.phoenixcontact.com
+18	Polycab	10	www.polycab.com
+19	Prysmian	6	www.prysmian.com
+29	Rockwell Automation	3	www.rockwellautomation.com
+5	Schneider Electric	9	www.se.com
+32	Schneider Electric Easy9	9	www.se.com
+1	Siemens	1	www.siemens.com
+3	Southwire	3	www.southwire.com
+2	Terasaki	2	www.terasaki.com
+37	Tunisia	14	sample.com
+21	WAGO	1	www.wago.com
+23	Weidmuller	1	www.weidmueller.com
+-----------------------
+
+id	country_name	country_code
+1	Germany	DE
+2	Spain	ES
+3	United States	US
+4	United Kingdom	UK
+5	CHINA	CN
+6	ITALY	IT
+7	INDONESIA	ID
+8	JAPAN	JP
+9	FRANCE	FR
+10	INDIA	IN
+11	MALAYASIA	MY
+12	LIBYA	LY
+13	Algeria	DZ
+14	Tunisia	TN
+15	Egypt	EG
+----------------------
+
+describe `inventory`; 
+ id	int(11)	NO	PRI	NULL	auto_increment	 
+name	varchar(255)	YES		NULL		 
+category	varchar(100)	YES		NULL		 
+sku	varchar(50)	YES	UNI	NULL		 
+quantity	decimal(12,2)	NO		0.00		 
+location_id	int(11)	YES	MUL	NULL		 
+min_stock	int(11)	YES		10		 
+cost_price	decimal(10,2)	YES		0.00		 
+base_unit	varchar(20)	YES		unit		 
+allow_fraction	tinyint(1)	YES		0		 
+sale_unit	varchar(20)	YES		NULL		 
+units_per_sale	int(11)	YES		1		 
+price_per_base	decimal(10,2)	YES		NULL		 
+price_per_sale	decimal(10,2)	YES		NULL		 
+brand_id	int(11)	YES	MUL	NULL		 
+country_id	int(11)	YES	MUL	NULL		 
+
+
+describe `inventory_location_stock`;
+id	int(11)	NO	PRI	NULL	auto_increment	
+inventory_id	int(11)	NO	MUL	NULL		
+location_id	int(11)	NO		NULL		
+quantity	decimal(12,2)	NO		0.00		
