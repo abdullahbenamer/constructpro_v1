@@ -23,256 +23,277 @@ class ResourceRequisitions extends Controller
     | Create
     |-----------------------------------------
     */
-    public function create()
-    {
-        AuthHelper::can('projects.create');
+public function create()
+{
+    AuthHelper::can('projects.create');
 
-        $model = $this->model('ResourceRequisition');
-        $projectModel = $this->model('Project');
+    $model = $this->model('ResourceRequisition');
+    $projectModel = $this->model('Project');
+    $locationModel = $this->model('InventoryLocation');
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $id = $model->create([
+        $id = $model->create([
 
-                'req_number'     => $model->nextNumber(),
-                'project_id'     => $_POST['project_id'],
-                'request_date'   => $_POST['request_date'],
-                'required_date'  => $_POST['required_date'],
-                'priority'       => $_POST['priority'],
-                'remarks'        => trim($_POST['remarks'])
+            'req_number'     => $model->nextNumber(),
+            'project_id'     => $_POST['project_id'],
+            'request_date'   => $_POST['request_date'],
+            'required_date'  => $_POST['required_date'],
+            'priority'       => $_POST['priority'],
+            'target_warehouse_id' => !empty($_POST['target_warehouse_id'])
+                ? $_POST['target_warehouse_id']
+                : null,
+            'delivery_method' => $_POST['delivery_method'] ?? 'WAREHOUSE',
+            'remarks'        => trim($_POST['remarks'])
 
-            ]);
+        ]);
 
-            header('Location: ' . URLROOT . '/resourcerequisitions/details/' . $id);
-            exit;
-        }
-
-        $data['projects'] = $projectModel->getAll();
-
-        $data['next_number'] = $model->nextNumber();
-
-        $this->view('resource-requisitions/create', $data);
+        header('Location: ' . URLROOT . '/resourcerequisitions/details/' . $id);
+        exit;
     }
+
+    $data['projects'] = $projectModel->getAll();
+
+    $data['locations'] = $locationModel->getAll();
+
+    $data['next_number'] = $model->nextNumber();
+
+    $this->view('resource-requisitions/create', $data);
+}
 
     /*
     |------------------------------------------------------
     | Edit
     |--------------------------------------------------
     */
-    public function edit($id)
-    {
-        AuthHelper::can('projects.create');
+  public function edit($id)
+{
+    AuthHelper::can('projects.create');
 
-        $model = $this->model('ResourceRequisition');
-        $projectModel = $this->model('Project');
+    $model = $this->model('ResourceRequisition');
+    $projectModel = $this->model('Project');
+    $locationModel = $this->model('InventoryLocation');
 
-        $requisition = $model->getById($id);
+    $requisition = $model->getById($id);
 
-        if (!$requisition) {
+    if (!$requisition) {
 
-            header('Location: ' . URLROOT . '/resourcerequisitions');
-            exit;
-        }
-
-        // Only Draft can be edited
-        if ($requisition->status !== 'DRAFT') {
-
-            $_SESSION['error'] = 'Only Draft requisitions can be edited.';
-
-            header('Location: ' . URLROOT . '/resourcerequisitions/details/' . $id);
-            exit;
-        }
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            $model->update($id, [
-
-                'project_id'     => $_POST['project_id'],
-                'request_date'   => $_POST['request_date'],
-                'required_date'  => $_POST['required_date'],
-                'priority'       => $_POST['priority'],
-                'remarks'        => trim($_POST['remarks'])
-
-            ]);
-
-            header('Location: ' . URLROOT . '/resourcerequisitions/details/' . $id);
-            exit;
-        }
-
-        $data['requisition'] = $requisition;
-
-        $data['projects'] = $projectModel->getAll();
-
-        $this->view('resource-requisitions/edit', $data);
+        header('Location: ' . URLROOT . '/resourcerequisitions');
+        exit;
     }
 
+    // Only Draft can be edited
+    if ($requisition->status !== 'DRAFT') {
 
-    public function update($id)
-    {
-        AuthHelper::can('projects.create');
+        $_SESSION['error'] = 'Only Draft requisitions can be edited.';
 
-        $model = $this->model('ResourceRequisition');
+        header('Location: ' . URLROOT . '/resourcerequisitions/details/' . $id);
+        exit;
+    }
 
-        $requisition = $model->getById($id);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        if (!$requisition) {
+        $model->update($id, [
 
-            header('Location: ' . URLROOT . '/ResourceRequisitions');
-            exit;
-        }
+            'project_id'     => $_POST['project_id'],
+            'request_date'   => $_POST['request_date'],
+            'required_date'  => $_POST['required_date'],
+            'priority'       => $_POST['priority'],
+            'target_warehouse_id' => !empty($_POST['target_warehouse_id'])
+                ? $_POST['target_warehouse_id']
+                : null,
+            'delivery_method' => $_POST['delivery_method'] ?? 'WAREHOUSE',
+            'remarks'        => trim($_POST['remarks'])
 
-        if ($requisition->status != 'DRAFT') {
+        ]);
 
-            $_SESSION['error'] = 'Only Draft requisitions can be edited.';
+        header('Location: ' . URLROOT . '/resourcerequisitions/details/' . $id);
+        exit;
+    }
 
-            header('Location: ' . URLROOT . '/ResourceRequisitions/details/' . $id);
-            exit;
-        }
+    $data['requisition'] = $requisition;
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $data['projects'] = $projectModel->getAll();
 
-            $model->update($id, [
+    $data['locations'] = $locationModel->getAll();
 
-                'project_id'    => $_POST['project_id'],
-                'request_date'  => $_POST['request_date'],
-                'required_date' => $_POST['required_date'],
-                'priority'      => $_POST['priority'],
-                'remarks'       => trim($_POST['remarks'])
+    $this->view('resource-requisitions/edit', $data);
+}
 
-            ]);
-        }
+
+public function update($id)
+{
+    AuthHelper::can('projects.create');
+
+    $model = $this->model('ResourceRequisition');
+
+    $requisition = $model->getById($id);
+
+    if (!$requisition) {
+
+        header('Location: ' . URLROOT . '/ResourceRequisitions');
+        exit;
+    }
+
+    if ($requisition->status != 'DRAFT') {
+
+        $_SESSION['error'] = 'Only Draft requisitions can be edited.';
 
         header('Location: ' . URLROOT . '/ResourceRequisitions/details/' . $id);
         exit;
     }
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+        $model->update($id, [
+
+            'project_id'    => $_POST['project_id'],
+            'request_date'  => $_POST['request_date'],
+            'required_date' => $_POST['required_date'],
+            'priority'      => $_POST['priority'],
+
+            'target_warehouse_id' => !empty($_POST['target_warehouse_id'])
+                ? $_POST['target_warehouse_id']
+                : null,
+
+            'delivery_method' => $_POST['delivery_method'] ?? 'WAREHOUSE',
+
+            'remarks'       => trim($_POST['remarks'])
+
+        ]);
+    }
+
+    header('Location: ' . URLROOT . '/ResourceRequisitions/details/' . $id);
+    exit;
+}
 
     /*
     |-----------------------------------
     | Details
     |-----------------------------
     */
-   public function details($id)
-{
-    AuthHelper::can('projects.view');
+    public function details($id)
+    {
+        AuthHelper::can('projects.view');
 
 
-    /*
+        /*
     |--------------------------------------------------------------
     | LOAD MODELS
     |--------------------------------------------------------------
     */
 
-    $model =
-        $this->model('ResourceRequisition');
+        $model =
+            $this->model('ResourceRequisition');
 
-    $itemModel =
-        $this->model('ResourceRequisitionItem');
+        $itemModel =
+            $this->model('ResourceRequisitionItem');
 
-    $fulfillmentModel =
-        $this->model('ResourceRequisitionFulfillmentModel');
+        $fulfillmentModel =
+            $this->model('ResourceRequisitionFulfillmentModel');
 
 
-    /*
+        /*
     |--------------------------------------------------------------
     | GET REQUISITION
     |--------------------------------------------------------------
     */
 
-    $requisition =
-        $model->getById($id);
+        $requisition =
+            $model->getById($id);
 
 
-    if (!$requisition) {
+        if (!$requisition) {
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitions'
-        );
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/ResourceRequisitions'
+            );
 
-        exit;
-    }
+            exit;
+        }
 
 
-    /*
+        /*
     |--------------------------------------------------------------
     | GET REQUISITION ITEMS
     |--------------------------------------------------------------
     */
 
-    $items =
-        $itemModel->getByRequisition($id);
+        $items =
+            $itemModel->getByRequisition($id);
 
 
-    /*
+        /*
     |--------------------------------------------------------------
     | GET APPROVAL HISTORY
     |--------------------------------------------------------------
     */
 
-    $history =
-        $model->getApprovalHistory($id);
+        $history =
+            $model->getApprovalHistory($id);
 
 
-    /*
+        /*
     |--------------------------------------------------------------
     | CHECK REMAINING MATERIAL ITEMS
     |--------------------------------------------------------------
     */
 
-    $materialItems =
-        $fulfillmentModel
+        $materialItems =
+            $fulfillmentModel
             ->getFulfillableMaterialItems($id);
 
 
-    /*
+        /*
     |--------------------------------------------------------------
     | CHECK REMAINING RESOURCE ITEMS
     |--------------------------------------------------------------
     */
 
-    $resourceItems =
-        $fulfillmentModel
+        $resourceItems =
+            $fulfillmentModel
             ->getFulfillableResourceItems($id);
 
 
-    /*
+        /*
     |--------------------------------------------------------------
     | VIEW DATA
     |--------------------------------------------------------------
     */
 
-    $data = [
+        $data = [
 
-        'requisition' =>
+            'requisition' =>
             $requisition,
 
-        'items' =>
+            'items' =>
             $items,
 
-        'hasMaterialItems' =>
+            'hasMaterialItems' =>
             !empty($materialItems),
 
-        'hasResourceItems' =>
+            'hasResourceItems' =>
             !empty($resourceItems),
 
-        'history' =>
+            'history' =>
             $history
 
-    ];
+        ];
 
 
-    /*
+        /*
     |--------------------------------------------------------------
     | LOAD VIEW
     |--------------------------------------------------------------
     */
 
-    $this->view(
-        'resource-requisitions/details',
-        $data
-    );
-}
+        $this->view(
+            'resource-requisitions/details',
+            $data
+        );
+    }
 
 
     /**

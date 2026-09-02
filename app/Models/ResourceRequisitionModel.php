@@ -84,71 +84,77 @@ WHERE rr.id = ?
     | Create
     |-----------------------------------------------------------
     */
-    public function create($data)
-    {
+public function create($data)
+{
+    $this->db->query("
+        INSERT INTO resource_requisitions
+        (
+            req_number,
+            project_id,
+            request_date,
+            required_date,
+            priority,
+            target_warehouse_id,
+            delivery_method,
+            remarks,
+            requested_by,
+            status
+        )
+        VALUES
+        (
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+        )
+    ", [
 
-        $this->db->query("
-            INSERT INTO resource_requisitions
-            (
-                req_number,
-                project_id,
-                request_date,
-                required_date,
-                priority,
-                remarks,
-                requested_by,
-                status
-            )
-            VALUES
-            (
-                ?, ?, ?, ?, ?, ?, ?, ?
-            )
-        ", [
+        $data['req_number'],
+        $data['project_id'],
+        $data['request_date'],
+        $data['required_date'],
+        $data['priority'],
+        $data['target_warehouse_id'],
+        $data['delivery_method'],
+        $data['remarks'],
+        $_SESSION['user_id'],
+        'DRAFT'
 
-            $data['req_number'],
-            $data['project_id'],
-            $data['request_date'],
-            $data['required_date'],
-            $data['priority'],
-            $data['remarks'],
-            $_SESSION['user_id'],
-            'DRAFT'
+    ]);
 
-        ]);
-
-        return $this->db->lastInsertId();
-    }
-
+    return $this->db->lastInsertId();
+}
     /*  
     |----------------------------------------------------
     | Update
     |----------------------------------------------------
     */
-    public function update($id, $data)
-    {
-        return $this->db->query("
-            UPDATE resource_requisitions
+public function update($id, $data)
+{
+    return $this->db->query("
+        UPDATE resource_requisitions
 
-            SET
+        SET
 
-                project_id     = ?,
-                request_date   = ?,
-                required_date  = ?,
-                priority       = ?,
-                remarks        = ?
+            project_id           = ?,
+            request_date         = ?,
+            required_date        = ?,
+            priority             = ?,
+            target_warehouse_id  = ?,
+            delivery_method      = ?,
+            remarks              = ?
 
-            WHERE id = ?
-        ", [
+        WHERE id = ?
+    ", [
 
-            $data['project_id'],
-            $data['request_date'],
-            $data['required_date'],
-            $data['priority'],
-            $data['remarks'],
-            $id
+        $data['project_id'],
+        $data['request_date'],
+        $data['required_date'],
+        $data['priority'],
+        $data['target_warehouse_id'],
+        $data['delivery_method'],
+        $data['remarks'],
+        $id
 
-        ]);
-    }
+    ]);
+}
 
     /**
  * SUBMIT REQUISITION
