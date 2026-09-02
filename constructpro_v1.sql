@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 02, 2026 at 05:54 PM
+-- Generation Time: Sep 02, 2026 at 10:12 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -933,6 +933,10 @@ CREATE TABLE `purchase_orders` (
   `id` int(11) NOT NULL,
   `po_number` varchar(50) DEFAULT NULL,
   `supplier_id` int(11) NOT NULL,
+  `project_id` int(11) DEFAULT NULL,
+  `requisition_id` int(11) DEFAULT NULL,
+  `target_warehouse_id` int(11) DEFAULT NULL,
+  `delivery_method` enum('WAREHOUSE','DIRECT_TO_PROJECT_SITE') NOT NULL DEFAULT 'WAREHOUSE',
   `status` enum('draft','approved','partial','received','cancelled') DEFAULT 'draft',
   `order_date` date DEFAULT NULL,
   `expected_date` date DEFAULT NULL,
@@ -953,8 +957,8 @@ CREATE TABLE `purchase_orders` (
 -- Dumping data for table `purchase_orders`
 --
 
-INSERT INTO `purchase_orders` (`id`, `po_number`, `supplier_id`, `status`, `order_date`, `expected_date`, `subtotal`, `tax_amount`, `discount_amount`, `total_amount`, `notes`, `created_by`, `approved_by`, `approved_at`, `received_at`, `created_at`, `receiving_status`) VALUES
-(52, 'PO-260902155733', 4, 'draft', '2026-09-02', '2026-09-09', 1250.00, 0.00, 0.00, 1250.00, 'Created from Resource Requisition REQ-260902145633', 1, NULL, NULL, NULL, '2026-09-02 13:57:33', 'OPEN');
+INSERT INTO `purchase_orders` (`id`, `po_number`, `supplier_id`, `project_id`, `requisition_id`, `target_warehouse_id`, `delivery_method`, `status`, `order_date`, `expected_date`, `subtotal`, `tax_amount`, `discount_amount`, `total_amount`, `notes`, `created_by`, `approved_by`, `approved_at`, `received_at`, `created_at`, `receiving_status`) VALUES
+(52, 'PO-260902155733', 4, NULL, NULL, NULL, 'WAREHOUSE', 'draft', '2026-09-02', '2026-09-09', 1250.00, 0.00, 0.00, 1250.00, 'Created from Resource Requisition REQ-260902145633', 1, NULL, NULL, NULL, '2026-09-02 13:57:33', 'OPEN');
 
 -- --------------------------------------------------------
 
@@ -1068,6 +1072,8 @@ CREATE TABLE `resource_requisitions` (
   `project_id` int(11) NOT NULL,
   `request_date` date NOT NULL,
   `required_date` date DEFAULT NULL,
+  `target_warehouse_id` int(11) DEFAULT NULL,
+  `delivery_method` enum('WAREHOUSE','DIRECT_TO_PROJECT_SITE') NOT NULL DEFAULT 'WAREHOUSE',
   `priority` enum('LOW','NORMAL','HIGH','URGENT','CRITICAL') DEFAULT 'NORMAL',
   `status` enum('DRAFT','SUBMITTED','APPROVED','PARTIAL','FULFILLED','REJECTED','CANCELLED') DEFAULT 'DRAFT',
   `remarks` text DEFAULT NULL,
@@ -1086,8 +1092,8 @@ CREATE TABLE `resource_requisitions` (
 -- Dumping data for table `resource_requisitions`
 --
 
-INSERT INTO `resource_requisitions` (`id`, `req_number`, `project_id`, `request_date`, `required_date`, `priority`, `status`, `remarks`, `submitted_by`, `submitted_at`, `requested_by`, `approved_by`, `approved_at`, `approval_remarks`, `approval_notes`, `created_at`, `updated_at`) VALUES
-(38, 'REQ-260902145633', 45, '2026-09-02', '2026-09-09', 'NORMAL', 'APPROVED', 'Test RR', 1, '2026-09-02 15:17:06', 1, 1, '2026-09-02 15:21:49', 'Test approval', NULL, '2026-09-02 12:56:33', '2026-09-02 13:21:49');
+INSERT INTO `resource_requisitions` (`id`, `req_number`, `project_id`, `request_date`, `required_date`, `target_warehouse_id`, `delivery_method`, `priority`, `status`, `remarks`, `submitted_by`, `submitted_at`, `requested_by`, `approved_by`, `approved_at`, `approval_remarks`, `approval_notes`, `created_at`, `updated_at`) VALUES
+(38, 'REQ-260902145633', 45, '2026-09-02', '2026-09-09', 1, 'WAREHOUSE', 'NORMAL', 'APPROVED', 'Test RR', 1, '2026-09-02 15:17:06', 1, 1, '2026-09-02 15:21:49', 'Test approval', NULL, '2026-09-02 12:56:33', '2026-09-02 20:09:52');
 
 -- --------------------------------------------------------
 
@@ -1830,7 +1836,10 @@ ALTER TABLE `purchase_orders`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `po_number` (`po_number`),
   ADD KEY `approved_by_fk` (`approved_by`),
-  ADD KEY `purchase_orders_ibfk_1` (`supplier_id`);
+  ADD KEY `purchase_orders_ibfk_1` (`supplier_id`),
+  ADD KEY `fk_po_project` (`project_id`),
+  ADD KEY `fk_po_requisition` (`requisition_id`),
+  ADD KEY `fk_po_target_warehouse` (`target_warehouse_id`);
 
 --
 -- Indexes for table `purchase_order_items`
@@ -1864,7 +1873,8 @@ ALTER TABLE `resource_requisitions`
   ADD UNIQUE KEY `req_number` (`req_number`),
   ADD KEY `fk_rr_project` (`project_id`),
   ADD KEY `fk_rr_requested_by` (`requested_by`),
-  ADD KEY `fk_rr_approved_by` (`approved_by`);
+  ADD KEY `fk_rr_approved_by` (`approved_by`),
+  ADD KEY `fk_rr_target_warehouse` (`target_warehouse_id`);
 
 --
 -- Indexes for table `resource_requisition_approvals`
@@ -2443,6 +2453,9 @@ ALTER TABLE `purchase_items`
 --
 ALTER TABLE `purchase_orders`
   ADD CONSTRAINT `approved_by_fk` FOREIGN KEY (`approved_by`) REFERENCES `users` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_po_project` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_po_requisition` FOREIGN KEY (`requisition_id`) REFERENCES `resource_requisitions` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_po_target_warehouse` FOREIGN KEY (`target_warehouse_id`) REFERENCES `inventory_locations` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `purchase_orders_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`);
 
 --
@@ -2467,7 +2480,8 @@ ALTER TABLE `resources`
 ALTER TABLE `resource_requisitions`
   ADD CONSTRAINT `fk_rr_approved_by` FOREIGN KEY (`approved_by`) REFERENCES `users` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_rr_project` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_rr_requested_by` FOREIGN KEY (`requested_by`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_rr_requested_by` FOREIGN KEY (`requested_by`) REFERENCES `users` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_rr_target_warehouse` FOREIGN KEY (`target_warehouse_id`) REFERENCES `inventory_locations` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `resource_requisition_approvals`
