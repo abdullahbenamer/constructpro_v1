@@ -116,11 +116,7 @@
 
                     </div>
 
-
-
-
-
-                <!-- PRIORITY -->
+<!-- PRIORITY -->
 <div class="col-md-4 mb-3">
 
     <label class="form-label">
@@ -134,24 +130,14 @@
             LOW
         </option>
 
-        <option value="NORMAL"
-            <?= ($data['requisition']->priority == 'NORMAL') ? 'selected' : '' ?>>
-            NORMAL
+        <option value="MEDIUM"
+            <?= ($data['requisition']->priority == 'MEDIUM') ? 'selected' : '' ?>>
+            MEDIUM
         </option>
 
         <option value="HIGH"
             <?= ($data['requisition']->priority == 'HIGH') ? 'selected' : '' ?>>
             HIGH
-        </option>
-
-        <option value="URGENT"
-            <?= ($data['requisition']->priority == 'URGENT') ? 'selected' : '' ?>>
-            URGENT
-        </option>
-
-        <option value="CRITICAL"
-            <?= ($data['requisition']->priority == 'CRITICAL') ? 'selected' : '' ?>>
-            CRITICAL
         </option>
 
     </select>

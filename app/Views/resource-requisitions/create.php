@@ -102,25 +102,30 @@
                 </div>
 
                 <!-- Priority -->
-                <div class="col-md-4 mb-3">
+             <!-- Priority -->
+<div class="col-md-4 mb-3">
 
-                    <label class="form-label">
-                        Priority
-                    </label>
+    <label class="form-label">
+        Priority
+    </label>
 
-                    <select
-                        name="priority"
-                        class="form-select">
+    <select
+        name="priority"
+        class="form-select">
 
-                        <option value="LOW">LOW</option>
-                        <option value="NORMAL" selected>NORMAL</option>
-                        <option value="HIGH">HIGH</option>
-                        <option value="URGENT">URGENT</option>
-                        <option value="CRITICAL">CRITICAL</option>
+        <option value="LOW">LOW</option>
 
-                    </select>
+        <option value="MEDIUM" selected>
+            MEDIUM
+        </option>
 
-                </div>
+        <option value="HIGH">
+            HIGH
+        </option>
+
+    </select>
+
+</div>
 
                 <div class="row">
 
