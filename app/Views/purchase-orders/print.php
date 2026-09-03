@@ -404,7 +404,7 @@
 
         <div style="margin-top: 10px;">
 
-            Delivery information not specified.
+            Delivery information Not specified.
 
         </div>
 
