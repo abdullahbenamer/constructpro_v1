@@ -247,30 +247,42 @@ class RequisitionPurchaseOrders extends Controller
                 $poNumber =
                     'PO-' . date('ymdHis');
 
-                $poId =
-                    $poModel->create([
+           $poId =
+    $poModel->create([
 
-                        'po_number' =>
-                            $poNumber,
+        'po_number' =>
+            $poNumber,
 
-                        'supplier_id' =>
-                            $supplierId,
+        'supplier_id' =>
+            $supplierId,
 
-                        'order_date' =>
-                            $orderDate,
+        'project_id' =>
+            $requisition->project_id ?? null,
 
-                        'expected_date' =>
-                            $expectedDate,
+        'requisition_id' =>
+            (int)$requisition_id,
 
-                        'notes' =>
-                            'Created from Resource Requisition ' .
-                            (
-                                $requisition->req_number
-                                ?? $requisition->requisition_no
-                                ?? $requisition_id
-                            )
+        'target_warehouse_id' =>
+            $requisition->target_warehouse_id ?? null,
 
-                    ]);
+        'delivery_method' =>
+            $requisition->delivery_method ?? 'WAREHOUSE',
+
+        'order_date' =>
+            $orderDate,
+
+        'expected_date' =>
+            $expectedDate,
+
+        'notes' =>
+            'Created from Resource Requisition ' .
+            (
+                $requisition->req_number
+                ?? $requisition->requisition_no
+                ?? $requisition_id
+            )
+
+    ]);
 
                 /*
                 |--------------------------------------------------------------------------

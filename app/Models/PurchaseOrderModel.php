@@ -62,34 +62,47 @@ class PurchaseOrderModel extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function create($data)
-    {
+/*
+|--------------------------------------------------------------------------
+| CREATE PURCHASE ORDER
+|--------------------------------------------------------------------------
+*/
 
-        $this->db->query(
-            "
-            INSERT INTO purchase_orders
-            (
-                po_number,
-                supplier_id,
-                order_date,
-                expected_date,
-                notes,
-                created_by
-            )
-            VALUES (?, ?, ?, ?, ?, ?)
-            ",
-            [
-                $data['po_number'],
-                $data['supplier_id'],
-                $data['order_date'],
-                $data['expected_date'],
-                $data['notes'],
-                $_SESSION['user_id']
-            ]
-        );
+public function create($data)
+{
+    $this->db->query(
+        "
+        INSERT INTO purchase_orders
+        (
+            po_number,
+            supplier_id,
+            project_id,
+            requisition_id,
+            target_warehouse_id,
+            delivery_method,
+            order_date,
+            expected_date,
+            notes,
+            created_by
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ",
+        [
+            $data['po_number'],
+            $data['supplier_id'],
+            $data['project_id'] ?? null,
+            $data['requisition_id'] ?? null,
+            $data['target_warehouse_id'] ?? null,
+            $data['delivery_method'] ?? 'WAREHOUSE',
+            $data['order_date'],
+            $data['expected_date'],
+            $data['notes'],
+            $_SESSION['user_id']
+        ]
+    );
 
-        return $this->db->lastInsertId();
-    }
+    return $this->db->lastInsertId();
+}
 
     public function addItem($data)
     {

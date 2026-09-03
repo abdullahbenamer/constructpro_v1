@@ -11,28 +11,40 @@ class ResourceRequisitionFulfillmentModel extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function getRequisition($requisition_id)
-    {
-        return $this->db->query(
-            "
-            SELECT
-                rr.*,
-                p.title AS project_name
+/*
+|--------------------------------------------------------------------------
+| GET REQUISITION
+|--------------------------------------------------------------------------
+*/
 
-            FROM resource_requisitions rr
+public function getRequisition($requisition_id)
+{
+    return $this->db->query(
+        "
+        SELECT
+            rr.*,
 
-            LEFT JOIN projects p
-                ON p.id = rr.project_id
+            p.title AS project_name,
 
-            WHERE rr.id = ?
+            l.name AS target_warehouse_name
 
-            LIMIT 1
-            ",
-            [
-                $requisition_id
-            ]
-        )->fetch();
-    }
+        FROM resource_requisitions rr
+
+        LEFT JOIN projects p
+            ON p.id = rr.project_id
+
+        LEFT JOIN inventory_locations l
+            ON l.id = rr.target_warehouse_id
+
+        WHERE rr.id = ?
+
+        LIMIT 1
+        ",
+        [
+            $requisition_id
+        ]
+    )->fetch();
+}
 
 
     /*

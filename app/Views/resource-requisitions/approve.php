@@ -77,26 +77,43 @@
 
                 </div>
 
+<div class="col-md-4 mb-3">
 
-                <div class="col-md-4 mb-3">
+    <label class="text-muted">
+        Priority
+    </label>
 
-                    <label class="text-muted">
-                        Priority
-                    </label>
+    <div>
 
-                    <div>
+        <?php if ($data['requisition']->priority === 'HIGH'): ?>
 
-                        <span class="badge bg-warning text-dark">
+            <span class="badge bg-danger">
+                HIGH
+            </span>
 
-                            <?= htmlspecialchars(
-                                $data['requisition']->priority
-                            ) ?>
+        <?php elseif ($data['requisition']->priority === 'MEDIUM'): ?>
 
-                        </span>
+            <span class="badge bg-warning text-dark">
+                MEDIUM
+            </span>
 
-                    </div>
+        <?php elseif ($data['requisition']->priority === 'LOW'): ?>
 
-                </div>
+            <span class="badge bg-secondary">
+                LOW
+            </span>
+
+        <?php else: ?>
+
+            <span class="text-muted">
+                Not Set
+            </span>
+
+        <?php endif; ?>
+
+    </div>
+
+</div>
 
             </div>
 
