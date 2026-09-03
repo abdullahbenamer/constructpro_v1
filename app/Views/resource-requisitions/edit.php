@@ -265,7 +265,89 @@
 
                     </div>
 
+<div class="row">
 
+    <!-- DELIVERY METHOD -->
+    <div class="col-md-6 mb-3">
+
+        <label class="form-label">
+            Delivery Method
+            <span class="text-danger">*</span>
+        </label>
+
+        <select
+            name="delivery_method"
+            id="delivery_method"
+            class="form-select"
+            required>
+
+            <option value="WAREHOUSE"
+                <?= ($data['requisition']->delivery_method == 'WAREHOUSE') ? 'selected' : '' ?>>
+                Warehouse
+            </option>
+
+            <option value="DIRECT_TO_PROJECT_SITE"
+                <?= ($data['requisition']->delivery_method == 'DIRECT_TO_PROJECT_SITE') ? 'selected' : '' ?>>
+                Direct to Project Site
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- TARGET WAREHOUSE -->
+    <div
+        class="col-md-6 mb-3"
+        id="targetWarehouseGroup">
+
+        <label class="form-label">
+
+            Target Warehouse
+
+            <span class="text-danger">*</span>
+
+        </label>
+
+        <select
+            name="target_warehouse_id"
+            id="target_warehouse_id"
+            class="form-select">
+
+            <option value="">
+                -- Select Warehouse --
+            </option>
+
+            <?php foreach ($data['locations'] as $location): ?>
+
+                <option
+                    value="<?= $location->id ?>"
+                    <?= ($location->id == $data['requisition']->target_warehouse_id) ? 'selected' : '' ?>>
+
+                    <?= htmlspecialchars($location->code) ?>
+                    -
+                    <?= htmlspecialchars($location->name) ?>
+
+                </option>
+
+            <?php endforeach; ?>
+
+        </select>
+
+    </div>
+
+</div>
+
+<div
+    id="projectSiteInfo"
+    class="alert alert-info d-none">
+
+    <i class="fas fa-truck"></i>
+
+    This requisition will be delivered directly to the
+    selected project's site.
+
+</div>
                 </div>
 
 
@@ -332,3 +414,51 @@
 
 
 </div>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const deliveryMethod =
+        document.getElementById('delivery_method');
+
+    const warehouseGroup =
+        document.getElementById('targetWarehouseGroup');
+
+    const warehouse =
+        document.getElementById('target_warehouse_id');
+
+    const projectSiteInfo =
+        document.getElementById('projectSiteInfo');
+
+    function updateDeliveryFields() {
+
+        if (deliveryMethod.value === 'WAREHOUSE') {
+
+            warehouseGroup.classList.remove('d-none');
+
+            warehouse.required = true;
+
+            projectSiteInfo.classList.add('d-none');
+
+        } else {
+
+            warehouseGroup.classList.add('d-none');
+
+            warehouse.required = false;
+
+            projectSiteInfo.classList.remove('d-none');
+
+        }
+    }
+
+    deliveryMethod.addEventListener(
+        'change',
+        updateDeliveryFields
+    );
+
+    updateDeliveryFields();
+
+});
+
+</script>

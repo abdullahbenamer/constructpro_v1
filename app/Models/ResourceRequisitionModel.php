@@ -47,33 +47,39 @@ class ResourceRequisitionModel extends Model
  public function getById($id)
 {
     return $this->db->query("
-       SELECT
+        SELECT
 
-    rr.*,
- rr.req_number AS requisition_no,
-    p.title AS project_name,
+            rr.*,
+            rr.req_number AS requisition_no,
 
-    u1.full_name AS requested_by_name,
+            p.title AS project_name,
 
-    u2.full_name AS submitted_by_name,
+            l.name AS target_warehouse_name,
 
-    u3.full_name AS approved_by_name
+            u1.full_name AS requested_by_name,
 
-FROM resource_requisitions rr
+            u2.full_name AS submitted_by_name,
 
-LEFT JOIN projects p
-    ON p.id = rr.project_id
+            u3.full_name AS approved_by_name
 
-LEFT JOIN users u1
-    ON u1.id = rr.requested_by
+        FROM resource_requisitions rr
 
-LEFT JOIN users u2
-    ON u2.id = rr.submitted_by
+        LEFT JOIN projects p
+            ON p.id = rr.project_id
 
-LEFT JOIN users u3
-    ON u3.id = rr.approved_by
+        LEFT JOIN inventory_locations l
+            ON l.id = rr.target_warehouse_id
 
-WHERE rr.id = ?
+        LEFT JOIN users u1
+            ON u1.id = rr.requested_by
+
+        LEFT JOIN users u2
+            ON u2.id = rr.submitted_by
+
+        LEFT JOIN users u3
+            ON u3.id = rr.approved_by
+
+        WHERE rr.id = ?
 
         LIMIT 1
     ", [$id])->fetch();

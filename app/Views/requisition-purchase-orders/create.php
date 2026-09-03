@@ -18,8 +18,8 @@
                 <strong>
                     <?= htmlspecialchars(
                         $requisition->req_number
-                        ?? $requisition->requisition_no
-                        ?? $requisition->id
+                            ?? $requisition->requisition_no
+                            ?? $requisition->id
                     ) ?>
                 </strong>
 
@@ -171,8 +171,8 @@
                             name="expected_date"
                             class="form-control"
                             value="<?= htmlspecialchars(
-                                $requisition->required_date ?? ''
-                            ) ?>">
+                                        $requisition->required_date ?? ''
+                                    ) ?>">
 
                     </div>
 
@@ -262,8 +262,8 @@
 
                                         <?= htmlspecialchars(
                                             $item->inventory_uom
-                                            ?? $item->uom
-                                            ?? '-'
+                                                ?? $item->uom
+                                                ?? '-'
                                         ) ?>
 
                                     </td>
@@ -303,8 +303,8 @@
                                             min="0"
                                             step="0.01"
                                             value="<?= (float)(
-                                                $item->estimated_unit_cost ?? 0
-                                            ) ?>">
+                                                        $item->estimated_unit_cost ?? 0
+                                                    ) ?>">
 
                                     </td>
 
