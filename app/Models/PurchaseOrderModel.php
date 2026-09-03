@@ -37,24 +37,64 @@ class PurchaseOrderModel extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function getById($id)
-    {
-        return $this->db->query(
-            "
-            SELECT
-                po.*,
-                s.company_name AS supplier_name
+/*
+|--------------------------------------------------------------------------
+| GET BY ID
+|--------------------------------------------------------------------------
+*/
 
-            FROM purchase_orders po
+public function getById($id)
+{
+    return $this->db->query(
+        "
+        SELECT
 
-            JOIN suppliers s
-                ON s.id = po.supplier_id
+            po.*,
 
-            WHERE po.id = ?
-            ",
-            [$id]
-        )->fetch();
-    }
+            s.company_name AS supplier_name,
+
+            /* PROJECT */
+            p.title AS project_name,
+            p.site_location AS project_site_location,
+
+            /* PROJECT MANAGER */
+            pm.full_name AS project_manager_name,
+            pm.mobile AS project_manager_mobile,
+
+            /* TARGET WAREHOUSE */
+            l.code AS target_warehouse_code,
+            l.name AS target_warehouse_name,
+            l.address AS target_warehouse_address,
+            l.mobile AS target_warehouse_mobile,
+
+            /* STOREKEEPER */
+            sk.full_name AS storekeeper_name,
+            sk.mobile AS storekeeper_mobile
+
+        FROM purchase_orders po
+
+        JOIN suppliers s
+            ON s.id = po.supplier_id
+
+        LEFT JOIN projects p
+            ON p.id = po.project_id
+
+        LEFT JOIN users pm
+            ON pm.id = p.project_manager_id
+
+        LEFT JOIN inventory_locations l
+            ON l.id = po.target_warehouse_id
+
+        LEFT JOIN users sk
+            ON sk.id = l.storekeeper_id
+
+        WHERE po.id = ?
+
+        LIMIT 1
+        ",
+        [$id]
+    )->fetch();
+}
 
     /*
     |--------------------------------------------------------------------------

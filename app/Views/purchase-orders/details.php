@@ -80,8 +80,8 @@
             </div>
 
         </div>
-
-        <?php if (!empty($po->notes)): ?>
+        
+         <?php if (!empty($po->notes)): ?>
 
             <hr>
 
@@ -89,6 +89,247 @@
                 <strong>Notes:</strong><br>
                 <?= nl2br(htmlspecialchars($po->notes)) ?>
             </p>
+
+        <?php endif; ?> 
+
+    </div>
+
+</div>
+
+<!-- DELIVERY / SHIP TO -->
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-header bg-white">
+
+        <strong>
+            <i class="fas fa-truck"></i>
+            Delivery / Ship To
+        </strong>
+
+    </div>
+
+    <div class="card-body">
+
+        <?php if ($po->delivery_method === 'DIRECT_TO_PROJECT_SITE'): ?>
+
+            <div class="row">
+
+                <!-- PROJECT -->
+                <div class="col-md-6 mb-3">
+
+                    <strong>
+                        Project
+                    </strong>
+
+                    <div>
+                        <?= htmlspecialchars(
+                            $po->project_name ?? '-'
+                        ) ?>
+                    </div>
+
+                </div>
+
+
+                <!-- DELIVERY METHOD -->
+                <div class="col-md-6 mb-3">
+
+                    <strong>
+                        Delivery Method
+                    </strong>
+
+                    <div>
+
+                        <span class="badge bg-info text-dark">
+
+                            <i class="fas fa-truck"></i>
+
+                            Direct to Project Site
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SITE LOCATION -->
+                <div class="col-md-12 mb-3">
+
+                    <strong>
+                        Delivery Location
+                    </strong>
+
+                    <div class="border rounded p-3 bg-light">
+
+                        <?= nl2br(
+                            htmlspecialchars(
+                                $po->project_site_location ?? '-'
+                            )
+                        ) ?>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PROJECT MANAGER -->
+                <div class="col-md-6 mb-3">
+
+                    <strong>
+                        Site Contact
+                    </strong>
+
+                    <div>
+                        <?= htmlspecialchars(
+                            $po->project_manager_name ?? '-'
+                        ) ?>
+                    </div>
+
+                </div>
+
+
+                <!-- PM MOBILE -->
+                <div class="col-md-6 mb-3">
+
+                    <strong>
+                        Contact Number
+                    </strong>
+
+                    <div>
+                        <?= htmlspecialchars(
+                            $po->project_manager_mobile ?? '-'
+                        ) ?>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        <?php elseif ($po->delivery_method === 'WAREHOUSE'): ?>
+
+            <div class="row">
+
+                <!-- WAREHOUSE -->
+                <div class="col-md-6 mb-3">
+
+                    <strong>
+                        Warehouse
+                    </strong>
+
+                    <div>
+
+                        <?= htmlspecialchars(
+                            $po->target_warehouse_code ?? ''
+                        ) ?>
+
+                        <?php if (!empty($po->target_warehouse_name)): ?>
+                            -
+                            <?= htmlspecialchars(
+                                $po->target_warehouse_name
+                            ) ?>
+                        <?php endif; ?>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DELIVERY METHOD -->
+                <div class="col-md-6 mb-3">
+
+                    <strong>
+                        Delivery Method
+                    </strong>
+
+                    <div>
+
+                        <span class="badge bg-primary">
+
+                            <i class="fas fa-warehouse"></i>
+
+                            Warehouse
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ADDRESS -->
+                <div class="col-md-12 mb-3">
+
+                    <strong>
+                        Delivery Location
+                    </strong>
+
+                    <div class="border rounded p-3 bg-light">
+
+                        <?= nl2br(
+                            htmlspecialchars(
+                                $po->target_warehouse_address ?? '-'
+                            )
+                        ) ?>
+
+                    </div>
+
+                </div>
+
+
+                <!-- WAREHOUSE PHONE -->
+                <div class="col-md-6 mb-3">
+
+                    <strong>
+                        Warehouse Contact Number
+                    </strong>
+
+                    <div>
+                        <?= htmlspecialchars(
+                            $po->target_warehouse_mobile ?? '-'
+                        ) ?>
+                    </div>
+
+                </div>
+
+
+                <!-- STOREKEEPER -->
+                <div class="col-md-6 mb-3">
+
+                    <strong>
+                        Storekeeper
+                    </strong>
+
+                    <div>
+                        <?= htmlspecialchars(
+                            $po->storekeeper_name ?? '-'
+                        ) ?>
+
+                        <?php if (!empty($po->storekeeper_mobile)): ?>
+
+                            <br>
+
+                            <small class="text-muted">
+                                <?= htmlspecialchars(
+                                    $po->storekeeper_mobile
+                                ) ?>
+                            </small>
+
+                        <?php endif; ?>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        <?php else: ?>
+
+            <div class="text-muted">
+                Delivery information not specified.
+            </div>
 
         <?php endif; ?>
 

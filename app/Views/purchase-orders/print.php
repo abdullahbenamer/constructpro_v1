@@ -254,7 +254,163 @@
 
         </div>
 
+<!-- DELIVERY / SHIP TO -->
 
+<div
+    class="supplier-box"
+    style="margin-bottom: 25px;">
+
+    <strong>
+        DELIVERY / SHIP TO
+    </strong>
+
+    <?php if (
+        $po->delivery_method === 'DIRECT_TO_PROJECT_SITE'
+    ): ?>
+
+        <div style="margin-top: 10px;">
+
+            <div class="meta">
+                <strong>Project:</strong>
+                <?= htmlspecialchars(
+                    $po->project_name ?? '-'
+                ) ?>
+            </div>
+
+            <div class="meta">
+                <strong>Delivery Method:</strong>
+                Direct to Project Site
+            </div>
+
+            <div class="meta">
+
+                <strong>Delivery Location:</strong><br>
+
+                <?= nl2br(
+                    htmlspecialchars(
+                        $po->project_site_location ?? '-'
+                    )
+                ) ?>
+
+            </div>
+
+            <div class="meta">
+
+                <strong>Site Contact:</strong>
+                <?= htmlspecialchars(
+                    $po->project_manager_name ?? '-'
+                ) ?>
+
+            </div>
+
+            <div class="meta">
+
+                <strong>Contact Number:</strong>
+                <?= htmlspecialchars(
+                    $po->project_manager_mobile ?? '-'
+                ) ?>
+
+            </div>
+
+        </div>
+
+
+    <?php elseif (
+        $po->delivery_method === 'WAREHOUSE'
+    ): ?>
+
+        <div style="margin-top: 10px;">
+
+            <div class="meta">
+
+                <strong>Warehouse:</strong>
+
+                <?= htmlspecialchars(
+                    $po->target_warehouse_code ?? ''
+                ) ?>
+
+                <?php if (!empty($po->target_warehouse_name)): ?>
+
+                    -
+                    <?= htmlspecialchars(
+                        $po->target_warehouse_name
+                    ) ?>
+
+                <?php endif; ?>
+
+            </div>
+
+            <div class="meta">
+
+                <strong>Delivery Method:</strong>
+                Warehouse
+
+            </div>
+
+            <div class="meta">
+
+                <strong>Delivery Location:</strong><br>
+
+                <?= nl2br(
+                    htmlspecialchars(
+                        $po->target_warehouse_address ?? '-'
+                    )
+                ) ?>
+
+            </div>
+
+            <?php if (!empty($po->target_warehouse_mobile)): ?>
+
+                <div class="meta">
+
+                    <strong>Warehouse Contact Number:</strong>
+
+                    <?= htmlspecialchars(
+                        $po->target_warehouse_mobile
+                    ) ?>
+
+                </div>
+
+            <?php endif; ?>
+
+
+            <?php if (!empty($po->storekeeper_name)): ?>
+
+                <div class="meta">
+
+                    <strong>Storekeeper:</strong>
+
+                    <?= htmlspecialchars(
+                        $po->storekeeper_name
+                    ) ?>
+
+                    <?php if (!empty($po->storekeeper_mobile)): ?>
+
+                        -
+                        <?= htmlspecialchars(
+                            $po->storekeeper_mobile
+                        ) ?>
+
+                    <?php endif; ?>
+
+                </div>
+
+            <?php endif; ?>
+
+        </div>
+
+
+    <?php else: ?>
+
+        <div style="margin-top: 10px;">
+
+            Delivery information not specified.
+
+        </div>
+
+    <?php endif; ?>
+
+</div>
         <table>
 
             <thead>
