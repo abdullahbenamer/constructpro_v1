@@ -29,178 +29,202 @@
 
     </div>
 
-<!-- REQUISITION INFORMATION -->
+    <!-- REQUISITION INFORMATION -->
 
-<div class="card shadow-sm mb-4">
+    <div class="card shadow-sm mb-4">
 
-    <div class="card-body">
+        <div class="card-body">
 
-        <div class="row">
+            <div class="row">
 
-            <!-- PROJECT -->
-            <div class="col-md-3 mb-3">
+                <!-- PROJECT -->
+                <div class="col-md-3 mb-3">
 
-                <strong>
-                    Project
-                </strong>
+                    <strong>
+                        Project
+                    </strong>
 
-                <div>
-
-                    <?= htmlspecialchars(
-                        $requisition->project_name ?? '-'
-                    ) ?>
-
-                </div>
-
-            </div>
-
-
-            <!-- RR -->
-            <div class="col-md-3 mb-3">
-
-                <strong>
-                    Source RR
-                </strong>
-
-                <div>
-
-                    <?= htmlspecialchars(
-                        $requisition->req_number
-                            ?? $requisition->requisition_no
-                            ?? $requisition->id
-                    ) ?>
-
-                </div>
-
-            </div>
-
-
-            <!-- REQUIRED DATE -->
-            <div class="col-md-2 mb-3">
-
-                <strong>
-                    Required Date
-                </strong>
-
-                <div>
-
-                    <?= htmlspecialchars(
-                        $requisition->required_date ?? '-'
-                    ) ?>
-
-                </div>
-
-            </div>
-
-
-            <!-- PRIORITY -->
-            <div class="col-md-2 mb-3">
-
-                <strong>
-                    Priority
-                </strong>
-
-                <div>
-
-                    <?= htmlspecialchars(
-                        $requisition->priority ?? '-'
-                    ) ?>
-
-                </div>
-
-            </div>
-
-
-            <!-- DELIVERY METHOD -->
-            <div class="col-md-2 mb-3">
-
-                <strong>
-                    Delivery
-                </strong>
-
-                <div>
-
-                    <?php if (
-                        $requisition->delivery_method === 'WAREHOUSE'
-                    ): ?>
-
-                        <span class="badge bg-primary">
-
-                            <i class="fas fa-warehouse"></i>
-
-                            Warehouse
-
-                        </span>
-
-                    <?php elseif (
-                        $requisition->delivery_method === 'DIRECT_TO_PROJECT_SITE'
-                    ): ?>
-
-                        <span class="badge bg-info text-dark">
-
-                            <i class="fas fa-truck"></i>
-
-                            Direct to Site
-
-                        </span>
-
-                    <?php else: ?>
-
-                        <span class="text-muted">
-                            -
-                        </span>
-
-                    <?php endif; ?>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- DESTINATION -->
-
-        <div class="row mt-2">
-
-            <div class="col-md-6">
-
-                <strong>
-                    Target Warehouse
-                </strong>
-
-                <div>
-
-                    <?php if (
-                        $requisition->delivery_method === 'WAREHOUSE'
-                        && !empty($requisition->target_warehouse_name)
-                    ): ?>
-
-                        <i class="fas fa-warehouse text-primary"></i>
+                    <div>
 
                         <?= htmlspecialchars(
-                            $requisition->target_warehouse_name
+                            $requisition->project_name ?? '-'
                         ) ?>
 
-                    <?php elseif (
-                        $requisition->delivery_method === 'DIRECT_TO_PROJECT_SITE'
-                    ): ?>
+                    </div>
 
-                        <span class="text-info">
+                </div>
 
-                            <i class="fas fa-map-marker-alt"></i>
 
-                            Project Site
+                <!-- RR -->
+                <div class="col-md-3 mb-3">
 
-                        </span>
+                    <strong>
+                        Source RR
+                    </strong>
 
-                    <?php else: ?>
+                    <div>
 
-                        <span class="text-muted">
-                            -
-                        </span>
+                        <?= htmlspecialchars(
+                            $requisition->req_number
+                                ?? $requisition->requisition_no
+                                ?? $requisition->id
+                        ) ?>
 
-                    <?php endif; ?>
+                    </div>
+
+                </div>
+
+
+                <!-- REQUIRED DATE -->
+                <div class="col-md-2 mb-3">
+
+                    <strong>
+                        Required Date
+                    </strong>
+
+                    <div>
+
+                        <?= htmlspecialchars(
+                            $requisition->required_date ?? '-'
+                        ) ?>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRIORITY -->
+                <div class="col-md-2 mb-3">
+
+                    <strong>
+                        Priority
+                    </strong>
+
+                    <div>
+
+                        <?php if ($requisition->priority === 'HIGH'): ?>
+
+                            <span class="badge bg-danger">
+                                HIGH
+                            </span>
+
+                        <?php elseif ($requisition->priority === 'MEDIUM'): ?>
+
+                            <span class="badge bg-warning text-dark">
+                                MEDIUM
+                            </span>
+
+                        <?php elseif ($requisition->priority === 'LOW'): ?>
+
+                            <span class="badge bg-secondary">
+                                LOW
+                            </span>
+
+                        <?php else: ?>
+
+                            <span class="text-muted">
+                                -
+                            </span>
+
+                        <?php endif; ?>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DELIVERY METHOD -->
+                <div class="col-md-2 mb-3">
+
+                    <strong>
+                        Delivery
+                    </strong>
+
+                    <div>
+
+                        <?php if (
+                            $requisition->delivery_method === 'WAREHOUSE'
+                        ): ?>
+
+                            <span class="badge bg-primary">
+
+                                <i class="fas fa-warehouse"></i>
+
+                                Warehouse
+
+                            </span>
+
+                        <?php elseif (
+                            $requisition->delivery_method === 'DIRECT_TO_PROJECT_SITE'
+                        ): ?>
+
+                            <span class="badge bg-info text-dark">
+
+                                <i class="fas fa-truck"></i>
+
+                                Direct to Site
+
+                            </span>
+
+                        <?php else: ?>
+
+                            <span class="text-muted">
+                                -
+                            </span>
+
+                        <?php endif; ?>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DESTINATION -->
+
+            <div class="row mt-2">
+
+                <div class="col-md-6">
+
+                    <strong>
+                        Target Warehouse
+                    </strong>
+
+                    <div>
+
+                        <?php if (
+                            $requisition->delivery_method === 'WAREHOUSE'
+                            && !empty($requisition->target_warehouse_name)
+                        ): ?>
+
+                            <i class="fas fa-warehouse text-primary"></i>
+
+                            <?= htmlspecialchars(
+                                $requisition->target_warehouse_name
+                            ) ?>
+
+                        <?php elseif (
+                            $requisition->delivery_method === 'DIRECT_TO_PROJECT_SITE'
+                        ): ?>
+
+                            <span class="text-info">
+
+                                <i class="fas fa-map-marker-alt"></i>
+
+                                Project Site
+
+                            </span>
+
+                        <?php else: ?>
+
+                            <span class="text-muted">
+                                -
+                            </span>
+
+                        <?php endif; ?>
+
+                    </div>
 
                 </div>
 
@@ -209,8 +233,6 @@
         </div>
 
     </div>
-
-</div>
 
     <form method="POST">
 
@@ -413,19 +435,36 @@
 
                                     </td>
 
-                                    <td>
+                                 <td>
 
-                                        <input
-                                            type="number"
-                                            name="items[<?= $item->id ?>][unit_cost]"
-                                            class="form-control text-end"
-                                            min="0"
-                                            step="0.01"
-                                            value="<?= (float)(
-                                                        $item->estimated_unit_cost ?? 0
-                                                    ) ?>">
+    <input
+        type="number"
+        name="items[<?= $item->id ?>][unit_cost]"
+        class="form-control text-end"
+        min="0"
+        step="0.01"
+        value=""
+        placeholder="Enter price"
+        required>
 
-                                    </td>
+    <?php if (
+        isset($item->current_cost)
+        && (float)$item->current_cost > 0
+    ): ?>
+
+        <small class="text-muted d-block mt-1">
+            Reference only — Current Cost:
+            <strong>
+                <?= number_format(
+                    (float)$item->current_cost,
+                    2
+                ) ?>
+            </strong>
+        </small>
+
+    <?php endif; ?>
+
+</td>
 
                                 </tr>
 

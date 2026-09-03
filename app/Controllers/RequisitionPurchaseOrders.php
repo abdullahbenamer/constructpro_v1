@@ -198,19 +198,24 @@ class RequisitionPurchaseOrders extends Controller
                     |
                     */
 
-                    $unitCost =
-                        (float)(
-                            $postedItems[$itemId]['unit_cost']
-                            ?? $item->estimated_unit_cost
-                            ?? 0
-                        );
+                 if (
+    !isset($postedItems[$itemId]['unit_cost'])
+    || $postedItems[$itemId]['unit_cost'] === ''
+) {
+    throw new Exception(
+        'Please enter the actual supplier unit cost for "' .
+        $item->inventory_name .
+        '".'
+    );
+}
 
-                    if ($unitCost < 0) {
+$unitCost = (float)$postedItems[$itemId]['unit_cost'];
 
-                        throw new Exception(
-                            'Unit cost cannot be negative.'
-                        );
-                    }
+if ($unitCost < 0) {
+    throw new Exception(
+        'Unit cost cannot be negative.'
+    );
+}
 
                     $poItems[] = [
 

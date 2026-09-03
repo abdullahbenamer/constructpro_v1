@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 02, 2026 at 10:12 PM
+-- Generation Time: Sep 03, 2026 at 12:22 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -958,7 +958,8 @@ CREATE TABLE `purchase_orders` (
 --
 
 INSERT INTO `purchase_orders` (`id`, `po_number`, `supplier_id`, `project_id`, `requisition_id`, `target_warehouse_id`, `delivery_method`, `status`, `order_date`, `expected_date`, `subtotal`, `tax_amount`, `discount_amount`, `total_amount`, `notes`, `created_by`, `approved_by`, `approved_at`, `received_at`, `created_at`, `receiving_status`) VALUES
-(52, 'PO-260902155733', 4, NULL, NULL, NULL, 'WAREHOUSE', 'draft', '2026-09-02', '2026-09-09', 1250.00, 0.00, 0.00, 1250.00, 'Created from Resource Requisition REQ-260902145633', 1, NULL, NULL, NULL, '2026-09-02 13:57:33', 'OPEN');
+(52, 'PO-260902155733', 4, NULL, NULL, NULL, 'WAREHOUSE', 'draft', '2026-09-02', '2026-09-09', 1250.00, 0.00, 0.00, 1250.00, 'Created from Resource Requisition REQ-260902145633', 1, NULL, NULL, NULL, '2026-09-02 13:57:33', 'OPEN'),
+(53, 'PO-260903121940', 3, 45, 39, 3, 'DIRECT_TO_PROJECT_SITE', 'draft', '2026-09-03', '2026-09-10', 300.00, 0.00, 0.00, 300.00, 'Created from Resource Requisition REQ-260903072306', 1, NULL, NULL, NULL, '2026-09-03 10:19:40', 'OPEN');
 
 -- --------------------------------------------------------
 
@@ -983,7 +984,8 @@ CREATE TABLE `purchase_order_items` (
 --
 
 INSERT INTO `purchase_order_items` (`id`, `purchase_order_id`, `inventory_id`, `quantity`, `received_quantity`, `unit_cost`, `total_cost`, `notes`, `created_at`) VALUES
-(53, 52, 114, 500.00, 0.00, 2.50, 0.00, NULL, '2026-09-02 13:57:33');
+(53, 52, 114, 500.00, 0.00, 2.50, 0.00, NULL, '2026-09-02 13:57:33'),
+(54, 53, 123, 50.00, 0.00, 6.00, 0.00, NULL, '2026-09-03 10:19:40');
 
 -- --------------------------------------------------------
 
@@ -1074,7 +1076,7 @@ CREATE TABLE `resource_requisitions` (
   `required_date` date DEFAULT NULL,
   `target_warehouse_id` int(11) DEFAULT NULL,
   `delivery_method` enum('WAREHOUSE','DIRECT_TO_PROJECT_SITE') NOT NULL DEFAULT 'WAREHOUSE',
-  `priority` enum('LOW','NORMAL','HIGH','URGENT','CRITICAL') DEFAULT 'NORMAL',
+  `priority` enum('HIGH','MEDIUM','LOW') NOT NULL DEFAULT 'MEDIUM',
   `status` enum('DRAFT','SUBMITTED','APPROVED','PARTIAL','FULFILLED','REJECTED','CANCELLED') DEFAULT 'DRAFT',
   `remarks` text DEFAULT NULL,
   `submitted_by` int(11) DEFAULT NULL,
@@ -1093,7 +1095,9 @@ CREATE TABLE `resource_requisitions` (
 --
 
 INSERT INTO `resource_requisitions` (`id`, `req_number`, `project_id`, `request_date`, `required_date`, `target_warehouse_id`, `delivery_method`, `priority`, `status`, `remarks`, `submitted_by`, `submitted_at`, `requested_by`, `approved_by`, `approved_at`, `approval_remarks`, `approval_notes`, `created_at`, `updated_at`) VALUES
-(38, 'REQ-260902145633', 45, '2026-09-02', '2026-09-09', 1, 'WAREHOUSE', 'NORMAL', 'APPROVED', 'Test RR', 1, '2026-09-02 15:17:06', 1, 1, '2026-09-02 15:21:49', 'Test approval', NULL, '2026-09-02 12:56:33', '2026-09-02 20:09:52');
+(38, 'REQ-260902145633', 45, '2026-09-02', '2026-09-09', 1, 'WAREHOUSE', 'MEDIUM', 'APPROVED', 'Test RR', 1, '2026-09-02 15:17:06', 1, 1, '2026-09-02 15:21:49', 'Test approval', NULL, '2026-09-02 12:56:33', '2026-09-03 08:46:23'),
+(39, 'REQ-260903072306', 45, '2026-09-03', '2026-09-10', 3, 'DIRECT_TO_PROJECT_SITE', 'MEDIUM', 'APPROVED', 'Normal priority', 1, '2026-09-03 10:34:53', 1, 1, '2026-09-03 11:06:31', '', NULL, '2026-09-03 05:23:06', '2026-09-03 09:06:31'),
+(40, 'REQ-260903110438', 45, '2026-09-03', '2026-09-04', NULL, 'DIRECT_TO_PROJECT_SITE', 'HIGH', 'SUBMITTED', '', 1, '2026-09-03 11:05:06', 1, NULL, NULL, NULL, NULL, '2026-09-03 09:04:38', '2026-09-03 09:05:06');
 
 -- --------------------------------------------------------
 
@@ -1116,7 +1120,10 @@ CREATE TABLE `resource_requisition_approvals` (
 
 INSERT INTO `resource_requisition_approvals` (`id`, `requisition_id`, `action`, `action_by`, `remarks`, `action_date`) VALUES
 (45, 38, 'SUBMITTED', 1, NULL, '2026-09-02 15:17:06'),
-(46, 38, 'APPROVED', 1, 'Test approval', '2026-09-02 15:21:49');
+(46, 38, 'APPROVED', 1, 'Test approval', '2026-09-02 15:21:49'),
+(47, 39, 'SUBMITTED', 1, NULL, '2026-09-03 10:34:53'),
+(48, 40, 'SUBMITTED', 1, NULL, '2026-09-03 11:05:06'),
+(49, 39, 'APPROVED', 1, '', '2026-09-03 11:06:31');
 
 -- --------------------------------------------------------
 
@@ -1212,7 +1219,9 @@ CREATE TABLE `resource_requisition_items` (
 --
 
 INSERT INTO `resource_requisition_items` (`id`, `requisition_id`, `resource_source`, `inventory_id`, `resource_id`, `description`, `uom`, `quantity`, `fulfilled_quantity`, `estimated_unit_cost`, `estimated_total`, `remarks`, `status`, `created_at`) VALUES
-(36, 38, 'INVENTORY', NULL, 114, 'Concrete Block 20cm', 'PCS', 500.00, 0.00, 0.00, 0.00, 'Concrete blocks for project works', 'OPEN', '2026-09-02 12:57:55');
+(36, 38, 'INVENTORY', NULL, 114, 'Concrete Block 20cm', 'PCS', 500.00, 0.00, 0.00, 0.00, 'Concrete blocks for project works', 'OPEN', '2026-09-02 12:57:55'),
+(37, 39, 'INVENTORY', NULL, 123, 'Ceramic Wall Tile 30x60', 'M2', 50.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-09-03 08:34:23'),
+(38, 40, 'INVENTORY', NULL, 168, 'Acrylic Wall Paint White', 'LTR', 67.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-09-03 09:05:00');
 
 -- --------------------------------------------------------
 
@@ -2090,7 +2099,7 @@ ALTER TABLE `inventory_locations`
 -- AUTO_INCREMENT for table `inventory_location_stock`
 --
 ALTER TABLE `inventory_location_stock`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=511;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=484;
 
 --
 -- AUTO_INCREMENT for table `inventory_movements`
@@ -2174,13 +2183,13 @@ ALTER TABLE `purchase_items`
 -- AUTO_INCREMENT for table `purchase_orders`
 --
 ALTER TABLE `purchase_orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `purchase_order_items`
 --
 ALTER TABLE `purchase_order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `resources`
@@ -2198,13 +2207,13 @@ ALTER TABLE `resource_categories`
 -- AUTO_INCREMENT for table `resource_requisitions`
 --
 ALTER TABLE `resource_requisitions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `resource_requisition_approvals`
 --
 ALTER TABLE `resource_requisition_approvals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `resource_requisition_attachments`
@@ -2234,7 +2243,7 @@ ALTER TABLE `resource_requisition_fulfillment_items`
 -- AUTO_INCREMENT for table `resource_requisition_items`
 --
 ALTER TABLE `resource_requisition_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `roles`

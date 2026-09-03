@@ -153,11 +153,13 @@ public function getRequisition($requisition_id)
             |--------------------------------------------------------------------------
             */
 
-            i.sku,
+           i.sku,
 
-            i.name AS inventory_name,
+i.name AS inventory_name,
 
-            i.base_unit AS inventory_uom,
+i.base_unit AS inventory_uom,
+
+i.cost_price AS current_cost,
 
 
             /*
