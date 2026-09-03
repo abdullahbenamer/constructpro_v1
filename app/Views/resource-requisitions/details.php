@@ -183,99 +183,190 @@
 
             </div>
 
-            <div class="row">
+    <div class="row">
 
-                <!-- REQUEST DATE -->
+    <!-- REQUEST DATE -->
+    <div class="col-md-3 mb-3">
 
-                <div class="col-md-4 mb-3">
+        <label class="text-muted">
+            Request Date
+        </label>
 
-                    <label class="text-muted">
+        <div>
+            <?= htmlspecialchars($data['requisition']->request_date ?? '-') ?>
+        </div>
 
-                        Request Date
-
-                    </label>
-
-
-                    <div>
-
-                        <?= $data['requisition']->request_date ?>
-
-                    </div>
+    </div>
 
 
-                </div>
+    <!-- REQUIRED DATE -->
+    <div class="col-md-3 mb-3">
 
-                <!-- REQUIRED DATE -->
+        <label class="text-muted">
+            Required Date
+        </label>
 
+        <div>
+            <?= htmlspecialchars($data['requisition']->required_date ?? '-') ?>
+        </div>
 
-                <div class="col-md-4 mb-3">
-
-
-                    <label class="text-muted">
-
-                        Required Date
-
-                    </label>
-
-
-                    <div>
-
-                        <?= $data['requisition']->required_date ?>
-
-                    </div>
+    </div>
 
 
-                </div>
+    <!-- PRIORITY -->
+    <div class="col-md-3 mb-3">
 
-                <!-- PRIORITY -->
+        <label class="text-muted">
+            Priority
+        </label>
 
+        <div>
 
-                <div class="col-md-4 mb-3">
+            <?php if ($data['requisition']->priority == 'HIGH'): ?>
 
+                <span class="badge bg-danger">
+                    HIGH
+                </span>
 
-                    <label class="text-muted">
+            <?php elseif ($data['requisition']->priority == 'MEDIUM'): ?>
 
-                        Priority
+                <span class="badge bg-warning text-dark">
+                    MEDIUM
+                </span>
 
-                    </label>
+            <?php else: ?>
 
+                <span class="badge bg-secondary">
+                    LOW
+                </span>
 
+            <?php endif; ?>
 
-                    <div>
+        </div>
 
-
-                        <?php if ($data['requisition']->priority == 'HIGH'): ?>
-
-
-                            <span class="badge bg-danger">
-                                HIGH
-                            </span>
-
-
-
-                        <?php elseif ($data['requisition']->priority == 'MEDIUM'): ?>
-
-
-                            <span class="badge bg-warning text-dark">
-                                MEDIUM
-                            </span>
+    </div>
 
 
+    <!-- DELIVERY METHOD -->
+    <div class="col-md-3 mb-3">
 
-                        <?php else: ?>
+        <label class="text-muted">
+            Delivery Method
+        </label>
+
+        <div>
+
+            <?php if ($data['requisition']->delivery_method === 'WAREHOUSE'): ?>
+
+                <span class="badge bg-primary">
+                    <i class="fas fa-warehouse"></i>
+                    Warehouse
+                </span>
+
+            <?php elseif ($data['requisition']->delivery_method === 'DIRECT_TO_PROJECT_SITE'): ?>
+
+                <span class="badge bg-info text-dark">
+                    <i class="fas fa-truck"></i>
+                    Direct to Project Site
+                </span>
+
+            <?php else: ?>
+
+                <span class="text-muted">
+                    -
+                </span>
+
+            <?php endif; ?>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Target warehouse -->
+ <div class="row">
+
+    <!-- TARGET WAREHOUSE -->
+    <div class="col-md-6 mb-3">
+
+        <label class="text-muted">
+            Target Warehouse
+        </label>
+
+        <div class="fw-semibold">
+
+            <?php if (
+                $data['requisition']->delivery_method === 'WAREHOUSE'
+                && !empty($data['requisition']->target_warehouse_name)
+            ): ?>
+
+                <i class="fas fa-warehouse text-primary"></i>
+
+                <?= htmlspecialchars(
+                    $data['requisition']->target_warehouse_name
+                ) ?>
+
+            <?php elseif (
+                $data['requisition']->delivery_method === 'DIRECT_TO_PROJECT_SITE'
+            ): ?>
+
+                <span class="text-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Project Site
+                </span>
+
+            <?php else: ?>
+
+                <span class="text-muted">
+                    -
+                </span>
+
+            <?php endif; ?>
+
+        </div>
+
+    </div>
 
 
-                            <span class="badge bg-secondary">
-                                LOW
-                            </span>
+    <!-- DESTINATION NOTE -->
+    <div class="col-md-6 mb-3">
 
+        <label class="text-muted">
+            Destination
+        </label>
 
-                        <?php endif; ?>
+        <div>
 
+            <?php if (
+                $data['requisition']->delivery_method === 'WAREHOUSE'
+            ): ?>
 
-                    </div>
-                </div>
-            </div>
+                <span class="text-muted">
+                    Goods are planned to be delivered to the selected warehouse.
+                </span>
+
+            <?php elseif (
+                $data['requisition']->delivery_method === 'DIRECT_TO_PROJECT_SITE'
+            ): ?>
+
+                <span class="text-muted">
+                    Goods are planned for direct delivery to the project site.
+                </span>
+
+            <?php else: ?>
+
+                <span class="text-muted">
+                    Not specified
+                </span>
+
+            <?php endif; ?>
+
+        </div>
+
+    </div>
+
+</div>
             <!-- REMARKS -->
             <div class="row">
                 <div class="col-md-12 mb-3">
