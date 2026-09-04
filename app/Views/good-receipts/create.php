@@ -297,4 +297,12 @@
 
         this.value = '';
     });
+
+    // Apply default location when a PO is already selected on page load
+if (poSelect.value) {
+    const selected = poSelect.options[poSelect.selectedIndex];
+
+    locationSelect.value =
+        selected.dataset.defaultLocationId || '';
+}
 </script>
