@@ -18,8 +18,7 @@
                 <option
                     value="<?= $po->id ?>"
                     data-supplier-id="<?= $po->supplier_id ?>"
-                    data-supplier-name="<?= htmlspecialchars($po->company_name) ?>"
-                    data-default-location-id="<?= $po->default_location_id ?? '' ?>">
+                    data-supplier-name="<?= htmlspecialchars($po->company_name) ?>">
                     <?= $po->po_number ?>
                     -
                     <?= htmlspecialchars($po->company_name) ?>
@@ -75,7 +74,7 @@
         <div class="mb-3">
             <label class="form-label">Receive To Location</label>
 
-            <select name="location_id" id="locationSelect" class="form-select" required>
+          <select name="location_id" class="form-select" required>
 
                 <option value="">-- Select Location --</option>
 
@@ -159,7 +158,6 @@
     const poItemSelect = document.getElementById('poItemSelect');
     const inventoryId = document.getElementById('inventory_id');
     const barcodeInput = document.getElementById('barcodeInput');
-    const locationSelect = document.getElementById('locationSelect');
 
     let currentPOItems = [];
 
@@ -210,16 +208,13 @@
     }
 
 
-    poSelect.addEventListener('change', function() {
+  poSelect.addEventListener('change', function() {
 
-        const selected =
-            this.options[this.selectedIndex];
+    const selected =
+        this.options[this.selectedIndex];
 
-        locationSelect.value =
-            selected.dataset.defaultLocationId || '';
-
-        document.getElementById('supplier_id').value =
-            selected.dataset.supplierId || '';
+    document.getElementById('supplier_id').value =
+        selected.dataset.supplierId || '';
 
         document.getElementById('supplierName').value =
             selected.dataset.supplierName || '';
@@ -298,11 +293,4 @@
         this.value = '';
     });
 
-    // Apply default location when a PO is already selected on page load
-if (poSelect.value) {
-    const selected = poSelect.options[poSelect.selectedIndex];
-
-    locationSelect.value =
-        selected.dataset.defaultLocationId || '';
-}
-</script>
+   </script>
