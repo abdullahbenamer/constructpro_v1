@@ -20,8 +20,8 @@ $service = new GoodsReceiptService(
     $this->model('PurchaseOrder'),
     $this->model('GoodsReceipt'),
     $this->model('GoodsReceiptItem'),
-    $this->model('InventoryMovement'),
-    $this->model('SupplierLedger')
+    $this->model('SupplierLedger'),
+    $this->model('InventoryService')
 );
             $service->receive($_POST);
 
