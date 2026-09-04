@@ -28,6 +28,7 @@ public function receive(array $data): bool
     $inventoryId = (int)($data['inventory_id'] ?? 0);
     $locationId  = (int)($data['location_id'] ?? 0);
     $quantity    = (float)($data['quantity'] ?? 0);
+    $unitCost    = (float)($data['unit_cost'] ?? 0);
 
     if ($inventoryId <= 0) {
         throw new Exception('Invalid inventory item.');
@@ -41,6 +42,16 @@ public function receive(array $data): bool
         throw new Exception('Invalid quantity.');
     }
 
+    if ($unitCost < 0) {
+        throw new Exception('Unit cost cannot be negative.');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | RECEIVE PHYSICAL STOCK
+    |--------------------------------------------------------------------------
+    */
+
     $success = $this->stockModel->adjustStock(
         $inventoryId,
         $locationId,
@@ -53,12 +64,38 @@ public function receive(array $data): bool
         );
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | UPDATE CURRENT INVENTORY COST
+    |--------------------------------------------------------------------------
+    |
+    | The latest actual received purchase cost becomes the
+    | current cost_price for future inventory usage.
+    |
+    */
+
+    $this->db->query(
+        "UPDATE inventory
+         SET cost_price = ?
+         WHERE id = ?",
+        [
+            $unitCost,
+            $inventoryId
+        ]
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | RECORD INVENTORY MOVEMENT
+    |--------------------------------------------------------------------------
+    */
+
     $this->movementModel->addMovement([
         'inventory_id' => $inventoryId,
         'location_id'  => $locationId,
         'type'         => 'IN',
         'quantity'     => $quantity,
-        'unit_cost'    => $data['unit_cost'] ?? 0,
+        'unit_cost'    => $unitCost,
         'supplier_id'  => $data['supplier_id'] ?? null,
         'reference'    => $data['reference'] ?? null,
         'notes'        => $data['notes'] ?? '',
