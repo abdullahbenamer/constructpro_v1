@@ -699,39 +699,35 @@ public function getLocationBreakdown(int $inventory_id)
 
             il.name AS location_name,
 
-            ils.quantity AS physical_qty,
+            COALESCE(
+                ils.quantity,
+                0
+            ) AS physical_qty,
 
-
-            /*
-            |----------------------------------------------------------
-            | ACTIVE RESERVED QUANTITY FOR THIS ITEM + LOCATION
-            |----------------------------------------------------------
-            */
-
+            /* ACTIVE RESERVED QUANTITY FOR THIS ITEM + LOCATION */
             COALESCE(
                 (
                     SELECT SUM(ir.quantity)
 
                     FROM inventory_reservations ir
 
-                    WHERE ir.inventory_id = ils.inventory_id
+                    WHERE ir.inventory_id = ?
 
-                    AND ir.location_id = ils.location_id
+                    AND ir.location_id = il.id
 
                     AND ir.status = 'ACTIVE'
                 ),
                 0
             ) AS reserved_qty,
 
-
-            /*
-            |----------------------------------------------------------
-            | AVAILABLE QUANTITY
-            |----------------------------------------------------------
-            */
-
+            /* AVAILABLE QUANTITY */
             (
-                ils.quantity -
+                COALESCE(
+                    ils.quantity,
+                    0
+                )
+
+                -
 
                 COALESCE(
                     (
@@ -739,11 +735,9 @@ public function getLocationBreakdown(int $inventory_id)
 
                         FROM inventory_reservations ir
 
-                        WHERE ir.inventory_id =
-                            ils.inventory_id
+                        WHERE ir.inventory_id = ?
 
-                        AND ir.location_id =
-                            ils.location_id
+                        AND ir.location_id = il.id
 
                         AND ir.status = 'ACTIVE'
                     ),
@@ -751,20 +745,19 @@ public function getLocationBreakdown(int $inventory_id)
                 )
             ) AS available_qty
 
+        FROM inventory_locations il
 
-        FROM inventory_location_stock ils
+        LEFT JOIN inventory_location_stock ils
 
-        INNER JOIN inventory_locations il
+            ON ils.location_id = il.id
 
-            ON il.id = ils.location_id
-
-
-        WHERE ils.inventory_id = ?
-
+            AND ils.inventory_id = ?
 
         ORDER BY il.code
         ",
         [
+            $inventory_id,
+            $inventory_id,
             $inventory_id
         ]
     )->fetchAll();

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 04, 2026 at 07:16 AM
+-- Generation Time: Sep 04, 2026 at 11:54 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -345,7 +345,8 @@ INSERT INTO `inventory_locations` (`id`, `code`, `name`, `notes`, `address`, `st
 (1, 'MAIN WH', 'MAIN WAREHOUSE', 'Central Main Warehouse', 'Central Main Warehouse', 12, '092609876', '2026-06-12 06:27:59'),
 (2, 'TAJORA', 'TAJORA WH', 'مخزن النشيع', 'مخزن النشيع', 12, '098723654', '2026-06-12 06:27:59'),
 (3, 'JANZOUR', 'JANZOUR WAREHOUSE', 'Janzour Center', 'Janzour Center', 15, '0942787698', '2026-06-12 06:27:59'),
-(21, 'PRJ-46', 'PROJECT - 46# New Office Building', 'Project inventory location', 'Tarhouna the mountains', NULL, '', '2026-09-04 04:59:13');
+(21, 'PRJ-46', 'PROJECT - 46# New Office Building', 'Project inventory location', 'Tarhouna the mountains', NULL, '', '2026-09-04 04:59:13'),
+(22, 'PRJ-45', 'PROJECT - 45# Construction of XYZ Building', 'Project inventory location', 'South Tripoli, Ain Zara', 15, '0987654236', '2026-09-04 09:37:33');
 
 -- --------------------------------------------------------
 
@@ -386,7 +387,7 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (274, 117, 1, 30.00),
 (275, 117, 2, 18.00),
 (276, 117, 3, 12.00),
-(277, 118, 1, 25.00),
+(277, 118, 1, 21.00),
 (278, 118, 2, 15.00),
 (279, 118, 3, 10.00),
 (280, 119, 1, 2500.00),
@@ -592,7 +593,8 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (480, 185, 3, 40.00),
 (481, 186, 1, 75.00),
 (482, 186, 2, 45.00),
-(483, 186, 3, 30.00);
+(483, 186, 3, 30.00),
+(484, 118, 21, 4.00);
 
 -- --------------------------------------------------------
 
@@ -626,7 +628,9 @@ INSERT INTO `inventory_movements` (`id`, `inventory_id`, `location_id`, `type`, 
 (297, 134, 1, 'OUT', 5.00, NULL, NULL, NULL, NULL, 35.00, 80.00, NULL, 'Warehouse Transfer #41', 1, '2026-09-02 08:32:56'),
 (298, 134, 3, 'IN', 5.00, NULL, NULL, NULL, NULL, 21.00, 80.00, NULL, 'Warehouse Transfer #41', 1, '2026-09-02 08:32:56'),
 (299, 134, 3, 'OUT', 5.00, NULL, NULL, NULL, NULL, 16.00, 80.00, NULL, 'Reversal of Transfer #41', 1, '2026-09-02 08:36:42'),
-(300, 134, 1, 'IN', 5.00, NULL, NULL, NULL, NULL, 40.00, 80.00, NULL, 'Reversal of Transfer #41', 1, '2026-09-02 08:36:42');
+(300, 134, 1, 'IN', 5.00, NULL, NULL, NULL, NULL, 40.00, 80.00, NULL, 'Reversal of Transfer #41', 1, '2026-09-02 08:36:42'),
+(301, 118, 1, 'OUT', 4.00, NULL, NULL, NULL, NULL, 21.00, 50.00, 'activating the new project warehouse', 'Warehouse Transfer #43', 1, '2026-09-04 05:29:54'),
+(302, 118, 21, 'IN', 4.00, NULL, NULL, NULL, NULL, 4.00, 50.00, 'activating the new project warehouse', 'Warehouse Transfer #43', 1, '2026-09-04 05:29:54');
 
 -- --------------------------------------------------------
 
@@ -683,7 +687,8 @@ CREATE TABLE `inventory_transfers` (
 
 INSERT INTO `inventory_transfers` (`id`, `inventory_id`, `from_location_id`, `to_location_id`, `quantity`, `reference`, `notes`, `created_by`, `created_at`, `reversed_at`, `reversed_by`, `reversal_transfer_id`, `status`) VALUES
 (41, 134, 1, 3, 5.00, '', '', 1, '2026-09-02 08:32:56', '2026-09-02 10:36:42', 1, 42, 'REVERSED'),
-(42, 134, 3, 1, 5.00, '', 'Reversal of Transfer #41', 1, '2026-09-02 08:36:42', NULL, NULL, NULL, 'COMPLETED');
+(42, 134, 3, 1, 5.00, '', 'Reversal of Transfer #41', 1, '2026-09-02 08:36:42', NULL, NULL, NULL, 'COMPLETED'),
+(43, 118, 1, 21, 4.00, 'activating the new project warehouse', 'activating the new project wh', 1, '2026-09-04 05:29:54', NULL, NULL, NULL, 'COMPLETED');
 
 -- --------------------------------------------------------
 
@@ -793,7 +798,7 @@ CREATE TABLE `projects` (
 --
 
 INSERT INTO `projects` (`id`, `location_id`, `customer_id`, `title`, `project_type`, `description`, `deadline`, `status`, `budget`, `created_at`, `is_archived`, `site_location`, `start_date`, `project_manager_id`, `contract_number`, `project_code`, `priority`) VALUES
-(45, NULL, 5, 'Construction of XYZ Building', 'construction', 'Construction of XYZ Building including facilities', '2026-12-24', 'planning', 1750000.00, '2026-09-01 09:55:13', 0, 'South Tripoli', '2026-08-15', 14, 'CT-000119', 'ABC-001', 'medium'),
+(45, 22, 5, 'Construction of XYZ Building', 'construction', 'Construction of XYZ Building including facilities', '2026-12-24', 'planning', 1750000.00, '2026-09-01 09:55:13', 0, 'South Tripoli', '2026-08-15', 14, 'CT-000119', 'ABC-001', 'medium'),
 (46, 21, 2, 'New Office Building', 'construction', 'Renovating and extending the New Office Building', '2026-10-22', 'planning', 500000.00, '2026-09-04 04:59:13', 0, 'Tarhouna the mountains', '2026-09-07', 1, 'NOB-2026', 'NOB-1773', 'medium');
 
 -- --------------------------------------------------------
@@ -1643,8 +1648,11 @@ INSERT INTO `user_locations` (`user_id`, `location_id`) VALUES
 (1, 2),
 (1, 3),
 (1, 4),
+(1, 22),
 (6, 21),
-(8, 21);
+(6, 22),
+(8, 21),
+(17, 22);
 
 --
 -- Indexes for dumped tables
@@ -2099,19 +2107,19 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `inventory_locations`
 --
 ALTER TABLE `inventory_locations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `inventory_location_stock`
 --
 ALTER TABLE `inventory_location_stock`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=484;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=485;
 
 --
 -- AUTO_INCREMENT for table `inventory_movements`
 --
 ALTER TABLE `inventory_movements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=301;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=303;
 
 --
 -- AUTO_INCREMENT for table `inventory_reservations`
@@ -2123,7 +2131,7 @@ ALTER TABLE `inventory_reservations`
 -- AUTO_INCREMENT for table `inventory_transfers`
 --
 ALTER TABLE `inventory_transfers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `location_switch_log`
