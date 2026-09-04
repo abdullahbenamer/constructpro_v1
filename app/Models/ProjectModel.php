@@ -57,27 +57,37 @@ class ProjectModel extends Model
         return $result;
     }
 
-    public function create($data)
-    {
-        return $this->db->query(
+public function create($data)
+{
+    $this->db->beginTransaction();
+
+    try {
+
+        /*
+        |--------------------------------------------------------------------------
+        | 1. CREATE PROJECT
+        |--------------------------------------------------------------------------
+        */
+
+        $this->db->query(
             "INSERT INTO projects
-        (
-            customer_id,
-            title,
-            project_type,
-            description,
-            site_location,
-            start_date,
-            deadline,
-            project_manager_id,
-            contract_number,
-            project_code,
-            priority,
-            status,
-            budget
-        )
-        VALUES
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            (
+                customer_id,
+                title,
+                project_type,
+                description,
+                site_location,
+                start_date,
+                deadline,
+                project_manager_id,
+                contract_number,
+                project_code,
+                priority,
+                status,
+                budget
+            )
+            VALUES
+            (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             [
                 $data['customer_id'],
                 $data['title'],
@@ -93,8 +103,80 @@ class ProjectModel extends Model
                 $data['status'],
                 $data['budget']
             ]
-        )->rowCount() > 0;
+        );
+
+        $projectId = (int)$this->db->lastInsertId();
+
+        if ($projectId <= 0) {
+            throw new Exception('Unable to create project.');
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | 2. CREATE PROJECT INVENTORY LOCATION
+        |--------------------------------------------------------------------------
+        */
+
+        $locationCode = 'PRJ-' . $projectId;
+
+        $locationName =
+            'PROJECT - ' .
+            $projectId .
+            '# ' .
+            trim($data['title']);
+
+        $this->db->query(
+            "INSERT INTO inventory_locations
+            (
+                code,
+                name,
+                address,
+                notes
+            )
+            VALUES (?, ?, ?, ?)",
+            [
+                $locationCode,
+                $locationName,
+                trim($data['site_location'] ?? ''),
+                'Project inventory location'
+            ]
+        );
+
+        $locationId = (int)$this->db->lastInsertId();
+
+        if ($locationId <= 0) {
+            throw new Exception(
+                'Unable to create project inventory location.'
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | 3. LINK PROJECT TO ITS LOCATION
+        |--------------------------------------------------------------------------
+        */
+
+        $this->db->query(
+            "UPDATE projects
+             SET location_id = ?
+             WHERE id = ?",
+            [
+                $locationId,
+                $projectId
+            ]
+        );
+
+        $this->db->commit();
+
+        return $projectId;
+
+    } catch (Throwable $e) {
+
+        $this->db->rollBack();
+
+        throw $e;
     }
+}
 
     public function update($id, $data)
     {

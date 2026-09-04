@@ -14,7 +14,7 @@ class Projects extends Controller
         $this->view('projects/index', $data);
     }
 
-  
+
     public function create() // crete a new Project
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -36,13 +36,22 @@ class Projects extends Controller
                 'status'           => $_POST['status'],
                 'budget'           => (float)$_POST['budget']
             ];
-
             $projectModel = $this->model('Project');
 
-            if ($projectModel->create($data)) {
-                FlashHelper::success('Project created successfully.');
-                header('Location: ' . URLROOT . '/projects');
-                exit;
+            try {
+
+                $projectId = $projectModel->create($data);
+
+                if ($projectId) {
+                    FlashHelper::success('Project created successfully.');
+                    header('Location: ' . URLROOT . '/projects');
+                    exit;
+                }
+            } catch (Throwable $e) {
+
+                FlashHelper::error(
+                    $e->getMessage()
+                );
             }
 
             FlashHelper::error('Unable to create project.');
@@ -60,23 +69,23 @@ class Projects extends Controller
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-          $data = [
-    'customer_id'       => (int)$_POST['customer_id'],
-    'title'             => trim($_POST['title']),
-    'project_type'      => $_POST['project_type'],
-    'description'       => trim($_POST['description']),
-    'site_location'     => trim($_POST['site_location']),
-    'start_date'        => $_POST['start_date'] ?: null,
-    'deadline'          => $_POST['deadline'] ?: null,
-    'project_manager_id'=> !empty($_POST['project_manager_id'])
-                            ? (int)$_POST['project_manager_id']
-                            : null,
-    'contract_number'   => trim($_POST['contract_number']),
-    'project_code'      => trim($_POST['project_code']),
-    'priority'          => $_POST['priority'],
-    'status'            => $_POST['status'],
-    'budget'            => (float)$_POST['budget']
-];
+            $data = [
+                'customer_id'       => (int)$_POST['customer_id'],
+                'title'             => trim($_POST['title']),
+                'project_type'      => $_POST['project_type'],
+                'description'       => trim($_POST['description']),
+                'site_location'     => trim($_POST['site_location']),
+                'start_date'        => $_POST['start_date'] ?: null,
+                'deadline'          => $_POST['deadline'] ?: null,
+                'project_manager_id' => !empty($_POST['project_manager_id'])
+                    ? (int)$_POST['project_manager_id']
+                    : null,
+                'contract_number'   => trim($_POST['contract_number']),
+                'project_code'      => trim($_POST['project_code']),
+                'priority'          => $_POST['priority'],
+                'status'            => $_POST['status'],
+                'budget'            => (float)$_POST['budget']
+            ];
 
             if ($model->update($id, $data)) {
                 FlashHelper::success('Project updated successfully.');
@@ -165,62 +174,62 @@ class Projects extends Controller
     }
 
 
-public function ledger($project_id)
-{
-    AuthHelper::can('projects.view');
+    public function ledger($project_id)
+    {
+        AuthHelper::can('projects.view');
 
-    $projectModel = $this->model('Project');
-    $ledgerModel  = $this->model('ProjectLedger');
+        $projectModel = $this->model('Project');
+        $ledgerModel  = $this->model('ProjectLedger');
 
-    $project = $projectModel->getById($project_id);
+        $project = $projectModel->getById($project_id);
 
-    if (!$project) {
+        if (!$project) {
 
-        $_SESSION['error'] = "Project not found";
+            $_SESSION['error'] = "Project not found";
 
-        header(
-            "Location: " . URLROOT . "/projects"
-        );
+            header(
+                "Location: " . URLROOT . "/projects"
+            );
 
-        exit;
-    }
+            exit;
+        }
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | GET ALL ENTRIES FROM project_ledger
     |--------------------------------------------------------------------------
     */
 
-    $ledger = $ledgerModel->getLedger(
-        $project_id
-    );
+        $ledger = $ledgerModel->getLedger(
+            $project_id
+        );
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | GET FINAL SUMMARY
     |--------------------------------------------------------------------------
     */
 
-    $summary = $ledgerModel->getProjectSummary(
-        $project_id
-    );
+        $summary = $ledgerModel->getProjectSummary(
+            $project_id
+        );
 
-    $data = [
+        $data = [
 
-        'project' => $project,
+            'project' => $project,
 
-        'ledger' => $ledger,
+            'ledger' => $ledger,
 
-        'balance' => $summary->balance,
+            'balance' => $summary->balance,
 
-        'summary' => $summary
-    ];
+            'summary' => $summary
+        ];
 
-    $this->view(
-        'project-costs/ledger',
-        $data
-    );
-}
+        $this->view(
+            'project-costs/ledger',
+            $data
+        );
+    }
 
     // Show archived projects
     public function archived()
@@ -313,18 +322,18 @@ public function ledger($project_id)
 
                 if (move_uploaded_file($tmpName, $destination)) {
 
-                   $documentModel->create([
-    'project_id'     => $project_id,
-    'category'       => $_POST['category'] ?? 'other',
-    'title'          => $_POST['title'] ?? $originalName,
-    'description'    => $_POST['description'] ?? '',
-    'document_date'  => $_POST['document_date'] ?: null,
-    'original_name'  => $originalName,
-    'stored_name'    => $storedName,
-    'file_type'      => $type,
-    'file_size'      => $size,
-    'uploaded_by'    => $_SESSION['user_id'],
-]);
+                    $documentModel->create([
+                        'project_id'     => $project_id,
+                        'category'       => $_POST['category'] ?? 'other',
+                        'title'          => $_POST['title'] ?? $originalName,
+                        'description'    => $_POST['description'] ?? '',
+                        'document_date'  => $_POST['document_date'] ?: null,
+                        'original_name'  => $originalName,
+                        'stored_name'    => $storedName,
+                        'file_type'      => $type,
+                        'file_size'      => $size,
+                        'uploaded_by'    => $_SESSION['user_id'],
+                    ]);
 
                     $uploadedCount++;
                 }

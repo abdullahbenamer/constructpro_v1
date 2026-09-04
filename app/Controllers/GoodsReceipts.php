@@ -16,13 +16,13 @@ class GoodsReceipts extends Controller
 
             $db = $this->model('Supplier')->db; // any model has DB reference
 
-$service = new GoodsReceiptService(
-    $this->model('PurchaseOrder'),
-    $this->model('GoodsReceipt'),
-    $this->model('GoodsReceiptItem'),
-    $this->model('SupplierLedger'),
-    $this->model('InventoryService')
-);
+            $service = new GoodsReceiptService(
+                $this->model('PurchaseOrder'),
+                $this->model('GoodsReceipt'),
+                $this->model('GoodsReceiptItem'),
+                $this->model('SupplierLedger'),
+                $this->model('InventoryService')
+            );
             $service->receive($_POST);
 
             header('Location: ' . URLROOT . '/goodsreceipts');

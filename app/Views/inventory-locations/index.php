@@ -10,7 +10,7 @@
         <tr>
             <th>ID</th>
             <th>Code</th>
-            <th>Ware House</th>
+            <th>Warehouse</th>
             <th>Address/Location</th>
             <th>Storekeeper</th>
             <th>Mobile Number</th>
@@ -20,94 +20,91 @@
 
     <tbody>
 
-<?php if (empty($locations)): ?>
+        <?php if (empty($locations)): ?>
 
-    <tr>
-        <td colspan="7" class="text-center py-5">
+            <tr>
+                <td colspan="7" class="text-center py-5">
 
-            <i class="fas fa-warehouse fa-3x text-secondary mb-3"></i>
+                    <i class="fas fa-warehouse fa-3x text-secondary mb-3"></i>
 
-            <h5 class="mt-3 text-muted">
-                No inventory locations available.
-            </h5>
+                    <h5 class="mt-3 text-muted">
+                        No inventory locations available.
+                    </h5>
 
-            <p class="text-muted mb-3">
-                Add your first warehouse or storage location to begin managing inventory.
-            </p>
+                    <p class="text-muted mb-3">
+                        Add your first warehouse or storage location to begin managing inventory.
+                    </p>
 
-            <a href="<?= URLROOT ?>/inventorylocations/create"
-               class="btn btn-primary">
+                    <a href="<?= URLROOT ?>/inventorylocations/create"
+                        class="btn btn-primary">
 
-                <i class="fas fa-plus"></i>
-                Add Location
+                        <i class="fas fa-plus"></i>
+                        Add Location
 
-            </a>
+                    </a>
 
-        </td>
-    </tr>
+                </td>
+            </tr>
 
-<?php else: ?>
+        <?php else: ?>
 
-    <?php foreach ($locations as $loc) : ?>
+            <?php foreach ($locations as $loc) : ?>
 
-        <tr>
+                <tr>
 
-            <td><?= $loc->id ?></td>
+                    <td><?= $loc->id ?></td>
 
-            <td>
-                <a href="<?= URLROOT ?>/inventorylocations/details/<?= $loc->id ?>">
-                    <?= htmlspecialchars($loc->code) ?>
-                </a>
-            </td>
+                    <td>
+                        <a href="<?= URLROOT ?>/inventorylocations/details/<?= $loc->id ?>">
+                            <?= htmlspecialchars($loc->code) ?>
+                        </a>
+                    </td>
 
-            <td><?= htmlspecialchars($loc->name) ?></td>
+                    <td><?= htmlspecialchars($loc->name) ?></td>
+                    <td><?= htmlspecialchars($loc->address ?? '') ?></td>
+                    <td><?= htmlspecialchars($loc->mobile ?? '') ?></td>
+                    <td><?= htmlspecialchars($loc->storekeeper ?? '') ?></td>
 
-            <td><?= htmlspecialchars($loc->notes) ?></td>
+                    <td>
 
-            <td><?= htmlspecialchars($loc->storekeeper) ?></td>
+                        <a href="<?= URLROOT ?>/inventorylocations/edit/<?= $loc->id ?>"
+                            class="btn btn-sm btn-warning">
+                            Edit
+                        </a>
 
-            <td><?= htmlspecialchars($loc->mobile) ?></td>
+                        <?php if ($loc->total_stock <= 0): ?>
 
-            <td>
+                            <a href="<?= URLROOT ?>/inventorylocations/delete/<?= $loc->id ?>"
+                                class="btn btn-sm btn-outline-danger"
+                                onclick="return confirm('Are you sure you want to delete this location? This action cannot be undone.')">
 
-                <a href="<?= URLROOT ?>/inventorylocations/edit/<?= $loc->id ?>"
-                   class="btn btn-sm btn-warning">
-                    Edit
-                </a>
+                                <i class="bi bi-trash"></i>
+                                Delete
 
-               <?php if ($loc->total_stock <= 0): ?>
+                            </a>
 
-    <a href="<?= URLROOT ?>/inventorylocations/delete/<?= $loc->id ?>"
-       class="btn btn-sm btn-outline-danger"
-       onclick="return confirm('Are you sure you want to delete this location? This action cannot be undone.')">
+                        <?php else: ?>
 
-        <i class="bi bi-trash"></i>
-        Delete
+                            <button type="button"
+                                class="btn btn-sm btn-warning"
+                                disabled
+                                title="This location cannot be deleted because it currently contains stock.">
 
-    </a>
+                                <i class="bi bi-box-seam"></i>
+                                [Contains Stock] <?= number_format($loc->total_stock, 2) ?> Items.
 
-<?php else: ?>
+                            </button>
 
-    <button type="button"
-            class="btn btn-sm btn-warning"
-            disabled
-            title="This location cannot be deleted because it currently contains stock.">
+                        <?php endif; ?>
 
-        <i class="bi bi-box-seam"></i>
-      [Contains Stock] <?= number_format($loc->total_stock, 2) ?> Items.
+                    </td>
 
-    </button>
+                </tr>
 
-<?php endif; ?>
+            <?php endforeach; ?>
 
-            </td>
+        <?php endif; ?>
 
-        </tr>
-
-    <?php endforeach; ?>
-
-<?php endif; ?>
-
-</tbody>
+    </tbody>
 
 </table>

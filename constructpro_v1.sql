@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 03, 2026 at 12:22 PM
+-- Generation Time: Sep 04, 2026 at 07:16 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -344,7 +344,8 @@ CREATE TABLE `inventory_locations` (
 INSERT INTO `inventory_locations` (`id`, `code`, `name`, `notes`, `address`, `storekeeper_id`, `mobile`, `created_at`) VALUES
 (1, 'MAIN WH', 'MAIN WAREHOUSE', 'Central Main Warehouse', 'Central Main Warehouse', 12, '092609876', '2026-06-12 06:27:59'),
 (2, 'TAJORA', 'TAJORA WH', 'مخزن النشيع', 'مخزن النشيع', 12, '098723654', '2026-06-12 06:27:59'),
-(3, 'JANZOUR', 'JANZOUR WAREHOUSE', 'Janzour Center', 'Janzour Center', 15, '0942787698', '2026-06-12 06:27:59');
+(3, 'JANZOUR', 'JANZOUR WAREHOUSE', 'Janzour Center', 'Janzour Center', 15, '0942787698', '2026-06-12 06:27:59'),
+(21, 'PRJ-46', 'PROJECT - 46# New Office Building', 'Project inventory location', 'Tarhouna the mountains', NULL, '', '2026-09-04 04:59:13');
 
 -- --------------------------------------------------------
 
@@ -769,6 +770,7 @@ INSERT INTO `permissions` (`id`, `name`, `description`) VALUES
 
 CREATE TABLE `projects` (
   `id` int(11) NOT NULL,
+  `location_id` int(11) DEFAULT NULL,
   `customer_id` int(11) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   `project_type` varchar(50) DEFAULT NULL,
@@ -790,8 +792,9 @@ CREATE TABLE `projects` (
 -- Dumping data for table `projects`
 --
 
-INSERT INTO `projects` (`id`, `customer_id`, `title`, `project_type`, `description`, `deadline`, `status`, `budget`, `created_at`, `is_archived`, `site_location`, `start_date`, `project_manager_id`, `contract_number`, `project_code`, `priority`) VALUES
-(45, 5, 'Construction of XYZ Building', 'construction', 'Construction of XYZ Building including facilities', '2026-12-24', 'planning', 1750000.00, '2026-09-01 09:55:13', 0, 'South Tripoli', '2026-08-15', 14, 'CT-000119', 'ABC-001', 'medium');
+INSERT INTO `projects` (`id`, `location_id`, `customer_id`, `title`, `project_type`, `description`, `deadline`, `status`, `budget`, `created_at`, `is_archived`, `site_location`, `start_date`, `project_manager_id`, `contract_number`, `project_code`, `priority`) VALUES
+(45, NULL, 5, 'Construction of XYZ Building', 'construction', 'Construction of XYZ Building including facilities', '2026-12-24', 'planning', 1750000.00, '2026-09-01 09:55:13', 0, 'South Tripoli', '2026-08-15', 14, 'CT-000119', 'ABC-001', 'medium'),
+(46, 21, 2, 'New Office Building', 'construction', 'Renovating and extending the New Office Building', '2026-10-22', 'planning', 500000.00, '2026-09-04 04:59:13', 0, 'Tarhouna the mountains', '2026-09-07', 1, 'NOB-2026', 'NOB-1773', 'medium');
 
 -- --------------------------------------------------------
 
@@ -959,7 +962,7 @@ CREATE TABLE `purchase_orders` (
 
 INSERT INTO `purchase_orders` (`id`, `po_number`, `supplier_id`, `project_id`, `requisition_id`, `target_warehouse_id`, `delivery_method`, `status`, `order_date`, `expected_date`, `subtotal`, `tax_amount`, `discount_amount`, `total_amount`, `notes`, `created_by`, `approved_by`, `approved_at`, `received_at`, `created_at`, `receiving_status`) VALUES
 (52, 'PO-260902155733', 4, NULL, NULL, NULL, 'WAREHOUSE', 'draft', '2026-09-02', '2026-09-09', 1250.00, 0.00, 0.00, 1250.00, 'Created from Resource Requisition REQ-260902145633', 1, NULL, NULL, NULL, '2026-09-02 13:57:33', 'OPEN'),
-(53, 'PO-260903121940', 3, 45, 39, 3, 'DIRECT_TO_PROJECT_SITE', 'draft', '2026-09-03', '2026-09-10', 300.00, 0.00, 0.00, 300.00, 'Created from Resource Requisition REQ-260903072306', 1, NULL, NULL, NULL, '2026-09-03 10:19:40', 'OPEN');
+(53, 'PO-260903121940', 3, 45, 39, 3, 'DIRECT_TO_PROJECT_SITE', 'approved', '2026-09-03', '2026-09-10', 300.00, 0.00, 0.00, 300.00, 'Created from Resource Requisition REQ-260903072306', 1, 1, '2026-09-03 15:35:58', NULL, '2026-09-03 10:19:40', 'OPEN');
 
 -- --------------------------------------------------------
 
@@ -1639,7 +1642,9 @@ CREATE TABLE `user_locations` (
 INSERT INTO `user_locations` (`user_id`, `location_id`) VALUES
 (1, 2),
 (1, 3),
-(1, 4);
+(1, 4),
+(6, 21),
+(8, 21);
 
 --
 -- Indexes for dumped tables
@@ -1782,7 +1787,8 @@ ALTER TABLE `permissions`
 ALTER TABLE `projects`
   ADD PRIMARY KEY (`id`),
   ADD KEY `project_customer_fk` (`customer_id`),
-  ADD KEY `project_manager_fk` (`project_manager_id`);
+  ADD KEY `project_manager_fk` (`project_manager_id`),
+  ADD KEY `fk_projects_location` (`location_id`);
 
 --
 -- Indexes for table `project_advances`
@@ -2093,7 +2099,7 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `inventory_locations`
 --
 ALTER TABLE `inventory_locations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `inventory_location_stock`
@@ -2135,7 +2141,7 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `project_advances`
@@ -2406,6 +2412,7 @@ ALTER TABLE `inventory_transfers`
 -- Constraints for table `projects`
 --
 ALTER TABLE `projects`
+  ADD CONSTRAINT `fk_projects_location` FOREIGN KEY (`location_id`) REFERENCES `inventory_locations` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `project_customer_fk` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `project_manager_fk` FOREIGN KEY (`project_manager_id`) REFERENCES `users` (`id`);
 
