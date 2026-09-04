@@ -299,10 +299,26 @@ public function items($po_id)
 public function getOpenPurchaseOrders()
 {
     return $this->db->query("
-        SELECT po.*, s.company_name
+        SELECT
+            po.*,
+            s.company_name,
+
+            CASE
+                WHEN po.delivery_method = 'DIRECT_TO_PROJECT_SITE'
+                    THEN p.location_id
+                ELSE po.target_warehouse_id
+            END AS default_location_id
+
         FROM purchase_orders po
-        LEFT JOIN suppliers s ON s.id = po.supplier_id
+
+        LEFT JOIN suppliers s
+            ON s.id = po.supplier_id
+
+        LEFT JOIN projects p
+            ON p.id = po.project_id
+
         WHERE po.status IN ('approved', 'partial')
+
         ORDER BY po.id DESC
     ")->fetchAll();
 }

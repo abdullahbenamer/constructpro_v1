@@ -18,7 +18,8 @@
                 <option
                     value="<?= $po->id ?>"
                     data-supplier-id="<?= $po->supplier_id ?>"
-                    data-supplier-name="<?= htmlspecialchars($po->company_name) ?>">
+                    data-supplier-name="<?= htmlspecialchars($po->company_name) ?>"
+                    data-default-location-id="<?= $po->default_location_id ?? '' ?>">
                     <?= $po->po_number ?>
                     -
                     <?= htmlspecialchars($po->company_name) ?>
@@ -28,24 +29,24 @@
 
         </select>
     </div>
- <div id="poItemInfo" class="alert alert-info d-none">
+    <div id="poItemInfo" class="alert alert-info d-none">
 
-    <strong>Item:</strong>
-    <span id="itemName"></span><br>
+        <strong>Item:</strong>
+        <span id="itemName"></span><br>
 
-    <strong>SKU:</strong>
-    <span id="itemSku"></span><br>
+        <strong>SKU:</strong>
+        <span id="itemSku"></span><br>
 
-    <strong>Ordered:</strong>
-    <span id="orderedQty"></span><br>
+        <strong>Ordered:</strong>
+        <span id="orderedQty"></span><br>
 
-    <strong>Received:</strong>
-    <span id="receivedQty"></span><br>
+        <strong>Received:</strong>
+        <span id="receivedQty"></span><br>
 
-    <strong>Remaining:</strong>
-    <span id="remainingQty"></span>
+        <strong>Remaining:</strong>
+        <span id="remainingQty"></span>
 
-</div>
+    </div>
     <div class="row">
         <!-- BARCODE -->
         <div class="col-md-6 mb-3">
@@ -70,11 +71,11 @@
             </select>
 
         </div>
-        <!-- Item Location -->
+        <!-- Delivery Location -->
         <div class="mb-3">
             <label class="form-label">Receive To Location</label>
 
-            <select name="location_id" class="form-select" required>
+            <select name="location_id" id="locationSelect" class="form-select" required>
 
                 <option value="">-- Select Location --</option>
 
@@ -131,7 +132,7 @@
 
             <label class="form-label">Invoice / Reference</label>
 
-            <input type="text" name="reference" value="GRN-<?= date('ymd-His') ?>"class="form-control" required>
+            <input type="text" name="reference" value="GRN-<?= date('ymd-His') ?>" class="form-control" required>
 
         </div>
 
@@ -158,60 +159,64 @@
     const poItemSelect = document.getElementById('poItemSelect');
     const inventoryId = document.getElementById('inventory_id');
     const barcodeInput = document.getElementById('barcodeInput');
+    const locationSelect = document.getElementById('locationSelect');
 
     let currentPOItems = [];
 
-  function showPOItem(item) {
+    function showPOItem(item) {
 
-    inventoryId.value = item.inventory_id;
+        inventoryId.value = item.inventory_id;
 
-    document.querySelector('[name="unit_cost"]').value =
-        item.unit_cost;
+        document.querySelector('[name="unit_cost"]').value =
+            item.unit_cost;
 
-    const ordered =
-        parseFloat(item.quantity);
+        const ordered =
+            parseFloat(item.quantity);
 
-    const received =
-        parseFloat(item.received_quantity || 0);
+        const received =
+            parseFloat(item.received_quantity || 0);
 
-    const remaining =
-        ordered - received;
+        const remaining =
+            ordered - received;
 
-    document.getElementById('itemName').textContent =
-        item.name;
+        document.getElementById('itemName').textContent =
+            item.name;
 
-    document.getElementById('itemSku').textContent =
-        item.sku || 'N/A';
+        document.getElementById('itemSku').textContent =
+            item.sku || 'N/A';
 
-    document.getElementById('orderedQty').textContent =
-        ordered;
+        document.getElementById('orderedQty').textContent =
+            ordered;
 
-    document.getElementById('receivedQty').textContent =
-        received;
+        document.getElementById('receivedQty').textContent =
+            received;
 
-    document.getElementById('remainingQty').textContent =
-        remaining;
+        document.getElementById('remainingQty').textContent =
+            remaining;
 
-    document.getElementById('poItemInfo')
-        .classList.remove('d-none');
+        document.getElementById('poItemInfo')
+            .classList.remove('d-none');
 
-    document.querySelector('[name="quantity"]')
-        .addEventListener('input', function() {
-            this.value = Math.floor(this.value);
-        });
+        document.querySelector('[name="quantity"]')
+            .addEventListener('input', function() {
+                this.value = Math.floor(this.value);
+            });
 
-    document.querySelector('[name="quantity"]').value =
-        remaining;
+        document.querySelector('[name="quantity"]').value =
+            remaining;
 
-    document.querySelector('[name="quantity"]').max =
-        remaining;
-}
+        document.querySelector('[name="quantity"]').max =
+            remaining;
+    }
 
 
     poSelect.addEventListener('change', function() {
 
         const selected =
             this.options[this.selectedIndex];
+
+        locationSelect.value =
+            selected.dataset.defaultLocationId || '';
 
         document.getElementById('supplier_id').value =
             selected.dataset.supplierId || '';
