@@ -50,27 +50,18 @@
             <td>
                 <?= htmlspecialchars($supplier->phone ?? '-') ?>
             </td>
-
             <td>
                 <?= htmlspecialchars($supplier->email ?? '-') ?>
             </td>
-
             <td>
-
-                <a href="<?= URLROOT ?>/suppliers/details/<?= $supplier->id ?>"
+                <a href="<?= URLROOT ?>/suppliers/info/<?= $supplier->id ?>"
                    class="btn btn-sm btn-info">
-
-                    View
-
+                    View Profile
                 </a>
-
                 <a href="<?= URLROOT ?>/suppliers/edit/<?= $supplier->id ?>"
                    class="btn btn-sm btn-warning">
-
                     Edit
-
                 </a>
-
                 <a href="<?= URLROOT ?>/suppliers/delete/<?= $supplier->id ?>"
                    class="btn btn-sm btn-danger"
                    onclick="return confirm('Delete supplier?')">
