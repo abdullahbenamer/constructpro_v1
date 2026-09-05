@@ -74,8 +74,6 @@ class GoodsReceiptService extends BaseService
                 );
             }
 
-            ///////////////////////////////////////////////////////////
-
             /*
 |--------------------------------------------------------------------------
 | 2. VALIDATE PURCHASE ORDER
@@ -172,7 +170,7 @@ class GoodsReceiptService extends BaseService
                         ' units remain on the purchase order.'
                 );
             }
-         
+
             /*
             |--------------------------------------------------------------------------
             | 5. CALCULATE TOTAL
@@ -273,7 +271,7 @@ class GoodsReceiptService extends BaseService
                 $supplierId,
 
                 'reference' =>
-                'GRN-' . $grnId,
+                'GRN-' . $grnId . ' / PO-' . $po->po_number,
 
                 'notes' =>
                 $data['notes'] ?? '',
