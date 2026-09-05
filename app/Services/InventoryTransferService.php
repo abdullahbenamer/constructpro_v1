@@ -18,23 +18,7 @@ class InventoryTransferService extends Model
         $this->transferModel = $transferModel;
     }
 
-    /**
-     * Receive stock into a warehouse.
-     */
-    // public function receive(array $data): bool
-    // {
-    //     throw new Exception('Not implemented');
-    // }
-
-    /**
-     * Issue stock from a warehouse.
-     */
-    // public function issue(array $data): bool
-    // {
-    //     throw new Exception('Not implemented');
-    // }
-
-    /**
+       /**
      * Transfer stock between warehouses.
      */
   public function transfer(array $data): int
@@ -347,15 +331,7 @@ public function reverse(int $transferId): array
     }
 }
 
-    /**
-     * Inventory adjustment.
-     */
-    // public function adjust(array $data): bool
-    // {
-    //     throw new Exception('Not implemented');
-    // }
-
-    /**
+       /**
      * Current available quantity.
      */
     public function available(

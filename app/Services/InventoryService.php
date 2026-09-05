@@ -281,9 +281,6 @@ public function issue(array $data): bool
 }
 
     /**
-     * Inventory adjustment.
-     */
-    /**
  * Inventory adjustment.
  *
  * Positive quantity = increase stock
