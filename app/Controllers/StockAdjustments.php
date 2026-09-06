@@ -2,7 +2,7 @@
 
 class StockAdjustments extends Controller
 {
-    public function create()
+    public function create($inventoryId = null)
     {
         AuthHelper::can('inventory.adjustment.create');
 
@@ -43,8 +43,8 @@ class StockAdjustments extends Controller
 
                 header(
                     'Location: ' .
-                    URLROOT .
-                    '/stockadjustments/create'
+                        URLROOT .
+                        '/stockadjustments/create'
                 );
 
                 exit;
@@ -57,8 +57,8 @@ class StockAdjustments extends Controller
 
                 header(
                     'Location: ' .
-                    URLROOT .
-                    '/stockadjustments/create'
+                        URLROOT .
+                        '/stockadjustments/create'
                 );
 
                 exit;
@@ -77,8 +77,8 @@ class StockAdjustments extends Controller
 
                 header(
                     'Location: ' .
-                    URLROOT .
-                    '/stockadjustments/create'
+                        URLROOT .
+                        '/stockadjustments/create'
                 );
 
                 exit;
@@ -91,8 +91,8 @@ class StockAdjustments extends Controller
 
                 header(
                     'Location: ' .
-                    URLROOT .
-                    '/stockadjustments/create'
+                        URLROOT .
+                        '/stockadjustments/create'
                 );
 
                 exit;
@@ -115,8 +115,8 @@ class StockAdjustments extends Controller
 
                 header(
                     'Location: ' .
-                    URLROOT .
-                    '/stockadjustments/create'
+                        URLROOT .
+                        '/stockadjustments/create'
                 );
 
                 exit;
@@ -132,8 +132,8 @@ class StockAdjustments extends Controller
 
                 header(
                     'Location: ' .
-                    URLROOT .
-                    '/stockadjustments/create'
+                        URLROOT .
+                        '/stockadjustments/create'
                 );
 
                 exit;
@@ -183,19 +183,19 @@ class StockAdjustments extends Controller
                 $service->adjust([
 
                     'inventory_id' =>
-                        $inventoryId,
+                    $inventoryId,
 
                     'location_id' =>
-                        $locationId,
+                    $locationId,
 
                     'delta' =>
-                        $delta,
+                    $delta,
 
                     'reference' =>
-                        $reference,
+                    $reference,
 
                     'notes' =>
-                        $reason .
+                    $reason .
                         (
                             $notes !== ''
                             ? ' - ' . $notes
@@ -203,23 +203,22 @@ class StockAdjustments extends Controller
                         ),
 
                     'created_by' =>
-                        $_SESSION['user_id'] ?? null
+                    $_SESSION['user_id'] ?? null
 
                 ]);
 
                 FlashHelper::success(
                     'Stock adjustment posted successfully. ' .
-                    'Reference: ' . $reference
+                        'Reference: ' . $reference
                 );
 
                 header(
                     'Location: ' .
-                    URLROOT .
-                    '/inventory'
+                        URLROOT .
+                        '/inventory'
                 );
 
                 exit;
-
             } catch (Throwable $e) {
 
                 FlashHelper::error(
@@ -228,8 +227,8 @@ class StockAdjustments extends Controller
 
                 header(
                     'Location: ' .
-                    URLROOT .
-                    '/stockadjustments/create'
+                        URLROOT .
+                        '/stockadjustments/create'
                 );
 
                 exit;
@@ -247,6 +246,9 @@ class StockAdjustments extends Controller
 
         $data['locations'] =
             $locationModel->getAll();
+
+        $data['selected_inventory_id'] =
+            (int)($inventoryId ?? 0);
 
         $this->view(
             'stock-adjustments/create',
@@ -314,13 +316,13 @@ class StockAdjustments extends Controller
         echo json_encode([
 
             'physical_qty' =>
-                $physicalQty,
+            $physicalQty,
 
             'reserved_qty' =>
-                $reservedQty,
+            $reservedQty,
 
             'available_qty' =>
-                $availableQty
+            $availableQty
 
         ]);
     }
