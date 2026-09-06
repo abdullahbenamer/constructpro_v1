@@ -32,7 +32,15 @@
                 Edit Supplier
 
             </a>
+           <a
+    href="<?= URLROOT ?>/suppliers/ledger/<?= $supplier->id ?>"
+    class="btn btn-dark"
+    target="_blank">
 
+    <i class="fas fa-print me-1"></i>
+    Print Supplier Ledger
+
+</a>
             <a href="<?= URLROOT ?>/suppliers"
                 class="btn btn-secondary shadow-sm">
 
@@ -163,7 +171,7 @@
 
                             <h4 class="fw-bold mt-2">
 
-                              <?= number_format($summary['ordered_value'] ?? 0, 2, '.', ',') ?>
+                                <?= number_format($summary['ordered_value'] ?? 0, 2, '.', ',') ?>
 
                             </h4>
 
@@ -193,12 +201,12 @@
                                 Outstanding Balance
 
                             </small>
-                          <h4 class="fw-bold mt-2 text-danger"> 
-                          <?= number_format($summary['balance'] ?? 0, 2, '.', ',') ?> </h4>
+                            <h4 class="fw-bold mt-2 text-danger">
+                                <?= number_format($summary['balance'] ?? 0, 2, '.', ',') ?> </h4>
                         </div>
                         <div class="align-self-center">
 
-                    <i class="fas fa-calendar-check fa-3x text-danger opacity-50"></i>
+                            <i class="fas fa-calendar-check fa-3x text-danger opacity-50"></i>
 
                         </div>
 
@@ -491,8 +499,8 @@
                     </tbody>
                     <tfoot class="table-light">
                         <tr>
-                            <th colspan="2" class="text-primary fs-5"> Total Purchase Order Value </th> 
-<th colspan="2" class="text-end text-primary fs-5"> <?= number_format($summary['ordered_value'], 2) ?> </th>
+                            <th colspan="2" class="text-primary fs-5"> Total Purchase Order Value </th>
+                            <th colspan="2" class="text-end text-primary fs-5"> <?= number_format($summary['ordered_value'], 2) ?> </th>
 
                         </tr>
                     </tfoot>
@@ -671,7 +679,7 @@
                                     <tr>
                                         <td colspan="7" class="text-center text-muted py-4">
                                             <i class="fas fa-folder-open fa-2x mb-2"></i>
-                                    <br>
+                                            <br>
                                             No ledger entries found.
                                         </td>
                                     </tr>

@@ -209,4 +209,97 @@ public function info($supplier_id)
 
     $this->view('suppliers/supplier_info', $data);
 }
+
+public function ledger($supplier_id)
+{
+    AuthHelper::can('suppliers.view');
+
+    $supplierModel = $this->model('Supplier');
+    $ledgerModel   = $this->model('SupplierLedger');
+
+    $supplier =
+        $supplierModel->getById($supplier_id);
+
+    if (!$supplier) {
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/suppliers'
+        );
+
+        exit;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | GET SUPPLIER LEDGER
+    |--------------------------------------------------------------------------
+    */
+
+    $ledger =
+        $ledgerModel->getStatement(
+            $supplier_id
+        );
+
+    /*
+    |--------------------------------------------------------------------------
+    | SUMMARY
+    |--------------------------------------------------------------------------
+    */
+
+    $totalDebit  = 0;
+    $totalCredit = 0;
+
+    foreach ($ledger as $row) {
+
+        $totalDebit +=
+            (float)$row->debit;
+
+        $totalCredit +=
+            (float)$row->credit;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | FINAL BALANCE
+    |--------------------------------------------------------------------------
+    */
+
+    $balance =
+        $totalDebit -
+        $totalCredit;
+
+    /*
+    |--------------------------------------------------------------------------
+    | VIEW DATA
+    |--------------------------------------------------------------------------
+    */
+
+    $data = [
+
+        'supplier'     => $supplier,
+
+        'ledger'       => $ledger,
+
+        'total_debit'  => $totalDebit,
+
+        'total_credit' => $totalCredit,
+
+        'balance'      => $balance
+
+    ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | PRINTABLE REPORT
+    |--------------------------------------------------------------------------
+    */
+
+    $this->view(
+        'suppliers/ledger_report',
+        $data,
+        false
+    );
+}
 }

@@ -153,5 +153,35 @@ public function getStatement($supplierId, $from = null, $to = null)
     return $statement;
 }
 
+public function getTotalOutstanding()
+{
+    $result = $this->db->query("
+        SELECT
+            COALESCE(
+                SUM(
+                    CASE
+                        WHEN balance > 0
+                        THEN balance
+                        ELSE 0
+                    END
+                ),
+                0
+            ) AS total_outstanding
+        FROM (
+            SELECT
+                supplier_id,
+                SUM(
+                    CASE
+                        WHEN direction = 'DEBIT'
+                        THEN amount
+                        ELSE -amount
+                    END
+                ) AS balance
+            FROM supplier_ledger
+            GROUP BY supplier_id
+        ) AS supplier_balances
+    ")->fetch();
 
+    return (float)($result->total_outstanding ?? 0);
+}
 }

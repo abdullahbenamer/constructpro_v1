@@ -15,6 +15,7 @@ class Dashboard extends Controller
         $costModel      = $this->model('ProjectCost');
         $financeModel   = $this->model('ProjectAdvance');
         $reportModel    = $this->model('Report');
+        $supplierLedgerModel = $this->model('SupplierLedger');
         $portfolio      = $reportModel->getPortfolioDashboard();
         $data['portfolio'] = $portfolio;
 
@@ -64,7 +65,7 @@ class Dashboard extends Controller
         $data['customers'] =
             $customerModel->getCustomers('active');
 
-       
+
         // ==================================================
         // GLOBAL FINANCE
         // ==================================================
@@ -78,6 +79,9 @@ class Dashboard extends Controller
         $data['global_balance'] =
             $data['global_advances'] -
             $data['global_costs'];
+
+        $data['total_supplier_outstanding'] =
+            $supplierLedgerModel->getTotalOutstanding();
 
         // ==================================================
         // ERP FINANCIAL KPIs
