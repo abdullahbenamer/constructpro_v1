@@ -33,22 +33,19 @@ class InventoryMovementModel extends Model
             die("Invalid location");
         }
 
-        if ($quantity <= 0) {
+        if ($type === 'ADJUSTMENT') {
+
+            if ($quantity == 0) {
+                die("Invalid adjustment quantity");
+            }
+        } elseif ($quantity <= 0) {
+
             die("Invalid quantity");
         }
 
         if (!in_array($type, ['IN', 'OUT', 'ADJUSTMENT'])) {
             die("Invalid movement type");
         }
-
-        /*
-|--------------------------------------------------------------------------
-| Balance After Movement
-|--------------------------------------------------------------------------
-| Stock has already been updated by the Inventory Engine.
-| Therefore we simply read the current location balance.
-|--------------------------------------------------------------------------
-*/
 
         /*
 |--------------------------------------------------------------------------
@@ -90,26 +87,12 @@ class InventoryMovementModel extends Model
         $global_balance_after =
             (float)$inventory->quantity;
 
-        /*
-|-----------------------------------------------------------------
-| Adjustment movements
-|-----------------------------------------------------------------
-| For adjustments, store the movement quantity as the difference.
-|-----------------------------------------------------------------
-*/
-
-        if ($type === 'ADJUSTMENT') {
-
-            $previousBalance = $new_balance;
-
-            $quantity = $data['quantity'] - $previousBalance;
-        }
-        // =========================
+               // =========================
         // SAVE MOVEMENT
         // =========================
 
-      $this->db->query(
-    "INSERT INTO inventory_movements    
+        $this->db->query(
+            "INSERT INTO inventory_movements    
     (
         inventory_id,
         location_id,
@@ -123,19 +106,19 @@ class InventoryMovementModel extends Model
         created_by
     )
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-    [
-        $inventory_id,
-        $location_id,
-        $type,
-        $quantity,
-        $supplier_id,
-        $new_balance,
-        $global_balance_after,
-        $reference ?: null,
-        $notes ?: null,
-        $created_by
-    ]
-);
+            [
+                $inventory_id,
+                $location_id,
+                $type,
+                $quantity,
+                $supplier_id,
+                $new_balance,
+                $global_balance_after,
+                $reference ?: null,
+                $notes ?: null,
+                $created_by
+            ]
+        );
 
         return true;
     }
@@ -168,8 +151,8 @@ class InventoryMovementModel extends Model
     }
 
     public function getAllMovements()
-{
-    return $this->db->query("
+    {
+        return $this->db->query("
         SELECT 
             im.*,
 
@@ -194,7 +177,7 @@ class InventoryMovementModel extends Model
         ORDER BY im.created_at DESC
 
     ")->fetchAll();
-}
+    }
 
     public function getMovementsDetailed($inventory_id)
     {

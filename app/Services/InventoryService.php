@@ -309,6 +309,50 @@ public function adjust(array $data): bool
         }
 
         /*
+|--------------------------------------------------------------------------
+| CHECK ACTIVE RESERVATION
+|--------------------------------------------------------------------------
+| A stock decrease can Not consume quantities already reserved
+| for active reservations at this location.
+|--------------------------------------------------------------------------
+*/
+
+if ($delta < 0) {
+
+    $reservationModel =
+        new InventoryReservationModel();
+
+    $reservedQty =
+        $reservationModel->getReservedQuantity(
+            $inventoryId,
+            $locationId
+        );
+
+    $stock =
+        $this->stockModel->getStock(
+            $inventoryId,
+            $locationId
+        );
+
+    $physicalQty =
+        (float)($stock->quantity ?? 0);
+
+    $availableQty =
+        $physicalQty - $reservedQty;
+
+    if (abs($delta) > $availableQty) {
+
+        throw new Exception(
+            'Adjustment would exceed available stock. '
+            . 'Available after reservations: '
+            . number_format(
+                max(0, $availableQty),
+                2
+            )
+        );
+    }
+}
+        /*
         |--------------------------------------------------------------------------
         | ADJUST PHYSICAL STOCK
         |--------------------------------------------------------------------------
@@ -333,43 +377,36 @@ public function adjust(array $data): bool
             );
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | MOVEMENT TYPE
-        |--------------------------------------------------------------------------
-        */
+       
+  /*
+|--------------------------------------------------------------------------
+| RECORD MOVEMENT
+|--------------------------------------------------------------------------
+*/
 
-        $movementQuantity = abs($delta);
+$this->movementModel->addMovement([
 
-        /*
-        |--------------------------------------------------------------------------
-        | RECORD MOVEMENT
-        |--------------------------------------------------------------------------
-        */
+    'inventory_id' => $inventoryId,
 
-        $this->movementModel->addMovement([
+    'location_id' => $locationId,
 
-            'inventory_id' => $inventoryId,
+    'type' => 'ADJUSTMENT',
 
-            'location_id' => $locationId,
+    'quantity' => $delta,
 
-            'type' => 'ADJUSTMENT',
+    'unit_cost' => (float)($data['unit_cost'] ?? 0),
 
-            'quantity' => $movementQuantity,
+    'supplier_id' => $data['supplier_id'] ?? null,
 
-            'unit_cost' => (float)($data['unit_cost'] ?? 0),
+    'reference' => $data['reference'] ?? null,
 
-            'supplier_id' => $data['supplier_id'] ?? null,
+    'notes' => $data['notes'] ?? 'Inventory adjustment',
 
-            'reference' => $data['reference'] ?? null,
+    'created_by' =>
+        $data['created_by']
+        ?? $this->currentUserId()
 
-            'notes' => $data['notes'] ?? 'Inventory adjustment',
-
-            'created_by' =>
-                $data['created_by']
-                ?? $this->currentUserId()
-
-        ]);
+]);
 
         return true;
     });

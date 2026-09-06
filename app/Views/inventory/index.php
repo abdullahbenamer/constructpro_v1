@@ -425,6 +425,12 @@ foreach ($stock as $inventory) {
 
                             </a>
 
+                               <a href="<?= URLROOT ?>/stockadjustments/create/<?= $inventory->id ?>" class="btn btn-success">
+
+                                Adjust Qty
+
+                            </a>
+
                             <a href="<?= URLROOT ?>/inventory/delete/<?= $inventory->id ?>" class="btn btn-danger" onclick="return confirm('Delete item?')">
 
                                 Delete Item
