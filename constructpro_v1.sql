@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 07, 2026 at 09:51 AM
+-- Generation Time: Sep 07, 2026 at 07:02 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -363,7 +363,11 @@ INSERT INTO `inventory_locations` (`id`, `code`, `name`, `notes`, `address`, `st
 (3, 'JANZOUR', 'JANZOUR WAREHOUSE', 'Janzour Center', 'Janzour Center', 15, '0942787698', '2026-06-12 06:27:59'),
 (21, 'PRJ-46', 'PROJECT - 46# New Office Building', 'Project inventory location', 'Tarhouna the mountains', NULL, '', '2026-09-04 04:59:13'),
 (22, 'PRJ-45', 'PROJECT - 45# Construction of XYZ Building', 'Project inventory location', 'South Tripoli, Ain Zara', 15, '0987654236', '2026-09-04 09:37:33'),
-(23, 'PRJ-47', 'PROJECT - 47# Maintaining The Corniche', 'Project inventory location', 'Musrata North', NULL, NULL, '2026-09-04 10:36:10');
+(23, 'PRJ-47', 'PROJECT - 47# Maintaining The Corniche', 'Project inventory location', 'Musrata North', NULL, NULL, '2026-09-04 10:36:10'),
+(24, 'PRJ-48', 'PROJECT - 48# Building Studio in Janzour', 'Project inventory location', 'Sara, Iloilo', NULL, NULL, '2026-09-07 12:43:08'),
+(25, 'PRJ-49', 'PROJECT - 49# Our Tiny house in Sara', 'Project inventory location', 'Sara, Iloilo', NULL, NULL, '2026-09-07 16:32:52'),
+(26, 'PRJ-50', 'PROJECT - 50# Bamboo House In Aldeguer', 'Project inventory location', 'Ajuy, Tipacla', NULL, NULL, '2026-09-07 16:36:35'),
+(27, 'PRJ-51', 'PROJECT - 51# a test project', 'Project inventory location', 'Alzahra Tripoli', NULL, NULL, '2026-09-07 16:59:38');
 
 -- --------------------------------------------------------
 
@@ -788,7 +792,11 @@ CREATE TABLE `projects` (
 INSERT INTO `projects` (`id`, `location_id`, `customer_id`, `title`, `project_type`, `description`, `deadline`, `status`, `budget`, `created_at`, `is_archived`, `site_location`, `start_date`, `project_manager_id`, `contract_number`, `project_code`, `priority`) VALUES
 (45, 22, 5, 'Construction of XYZ Building', 'construction', 'Construction of XYZ Building including facilities', '2026-12-24', 'planning', 1750000.00, '2026-09-01 09:55:13', 0, 'South Tripoli', '2026-08-15', 14, 'CT-000119', 'ABC-001', 'medium'),
 (46, 21, 2, 'New Office Building', 'construction', 'Renovating and extending the New Office Building', '2026-10-22', 'planning', 500000.00, '2026-09-04 04:59:13', 0, 'Tarhouna the mountains', '2026-09-07', 1, 'NOB-2026', 'NOB-1773', 'medium'),
-(47, 23, 5, 'Maintaining The Corniche', 'maintenance', '', '2026-11-06', 'planning', 600000.00, '2026-09-04 10:36:10', 0, 'Musrata North', '2026-09-11', 1, '26009', 'MTC-7864', 'medium');
+(47, 23, 5, 'Maintaining The Corniche', 'maintenance', '', '2026-11-06', 'planning', 600000.00, '2026-09-04 10:36:10', 0, 'Musrata North', '2026-09-11', 1, '26009', 'MTC-7864', 'medium'),
+(48, 24, 2, 'Building Studio in Janzour', 'construction', 'Building Studio in Janzour for 76000 LYD', '2026-11-08', 'planning', 79000.00, '2026-09-07 12:43:08', 0, 'Sara, Iloilo', '2026-09-09', 1, '26907', 'Proj-BSJ22', 'critical'),
+(49, 25, 5, 'Our Tiny house in Sara', 'construction', 'Tiny house in Sara', '2026-11-12', 'planning', 600000.00, '2026-09-07 16:32:52', 0, 'Sara, Iloilo', '2026-09-13', 1, '5548', 'OTH-147', 'high'),
+(50, 26, 2, 'Bamboo House In Aldeguer', 'construction', 'Bamboo House In Aldeguer', '2026-10-15', 'planning', 40000.00, '2026-09-07 16:36:35', 0, 'Ajuy, Tipacla', '2026-09-14', 14, '111190', 'bamboo-26', 'medium'),
+(51, 27, 2, 'a test project', 'maintenance', 'a test project', '2026-10-29', 'in_progress', 300000.00, '2026-09-07 16:59:38', 0, 'Alzahra Tripoli, north', '2026-09-16', 1, 'con-1733', 'New-246', 'critical');
 
 -- --------------------------------------------------------
 
@@ -871,6 +879,37 @@ CREATE TABLE `project_ledger` (
   `balance_after` decimal(15,2) DEFAULT 0.00,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `project_scopes`
+--
+
+CREATE TABLE `project_scopes` (
+  `id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `scope` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `project_scopes`
+--
+
+INSERT INTO `project_scopes` (`id`, `project_id`, `scope`) VALUES
+(8, 48, 'Architectural'),
+(7, 48, 'Civil'),
+(9, 48, 'MEP'),
+(11, 49, 'Architectural'),
+(10, 49, 'Civil'),
+(13, 49, 'MEP'),
+(12, 49, 'Structural'),
+(18, 50, 'Finishing'),
+(17, 50, 'Structural'),
+(22, 51, 'Civil'),
+(24, 51, 'Finishing'),
+(23, 51, 'MEP'),
+(25, 51, 'Telecommunications');
 
 -- --------------------------------------------------------
 
@@ -1794,6 +1833,13 @@ ALTER TABLE `project_ledger`
   ADD KEY `projectid_ledger-fk` (`project_id`);
 
 --
+-- Indexes for table `project_scopes`
+--
+ALTER TABLE `project_scopes`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uq_project_scope` (`project_id`,`scope`);
+
+--
 -- Indexes for table `purchase_items`
 --
 ALTER TABLE `purchase_items`
@@ -2056,7 +2102,7 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `inventory_locations`
 --
 ALTER TABLE `inventory_locations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `inventory_location_stock`
@@ -2092,7 +2138,7 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `project_advances`
@@ -2117,6 +2163,12 @@ ALTER TABLE `project_documents`
 --
 ALTER TABLE `project_ledger`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+
+--
+-- AUTO_INCREMENT for table `project_scopes`
+--
+ALTER TABLE `project_scopes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `purchase_items`
@@ -2383,6 +2435,12 @@ ALTER TABLE `project_documents`
 --
 ALTER TABLE `project_ledger`
   ADD CONSTRAINT `projectid_ledger-fk` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`);
+
+--
+-- Constraints for table `project_scopes`
+--
+ALTER TABLE `project_scopes`
+  ADD CONSTRAINT `fk_project_scopes_project` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `purchase_items`
