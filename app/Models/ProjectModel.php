@@ -112,6 +112,34 @@ public function create($data)
         }
 
         /*
+|--------------------------------------------------------------------------
+| 2. SAVE PROJECT SCOPES
+|--------------------------------------------------------------------------
+*/
+
+if (!empty($data['scopes']) && is_array($data['scopes'])) {
+
+    foreach ($data['scopes'] as $scope) {
+
+        $scope = trim($scope);
+
+        if ($scope === '') {
+            continue;
+        }
+
+        $this->db->query(
+            "INSERT INTO project_scopes
+             (project_id, scope)
+             VALUES (?, ?)",
+            [
+                $projectId,
+                $scope
+            ]
+        );
+    }
+}
+
+        /*
         |--------------------------------------------------------------------------
         | 2. CREATE PROJECT INVENTORY LOCATION
         |--------------------------------------------------------------------------
@@ -178,42 +206,96 @@ public function create($data)
     }
 }
 
-    public function update($id, $data)
-    {
-        return $this->db->query(
-            "UPDATE projects SET
-            customer_id      = ?,
-            title            = ?,
-            project_type     = ?,
-            description      = ?,
-            site_location    = ?,
-            start_date       = ?,
-            deadline         = ?,
-          project_manager_id = ?,
-            contract_number  = ?,
-            project_code     = ?,
-            priority         = ?,
-            status           = ?,
-            budget           = ?
+public function getProjectScopes($projectId)
+{
+    return $this->db->query(
+        "SELECT scope
+         FROM project_scopes
+         WHERE project_id = ?
+         ORDER BY id",
+        [$projectId]
+    )->fetchAll();
+}
+   
+public function update($id, $data)
+{
+   $this->db->beginTransaction();
+
+try {
+
+    // UPDATE PROJECT
+    $stmt = $this->db->query(
+        "UPDATE projects SET
+            customer_id       = ?,
+            title             = ?,
+            project_type      = ?,
+            description       = ?,
+            site_location     = ?,
+            start_date        = ?,
+            deadline          = ?,
+            project_manager_id = ?,
+            contract_number   = ?,
+            project_code      = ?,
+            priority          = ?,
+            status            = ?,
+            budget            = ?
          WHERE id = ?",
-            [
-                $data['customer_id'],
-                $data['title'],
-                $data['project_type'],
-                $data['description'],
-                $data['site_location'],
-                $data['start_date'],
-                $data['deadline'],
-                $data['project_manager_id'],
-                $data['contract_number'],
-                $data['project_code'],
-                $data['priority'],
-                $data['status'],
-                $data['budget'],
-                $id
-            ]
-        )->rowCount() > 0;
+        [
+            $data['customer_id'],
+            $data['title'],
+            $data['project_type'],
+            $data['description'],
+            $data['site_location'],
+            $data['start_date'],
+            $data['deadline'],
+            $data['project_manager_id'],
+            $data['contract_number'],
+            $data['project_code'],
+            $data['priority'],
+            $data['status'],
+            $data['budget'],
+            $id
+        ]
+    );
+
+    // DELETE OLD SCOPES
+    $this->db->query(
+        "DELETE FROM project_scopes
+         WHERE project_id = ?",
+        [$id]
+    );
+
+    // INSERT NEW SCOPES
+    if (!empty($data['scopes']) && is_array($data['scopes'])) {
+
+        foreach ($data['scopes'] as $scope) {
+
+            $scope = trim($scope);
+
+            if ($scope === '') {
+                continue;
+            }
+
+            $this->db->query(
+                "INSERT INTO project_scopes
+                 (project_id, scope)
+                 VALUES (?, ?)",
+                [$id, $scope]
+            );
+        }
     }
+
+    $this->db->commit();
+
+    return true;
+
+} catch (Throwable $e) {
+
+    $this->db->rollBack();
+
+    throw $e;
+}
+}
 
     // delete Project
     public function delete($id)

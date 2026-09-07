@@ -1,3 +1,13 @@
+<?php
+
+$projectScopes = [];
+
+foreach ($data['project_scopes'] ?? [] as $row) {
+    $projectScopes[] = $row->scope;
+}
+
+?>
+
 <h2>
     <i class="fas fa-edit"></i>
     Edit Project #<?= $project->id ?>
@@ -20,28 +30,106 @@
         </select>
     </div>
 
-    <!-- PROJECT TYPE -->
-    <div class="col-md-6">
-        <label>Project Type</label>
-        <select name="project_type" id="projectType" class="form-select" required>
-            <?php
-            $types = [
-                'civil' => 'Civil Engineering',
-                'construction' => 'Construction',
-                'electrical' => 'Electrical',
-                'mechanical' => 'Mechanical',
-                'maintenance' => 'Maintenance',
-                'inspection' => 'Inspection / NDT'
-            ];
-            foreach ($types as $key => $label): ?>
-                <option value="<?= $key ?>"
-                    <?= $project->project_type == $key ? 'selected' : '' ?>>
-                    <?= $label ?>
-                </option>
+ <!-- PROJECT TYPE -->
+
+<div class="col-md-4">
+
+    <label>Project Type</label>
+
+    <select name="project_type"
+            id="projectType"
+            class="form-select"
+            required>
+
+        <option value="construction"
+            <?= $project->project_type == 'construction' ? 'selected' : '' ?>>
+            Construction
+        </option>
+
+        <option value="maintenance"
+            <?= $project->project_type == 'maintenance' ? 'selected' : '' ?>>
+            Maintenance
+        </option>
+
+        <option value="inspection"
+            <?= $project->project_type == 'inspection' ? 'selected' : '' ?>>
+            Inspection
+        </option>
+
+        <option value="consultancy"
+            <?= $project->project_type == 'consultancy' ? 'selected' : '' ?>>
+            Consultancy
+        </option>
+
+        <option value="other"
+            <?= $project->project_type == 'other' ? 'selected' : '' ?>>
+            Other
+        </option>
+
+    </select>
+
+</div>
+
+<!-- PROJECT SCOPE -->
+
+<div class="mb-3">
+    <label class="form-label">PROJECT SCOPE</label>
+
+    <?php
+    $projectScopes = [];
+
+    foreach ($data['project_scopes'] ?? [] as $row) {
+        $projectScopes[] = $row->scope;
+    }
+
+    $scopes = [
+        'Civil',
+        'Architectural',
+        'Structural',
+        'MEP',
+        'Finishing',
+        'Instrumentation & Control',
+        'Telecommunications',
+        'Other'
+    ];
+    ?>
+
+    <div class="border rounded p-3 bg-light">
+        <div class="row g-2">
+
+            <?php foreach ($scopes as $scope): ?>
+
+                <div class="col-md-6">
+                    <div class="form-check">
+
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name="scopes[]"
+                            value="<?= htmlspecialchars($scope) ?>"
+                            id="scope_<?= md5($scope) ?>"
+                            <?= in_array($scope, $projectScopes, true) ? 'checked' : '' ?>
+                        >
+
+                        <label
+                            class="form-check-label"
+                            for="scope_<?= md5($scope) ?>"
+                        >
+                            <?= htmlspecialchars($scope) ?>
+                        </label>
+
+                    </div>
+                </div>
+
             <?php endforeach; ?>
-        </select>
+
+        </div>
     </div>
 
+    <small class="text-muted">
+        Select one or more applicable project scopes.
+    </small>
+</div>
 </div>
 
 <!-- COMMON FIELDS -->

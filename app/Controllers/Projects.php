@@ -23,6 +23,7 @@ class Projects extends Controller
                 'customer_id'      => (int)$_POST['customer_id'],
                 'title'            => trim($_POST['title']),
                 'project_type'     => $_POST['project_type'],
+                'scopes'           => $_POST['scopes'] ?? [],
                 'description'      => trim($_POST['description']),
                 'site_location'    => trim($_POST['site_location']),
                 'start_date'       => $_POST['start_date'] ?: null,
@@ -70,21 +71,22 @@ class Projects extends Controller
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $data = [
-                'customer_id'       => (int)$_POST['customer_id'],
-                'title'             => trim($_POST['title']),
-                'project_type'      => $_POST['project_type'],
-                'description'       => trim($_POST['description']),
-                'site_location'     => trim($_POST['site_location']),
-                'start_date'        => $_POST['start_date'] ?: null,
-                'deadline'          => $_POST['deadline'] ?: null,
+                'customer_id'        => (int)$_POST['customer_id'],
+                'title'              => trim($_POST['title']),
+                'project_type'       => $_POST['project_type'],
+                'scopes'             => $_POST['scopes'] ?? [],
+                'description'        => trim($_POST['description']),
+                'site_location'      => trim($_POST['site_location']),
+                'start_date'         => $_POST['start_date'] ?: null,
+                'deadline'           => $_POST['deadline'] ?: null,
                 'project_manager_id' => !empty($_POST['project_manager_id'])
                     ? (int)$_POST['project_manager_id']
                     : null,
-                'contract_number'   => trim($_POST['contract_number']),
-                'project_code'      => trim($_POST['project_code']),
-                'priority'          => $_POST['priority'],
-                'status'            => $_POST['status'],
-                'budget'            => (float)$_POST['budget']
+                'contract_number'    => trim($_POST['contract_number']),
+                'project_code'       => trim($_POST['project_code']),
+                'priority'           => $_POST['priority'],
+                'status'             => $_POST['status'],
+                'budget'             => (float)$_POST['budget']
             ];
 
             if ($model->update($id, $data)) {
@@ -97,6 +99,7 @@ class Projects extends Controller
         }
 
         $data['project'] = $model->getById($id);
+        $data['project_scopes'] = $model->getProjectScopes($id);
         $data['customers'] = $this->model('Customer')->getAll();
         $data['users'] = $this->model('User')->getProjectManagers();
 
