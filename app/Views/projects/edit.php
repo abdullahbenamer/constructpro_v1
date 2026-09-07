@@ -41,30 +41,30 @@ foreach ($data['project_scopes'] ?? [] as $row) {
             class="form-select"
             required>
 
-        <option value="construction"
-            <?= $project->project_type == 'construction' ? 'selected' : '' ?>>
-            Construction
-        </option>
+<option value="Construction"
+    <?= ($data['project']->project_type ?? '') === 'Construction' ? 'selected' : '' ?>>
+    Construction
+</option>
 
-        <option value="maintenance"
-            <?= $project->project_type == 'maintenance' ? 'selected' : '' ?>>
-            Maintenance
-        </option>
+<option value="Maintenance"
+    <?= ($data['project']->project_type ?? '') === 'Maintenance' ? 'selected' : '' ?>>
+    Maintenance
+</option>
 
-        <option value="inspection"
-            <?= $project->project_type == 'inspection' ? 'selected' : '' ?>>
-            Inspection
-        </option>
+<option value="Inspection"
+    <?= ($data['project']->project_type ?? '') === 'Inspection' ? 'selected' : '' ?>>
+    Inspection
+</option>
 
-        <option value="consultancy"
-            <?= $project->project_type == 'consultancy' ? 'selected' : '' ?>>
-            Consultancy
-        </option>
+<option value="Consultancy"
+    <?= ($data['project']->project_type ?? '') === 'Consultancy' ? 'selected' : '' ?>>
+    Consultancy
+</option>
 
-        <option value="other"
-            <?= $project->project_type == 'other' ? 'selected' : '' ?>>
-            Other
-        </option>
+<option value="Other"
+    <?= ($data['project']->project_type ?? '') === 'Other' ? 'selected' : '' ?>>
+    Other
+</option>
 
     </select>
 
@@ -206,12 +206,20 @@ foreach ($data['project_scopes'] ?? [] as $row) {
                value="<?= $project->contract_number ?>">
     </div>
 
-    <div class="col-md-4">
-        <label>Project Code</label>
-        <input type="text" name="project_code"
-               class="form-control"
-               value="<?= $project->project_code ?>">
-    </div>
+    <div class="mb-3">
+    <label class="form-label">PROJECT CODE</label>
+
+    <input
+        type="text"
+        class="form-control"
+        value="<?= htmlspecialchars($data['project']->project_code ?? '') ?>"
+        readonly
+    >
+
+    <small class="text-muted">
+        Project Code is automatically generated and cannot be changed.
+    </small>
+</div>
 
 </div>
 

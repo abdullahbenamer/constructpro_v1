@@ -43,77 +43,78 @@ echo "<p>Customers loaded: " . count($customers) . "</p>";
 
                 <option value="">Select Type</option>
 
-                <option value="construction">Construction</option>
-                <option value="maintenance">Maintenance</option>
-                <option value="inspection">Inspection</option>
-                <option value="consultancy">Consultancy</option>
-                <option value="other">Other</option>
+                <option value="Construction">Construction</option>
+                <option value="Maintenance">Maintenance</option>
+                <option value="Inspection">Inspection</option>
+                <option value="Consultancy">Consultancy</option>
+                <option value="Other">Other</option>
 
             </select>
         </div>
 
-<!-- ///////////// -->
-       <div class="mb-3">
-    <label class="form-label">PROJECT SCOPE</label>
+        <!-- ///////////// -->
+        <div class="mb-3">
+            <label class="form-label">PROJECT SCOPE</label>
 
-    <div class="border rounded p-3 bg-light">
-        <div class="row g-2">
+            <div class="border rounded p-3 bg-light">
+                <div class="row g-2">
 
-            <?php
-            $scopes = [
-                'Civil',
-                'Architectural',
-                'Structural',
-                'MEP',
-                'Finishing',
-                'Instrumentation & Control',
-                'Telecommunications',
-                'Other'
-            ];
-            ?>
+                    <?php
+                    $scopes = [
+                        'Civil',
+                        'Architectural',
+                        'Structural',
+                        'MEP',
+                        'Finishing',
+                        'Instrumentation & Control',
+                        'Telecommunications',
+                        'Other'
+                    ];
+                    ?>
 
-            <?php foreach ($scopes as $scope): ?>
-                <div class="col-md-6">
-                    <div class="form-check">
-                        <input
-                            class="form-check-input"
-                            type="checkbox"
-                            name="scopes[]"
-                            value="<?= htmlspecialchars($scope) ?>"
-                            id="scope_<?= md5($scope) ?>"
-                        >
+                    <?php foreach ($scopes as $scope): ?>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    name="scopes[]"
+                                    value="<?= htmlspecialchars($scope) ?>"
+                                    id="scope_<?= md5($scope) ?>">
 
-                        <label
-                            class="form-check-label"
-                            for="scope_<?= md5($scope) ?>"
-                        >
-                            <?= htmlspecialchars($scope) ?>
-                        </label>
-                    </div>
+                                <label
+                                    class="form-check-label"
+                                    for="scope_<?= md5($scope) ?>">
+                                    <?= htmlspecialchars($scope) ?>
+                                </label>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+
                 </div>
-            <?php endforeach; ?>
+            </div>
 
+            <small class="text-muted">
+                Select one or more applicable project scopes.
+            </small>
         </div>
-    </div>
+
+        <!-- ///////////// -->
+
+<div class="mb-3">
+    <label class="form-label">PROJECT CODE</label>
+
+    <input
+        type="text"
+        class="form-control"
+        value="AUTO-GENERATED"
+        readonly
+    >
 
     <small class="text-muted">
-        Select one or more applicable project scopes.
+        Project Code will be generated automatically when the project is created.
     </small>
 </div>
-
-<!-- ///////////// -->
-
-
-        <div class="col-md-2">
-
-            <label>Project Code</label>
-
-            <input type="text"
-                name="project_code"
-                class="form-control">
-
-        </div>
-
 
         <div class="col-md-2">
 
@@ -220,4 +221,3 @@ echo "<p>Customers loaded: " . count($customers) . "</p>";
     </button>
     <a href="<?= URLROOT ?>/projects" class="btn btn-secondary btn-lg">Cancel</a>
 </form>
-

@@ -83,7 +83,6 @@ class Projects extends Controller
                     ? (int)$_POST['project_manager_id']
                     : null,
                 'contract_number'    => trim($_POST['contract_number']),
-                'project_code'       => trim($_POST['project_code']),
                 'priority'           => $_POST['priority'],
                 'status'             => $_POST['status'],
                 'budget'             => (float)$_POST['budget']
