@@ -27,8 +27,13 @@
 <div class="row mb-4">
 
     <!-- Active Projects -->
+ 
+<div class="col-xl-3 col-md-6 mb-4">
 
-    <div class="col-xl-3 col-md-6 mb-4">
+    <a
+        href="<?= URLROOT ?>/projects"
+        class="text-decoration-none text-dark"
+    >
 
         <div class="card border-left-primary shadow h-100 py-2">
 
@@ -60,9 +65,9 @@
 
         </div>
 
-    </div>
+    </a>
 
-
+</div>
     <!-- Low Stock -->
 
     <div class="col-xl-3 col-md-6 mb-4">
@@ -102,7 +107,12 @@
 
     <!-- Customers -->
 
-    <div class="col-xl-3 col-md-6 mb-4">
+  <div class="col-xl-3 col-md-6 mb-4">
+
+    <a
+        href="<?= URLROOT ?>/customers"
+        class="text-decoration-none text-dark"
+    >
 
         <div class="card border-left-success shadow h-100 py-2">
 
@@ -134,12 +144,19 @@
 
         </div>
 
-    </div>
+    </a>
+
+</div>
 
 
     <!-- Resource Requisitions -->
 
-    <div class="col-xl-3 col-md-6 mb-4">
+<div class="col-xl-3 col-md-6 mb-4">
+
+    <a
+        href="<?= URLROOT ?>/ResourceRequisitions"
+        class="text-decoration-none text-dark"
+    >
 
         <div class="card border-left-info shadow h-100 py-2">
 
@@ -171,7 +188,9 @@
 
         </div>
 
-    </div>
+    </a>
+
+</div>
 
 </div>
 

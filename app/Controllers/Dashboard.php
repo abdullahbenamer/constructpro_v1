@@ -16,6 +16,7 @@ class Dashboard extends Controller
         $financeModel   = $this->model('ProjectAdvance');
         $reportModel    = $this->model('Report');
         $supplierLedgerModel = $this->model('SupplierLedger');
+        $resourceRequisitionModel = $this->model('ResourceRequisition');
         $portfolio      = $reportModel->getPortfolioDashboard();
         $data['portfolio'] = $portfolio;
 
@@ -65,7 +66,8 @@ class Dashboard extends Controller
         $data['customers'] =
             $customerModel->getCustomers('active');
 
-
+        $data['resource_requisitions'] =
+            $resourceRequisitionModel->getAll();
         // ==================================================
         // GLOBAL FINANCE
         // ==================================================
