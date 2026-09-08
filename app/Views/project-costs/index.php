@@ -1,139 +1,346 @@
-  <div class="row">
-      <div class="col-12">
-         <div class="card mb-3">
-        <div class="card-body">
+<!-- =========================================================
+     PROJECT WORKSPACE HEADER
+========================================================= -->
 
-        <h3 class="mb-1">
-            Project: <?= strtoupper(htmlspecialchars($project->title)) ?>
-        </h3>
+<div class="card shadow-sm mb-3">
 
-         <div class="text-muted">
-    <h4>Customer:</h4>
-    <h4><?= strtoupper(htmlspecialchars($project->customer_name)) ?></h4>
-   
-     <a href="<?= URLROOT ?>/customers/details/<?= $project->customer_id ?>" class="fw-bold text-decoration-none"><i class="fas fa-address-card"></i> Go to Customer Profile</a>
+    <div class="card-body">
 
-</div>
+        <!-- PROJECT IDENTITY -->
+        <div class="d-flex flex-wrap justify-content-between align-items-start mb-3">
+
+            <div>
+                <div class="text-muted small">
+                    PROJECT
+                </div>
+
+                <h3 class="mb-1 text-uppercase">
+                    <?= htmlspecialchars($project->title) ?>
+                </h3>
+
+                <div>
+                    <span class="badge bg-primary fs-6">
+                        <?= htmlspecialchars($project->project_code ?? 'N/A') ?>
+                    </span>
+
+                    <span class="badge bg-secondary fs-6">
+                        <?= htmlspecialchars(ucfirst($project->project_type ?? 'N/A')) ?>
+                    </span>
+
+                    <?php
+                    $statusColors = [
+                        'planning'    => 'secondary',
+                        'in_progress' => 'warning',
+                        'testing'     => 'info',
+                        'completed'   => 'success',
+                        'cancelled'   => 'danger'
+                    ];
+
+                    $statusColor =
+                        $statusColors[$project->status ?? '']
+                        ?? 'secondary';
+                    ?>
+
+                    <span class="badge bg-<?= $statusColor ?> fs-6">
+                        <?= ucwords(str_replace('_', ' ', $project->status ?? 'N/A')) ?>
+                    </span>
+                </div>
+            </div>
+
+            <div class="mt-2 mt-md-0">
+
+                <a href="<?= URLROOT ?>/projects/edit/<?= $project->id ?>"
+                   class="btn btn-warning">
+                    <i class="fas fa-edit"></i>
+                    Edit Project
+                </a>
+
+                <a href="<?= URLROOT ?>/customers/details/<?= $project->customer_id ?>"
+                   class="btn btn-outline-primary">
+                    <i class="fas fa-address-card"></i>
+                    Customer
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROJECT SPECIFICATIONS -->
+        <div class="border rounded p-3 bg-light">
+
+            <h6 class="mb-3">
+                <i class="fas fa-info-circle"></i>
+                PROJECT SPECIFICATIONS
+            </h6>
+
+            <div class="row g-3">
+
+                <!-- PROJECT CODE -->
+                <div class="col-md-3">
+                    <div class="text-muted small">
+                        Project Code
+                    </div>
+
+                    <strong>
+                        <?= htmlspecialchars($project->project_code ?? 'N/A') ?>
+                    </strong>
+                </div>
+
+
+                <!-- PROJECT TYPE -->
+                <div class="col-md-3">
+                    <div class="text-muted small">
+                        Project Type
+                    </div>
+
+                    <strong>
+                        <?= htmlspecialchars(
+                            $project->project_type
+                            ? ucfirst($project->project_type)
+                            : 'N/A'
+                        ) ?>
+                    </strong>
+                </div>
+
+
+                <!-- CUSTOMER -->
+                <div class="col-md-3">
+                    <div class="text-muted small">
+                        Customer
+                    </div>
+
+                    <strong>
+                        <?= htmlspecialchars($project->customer_name ?? 'N/A') ?>
+                    </strong>
+                </div>
+
+
+                <!-- CONTRACT NUMBER -->
+                <div class="col-md-3">
+                    <div class="text-muted small">
+                        Contract Number
+                    </div>
+
+                    <strong>
+                        <?= htmlspecialchars($project->contract_number ?? 'N/A') ?>
+                    </strong>
+                </div>
+
+
+                <!-- PROJECT MANAGER -->
+                <div class="col-md-3">
+                    <div class="text-muted small">
+                        Project Manager
+                    </div>
+
+                    <strong>
+                        <?= htmlspecialchars(
+                            $project->project_manager_name
+                            ?? 'N/A'
+                        ) ?>
+                    </strong>
+                </div>
+
+
+                <!-- PRIORITY -->
+                <div class="col-md-3">
+                    <div class="text-muted small">
+                        Priority
+                    </div>
+
+                    <strong>
+                        <?= htmlspecialchars(
+                            ucfirst($project->priority ?? 'N/A')
+                        ) ?>
+                    </strong>
+                </div>
+
+
+                <!-- START DATE -->
+                <div class="col-md-3">
+                    <div class="text-muted small">
+                        Start Date
+                    </div>
+
+                    <strong>
+                        <?= !empty($project->start_date)
+                            ? date('d M Y', strtotime($project->start_date))
+                            : 'N/A'
+                        ?>
+                    </strong>
+                </div>
+
+
+                <!-- DEADLINE -->
+                <div class="col-md-3">
+                    <div class="text-muted small">
+                        Deadline
+                    </div>
+
+                    <strong>
+                        <?= !empty($project->deadline)
+                            ? date('d M Y', strtotime($project->deadline))
+                            : 'N/A'
+                        ?>
+                    </strong>
+                </div>
+
+
+                <!-- SITE LOCATION -->
+                <div class="col-md-6">
+                    <div class="text-muted small">
+                        Site Location
+                    </div>
+
+                    <strong>
+                        <?= htmlspecialchars(
+                            $project->site_location ?? 'N/A'
+                        ) ?>
+                    </strong>
+                </div>
+
+
+                <!-- PROJECT WAREHOUSE -->
+                <div class="col-md-3">
+                    <div class="text-muted small">
+                        Project Warehouse
+                    </div>
+
+                    <strong>
+                        <?= htmlspecialchars(
+                            $project->project_code ?? 'N/A'
+                        ) ?>
+                    </strong>
+                </div>
+
+
+                <!-- BUDGET -->
+                <div class="col-md-3">
+                    <div class="text-muted small">
+                        Project Budget
+                    </div>
+
+                    <strong>
+                        <?= number_format(
+                            (float)($project->budget ?? 0),
+                            2
+                        ) ?>
+                        LYD
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <!-- PROJECT SCOPE -->
+            <div class="mt-4">
+
+                <div class="text-muted small mb-2">
+                    Project Scope
+                </div>
+
+                <?php if (!empty($project_scopes)): ?>
+
+                    <?php foreach ($project_scopes as $scope): ?>
+
+                        <span class="badge bg-dark me-1 mb-1">
+                            <?= htmlspecialchars($scope->scope) ?>
+                        </span>
+
+                    <?php endforeach; ?>
+
+                <?php else: ?>
+
+                    <span class="text-muted">
+                        No project scope specified.
+                    </span>
+
+                <?php endif; ?>
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+            <?php if (!empty($project->description)): ?>
+
+                <div class="mt-4">
+
+                    <div class="text-muted small mb-1">
+                        Description
+                    </div>
+
+                    <div>
+                        <?= nl2br(
+                            htmlspecialchars($project->description)
+                        ) ?>
+                    </div>
+
+                </div>
+
+            <?php endif; ?>
+
+        </div>
 
     </div>
+
 </div>
-          <div class="d-flex justify-content-between align-items-center mb-3">
-              <a href="<?= URLROOT ?>/projects" class="btn btn-success">
-                  Go Back to Projects
-              </a>
-          </div>
 
-          <div class="d-flex justify-content-between align-items-center mb-3">
-              <h3><i class="fas fa-coins"></i> Project Costs</h3>
 
-              <a href="<?= URLROOT ?>/project-costs/create/<?= $project_id ?>" class="btn btn-primary">
-                  <i class="fas fa-plus"></i> Add Cost
-              </a>
-          </div>
-          <div>
-  
-<a href="<?= URLROOT ?>/projectcosts/finance/<?= $project->id ?>"
-   class="btn btn-primary">
-    <i class="fas fa-money-check-dollar"></i>
-    Advance Payment
-</a>
+<!-- =========================================================
+     PROJECT NAVIGATION
+========================================================= -->
 
-<a href="<?= URLROOT ?>/projectcosts/ledger/<?= $project->id ?>"
-   class="btn btn-secondary">
-    <i class="fas fa-book"></i>
-    Finance Ledger
-</a>
+<div class="d-flex flex-wrap gap-2 mb-3">
 
-<a href="<?= URLROOT ?>/projectcosts/financeDashboard/<?= $project->id ?>"
-   class="btn btn-info">
-    <i class="fas fa-chart-line"></i>
-    Project Dashboard
-</a>
+    <a href="<?= URLROOT ?>/projects"
+       class="btn btn-success">
+        <i class="fas fa-arrow-left"></i>
+        Projects
+    </a>
 
-<!-- Documents -->
- <a href="<?= URLROOT ?>/projects/documents/<?= $project->id ?>"
-   class="btn btn-secondary">
-    <i class="fas fa-folder-open"></i>
-    Documents
-</a>
-          </div>
-          <br>
-          <!-- -->
-          <div class="card">
-              <div class="card-header d-flex justify-content-between">
-                  <strong>Total Costs: $<?= number_format($total_cost ?? 0, 2) ?></strong>
-                  <span class="badge bg-info"><?= count($costs ?? []) ?> items</span>
-              </div>
+    <a href="<?= URLROOT ?>/projects/documents/<?= $project->id ?>"
+       class="btn btn-secondary">
+        <i class="fas fa-folder-open"></i>
+        Documents
+    </a>
 
-              <div class="table-responsive">
-                  <table class="table table-striped mb-0">
-                      <thead>
-                          <tr>
-                              <th>Type</th>
-                             <th>Item / Description</th>
-                              <th>SKU/Barcode</th>
-                              <th>Source Location</th>
-                              <th>Qty</th>
-                              <th>Cost Price</th>
-                              <th>Total Cost</th>
-                              <th>Issue Date</th>
-                              <th>Actions</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <?php foreach ($costs ?? [] as $cost) : ?>
-                              <tr>
-                                  <td><span class="badge bg-info"><?= ucfirst($cost->cost_type) ?></span></td>
-                                <td>
-    <?php if (!empty($cost->item_name)): ?>
-        <strong>
-            <?= htmlspecialchars($cost->item_name) ?>
-        </strong>
-    <?php endif; ?>
+    <a href="<?= URLROOT ?>/projectcosts/finance/<?= $project->id ?>"
+       class="btn btn-primary">
+        <i class="fas fa-money-check-dollar"></i>
+        Advance Payment
+    </a>
 
-    <?php if (!empty($cost->description)): ?>
-        <div class="text-muted small">
-            <?= htmlspecialchars($cost->description) ?>
-        </div>
-    <?php endif; ?>
-</td>
-                                  <td><?= htmlspecialchars($cost->sku ?? 'N/A') ?></td>
-                                  <td>
-    <?php if (!empty($cost->location_code)): ?>
-        <span class="badge bg-secondary">
-            <?= htmlspecialchars($cost->location_code)?>
-        </span>
-        <br>
-        <small><?= htmlspecialchars($cost->location_name) ?></small>
-    <?php else: ?>
-        <span class="text-muted">N/A</span>
-    <?php endif; ?>
-</td>
-                                  <td><?= $cost->quantity ?></td>
-                                  <td>$<?= number_format($cost->unit_price, 2) ?></td>
-                                  <td><strong>$<?= number_format($cost->quantity * $cost->unit_price, 2) ?></strong></td>
-                                  <td><?= date('M j', strtotime($cost->created_at)) ?></td>
-                                  <td>
-                                      <a href="<?= URLROOT ?>/project-costs/edit/<?= $cost->id ?>/<?= $project_id ?>" class="btn btn-sm btn-warning">
-                                          Edit
-                                      </a>
+    <a href="<?= URLROOT ?>/projectcosts/ledger/<?= $project->id ?>"
+       class="btn btn-secondary">
+        <i class="fas fa-book"></i>
+        Finance Ledger
+    </a>
 
-                                      <a href="<?= URLROOT ?>/project-costs/delete/<?= $cost->id ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete this cost?')">
-                                          Delete
-                                      </a>
-                                  </td>
-                              </tr>
-                          <?php endforeach; ?>
-                      </tbody>
-                  </table>
-              </div>
-          </div>
-          <?php if (empty($costs)) : ?>
-              <div class="alert alert-info">
-                  <i class="fas fa-info-circle"></i> No costs added yet. 
-                  <a href="<?= URLROOT ?>/project-costs/create/<?= $project_id ?>">Add first cost</a>
-                  
-              </div>
-          <?php endif; ?>
-      </div>
-  </div>
+    <a href="<?= URLROOT ?>/projectcosts/financeDashboard/<?= $project->id ?>"
+       class="btn btn-info">
+        <i class="fas fa-chart-line"></i>
+        Finance Dashboard
+    </a>
+
+</div>
+
+
+<!-- =========================================================
+     PROJECT COSTS TITLE
+========================================================= -->
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+
+    <h3 class="mb-0">
+        <i class="fas fa-coins"></i>
+        Project Costs
+    </h3>
+
+    <a href="<?= URLROOT ?>/project-costs/create/<?= $project->id ?>"
+       class="btn btn-primary">
+        <i class="fas fa-plus"></i>
+        Add Cost
+    </a>
+
+</div>
