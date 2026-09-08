@@ -216,19 +216,17 @@
 
 
                 <!-- BUDGET -->
-                <div class="col-md-3">
-                    <div class="text-muted small">
-                        Project Budget
-                    </div>
+               <div class="col-md-3">
+    <div class="text-muted small">Project Budget</div>
+    <strong>
+        <?= number_format((float)($project->budget ?? 0), 2) ?> LYD
+    </strong>
 
-                    <strong>
-                        <?= number_format(
-                            (float)($project->budget ?? 0),
-                            2
-                        ) ?>
-                        LYD
-                    </strong>
-                </div>
+    <div class="text-muted small mt-3">Project Costs</div>
+    <strong>
+        <?= number_format((float)($total_cost ?? 0), 2) ?> LYD
+    </strong>
+</div>
 
             </div>
 
