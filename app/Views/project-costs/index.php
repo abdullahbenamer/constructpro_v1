@@ -380,8 +380,19 @@
                         </td>
 
                         <td>
-                            <!-- Existing actions go here -->
-                        </td>
+    <a href="<?= URLROOT ?>/project-costs/edit/<?= $cost->id ?>/<?= $project_id ?>"
+       class="btn btn-sm btn-warning">
+        <i class="fas fa-edit"></i>
+        Edit
+    </a>
+
+    <a href="<?= URLROOT ?>/project-costs/delete/<?= $cost->id ?>"
+       class="btn btn-sm btn-danger"
+       onclick="return confirm('Delete this cost?')">
+        <i class="fas fa-trash"></i>
+        Delete
+    </a>
+</td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
