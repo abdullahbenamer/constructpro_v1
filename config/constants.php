@@ -1,6 +1,6 @@
 <?php
   
-define('URLROOT', 'https://localhost/constructpro_v1/public');
+define('URLROOT', 'https://localhost/constructpro_v1_final/public');
 define('APPROOT', dirname(__DIR__));
 define('PUBLICROOT', dirname(__DIR__) . '/public'); // For uploads to be stored in public/uploads/projects/ instead of inside app/.
 define('DBHOST', 'localhost');

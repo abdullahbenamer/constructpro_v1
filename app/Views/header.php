@@ -3,6 +3,9 @@
 $role_id   = $_SESSION['role_id'] ?? null;
 $role_name = $_SESSION['role_name'] ?? '';
 
+$current_language = Language::get();
+$direction = Language::direction();
+
 ?>
 
 <!-- =========================================================
@@ -62,7 +65,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="<?= htmlspecialchars($current_language) ?>" dir="<?= htmlspecialchars($direction) ?>">
 
 <head>
 
@@ -74,26 +77,18 @@ $role_name = $_SESSION['role_name'] ?? '';
 
     <title>
         <?= isset($title) ? $title . ' - ' : '' ?>
-        Construction Professional
+        Construction Pro
     </title>
 
-
     <!-- Bootstrap -->
-
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
         rel="stylesheet">
-
-
     <!-- Select2 -->
-
     <link
         href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
         rel="stylesheet">
-
-
     <!-- Font Awesome -->
-
     <link
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
         rel="stylesheet">
@@ -101,8 +96,10 @@ $role_name = $_SESSION['role_name'] ?? '';
 
     <!-- Fonts -->
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Tajawal:wght@300;400;500;700;800&display=swap"
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Cairo:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
         rel="stylesheet">
 
 
@@ -118,13 +115,14 @@ $role_name = $_SESSION['role_name'] ?? '';
         */
 
         body {
-
             padding-left: 260px;
-
             transition: padding-left 0.2s ease;
-
+            font-family: "Roboto", "Tajawal", Arial, sans-serif;
         }
 
+        html[dir="rtl"] body {
+            font-family: "Tajawal", "Cairo", "Roboto", Arial, sans-serif;
+        }
 
         /*
         |--------------------------------------------------------------------------
@@ -203,13 +201,13 @@ $role_name = $_SESSION['role_name'] ?? '';
         }
 
 
-     .app-sidebar .nav-item {
+        .app-sidebar .nav-item {
 
-    width: 100%;
+            width: 100%;
 
-    display: block;
+            display: block;
 
-}
+        }
 
 
         .app-sidebar .nav-link {
@@ -257,67 +255,67 @@ $role_name = $_SESSION['role_name'] ?? '';
         |--------------------------------------------------------------------------
         */
 
-  .app-sidebar .dropdown {
+        .app-sidebar .dropdown {
 
-    position: relative;
+            position: relative;
 
-}
-
-
-.app-sidebar .dropdown-menu {
-
-    min-width: 230px;
-
-    margin: 0;
-
-    border: none;
-
-    border-radius: 6px;
-
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
-
-    z-index: 9999 !important;
-
-}
+        }
 
 
-/*
+        .app-sidebar .dropdown-menu {
+
+            min-width: 230px;
+
+            margin: 0;
+
+            border: none;
+
+            border-radius: 6px;
+
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+
+            z-index: 9999 !important;
+
+        }
+
+
+        /*
 |--------------------------------------------------------------------------
 | DESKTOP SIDEBAR DROPDOWNS
 |--------------------------------------------------------------------------
 */
 
-@media (min-width: 992px) {
+        @media (min-width: 992px) {
 
-    .app-sidebar,
-    .app-sidebar .container-fluid,
-    .app-sidebar .navbar-collapse,
-    .app-sidebar .navbar-nav,
-    .app-sidebar .nav-item,
-    .app-sidebar .dropdown {
+            .app-sidebar,
+            .app-sidebar .container-fluid,
+            .app-sidebar .navbar-collapse,
+            .app-sidebar .navbar-nav,
+            .app-sidebar .nav-item,
+            .app-sidebar .dropdown {
 
-        overflow: visible !important;
+                overflow: visible !important;
 
-    }
+            }
 
 
-    .app-sidebar .dropend > .dropdown-menu {
+            .app-sidebar .dropend>.dropdown-menu {
 
-        position: absolute !important;
+                position: absolute !important;
 
-        top: 0 !important;
+                top: 0 !important;
 
-        left: 100% !important;
+                left: 100% !important;
 
-        margin-top: 0 !important;
+                margin-top: 0 !important;
 
-        margin-left: 0.125rem !important;
+                margin-left: 0.125rem !important;
 
-        z-index: 9999 !important;
+                z-index: 9999 !important;
 
-    }
+            }
 
-}
+        }
 
         .app-sidebar .dropdown-item {
 
@@ -419,31 +417,31 @@ $role_name = $_SESSION['role_name'] ?? '';
             }
 
 
-        .app-sidebar {
+            .app-sidebar {
 
-    position: fixed;
+                position: fixed;
 
-    top: 0;
+                top: 0;
 
-    left: 0;
+                left: 0;
 
-    width: 260px;
+                width: 260px;
 
-    height: 100vh;
+                height: 100vh;
 
-    z-index: 1050;
+                z-index: 1050;
 
-    display: flex;
+                display: flex;
 
-    flex-direction: column;
+                flex-direction: column;
 
-    overflow: visible;
+                overflow: visible;
 
-    background-color: #0d6efd;
+                background-color: #0d6efd;
 
-    box-shadow: 3px 0 12px rgba(0, 0, 0, 0.12);
+                box-shadow: 3px 0 12px rgba(0, 0, 0, 0.12);
 
-}
+            }
 
 
             .app-sidebar .navbar-brand {
@@ -515,6 +513,186 @@ $role_name = $_SESSION['role_name'] ?? '';
             }
 
         }
+
+        /* =========================================================
+   Language and RTL SUPPORT
+   ========================================================= */
+
+        /* =========================================================
+   LANGUAGE SWITCHER
+   ========================================================= */
+
+        .language-switcher {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            background: #f1f3f5;
+            border-radius: 6px;
+            padding: 2px;
+        }
+
+        .language-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-width: 38px;
+            height: 30px;
+
+            padding: 0 8px;
+
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+
+            color: #495057;
+            background: transparent;
+
+            border-radius: 4px;
+
+            transition: all 0.2s ease;
+        }
+
+        .language-btn:hover {
+            color: #212529;
+            background: #ffffff;
+            text-decoration: none;
+        }
+
+        .language-btn.active {
+            color: #ffffff;
+            background: #0d6efd;
+        }
+
+        /* --------------- */
+
+        html[dir="rtl"] body {
+            padding-left: 0;
+            padding-right: 260px;
+        }
+
+        html[dir="rtl"] .app-sidebar {
+            left: auto;
+            right: 0;
+        }
+
+        html[dir="rtl"] .company-header {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        html[dir="rtl"] .dropend>.dropdown-menu {
+            left: auto;
+            right: 100%;
+            margin-left: 0;
+            margin-right: 0.125rem;
+        }
+
+        /* Bootstrap dropdown arrows */
+        html[dir="rtl"] .dropdown-toggle::after {
+            margin-left: 0;
+            margin-right: 0.255em;
+        }
+
+        html[dir="rtl"] .me-1 {
+            margin-right: 0 !important;
+            margin-left: 0.25rem !important;
+        }
+
+        html[dir="rtl"] .me-2 {
+            margin-right: 0 !important;
+            margin-left: 0.5rem !important;
+        }
+
+        html[dir="rtl"] .ms-1 {
+            margin-left: 0 !important;
+            margin-right: 0.25rem !important;
+        }
+
+        html[dir="rtl"] .ms-2 {
+            margin-left: 0 !important;
+            margin-right: 0.5rem !important;
+        }
+
+
+        /* Mobile */
+        @media (max-width: 991.98px) {
+
+            html[dir="rtl"] body {
+                padding-right: 0;
+                padding-left: 0;
+            }
+
+            html[dir="rtl"] .app-sidebar {
+                right: -260px;
+                left: auto;
+            }
+
+            html[dir="rtl"] .app-sidebar.show {
+                right: 0;
+            }
+
+
+        }
+
+        /* =========================================================
+   RTL SIDEBAR SUBMENUS
+   ========================================================= */
+
+        html[dir="rtl"] .app-sidebar {
+            direction: rtl;
+        }
+
+        /* Main sidebar menu text */
+        html[dir="rtl"] .app-sidebar .nav-link {
+            text-align: right;
+        }
+
+        /* Submenu itself */
+        html[dir="rtl"] .app-sidebar .dropdown-menu {
+            direction: rtl;
+            text-align: right;
+
+            min-width: 280px;
+            max-width: 340px;
+
+            white-space: normal;
+        }
+
+        /* Submenu items */
+        html[dir="rtl"] .app-sidebar .dropdown-item {
+            direction: rtl;
+            text-align: right;
+
+            white-space: normal;
+            overflow-wrap: break-word;
+            word-break: normal;
+
+            padding: 0.55rem 1rem;
+        }
+
+        /* Keep Arabic text inside the menu */
+        html[dir="rtl"] .app-sidebar .dropdown-item span,
+        html[dir="rtl"] .app-sidebar .dropdown-item a {
+            text-align: right;
+        }
+
+        /* Submenu icons */
+        html[dir="rtl"] .app-sidebar .dropdown-item i,
+        html[dir="rtl"] .app-sidebar .dropdown-item .fa,
+        html[dir="rtl"] .app-sidebar .dropdown-item .fas,
+        html[dir="rtl"] .app-sidebar .dropdown-item .far {
+            margin-left: 0.5rem;
+            margin-right: 0;
+        }
+
+        /* RTL submenu opens toward the left */
+        html[dir="rtl"] .app-sidebar .dropend>.dropdown-menu {
+            left: auto;
+            right: 100%;
+            margin-left: 0;
+            margin-right: 0.125rem;
+        }
     </style>
 
 </head>
@@ -528,7 +706,21 @@ $role_name = $_SESSION['role_name'] ?? '';
 ========================================================= -->
 
     <nav class="navbar navbar-expand-lg navbar-dark app-sidebar">
+        <!-- ############### -->
 
+        <div class="language-switcher">
+            <a href="<?= htmlspecialchars(strtok($_SERVER['REQUEST_URI'], '?')) ?>?lang=en"
+                class="language-btn <?= $current_language === 'en' ? 'active' : '' ?>">
+                EN
+            </a>
+
+            <a href="<?= htmlspecialchars(strtok($_SERVER['REQUEST_URI'], '?')) ?>?lang=ar"
+                class="language-btn <?= $current_language === 'ar' ? 'active' : '' ?>">
+                AR
+            </a>
+        </div>
+
+        <!-- ############### -->
 
         <div class="container-fluid d-flex flex-column align-items-stretch">
 
@@ -543,7 +735,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                 <i class="fas fa-city"></i>
 
-                ConstructPro System
+                <?= __('constructpro_system') ?>
 
                 <i class="fas fa-drafting-compass"></i>
 
@@ -594,7 +786,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                                 <i class="fas fa-tachometer-alt"></i>
 
-                                Dashboard
+                                <?= __('dashboard') ?>
 
                             </a>
 
@@ -624,7 +816,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                                 <i class="fas fa-project-diagram"></i>
 
-                                Projects
+                                <?= __('projects') ?>
 
                             </a>
 
@@ -644,7 +836,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                                             <i class="fas fa-project-diagram"></i>
 
-                                            Projects
+                                            <?= __('projects') ?>
 
                                         </a>
 
@@ -663,7 +855,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                                             <i class="fas fa-file"></i>
 
-                                            Resource Requisitions
+                                            <?= __('resource_requisitions') ?>
 
                                         </a>
 
@@ -682,7 +874,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                                             <i class="fas fa-users"></i>
 
-                                            Customers
+                                            <?= __('customers') ?>
 
                                         </a>
 
@@ -728,7 +920,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                                 <i class="fas fa-warehouse"></i>
 
-                                Inventory
+                                <?= __('inventory') ?>
 
                             </a>
 
@@ -746,7 +938,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                                             <i class="fas fa-boxes"></i>
 
-                                            Inventory List
+                                            <?= __('inventory_list') ?>
 
                                         </a>
 
@@ -764,8 +956,7 @@ $role_name = $_SESSION['role_name'] ?? '';
                                             href="<?= URLROOT ?>/inventory-locations">
 
                                             <i class="fas fa-map-marker-alt"></i>
-
-                                            Locations (WareHouse)
+                                            <?= __('locations_warehouse') ?>
 
                                         </a>
 
@@ -783,8 +974,7 @@ $role_name = $_SESSION['role_name'] ?? '';
                                             href="<?= URLROOT ?>/inventoryreservations">
 
                                             <i class="fas fa-lock"></i>
-
-                                            Material Reservations
+                                            <?= __('material_reservations') ?>
 
                                         </a>
 
@@ -803,7 +993,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                                             <i class="fas fa-random"></i>
 
-                                            Stock Transfers
+                                            <?= __('stock_transfers') ?>
 
                                         </a>
 
@@ -822,7 +1012,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                                             <i class="fas fa-exchange-alt"></i>
 
-                                            Stock Movements (Report)
+                                            <?= __('stock_movements_report') ?>
 
                                         </a>
 
@@ -862,7 +1052,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                                 <i class="fas fa-shopping-cart"></i>
 
-                                Procurement
+                                <?= __('procurement') ?>
 
                             </a>
 
@@ -880,7 +1070,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                                             <i class="fas fa-file-invoice-dollar"></i>
 
-                                            Supplier Quotations
+                                            <?= __('supplier_quotations') ?>
 
                                         </a>
 
@@ -899,7 +1089,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                                             <i class="fas fa-file-invoice"></i>
 
-                                            Purchase Orders
+                                            <?= __('purchase_orders') ?>
 
                                         </a>
 
@@ -918,7 +1108,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                                             <i class="fas fa-truck-loading"></i>
 
-                                            Receive Stock (from PO)
+                                            <?= __('receive_stock_from_po') ?>
 
                                         </a>
 
@@ -937,7 +1127,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                                             <i class="fas fa-undo-alt"></i>
 
-                                            Return Goods (from Warehouse)
+                                            <?= __('return_goods_warehouse') ?>
 
                                         </a>
 
@@ -956,7 +1146,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                                             <i class="fas fa-recycle"></i>
 
-                                            Goods Returns (Report)
+                                            <?= __('goods_returns_report') ?>
 
                                         </a>
 
@@ -975,7 +1165,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                                             <i class="fas fa-truck"></i>
 
-                                            Suppliers
+                                            <?= __('suppliers') ?>
 
                                         </a>
 
@@ -990,32 +1180,6 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                     <?php endif; ?>
 
-
-                    <!-- =================================================
-                     SERVICES - CURRENTLY DISABLED
-                ================================================== -->
-
-                    <!--
-
-                <?php if (AuthHelper::canView('services.view')) : ?>
-
-                    <li class="nav-item">
-
-                        <a
-                            class="nav-link"
-                            href="<?= URLROOT ?>/services">
-
-                            <i class="fas fa-tools"></i>
-
-                            Services
-
-                        </a>
-
-                    </li>
-
-                <?php endif; ?>
-
-                -->
 
 
                     <!-- =================================================
@@ -1036,7 +1200,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                                 <i class="fas fa-coins"></i>
 
-                                Finance
+                                <?= __('finance') ?>
 
                             </a>
 
@@ -1054,7 +1218,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                                             <i class="fas fa-money-bill-wave"></i>
 
-                                            Projects Cost (Report)
+                                            <?= __('projects_cost_report') ?>
 
                                         </a>
 
@@ -1073,7 +1237,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                                             <i class="fas fa-chart-line"></i>
 
-                                            Portfolio Dashboard
+                                            <?= __('portfolio_dashboard') ?>
 
                                         </a>
 
@@ -1088,32 +1252,6 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                     <?php endif; ?>
 
-
-                    <!-- =================================================
-                     POS - CURRENTLY DISABLED
-                ================================================== -->
-
-                    <!--
-
-                <?php if (AuthHelper::canView('pos.view')) : ?>
-
-                    <li class="nav-item">
-
-                        <a
-                            class="nav-link"
-                            href="<?= URLROOT ?>/pos">
-
-                            <i class="fas fa-cash-register"></i>
-
-                            POS
-
-                        </a>
-
-                    </li>
-
-                <?php endif; ?>
-
-                -->
 
 
                     <!-- =================================================
@@ -1154,7 +1292,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                                     <i class="fas fa-user-shield"></i>
 
-                                    Admin Panel
+                                    <?= __('admin_panel') ?>
 
                                 </a>
 
@@ -1175,7 +1313,7 @@ $role_name = $_SESSION['role_name'] ?? '';
 
                                     <i class="fas fa-sign-out-alt"></i>
 
-                                    Logout
+                                    <?= __('logout') ?>
 
                                 </a>
 

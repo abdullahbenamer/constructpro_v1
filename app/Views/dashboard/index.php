@@ -4,12 +4,12 @@
 
         <h1>
             <i class="fas fa-tachometer-alt text-primary"></i>
-            Dashboard
+      <?= __('dashboard') ?>
         </h1>
 
         <p class="text-muted">
             <i class="fas fa-city"></i>
-            CONSTRUCTION PROFESSIONAL
+         <?= __('construction_professional') ?>
             <i class="fas fa-drafting-compass"></i>
             -
             <?= date('F j, Y') ?>
@@ -44,7 +44,7 @@
                     <div class="col mr-2">
 
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Active Projects
+                         <?= __('active_projects') ?>
                         </div>
 
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
@@ -84,7 +84,7 @@
                     <div class="col mr-2">
 
                         <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                            Low Stock
+                          <?= __('low_stock') ?>
                         </div>
 
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
@@ -126,7 +126,7 @@
                     <div class="col mr-2">
 
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            Customers
+                      <?= __('customers') ?>
                         </div>
 
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
@@ -170,7 +170,7 @@
                     <div class="col mr-2">
 
                         <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                            Resource Requisitions
+                         <?= __('resource_requisitions') ?>
                         </div>
 
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
@@ -264,7 +264,7 @@ if ($usedPercent >= 90) {
             <div class="card-body">
 
                 <h5>
-                    Total Portfolio Budget
+                 <?= __('total_portfolio_budget') ?>
                 </h5>
 
                 <h2>
@@ -287,7 +287,7 @@ if ($usedPercent >= 90) {
             <div class="card-body">
 
                 <h5>
-                    Total Portfolio Projects Cost
+             <?= __('total_portfolio_projects_cost') ?>
                 </h5>
 
                 <h2 class="mb-3">
@@ -315,7 +315,7 @@ if ($usedPercent >= 90) {
             <div class="card-body">
 
                 <h5 class="mb-3">
-                    Remaining Budget
+         <?= __('remaining_budget') ?>
                 </h5>
 
                 <h3 class="mb-3">
@@ -355,7 +355,7 @@ if ($usedPercent >= 90) {
                         $remainingPercent,
                         1
                     ) ?>%
-                    budget remaining
+           <?= __('budget_remaining') ?>
 
                 </small>
 
@@ -375,7 +375,7 @@ if ($usedPercent >= 90) {
             <div class="card-body">
 
                 <h5>
-                    Supplier Payables
+                    <?= __('supplier_payables') ?>
                 </h5>
 
                 <h2>
@@ -388,7 +388,7 @@ if ($usedPercent >= 90) {
                 </h2>
 
                 <small>
-                    Total Outstanding
+                   <?= __('total_outstanding') ?>
                 </small>
 
             </div>
@@ -413,7 +413,7 @@ if ($usedPercent >= 90) {
             <div class="card-header py-3">
 
                 <h6 class="m-0 font-weight-bold text-primary">
-                    Recent Projects
+          <?= __('recent_projects') ?>
                 </h6>
 
             </div>
@@ -463,7 +463,7 @@ if ($usedPercent >= 90) {
 
                                 <small class="text-muted">
 
-                                    Customer:
+                              <?= __('customer') ?>
 
                                     <a
                                         href="<?= URLROOT ?>/customers/details/<?= $project->customer_id ?>"
@@ -508,7 +508,7 @@ if ($usedPercent >= 90) {
                 <?php else : ?>
 
                     <p class="text-muted">
-                        No active projects
+                  <?= __('no_active_projects') ?>
                     </p>
 
                 <?php endif; ?>
