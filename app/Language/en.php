@@ -88,7 +88,7 @@ return [
     'day_left'                 => 'day left',
     'days'      => 'days',
     'day'       => 'day',
-    
+
     'details'                  => 'Details',
     'edit'                     => 'Edit',
     'archive'                  => 'Archive',
@@ -105,6 +105,57 @@ return [
     'testing'                  => 'Testing',
     'completed_status'         => 'Completed',
     'cancelled'                => 'Cancelled',
+
+    // PROJECT FORM
+'new_project'                  => 'New Project',
+'a_new_project'               => 'A New Project',
+
+'select_customer'             => 'Select Customer',
+'project_title'               => 'Project Title',
+'project_type'                => 'Project Type',
+'select_type'                 => 'Select Type',
+
+'construction'                => 'Construction',
+'maintenance'                 => 'Maintenance',
+'inspection'                  => 'Inspection',
+'consultancy'                 => 'Consultancy',
+'other'                       => 'Other',
+
+'project_scope'               => 'PROJECT SCOPE',
+'civil'                       => 'Civil',
+'architectural'               => 'Architectural',
+'structural'                 => 'Structural',
+'mep'                         => 'MEP',
+'finishing'                  => 'Finishing',
+'instrumentation_control'    => 'Instrumentation & Control',
+'telecommunications'         => 'Telecommunications',
+
+'select_project_scopes'       => 'Select one or more applicable project scopes.',
+
+'project_code'                => 'PROJECT CODE',
+'auto_generated'              => 'AUTO-GENERATED',
+'project_code_auto_generated' => 'Project Code will be generated automatically when the project is created.',
+
+'contract_number'             => 'Contract Number',
+'site_location'               => 'Site Location',
+'project_manager'             => 'Project Manager',
+'select_project_manager'      => '-- Select Project Manager --',
+
+'start_date'                  => 'Start Date',
+'deadline'                    => 'Deadline',
+'priority'                    => 'Priority',
+
+'low'                         => 'Low',
+'medium'                      => 'Medium',
+'high'                        => 'High',
+'critical'                    => 'Critical',
+
+'status'                      => 'Status',
+'budget_lyd_label'            => 'Budget (LYD)',
+'description'                 => 'Description',
+
+'create_project'              => 'Create Project',
+'cancel'                      => 'Cancel',
 
 
 

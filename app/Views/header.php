@@ -710,6 +710,23 @@ $direction = Language::direction();
             direction: rtl;
             unicode-bidi: isolate;
         }
+
+        /* RTL CHECKBOXES */
+html[dir="rtl"] .form-check {
+    padding-right: 1.5em;
+    padding-left: 0;
+}
+
+html[dir="rtl"] .form-check-input {
+    float: right;
+    margin-right: -1.5em;
+    margin-left: 0;
+}
+
+html[dir="rtl"] .form-check-label {
+    display: block;
+    text-align: right;
+}
     </style>
 
 </head>

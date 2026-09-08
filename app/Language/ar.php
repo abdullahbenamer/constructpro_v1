@@ -106,6 +106,57 @@ return [
     'completed_status'         => 'مكتمل',
     'cancelled'                => 'ملغى',
 
+    // PROJECT FORM
+'new_project'                  => 'مشروع جديد',
+'a_new_project'               => 'مشروع جديد',
+
+'select_customer'             => 'اختر العميل',
+'project_title'               => 'عنوان المشروع',
+'project_type'                => 'نوع المشروع',
+'select_type'                 => 'اختر النوع',
+
+'construction'                => 'إنشاءات',
+'maintenance'                 => 'صيانة',
+'inspection'                  => 'فحص',
+'consultancy'                 => 'استشارات',
+'other'                       => 'أخرى',
+
+'project_scope'               => 'نطاق المشروع',
+'civil'                       => 'مدني',
+'architectural'               => 'معماري',
+'structural'                 => 'إنشائي',
+'mep'                         => 'الأعمال الميكانيكية والكهربائية والصحية',
+'finishing'                  => 'التشطيبات',
+'instrumentation_control'    => 'أجهزة القياس والتحكم',
+'telecommunications'         => 'الاتصالات',
+
+'select_project_scopes'       => 'اختر نطاقاً واحداً أو أكثر من نطاقات المشروع.',
+
+'project_code'                => 'رمز المشروع',
+'auto_generated'              => 'يتم إنشاؤه تلقائياً',
+'project_code_auto_generated' => 'سيتم إنشاء رمز المشروع تلقائياً عند إنشاء المشروع.',
+
+'contract_number'             => 'رقم العقد',
+'site_location'               => 'موقع المشروع',
+'project_manager'             => 'مدير المشروع',
+'select_project_manager'      => '-- اختر مدير المشروع --',
+
+'start_date'                  => 'تاريخ البدء',
+'deadline'                    => 'الموعد النهائي',
+'priority'                    => 'الأولوية',
+
+'low'                         => 'منخفضة',
+'medium'                      => 'متوسطة',
+'high'                        => 'عالية',
+'critical'                    => 'حرجة',
+
+'status'                      => 'الحالة',
+'budget_lyd_label'            => 'الميزانية (LYD)',
+'description'                 => 'الوصف',
+
+'create_project'              => 'إنشاء المشروع',
+'cancel'                      => 'إلغاء',
+
 
 
 ];
