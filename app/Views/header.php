@@ -693,6 +693,23 @@ $direction = Language::direction();
             margin-left: 0;
             margin-right: 0.125rem;
         }
+
+        /* =========================================================
+   RTL DEADLINE / DATE DISPLAY
+   Prevent Arabic BiDi from rearranging dates and numbers
+   ========================================================= */
+
+        html[dir="rtl"] .deadline-date,
+        html[dir="rtl"] .deadline-number {
+            direction: ltr;
+            unicode-bidi: isolate;
+            display: inline-block;
+        }
+
+        html[dir="rtl"] .deadline-text {
+            direction: rtl;
+            unicode-bidi: isolate;
+        }
     </style>
 
 </head>

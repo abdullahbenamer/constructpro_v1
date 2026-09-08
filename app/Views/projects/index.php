@@ -18,7 +18,7 @@
         <h2 class="mb-0">
             <i class="fas fa-project-diagram"></i>
             (<?= count($projects) ?>)
-            <?= $showArchived ? 'Archived Projects' : 'Active Projects' ?>
+            <?= $showArchived ? __('archived_projects') : __('active_projects') ?>
         </h2>
     </div>
 
@@ -26,29 +26,23 @@
 
         <a href="<?= URLROOT ?>/projects"
             class="btn btn-success">
-            Active Projects
+            <?= __('active_projects') ?>
         </a>
 
         <a href="<?= URLROOT ?>/projects/archived"
             class="btn btn-secondary">
-            Archived Projects
+            <?= __('archived_projects') ?>
         </a>
-
-        <!-- <a href="<?//= URLROOT ?>/projects/create"
-            class="btn btn-primary">
-            <i class="fas fa-plus"></i>
-            New Project
-        </a> -->
 
         <?php if (AuthHelper::canView('projects.create')): ?>
 
-<a href="<?= URLROOT ?>/projects/create"
-            class="btn btn-primary">
-            <i class="fas fa-plus"></i>
-            New Project
-        </a>
+            <a href="<?= URLROOT ?>/projects/create"
+                class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                <?= __('new_project') ?>
+            </a>
 
-<?php endif; ?>
+        <?php endif; ?>
 
 
 
@@ -64,252 +58,312 @@
         <div class="table-responsive">
 
             <table class="table table-striped table-hover table-sm align-middle w-100 mb-0">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Project</th>
-                <!-- <th>Customer</th> -->
-                <th>Type</th>
-                <th>Location</th>
-                <th>Doc.</th>
-                <th><i class="fas fa-tools"></i> Work Status</th>
-                <th>Deadline</th>
-                <th>Budget LYD</th>
-                <th>Costs LYD</th>
-                <?php if (empty($showArchived)): ?>
-                    <th><i class="fas fa-coins"></i> Finance</th>
-                <?php endif; ?>
-                <?php if (empty($showArchived)): ?>
-                    <th><i class="fas fa-dollar"></i> Cost Status</th>
-                <?php endif; ?>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (empty($projects)): ?>
-                <tr>
-                    <?php
-                    $columnCount = empty($showArchived) ? 13 : 11;
-                    ?>
-                    <td colspan="<?= $columnCount ?>" class="text-center py-5">
-
-                        <i class="fas fa-folder-open fa-3x text-secondary mb-3"></i>
-
-                        <h5 class="mt-3 text-muted">
-                            No <?= $showArchived ? 'archived' : 'active' ?> projects available.
-                        </h5>
-
-                        <p class="text-muted mb-3">
-                            <?= $showArchived
-                                ? 'There are currently no archived projects.'
-                                : 'Create your first project to get started.' ?>
-                        </p>
-
-                        <?php if (empty($showArchived)): ?>
-                            <a href="<?= URLROOT ?>/projects/create" class="btn btn-primary">
-                                <i class="fas fa-plus"></i>
-                                    
-                            </a>
-                        <?php endif; ?>
-
-                    </td>
-                </tr>
-
-            <?php else: ?>
-
-                <?php foreach ($projects as $project) :
-
-                    $budget = (float)$project->budget;
-                    $cost   = (float)($project->total_cost ?? 0);
-
-                    $ratio = ($budget > 0) ? ($cost / $budget) : 0;
-
-                    if ($cost == 0) {
-                        $statusColor = 'secondary';
-                        $label = 'Not Started';
-                    } elseif ($ratio <= 0.8) {
-                        $statusColor = 'success';
-                        $label = 'Healthy';
-                    } elseif ($ratio <= 1) {
-                        $statusColor = 'warning';
-                        $label = 'Warning';
-                    } else {
-                        $statusColor = 'danger';
-                        $label = 'Over Budget';
-                    }
-
-                ?>
+                <thead>
                     <tr>
-                        <td><?= $project->id ?></td>
-                        <td class="text-nowrap"><?= htmlspecialchars($project->title) ?></td>
-                        <!-- <td class="text-nowrap"><?//= htmlspecialchars($project->customer_name ?? 'N/A') ?></td> -->
-                        <td class="text-nowrap">
-                            <?= ucfirst($project->project_type ?? '-') ?>
-                        </td>
+                        <th>ID</th>
 
-                        <td>
-                            <?= htmlspecialchars($project->site_location ?? '-') ?>
-                        </td>
+                        <th><?= __('project') ?></th>
 
-                        <td>
-                            <a href="<?= URLROOT ?>/projects/documents/<?= $project->id ?>"
-                                class="btn btn-sm btn-dark"
-                                style="white-space: nowrap;">
+                        <th><?= __('type') ?></th>
 
-                                <i class="fas fa-folder"></i>
-                                <span class="badge bg-light text-dark ms-1">
-                                    <?= $project->document_count ?? 0 ?>
-                                </span>
+                        <th><?= __('location') ?></th>
 
-                            </a>
-                        </td>
-                        <td>
-                            <?php // Project Status
-                            $statusColors = [
-                                'planning'     => 'secondary',
-                                'in_progress'  => 'warning',
-                                'testing'      => 'info',
-                                'completed'    => 'success',
-                                'cancelled'    => 'danger'
-                            ];
-                            $badge =
-                                $statusColors[$project->status]
-                                ?? 'secondary';
-                            ?>
-                            <div style="min-width: 6rem;">
-                                <span class="badge bg-<?= $badge ?>">
-                                    <?= ucwords(str_replace('_', ' ', $project->status)) ?>
-                                </span>
-                        </td>
-                        <?php
-                        $deadline = strtotime($project->deadline);
-                        $today    = strtotime(date('Y-m-d'));
-                        $daysRemaining = floor(($deadline - $today) / 86400);
-                        $formattedDate = date('d M Y', $deadline);
-                        ?>
-                        <td>
-                            <?php if ($project->status == 'completed'): ?>
-                                <span class="badge bg-success">
-                                    Completed · <?= $formattedDate ?>
-                                </span>
-                            <?php elseif ($daysRemaining < 0): ?>
-                                <span class="badge bg-danger">
-                                    <?= $formattedDate ?> · Overdue by <?= abs($daysRemaining) ?> day<?= abs($daysRemaining) != 1 ? 's' : '' ?>
-                                </span>
+                        <th><?= __('doc') ?></th>
 
-                            <?php elseif ($daysRemaining == 0): ?>
+                        <th>
+                            <i class="fas fa-tools"></i>
+                            <?= __('work_status') ?>
+                        </th>
 
-                                <span class="badge bg-danger">
-                                    <?= $formattedDate ?> · Due Today
-                                </span>
+                        <th><?= __('deadline') ?></th>
 
-                            <?php elseif ($daysRemaining <= 3): ?>
+                        <th><?= __('budget_lyd') ?></th>
 
-                                <span class="badge bg-danger">
-                                    <?= $formattedDate ?> · <?= $daysRemaining ?> day<?= $daysRemaining != 1 ? 's' : '' ?> left
-                                </span>
-
-                            <?php elseif ($daysRemaining <= 7): ?>
-
-                                <span class="badge bg-warning text-dark">
-                                    <?= $formattedDate ?> · <?= $daysRemaining ?> days left
-                                </span>
-
-                            <?php elseif ($daysRemaining <= 14): ?>
-
-                                <span class="badge bg-info text-dark">
-                                    <?= $formattedDate ?> · <?= $daysRemaining ?> days left
-                                </span>
-
-                            <?php else: ?>
-
-                                <span class="badge bg-success">
-                                    <?= $formattedDate ?> · <?= $daysRemaining ?> days left
-                                </span>
-
-                            <?php endif; ?>
-
-                        </td>
-                        <td class="text-nowrap"><?= number_format($project->budget, 0) ?></td>
-
-                        <td class="text-nowrap"><?= number_format($cost, 0) ?></td>
-
+                        <th><?= __('costs_lyd') ?></th>
                         <?php if (empty($showArchived)): ?>
-                            <!-- ✅ Finance columns , Hide for Archived projects-->
-                            <td>
-                                <a href="<?= URLROOT ?>/project-costs/<?= $project->id ?>"
-                                    class="btn btn-sm btn-info text-nowrap">
-                                    Details
-                                </a>
-                            </td>
-
-                            <td>
-                                <div style="min-width: 6rem;">
-                                    <div class="progress" style="height: 0.5rem;">
-                                        <div class="progress-bar bg-<?= $statusColor ?>"
-                                            style="width: <?= min(100, $ratio * 100) ?>%">
-                                        </div>
-                                    </div>
-                                    <small class="text-<?= $statusColor ?>">
-                                        <?= round($ratio * 100) ?>% (<?= $label ?>)
-                                    </small>
-                                </div>
-                            </td>
+                            <th>
+                                <i class="fas fa-coins"></i>
+                                <?= __('finance') ?>
+                            </th>
                         <?php endif; ?>
+                        <?php if (empty($showArchived)): ?>
+                            <th>
+                                <i class="fas fa-dollar"></i>
+                                <?= __('cost_status') ?>
+                            </th>
+                        <?php endif; ?>
+                        <th><?= __('actions') ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (empty($projects)): ?>
+                        <tr>
+                            <?php
+                            $columnCount = empty($showArchived) ? 13 : 11;
+                            ?>
+                            <td colspan="<?= $columnCount ?>" class="text-center py-5">
 
-                        <td class="text-nowrap">
-                            <div class="btn-group btn-group-sm" role="group">
-                                <a href="<?= URLROOT ?>/projects/edit/<?= $project->id ?>"
-                                    class="btn btn-sm btn-warning">
-                                    Edit
-                                </a>
+                                <i class="fas fa-folder-open fa-3x text-secondary mb-3"></i>
+
+                                <h5 class="mt-3 text-muted">
+                                    <?= $showArchived
+                                        ? __('no_archived_projects')
+                                        : __('no_active_projects_available') ?>
+                                </h5>
+
+                                <p class="text-muted mb-3">
+                                    <?= $showArchived
+                                        ? __('no_archived_projects_currently')
+                                        : __('create_first_project') ?>
+                                </p>
 
                                 <?php if (empty($showArchived)): ?>
+                                    <a href="<?= URLROOT ?>/projects/create" class="btn btn-primary">
+                                        <i class="fas fa-plus"></i>
 
-                                    <a href="<?= URLROOT ?>/projects/archive/<?= $project->id ?>"
-                                        class="btn btn-sm btn-secondary"
-                                        onclick="return confirm('Archive this project?')">
-                                        Archive
                                     </a>
-
                                 <?php endif; ?>
 
-                                <?php if (!empty($showArchived)): ?>
+                            </td>
+                        </tr>
 
-                                    <a href="<?= URLROOT ?>/projects/restore/<?= $project->id ?>"
-                                        class="btn btn-sm btn-success"
-                                        onclick="return confirm('Restore this project?')">
-                                        Restore
+                    <?php else: ?>
+
+                        <?php foreach ($projects as $project) :
+
+                            $budget = (float)$project->budget;
+                            $cost   = (float)($project->total_cost ?? 0);
+
+                            $ratio = ($budget > 0) ? ($cost / $budget) : 0;
+
+                            if ($cost == 0) {
+                                $statusColor = 'secondary';
+                                $label = __('not_started');
+                            } elseif ($ratio <= 0.8) {
+                                $statusColor = 'success';
+                                $label = __('healthy');
+                            } elseif ($ratio <= 1) {
+                                $statusColor = 'warning';
+                                $label = __('warning');
+                            } else {
+                                $statusColor = 'danger';
+                                $label = __('over_budget');
+                            }
+
+                        ?>
+                            <tr>
+                                <td><?= $project->id ?></td>
+                                <td class="text-nowrap"><?= htmlspecialchars($project->title) ?></td>
+                                <!-- <td class="text-nowrap"><? //= htmlspecialchars($project->customer_name ?? 'N/A') 
+                                                                ?></td> -->
+                                <td class="text-nowrap">
+                                    <?= ucfirst($project->project_type ?? '-') ?>
+                                </td>
+
+                                <td>
+                                    <?= htmlspecialchars($project->site_location ?? '-') ?>
+                                </td>
+
+                                <td>
+                                    <a href="<?= URLROOT ?>/projects/documents/<?= $project->id ?>"
+                                        class="btn btn-sm btn-dark"
+                                        style="white-space: nowrap;">
+
+                                        <i class="fas fa-folder"></i>
+                                        <span class="badge bg-light text-dark ms-1">
+                                            <?= $project->document_count ?? 0 ?>
+                                        </span>
+
                                     </a>
+                                </td>
+                                <td>
+                                    <?php
+                                    $statusLabels = [
+                                        'planning'    => __('planning'),
+                                        'in_progress' => __('in_progress'),
+                                        'testing'     => __('testing'),
+                                        'completed'   => __('completed_status'),
+                                        'cancelled'   => __('cancelled')
+                                    ];
+                                    ?>
 
-                                <?php endif; ?>
+                                    <span class="badge bg-<?= $badge ?>">
+                                        <?= $statusLabels[$project->status] ?? ucwords(str_replace('_', ' ', $project->status)) ?>
+                                    </span>
+                                </td>
+                                <?php
+                                $deadline = strtotime($project->deadline);
+                                $today    = strtotime(date('Y-m-d'));
+                                $daysRemaining = floor(($deadline - $today) / 86400);
+                                $formattedDate = date('d M Y', $deadline);
+                                ?>
+                                <td>
+                                    <?php if ($project->status == 'completed'): ?>
 
-                                <!-- <a href="<?//= URLROOT ?>/projects/delete/<?//= $project->id ?>"
-                                    class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Permanently delete this project?')">
-                                    Delete
-                                </a> -->
+    <span class="badge bg-success">
+        <span class="deadline-date"><?= $formattedDate ?></span>
+        ·
+        <?= __('completed') ?>
+    </span>
 
-<?php if ($_SESSION['role_id'] == 1): ?>
+<?php elseif ($daysRemaining < 0): ?>
 
-    <a href="<?= URLROOT ?>/projects/delete/<?= $project->id ?>"
-       class="btn btn-sm btn-danger"
-       onclick="return confirm('Permanently delete this project?')">    
-        Delete
+    <span class="badge bg-danger">
+        <span class="deadline-date"><?= $formattedDate ?></span>
+        ·
+        <span class="deadline-text">
+            <?= __('overdue_by') ?>
+        </span>
+        <span class="deadline-number">
+            <?= abs($daysRemaining) ?>
+        </span>
+        <span class="deadline-text">
+            <?= abs($daysRemaining) != 1
+                ? __('days')
+                : __('day') ?>
+        </span>
+    </span>
 
-    </a>
+<?php elseif ($daysRemaining == 0): ?>
+
+    <span class="badge bg-danger">
+        <span class="deadline-date"><?= $formattedDate ?></span>
+        ·
+        <span class="deadline-text">
+            <?= __('due_today') ?>
+        </span>
+    </span>
+
+<?php elseif ($daysRemaining <= 3): ?>
+
+    <span class="badge bg-danger">
+        <span class="deadline-date"><?= $formattedDate ?></span>
+        ·
+        <span class="deadline-number">
+            <?= $daysRemaining ?>
+        </span>
+        <span class="deadline-text">
+            <?= $daysRemaining != 1
+                ? __('days_left')
+                : __('day_left') ?>
+        </span>
+    </span>
+
+<?php elseif ($daysRemaining <= 7): ?>
+
+    <span class="badge bg-warning text-dark">
+        <span class="deadline-date"><?= $formattedDate ?></span>
+        ·
+        <span class="deadline-number">
+            <?= $daysRemaining ?>
+        </span>
+        <span class="deadline-text">
+            <?= __('days_left') ?>
+        </span>
+    </span>
+
+<?php elseif ($daysRemaining <= 14): ?>
+
+    <span class="badge bg-info text-dark">
+        <span class="deadline-date"><?= $formattedDate ?></span>
+        ·
+        <span class="deadline-number">
+            <?= $daysRemaining ?>
+        </span>
+        <span class="deadline-text">
+            <?= __('days_left') ?>
+        </span>
+    </span>
+
+<?php else: ?>
+
+    <span class="badge bg-success">
+        <span class="deadline-date"><?= $formattedDate ?></span>
+        ·
+        <span class="deadline-number">
+            <?= $daysRemaining ?>
+        </span>
+        <span class="deadline-text">
+            <?= __('days_left') ?>
+        </span>
+    </span>
 
 <?php endif; ?>
+                                </td>
+                                <td class="text-nowrap"><?= number_format($project->budget, 0) ?></td>
 
-                            </div>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
+                                <td class="text-nowrap"><?= number_format($cost, 0) ?></td>
 
-            <?php endif; ?>
+                                <?php if (empty($showArchived)): ?>
+                                    <!-- ✅ Finance columns , Hide for Archived projects-->
+                                    <td>
+                                        <a href="<?= URLROOT ?>/project-costs/<?= $project->id ?>"
+                                            class="btn btn-sm btn-info text-nowrap">
+                                            <?= __('details') ?>
+                                        </a>
+                                    </td>
 
-        </tbody>
-               </table>
+                                    <td>
+                                        <div style="min-width: 6rem;">
+                                            <div class="progress" style="height: 0.5rem;">
+                                                <div class="progress-bar bg-<?= $statusColor ?>"
+                                                    style="width: <?= min(100, $ratio * 100) ?>%">
+                                                </div>
+                                            </div>
+                                            <small class="text-<?= $statusColor ?>">
+                                                <?= round($ratio * 100) ?>% (<?= $label ?>)
+                                            </small>
+                                        </div>
+                                    </td>
+                                <?php endif; ?>
+
+                                <td class="text-nowrap">
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <a href="<?= URLROOT ?>/projects/edit/<?= $project->id ?>"
+                                            class="btn btn-sm btn-warning">
+                                            <?= __('edit') ?>
+                                        </a>
+
+                                        <?php if (empty($showArchived)): ?>
+
+                                            <a href="<?= URLROOT ?>/projects/archive/<?= $project->id ?>"
+                                                class="btn btn-sm btn-secondary"
+                                                onclick="return confirm('<?= htmlspecialchars(__('archive_project_confirm'), ENT_QUOTES) ?>')">
+                                                <?= __('archive') ?>
+                                            </a>
+
+                                        <?php endif; ?>
+
+                                        <?php if (!empty($showArchived)): ?>
+
+                                            <a href="<?= URLROOT ?>/projects/restore/<?= $project->id ?>"
+                                                class="btn btn-sm btn-success"
+                                                onclick="return confirm('<?= htmlspecialchars(__('restore_project_confirm'), ENT_QUOTES) ?>')">
+                                                <?= __('restore') ?>
+                                            </a>
+
+                                        <?php endif; ?>
+
+                                        <?php if ($_SESSION['role_id'] == 1): ?>
+
+                                            <a href="<?= URLROOT ?>/projects/delete/<?= $project->id ?>"
+                                                class="btn btn-sm btn-danger"
+                                                onclick="return confirm('<?= htmlspecialchars(__('delete_project_confirm'), ENT_QUOTES) ?>')">
+                                                <?= __('delete') ?>
+
+                                            </a>
+
+                                        <?php endif; ?>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+
+                    <?php endif; ?>
+
+                </tbody>
+            </table>
 
         </div>
 

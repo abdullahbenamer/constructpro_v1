@@ -54,4 +54,58 @@ return [
     'customer'                     => 'العميل:',
     'no_active_projects'           => 'لا توجد مشاريع نشطة',
 
+    // PROJECTS
+    'active_projects'          => 'المشاريع النشطة',
+    'archived_projects'        => 'المشاريع المؤرشفة',
+    'new_project'              => 'مشروع جديد',
+
+    'project'                  => 'المشروع',
+    'type'                     => 'النوع',
+    'location'                 => 'الموقع',
+    'doc'                      => 'المستند',
+    'work_status'              => 'حالة العمل',
+    'deadline'                 => 'الموعد النهائي',
+    'budget_lyd'               => 'الميزانية LYD',
+    'costs_lyd'                => 'التكاليف LYD',
+    'finance'                  => 'المالية',
+    'cost_status'              => 'حالة التكلفة',
+    'actions'                  => 'الإجراءات',
+
+    'no_archived_projects'     => 'لا توجد مشاريع مؤرشفة متاحة.',
+    'no_active_projects_available' => 'لا توجد مشاريع نشطة متاحة.',
+    'no_archived_projects_currently' => 'لا توجد حالياً مشاريع مؤرشفة.',
+    'create_first_project'     => 'أنشئ مشروعك الأول للبدء.',
+
+    'not_started'              => 'لم يبدأ',
+    'healthy'                  => 'سليم',
+    'warning'                  => 'تحذير',
+    'over_budget'              => 'تجاوز الميزانية',
+
+    'completed'                => 'مكتمل',
+    'overdue_by'               => 'متأخر بمقدار',
+    'due_today'                => 'مستحق اليوم',
+    'days_left'                => 'أيام متبقية',
+    'day_left'                 => 'يوم متبقٍ',
+    'days'      => 'أيام',
+    'day'       => 'يوم',
+
+    'details'                  => 'التفاصيل',
+    'edit'                     => 'تعديل',
+    'archive'                  => 'أرشفة',
+    'restore'                  => 'استعادة',
+    'delete'                   => 'حذف',
+
+    'archive_project_confirm'  => 'هل تريد أرشفة هذا المشروع؟',
+    'restore_project_confirm'  => 'هل تريد استعادة هذا المشروع؟',
+    'delete_project_confirm'   => 'هل تريد حذف هذا المشروع نهائياً؟',
+
+    // PROJECT WORK STATUSES
+    'planning'                 => 'التخطيط',
+    'in_progress'              => 'قيد التنفيذ',
+    'testing'                  => 'قيد الاختبار',
+    'completed_status'         => 'مكتمل',
+    'cancelled'                => 'ملغى',
+
+
+
 ];
