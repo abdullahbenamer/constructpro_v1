@@ -330,17 +330,104 @@
      PROJECT COSTS TITLE
 ========================================================= -->
 
-<div class="d-flex justify-content-between align-items-center mb-3">
+<?php if (!empty($costs)): ?>
 
-    <h3 class="mb-0">
-        <i class="fas fa-coins"></i>
-        Project Costs
-    </h3>
+    <!-- PROJECT COSTS TABLE -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>#</th>
+                    <th>DATE</th>
+                    <th>COST TYPE</th>
+                    <th>DESCRIPTION</th>
+                    <th class="text-end">QUANTITY</th>
+                    <th class="text-end">UNIT PRICE</th>
+                    <th class="text-end">TOTAL</th>
+                    <th>ACTIONS</th>
+                </tr>
+            </thead>
 
-    <a href="<?= URLROOT ?>/project-costs/create/<?= $project->id ?>"
-       class="btn btn-primary">
-        <i class="fas fa-plus"></i>
-        Add Cost
-    </a>
+            <tbody>
+                <?php foreach ($costs as $index => $cost): ?>
+                    <tr>
+                        <td><?= $index + 1 ?></td>
 
-</div>
+                        <td>
+                            <?= !empty($cost->created_at)
+                                ? date('d M Y', strtotime($cost->created_at))
+                                : 'N/A' ?>
+                        </td>
+
+                        <td>
+                            <?= htmlspecialchars($cost->cost_type ?? 'N/A') ?>
+                        </td>
+
+                        <td>
+                            <?= htmlspecialchars($cost->description ?? '') ?>
+                        </td>
+
+                        <td class="text-end">
+                            <?= number_format((float)($cost->quantity ?? 0), 2) ?>
+                        </td>
+
+                        <td class="text-end">
+                            <?= number_format((float)($cost->unit_price ?? 0), 2) ?>
+                            LYD
+                        </td>
+
+                        <td class="text-end fw-bold">
+                            <?= number_format((float)($cost->total_cost ?? 0), 2) ?>
+                            LYD
+                        </td>
+
+                        <td>
+                            <!-- Existing actions go here -->
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+
+            <tfoot>
+                <tr class="table-light">
+                    <th colspan="6" class="text-end">
+                        TOTAL PROJECT COST
+                    </th>
+                    <th class="text-end">
+                        <?= number_format((float)($total_cost ?? 0), 2) ?> LYD
+                    </th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+<?php else: ?>
+
+    <!-- EMPTY PROJECT COSTS STATE -->
+    <div class="card border-0 bg-light mb-4">
+        <div class="card-body text-center py-5">
+
+            <div class="mb-3">
+                <i class="fas fa-coins fa-3x text-muted"></i>
+            </div>
+
+            <h5 class="mb-2">
+                NO PROJECT COSTS RECORDED
+            </h5>
+
+            <p class="text-muted mb-4">
+                No costs have been recorded for this project yet.
+                Start by adding the first project cost.
+            </p>
+
+            <a href="<?= URLROOT ?>/project-costs/create/<?= $project->id ?>"
+               class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                ADD FIRST COST
+            </a>
+
+        </div>
+    </div>
+
+<?php endif; ?>

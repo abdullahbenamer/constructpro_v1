@@ -29,9 +29,11 @@ class ProjectCosts extends Controller
             header('Location: ' . URLROOT . '/projects');
             exit;
         }
-
         $data['project'] = $project;
         $data['project_id'] = $project_id;
+
+        // PROJECT SCOPES
+        $data['project_scopes'] = $projectModel->getProjectScopes($project_id);
 
         $data['costs'] = $costModel->getProjectCosts($project_id);
         $data['total_cost'] = $costModel->getTotalCost($project_id);

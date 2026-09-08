@@ -41,21 +41,32 @@ class ProjectModel extends Model
         return $this->getProjects();
     }
 
-    public function getById($id)
-    {
-        $stmt = $this->db->query("SELECT p.*, c.company as customer_name 
-                                  FROM projects p 
-                                  LEFT JOIN customers c ON p.customer_id = c.id 
-                                  WHERE p.id = ?", [$id]);
-        $result = $stmt->fetch();
+  public function getById($id)
+{
+    $stmt = $this->db->query(
+        "SELECT
+            p.*,
+            c.company AS customer_name,
+            u.full_name AS project_manager_name
+         FROM projects p
+         LEFT JOIN customers c
+            ON p.customer_id = c.id
+         LEFT JOIN users u
+            ON p.project_manager_id = u.id
+         WHERE p.id = ?",
+        [$id]
+    );
 
-        // SAFE: Return null object or redirect
-        if (!$result) {
-            header('Location: ' . URLROOT . '/projects');
-            exit;
-        }
-        return $result;
+    $result = $stmt->fetch();
+
+    // SAFE: Return null object or redirect
+    if (!$result) {
+        header('Location: ' . URLROOT . '/projects');
+        exit;
     }
+
+    return $result;
+}
 
     public function create($data)
     {
