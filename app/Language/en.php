@@ -36,12 +36,9 @@ return [
     'portfolio_dashboard'    => 'Portfolio Dashboard',
 
     // DASHBOARD
-    'dashboard'                    => 'Dashboard',
     'construction_professional'   => 'CONSTRUCTION PROFESSIONAL',
     'active_projects'             => 'Active Projects',
     'low_stock'                    => 'Low Stock',
-    'customers'                    => 'Customers',
-    'resource_requisitions'        => 'Resource Requisitions',
 
     'total_portfolio_budget'       => 'Total Portfolio Budget',
     'total_portfolio_projects_cost' => 'Total Portfolio Projects Cost',
@@ -55,7 +52,6 @@ return [
     'no_active_projects'           => 'No active projects',
 
     // PROJECTS
-    'active_projects'          => 'Active Projects',
     'archived_projects'        => 'Archived Projects',
     'new_project'              => 'New Project',
 
@@ -67,7 +63,6 @@ return [
     'deadline'                 => 'Deadline',
     'budget_lyd'               => 'Budget LYD',
     'costs_lyd'                => 'Costs LYD',
-    'finance'                  => 'Finance',
     'cost_status'              => 'Cost Status',
     'actions'                  => 'Actions',
 
@@ -107,55 +102,107 @@ return [
     'cancelled'                => 'Cancelled',
 
     // PROJECT FORM
-'new_project'                  => 'New Project',
-'a_new_project'               => 'A New Project',
+    'a_new_project'               => 'A New Project',
 
-'select_customer'             => 'Select Customer',
-'project_title'               => 'Project Title',
-'project_type'                => 'Project Type',
-'select_type'                 => 'Select Type',
+    'select_customer'             => 'Select Customer',
+    'project_title'               => 'Project Title',
+    'project_type'                => 'Project Type',
+    'select_type'                 => 'Select Type',
 
-'construction'                => 'Construction',
-'maintenance'                 => 'Maintenance',
-'inspection'                  => 'Inspection',
-'consultancy'                 => 'Consultancy',
-'other'                       => 'Other',
+    'construction'                => 'Construction',
+    'maintenance'                 => 'Maintenance',
+    'inspection'                  => 'Inspection',
+    'consultancy'                 => 'Consultancy',
+    'other'                       => 'Other',
 
-'project_scope'               => 'PROJECT SCOPE',
-'civil'                       => 'Civil',
-'architectural'               => 'Architectural',
-'structural'                 => 'Structural',
-'mep'                         => 'MEP',
-'finishing'                  => 'Finishing',
-'instrumentation_control'    => 'Instrumentation & Control',
-'telecommunications'         => 'Telecommunications',
+    'project_scope'               => 'PROJECT SCOPE',
+    'civil'                       => 'Civil',
+    'architectural'               => 'Architectural',
+    'structural'                 => 'Structural',
+    'mep'                         => 'MEP',
+    'finishing'                  => 'Finishing',
+    'instrumentation_control'    => 'Instrumentation & Control',
+    'telecommunications'         => 'Telecommunications',
 
-'select_project_scopes'       => 'Select one or more applicable project scopes.',
+    'select_project_scopes'       => 'Select one or more applicable project scopes.',
 
-'project_code'                => 'PROJECT CODE',
-'auto_generated'              => 'AUTO-GENERATED',
-'project_code_auto_generated' => 'Project Code will be generated automatically when the project is created.',
+    'project_code'                => 'PROJECT CODE',
+    'auto_generated'              => 'AUTO-GENERATED',
+    'project_code_auto_generated' => 'Project Code will be generated automatically when the project is created.',
 
-'contract_number'             => 'Contract Number',
-'site_location'               => 'Site Location',
-'project_manager'             => 'Project Manager',
-'select_project_manager'      => '-- Select Project Manager --',
+    'contract_number'             => 'Contract Number',
+    'site_location'               => 'Site Location',
+    'project_manager'             => 'Project Manager',
+    'select_project_manager'      => '-- Select Project Manager --',
 
-'start_date'                  => 'Start Date',
-'deadline'                    => 'Deadline',
-'priority'                    => 'Priority',
+    'start_date'                  => 'Start Date',
+    'priority'                    => 'Priority',
 
-'low'                         => 'Low',
-'medium'                      => 'Medium',
-'high'                        => 'High',
-'critical'                    => 'Critical',
+    'low'                         => 'Low',
+    'medium'                      => 'Medium',
+    'high'                        => 'High',
+    'critical'                    => 'Critical',
 
-'status'                      => 'Status',
-'budget_lyd_label'            => 'Budget (LYD)',
-'description'                 => 'Description',
+    'status'                      => 'Status',
+    'budget_lyd_label'            => 'Budget (LYD)',
+    'description'                 => 'Description',
 
-'create_project'              => 'Create Project',
-'cancel'                      => 'Cancel',
+    'create_project'              => 'Create Project',
+    'cancel'                      => 'Cancel',
+
+    'edit_project' => 'Edit Project',
+
+    'customer_label' => 'Customer',
+
+    'select_manager' => '-- Select Manager --',
+
+    'project_code_cannot_change' => 'Project Code is automatically generated and cannot be changed.',
+
+    'budget' => 'Budget',
+
+    'save_changes' => 'Save Changes',
+
+    'project_specifications' => 'PROJECT SPECIFICATIONS',
+
+    'project_budget' => 'Project Budget',
+    'project_costs'  => 'Project Costs',
+    'no_project_scope' => 'No project scope specified.',
+    'documents' => 'Documents',
+    'advance_payment' => 'Advance Payment',
+    'finance_ledger' => 'Finance Ledger',
+    'finance_dashboard' => 'Finance Dashboard',
+    'date'       => 'DATE',
+    'cost_type'  => 'COST TYPE',
+    'quantity'   => 'QUANTITY',
+    'unit_price' => 'UNIT PRICE',
+    'total'      => 'TOTAL',
+    'delete_this_cost' => 'Delete this cost?',
+    'total_project_cost' => 'TOTAL PROJECT COST',
+    'no_project_costs_recorded' => 'NO PROJECT COSTS RECORDED',
+    'no_costs_yet'             => 'No costs have been recorded for this project yet.',
+    'start_first_project_cost' => 'Start by adding the first project cost.',
+    'add_first_cost' => 'ADD FIRST COST',
+    'project_warehouse' => 'Project Warehouse',
+    'add_cost_to_project' => 'Add Cost to Project',
+    'materials'     => 'MATERIALS',
+    'labor'         => 'LABOR',
+    'transport'     => 'TRANSPORT',
+    'subcontract'   => 'SUBCONTRACT',
+    'miscellaneous' => 'MISCELLANEOUS',
+    'inventory_item' => 'Inventory Item',
+    'select_item' => 'Select Item',
+    'available' => 'Available',
+    'physical'  => 'Physical',
+    'resource_description_placeholder' => 'Description of the Resource ....',
+    'select_location' => 'Select Location',
+    'quantity_warning' => "It's not possible to exceed the available quantity in the selected Warehouse",
+    'unit_cost' => 'Unit Cost',
+    'autofill_materials' => 'Autofill for Materials ...',
+    'add_cost' => 'Add Cost',
+    'qty' => 'Qty',
+
+
+
 
 
 

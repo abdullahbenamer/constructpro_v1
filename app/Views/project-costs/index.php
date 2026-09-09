@@ -11,7 +11,7 @@
 
             <div>
                 <div class="text-muted small">
-                    PROJECT
+                    <?= __('project') ?>
                 </div>
 
                 <h3 class="mb-1 text-uppercase">
@@ -24,7 +24,15 @@
                     </span>
 
                     <span class="badge bg-secondary fs-6">
-                        <?= htmlspecialchars(ucfirst($project->project_type ?? 'N/A')) ?>
+                        <?= htmlspecialchars(
+                            [
+                                'Construction' => __('construction'),
+                                'Maintenance'  => __('maintenance'),
+                                'Inspection'   => __('inspection'),
+                                'Consultancy'  => __('consultancy'),
+                                'Other'        => __('other')
+                            ][$project->project_type ?? ''] ?? ($project->project_type ?? 'N/A')
+                        ) ?>
                     </span>
 
                     <?php
@@ -42,23 +50,37 @@
                     ?>
 
                     <span class="badge bg-<?= $statusColor ?> fs-6">
-                        <?= ucwords(str_replace('_', ' ', $project->status ?? 'N/A')) ?>
+                        <?= htmlspecialchars(
+                            [
+                                'planning'    => __('planning'),
+                                'in_progress' => __('in_progress'),
+                                'testing'     => __('testing'),
+                                'completed'   => __('completed_status'),
+                                'cancelled'   => __('cancelled')
+                            ][$project->status ?? ''] ?? ($project->status ?? 'N/A')
+                        ) ?>
                     </span>
                 </div>
             </div>
 
             <div class="mt-2 mt-md-0">
 
+                    <a href="<?= URLROOT ?>/project-costs/create/<?= $project->id ?>"
+                        class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        <?= __('add_cost') ?>
+                    </a>             
+
                 <a href="<?= URLROOT ?>/projects/edit/<?= $project->id ?>"
-                   class="btn btn-warning">
+                    class="btn btn-warning">
                     <i class="fas fa-edit"></i>
-                    Edit Project
+                    <?= __('edit_project') ?>
                 </a>
 
                 <a href="<?= URLROOT ?>/customers/details/<?= $project->customer_id ?>"
-                   class="btn btn-outline-primary">
+                    class="btn btn-outline-primary">
                     <i class="fas fa-address-card"></i>
-                    Customer
+                    <?= __('customer_label') ?>
                 </a>
 
             </div>
@@ -71,7 +93,7 @@
 
             <h6 class="mb-3">
                 <i class="fas fa-info-circle"></i>
-                PROJECT SPECIFICATIONS
+                <?= __('project_specifications') ?>
             </h6>
 
             <div class="row g-3">
@@ -79,7 +101,7 @@
                 <!-- PROJECT CODE -->
                 <div class="col-md-3">
                     <div class="text-muted small">
-                        Project Code
+                        <?= __('project_code') ?>
                     </div>
 
                     <strong>
@@ -91,14 +113,14 @@
                 <!-- PROJECT TYPE -->
                 <div class="col-md-3">
                     <div class="text-muted small">
-                        Project Type
+                        <?= __('project_type') ?>
                     </div>
 
                     <strong>
                         <?= htmlspecialchars(
                             $project->project_type
-                            ? ucfirst($project->project_type)
-                            : 'N/A'
+                                ? ucfirst($project->project_type)
+                                : 'N/A'
                         ) ?>
                     </strong>
                 </div>
@@ -107,7 +129,7 @@
                 <!-- CUSTOMER -->
                 <div class="col-md-3">
                     <div class="text-muted small">
-                        Customer
+                        <?= __('customer_label') ?>
                     </div>
 
                     <strong>
@@ -119,7 +141,7 @@
                 <!-- CONTRACT NUMBER -->
                 <div class="col-md-3">
                     <div class="text-muted small">
-                        Contract Number
+                        <?= __('contract_number') ?>
                     </div>
 
                     <strong>
@@ -131,13 +153,13 @@
                 <!-- PROJECT MANAGER -->
                 <div class="col-md-3">
                     <div class="text-muted small">
-                        Project Manager
+                        <?= __('project_manager') ?>
                     </div>
 
                     <strong>
                         <?= htmlspecialchars(
                             $project->project_manager_name
-                            ?? 'N/A'
+                                ?? 'N/A'
                         ) ?>
                     </strong>
                 </div>
@@ -146,7 +168,7 @@
                 <!-- PRIORITY -->
                 <div class="col-md-3">
                     <div class="text-muted small">
-                        Priority
+                        <?= __('priority') ?>
                     </div>
 
                     <strong>
@@ -160,7 +182,7 @@
                 <!-- START DATE -->
                 <div class="col-md-3">
                     <div class="text-muted small">
-                        Start Date
+                        <?= __('start_date') ?>
                     </div>
 
                     <strong>
@@ -175,7 +197,7 @@
                 <!-- DEADLINE -->
                 <div class="col-md-3">
                     <div class="text-muted small">
-                        Deadline
+                        <?= __('deadline') ?>
                     </div>
 
                     <strong>
@@ -190,7 +212,7 @@
                 <!-- SITE LOCATION -->
                 <div class="col-md-6">
                     <div class="text-muted small">
-                        Site Location
+                        <?= __('site_location') ?>
                     </div>
 
                     <strong>
@@ -204,7 +226,7 @@
                 <!-- PROJECT WAREHOUSE -->
                 <div class="col-md-3">
                     <div class="text-muted small">
-                        Project Warehouse
+                        <?= __('project_warehouse') ?>
                     </div>
 
                     <strong>
@@ -216,34 +238,61 @@
 
 
                 <!-- BUDGET -->
-               <div class="col-md-3">
-    <div class="text-muted small">Project Budget</div>
-    <strong>
-        <?= number_format((float)($project->budget ?? 0), 2) ?> LYD
-    </strong>
-
-    <div class="text-muted small mt-3">Project Costs</div>
-    <strong>
-        <?= number_format((float)($total_cost ?? 0), 2) ?> LYD
-    </strong>
-</div>
+                <div class="col-md-3">
+                    <div class="text-muted small">
+                        <?= __('project_budget') ?>
+                    </div>
+                    <strong>
+                        <?= number_format((float)($project->budget ?? 0), 2) ?> LYD
+                    </strong>
+                    <div class="text-muted small mt-3">
+                        <?= __('project_costs') ?>
+                    </div>
+                    <strong>
+                        <?= number_format((float)($total_cost ?? 0), 2) ?> LYD
+                    </strong>
+                </div>
 
             </div>
-
 
             <!-- PROJECT SCOPE -->
             <div class="mt-4">
 
                 <div class="text-muted small mb-2">
-                    Project Scope
+                    <?= __('project_scope') ?>
                 </div>
 
                 <?php if (!empty($project_scopes)): ?>
 
+                    <?php
+                    $scopeLabels = [
+                        'Civil' => __('civil'),
+                        'Architectural' => __('architectural'),
+                        'Structural' => __('structural'),
+                        'MEP' => __('mep'),
+                        'Finishing' => __('finishing'),
+                        'Instrumentation & Control' => __('instrumentation_control'),
+                        'Telecommunications' => __('telecommunications'),
+                        'Other' => __('other')
+                    ];
+
+                    $displayedScopes = [];
+                    ?>
+
                     <?php foreach ($project_scopes as $scope): ?>
 
+                        <?php
+                        if (in_array($scope->scope, $displayedScopes, true)) {
+                            continue;
+                        }
+
+                        $displayedScopes[] = $scope->scope;
+                        ?>
+
                         <span class="badge bg-dark me-1 mb-1">
-                            <?= htmlspecialchars($scope->scope) ?>
+                            <?= htmlspecialchars(
+                                $scopeLabels[$scope->scope] ?? $scope->scope
+                            ) ?>
                         </span>
 
                     <?php endforeach; ?>
@@ -251,13 +300,12 @@
                 <?php else: ?>
 
                     <span class="text-muted">
-                        No project scope specified.
+                        <?= __('no_project_scope') ?>
                     </span>
 
                 <?php endif; ?>
 
             </div>
-
 
             <!-- DESCRIPTION -->
             <?php if (!empty($project->description)): ?>
@@ -265,7 +313,7 @@
                 <div class="mt-4">
 
                     <div class="text-muted small mb-1">
-                        Description
+                        <?= __('description') ?>
                     </div>
 
                     <div>
@@ -292,33 +340,33 @@
 <div class="d-flex flex-wrap gap-2 mb-3">
 
     <a href="<?= URLROOT ?>/projects"
-       class="btn btn-success">
+        class="btn btn-success">
         <i class="fas fa-arrow-left"></i>
-        Projects
+        <?= __('projects') ?>
     </a>
 
     <a href="<?= URLROOT ?>/projects/documents/<?= $project->id ?>"
-       class="btn btn-secondary">
+        class="btn btn-secondary">
         <i class="fas fa-folder-open"></i>
-        Documents
+        <?= __('documents') ?>
     </a>
 
     <a href="<?= URLROOT ?>/projectcosts/finance/<?= $project->id ?>"
-       class="btn btn-primary">
+        class="btn btn-primary">
         <i class="fas fa-money-check-dollar"></i>
-        Advance Payment
+        <?= __('advance_payment') ?>
     </a>
 
     <a href="<?= URLROOT ?>/projectcosts/ledger/<?= $project->id ?>"
-       class="btn btn-secondary">
+        class="btn btn-secondary">
         <i class="fas fa-book"></i>
-        Finance Ledger
+        <?= __('finance_ledger') ?>
     </a>
 
     <a href="<?= URLROOT ?>/projectcosts/financeDashboard/<?= $project->id ?>"
-       class="btn btn-info">
+        class="btn btn-info">
         <i class="fas fa-chart-line"></i>
-        Finance Dashboard
+        <?= __('finance_dashboard') ?>
     </a>
 
 </div>
@@ -336,13 +384,13 @@
             <thead class="table-light">
                 <tr>
                     <th>#</th>
-                    <th>DATE</th>
-                    <th>COST TYPE</th>
-                    <th>DESCRIPTION</th>
-                    <th class="text-end">QUANTITY</th>
-                    <th class="text-end">UNIT PRICE</th>
-                    <th class="text-end">TOTAL</th>
-                    <th>ACTIONS</th>
+                    <th><?= __('date') ?></th>
+                    <th><?= __('cost_type') ?></th>
+                    <th><?= __('description') ?></th>
+                    <th class="text-end"><?= __('quantity') ?></th>
+                    <th class="text-end"><?= __('unit_price') ?></th>
+                    <th class="text-end"><?= __('total') ?></th>
+                    <th><?= __('actions') ?></th>
                 </tr>
             </thead>
 
@@ -380,19 +428,19 @@
                         </td>
 
                         <td>
-    <a href="<?= URLROOT ?>/project-costs/edit/<?= $cost->id ?>/<?= $project_id ?>"
-       class="btn btn-sm btn-warning">
-        <i class="fas fa-edit"></i>
-        Edit
-    </a>
+                            <a href="<?= URLROOT ?>/project-costs/edit/<?= $cost->id ?>/<?= $project_id ?>"
+                                class="btn btn-sm btn-warning">
+                                <i class="fas fa-edit"></i>
+                                <?= __('edit') ?>
+                            </a>
 
-    <a href="<?= URLROOT ?>/project-costs/delete/<?= $cost->id ?>"
-       class="btn btn-sm btn-danger"
-       onclick="return confirm('Delete this cost?')">
-        <i class="fas fa-trash"></i>
-        Delete
-    </a>
-</td>
+                            <a href="<?= URLROOT ?>/project-costs/delete/<?= $cost->id ?>"
+                                class="btn btn-sm btn-danger"
+                                onclick="return confirm('<?= __('delete_this_cost') ?>')">
+                                <i class="fas fa-trash"></i>
+                                <?= __('delete') ?>
+                            </a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -400,7 +448,7 @@
             <tfoot>
                 <tr class="table-light">
                     <th colspan="6" class="text-end">
-                        TOTAL PROJECT COST
+                        <?= __('total_project_cost') ?>
                     </th>
                     <th class="text-end">
                         <?= number_format((float)($total_cost ?? 0), 2) ?> LYD
@@ -422,18 +470,18 @@
             </div>
 
             <h5 class="mb-2">
-                NO PROJECT COSTS RECORDED
+                <?= __('no_project_costs_recorded') ?>
             </h5>
 
             <p class="text-muted mb-4">
-                No costs have been recorded for this project yet.
-                Start by adding the first project cost.
+                <?= __('no_costs_yet') ?>
+                <?= __('start_first_project_cost') ?>
             </p>
 
             <a href="<?= URLROOT ?>/project-costs/create/<?= $project->id ?>"
-               class="btn btn-primary">
+                class="btn btn-primary">
                 <i class="fas fa-plus"></i>
-                ADD FIRST COST
+                <?= __('add_first_cost') ?>
             </a>
 
         </div>

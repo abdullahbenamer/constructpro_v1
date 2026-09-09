@@ -173,7 +173,7 @@
 
             <tr>
 
-                <td colspan="7" class="text-center text-muted py-4">
+                <td colspan="8" class="text-center text-muted py-4">
 
                     <i class="fas fa-folder-open fa-2x"></i>
 

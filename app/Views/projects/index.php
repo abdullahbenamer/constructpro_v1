@@ -176,6 +176,7 @@
 
                                     </a>
                                 </td>
+                                <!-- Project Work Status -->
                                 <td>
                                     <?php
                                     $statusLabels = [
@@ -185,9 +186,19 @@
                                         'completed'   => __('completed_status'),
                                         'cancelled'   => __('cancelled')
                                     ];
+
+                                    $statusBadges = [
+                                        'planning'    => 'secondary',
+                                        'in_progress' => 'primary',
+                                        'testing'     => 'warning',
+                                        'completed'   => 'success',
+                                        'cancelled'   => 'danger'
+                                    ];
+
+                                    $badge = $statusBadges[$project->status] ?? 'secondary';
                                     ?>
 
-                                    <span class="badge bg-<?= $badge ?>">
+                                    <span class="badge bg-<?= $badge ?><?= $project->status === 'testing' ? ' text-dark' : '' ?>">
                                         <?= $statusLabels[$project->status] ?? ucwords(str_replace('_', ' ', $project->status)) ?>
                                     </span>
                                 </td>
@@ -200,95 +211,95 @@
                                 <td>
                                     <?php if ($project->status == 'completed'): ?>
 
-    <span class="badge bg-success">
-        <span class="deadline-date"><?= $formattedDate ?></span>
-        ·
-        <?= __('completed') ?>
-    </span>
+                                        <span class="badge bg-success">
+                                            <span class="deadline-date"><?= $formattedDate ?></span>
+                                            ·
+                                            <?= __('completed') ?>
+                                        </span>
 
-<?php elseif ($daysRemaining < 0): ?>
+                                    <?php elseif ($daysRemaining < 0): ?>
 
-    <span class="badge bg-danger">
-        <span class="deadline-date"><?= $formattedDate ?></span>
-        ·
-        <span class="deadline-text">
-            <?= __('overdue_by') ?>
-        </span>
-        <span class="deadline-number">
-            <?= abs($daysRemaining) ?>
-        </span>
-        <span class="deadline-text">
-            <?= abs($daysRemaining) != 1
-                ? __('days')
-                : __('day') ?>
-        </span>
-    </span>
+                                        <span class="badge bg-danger">
+                                            <span class="deadline-date"><?= $formattedDate ?></span>
+                                            ·
+                                            <span class="deadline-text">
+                                                <?= __('overdue_by') ?>
+                                            </span>
+                                            <span class="deadline-number">
+                                                <?= abs($daysRemaining) ?>
+                                            </span>
+                                            <span class="deadline-text">
+                                                <?= abs($daysRemaining) != 1
+                                                    ? __('days')
+                                                    : __('day') ?>
+                                            </span>
+                                        </span>
 
-<?php elseif ($daysRemaining == 0): ?>
+                                    <?php elseif ($daysRemaining == 0): ?>
 
-    <span class="badge bg-danger">
-        <span class="deadline-date"><?= $formattedDate ?></span>
-        ·
-        <span class="deadline-text">
-            <?= __('due_today') ?>
-        </span>
-    </span>
+                                        <span class="badge bg-danger">
+                                            <span class="deadline-date"><?= $formattedDate ?></span>
+                                            ·
+                                            <span class="deadline-text">
+                                                <?= __('due_today') ?>
+                                            </span>
+                                        </span>
 
-<?php elseif ($daysRemaining <= 3): ?>
+                                    <?php elseif ($daysRemaining <= 3): ?>
 
-    <span class="badge bg-danger">
-        <span class="deadline-date"><?= $formattedDate ?></span>
-        ·
-        <span class="deadline-number">
-            <?= $daysRemaining ?>
-        </span>
-        <span class="deadline-text">
-            <?= $daysRemaining != 1
-                ? __('days_left')
-                : __('day_left') ?>
-        </span>
-    </span>
+                                        <span class="badge bg-danger">
+                                            <span class="deadline-date"><?= $formattedDate ?></span>
+                                            ·
+                                            <span class="deadline-number">
+                                                <?= $daysRemaining ?>
+                                            </span>
+                                            <span class="deadline-text">
+                                                <?= $daysRemaining != 1
+                                                    ? __('days_left')
+                                                    : __('day_left') ?>
+                                            </span>
+                                        </span>
 
-<?php elseif ($daysRemaining <= 7): ?>
+                                    <?php elseif ($daysRemaining <= 7): ?>
 
-    <span class="badge bg-warning text-dark">
-        <span class="deadline-date"><?= $formattedDate ?></span>
-        ·
-        <span class="deadline-number">
-            <?= $daysRemaining ?>
-        </span>
-        <span class="deadline-text">
-            <?= __('days_left') ?>
-        </span>
-    </span>
+                                        <span class="badge bg-warning text-dark">
+                                            <span class="deadline-date"><?= $formattedDate ?></span>
+                                            ·
+                                            <span class="deadline-number">
+                                                <?= $daysRemaining ?>
+                                            </span>
+                                            <span class="deadline-text">
+                                                <?= __('days_left') ?>
+                                            </span>
+                                        </span>
 
-<?php elseif ($daysRemaining <= 14): ?>
+                                    <?php elseif ($daysRemaining <= 14): ?>
 
-    <span class="badge bg-info text-dark">
-        <span class="deadline-date"><?= $formattedDate ?></span>
-        ·
-        <span class="deadline-number">
-            <?= $daysRemaining ?>
-        </span>
-        <span class="deadline-text">
-            <?= __('days_left') ?>
-        </span>
-    </span>
+                                        <span class="badge bg-info text-dark">
+                                            <span class="deadline-date"><?= $formattedDate ?></span>
+                                            ·
+                                            <span class="deadline-number">
+                                                <?= $daysRemaining ?>
+                                            </span>
+                                            <span class="deadline-text">
+                                                <?= __('days_left') ?>
+                                            </span>
+                                        </span>
 
-<?php else: ?>
+                                    <?php else: ?>
 
-    <span class="badge bg-success">
-        <span class="deadline-date"><?= $formattedDate ?></span>
-        ·
-        <span class="deadline-number">
-            <?= $daysRemaining ?>
-        </span>
-        <span class="deadline-text">
-            <?= __('days_left') ?>
-        </span>
-    </span>
+                                        <span class="badge bg-success">
+                                            <span class="deadline-date"><?= $formattedDate ?></span>
+                                            ·
+                                            <span class="deadline-number">
+                                                <?= $daysRemaining ?>
+                                            </span>
+                                            <span class="deadline-text">
+                                                <?= __('days_left') ?>
+                                            </span>
+                                        </span>
 
-<?php endif; ?>
+                                    <?php endif; ?>
                                 </td>
                                 <td class="text-nowrap"><?= number_format($project->budget, 0) ?></td>
 

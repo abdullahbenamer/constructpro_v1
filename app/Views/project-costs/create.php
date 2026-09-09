@@ -6,16 +6,25 @@ $locations = $locations ?? [];
 ?>
 
 <div class="card mb-3">
-    <h3>Add Cost to Project</h3>
+    <h3><?= __('add_cost_to_project') ?></h3>
     <div class="card-body">
         <h4>
             Project #<?= $project->id ?> -
             <?= htmlspecialchars($project->title) ?>
         </h4>
         <p class="mb-0">
-            <strong>Customer:</strong> <?= htmlspecialchars($project->customer_name ?? '') ?><br>
-            <strong>Status:</strong> <?= ucfirst($project->status) ?><br>
-            <strong>Budget:</strong> $<?= number_format($project->budget ?? 0, 2) ?>
+            <strong><?= __('customer_label') ?>:</strong> <?= htmlspecialchars($project->customer_name ?? '') ?><br>
+            <strong><?= __('status') ?>:</strong>
+            <?= htmlspecialchars(
+                [
+                    'planning'    => __('planning'),
+                    'in_progress' => __('in_progress'),
+                    'testing'     => __('testing'),
+                    'completed'   => __('completed_status'),
+                    'cancelled'   => __('cancelled')
+                ][$project->status] ?? $project->status
+            ) ?><br>
+            <strong><?= __('budget') ?>:</strong> $<?= number_format($project->budget ?? 0, 2) ?>
         </p>
     </div>
 </div>
@@ -25,32 +34,34 @@ $locations = $locations ?? [];
     <div class="row">
 
         <div class="col-md-3">
-            <label class="form-label">Cost Type</label>
+            <label class="form-label"><?= __('cost_type') ?></label>
 
             <select name="cost_type" id="costType" class="form-select">
-                <option value="materials">MATERIALS</option>
-                <option value="labor">LABOR</option>
-                <option value="transport">TRANSPORT</option>
-                <option value="subcontract">SUBCONTRACT</option>
-                <option value="misc">MISCELLANEOUS</option>
+                <option value="materials"><?= __('materials') ?></option>
+                <option value="labor"><?= __('labor') ?></option>
+                <option value="transport"><?= __('transport') ?></option>
+                <option value="subcontract"><?= __('subcontract') ?></option>
+                <option value="misc"><?= __('miscellaneous') ?></option>
             </select>
         </div>
 
         <!-- Material Item -->
         <div class="col-md-4" id="inventoryBlock">
-            <label class="form-label">Inventory Item</label>
+            <label class="form-label"><?= __('inventory_item') ?></label>
 
             <select name="inventory_id" id="inventorySelect" class="form-select" required>
-                <option value="">-- Select Item --</option>
+                <option value="">-- <?= __('select_item') ?> --</option>
 
                 <?php foreach ($inventory as $item) : ?>
                     <option value="<?= $item->id ?>"
                         data-cost="<?= $item->cost_price ?>">
                         <?= $item->name ?>
                         (
-                        Available: <?= $item->available_qty ?>
+                        <?= __('available') ?>:
+                        <?= $item->available_qty ?>
                         /
-                        Physical: <?= $item->quantity ?>
+                        <?= __('physical') ?>:
+                        <?= $item->quantity ?>
                         )
                     </option>
                 <?php endforeach; ?>
@@ -60,18 +71,18 @@ $locations = $locations ?? [];
 
         <!-- Cost/Item Description -->
         <div class="col-md-5">
-            <label class="form-label">Description</label>
-            <input type="text" name="description" class="form-control" required placeholder="Description of the Resource ....">
+            <label class="form-label"><?= __('description') ?></label>
+            <input type="text" name="description" class="form-control" required placeholder="<?= __('resource_description_placeholder') ?>">
         </div>
 
         <!-- Location -->
         <div class="col-md-4" id="locationBlock">
 
-            <label class="form-label">Location</label>
+            <label class="form-label"><?= __('location') ?></label>
 
             <select name="location_id" id="locationSelect" class="form-select" required>
 
-                <option value="">-- Select Location --</option>
+                <option value="">-- <?= __('select_location') ?> --</option>
 
                 <?php foreach ($locations as $location) : ?>
                     <option value="<?= $location->id ?>">
@@ -86,179 +97,184 @@ $locations = $locations ?? [];
         </div>
 
         <div class="col-md-2">
-            <label class="form-label">Quantity</label>
+            <label class="form-label"><?= __('quantity') ?></label>
             <input type="number" name="quantity" class="form-control" value="" min="0" step="0.01" required>
             <small id="qtyWarning" class="text-danger">
-    (Don't exceed the available quantity in any Warehouse)
-</small>
+                (<?= __('quantity_warning') ?>)
+            </small>
         </div>
 
         <div class="col-md-2">
-            <label class="form-label" id="priceLabel">Unit Cost ($)</label>
-            <input type="number" name="unit_price" class="form-control" step="0.01" required placeholder="Autofill for Materials ...">
+            <label class="form-label" id="priceLabel">
+                <?= __('unit_cost') ?> (LYD)
+            </label>
+            <input type="number" name="unit_price" class="form-control" step="0.01" required placeholder="<?= __('autofill_materials') ?>">
+                </div>
         </div>
-    </div>
 
-    <button type="submit" class="btn btn-primary mt-3">
-        <i class="fas fa-save"></i> Add Cost
-    </button>
-    <a href="<?= URLROOT ?>/project-costs/<?= $project_id ?>" class="btn btn-secondary mt-3">Cancel</a>
+        <button type="submit" class="btn btn-primary mt-3">
+            <i class="fas fa-save"></i> <?= __('add_cost') ?>
+        </button>
+        <a href="<?= URLROOT ?>/project-costs/<?= $project_id ?>"
+            class="btn btn-secondary mt-3">
+            <?= __('cancel') ?>
+        </a>
 </form>
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
 
-    // ==================================================
-    // ELEMENTS
-    // ==================================================
+        // ==================================================
+        // ELEMENTS
+        // ==================================================
 
-    const costType = document.getElementById('costType');
+        const costType = document.getElementById('costType');
 
-    const inventoryBlock = document.getElementById('inventoryBlock');
-    const locationBlock  = document.getElementById('locationBlock');
+        const inventoryBlock = document.getElementById('inventoryBlock');
+        const locationBlock = document.getElementById('locationBlock');
 
-    const inventorySelect = document.getElementById('inventorySelect');
-    const locationSelect  = document.getElementById('locationSelect');
+        const inventorySelect = document.getElementById('inventorySelect');
+        const locationSelect = document.getElementById('locationSelect');
 
-    const descriptionInput = document.querySelector('[name="description"]');
-    const quantityInput    = document.querySelector('[name="quantity"]');
-    const unitPriceInput   = document.querySelector('[name="unit_price"]');
+        const descriptionInput = document.querySelector('[name="description"]');
+        const quantityInput = document.querySelector('[name="quantity"]');
+        const unitPriceInput = document.querySelector('[name="unit_price"]');
 
-    const qtyWarning = document.getElementById('qtyWarning');
+        const qtyWarning = document.getElementById('qtyWarning');
 
 
-    // ==================================================
-    // MATERIAL / NON-MATERIAL MODE
-    // ==================================================
+        // ==================================================
+        // MATERIAL / NON-MATERIAL MODE
+        // ==================================================
 
-    function updateMode() {
+        function updateMode() {
 
-        const material = (costType.value === 'materials');
+            const material = (costType.value === 'materials');
 
-        inventoryBlock.style.display = material ? '' : 'none';
-        locationBlock.style.display  = material ? '' : 'none';
+            inventoryBlock.style.display = material ? '' : 'none';
+            locationBlock.style.display = material ? '' : 'none';
 
-        qtyWarning.style.display = material ? '' : 'none';
+            qtyWarning.style.display = material ? '' : 'none';
 
-        inventorySelect.required = material;
-        locationSelect.required  = material;
+            inventorySelect.required = material;
+            locationSelect.required = material;
 
-        unitPriceInput.readOnly = material;
+            unitPriceInput.readOnly = material;
 
-        if (!material) {
+            if (!material) {
 
-            inventorySelect.value = '';
-            locationSelect.innerHTML =
-                '<option value="">-- Select Location --</option>';
+                inventorySelect.value = '';
+                locationSelect.innerHTML =
+                    '<option value="">-- <?= __('select_location') ?> --</option>';
 
-            descriptionInput.value = '';
-            unitPriceInput.value = '';
+                descriptionInput.value = '';
+                unitPriceInput.value = '';
 
-        } else {
+            } else {
+
+                autoFillMaterial();
+
+            }
+
+        }
+
+
+        // ==================================================
+        // AUTO FILL MATERIAL INFO
+        // ==================================================
+
+        function autoFillMaterial() {
+
+            const option =
+                inventorySelect.options[inventorySelect.selectedIndex];
+
+            if (!option || !inventorySelect.value) {
+
+                descriptionInput.value = '';
+                unitPriceInput.value = '';
+
+                return;
+
+            }
+
+            descriptionInput.value =
+                option.text.split('(')[0].trim();
+
+            unitPriceInput.value =
+                parseFloat(
+                    option.dataset.cost || 0
+                ).toFixed(2);
+
+        }
+
+
+        // ==================================================
+        // LOAD LOCATIONS
+        // ==================================================
+
+        function loadLocations() {
+
+            const inventoryId = inventorySelect.value;
+
+            if (!inventoryId) {
+
+                locationSelect.innerHTML =
+                    '<option value="">-- Select Location --</option>';
+
+                return;
+
+            }
+
+            fetch(
+                    '<?= URLROOT ?>/project-costs/getInventoryLocations/' +
+                    inventoryId
+                )
+                .then(r => r.json())
+                .then(data => {
+
+                    let html =
+                        '<option value="">-- Select Location --</option>';
+
+                    data.forEach(function(location) {
+
+                        html += `
+    <option value="${location.location_id}">
+        ${location.code}
+        - ${location.name}
+        (<?= __('qty') ?>: ${location.quantity})
+    </option>
+`;
+
+                    });
+
+                    locationSelect.innerHTML = html;
+
+                });
+
+        }
+
+
+        // ==================================================
+        // EVENTS
+        // ==================================================
+
+        costType.addEventListener('change', updateMode);
+
+        inventorySelect.addEventListener('change', function() {
 
             autoFillMaterial();
 
-        }
-
-    }
-
-
-    // ==================================================
-    // AUTO FILL MATERIAL INFO
-    // ==================================================
-
-    function autoFillMaterial() {
-
-        const option =
-            inventorySelect.options[inventorySelect.selectedIndex];
-
-        if (!option || !inventorySelect.value) {
-
-            descriptionInput.value = '';
-            unitPriceInput.value = '';
-
-            return;
-
-        }
-
-        descriptionInput.value =
-            option.text.split('(')[0].trim();
-
-        unitPriceInput.value =
-            parseFloat(
-                option.dataset.cost || 0
-            ).toFixed(2);
-
-    }
-
-
-    // ==================================================
-    // LOAD LOCATIONS
-    // ==================================================
-
-    function loadLocations() {
-
-        const inventoryId = inventorySelect.value;
-
-        if (!inventoryId) {
-
-            locationSelect.innerHTML =
-                '<option value="">-- Select Location --</option>';
-
-            return;
-
-        }
-
-        fetch(
-            '<?= URLROOT ?>/project-costs/getInventoryLocations/' +
-            inventoryId
-        )
-        .then(r => r.json())
-        .then(data => {
-
-            let html =
-                '<option value="">-- Select Location --</option>';
-
-            data.forEach(function(location){
-
-                html += `
-                    <option value="${location.location_id}">
-                        ${location.code}
-                        - ${location.name}
-                        (Qty: ${location.quantity})
-                    </option>
-                `;
-
-            });
-
-            locationSelect.innerHTML = html;
+            loadLocations();
 
         });
 
-    }
 
+        // ==================================================
+        // INITIAL PAGE
+        // ==================================================
 
-    // ==================================================
-    // EVENTS
-    // ==================================================
-
-    costType.addEventListener('change', updateMode);
-
-    inventorySelect.addEventListener('change', function () {
-
-        autoFillMaterial();
-
-        loadLocations();
+        updateMode();
 
     });
-
-
-    // ==================================================
-    // INITIAL PAGE
-    // ==================================================
-
-    updateMode();
-
-});
 </script>

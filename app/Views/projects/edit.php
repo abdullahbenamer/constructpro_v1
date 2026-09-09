@@ -10,261 +10,290 @@ foreach ($data['project_scopes'] ?? [] as $row) {
 
 <h2>
     <i class="fas fa-edit"></i>
-    Edit Project #<?= $project->id ?>
+    <?= __('edit_project') ?> #<?= $project->id ?>
 </h2>
 
 <form method="POST">
 
-<div class="row">
+    <div class="row">
 
-    <!-- CUSTOMER -->
-    <div class="col-md-6">
-        <label>Customer</label>
-        <select name="customer_id" class="form-select" required>
-            <?php foreach ($customers as $c): ?>
-                <option value="<?= $c->id ?>"
-                    <?= $project->customer_id == $c->id ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($c->company) ?>
+        <!-- CUSTOMER -->
+        <div class="col-md-6">
+            <label><?= __('customer_label') ?></label>
+            <select name="customer_id" class="form-select" required>
+                <?php foreach ($customers as $c): ?>
+                    <option value="<?= $c->id ?>"
+                        <?= $project->customer_id == $c->id ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($c->company) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <!-- PROJECT TYPE -->
+
+        <div class="col-md-4">
+
+            <label><?= __('project_type') ?></label>
+
+            <select name="project_type"
+                id="projectType"
+                class="form-select"
+                required>
+
+                <option value="Construction"
+                    <?= ($data['project']->project_type ?? '') === 'Construction' ? 'selected' : '' ?>>
+                    <?= __('construction') ?>
                 </option>
-            <?php endforeach; ?>
-        </select>
-    </div>
 
- <!-- PROJECT TYPE -->
+                <option value="Maintenance"
+                    <?= ($data['project']->project_type ?? '') === 'Maintenance' ? 'selected' : '' ?>>
+                    <?= __('maintenance') ?>
+                </option>
 
-<div class="col-md-4">
+                <option value="Inspection"
+                    <?= ($data['project']->project_type ?? '') === 'Inspection' ? 'selected' : '' ?>>
+                    <?= __('inspection') ?>
+                </option>
 
-    <label>Project Type</label>
+                <option value="Consultancy"
+                    <?= ($data['project']->project_type ?? '') === 'Consultancy' ? 'selected' : '' ?>>
+                    <?= __('consultancy') ?>
+                </option>
 
-    <select name="project_type"
-            id="projectType"
-            class="form-select"
-            required>
+                <option value="Other"
+                    <?= ($data['project']->project_type ?? '') === 'Other' ? 'selected' : '' ?>>
+                    <?= __('other') ?>
+                </option>
 
-<option value="Construction"
-    <?= ($data['project']->project_type ?? '') === 'Construction' ? 'selected' : '' ?>>
-    Construction
-</option>
+            </select>
 
-<option value="Maintenance"
-    <?= ($data['project']->project_type ?? '') === 'Maintenance' ? 'selected' : '' ?>>
-    Maintenance
-</option>
+        </div>
 
-<option value="Inspection"
-    <?= ($data['project']->project_type ?? '') === 'Inspection' ? 'selected' : '' ?>>
-    Inspection
-</option>
+        <!-- PROJECT SCOPE -->
 
-<option value="Consultancy"
-    <?= ($data['project']->project_type ?? '') === 'Consultancy' ? 'selected' : '' ?>>
-    Consultancy
-</option>
+        <div class="mb-3">
+            <label class="form-label"><?= __('project_scope') ?></label>
 
-<option value="Other"
-    <?= ($data['project']->project_type ?? '') === 'Other' ? 'selected' : '' ?>>
-    Other
-</option>
+            <?php
+            $projectScopes = [];
 
-    </select>
+            foreach ($data['project_scopes'] ?? [] as $row) {
+                $projectScopes[] = $row->scope;
+            }
 
-</div>
+            $scopes = [
+                'Civil',
+                'Architectural',
+                'Structural',
+                'MEP',
+                'Finishing',
+                'Instrumentation & Control',
+                'Telecommunications',
+                'Other'
+            ];
+            ?>
 
-<!-- PROJECT SCOPE -->
+            <div class="border rounded p-3 bg-light">
+                <div class="row g-2">
 
-<div class="mb-3">
-    <label class="form-label">PROJECT SCOPE</label>
+                    <?php foreach ($scopes as $scope): ?>
 
-    <?php
-    $projectScopes = [];
+                        <div class="col-md-6">
+                            <div class="form-check">
 
-    foreach ($data['project_scopes'] ?? [] as $row) {
-        $projectScopes[] = $row->scope;
-    }
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    name="scopes[]"
+                                    value="<?= htmlspecialchars($scope) ?>"
+                                    id="scope_<?= md5($scope) ?>"
+                                    <?= in_array($scope, $projectScopes, true) ? 'checked' : '' ?>>
 
-    $scopes = [
-        'Civil',
-        'Architectural',
-        'Structural',
-        'MEP',
-        'Finishing',
-        'Instrumentation & Control',
-        'Telecommunications',
-        'Other'
-    ];
-    ?>
+                                <label
+                                    class="form-check-label"
+                                    for="scope_<?= md5($scope) ?>">
+                                    <?php
+                                    $scopeLabels = [
+                                        'Civil' => __('civil'),
+                                        'Architectural' => __('architectural'),
+                                        'Structural' => __('structural'),
+                                        'MEP' => __('mep'),
+                                        'Finishing' => __('finishing'),
+                                        'Instrumentation & Control' => __('instrumentation_control'),
+                                        'Telecommunications' => __('telecommunications'),
+                                        'Other' => __('other')
+                                    ];
+                                    ?>
 
-    <div class="border rounded p-3 bg-light">
-        <div class="row g-2">
+                                    <?= htmlspecialchars($scopeLabels[$scope] ?? $scope) ?>
+                                </label>
 
-            <?php foreach ($scopes as $scope): ?>
+                            </div>
+                        </div>
 
-                <div class="col-md-6">
-                    <div class="form-check">
+                    <?php endforeach; ?>
 
-                        <input
-                            class="form-check-input"
-                            type="checkbox"
-                            name="scopes[]"
-                            value="<?= htmlspecialchars($scope) ?>"
-                            id="scope_<?= md5($scope) ?>"
-                            <?= in_array($scope, $projectScopes, true) ? 'checked' : '' ?>
-                        >
-
-                        <label
-                            class="form-check-label"
-                            for="scope_<?= md5($scope) ?>"
-                        >
-                            <?= htmlspecialchars($scope) ?>
-                        </label>
-
-                    </div>
                 </div>
+            </div>
 
-            <?php endforeach; ?>
-
+            <small class="text-muted">
+                <?= __('select_project_scopes') ?>
+            </small>
         </div>
     </div>
 
-    <small class="text-muted">
-        Select one or more applicable project scopes.
-    </small>
-</div>
-</div>
+    <!-- COMMON FIELDS -->
+    <div class="mt-3">
 
-<!-- COMMON FIELDS -->
-<div class="mt-3">
+        <label><?= __('project_title') ?></label>
+        <input type="text" name="title"
+            class="form-control"
+            value="<?= htmlspecialchars($project->title) ?>">
 
-    <label>Title</label>
-    <input type="text" name="title"
-           class="form-control"
-           value="<?= htmlspecialchars($project->title) ?>">
-
-    <label class="mt-2">Description</label>
-    <textarea name="description" class="form-control">
+        <label class="mt-2"><?= __('description') ?></label>
+        <textarea name="description" class="form-control">
         <?= htmlspecialchars($project->description) ?>
     </textarea>
 
-</div>
-
-<!-- LOCATION / DATES -->
-<div class="row mt-3">
-
-    <div class="col-md-4">
-        <label>Site Location</label>
-        <input type="text" name="site_location"
-               class="form-control"
-               value="<?= $project->site_location ?>">
     </div>
 
-    <div class="col-md-4">
-        <label>Start Date</label>
-        <input type="date" name="start_date"
-               class="form-control"
-               value="<?= $project->start_date ?>">
+    <!-- LOCATION / DATES -->
+    <div class="row mt-3">
+
+        <div class="col-md-4">
+            <label><?= __('site_location') ?></label>
+            <input type="text" name="site_location"
+                class="form-control"
+                value="<?= $project->site_location ?>">
+        </div>
+
+        <div class="col-md-4">
+            <label><?= __('start_date') ?></label>
+            <input type="date" name="start_date"
+                class="form-control"
+                value="<?= $project->start_date ?>">
+        </div>
+
+        <div class="col-md-4">
+            <label><?= __('deadline') ?></label>
+            <input type="date" name="deadline"
+                class="form-control"
+                value="<?= $project->deadline ?>">
+        </div>
+
     </div>
 
-    <div class="col-md-4">
-        <label>Deadline</label>
-        <input type="date" name="deadline"
-               class="form-control"
-               value="<?= $project->deadline ?>">
+    <!-- MANAGEMENT -->
+    <div class="row mt-3">
+
+        <div class="col-md-4">
+
+            <label><?= __('project_manager') ?></label>
+
+            <select name="project_manager_id" class="form-select">
+
+                <option value=""><?= __('select_manager') ?></option>
+
+                <?php foreach ($users as $u): ?>
+
+                    <option value="<?= $u->id ?>"
+                        <?= $project->project_manager_id == $u->id ? 'selected' : '' ?>>
+
+                        <?= htmlspecialchars($u->full_name) ?>
+
+                    </option>
+
+                <?php endforeach; ?>
+
+            </select>
+
+        </div>
+
+        <div class="col-md-4">
+            <label><?= __('contract_number') ?></label>
+            <input type="text" name="contract_number"
+                class="form-control"
+                value="<?= $project->contract_number ?>">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label"><?= __('project_code') ?></label>
+
+            <input
+                type="text"
+                class="form-control"
+                value="<?= htmlspecialchars($data['project']->project_code ?? '') ?>"
+                readonly>
+
+            <small class="text-muted">
+                <?= __('project_code_cannot_change') ?>
+            </small>
+        </div>
+
     </div>
 
-</div>
+    <!-- PRIORITY / STATUS -->
+    <div class="row mt-3">
 
-<!-- MANAGEMENT -->
-<div class="row mt-3">
+        <div class="col-md-6">
+            <label><?= __('status') ?></label>
+            <select name="status" class="form-select">
+                <option value="planning" <?= $project->status == 'planning' ? 'selected' : '' ?>>
+                    <?= __('planning') ?>
+                </option>
 
-   <div class="col-md-4">
+                <option value="in_progress" <?= $project->status == 'in_progress' ? 'selected' : '' ?>>
+                    <?= __('in_progress') ?>
+                </option>
 
-    <label>Project Manager</label>
+                <option value="completed" <?= $project->status == 'completed' ? 'selected' : '' ?>>
+                    <?= __('completed_status') ?>
+                </option>
+            </select>
+        </div>
 
-    <select name="project_manager_id" class="form-select">
+        <div class="col-md-6">
+            <label><?= __('priority') ?></label>
+            <select name="priority" class="form-select">
+                <option value="low" <?= $project->priority == 'low' ? 'selected' : '' ?>>
+                    <?= __('low') ?>
+                </option>
 
-        <option value="">-- Select Manager --</option>
+                <option value="medium" <?= $project->priority == 'medium' ? 'selected' : '' ?>>
+                    <?= __('medium') ?>
+                </option>
 
-        <?php foreach($users as $u): ?>
+                <option value="high" <?= $project->priority == 'high' ? 'selected' : '' ?>>
+                    <?= __('high') ?>
+                </option>
 
-            <option value="<?= $u->id ?>"
-                <?= $project->project_manager_id == $u->id ? 'selected' : '' ?>>
+                <option value="critical" <?= $project->priority == 'critical' ? 'selected' : '' ?>>
+                    <?= __('critical') ?>
+                </option>
+            </select>
+        </div>
 
-                <?= htmlspecialchars($u->full_name) ?>
-
-            </option>
-
-        <?php endforeach; ?>
-
-    </select>
-
-</div>
-
-    <div class="col-md-4">
-        <label>Contract No</label>
-        <input type="text" name="contract_number"
-               class="form-control"
-               value="<?= $project->contract_number ?>">
     </div>
 
-    <div class="mb-3">
-    <label class="form-label">PROJECT CODE</label>
-
-    <input
-        type="text"
-        class="form-control"
-        value="<?= htmlspecialchars($data['project']->project_code ?? '') ?>"
-        readonly
-    >
-
-    <small class="text-muted">
-        Project Code is automatically generated and cannot be changed.
-    </small>
-</div>
-
-</div>
-
-<!-- PRIORITY / STATUS -->
-<div class="row mt-3">
-
-    <div class="col-md-6">
-        <label>Status</label>
-        <select name="status" class="form-select">
-            <option value="planning" <?= $project->status=='planning'?'selected':'' ?>>Planning</option>
-            <option value="in_progress" <?= $project->status=='in_progress'?'selected':'' ?>>In Progress</option>
-            <option value="completed" <?= $project->status=='completed'?'selected':'' ?>>Completed</option>
-        </select>
+    <!-- BUDGET -->
+    <div class="mt-3">
+   <label><?= __('budget') ?></label>
+        <input type="number" step="0.01"
+            name="budget"
+            class="form-control"
+            value="<?= $project->budget ?>">
     </div>
 
-    <div class="col-md-6">
-        <label>Priority</label>
-        <select name="priority" class="form-select">
-            <option value="low" <?= $project->priority=='low'?'selected':'' ?>>Low</option>
-            <option value="medium" <?= $project->priority=='medium'?'selected':'' ?>>Medium</option>
-            <option value="high" <?= $project->priority=='high'?'selected':'' ?>>High</option>
-            <option value="critical" <?= $project->priority=='critical'?'selected':'' ?>>Critical</option>
-        </select>
+    <!-- BUTTON -->
+    <div class="mt-4">
+        <button class="btn btn-success">
+           <?= __('save_changes') ?>
+        </button>
+
+        <a href="<?= URLROOT ?>/projects" class="btn btn-secondary">
+           <?= __('cancel') ?>
+        </a>
     </div>
-
-</div>
-
-<!-- BUDGET -->
-<div class="mt-3">
-    <label>Budget</label>
-    <input type="number" step="0.01"
-           name="budget"
-           class="form-control"
-           value="<?= $project->budget ?>">
-</div>
-
-<!-- BUTTON -->
-<div class="mt-4">
-    <button class="btn btn-success">
-        Save Changes
-    </button>
-
-    <a href="<?= URLROOT ?>/projects" class="btn btn-secondary">
-        Cancel
-    </a>
-</div>
 
 </form>
