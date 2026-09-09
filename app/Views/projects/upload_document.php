@@ -1,8 +1,8 @@
 <h2>
 
-<i class="fas fa-upload"></i>
+    <i class="fas fa-upload"></i>
 
-Upload Project Documents
+    <?= __('upload_project_documents') ?>
 
 </h2>
 
@@ -10,141 +10,190 @@ Upload Project Documents
 
 <h5>
 
-Project:
+    <?= __('project') ?>:
 
-<strong><?= strtoupper(htmlspecialchars($project->title)) ?></strong>
+    <strong><?= strtoupper(htmlspecialchars($project->title)) ?></strong>
 
 </h5>
 
 <form method="POST" enctype="multipart/form-data">
 
-<div class="row">
+    <div class="row">
 
-<div class="col-md-4">
+        <div class="col-md-4">
 
-<label class="form-label">
+            <label class="form-label">
 
-Category
+                <?= __('category') ?>
 
-</label>
+            </label>
 
-<select name="category" id="category" class="form-select" required>
-    
-<option value="">-- Select Documnet Category--</option>
+            <select name="category" id="category" class="form-select" required>
 
-<option value="contract">Contract</option>
+                <option value="">
+                    <?= __('select_document_category') ?>
+                </option>
 
-<option value="drawing">Drawing</option>
+                <option value="contract">
+                    <?= __('contract') ?>
+                </option>
 
-<option value="quotation">Quotation</option>
+                <option value="drawing">
+                    <?= __('drawing') ?>
+                </option>
 
-<option value="invoice">Invoice</option>
+                <option value="quotation">
+                    <?= __('quotation') ?>
+                </option>
 
-<option value="receipt">Receipt</option>
+                <option value="invoice">
+                    <?= __('invoice') ?>
+                </option>
 
-<option value="purchase_order">Purchase Order</option>
+                <option value="receipt">
+                    <?= __('receipt') ?>
+                </option>
 
-<option value="inspection">Inspection</option>
+                <option value="purchase_order">
+                    <?= __('purchase_order') ?>
+                </option>
 
-<option value="report">Report</option>
+                <option value="inspection">
+                    <?= __('inspection') ?>
+                </option>
 
-<option value="photo">Photo</option>
+                <option value="report">
+                    <?= __('report') ?>
+                </option>
 
-<option value="certificate">Certificate</option>
+                <option value="photo">
+                    <?= __('photo') ?>
+                </option>
 
-<option value="permit">Permit</option>
+                <option value="certificate">
+                    <?= __('certificate') ?>
+                </option>
 
-<option value="manual">Manual</option>
+                <option value="permit">
+                    <?= __('permit') ?>
+                </option>
 
-<option value="other">Other</option>
+                <option value="manual">
+                    <?= __('manual') ?>
+                </option>
 
-</select>
+                <option value="other">
+                    <?= __('other') ?>
+                </option>
 
-</div>
+            </select>
 
-<div class="col-md-8">
+        </div>
 
-<label class="form-label">
+        <div class="col-md-8">
 
-Title
+            <label class="form-label">
 
-</label>
+                <?= __('title') ?>
 
-<input type="text" name="title"  id="title" class="form-control" required>
+            </label>
 
-</div>
+            <input
+                type="text"
+                name="title"
+                id="title"
+                class="form-control"
+                required>
 
-</div>
+        </div>
 
-<br>
+    </div>
 
-<div class="mb-3">
+    <br>
 
-<label>
+    <div class="mb-3">
 
-Description
+        <label>
 
-</label>
+            <?= __('description') ?>
 
-<textarea
-    name="description"
-    class="form-control"
-    rows="3"></textarea>
+        </label>
 
-</div>
+        <textarea
+            name="description"
+            class="form-control"
+            rows="3"></textarea>
 
-<div class="row">
+    </div>
 
-<div class="col-md-4">
+    <div class="row">
 
-<label>
+        <div class="col-md-4">
 
-Document Date <small class="text-danger">(Actual Date of the Document)</small>
+            <label>
 
-</label>
+                <?= __('document_date') ?>
 
-<input type="date" name="document_date"  class="form-control"  value="<?= date('Y-m-d') ?>">
+                <small class="text-danger">
+                    (<?= __('actual_document_date') ?>)
+                </small>
 
-</div>
+            </label>
 
-</div>
+            <input
+                type="date"
+                name="document_date"
+                class="form-control"
+                value="<?= date('Y-m-d') ?>">
 
-<br>
+        </div>
 
-<div class="mb-3">
+    </div>
 
-<label>
+    <br>
 
-Select Files <small>(You can upload multiple files at once)</small>
+    <div class="mb-3">
 
-</label>
+        <label>
 
-<input type="file" name="documents[]" class="form-control"  multiple required>
+            <?= __('select_files') ?>
 
-<small class="text-muted">
+            <small>
+                (<?= __('multiple_files_note') ?>)
+            </small>
 
-PDF, Images, Word, Excel, ZIP...
+        </label>
 
-</small>
+        <input
+            type="file"
+            name="documents[]"
+            class="form-control"
+            multiple
+            required>
 
-</div>
+        <small class="text-muted">
 
-<button
-    class="btn btn-success">
+            <?= __('allowed_file_types') ?>
 
-<i class="fas fa-upload"></i>
+        </small>
 
-Upload
+    </div>
 
-</button>
+    <button class="btn btn-success">
 
-<a
-    href="<?= URLROOT ?>/projects/documents/<?= $project->id ?>"
-    class="btn btn-secondary">
+        <i class="fas fa-upload"></i>
 
-Cancel
+        <?= __('upload') ?>
 
-</a>
+    </button>
+
+    <a
+        href="<?= URLROOT ?>/projects/documents/<?= $project->id ?>"
+        class="btn btn-secondary">
+
+        <?= __('cancel') ?>
+
+    </a>
 
 </form>
 

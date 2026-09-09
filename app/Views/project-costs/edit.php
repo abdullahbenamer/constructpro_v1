@@ -1,7 +1,16 @@
-<h2><i class="fas fa-edit"></i> Edit Cost Item #<?= $cost->id ?></h2>
+<h2>
+    <i class="fas fa-edit"></i>
+    <?= __('edit_cost_item') ?> #<?= $cost->id ?>
+</h2>
+
 <div class="alert alert-danger my-3">
-    <strong>Note:</strong> Changing material item, warehouse, or cost type requires deleting the existing cost and creating a new cost.
+
+    <strong><?= __('note') ?>:</strong>
+
+    <?= __('cost_edit_restriction') ?>
+
 </div>
+
 <form method="POST">
 
     <input type="hidden"
@@ -24,123 +33,169 @@
 
         <!-- COST TYPE -->
         <div class="col-md-3">
-            <label class="form-label">Cost Type</label>
+
+            <label class="form-label">
+                <?= __('cost_type') ?>
+            </label>
+
             <span class="badge bg-primary">
-    <?= strtoupper($cost->cost_type) ?>
-</span>
+                <?= strtoupper($cost->cost_type) ?>
+            </span>
+
         </div>
 
         <!-- DESCRIPTION -->
         <div class="col-md-5">
-            <label class="form-label">Description</label>
-            <input type="text" name="description"
-               value="<?= htmlspecialchars($cost->description ?? '') ?>"
-                class="form-control" required>
+
+            <label class="form-label">
+                <?= __('description') ?>
+            </label>
+
+            <input
+                type="text"
+                name="description"
+                value="<?= htmlspecialchars($cost->description ?? '') ?>"
+                class="form-control"
+                required>
+
         </div>
 
         <!-- QTY -->
         <div class="col-md-2">
-            <label class="form-label">Quantity</label>
-            <input type="number" name="quantity"
+
+            <label class="form-label">
+                <?= __('quantity') ?>
+            </label>
+
+            <input
+                type="number"
+                name="quantity"
                 value="<?= $cost->quantity ?>"
-                class="form-control" min="0" step="0.01" required>
+                class="form-control"
+                min="0"
+                step="0.01"
+                required>
+
         </div>
 
         <!-- PRICE -->
         <div class="col-md-2">
-            <label class="form-label" id="priceLabel">Unit Cost ($)</label>
+
+            <label class="form-label" id="priceLabel">
+                <?= __('unit_cost_dollar') ?>
+            </label>
+
             <?php if ($cost->cost_type === 'materials'): ?>
 
-<input type="number"
-       value="<?= $cost->unit_price ?>"
-       class="form-control"
-       step="0.01"
-       readonly>
+                <input
+                    type="number"
+                    value="<?= $cost->unit_price ?>"
+                    class="form-control"
+                    step="0.01"
+                    readonly>
 
-<input type="hidden"
-       name="unit_price"
-       value="<?= $cost->unit_price ?>">
+                <input
+                    type="hidden"
+                    name="unit_price"
+                    value="<?= $cost->unit_price ?>">
 
-<?php else: ?>
+            <?php else: ?>
 
-<input type="number"
-       name="unit_price"
-       value="<?= $cost->unit_price ?>"
-       step="0.01"
-       class="form-control"
-       required>
+                <input
+                    type="number"
+                    name="unit_price"
+                    value="<?= $cost->unit_price ?>"
+                    step="0.01"
+                    class="form-control"
+                    required>
 
-<?php endif; ?>
+            <?php endif; ?>
+
         </div>
 
     </div>
 
     <!-- INVENTORY ITEM read-only -->
-  <?php if ($cost->cost_type == 'materials'): ?>
+    <?php if ($cost->cost_type == 'materials'): ?>
 
-<div class="col-md-6 mt-2">
-    <label class="form-label">Inventory Item</label>
+        <div class="col-md-6 mt-2">
 
-    <select class="form-select" disabled>
+            <label class="form-label">
+                <?= __('inventory_item') ?>
+            </label>
 
-        <?php foreach ($inventory as $item): ?>
+            <select class="form-select" disabled>
 
-            <?php if ($item->id == $cost->inventory_id): ?>
+                <?php foreach ($inventory as $item): ?>
 
-                <option selected>
-                    <?= htmlspecialchars($item->name) ?>
-                </option>
+                    <?php if ($item->id == $cost->inventory_id): ?>
 
-            <?php endif; ?>
+                        <option selected>
+                            <?= htmlspecialchars($item->name) ?>
+                        </option>
 
-        <?php endforeach; ?>
+                    <?php endif; ?>
 
-    </select>
+                <?php endforeach; ?>
 
-</div>
+            </select>
 
-<?php endif; ?>
+        </div>
+
+    <?php endif; ?>
 
 
     <!-- LOCATION for Materials read-only -->
-   <?php if ($cost->cost_type == 'materials'): ?>
+    <?php if ($cost->cost_type == 'materials'): ?>
 
-<div class="col-md-6 mt-2">
+        <div class="col-md-6 mt-2">
 
-    <label class="form-label">
-        Warehouse Location
-    </label>
+            <label class="form-label">
+                <?= __('warehouse_location') ?>
+            </label>
 
-    <select class="form-select" disabled>
+            <select class="form-select" disabled>
 
-        <?php foreach ($locations as $location): ?>
+                <?php foreach ($locations as $location): ?>
 
-            <?php if ($location->id == $cost->location_id): ?>
+                    <?php if ($location->id == $cost->location_id): ?>
 
-                <option selected>
+                        <option selected>
 
-                    <?= htmlspecialchars($location->code) ?>
-                    -
-                    <?= htmlspecialchars($location->name) ?>
+                            <?= htmlspecialchars($location->code) ?>
+                            -
+                            <?= htmlspecialchars($location->name) ?>
 
-                </option>
+                        </option>
 
-            <?php endif; ?>
+                    <?php endif; ?>
 
-        <?php endforeach; ?>
+                <?php endforeach; ?>
 
-    </select>
+            </select>
 
-</div>
+        </div>
 
-<?php endif; ?>
+    <?php endif; ?>
+
 
     <button type="submit" class="btn btn-success mt-3">
-        <i class="fas fa-save"></i> Update Cost
+
+        <i class="fas fa-save"></i>
+        <?= __('update_cost') ?>
+
     </button>
 
-    <a href="<?= URLROOT ?>/project-costs/<?= $project_id ?>" class="btn btn-secondary mt-3">Cancel</a>
+    <a
+        href="<?= URLROOT ?>/project-costs/<?= $project_id ?>"
+        class="btn btn-secondary mt-3">
+
+        <?= __('cancel') ?>
+
+    </a>
+
 </form>
+
 
 <!-- JS scripts -->
 <script>

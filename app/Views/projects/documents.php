@@ -1,12 +1,13 @@
 <h4>
-    Project: <strong><?= strtoupper(htmlspecialchars($project->title)) ?></strong>
+    <?= __('project') ?>:
+    <strong><?= strtoupper(htmlspecialchars($project->title)) ?></strong>
 </h4>
 
 <br>
 
 <h4>
     <i class="fas fa-folder-open"></i>
-    Project Documents
+    <?= __('project_documents') ?>
 </h4>
 
 <hr>
@@ -14,7 +15,7 @@
 <a href="<?= URLROOT ?>/projects/uploadDocument/<?= $project->id ?>"
     class="btn btn-primary mb-3">
     <i class="fas fa-upload"></i>
-    Upload Documents
+    <?= __('upload_documents') ?>
 </a>
 
 <table class="table table-striped table-hover align-middle">
@@ -22,13 +23,13 @@
     <thead class="table-dark">
         <tr>
             <th>ID</th>
-            <th>Category</th>
-            <th>Document</th>
-            <th>Type</th>
-            <th>Doc. Version Date</th>
-            <th>Size</th>
-            <th>upload Date</th>
-            <th>Actions</th>
+            <th><?= __('category') ?></th>
+            <th><?= __('document') ?></th>
+            <th><?= __('type') ?></th>
+            <th><?= __('version_date') ?></th>
+            <th><?= __('size') ?></th>
+            <th><?= __('upload_date') ?></th>
+            <th><?= __('actions') ?></th>
         </tr>
     </thead>
 
@@ -62,6 +63,7 @@
 
                                 <img src="<?= $fileUrl ?>"
                                     style="width:70px;height:70px;object-fit:cover;border-radius:6px;">
+
                                 <?= htmlspecialchars($doc->title) ?>
 
                             </a>
@@ -91,44 +93,64 @@
 
                         $type = match ($doc->file_type) {
 
-                            'application/pdf' => 'PDF',
+                            'application/pdf' =>
+                                __('pdf'),
 
-                            'application/msword' => 'MS Word',
+                            'application/msword' =>
+                                __('ms_word'),
 
-                            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'Word',
+                            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' =>
+                                __('word'),
 
-                            'application/vnd.ms-excel' => 'MS Excel',
+                            'application/vnd.ms-excel' =>
+                                __('ms_excel'),
 
-                            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'Excel',
+                            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' =>
+                                __('excel'),
 
-                            'application/vnd.ms-powerpoint' => 'PowerPoint',
+                            'application/vnd.ms-powerpoint' =>
+                                __('powerpoint'),
 
-                            'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'PowerPoint',
+                            'application/vnd.openxmlformats-officedocument.presentationml.presentation' =>
+                                __('powerpoint'),
 
-                            'image/jpeg' => 'JPEG Image',
+                            'image/jpeg' =>
+                                __('jpeg_image'),
 
-                            'image/png' => 'PNG Image',
+                            'image/png' =>
+                                __('png_image'),
 
-                            'image/gif' => 'GIF Image',
+                            'image/gif' =>
+                                __('gif_image'),
 
-                            'image/webp' => 'WEBP Image',
+                            'image/webp' =>
+                                __('webp_image'),
 
-                            'text/plain' => 'Text file',
+                            'text/plain' =>
+                                __('text_file'),
 
-                            'application/zip' => 'ZIP compressed file',
+                            'application/zip' =>
+                                __('zip_compressed_file'),
 
-                            'application/x-rar-compressed' => 'RAR compressed file',
+                            'application/x-rar-compressed' =>
+                                __('rar_compressed_file'),
 
-                            default => strtoupper(pathinfo($doc->original_name, PATHINFO_EXTENSION))
+                            default =>
+                                strtoupper(pathinfo(
+                                    $doc->original_name,
+                                    PATHINFO_EXTENSION
+                                ))
                         };
 
                         echo htmlspecialchars($type);
 
                         ?>
                     </td>
-<td>
+
+                    <td>
                         <?= date('Y-m-d', strtotime($doc->document_date)) ?>
                     </td>
+
                     <td>
                         <?= number_format($doc->file_size / 1024, 1) ?> KB
                     </td>
@@ -143,7 +165,7 @@
                             target="_blank"
                             class="btn btn-sm btn-primary">
 
-                            View
+                            <?= __('view') ?>
 
                         </a>
 
@@ -151,15 +173,15 @@
                             download
                             class="btn btn-sm btn-success">
 
-                            Download
+                            <?= __('download') ?>
 
                         </a>
 
                         <a href="<?= URLROOT ?>/projects/deleteDocument/<?= $doc->id ?>"
                             class="btn btn-sm btn-danger"
-                            onclick="return confirm('Delete this document?')">
+                            onclick="return confirm('<?= htmlspecialchars(__('delete_document_confirm'), ENT_QUOTES, 'UTF-8') ?>')">
 
-                            Delete
+                            <?= __('delete_document') ?>
 
                         </a>
 
@@ -179,7 +201,7 @@
 
                     <br><br>
 
-                    No documents uploaded yet.
+                    <?= __('no_documents_uploaded') ?>
 
                 </td>
 
