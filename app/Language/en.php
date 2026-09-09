@@ -360,5 +360,48 @@ return [
 'prepared_by'           => 'Prepared By',
 'approved_by'           => 'Approved By',
 
+// ALL PROJECT COSTS
+'all_project_costs' => 'All Project Costs',
+'proj_id'           => 'Proj ID',
+'cost_details'      => 'Details',
+
+// CUSTOMERS INDEX
+'add_customer'              => 'Add Customer',
+'company'                   => 'Company',
+'contact'                   => 'Contact',
+'phone'                     => 'Phone',
+'email'                     => 'E-mail',
+'active'                    => 'Active',
+'no_customers_available'    => 'No customers available.',
+'no_customers_yet'          => "You haven't added any customers yet.",
+'create_first_customer'     => 'Create your first customer to get started.',
+'delete_customer_confirm'   => 'Delete this customer?',
+
+// CUSTOMER CREATE
+'add_new_customer' => 'Add New Customer',
+'contact_name'     => 'Contact Name',
+'address'          => 'Address',
+'inactive'         => 'Inactive',
+
+// CUSTOMER INFORMATION
+'customer_information' => 'Customer Information',
+'company_information'  => 'Company Information',
+'contact_information'  => 'Contact Information',
+'contact_person'       => 'Contact Person',
+
+// CUSTOMER DETAILS
+'customer_details' => 'Customer Details',
+'account_manager'  => 'Account Manager',
+'not_assigned'     => 'Not assigned',
+'action'           => 'Action',
+'n_a'              => 'N/A',
+
+// CUSTOMER EDIT
+'edit_customer'          => 'Edit Customer',
+'created_at'              => 'Created At',
+'update_customer'         => 'Update Customer',
+'customer_not_found'      => 'Customer Not Found!',
+'customer_record_missing' => 'The customer record no longer exists.',
+'back_to_customers'       => 'Back to Customers',
 
 ];

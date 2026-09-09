@@ -344,4 +344,48 @@ return [
 'prepared_by'           => 'أعده',
 'approved_by'           => 'اعتمده',
 
+// ALL PROJECT COSTS
+'all_project_costs' => 'جميع تكاليف المشاريع',
+'proj_id'           => 'رقم المشروع',
+'cost_details'      => 'التفاصيل',
+
+// CUSTOMERS INDEX
+'add_customer'              => 'إضافة عميل',
+'company'                   => 'الشركة',
+'contact'                   => 'جهة الاتصال',
+'phone'                     => 'الهاتف',
+'email'                     => 'البريد الإلكتروني',
+'active'                    => 'نشط',
+'no_customers_available'    => 'لا يوجد عملاء متاحون.',
+'no_customers_yet'          => 'لم تقم بإضافة أي عملاء بعد.',
+'create_first_customer'     => 'أنشئ أول عميل للبدء.',
+'delete_customer_confirm'   => 'هل تريد حذف هذا العميل؟',
+
+// CUSTOMER CREATE
+'add_new_customer' => 'إضافة عميل جديد',
+'contact_name'     => 'اسم جهة الاتصال',
+'address'          => 'العنوان',
+'inactive'         => 'غير نشط',
+
+// CUSTOMER INFORMATION
+'customer_information' => 'معلومات العميل',
+'company_information'  => 'معلومات الشركة',
+'contact_information'  => 'معلومات الاتصال',
+'contact_person'       => 'جهة الاتصال',
+
+// CUSTOMER DETAILS
+'customer_details' => 'تفاصيل العميل',
+'account_manager'  => 'مدير الحساب',
+'not_assigned'     => 'غير محدد',
+'action'           => 'الإجراء',
+'n_a'              => 'غير متاح',
+
+// CUSTOMER EDIT
+'edit_customer'          => 'تعديل العميل',
+'created_at'              => 'تاريخ الإنشاء',
+'update_customer'         => 'تحديث العميل',
+'customer_not_found'      => 'العميل غير موجود!',
+'customer_record_missing' => 'سجل العميل لم يعد موجوداً.',
+'back_to_customers'       => 'العودة إلى العملاء',
+
 ];
