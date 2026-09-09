@@ -306,6 +306,59 @@ return [
 'project_financial_ledger_report' => 'Project Financial Ledger Report',
 'printed'                        => 'Printed',
 
+// PURCHASE ORDERS
+'create_purchase_order' => 'Create Purchase Order',
+'select_supplier'      => 'Select Supplier',
+'order_date'           => 'Order Date',
+'expected_date'        => 'Expected Date',
+
+// PURCHASE ORDER DETAILS
+'purchase_order_details'       => 'Purchase Order Details',
+'po_number'                    => 'PO Number',
+'draft'                        => 'Draft',
+'approved'                     => 'Approved',
+'partially_received'           => 'Partially Received',
+'received'                     => 'Received',
+'created'                      => 'Created',
+'delivery_ship_to'             => 'Delivery / Ship To',
+'delivery_method'              => 'Delivery Method',
+'direct_to_project_site'       => 'Direct to Project Site',
+'delivery_location'            => 'Delivery Location',
+'site_contact'                 => 'Site Contact',
+'contact_number'               => 'Contact Number',
+'warehouse_contact_number'     => 'Warehouse Contact Number',
+'storekeeper'                  => 'Storekeeper',
+'delivery_information_not_specified' => 'Delivery information not specified.',
+'back'                         => 'Back',
+'manage_items'                 => 'Manage Items',
+'approve_purchase_order'       => 'Approve Purchase Order',
+'approve_purchase_order_confirm' => 'Approve this Purchase Order?',
+'print_po'                     => 'Print PO',
+'purchase_order_items'         => 'Purchase Order Items',
+'item'                         => 'Item',
+'sku'                          => 'SKU',
+'no_items_added_yet'           => 'No items added yet',
+'grand_total'                  => 'Grand Total',
+
+// PURCHASE ORDERS INDEX
+'supplier'                     => 'Supplier',
+'open'                         => 'Open',
+'items'                        => 'Items',
+'approve'                      => 'Approve',
+'cancel_purchase_order_confirm'  => 'Cancel this Purchase Order? This action cannot be undone.',
+
+// PURCHASE ORDER ITEMS
+'po'                            => 'PO',
+'add_item'                      => 'Add Item',
+'qty_received'                  => 'Qty Received',
+'delete_item_confirm'           => 'Delete item?',
+
+// PURCHASE ORDER PRINT
+'print_purchase_order'  => 'Print Purchase Order',
+'close'                 => 'Close',
+'no_items'              => 'No items.',
+'prepared_by'           => 'Prepared By',
+'approved_by'           => 'Approved By',
 
 
 ];

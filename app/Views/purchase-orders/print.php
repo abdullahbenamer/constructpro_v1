@@ -1,24 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+    lang="<?= htmlspecialchars(Language::get()) ?>"
+    dir="<?= htmlspecialchars(Language::direction()) ?>">
 
 <head>
 
     <meta charset="UTF-8">
 
     <title>
-        Purchase Order - <?= htmlspecialchars($po->po_number) ?>
+        <?= __('purchase_order') ?> -
+        <?= htmlspecialchars($po->po_number) ?>
     </title>
 
-    <meta name="viewport"
+    <meta
+        name="viewport"
         content="width=device-width, initial-scale=1">
 
     <style>
+
         body {
             font-family: Arial, Helvetica, sans-serif;
             font-size: 13px;
             color: #000;
             margin: 0;
             padding: 30px;
+        }
+
+        html[dir="rtl"] body {
+            font-family: "Tajawal", Arial, Helvetica, sans-serif;
         }
 
         .document {
@@ -33,7 +42,6 @@
             margin-bottom: 30px;
             gap: 40px;
         }
-
 
         /* COMPANY */
 
@@ -55,12 +63,15 @@
             margin-top: 3px;
         }
 
-
         /* PO INFORMATION */
 
         .po-block {
             width: 270px;
             text-align: left;
+        }
+
+        html[dir="rtl"] .po-block {
+            text-align: right;
         }
 
         .document-title {
@@ -158,6 +169,7 @@
             }
 
         }
+
     </style>
 
 </head>
@@ -167,11 +179,15 @@
     <div class="actions">
 
         <button onclick="window.print()">
-            Print Purchase Order
+
+            <?= __('print_purchase_order') ?>
+
         </button>
 
         <button onclick="window.close()">
-            Close
+
+            <?= __('close') ?>
+
         </button>
 
     </div>
@@ -182,30 +198,38 @@
         <div class="header">
 
             <!-- COMPANY INFORMATION -->
+
             <div class="company-block">
 
                 <div class="company-name">
+
                     <?= htmlspecialchars(
                         $settings->company_name ?? 'Company Name'
                     ) ?>
+
                 </div>
 
                 <?php if (!empty($settings->address)): ?>
 
                     <div class="company-detail">
+
                         <?= nl2br(
                             htmlspecialchars($settings->address)
                         ) ?>
+
                     </div>
 
                 <?php endif; ?>
 
+
                 <?php if (!empty($settings->contacts)): ?>
 
                     <div class="company-detail">
+
                         <?= nl2br(
                             htmlspecialchars($settings->contacts)
                         ) ?>
+
                     </div>
 
                 <?php endif; ?>
@@ -214,27 +238,48 @@
 
 
             <!-- PURCHASE ORDER INFORMATION -->
+
             <div class="po-block">
 
                 <div class="document-title">
-                    PURCHASE ORDER
+
+                    <?= __('purchase_order') ?>
+
                 </div>
 
+
                 <div class="meta">
-                    <strong>PO Number:</strong>
+
+                    <strong>
+                        <?= __('po_number') ?>:
+                    </strong>
+
                     <?= htmlspecialchars($po->po_number) ?>
+
                 </div>
 
+
                 <div class="meta">
-                    <strong>Order Date:</strong>
+
+                    <strong>
+                        <?= __('order_date') ?>:
+                    </strong>
+
                     <?= htmlspecialchars($po->order_date) ?>
+
                 </div>
 
+
                 <div class="meta">
-                    <strong>Expected Date:</strong>
+
+                    <strong>
+                        <?= __('expected_date') ?>:
+                    </strong>
+
                     <?= htmlspecialchars(
                         $po->expected_date ?? '-'
                     ) ?>
+
                 </div>
 
             </div>
@@ -242,9 +287,13 @@
         </div>
 
 
+        <!-- SUPPLIER -->
+
         <div class="supplier-box">
 
-            <strong>SUPPLIER</strong>
+            <strong>
+                <?= __('supplier') ?>
+            </strong>
 
             <div style="margin-top: 8px;">
 
@@ -254,163 +303,221 @@
 
         </div>
 
-<!-- DELIVERY / SHIP TO -->
 
-<div
-    class="supplier-box"
-    style="margin-bottom: 25px;">
+        <!-- DELIVERY / SHIP TO -->
 
-    <strong>
-        DELIVERY / SHIP TO
-    </strong>
+        <div
+            class="supplier-box"
+            style="margin-bottom: 25px;">
 
-    <?php if (
-        $po->delivery_method === 'DIRECT_TO_PROJECT_SITE'
-    ): ?>
+            <strong>
 
-        <div style="margin-top: 10px;">
+                <?= __('delivery_ship_to') ?>
 
-            <div class="meta">
-                <strong>Project:</strong>
-                <?= htmlspecialchars(
-                    $po->project_name ?? '-'
-                ) ?>
-            </div>
-
-            <div class="meta">
-                <strong>Delivery Method:</strong>
-                Direct to Project Site
-            </div>
-
-            <div class="meta">
-
-                <strong>Delivery Location:</strong><br>
-
-                <?= nl2br(
-                    htmlspecialchars(
-                        $po->project_site_location ?? '-'
-                    )
-                ) ?>
-
-            </div>
-
-            <div class="meta">
-
-                <strong>Site Contact:</strong>
-                <?= htmlspecialchars(
-                    $po->project_manager_name ?? '-'
-                ) ?>
-
-            </div>
-
-            <div class="meta">
-
-                <strong>Contact Number:</strong>
-                <?= htmlspecialchars(
-                    $po->project_manager_mobile ?? '-'
-                ) ?>
-
-            </div>
-
-        </div>
+            </strong>
 
 
-    <?php elseif (
-        $po->delivery_method === 'WAREHOUSE'
-    ): ?>
+            <?php if (
+                $po->delivery_method === 'DIRECT_TO_PROJECT_SITE'
+            ): ?>
 
-        <div style="margin-top: 10px;">
+                <div style="margin-top: 10px;">
 
-            <div class="meta">
+                    <div class="meta">
 
-                <strong>Warehouse:</strong>
+                        <strong>
+                            <?= __('project') ?>:
+                        </strong>
 
-                <?= htmlspecialchars(
-                    $po->target_warehouse_code ?? ''
-                ) ?>
+                        <?= htmlspecialchars(
+                            $po->project_name ?? '-'
+                        ) ?>
 
-                <?php if (!empty($po->target_warehouse_name)): ?>
+                    </div>
 
-                    -
-                    <?= htmlspecialchars(
-                        $po->target_warehouse_name
-                    ) ?>
 
-                <?php endif; ?>
+                    <div class="meta">
 
-            </div>
+                        <strong>
+                            <?= __('delivery_method') ?>:
+                        </strong>
 
-            <div class="meta">
+                        <?= __('direct_to_project_site') ?>
 
-                <strong>Delivery Method:</strong>
-                Warehouse
+                    </div>
 
-            </div>
 
-            <div class="meta">
+                    <div class="meta">
 
-                <strong>Delivery Location:</strong><br>
+                        <strong>
+                            <?= __('delivery_location') ?>:
+                        </strong>
 
-                <?= nl2br(
-                    htmlspecialchars(
-                        $po->target_warehouse_address ?? '-'
-                    )
-                ) ?>
+                        <br>
 
-            </div>
+                        <?= nl2br(
+                            htmlspecialchars(
+                                $po->project_site_location ?? '-'
+                            )
+                        ) ?>
 
-            <?php if (!empty($po->target_warehouse_mobile)): ?>
+                    </div>
 
-                <div class="meta">
 
-                    <strong>Warehouse Contact Number:</strong>
+                    <div class="meta">
 
-                    <?= htmlspecialchars(
-                        $po->target_warehouse_mobile
-                    ) ?>
+                        <strong>
+                            <?= __('site_contact') ?>:
+                        </strong>
+
+                        <?= htmlspecialchars(
+                            $po->project_manager_name ?? '-'
+                        ) ?>
+
+                    </div>
+
+
+                    <div class="meta">
+
+                        <strong>
+                            <?= __('contact_number') ?>:
+                        </strong>
+
+                        <?= htmlspecialchars(
+                            $po->project_manager_mobile ?? '-'
+                        ) ?>
+
+                    </div>
 
                 </div>
 
-            <?php endif; ?>
 
+            <?php elseif (
+                $po->delivery_method === 'WAREHOUSE'
+            ): ?>
 
-            <?php if (!empty($po->storekeeper_name)): ?>
+                <div style="margin-top: 10px;">
 
-                <div class="meta">
+                    <div class="meta">
 
-                    <strong>Storekeeper:</strong>
+                        <strong>
+                            <?= __('warehouse') ?>:
+                        </strong>
 
-                    <?= htmlspecialchars(
-                        $po->storekeeper_name
-                    ) ?>
-
-                    <?php if (!empty($po->storekeeper_mobile)): ?>
-
-                        -
                         <?= htmlspecialchars(
-                            $po->storekeeper_mobile
+                            $po->target_warehouse_code ?? ''
                         ) ?>
+
+                        <?php if (
+                            !empty($po->target_warehouse_name)
+                        ): ?>
+
+                            -
+
+                            <?= htmlspecialchars(
+                                $po->target_warehouse_name
+                            ) ?>
+
+                        <?php endif; ?>
+
+                    </div>
+
+
+                    <div class="meta">
+
+                        <strong>
+                            <?= __('delivery_method') ?>:
+                        </strong>
+
+                        <?= __('warehouse') ?>
+
+                    </div>
+
+
+                    <div class="meta">
+
+                        <strong>
+                            <?= __('delivery_location') ?>:
+                        </strong>
+
+                        <br>
+
+                        <?= nl2br(
+                            htmlspecialchars(
+                                $po->target_warehouse_address ?? '-'
+                            )
+                        ) ?>
+
+                    </div>
+
+
+                    <?php if (
+                        !empty($po->target_warehouse_mobile)
+                    ): ?>
+
+                        <div class="meta">
+
+                            <strong>
+                                <?= __('warehouse_contact_number') ?>:
+                            </strong>
+
+                            <?= htmlspecialchars(
+                                $po->target_warehouse_mobile
+                            ) ?>
+
+                        </div>
+
+                    <?php endif; ?>
+
+
+                    <?php if (
+                        !empty($po->storekeeper_name)
+                    ): ?>
+
+                        <div class="meta">
+
+                            <strong>
+                                <?= __('storekeeper') ?>:
+                            </strong>
+
+                            <?= htmlspecialchars(
+                                $po->storekeeper_name
+                            ) ?>
+
+                            <?php if (
+                                !empty($po->storekeeper_mobile)
+                            ): ?>
+
+                                -
+
+                                <?= htmlspecialchars(
+                                    $po->storekeeper_mobile
+                                ) ?>
+
+                            <?php endif; ?>
+
+                        </div>
 
                     <?php endif; ?>
 
                 </div>
 
+
+            <?php else: ?>
+
+                <div style="margin-top: 10px;">
+
+                    <?= __('delivery_information_not_specified') ?>
+
+                </div>
+
             <?php endif; ?>
 
         </div>
 
 
-    <?php else: ?>
+        <!-- ITEMS -->
 
-        <div style="margin-top: 10px;">
-
-            Delivery information not specified.
-
-        </div>
-
-    <?php endif; ?>
-
-</div>
         <table>
 
             <thead>
@@ -422,28 +529,29 @@
                     </th>
 
                     <th>
-                        Item
+                        <?= __('item') ?>
                     </th>
 
                     <th>
-                        SKU
+                        <?= __('sku') ?>
                     </th>
 
                     <th class="text-end">
-                        Quantity
+                        <?= __('quantity') ?>
                     </th>
 
                     <th class="text-end">
-                        Unit Cost
+                        <?= __('unit_cost') ?>
                     </th>
 
                     <th class="text-end">
-                        Total
+                        <?= __('total') ?>
                     </th>
 
                 </tr>
 
             </thead>
+
 
             <tbody>
 
@@ -459,13 +567,16 @@
                                 <?= $n++ ?>
                             </td>
 
+
                             <td>
                                 <?= htmlspecialchars($item->name) ?>
                             </td>
 
+
                             <td>
                                 <?= htmlspecialchars($item->sku) ?>
                             </td>
+
 
                             <td class="text-end">
 
@@ -476,6 +587,7 @@
 
                             </td>
 
+
                             <td class="text-end">
 
                                 <?= number_format(
@@ -485,11 +597,12 @@
 
                             </td>
 
+
                             <td class="text-end">
 
                                 <?= number_format(
                                     (float)$item->quantity *
-                                        (float)$item->unit_cost,
+                                    (float)$item->unit_cost,
                                     2
                                 ) ?>
 
@@ -503,10 +616,11 @@
 
                     <tr>
 
-                        <td colspan="6"
+                        <td
+                            colspan="6"
                             style="text-align:center;">
 
-                            No items.
+                            <?= __('no_items') ?>
 
                         </td>
 
@@ -516,14 +630,16 @@
 
             </tbody>
 
+
             <tfoot>
 
                 <tr class="total-row">
 
-                    <th colspan="5"
+                    <th
+                        colspan="5"
                         class="text-end">
 
-                        GRAND TOTAL
+                        <?= __('grand_total') ?>
 
                     </th>
 
@@ -543,12 +659,14 @@
         </table>
 
 
+        <!-- NOTES -->
+
         <?php if (!empty($po->notes)): ?>
 
             <div class="notes">
 
                 <strong>
-                    Notes
+                    <?= __('notes') ?>
                 </strong>
 
                 <div style="margin-top:8px;">
@@ -564,28 +682,38 @@
         <?php endif; ?>
 
 
+        <!-- SIGNATURES -->
+
         <div class="signatures">
 
             <div class="signature">
 
                 <div class="signature-line">
-                    Prepared By
+
+                    <?= __('prepared_by') ?>
+
                 </div>
 
             </div>
 
+
             <div class="signature">
 
                 <div class="signature-line">
-                    Approved By
+
+                    <?= __('approved_by') ?>
+
                 </div>
 
             </div>
 
+
             <div class="signature">
 
                 <div class="signature-line">
-                    Supplier
+
+                    <?= __('supplier') ?>
+
                 </div>
 
             </div>

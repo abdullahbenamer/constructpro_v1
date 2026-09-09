@@ -1,5 +1,5 @@
 <h2>
-    Purchase Order Details
+    <?= __('purchase_order_details') ?>
 </h2>
 
 <div class="card mb-4">
@@ -11,40 +11,40 @@
             <div class="col-md-6">
 
                 <p>
-                    <strong>PO Number:</strong>
+                    <strong><?= __('po_number') ?>:</strong>
                     <?= htmlspecialchars($po->po_number) ?>
                 </p>
 
                 <p>
-                    <strong>Supplier:</strong>
+                    <strong><?= __('supplier') ?>:</strong>
                     <?= htmlspecialchars($po->supplier_name) ?>
                 </p>
 
                 <p>
-                    <strong>Status:</strong>
+                    <strong><?= __('status') ?>:</strong>
 
                     <?php if ($po->status === 'draft'): ?>
 
                         <span class="badge bg-secondary">
-                            Draft
+                            <?= __('draft') ?>
                         </span>
 
                     <?php elseif ($po->status === 'approved'): ?>
 
                         <span class="badge bg-success">
-                            Approved
+                            <?= __('approved') ?>
                         </span>
 
                     <?php elseif ($po->status === 'partially_received'): ?>
 
                         <span class="badge bg-warning text-dark">
-                            Partially Received
+                            <?= __('partially_received') ?>
                         </span>
 
                     <?php elseif ($po->status === 'received'): ?>
 
                         <span class="badge bg-primary">
-                            Received
+                            <?= __('received') ?>
                         </span>
 
                     <?php else: ?>
@@ -54,47 +54,58 @@
                         </span>
 
                     <?php endif; ?>
+
                 </p>
 
             </div>
 
+
             <div class="col-md-6">
 
                 <p>
-                    <strong>Order Date:</strong>
-                  <?= $po->order_date ?>
+                    <strong><?= __('order_date') ?>:</strong>
+                    <?= $po->order_date ?>
                 </p>
 
                 <p>
-                    <strong>Expected Date:</strong>
+                    <strong><?= __('expected_date') ?>:</strong>
+
                     <span class="bg-primary text-white px-2 py-1 rounded">
-    <?= $po->expected_date ?>
-</span>
+
+                        <?= $po->expected_date ?>
+
+                    </span>
+
                 </p>
 
                 <p>
-                    <strong>Created:</strong>
+                    <strong><?= __('created') ?>:</strong>
                     <?= $po->created_at ?>
                 </p>
 
             </div>
 
         </div>
-        
-         <?php if (!empty($po->notes)): ?>
+
+
+        <?php if (!empty($po->notes)): ?>
 
             <hr>
 
             <p>
-                <strong>Notes:</strong><br>
+
+                <strong><?= __('notes') ?>:</strong><br>
+
                 <?= nl2br(htmlspecialchars($po->notes)) ?>
+
             </p>
 
-        <?php endif; ?> 
+        <?php endif; ?>
 
     </div>
 
 </div>
+
 
 <!-- DELIVERY / SHIP TO -->
 
@@ -103,11 +114,15 @@
     <div class="card-header bg-white">
 
         <strong>
+
             <i class="fas fa-truck"></i>
-            Delivery / Ship To
+
+            <?= __('delivery_ship_to') ?>
+
         </strong>
 
     </div>
+
 
     <div class="card-body">
 
@@ -116,26 +131,30 @@
             <div class="row">
 
                 <!-- PROJECT -->
+
                 <div class="col-md-6 mb-3">
 
                     <strong>
-                        Project
+                        <?= __('project') ?>
                     </strong>
 
                     <div>
+
                         <?= htmlspecialchars(
                             $po->project_name ?? '-'
                         ) ?>
+
                     </div>
 
                 </div>
 
 
                 <!-- DELIVERY METHOD -->
+
                 <div class="col-md-6 mb-3">
 
                     <strong>
-                        Delivery Method
+                        <?= __('delivery_method') ?>
                     </strong>
 
                     <div>
@@ -144,7 +163,7 @@
 
                             <i class="fas fa-truck"></i>
 
-                            Direct to Project Site
+                            <?= __('direct_to_project_site') ?>
 
                         </span>
 
@@ -154,10 +173,11 @@
 
 
                 <!-- SITE LOCATION -->
+
                 <div class="col-md-12 mb-3">
 
                     <strong>
-                        Delivery Location
+                        <?= __('delivery_location') ?>
                     </strong>
 
                     <div class="border rounded p-3 bg-light">
@@ -174,32 +194,38 @@
 
 
                 <!-- PROJECT MANAGER -->
+
                 <div class="col-md-6 mb-3">
 
                     <strong>
-                        Site Contact
+                        <?= __('site_contact') ?>
                     </strong>
 
                     <div>
+
                         <?= htmlspecialchars(
                             $po->project_manager_name ?? '-'
                         ) ?>
+
                     </div>
 
                 </div>
 
 
                 <!-- PM MOBILE -->
+
                 <div class="col-md-6 mb-3">
 
                     <strong>
-                        Contact Number
+                        <?= __('contact_number') ?>
                     </strong>
 
                     <div>
+
                         <?= htmlspecialchars(
                             $po->project_manager_mobile ?? '-'
                         ) ?>
+
                     </div>
 
                 </div>
@@ -212,10 +238,11 @@
             <div class="row">
 
                 <!-- WAREHOUSE -->
+
                 <div class="col-md-6 mb-3">
 
                     <strong>
-                        Warehouse
+                        <?= __('warehouse') ?>
                     </strong>
 
                     <div>
@@ -225,10 +252,13 @@
                         ) ?>
 
                         <?php if (!empty($po->target_warehouse_name)): ?>
+
                             -
+
                             <?= htmlspecialchars(
                                 $po->target_warehouse_name
                             ) ?>
+
                         <?php endif; ?>
 
                     </div>
@@ -237,10 +267,11 @@
 
 
                 <!-- DELIVERY METHOD -->
+
                 <div class="col-md-6 mb-3">
 
                     <strong>
-                        Delivery Method
+                        <?= __('delivery_method') ?>
                     </strong>
 
                     <div>
@@ -249,7 +280,7 @@
 
                             <i class="fas fa-warehouse"></i>
 
-                            Warehouse
+                            <?= __('warehouse') ?>
 
                         </span>
 
@@ -259,10 +290,11 @@
 
 
                 <!-- ADDRESS -->
+
                 <div class="col-md-12 mb-3">
 
                     <strong>
-                        Delivery Location
+                        <?= __('delivery_location') ?>
                     </strong>
 
                     <div class="border rounded p-3 bg-light">
@@ -279,29 +311,34 @@
 
 
                 <!-- WAREHOUSE PHONE -->
+
                 <div class="col-md-6 mb-3">
 
                     <strong>
-                        Warehouse Contact Number
+                        <?= __('warehouse_contact_number') ?>
                     </strong>
 
                     <div>
+
                         <?= htmlspecialchars(
                             $po->target_warehouse_mobile ?? '-'
                         ) ?>
+
                     </div>
 
                 </div>
 
 
                 <!-- STOREKEEPER -->
+
                 <div class="col-md-6 mb-3">
 
                     <strong>
-                        Storekeeper
+                        <?= __('storekeeper') ?>
                     </strong>
 
                     <div>
+
                         <?= htmlspecialchars(
                             $po->storekeeper_name ?? '-'
                         ) ?>
@@ -311,9 +348,11 @@
                             <br>
 
                             <small class="text-muted">
+
                                 <?= htmlspecialchars(
                                     $po->storekeeper_mobile
                                 ) ?>
+
                             </small>
 
                         <?php endif; ?>
@@ -328,7 +367,9 @@
         <?php else: ?>
 
             <div class="text-muted">
-                Delivery information not specified.
+
+                <?= __('delivery_information_not_specified') ?>
+
             </div>
 
         <?php endif; ?>
@@ -337,59 +378,75 @@
 
 </div>
 
+
 <div class="mb-3">
 
-    <a href="<?= URLROOT ?>/purchaseorders"
+    <a
+        href="<?= URLROOT ?>/purchaseorders"
         class="btn btn-secondary">
 
-        Back
+        <?= __('back') ?>
 
     </a>
 
-    <a href="<?= URLROOT ?>/purchaseorders/itemsPage/<?= $po->id ?>"
-        class="btn btn-primary">
-
-        Manage Items
-
-    </a>
-
-<?php if ($po->status === 'draft' && !empty($items)): ?>
-
-    <a href="<?= URLROOT ?>/purchaseorders/approve/<?= $po->id ?>"
-        class="btn btn-success"
-        onclick="return confirm('Approve this Purchase Order?')">
-
-        Approve Purchase Order
-
-    </a>
-
-<?php endif; ?>
-
-<!-- Print PO -->
-<?php if (
-    in_array(
-        $po->status,
-        ['approved', 'partial', 'received'],
-        true
-    )
-): ?>
 
     <a
-        href="<?= URLROOT ?>/purchaseorders/print/<?= $po->id ?>"
-        class="btn btn-dark"
-        target="_blank">
+        href="<?= URLROOT ?>/purchaseorders/itemsPage/<?= $po->id ?>"
+        class="btn btn-primary">
 
-        <i class="fas fa-print"></i>
-        Print PO
+        <?= __('manage_items') ?>
 
     </a>
 
-<?php endif; ?>
+
+    <?php if ($po->status === 'draft' && !empty($items)): ?>
+
+        <a
+            href="<?= URLROOT ?>/purchaseorders/approve/<?= $po->id ?>"
+            class="btn btn-success"
+            onclick="return confirm('<?= htmlspecialchars(
+                __('approve_purchase_order_confirm'),
+                ENT_QUOTES,
+                'UTF-8'
+            ) ?>')">
+
+            <?= __('approve_purchase_order') ?>
+
+        </a>
+
+    <?php endif; ?>
+
+
+    <!-- Print PO -->
+
+    <?php if (
+        in_array(
+            $po->status,
+            ['approved', 'partial', 'received'],
+            true
+        )
+    ): ?>
+
+        <a
+            href="<?= URLROOT ?>/purchaseorders/print/<?= $po->id ?>"
+            class="btn btn-dark"
+            target="_blank">
+
+            <i class="fas fa-print"></i>
+
+            <?= __('print_po') ?>
+
+        </a>
+
+    <?php endif; ?>
+
 </div>
 
+
 <h4>
-    Purchase Order Items
+    <?= __('purchase_order_items') ?>
 </h4>
+
 
 <table class="table table-striped">
 
@@ -397,15 +454,30 @@
 
         <tr>
 
-            <th>Item</th>
-            <th>SKU</th>
-            <th width="120">Qty</th>
-            <th width="150">Unit Cost</th>
-            <th width="150">Total</th>
+            <th>
+                <?= __('item') ?>
+            </th>
+
+            <th>
+                <?= __('sku') ?>
+            </th>
+
+            <th width="120">
+                <?= __('qty') ?>
+            </th>
+
+            <th width="150">
+                <?= __('unit_cost') ?>
+            </th>
+
+            <th width="150">
+                <?= __('total') ?>
+            </th>
 
         </tr>
 
     </thead>
+
 
     <tbody>
 
@@ -418,16 +490,23 @@
                     <td>
                         <?= htmlspecialchars($item->name) ?>
                     </td>
-                     <td>
+
+                    <td>
                         <?= htmlspecialchars($item->sku) ?>
                     </td>
 
                     <td>
-                        <?= number_format($item->quantity, 2) ?>
+                        <?= number_format(
+                            $item->quantity,
+                            2
+                        ) ?>
                     </td>
 
                     <td>
-                        <?= number_format($item->unit_cost, 2) ?>
+                        <?= number_format(
+                            $item->unit_cost,
+                            2
+                        ) ?>
                     </td>
 
                     <td>
@@ -447,9 +526,11 @@
 
             <tr>
 
-                <td colspan="4" class="text-center text-muted">
+                <td
+                    colspan="5"
+                    class="text-center text-muted">
 
-                    No items added yet
+                    <?= __('no_items_added_yet') ?>
 
                 </td>
 
@@ -459,17 +540,23 @@
 
     </tbody>
 
+
     <tfoot>
 
         <tr>
 
             <th colspan="3" class="text-end">
-                Grand Total
+
+                <?= __('grand_total') ?>
+
             </th>
 
             <th>
 
-                <?= number_format($po->total_amount, 2) ?>
+                <?= number_format(
+                    $po->total_amount,
+                    2
+                ) ?>
 
             </th>
 
