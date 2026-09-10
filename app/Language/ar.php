@@ -1007,4 +1007,29 @@ return [
 'payment'                                     => 'دفعة',
 'no_ledger_entries_found'                     => 'لم يتم العثور على قيود في السجل.',
 
+'technician_details'                         => 'تفاصيل الفني',
+'specialty'                                  => 'التخصص',
+
+'new_unit'                                   => 'وحدة جديدة',
+'create_unit_of_measure'                     => 'إنشاء وحدة قياس',
+'unit_code'                                  => 'رمز الوحدة',
+'unit_name'                                  => 'اسم الوحدة',
+'save_unit'                                  => 'حفظ الوحدة',
+'edit_unit'                                  => 'تعديل الوحدة',
+'update_unit_of_measure'                     => 'تحديث وحدة القياس',
+'update_unit'                                => 'تحديث الوحدة',
+'units'                                      => 'الوحدات',
+'manage_units_of_measure'                    => 'إدارة وحدات القياس',
+'code'                                       => 'الرمز',
+'delete_unit_confirm'                        => 'هل تريد حذف هذه الوحدة؟',
+'no_units_found'                             => 'لم يتم العثور على وحدات.',
+
+'employee_details'                           => 'تفاصيل الموظف',
+'mobile'                                     => 'الهاتف المحمول',
+'role'                                       => 'الدور',
+
+// footer
+'dedicated_to_quality'            => 'ملتزمون بالجودة',
+'construction_professional_system'=> 'النظام الاحترافي للإنشاءات',
+'home'                            => 'الرئيسية',
 ];

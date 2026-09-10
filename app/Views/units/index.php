@@ -1,5 +1,6 @@
 <div class="container-fluid mt-4">
 
+
     <!-- PAGE HEADER -->
 
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -9,28 +10,29 @@
             <h4 class="mb-0">
 
                 <i class="fas fa-ruler"></i>
-                Units
+                <?= __('units') ?>
 
             </h4>
 
             <small class="text-muted">
 
-                Manage Units of Measure
+                <?= __('manage_units_of_measure') ?>
 
             </small>
 
         </div>
 
+
         <a href="<?= URLROOT ?>/Units/create"
            class="btn btn-primary">
 
             <i class="fas fa-plus"></i>
-            New Unit
+
+            <?= __('new_unit') ?>
 
         </a>
 
     </div>
-
 
 
     <div class="card shadow-sm">
@@ -45,19 +47,30 @@
 
                         <tr>
 
-                            <th width="80">Code</th>
+                            <th width="80">
+                                <?= __('code') ?>
+                            </th>
 
-                            <th>Unit Name</th>
+                            <th>
+                                <?= __('unit_name') ?>
+                            </th>
 
-                            <th>Arabic Name</th>
+                            <th>
+                                <?= __('arabic_name') ?>
+                            </th>
 
-                            <th width="120">Status</th>
+                            <th width="120">
+                                <?= __('status') ?>
+                            </th>
 
-                            <th width="180">Actions</th>
+                            <th width="180">
+                                <?= __('actions') ?>
+                            </th>
 
                         </tr>
 
                     </thead>
+
 
                     <tbody>
 
@@ -77,11 +90,13 @@
 
                                     </td>
 
+
                                     <td>
 
                                         <?= $unit->unit_name ?>
 
                                     </td>
+
 
                                     <td>
 
@@ -89,13 +104,14 @@
 
                                     </td>
 
+
                                     <td>
 
                                         <?php if ($unit->status == 'ACTIVE'): ?>
 
                                             <span class="badge bg-success">
 
-                                                ACTIVE
+                                                <?= __('active') ?>
 
                                             </span>
 
@@ -103,13 +119,14 @@
 
                                             <span class="badge bg-secondary">
 
-                                                INACTIVE
+                                                <?= __('inactive') ?>
 
                                             </span>
 
                                         <?php endif; ?>
 
                                     </td>
+
 
                                     <td>
 
@@ -120,9 +137,11 @@
 
                                         </a>
 
+
                                         <a href="<?= URLROOT ?>/Units/delete/<?= $unit->id ?>"
                                            class="btn btn-sm btn-danger"
-                                           onclick="return confirm('Delete this unit?');">
+
+                                           onclick="return confirm(<?= json_encode(__('delete_unit_confirm')) ?>);">
 
                                             <i class="fas fa-trash"></i>
 
@@ -134,6 +153,7 @@
 
                             <?php endforeach; ?>
 
+
                         <?php else: ?>
 
                             <tr>
@@ -141,7 +161,7 @@
                                 <td colspan="5"
                                     class="text-center text-muted">
 
-                                    No units found.
+                                    <?= __('no_units_found') ?>
 
                                 </td>
 

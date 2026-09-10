@@ -1,6 +1,9 @@
-<h2>Employee Details</h2>
+<h2>
+    <?= __('employee_details') ?>
+</h2>
 
 <div class="card">
+
     <div class="card-body">
 
         <h4>
@@ -8,29 +11,48 @@
         </h4>
 
         <p>
-            <strong>Email:</strong>
+
+            <strong><?= __('email') ?>:</strong>
+
             <?= htmlspecialchars($data['user']->email) ?>
+
         </p>
 
+
         <p>
-            <strong>Mobile:</strong>
+
+            <strong><?= __('mobile') ?>:</strong>
+
             <?= htmlspecialchars($data['user']->mobile) ?>
+
         </p>
 
-        <p>
-    <strong>Role:</strong>
-    <?= htmlspecialchars($data['user']->role_name ?? '-') ?>
-</p>
 
         <p>
-            <strong>Status:</strong>
+
+            <strong><?= __('role') ?>:</strong>
+
+            <?= htmlspecialchars($data['user']->role_name ?? '-') ?>
+
+        </p>
+
+
+        <p>
+
+            <strong><?= __('status') ?>:</strong>
+
             <?= htmlspecialchars($data['user']->status ?? 'Active') ?>
+
         </p>
 
     </div>
+
 </div>
+
 
 <a href="<?= URLROOT ?>/users"
    class="btn btn-secondary mt-3">
-    Back
+
+    <?= __('back') ?>
+
 </a>

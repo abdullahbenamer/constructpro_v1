@@ -1,5 +1,5 @@
 <h2>
-    Technician Details
+    <?= __('technician_details') ?>
 </h2>
 
 <div class="card">
@@ -11,22 +11,22 @@
         </h4>
 
         <p>
-            <strong>Email:</strong>
+            <strong><?= __('email') ?>:</strong>
             <?= htmlspecialchars($technician->email) ?>
         </p>
 
         <p>
-            <strong>Phone:</strong>
+            <strong><?= __('phone') ?>:</strong>
             <?= htmlspecialchars($technician->phone) ?>
         </p>
 
         <p>
-            <strong>Specialty:</strong>
+            <strong><?= __('specialty') ?>:</strong>
             <?= htmlspecialchars($technician->specialty) ?>
         </p>
 
         <p>
-            <strong>Status:</strong>
+            <strong><?= __('status') ?>:</strong>
             <?= htmlspecialchars($technician->status) ?>
         </p>
 
@@ -37,6 +37,6 @@
 <a href="<?= URLROOT ?>/services"
    class="btn btn-secondary mt-3">
 
-    Back
+    <?= __('back') ?>
 
 </a>

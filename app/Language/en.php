@@ -1020,5 +1020,29 @@ return [
 'payment'                                     => 'PAYMENT',
 'no_ledger_entries_found'                     => 'No ledger entries found.',
 
+'technician_details'                         => 'Technician Details',
+'specialty'                                  => 'Specialty',
+
+'new_unit'                                   => 'New Unit',
+'create_unit_of_measure'                     => 'Create a Unit of Measure',
+'unit_code'                                  => 'Unit Code',
+'unit_name'                                  => 'Unit Name',
+'save_unit'                                  => 'Save Unit',
+'edit_unit'                                  => 'Edit Unit',
+'update_unit_of_measure'                     => 'Update Unit of Measure',
+'update_unit'                                => 'Update Unit',
+'units'                                      => 'Units',
+'manage_units_of_measure'                    => 'Manage Units of Measure',
+'code'                                       => 'Code',
+'delete_unit_confirm'                        => 'Delete this unit?',
+'no_units_found'                             => 'No units found.',
+
+'employee_details'                           => 'Employee Details',
+'mobile'                                     => 'Mobile',
+'role'                                       => 'Role',
+
+'dedicated_to_quality'            => 'Dedicated to Quality',
+'construction_professional_system'=> 'Construction Professional System',
+'home'                            => 'Home',
 
 ];

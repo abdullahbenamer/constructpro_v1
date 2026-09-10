@@ -7,13 +7,13 @@
             <h4 class="mb-0">
 
                 <i class="fas fa-plus-circle"></i>
-                New Unit
+                <?= __('new_unit') ?>
 
             </h4>
 
             <small class="text-muted">
 
-                Create a Unit of Measure
+                <?= __('create_unit_of_measure') ?>
 
             </small>
 
@@ -23,7 +23,7 @@
            class="btn btn-secondary">
 
             <i class="fas fa-arrow-left"></i>
-            Back
+            <?= __('back') ?>
 
         </a>
 
@@ -43,7 +43,7 @@
 
                         <label class="form-label">
 
-                            Unit Code
+                            <?= __('unit_code') ?>
 
                         </label>
 
@@ -54,11 +54,12 @@
 
                     </div>
 
+
                     <div class="col-md-5 mb-3">
 
                         <label class="form-label">
 
-                            Unit Name
+                            <?= __('unit_name') ?>
 
                         </label>
 
@@ -69,11 +70,12 @@
 
                     </div>
 
+
                     <div class="col-md-4 mb-3">
 
                         <label class="form-label">
 
-                            Arabic Name
+                            <?= __('arabic_name') ?>
 
                         </label>
 
@@ -90,7 +92,7 @@
 
                     <label class="form-label">
 
-                        Description
+                        <?= __('description') ?>
 
                     </label>
 
@@ -107,7 +109,7 @@
 
                         <label class="form-label">
 
-                            Status
+                            <?= __('status') ?>
 
                         </label>
 
@@ -116,13 +118,13 @@
 
                             <option value="ACTIVE">
 
-                                ACTIVE
+                                <?= __('active') ?>
 
                             </option>
 
                             <option value="INACTIVE">
 
-                                INACTIVE
+                                <?= __('inactive') ?>
 
                             </option>
 
@@ -135,10 +137,11 @@
 
                 <hr>
 
+
                 <button class="btn btn-primary">
 
                     <i class="fas fa-save"></i>
-                    Save Unit
+                    <?= __('save_unit') ?>
 
                 </button>
 
