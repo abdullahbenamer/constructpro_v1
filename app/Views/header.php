@@ -712,21 +712,21 @@ $direction = Language::direction();
         }
 
         /* RTL CHECKBOXES */
-html[dir="rtl"] .form-check {
-    padding-right: 1.5em;
-    padding-left: 0;
-}
+        html[dir="rtl"] .form-check {
+            padding-right: 1.5em;
+            padding-left: 0;
+        }
 
-html[dir="rtl"] .form-check-input {
-    float: right;
-    margin-right: -1.5em;
-    margin-left: 0;
-}
+        html[dir="rtl"] .form-check-input {
+            float: right;
+            margin-right: -1.5em;
+            margin-left: 0;
+        }
 
-html[dir="rtl"] .form-check-label {
-    display: block;
-    text-align: right;
-}
+        html[dir="rtl"] .form-check-label {
+            display: block;
+            text-align: right;
+        }
     </style>
 
 </head>
@@ -1264,8 +1264,7 @@ html[dir="rtl"] .form-check-label {
                                 <?php if (AuthHelper::canView('reports.view')) : ?>
 
                                     <li>
-
-                                        <a
+                                                                            <a
                                             class="dropdown-item"
                                             href="<?= URLROOT ?>/reports">
 

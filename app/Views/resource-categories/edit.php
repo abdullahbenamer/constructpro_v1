@@ -12,20 +12,19 @@
 
                 <i class="fas fa-edit"></i>
 
-                Edit Resource Category
+                <?= __('edit_resource_category') ?>
 
             </h4>
 
 
             <small class="text-muted">
 
-                Update resource classification
+                <?= __('update_resource_classification') ?>
 
             </small>
 
 
         </div>
-
 
 
         <a href="<?= URLROOT ?>/ResourceCategories"
@@ -34,16 +33,13 @@
 
             <i class="fas fa-arrow-left"></i>
 
-            Back
+            <?= __('back') ?>
 
 
         </a>
 
 
     </div>
-
-
-
 
 
     <div class="card shadow-sm">
@@ -56,9 +52,6 @@
                   action="<?= URLROOT ?>/ResourceCategories/update/<?= $data['category']->id ?>">
 
 
-
-
-
                 <div class="row">
 
 
@@ -69,7 +62,7 @@
 
                         <label class="form-label">
 
-                            Category Code
+                            <?= __('category_code') ?>
 
                         </label>
 
@@ -84,9 +77,6 @@
                     </div>
 
 
-
-
-
                     <!-- NAME -->
 
                     <div class="col-md-5 mb-3">
@@ -94,7 +84,7 @@
 
                         <label class="form-label">
 
-                            Category Name
+                            <?= __('category_name') ?>
 
                         </label>
 
@@ -109,9 +99,6 @@
                     </div>
 
 
-
-
-
                     <!-- ARABIC NAME -->
 
                     <div class="col-md-4 mb-3">
@@ -119,7 +106,7 @@
 
                         <label class="form-label">
 
-                            Arabic Name
+                            <?= __('arabic_name') ?>
 
                         </label>
 
@@ -136,11 +123,6 @@
                 </div>
 
 
-
-
-
-
-
                 <!-- DESCRIPTION -->
 
 
@@ -149,7 +131,7 @@
 
                     <label class="form-label">
 
-                        Description
+                        <?= __('description') ?>
 
                     </label>
 
@@ -162,11 +144,6 @@
                 </div>
 
 
-
-
-
-
-
                 <!-- STATUS -->
 
 
@@ -175,7 +152,7 @@
 
                     <label class="form-label">
 
-                        Status
+                        <?= __('status') ?>
 
                     </label>
 
@@ -184,20 +161,18 @@
                             class="form-select">
 
 
-
                         <option value="ACTIVE"
                             <?= $data['category']->status == 'ACTIVE' ? 'selected' : '' ?>>
 
-                            ACTIVE
+                            <?= __('active') ?>
 
                         </option>
-
 
 
                         <option value="INACTIVE"
                             <?= $data['category']->status == 'INACTIVE' ? 'selected' : '' ?>>
 
-                            INACTIVE
+                            <?= __('inactive') ?>
 
                         </option>
 
@@ -208,13 +183,7 @@
                 </div>
 
 
-
-
-
-
-
                 <hr>
-
 
 
                 <button type="submit"
@@ -223,22 +192,20 @@
 
                     <i class="fas fa-save"></i>
 
-                    Update Category
+                    <?= __('update_category') ?>
 
 
                 </button>
-
 
 
                 <a href="<?= URLROOT ?>/ResourceCategories"
                    class="btn btn-secondary">
 
 
-                    Cancel
+                    <?= __('cancel') ?>
 
 
                 </a>
-
 
 
             </form>

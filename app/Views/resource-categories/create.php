@@ -10,14 +10,14 @@
 
                 <i class="fas fa-plus-circle"></i>
 
-                New Resource Category
+                <?= __('new_resource_category') ?>
 
             </h4>
 
 
             <small class="text-muted">
 
-                Create resource classification
+                <?= __('create_resource_classification') ?>
 
             </small>
 
@@ -25,21 +25,17 @@
         </div>
 
 
-
         <a href="<?= URLROOT ?>/ResourceCategories"
            class="btn btn-secondary">
 
             <i class="fas fa-arrow-left"></i>
 
-            Back
+            <?= __('back') ?>
 
         </a>
 
 
     </div>
-
-
-
 
 
     <div class="card shadow-sm">
@@ -52,7 +48,6 @@
                   action="<?= URLROOT ?>/ResourceCategories/store">
 
 
-
                 <div class="row">
 
 
@@ -60,7 +55,7 @@
 
 
                         <label class="form-label">
-                            Category Code
+                            <?= __('category_code') ?>
                         </label>
 
 
@@ -73,12 +68,11 @@
                     </div>
 
 
-
                     <div class="col-md-5 mb-3">
 
 
                         <label class="form-label">
-                            Category Name
+                            <?= __('category_name') ?>
                         </label>
 
 
@@ -91,12 +85,11 @@
                     </div>
 
 
-
                     <div class="col-md-4 mb-3">
 
 
                         <label class="form-label">
-                            Arabic Name
+                            <?= __('arabic_name') ?>
                         </label>
 
 
@@ -111,14 +104,11 @@
                 </div>
 
 
-
-
-
                 <div class="mb-3">
 
 
                     <label class="form-label">
-                        Description
+                        <?= __('description') ?>
                     </label>
 
 
@@ -130,14 +120,11 @@
                 </div>
 
 
-
-
-
                 <div class="col-md-3 mb-3">
 
 
                     <label class="form-label">
-                        Status
+                        <?= __('status') ?>
                     </label>
 
 
@@ -146,12 +133,12 @@
 
 
                         <option value="ACTIVE">
-                            ACTIVE
+                            <?= __('active') ?>
                         </option>
 
 
                         <option value="INACTIVE">
-                            INACTIVE
+                            <?= __('inactive') ?>
                         </option>
 
 
@@ -161,14 +148,11 @@
                 </div>
 
 
-
-
-
                 <button class="btn btn-primary">
 
                     <i class="fas fa-save"></i>
 
-                    Save Category
+                    <?= __('save_category') ?>
 
                 </button>
 

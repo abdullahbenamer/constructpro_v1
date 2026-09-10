@@ -7,13 +7,13 @@
             <h2 class="mb-1">
 
                 <i class="fas fa-shopping-cart"></i>
-                Create Purchase Order
+                <?= __('create_purchase_order') ?>
 
             </h2>
 
             <div class="text-muted">
 
-                From Resource Requisition:
+                <?= __('from_resource_requisition') ?>:
 
                 <strong>
                     <?= htmlspecialchars(
@@ -29,6 +29,7 @@
 
     </div>
 
+
     <!-- REQUISITION INFORMATION -->
 
     <div class="card shadow-sm mb-4">
@@ -38,10 +39,11 @@
             <div class="row">
 
                 <!-- PROJECT -->
+
                 <div class="col-md-3 mb-3">
 
                     <strong>
-                        Project
+                        <?= __('project') ?>
                     </strong>
 
                     <div>
@@ -56,10 +58,11 @@
 
 
                 <!-- RR -->
+
                 <div class="col-md-3 mb-3">
 
                     <strong>
-                        Source RR
+                        <?= __('source_rr') ?>
                     </strong>
 
                     <div>
@@ -76,10 +79,11 @@
 
 
                 <!-- REQUIRED DATE -->
+
                 <div class="col-md-2 mb-3">
 
                     <strong>
-                        Required Date
+                        <?= __('required_date') ?>
                     </strong>
 
                     <div>
@@ -94,10 +98,11 @@
 
 
                 <!-- PRIORITY -->
+
                 <div class="col-md-2 mb-3">
 
                     <strong>
-                        Priority
+                        <?= __('priority') ?>
                     </strong>
 
                     <div>
@@ -134,10 +139,11 @@
 
 
                 <!-- DELIVERY METHOD -->
+
                 <div class="col-md-2 mb-3">
 
                     <strong>
-                        Delivery
+                        <?= __('delivery') ?>
                     </strong>
 
                     <div>
@@ -150,7 +156,7 @@
 
                                 <i class="fas fa-warehouse"></i>
 
-                                Warehouse
+                                <?= __('warehouse') ?>
 
                             </span>
 
@@ -162,7 +168,7 @@
 
                                 <i class="fas fa-truck"></i>
 
-                                Direct to Site
+                                <?= __('direct_to_site') ?>
 
                             </span>
 
@@ -188,7 +194,7 @@
                 <div class="col-md-6">
 
                     <strong>
-                        Target Warehouse
+                        <?= __('target_warehouse') ?>
                     </strong>
 
                     <div>
@@ -212,7 +218,7 @@
 
                                 <i class="fas fa-map-marker-alt"></i>
 
-                                Project Site
+                                <?= __('project_site') ?>
 
                             </span>
 
@@ -234,6 +240,7 @@
 
     </div>
 
+
     <form method="POST">
 
 
@@ -244,7 +251,7 @@
             <div class="card-header">
 
                 <strong>
-                    Purchase Order Details
+                    <?= __('purchase_order_details') ?>
                 </strong>
 
             </div>
@@ -256,7 +263,7 @@
                     <div class="col-md-4 mb-3">
 
                         <label class="form-label">
-                            Supplier *
+                            <?= __('supplier') ?> *
                         </label>
 
                         <select
@@ -265,7 +272,7 @@
                             required>
 
                             <option value="">
-                                Select Supplier
+                                <?= __('select_supplier') ?>
                             </option>
 
                             <?php foreach ($suppliers as $supplier): ?>
@@ -288,7 +295,7 @@
                     <div class="col-md-4 mb-3">
 
                         <label class="form-label">
-                            Order Date
+                            <?= __('order_date') ?>
                         </label>
 
                         <input
@@ -304,7 +311,7 @@
                     <div class="col-md-4 mb-3">
 
                         <label class="form-label">
-                            Expected Date
+                            <?= __('expected_date') ?>
                         </label>
 
                         <input
@@ -312,8 +319,8 @@
                             name="expected_date"
                             class="form-control"
                             value="<?= htmlspecialchars(
-                                        $requisition->required_date ?? ''
-                                    ) ?>">
+                                $requisition->required_date ?? ''
+                            ) ?>">
 
                     </div>
 
@@ -331,7 +338,7 @@
             <div class="card-header bg-primary text-white">
 
                 <strong>
-                    Materials to Purchase
+                    <?= __('materials_to_purchase') ?>
                 </strong>
 
             </div>
@@ -348,27 +355,27 @@
                             <tr>
 
                                 <th>
-                                    Material
+                                    <?= __('material') ?>
                                 </th>
 
                                 <th>
-                                    SKU
+                                    <?= __('sku') ?>
                                 </th>
 
                                 <th>
-                                    UOM
+                                    <?= __('uom') ?>
                                 </th>
 
                                 <th class="text-end">
-                                    RR Remaining
+                                    <?= __('rr_remaining') ?>
                                 </th>
 
                                 <th style="width:180px;">
-                                    Quantity to Purchase
+                                    <?= __('quantity_to_purchase') ?>
                                 </th>
 
                                 <th style="width:180px;">
-                                    Unit Cost
+                                    <?= __('unit_cost') ?>
                                 </th>
 
                             </tr>
@@ -435,36 +442,41 @@
 
                                     </td>
 
-                                 <td>
+                                    <td>
 
-    <input
-        type="number"
-        name="items[<?= $item->id ?>][unit_cost]"
-        class="form-control text-end"
-        min="0"
-        step="0.01"
-        value=""
-        placeholder="Enter price"
-        required>
+                                        <input
+                                            type="number"
+                                            name="items[<?= $item->id ?>][unit_cost]"
+                                            class="form-control text-end"
+                                            min="0"
+                                            step="0.01"
+                                            value=""
+                                            placeholder="<?= __('enter_price') ?>"
+                                            required>
 
-    <?php if (
-        isset($item->current_cost)
-        && (float)$item->current_cost > 0
-    ): ?>
+                                        <?php if (
+                                            isset($item->current_cost)
+                                            && (float)$item->current_cost > 0
+                                        ): ?>
 
-        <small class="text-muted d-block mt-1">
-            Reference only — Current Cost:
-            <strong>
-                <?= number_format(
-                    (float)$item->current_cost,
-                    2
-                ) ?>
-            </strong>
-        </small>
+                                            <small class="text-muted d-block mt-1">
 
-    <?php endif; ?>
+                                                <?= __('reference_only_current_cost') ?>:
 
-</td>
+                                                <strong>
+
+                                                    <?= number_format(
+                                                        (float)$item->current_cost,
+                                                        2
+                                                    ) ?>
+
+                                                </strong>
+
+                                            </small>
+
+                                        <?php endif; ?>
+
+                                    </td>
 
                                 </tr>
 
@@ -486,7 +498,8 @@
                     class="btn btn-secondary">
 
                     <i class="fas fa-times"></i>
-                    Cancel
+
+                    <?= __('cancel') ?>
 
                 </a>
 
@@ -496,7 +509,8 @@
                     class="btn btn-success">
 
                     <i class="fas fa-file-invoice"></i>
-                    Create Purchase Order
+
+                    <?= __('create_purchase_order') ?>
 
                 </button>
 

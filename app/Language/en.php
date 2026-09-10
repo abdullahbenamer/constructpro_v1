@@ -78,7 +78,7 @@ return [
 
     'completed'                => 'Completed',
     'overdue_by'               => 'Overdue by',
-    'due_today'                => 'Due Today',
+        'due_today'                => 'Due Today',
     'days_left'                => 'days left',
     'day_left'                 => 'day left',
     'days'      => 'days',
@@ -818,9 +818,50 @@ return [
 'no_inventory_transfer_records' => 'There are currently no inventory transfer records.',
 'create_first_transfer'          => 'Create First Transfer',
 
+// REPORTS
+'project_portfolio_dashboard'  => 'PROJECT PORTFOLIO DASHBOARD',
+'total_projects'               => 'Total Projects',
+'due_soon'                     => 'Due Soon',
+'total_budget'                 => 'Total Budget',
+'total_cash_in_advances'       => 'Total Cash In (Advances)',
+'total_cash_out_costs'         => 'Total Cash Out (Costs)',
+'net_position'                 => 'Net Position',
+'cost_vs_budget_table'         => 'Cost vs Budget Table',
+'cost_vs_budget_analysis'      => 'Cost vs Budget Analysis',
+'project_id'                   => 'Project ID',
+'actual_cost'                  => 'Actual Cost',
+'variance'                     => 'Variance',
+'under_budget'                 => 'Under Budget',
+'overdue'               => 'Overdue',
 
+// REQUISITION PURCHASE ORDERS
+'from_resource_requisition'       => 'From Resource Requisition',
+'source_rr'                       => 'Source RR',
+'direct_to_site'                  => 'Direct to Site',
+'materials_to_purchase'           => 'Materials to Purchase',
+'material'                        => 'Material',
+'uom'                             => 'UOM',
+'rr_remaining'                    => 'RR Remaining',
+'quantity_to_purchase'            => 'Quantity to Purchase',
+'enter_price'                     => 'Enter price',
+'reference_only_current_cost'     => 'Reference only — Current Cost',
 
-
+// RESOURCE CATEGORIES
+'new_resource_category'           => 'New Resource Category',
+'create_resource_classification'  => 'Create resource classification',
+'category_code'                   => 'Category Code',
+'category_name'                   => 'Category Name',
+'arabic_name'                     => 'Arabic Name',
+'inactive'                        => 'Inactive',
+'save_category'                  => 'Save Category',
+'edit_resource_category'          => 'Edit Resource Category',
+'update_resource_classification' => 'Update resource classification',
+'update_category'                 => 'Update Category',
+'resource_categories'             => 'Resource Categories',
+'manage_resource_classification'  => 'Manage resource classification',
+'new_category'                    => 'New Category',
+'delete_category_confirm'         => 'Delete this category?',
+'no_categories_found'             => 'No categories found.',
 
 
 ];

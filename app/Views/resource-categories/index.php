@@ -12,20 +12,19 @@
 
                 <i class="fas fa-layer-group"></i>
 
-                Resource Categories
+                <?= __('resource_categories') ?>
 
             </h4>
 
 
             <small class="text-muted">
 
-                Manage resource classification
+                <?= __('manage_resource_classification') ?>
 
             </small>
 
 
         </div>
-
 
 
         <a href="<?= URLROOT ?>/ResourceCategories/create"
@@ -34,16 +33,13 @@
 
             <i class="fas fa-plus"></i>
 
-            New Category
+            <?= __('new_category') ?>
 
 
         </a>
 
 
     </div>
-
-
-
 
 
     <div class="card shadow-sm">
@@ -64,30 +60,29 @@
                         <tr>
 
                             <th width="120">
-                                Code
+                                <?= __('code') ?>
                             </th>
 
                             <th>
-                                Category Name
+                                <?= __('category_name') ?>
                             </th>
 
                             <th>
-                                Arabic Name
+                                <?= __('arabic_name') ?>
                             </th>
 
                             <th width="120">
-                                Status
+                                <?= __('status') ?>
                             </th>
 
                             <th width="150">
-                                Actions
+                                <?= __('actions') ?>
                             </th>
 
                         </tr>
 
 
                     </thead>
-
 
 
                     <tbody>
@@ -132,7 +127,9 @@
 
 
                                         <span class="badge bg-success">
-                                            ACTIVE
+
+                                            <?= __('active') ?>
+
                                         </span>
 
 
@@ -140,7 +137,9 @@
 
 
                                         <span class="badge bg-secondary">
-                                            INACTIVE
+
+                                            <?= __('inactive') ?>
+
                                         </span>
 
 
@@ -150,28 +149,22 @@
                                 </td>
 
 
-
                                 <td>
 
 
                                     <a href="<?= URLROOT ?>/ResourceCategories/edit/<?= $category->id ?>"
                                        class="btn btn-sm btn-warning">
 
-
                                         <i class="fas fa-edit"></i>
-
 
                                     </a>
 
 
-
                                     <a href="<?= URLROOT ?>/ResourceCategories/delete/<?= $category->id ?>"
                                        class="btn btn-sm btn-danger"
-                                       onclick="return confirm('Delete this category?');">
-
+                                       onclick="return confirm('<?= __('delete_category_confirm') ?>');">
 
                                         <i class="fas fa-trash"></i>
-
 
                                     </a>
 
@@ -193,7 +186,7 @@
                             <td colspan="5"
                                 class="text-center text-muted">
 
-                                No categories found.
+                                <?= __('no_categories_found') ?>
 
                             </td>
 
