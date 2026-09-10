@@ -45,7 +45,7 @@
         <strong><?= __('ordered') ?></strong>
         <span id="orderedQty"></span><br>
 
-        <strong><?= __('qty_received') ?></strong>
+        <strong><?= __('received_quantity') ?></strong>
         <span id="receivedQty"></span><br>
 
         <strong><?= __('remaining') ?></strong>

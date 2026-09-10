@@ -11,14 +11,14 @@
             <h4 class="mb-0">
 
                 <i class="fas fa-file-alt"></i>
-                Resource Requisition Details
+                <?= __('resource_requisition_details') ?>
 
             </h4>
 
 
             <small class="text-muted">
 
-                View requisition header information
+                <?= __('view_requisition_header_information') ?>
 
             </small>
 
@@ -37,10 +37,10 @@
 
                 <a href="<?= URLROOT ?>/ResourceRequisitions/submit/<?= $data['requisition']->id ?>"
                     class="btn btn-success"
-                    onclick="return confirm('Submit this requisition?\n\nAfter submission it can no longer be edited.')">
+                    onclick="return confirm(<?= json_encode(__('submit_requisition_confirm')) ?>)">
 
                     <i class="fas fa-paper-plane"></i>
-                    Submit Requisition
+                    <?= __('submit_requisition') ?>
 
                 </a>
 
@@ -57,7 +57,7 @@
                 <a href="<?= URLROOT ?>/ResourceRequisitions/approve/<?= $data['requisition']->id ?>"
                     class="btn btn-success">
                     <i class="fas fa-check-circle"></i>
-                    Approval Decision
+                    <?= __('approval_decision') ?>
                 </a>
 
             <?php endif; ?>
@@ -68,7 +68,7 @@
                     class="btn btn-warning">
 
                     <i class="fas fa-edit"></i>
-                    Edit
+                    <?= __('edit') ?>
 
                 </a>
 
@@ -79,7 +79,7 @@
                 class="btn btn-secondary">
 
                 <i class="fas fa-arrow-left"></i>
-                Back To Resource Requisitions
+                <?= __('back_to_resource_requisitions') ?>
 
             </a>
 
@@ -102,13 +102,12 @@
             <strong>
 
                 <i class="fas fa-info-circle"></i>
-                Header Information
+                <?= __('header_information') ?>
 
             </strong>
 
 
         </div>
-
 
 
 
@@ -119,7 +118,6 @@
             <div class="row">
 
 
-
                 <!-- REQUISITION NUMBER -->
 
                 <div class="col-md-4 mb-3">
@@ -127,7 +125,7 @@
 
                     <label class="text-muted">
 
-                        Requisition No.
+                        <?= __('requisition_no') ?>
 
                     </label>
 
@@ -147,7 +145,7 @@
 
                     <label class="text-muted">
 
-                        Project
+                        <?= __('project') ?>
 
                     </label>
 
@@ -166,7 +164,7 @@
 
                     <label class="text-muted">
 
-                        Status
+                        <?= __('status') ?>
 
                     </label>
 
@@ -183,207 +181,209 @@
 
             </div>
 
-    <div class="row">
+            <div class="row">
 
-    <!-- REQUEST DATE -->
-    <div class="col-md-3 mb-3">
+                <!-- REQUEST DATE -->
+                <div class="col-md-3 mb-3">
 
-        <label class="text-muted">
-            Request Date
-        </label>
+                    <label class="text-muted">
+                        <?= __('request_date') ?>
+                    </label>
 
-        <div>
-            <?= htmlspecialchars($data['requisition']->request_date ?? '-') ?>
-        </div>
+                    <div>
+                        <?= htmlspecialchars($data['requisition']->request_date ?? '-') ?>
+                    </div>
 
-    </div>
+                </div>
 
 
-    <!-- REQUIRED DATE -->
-    <div class="col-md-3 mb-3">
+                <!-- REQUIRED DATE -->
+                <div class="col-md-3 mb-3">
 
-        <label class="text-muted">
-            Required Date
-        </label>
+                    <label class="text-muted">
+                        <?= __('required_date') ?>
+                    </label>
 
-        <div>
-            <?= htmlspecialchars($data['requisition']->required_date ?? '-') ?>
-        </div>
+                    <div>
+                        <?= htmlspecialchars($data['requisition']->required_date ?? '-') ?>
+                    </div>
 
-    </div>
+                </div>
 
 
-    <!-- PRIORITY -->
-    <div class="col-md-3 mb-3">
+                <!-- PRIORITY -->
+                <div class="col-md-3 mb-3">
 
-        <label class="text-muted">
-            Priority
-        </label>
+                    <label class="text-muted">
+                        <?= __('priority') ?>
+                    </label>
 
-        <div>
+                    <div>
 
-            <?php if ($data['requisition']->priority == 'HIGH'): ?>
+                        <?php if ($data['requisition']->priority == 'HIGH'): ?>
 
-                <span class="badge bg-danger">
-                    HIGH
-                </span>
+                            <span class="badge bg-danger">
+                                <?= __('high') ?>
+                            </span>
 
-            <?php elseif ($data['requisition']->priority == 'MEDIUM'): ?>
+                        <?php elseif ($data['requisition']->priority == 'MEDIUM'): ?>
 
-                <span class="badge bg-warning text-dark">
-                    MEDIUM
-                </span>
+                            <span class="badge bg-warning text-dark">
+                                <?= __('medium') ?>
+                            </span>
 
-            <?php else: ?>
+                        <?php else: ?>
 
-                <span class="badge bg-secondary">
-                    LOW
-                </span>
+                            <span class="badge bg-secondary">
+                                <?= __('low') ?>
+                            </span>
 
-            <?php endif; ?>
+                        <?php endif; ?>
 
-        </div>
+                    </div>
 
-    </div>
+                </div>
 
 
-    <!-- DELIVERY METHOD -->
-    <div class="col-md-3 mb-3">
+                <!-- DELIVERY METHOD -->
+                <div class="col-md-3 mb-3">
 
-        <label class="text-muted">
-            Delivery Method
-        </label>
+                    <label class="text-muted">
+                        <?= __('delivery_method') ?>
+                    </label>
 
-        <div>
+                    <div>
 
-            <?php if ($data['requisition']->delivery_method === 'WAREHOUSE'): ?>
+                        <?php if ($data['requisition']->delivery_method === 'WAREHOUSE'): ?>
 
-                <span class="badge bg-primary">
-                    <i class="fas fa-warehouse"></i>
-                    Warehouse
-                </span>
+                            <span class="badge bg-primary">
+                                <i class="fas fa-warehouse"></i>
+                                <?= __('warehouse') ?>
+                            </span>
 
-            <?php elseif ($data['requisition']->delivery_method === 'DIRECT_TO_PROJECT_SITE'): ?>
+                        <?php elseif ($data['requisition']->delivery_method === 'DIRECT_TO_PROJECT_SITE'): ?>
 
-                <span class="badge bg-info text-dark">
-                    <i class="fas fa-truck"></i>
-                    Direct to Project Site
-                </span>
+                            <span class="badge bg-info text-dark">
+                                <i class="fas fa-truck"></i>
+                                <?= __('direct_to_project_site') ?>
+                            </span>
 
-            <?php else: ?>
+                        <?php else: ?>
 
-                <span class="text-muted">
-                    -
-                </span>
+                            <span class="text-muted">
+                                -
+                            </span>
 
-            <?php endif; ?>
+                        <?php endif; ?>
 
-        </div>
+                    </div>
 
-    </div>
+                </div>
 
-</div>
+            </div>
 
-<!-- Target warehouse -->
- <div class="row">
+            <!-- Target warehouse -->
+            <div class="row">
 
-    <!-- TARGET WAREHOUSE -->
-    <div class="col-md-6 mb-3">
+                <!-- TARGET WAREHOUSE -->
+                <div class="col-md-6 mb-3">
 
-        <label class="text-muted">
-            Target Warehouse
-        </label>
+                    <label class="text-muted">
+                        <?= __('target_warehouse') ?>
+                    </label>
 
-        <div class="fw-semibold">
+                    <div class="fw-semibold">
 
-            <?php if (
-                $data['requisition']->delivery_method === 'WAREHOUSE'
-                && !empty($data['requisition']->target_warehouse_name)
-            ): ?>
+                        <?php if (
+                            $data['requisition']->delivery_method === 'WAREHOUSE'
+                            && !empty($data['requisition']->target_warehouse_name)
+                        ): ?>
 
-                <i class="fas fa-warehouse text-primary"></i>
+                            <i class="fas fa-warehouse text-primary"></i>
 
-                <?= htmlspecialchars(
-                    $data['requisition']->target_warehouse_name
-                ) ?>
+                            <?= htmlspecialchars(
+                                $data['requisition']->target_warehouse_name
+                            ) ?>
 
-            <?php elseif (
-                $data['requisition']->delivery_method === 'DIRECT_TO_PROJECT_SITE'
-            ): ?>
+                        <?php elseif (
+                            $data['requisition']->delivery_method === 'DIRECT_TO_PROJECT_SITE'
+                        ): ?>
 
-                <span class="text-info">
-                    <i class="fas fa-map-marker-alt"></i>
-                    Project Site
-                </span>
+                            <span class="text-info">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <?= __('project_site') ?>
+                            </span>
 
-            <?php else: ?>
+                        <?php else: ?>
 
-                <span class="text-muted">
-                    -
-                </span>
+                            <span class="text-muted">
+                                -
+                            </span>
 
-            <?php endif; ?>
+                        <?php endif; ?>
 
-        </div>
+                    </div>
 
-    </div>
+                </div>
 
 
-    <!-- DESTINATION NOTE -->
-    <div class="col-md-6 mb-3">
+                <!-- DESTINATION NOTE -->
+                <div class="col-md-6 mb-3">
 
-        <label class="text-muted">
-            Destination
-        </label>
+                    <label class="text-muted">
+                        <?= __('destination') ?>
+                    </label>
 
-        <div>
+                    <div>
 
-            <?php if (
-                $data['requisition']->delivery_method === 'WAREHOUSE'
-            ): ?>
+                        <?php if (
+                            $data['requisition']->delivery_method === 'WAREHOUSE'
+                        ): ?>
 
-                <span class="text-muted">
-                    Goods are planned to be delivered to the selected warehouse.
-                </span>
+                            <span class="text-muted">
+                                <?= __('goods_planned_selected_warehouse') ?>
+                            </span>
 
-            <?php elseif (
-                $data['requisition']->delivery_method === 'DIRECT_TO_PROJECT_SITE'
-            ): ?>
+                        <?php elseif (
+                            $data['requisition']->delivery_method === 'DIRECT_TO_PROJECT_SITE'
+                        ): ?>
 
-                <span class="text-muted">
-                    Goods are planned for direct delivery to the project site.
-                </span>
+                            <span class="text-muted">
+                                <?= __('goods_planned_project_site') ?>
+                            </span>
 
-            <?php else: ?>
+                        <?php else: ?>
 
-                <span class="text-muted">
-                    Not specified
-                </span>
+                            <span class="text-muted">
+                                <?= __('not_specified') ?>
+                            </span>
 
-            <?php endif; ?>
+                        <?php endif; ?>
 
-        </div>
+                    </div>
 
-    </div>
+                </div>
 
-</div>
+            </div>
+
             <!-- REMARKS -->
             <div class="row">
                 <div class="col-md-12 mb-3">
-                    <label class="text-muted">
-                        Remarks
 
+                    <label class="text-muted">
+                        <?= __('remarks') ?>
                     </label>
 
 
                     <div class="border rounded p-3 bg-light">
 
-
                         <?= nl2br($data['requisition']->remarks) ?>
 
                     </div>
+
                 </div>
             </div>
+
             <div class="row">
 
                 <!-- REQUESTED BY -->
@@ -392,7 +392,7 @@
 
                     <label class="text-muted">
 
-                        Requested By
+                        <?= __('requested_by') ?>
 
                     </label>
 
@@ -406,15 +406,19 @@
 
                         <?php else: ?>
 
-                            N/A
+                            <?= __('n_a') ?>
 
                         <?php endif; ?>
 
                     </div>
+
                     <br>
 
-                    Submitted By:
-                    <div><?php if (!empty($data['requisition']->submitted_by)): ?>
+                    <?= __('submitted_by') ?>:
+
+                    <div>
+
+                        <?php if (!empty($data['requisition']->submitted_by)): ?>
 
                             <a href="<?= URLROOT ?>/users/details/<?= $data['requisition']->submitted_by ?>"
                                 class="link-primary text-decoration-none">
@@ -425,19 +429,23 @@
 
                         <?php else: ?>
 
-                            <span class="text-muted">Not Submitted</span>
+                            <span class="text-muted">
+                                <?= __('not_submitted') ?>
+                            </span>
 
                         <?php endif; ?>
+
                     </div>
 
                 </div>
 
             </div>
+
         </div>
+
     </div>
 
     <br>
-   
 
 
 <!-- FULFILLMENT ACTIONS -->
@@ -457,19 +465,19 @@
                 class="btn btn-success"
             >
                 <i class="fas fa-boxes"></i>
-                Fulfill Materials
+                <?= __('fulfill_materials') ?>
             </a>
 
         <?php endif; ?>
 
         <a
-    href="<?= URLROOT ?>/requisitionpurchaseorders/create/<?= $data['requisition']->id ?>"
-    class="btn btn-primary">
+            href="<?= URLROOT ?>/requisitionpurchaseorders/create/<?= $data['requisition']->id ?>"
+            class="btn btn-primary">
 
-    <i class="fas fa-shopping-cart"></i>
-    Create PO for Materials
+            <i class="fas fa-shopping-cart"></i>
+            <?= __('create_po_for_materials') ?>
 
-</a>
+        </a>
 
 
         <?php if (!empty($data['hasResourceItems'])): ?>
@@ -479,7 +487,7 @@
                 class="btn btn-primary"
             >
                 <i class="fas fa-tools"></i>
-                Fulfill Resources
+                <?= __('fulfill_resources') ?>
             </a>
 
         <?php endif; ?>
@@ -496,7 +504,7 @@
 
             <strong>
                 <i class="fas fa-list"></i>
-                Requisition Items
+                <?= __('requisition_items') ?>
             </strong>
 
 
@@ -506,7 +514,7 @@
                     class="btn btn-primary">
 
                     <i class="fas fa-plus"></i>
-                    Add Item
+                    <?= __('add_item') ?>
 
                 </a>
 
@@ -527,17 +535,17 @@
 
                             <th width="60">#</th>
 
-                            <th>Resource</th>
+                            <th><?= __('resource') ?></th>
 
-                            <th width="120">Requested</th>
+                            <th width="120"><?= __('requested') ?></th>
 
-                            <th width="150">Available</th>
+                            <th width="150"><?= __('available') ?></th>
 
-                            <th width="120">Unit</th>
+                            <th width="120"><?= __('unit') ?></th>
 
-                            <th>Remarks</th>
+                            <th><?= __('remarks') ?></th>
 
-                            <th width="140">Actions</th>
+                            <th width="140"><?= __('actions') ?></th>
 
                         </tr>
 
@@ -574,10 +582,11 @@
 
                                         <br>
                                         <small class="text-muted">
-                                            Category:
+                                            <?= __('category') ?>:
                                             <?= $item->category_name ?? '-' ?>
                                         </small>
                                     </td>
+
                                     <td>
                                         <?= number_format((float)$item->quantity, 2) ?>
                                     </td>
@@ -594,19 +603,19 @@
                                             <?php if ($available >= $requested): ?>
 
                                                 <span class="fw-bold text-success">
-                                                    Available: <?= number_format($available, 2) ?>
+                                                    <?= __('available') ?>: <?= number_format($available, 2) ?>
                                                 </span>
 
                                             <?php elseif ($available > 0): ?>
 
                                                 <span class="fw-bold text-danger">
-                                                    Available: <?= number_format($available, 2) ?>
+                                                    <?= __('available') ?>: <?= number_format($available, 2) ?>
                                                 </span>
 
                                             <?php else: ?>
 
                                                 <span class="fw-bold text-danger">
-                                                    OUT OF STOCK
+                                                    <?= __('out_of_stock') ?>
                                                 </span>
 
                                             <?php endif; ?>
@@ -614,7 +623,7 @@
                                         <?php else: ?>
 
                                             <span class="text-muted">
-                                                N/A
+                                                <?= __('n_a') ?>
                                             </span>
 
                                         <?php endif; ?>
@@ -624,25 +633,36 @@
                                     <td>
                                         <?= htmlspecialchars($item->uom ?? '-') ?>
                                     </td>
-                                    
+
                                     <td><?= $item->remarks ?></td>
+
                                     <td>
+
                                         <?php if ($data['requisition']->status == 'DRAFT'): ?>
+
                                             <a href="<?= URLROOT ?>/ResourceRequisitionItems/edit/<?= $item->id ?>"
                                                 class="btn btn-sm btn-warning">
+
                                                 <!-- <i class="fas fa-edit"></i> -->
-                                                Edit
+                                                <?= __('edit') ?>
+
                                             </a>
+
                                             <a href="<?= URLROOT ?>/ResourceRequisitionItems/delete/<?= $item->id ?>"
                                                 class="btn btn-sm btn-danger"
-                                                onclick="return confirm('Delete this item?');">
+                                                onclick="return confirm(<?= json_encode(__('delete_item_confirm')) ?>);">
+
                                                 <!-- <i class="fas fa-trash"></i> -->
-                                                Delete
+                                                <?= __('delete') ?>
+
                                             </a>
+
                                         <?php else: ?>
+
                                             <span class="text-muted">
-                                                Locked
+                                                <?= __('locked') ?>
                                             </span>
+
                                         <?php endif; ?>
 
                                     </td>
@@ -655,9 +675,9 @@
 
                             <tr>
 
-                               <td colspan="7" class="text-center text-muted">
+                                <td colspan="7" class="text-center text-muted">
 
-                                    No requisition items have been added.
+                                    <?= __('no_requisition_items_added') ?>
 
                                 </td>
 
@@ -685,14 +705,14 @@
 
             <strong>
                 <i class="fas fa-check-circle"></i>
-                Approval History
+                <?= __('approval_history') ?>
             </strong>
 
         </div>
 
         <div class="card-body text-muted">
 
-            Approval workflow will be implemented in a future milestone.
+            <?= __('approval_workflow_future_milestone') ?>
 
         </div>
 
@@ -704,14 +724,14 @@
 
             <strong>
                 <i class="fas fa-paperclip"></i>
-                Attachments
+                <?= __('attachments') ?>
             </strong>
 
         </div>
 
         <div class="card-body text-muted">
 
-            Attachment management will be implemented in a future milestone.
+            <?= __('attachment_management_future_milestone') ?>
 
         </div>
 
@@ -723,19 +743,18 @@
 
             <strong>
                 <i class="fas fa-comments"></i>
-                Comments
+                <?= __('comments') ?>
             </strong>
 
         </div>
 
         <div class="card-body text-muted">
 
-            Comments will be implemented in a future milestone.
+            <?= __('comments_future_milestone') ?>
 
         </div>
 
     </div>
-
 
 
 </div>

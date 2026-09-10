@@ -11,14 +11,14 @@
             <h4 class="mb-0">
 
                 <i class="fas fa-edit"></i>
-                Edit Resource Requisition
+                <?= __('edit_resource_requisition') ?>
 
             </h4>
 
 
             <small class="text-muted">
 
-                Update requisition header information
+                <?= __('update_requisition_header_information') ?>
 
             </small>
 
@@ -30,13 +30,12 @@
            class="btn btn-secondary">
 
             <i class="fas fa-arrow-left"></i>
-            Back
+            <?= __('back') ?>
 
         </a>
 
 
     </div>
-
 
 
 
@@ -51,12 +50,11 @@
             <strong>
 
                 <i class="fas fa-info-circle"></i>
-                Requisition Header
+                <?= __('requisition_header') ?>
 
             </strong>
 
         </div>
-
 
 
 
@@ -79,7 +77,7 @@
 
                         <label class="form-label">
 
-                            Requisition No.
+                            <?= __('requisition_no') ?>
 
                         </label>
 
@@ -95,7 +93,6 @@
 
 
 
-
                     <!-- STATUS -->
 
                     <div class="col-md-4 mb-3">
@@ -103,7 +100,7 @@
 
                         <label class="form-label">
 
-                            Status
+                            <?= __('status') ?>
 
                         </label>
 
@@ -116,39 +113,37 @@
 
                     </div>
 
-<!-- PRIORITY -->
-<div class="col-md-4 mb-3">
 
-    <label class="form-label">
-        Priority
-    </label>
+                    <!-- PRIORITY -->
+                    <div class="col-md-4 mb-3">
 
-    <select name="priority" class="form-select">
+                        <label class="form-label">
+                            <?= __('priority') ?>
+                        </label>
 
-        <option value="LOW"
-            <?= ($data['requisition']->priority == 'LOW') ? 'selected' : '' ?>>
-            LOW
-        </option>
+                        <select name="priority" class="form-select">
 
-        <option value="MEDIUM"
-            <?= ($data['requisition']->priority == 'MEDIUM') ? 'selected' : '' ?>>
-            MEDIUM
-        </option>
+                            <option value="LOW"
+                                <?= ($data['requisition']->priority == 'LOW') ? 'selected' : '' ?>>
+                                <?= __('low') ?>
+                            </option>
 
-        <option value="HIGH"
-            <?= ($data['requisition']->priority == 'HIGH') ? 'selected' : '' ?>>
-            HIGH
-        </option>
+                            <option value="MEDIUM"
+                                <?= ($data['requisition']->priority == 'MEDIUM') ? 'selected' : '' ?>>
+                                <?= __('medium') ?>
+                            </option>
 
-    </select>
+                            <option value="HIGH"
+                                <?= ($data['requisition']->priority == 'HIGH') ? 'selected' : '' ?>>
+                                <?= __('high') ?>
+                            </option>
 
-</div>
+                        </select>
+
+                    </div>
 
 
                 </div>
-
-
-
 
 
 
@@ -165,7 +160,7 @@
 
                         <label class="form-label">
 
-                            Project
+                            <?= __('project') ?>
 
                         </label>
 
@@ -203,7 +198,6 @@
 
 
 
-
                     <!-- REQUEST DATE -->
 
                     <div class="col-md-3 mb-3">
@@ -211,7 +205,7 @@
 
                         <label class="form-label">
 
-                            Request Date
+                            <?= __('request_date') ?>
 
                         </label>
 
@@ -229,7 +223,6 @@
 
 
 
-
                     <!-- REQUIRED DATE -->
 
                     <div class="col-md-3 mb-3">
@@ -237,7 +230,7 @@
 
                         <label class="form-label">
 
-                            Required Date
+                            <?= __('required_date') ?>
 
                         </label>
 
@@ -251,93 +244,90 @@
 
                     </div>
 
-<div class="row">
 
-    <!-- DELIVERY METHOD -->
-    <div class="col-md-6 mb-3">
+                    <div class="row">
 
-        <label class="form-label">
-            Delivery Method
-            <span class="text-danger">*</span>
-        </label>
+                        <!-- DELIVERY METHOD -->
+                        <div class="col-md-6 mb-3">
 
-        <select
-            name="delivery_method"
-            id="delivery_method"
-            class="form-select"
-            required>
+                            <label class="form-label">
+                                <?= __('delivery_method') ?>
+                                <span class="text-danger">*</span>
+                            </label>
 
-            <option value="WAREHOUSE"
-                <?= ($data['requisition']->delivery_method == 'WAREHOUSE') ? 'selected' : '' ?>>
-                Warehouse
-            </option>
+                            <select
+                                name="delivery_method"
+                                id="delivery_method"
+                                class="form-select"
+                                required>
 
-            <option value="DIRECT_TO_PROJECT_SITE"
-                <?= ($data['requisition']->delivery_method == 'DIRECT_TO_PROJECT_SITE') ? 'selected' : '' ?>>
-                Direct to Project Site
-            </option>
+                                <option value="WAREHOUSE"
+                                    <?= ($data['requisition']->delivery_method == 'WAREHOUSE') ? 'selected' : '' ?>>
+                                    <?= __('warehouse') ?>
+                                </option>
 
-        </select>
+                                <option value="DIRECT_TO_PROJECT_SITE"
+                                    <?= ($data['requisition']->delivery_method == 'DIRECT_TO_PROJECT_SITE') ? 'selected' : '' ?>>
+                                    <?= __('direct_to_project_site') ?>
+                                </option>
 
-    </div>
+                            </select>
+
+                        </div>
 
 
-    <!-- TARGET WAREHOUSE -->
-    <div
-        class="col-md-6 mb-3"
-        id="targetWarehouseGroup">
+                        <!-- TARGET WAREHOUSE -->
+                        <div
+                            class="col-md-6 mb-3"
+                            id="targetWarehouseGroup">
 
-        <label class="form-label">
+                            <label class="form-label">
 
-            Target Warehouse
+                                <?= __('target_warehouse') ?>
 
-            <span class="text-danger">*</span>
+                                <span class="text-danger">*</span>
 
-        </label>
+                            </label>
 
-        <select
-            name="target_warehouse_id"
-            id="target_warehouse_id"
-            class="form-select">
+                            <select
+                                name="target_warehouse_id"
+                                id="target_warehouse_id"
+                                class="form-select">
 
-            <option value="">
-                -- Select Warehouse --
-            </option>
+                                <option value="">
+                                    <?= __('select_warehouse') ?>
+                                </option>
 
-            <?php foreach ($data['locations'] as $location): ?>
+                                <?php foreach ($data['locations'] as $location): ?>
 
-                <option
-                    value="<?= $location->id ?>"
-                    <?= ($location->id == $data['requisition']->target_warehouse_id) ? 'selected' : '' ?>>
+                                    <option
+                                        value="<?= $location->id ?>"
+                                        <?= ($location->id == $data['requisition']->target_warehouse_id) ? 'selected' : '' ?>>
 
-                    <?= htmlspecialchars($location->code) ?>
-                    -
-                    <?= htmlspecialchars($location->name) ?>
+                                        <?= htmlspecialchars($location->code) ?>
+                                        -
+                                        <?= htmlspecialchars($location->name) ?>
 
-                </option>
+                                    </option>
 
-            <?php endforeach; ?>
+                                <?php endforeach; ?>
 
-        </select>
+                            </select>
 
-    </div>
+                        </div>
 
-</div>
+                    </div>
 
-<div
-    id="projectSiteInfo"
-    class="alert alert-info d-none">
+                    <div
+                        id="projectSiteInfo"
+                        class="alert alert-info d-none">
 
-    <i class="fas fa-truck"></i>
+                        <i class="fas fa-truck"></i>
 
-    This requisition will be delivered directly to the
-    selected project's site.
+                        <?= __('direct_project_site_delivery_info') ?>
 
-</div>
+                    </div>
                 </div>
-
-
-
 
 
 
@@ -351,7 +341,7 @@
 
                     <label class="form-label">
 
-                        Remarks
+                        <?= __('remarks') ?>
 
                     </label>
 
@@ -367,8 +357,6 @@
 
 
 
-
-
                 <div class="text-end">
 
 
@@ -378,7 +366,7 @@
 
                         <i class="fas fa-save"></i>
 
-                        Update Requisition
+                        <?= __('update_requisition') ?>
 
 
                     </button>

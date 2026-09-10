@@ -7,11 +7,11 @@
 
             <h4 class="mb-0">
                 <i class="fas fa-check-circle"></i>
-                Approval Decision
+                <?= __('approval_decision') ?>
             </h4>
 
             <small class="text-muted">
-                Review and approve or reject this resource requisition
+                <?= __('review_approve_reject_requisition') ?>
             </small>
 
         </div>
@@ -20,7 +20,7 @@
            class="btn btn-secondary">
 
             <i class="fas fa-arrow-left"></i>
-            Back
+            <?= __('back') ?>
 
         </a>
 
@@ -35,7 +35,7 @@
 
             <strong>
                 <i class="fas fa-file-alt"></i>
-                Requisition Summary
+                <?= __('requisition_summary') ?>
             </strong>
 
         </div>
@@ -47,7 +47,7 @@
                 <div class="col-md-4 mb-3">
 
                     <label class="text-muted">
-                        Requisition No.
+                        <?= __('requisition_no') ?>
                     </label>
 
                     <div class="fw-bold">
@@ -64,7 +64,7 @@
                 <div class="col-md-4 mb-3">
 
                     <label class="text-muted">
-                        Project
+                        <?= __('project') ?>
                     </label>
 
                     <div class="fw-bold">
@@ -77,43 +77,44 @@
 
                 </div>
 
-<div class="col-md-4 mb-3">
 
-    <label class="text-muted">
-        Priority
-    </label>
+                <div class="col-md-4 mb-3">
 
-    <div>
+                    <label class="text-muted">
+                        <?= __('priority') ?>
+                    </label>
 
-        <?php if ($data['requisition']->priority === 'HIGH'): ?>
+                    <div>
 
-            <span class="badge bg-danger">
-                HIGH
-            </span>
+                        <?php if ($data['requisition']->priority === 'HIGH'): ?>
 
-        <?php elseif ($data['requisition']->priority === 'MEDIUM'): ?>
+                            <span class="badge bg-danger">
+                                <?= __('high') ?>
+                            </span>
 
-            <span class="badge bg-warning text-dark">
-                MEDIUM
-            </span>
+                        <?php elseif ($data['requisition']->priority === 'MEDIUM'): ?>
 
-        <?php elseif ($data['requisition']->priority === 'LOW'): ?>
+                            <span class="badge bg-warning text-dark">
+                                <?= __('medium') ?>
+                            </span>
 
-            <span class="badge bg-secondary">
-                LOW
-            </span>
+                        <?php elseif ($data['requisition']->priority === 'LOW'): ?>
 
-        <?php else: ?>
+                            <span class="badge bg-secondary">
+                                <?= __('low') ?>
+                            </span>
 
-            <span class="text-muted">
-                Not Set
-            </span>
+                        <?php else: ?>
 
-        <?php endif; ?>
+                            <span class="text-muted">
+                                <?= __('not_set') ?>
+                            </span>
 
-    </div>
+                        <?php endif; ?>
 
-</div>
+                    </div>
+
+                </div>
 
             </div>
 
@@ -123,7 +124,7 @@
                 <div class="col-md-4">
 
                     <label class="text-muted">
-                        Requested By
+                        <?= __('requested_by') ?>
                     </label>
 
                     <div>
@@ -140,7 +141,7 @@
                 <div class="col-md-4">
 
                     <label class="text-muted">
-                        Required Date
+                        <?= __('required_date') ?>
                     </label>
 
                     <div>
@@ -157,7 +158,7 @@
                 <div class="col-md-4">
 
                     <label class="text-muted">
-                        Status
+                        <?= __('status') ?>
                     </label>
 
                     <div>
@@ -189,7 +190,7 @@
 
             <strong>
                 <i class="fas fa-gavel"></i>
-                Approval Decision
+                <?= __('approval_decision') ?>
             </strong>
 
         </div>
@@ -205,7 +206,7 @@
 
                     <label class="form-label">
 
-                        Approval Remarks
+                        <?= __('approval_remarks') ?>
 
                     </label>
 
@@ -213,7 +214,7 @@
                         name="remarks"
                         class="form-control"
                         rows="4"
-                        placeholder="Enter approval or rejection remarks..."></textarea>
+                        placeholder="<?= __('approval_remarks_placeholder') ?>"></textarea>
 
                 </div>
 
@@ -225,7 +226,7 @@
                     <a href="<?= URLROOT ?>/ResourceRequisitions/details/<?= $data['requisition']->id ?>"
                        class="btn btn-secondary">
 
-                        Cancel
+                        <?= __('cancel') ?>
 
                     </a>
 
@@ -237,10 +238,10 @@
                             name="action"
                             value="REJECT"
                             class="btn btn-danger"
-                            onclick="return confirm('Reject this requisition?');">
+                            onclick="return confirm(<?= json_encode(__('reject_requisition_confirm')) ?>);">
 
                             <i class="fas fa-times-circle"></i>
-                            Reject
+                            <?= __('reject') ?>
 
                         </button>
 
@@ -250,10 +251,10 @@
                             name="action"
                             value="APPROVE"
                             class="btn btn-success"
-                            onclick="return confirm('Approve this requisition?');">
+                            onclick="return confirm(<?= json_encode(__('approve_requisition_confirm')) ?>);">
 
                             <i class="fas fa-check-circle"></i>
-                            Approve
+                            <?= __('approve') ?>
 
                         </button>
 

@@ -350,7 +350,6 @@ return [
 // PURCHASE ORDER ITEMS
 'po'                            => 'PO',
 'add_item'                      => 'Add Item',
-'qty_received'                  => 'Qty Received',
 'delete_item_confirm'           => 'Delete item?',
 
 // PURCHASE ORDER PRINT
@@ -414,7 +413,7 @@ return [
 'receive_stock_po'              => 'Receive Stock (PO)',
 'select_purchase_order'         => '-- Select Purchase Order --',
 'ordered'                       => 'Ordered:',
-'received_quantity'             => 'Received Quantity:',
+'qty_received'                  => 'Received Quantity:',
 'remaining'                     => 'Remaining:',
 'scan_barcode'                  => 'Scan Barcode',
 'inventory_item_required'       => 'Inventory Item *',
@@ -502,6 +501,100 @@ return [
 'procurement_evaluation_notes'           => 'Procurement / Evaluation Notes',
 'procurement_evaluation_notes_placeholder' => 'General procurement evaluation, commercial observations, supplier experience, etc.',
 'create_quotation'                       => 'Create Quotation',
+
+// INVENTORY MOVEMENTS
+'inventory_movements'        => 'Inventory Movements',
+'user'                       => 'User',
+'source_location'            => 'Source Location',
+'warehouse_balance_after'    => 'WH Balance After',
+'global_balance_after'       => 'Global Balance After',
+
+// RESOURCE REQUISITIONS - APPROVAL
+'approval_decision'                  => 'Approval Decision',
+'review_approve_reject_requisition' => 'Review and approve or reject this resource requisition',
+'requisition_summary'               => 'Requisition Summary',
+'requisition_no'                    => 'Requisition No.',
+'requested_by'                      => 'Requested By',
+'required_date'                     => 'Required Date',
+'not_set'                           => 'Not Set',
+'approval_remarks'                  => 'Approval Remarks',
+'approval_remarks_placeholder'      => 'Enter approval or rejection remarks...',
+'reject'                            => 'Reject',
+'reject_requisition_confirm'        => 'Reject this requisition?',
+'approve_requisition_confirm'       => 'Approve this requisition?',
+
+
+// RESOURCE REQUISITIONS - CREATE
+'new_resource_requisition'           => 'New Resource Requisition',
+'create_resource_requisition'        => 'Create Resource Requisition',
+'requisition_no'                     => 'Requisition No.',
+'request_date'                       => 'Request Date',
+'required_date'                      => 'Required Date',
+'select_project'                     => '-- Select Project --',
+'warehouse'                          => 'Warehouse',
+'target_warehouse'                  => 'Target Warehouse',
+'select_warehouse'                  => '-- Select Warehouse --',
+'direct_project_site_delivery_info' => "This requisition will be delivered directly to the selected project's site.",
+'remarks'                            => 'Remarks',
+'remarks_placeholder'               => 'Enter purpose, work description or special instructions...',
+'save_draft'                         => 'Save Draft',
+
+// RESOURCE REQUISITIONS - DETAILS
+'resource_requisition_details'          => 'Resource Requisition Details',
+'view_requisition_header_information'   => 'View requisition header information',
+'submit_requisition'                    => 'Submit Requisition',
+'submit_requisition_confirm'            => "Submit this requisition?\n\nAfter submission it can no longer be edited.",
+'back_to_resource_requisitions'         => 'Back To Resource Requisitions',
+'header_information'                    => 'Header Information',
+'project_site'                          => 'Project Site',
+'destination'                           => 'Destination',
+'goods_planned_selected_warehouse'      => 'Goods are planned to be delivered to the selected warehouse.',
+'goods_planned_project_site'             => 'Goods are planned for direct delivery to the project site.',
+'submitted_by'                           => 'Submitted By',
+'not_submitted'                          => 'Not Submitted',
+'fulfill_materials'                     => 'Fulfill Materials',
+'create_po_for_materials'               => 'Create PO for Materials',
+'fulfill_resources'                     => 'Fulfill Resources',
+'requisition_items'                     => 'Requisition Items',
+'add_item'                              => 'Add Item',
+'resource'                              => 'Resource',
+'requested'                             => 'Requested',
+'unit'                                  => 'Unit',
+'category'                              => 'Category',
+'out_of_stock'                          => 'OUT OF STOCK',
+'locked'                                => 'Locked',
+'delete_item_confirm'                   => 'Delete this item?',
+'no_requisition_items_added'            => 'No requisition items have been added.',
+'approval_history'                      => 'Approval History',
+'approval_workflow_future_milestone'   => 'Approval workflow will be implemented in a future milestone.',
+'attachments'                           => 'Attachments',
+'attachment_management_future_milestone'=> 'Attachment management will be implemented in a future milestone.',
+'comments'                              => 'Comments',
+'comments_future_milestone'             => 'Comments will be implemented in a future milestone.',
+
+
+// RESOURCE REQUISITIONS - EDIT
+'edit_resource_requisition'             => 'Edit Resource Requisition',
+'update_requisition_header_information' => 'Update requisition header information',
+'requisition_header'                    => 'Requisition Header',
+'update_requisition'                    => 'Update Requisition',
+
+// RESOURCE REQUISITIONS - INDEX
+'resource_requisition_register'    => 'Resource Requisition Register',
+'requisition_no_short'            => 'Req No.',
+'normal'                           => 'NORMAL',
+'urgent'                           => 'URGENT',
+'critical'                         => 'CRITICAL',
+'submitted'                        => 'SUBMITTED',
+'under_review'                     => 'UNDER REVIEW',
+'approved'                         => 'APPROVED',
+'partially_fulfilled'              => 'PARTIALLY FULFILLED',
+'rejected'                         => 'REJECTED',
+'delete_requisition_confirm'       => 'Delete this requisition?',
+'no_resource_requisitions_found'   => 'No Resource Requisitions found.',
+'create_first_requisition'         => 'Create First Requisition',
+
+
 
 
 

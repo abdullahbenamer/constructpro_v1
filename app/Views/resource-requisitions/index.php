@@ -1,6 +1,6 @@
 <h2 class="mb-4">
     <i class="fas fa-clipboard-list text-primary"></i>
-    Resource Requisitions
+    <?= __('resource_requisitions') ?>
 </h2>
 
 <div class="mb-3">
@@ -10,7 +10,7 @@
 
         <i class="fas fa-plus"></i>
 
-        New Resource Requisition
+        <?= __('new_resource_requisition') ?>
 
     </a>
 
@@ -20,7 +20,7 @@
 
     <div class="card-header bg-primary text-white">
 
-        <strong>Resource Requisition Register</strong>
+        <strong><?= __('resource_requisition_register') ?></strong>
 
     </div>
 
@@ -34,22 +34,22 @@
 
                     <tr>
 
-                        <th width="140">Req No.</th>
+                        <th width="140"><?= __('requisition_no_short') ?></th>
 
-                        <th>Project</th>
+                        <th><?= __('project') ?></th>
 
-                        <th width="120">Request Date</th>
+                        <th width="120"><?= __('request_date') ?></th>
 
-                        <th width="120">Required Date</th>
+                        <th width="120"><?= __('required_date') ?></th>
 
-                        <th width="120">Priority</th>
+                        <th width="120"><?= __('priority') ?></th>
 
-                        <th width="130">Status</th>
+                        <th width="130"><?= __('status') ?></th>
 
-                        <th>Requested By</th>
+                        <th><?= __('requested_by') ?></th>
 
                         <th width="180" class="text-center">
-                            Actions
+                            <?= __('actions') ?>
                         </th>
 
                     </tr>
@@ -143,37 +143,67 @@
 
                                 <td>
 
-                                   <?php
-switch (strtoupper($req->priority)) {
+                                    <?php
 
-    case 'LOW':
-        $priorityClass = 'bg-success';
-        break;
+                                    switch (strtoupper($req->priority)) {
 
-    case 'NORMAL':
-        $priorityClass = 'bg-primary';
-        break;
+                                        case 'LOW':
+                                            $priorityClass = 'bg-success';
+                                            break;
 
-    case 'HIGH':
-        $priorityClass = 'bg-warning text-dark';
-        break;
+                                        case 'NORMAL':
+                                            $priorityClass = 'bg-primary';
+                                            break;
 
-    case 'URGENT':
-        $priorityClass = 'bg-danger';
-        break;
+                                        case 'HIGH':
+                                            $priorityClass = 'bg-warning text-dark';
+                                            break;
 
-    case 'CRITICAL':
-        $priorityClass = 'bg-dark';
-        break;
+                                        case 'URGENT':
+                                            $priorityClass = 'bg-danger';
+                                            break;
 
-    default:
-        $priorityClass = 'bg-secondary';
-}
-?>
+                                        case 'CRITICAL':
+                                            $priorityClass = 'bg-dark';
+                                            break;
 
-<span class="badge <?= $priorityClass ?>">
-    <?= htmlspecialchars($req->priority) ?>
-</span>
+                                        default:
+                                            $priorityClass = 'bg-secondary';
+                                    }
+
+                                    ?>
+
+                                    <span class="badge <?= $priorityClass ?>">
+
+                                        <?php
+                                        switch (strtoupper($req->priority)) {
+
+                                            case 'LOW':
+                                                echo __('low');
+                                                break;
+
+                                            case 'NORMAL':
+                                                echo __('normal');
+                                                break;
+
+                                            case 'HIGH':
+                                                echo __('high');
+                                                break;
+
+                                            case 'URGENT':
+                                                echo __('urgent');
+                                                break;
+
+                                            case 'CRITICAL':
+                                                echo __('critical');
+                                                break;
+
+                                            default:
+                                                echo htmlspecialchars($req->priority);
+                                        }
+                                        ?>
+
+                                    </span>
 
                                 </td>
 
@@ -181,7 +211,45 @@ switch (strtoupper($req->priority)) {
 
                                     <span class="badge bg-<?= $badge ?>">
 
-                                        <?= htmlspecialchars($req->status) ?>
+                                        <?php
+                                        switch ($req->status) {
+
+                                            case 'DRAFT':
+                                                echo __('draft');
+                                                break;
+
+                                            case 'SUBMITTED':
+                                                echo __('submitted');
+                                                break;
+
+                                            case 'UNDER_REVIEW':
+                                                echo __('under_review');
+                                                break;
+
+                                            case 'APPROVED':
+                                                echo __('approved');
+                                                break;
+
+                                            case 'PARTIALLY_FULFILLED':
+                                                echo __('partially_fulfilled');
+                                                break;
+
+                                            case 'COMPLETED':
+                                                echo __('completed');
+                                                break;
+
+                                            case 'REJECTED':
+                                                echo __('rejected');
+                                                break;
+
+                                            case 'CANCELLED':
+                                                echo __('cancelled');
+                                                break;
+
+                                            default:
+                                                echo htmlspecialchars($req->status);
+                                        }
+                                        ?>
 
                                     </span>
 
@@ -199,7 +267,7 @@ switch (strtoupper($req->priority)) {
                                         class="btn btn-sm btn-info">
 
                                         <!-- <i class="fas fa-eye"></i> -->
-                                         View
+                                        <?= __('view') ?>
 
                                     </a>
 
@@ -209,16 +277,16 @@ switch (strtoupper($req->priority)) {
                                             class="btn btn-sm btn-warning">
 
                                             <!-- <i class="fas fa-edit"></i> -->
-                                             Edit
+                                            <?= __('edit') ?>
 
                                         </a>
 
                                         <a href="<?= URLROOT ?>/resourcerequisitions/delete/<?= $req->id ?>"
                                             class="btn btn-sm btn-danger"
-                                            onclick="return confirm('Delete this requisition?');">
+                                            onclick="return confirm(<?= json_encode(__('delete_requisition_confirm')) ?>);">
 
                                             <!-- <i class="fas fa-trash"></i> -->
-                                            Delete
+                                            <?= __('delete') ?>
 
                                         </a>
 
@@ -240,7 +308,7 @@ switch (strtoupper($req->priority)) {
 
                                 <br>
 
-                                No Resource Requisitions found.
+                                <?= __('no_resource_requisitions_found') ?>
 
                                 <br><br>
 
@@ -249,7 +317,7 @@ switch (strtoupper($req->priority)) {
 
                                     <i class="fas fa-plus"></i>
 
-                                    Create First Requisition
+                                    <?= __('create_first_requisition') ?>
 
                                 </a>
 
