@@ -96,8 +96,8 @@
 </div>
 
 <!-- --------------------------------- -->
-<!-- Cost vs Budget Table -->
-<!-- <div class="row mb-4">
+Cost vs Budget Table
+ <div class="row mb-4">
     <div class="col-12">
         <h4>Cost vs Budget Analysis</h4>
         <div class="table-responsive">
@@ -113,35 +113,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php //foreach ($cost_vs_budget as $report): ?>
-                        <tr class="<?//= $report->variance < 0 ? 'table-danger' : 'table-success' ?>">
+                    <?php foreach ($cost_vs_budget as $report): ?>
+                        <tr class="<?= $report->variance < 0 ? 'table-danger' : 'table-success' ?>">
 
                          <td>
                                 
                         
-                                    <?//= "Prj-" . $report->id ?>
+                                    <?= "Prj-" . $report->id ?>
                             
                             </td>
                             <td>
-                                <a href="<?//= URLROOT ?>/project-costs/financeDashboard/<?//= $report->id ?>"
+                                <a href="<?= URLROOT ?>/project-costs/financeDashboard/<?= $report->id ?>"
                                     class="text-decoration-none fw-bold">
-                                    <?//= htmlspecialchars($report->title) ?>
+                                    <?= htmlspecialchars($report->title) ?>
                                 </a>
                             </td>
-                            <td>$<?//= number_format($report->budget, 2) ?></td>
-                            <td>$<?//= number_format($report->actual_cost, 2) ?></td>
+                            <td>$<?= number_format($report->budget, 2) ?></td>
+                            <td>$<?= number_format($report->actual_cost, 2) ?></td>
                             <td>
-                                <strong><?//= $report->variance < 0 ? '-' : '' ?>$<?//= number_format(abs($report->variance), 2) ?></strong>
+                                <strong><?= $report->variance < 0 ? '-' : '' ?>$<?= number_format(abs($report->variance), 2) ?></strong>
                             </td>
                             <td>
-                                <span class="badge bg-<?//= $report->variance >= 0 ? 'success' : 'danger' ?>">
-                                    <?//= $report->variance >= 0 ? 'Under Budget' : 'Over Budget' ?>
+                                <span class="badge bg-<?= $report->variance >= 0 ? 'success' : 'danger' ?>">
+                                    <?= $report->variance >= 0 ? 'Under Budget' : 'Over Budget' ?>
                                 </span>
                             </td>
                         </tr>
-                    <?php //endforeach; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
     </div>
-</div> -->
+</div> 
