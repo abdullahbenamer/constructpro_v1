@@ -1,6 +1,6 @@
 <h2>
     <i class="fas fa-undo"></i>
-    Goods Returns
+    <?= __('goods_returns') ?>
 </h2>
 
 <div class="mb-3">
@@ -8,7 +8,7 @@
        class="btn btn-primary">
 
         <i class="fas fa-plus"></i>
-        Return Goods
+        <?= __('return_goods') ?>
 
     </a>
 </div>
@@ -19,14 +19,14 @@
 
         <thead>
             <tr>
-                <th>Return Number</th>
-                <th>Supplier</th>
-                <th>GRN</th>
-                <th>Purchase Order</th>
-                <th>Return Date</th>
-                <th>Reason</th>
-                <th>Total</th>
-                <th>Actions</th>
+                <th><?= __('return_number') ?></th>
+                <th><?= __('supplier') ?></th>
+                <th><?= __('grn') ?></th>
+                <th><?= __('purchase_order') ?></th>
+                <th><?= __('return_date') ?></th>
+                <th><?= __('reason') ?></th>
+                <th><?= __('total') ?></th>
+                <th><?= __('actions') ?></th>
             </tr>
         </thead>
 
@@ -38,7 +38,7 @@
                 <td colspan="8"
                     class="text-center text-muted">
 
-                    No goods returns found.
+                    <?= __('no_goods_returns_found') ?>
 
                 </td>
             </tr>
@@ -98,7 +98,7 @@
                            class="btn btn-sm btn-info">
 
                             <i class="fas fa-eye"></i>
-                            View
+                            <?= __('view') ?>
 
                         </a>
 

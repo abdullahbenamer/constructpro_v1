@@ -1,14 +1,15 @@
 <h2>
     <i class="fas fa-undo-alt"></i>
-    Return Goods to Supplier
+    <?= __('return_goods_to_supplier') ?>
 </h2>
 
 <form method="POST">
 
     <!-- GRN -->
     <div class="mb-3">
+
         <label class="form-label">
-            Goods Receipt (GRN) *
+            <?= __('goods_receipt_grn_required') ?>
         </label>
 
         <select
@@ -19,7 +20,7 @@
         >
 
             <option value="">
-                -- Select Goods Receipt --
+                <?= __('select_goods_receipt') ?>
             </option>
 
             <?php foreach ($goodsReceipts as $grn): ?>
@@ -54,11 +55,11 @@
         <span id="grnNumber"></span>
         <br>
 
-        <strong>Purchase Order:</strong>
+        <strong><?= __('purchase_order') ?></strong>
         <span id="poNumber"></span>
         <br>
 
-        <strong>Supplier:</strong>
+        <strong><?= __('supplier') ?></strong>
         <span id="supplierName"></span>
 
     </div>
@@ -68,7 +69,7 @@
     <div class="mb-3">
 
         <label class="form-label">
-            Item *
+            <?= __('item_required') ?>
         </label>
 
         <select
@@ -80,7 +81,7 @@
         >
 
             <option value="">
-                -- Select GRN Item --
+                <?= __('select_grn_item') ?>
             </option>
 
         </select>
@@ -94,27 +95,27 @@
         class="alert alert-secondary d-none"
     >
 
-        <strong>Item:</strong>
+        <strong><?= __('item') ?></strong>
         <span id="itemName"></span>
         <br>
 
-        <strong>SKU:</strong>
+        <strong><?= __('sku') ?></strong>
         <span id="itemSku"></span>
         <br>
 
-        <strong>Original GRN Location:</strong>
+        <strong><?= __('original_grn_location') ?></strong>
         <span id="originalLocation"></span>
         <br>
 
-        <strong>Received:</strong>
+        <strong><?= __('received') ?></strong>
         <span id="receivedQty"></span>
         <br>
 
-        <strong>Already Returned:</strong>
+        <strong><?= __('already_returned') ?></strong>
         <span id="returnedQty"></span>
         <br>
 
-        <strong>Returnable:</strong>
+        <strong><?= __('returnable') ?></strong>
         <span id="returnableQty"></span>
 
     </div>
@@ -126,7 +127,7 @@
         <div class="col-md-6 mb-3">
 
             <label class="form-label">
-                Return From Warehouse *
+                <?= __('return_from_warehouse_required') ?>
             </label>
 
             <select
@@ -138,7 +139,7 @@
             >
 
                 <option value="">
-                    -- Select Warehouse --
+                    <?= __('select_warehouse') ?>
                 </option>
 
             </select>
@@ -150,7 +151,7 @@
         <div class="col-md-3 mb-3">
 
             <label class="form-label">
-                Return Quantity *
+                <?= __('return_quantity_required') ?>
             </label>
 
             <input
@@ -165,7 +166,7 @@
             >
 
             <div class="form-text">
-                Maximum returnable quantity:
+                <?= __('maximum_returnable_quantity') ?>
                 <span id="quantityHelp">0</span>
             </div>
 
@@ -176,7 +177,7 @@
         <div class="col-md-3 mb-3">
 
             <label class="form-label">
-                Unit Cost
+                <?= __('unit_cost') ?>
             </label>
 
             <input
@@ -199,7 +200,7 @@
         <div class="col-md-6 mb-3">
 
             <label class="form-label">
-                Supplier
+                <?= __('supplier') ?>
             </label>
 
             <input
@@ -222,7 +223,7 @@
         <div class="col-md-6 mb-3">
 
             <label class="form-label">
-                Return Date *
+                <?= __('return_date_required') ?>
             </label>
 
             <input
@@ -242,7 +243,7 @@
     <div class="mb-3">
 
         <label class="form-label">
-            Reason
+            <?= __('reason') ?>
         </label>
 
         <input
@@ -250,7 +251,7 @@
             name="reason"
             class="form-control"
             maxlength="255"
-            placeholder="Reason for returning goods"
+            placeholder="<?= __('reason_for_returning_goods') ?>"
         >
 
     </div>
@@ -260,7 +261,7 @@
     <div class="mb-3">
 
         <label class="form-label">
-            Notes
+            <?= __('notes') ?>
         </label>
 
         <textarea
@@ -281,7 +282,7 @@
     >
 
         <i class="fas fa-undo-alt"></i>
-        Return Goods
+        <?= __('return_goods') ?>
 
     </button>
 
@@ -289,7 +290,7 @@
         href="<?= URLROOT ?>/goodsreturns"
         class="btn btn-secondary"
     >
-        Cancel
+        <?= __('cancel') ?>
     </a>
 
 </form>
@@ -343,12 +344,12 @@ grnSelect.addEventListener('change', function () {
     currentLocations = [];
 
     grnItemSelect.innerHTML =
-        '<option value="">-- Select GRN Item --</option>';
+        '<option value=""><?= htmlspecialchars(__('select_grn_item'), ENT_QUOTES) ?></option>';
 
     grnItemSelect.disabled = true;
 
     locationSelect.innerHTML =
-        '<option value="">-- Select Warehouse --</option>';
+        '<option value=""><?= htmlspecialchars(__('select_warehouse'), ENT_QUOTES) ?></option>';
 
     locationSelect.disabled = true;
 
@@ -407,7 +408,7 @@ grnSelect.addEventListener('change', function () {
 
         if (!response.ok) {
             throw new Error(
-                'Unable to load GRN items.'
+                <?= json_encode(__('unable_to_load_grn_items')) ?>
             );
         }
 
@@ -447,7 +448,7 @@ grnSelect.addEventListener('change', function () {
 
             option.textContent =
                 item.name +
-                ' - Returnable: ' +
+                ' - <?= htmlspecialchars(__('returnable_label'), ENT_QUOTES) ?> ' +
                 returnable;
 
             grnItemSelect.appendChild(option);
@@ -512,7 +513,7 @@ grnItemSelect.addEventListener('change', function () {
         ? item.location_code +
           ' - ' +
           item.location_name
-        : 'Not recorded';
+        : <?= json_encode(__('not_recorded')) ?>;
 
 
     document.getElementById('receivedQty').textContent =
@@ -574,7 +575,7 @@ function loadLocations(inventoryId)
 {
 
     locationSelect.innerHTML =
-        '<option value="">Loading warehouses...</option>';
+        '<option value=""><?= htmlspecialchars(__('loading_warehouses'), ENT_QUOTES) ?></option>';
 
     locationSelect.disabled = true;
 
@@ -586,7 +587,7 @@ function loadLocations(inventoryId)
 
         if (!response.ok) {
             throw new Error(
-                'Unable to load warehouse stock.'
+                <?= json_encode(__('unable_to_load_warehouse_stock')) ?>
             );
         }
 
@@ -598,7 +599,7 @@ function loadLocations(inventoryId)
         currentLocations = data;
 
         locationSelect.innerHTML =
-            '<option value="">-- Select Warehouse --</option>';
+            '<option value=""><?= htmlspecialchars(__('select_warehouse'), ENT_QUOTES) ?></option>';
 
 
         data.forEach(location => {
@@ -628,7 +629,7 @@ function loadLocations(inventoryId)
                 location.code +
                 ' - ' +
                 location.name +
-                ' — Available: ' +
+                ' — <?= htmlspecialchars(__('available'), ENT_QUOTES) ?> ' +
                 qty;
 
 
@@ -674,7 +675,7 @@ function loadLocations(inventoryId)
     .catch(error => {
 
         locationSelect.innerHTML =
-            '<option value="">Unable to load warehouses</option>';
+            '<option value=""><?= htmlspecialchars(__('unable_to_load_warehouses'), ENT_QUOTES) ?></option>';
 
         alert(error.message);
 

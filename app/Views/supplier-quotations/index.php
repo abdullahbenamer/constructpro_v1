@@ -1,12 +1,12 @@
 <h2>
-    Supplier Quotations
+    <?= __('supplier_quotations') ?>
 </h2>
 
 <a href="<?= URLROOT ?>/supplierquotations/create"
     class="btn btn-primary mb-3">
 
     <i class="fas fa-plus"></i>
-    New Supplier Quotation
+    <?= __('new_supplier_quotation') ?>
 
 </a>
 
@@ -14,16 +14,16 @@
 
     <thead>
         <tr>
-            <th>Quotation #</th>
-            <th>Supplier</th>
-            <th>Supplier Ref.</th>
-            <th>Procurement Ref.</th>
-            <th>Date</th>
-            <th>Valid Until</th>
-            <th>Items</th>
-            <th>Delivery</th>
-            <th>Status</th>
-            <th width="250">Actions</th>
+            <th><?= __('quotation_number') ?></th>
+            <th><?= __('supplier') ?></th>
+            <th><?= __('supplier_reference') ?></th>
+            <th><?= __('procurement_reference') ?></th>
+            <th><?= __('date') ?></th>
+            <th><?= __('valid_until') ?></th>
+            <th><?= __('items') ?></th>
+            <th><?= __('delivery') ?></th>
+            <th><?= __('status') ?></th>
+            <th width="250"><?= __('actions') ?></th>
         </tr>
     </thead>
 
@@ -74,6 +74,7 @@
                     <td>
                         <?= (int)$quotation->item_count ?>
                     </td>
+
                     <td>
 
                         <?php if (
@@ -88,13 +89,13 @@
                             ): ?>
 
                                 <span class="badge bg-success">
-                                    Can Meet Date
+                                    <?= __('can_meet_date') ?>
                                 </span>
 
                             <?php else: ?>
 
                                 <span class="badge bg-danger">
-                                    Late
+                                    <?= __('late') ?>
                                 </span>
 
                             <?php endif; ?>
@@ -102,30 +103,31 @@
                         <?php else: ?>
 
                             <span class="text-muted">
-                                Not specified
+                                <?= __('not_specified') ?>
                             </span>
 
                         <?php endif; ?>
 
                     </td>
+
                     <td>
 
                         <?php if ($quotation->status === 'DRAFT'): ?>
 
                             <span class="badge bg-secondary">
-                                DRAFT
+                                <?= __('draft') ?>
                             </span>
 
                         <?php elseif ($quotation->status === 'ACCEPTED'): ?>
 
                             <span class="badge bg-success">
-                                ACCEPTED
+                                <?= __('accepted') ?>
                             </span>
 
                         <?php else: ?>
 
                             <span class="badge bg-danger">
-                                CANCELLED
+                                <?= __('cancelled') ?>
                             </span>
 
                         <?php endif; ?>
@@ -138,7 +140,7 @@
                             class="btn btn-sm btn-info">
 
                             <i class="fas fa-folder-open"></i>
-                            Open
+                            <?= __('open') ?>
 
                         </a>
 
@@ -146,17 +148,17 @@
 
                             <a href="<?= URLROOT ?>/supplierquotations/accept/<?= $quotation->id ?>"
                                 class="btn btn-sm btn-success"
-                                onclick="return confirm('Accept this supplier quotation?')">
+                                onclick="return confirm(<?= json_encode(__('accept_supplier_quotation_confirm')) ?>)">
 
-                                Accept
+                                <?= __('accept') ?>
 
                             </a>
 
                             <a href="<?= URLROOT ?>/supplierquotations/cancel/<?= $quotation->id ?>"
                                 class="btn btn-sm btn-danger"
-                                onclick="return confirm('Cancel this quotation?')">
+                                onclick="return confirm(<?= json_encode(__('cancel_quotation_confirm')) ?>)">
 
-                                Cancel
+                                <?= __('cancel') ?>
 
                             </a>
 
@@ -169,10 +171,10 @@
                             <a
                                 href="<?= URLROOT ?>/supplierquotations/compare/<?= urlencode($quotation->procurement_reference) ?>"
                                 class="btn btn-sm btn-outline-primary"
-                                title="Compare quotations for this procurement">
+                                title="<?= htmlspecialchars(__('compare_quotations_for_procurement'), ENT_QUOTES) ?>">
 
                                 <i class="fas fa-balance-scale"></i>
-                                Compare
+                                <?= __('compare') ?>
 
                             </a>
 
@@ -187,10 +189,10 @@
         <?php else: ?>
 
             <tr>
-                <td colspan="8"
+                <td colspan="10"
                     class="text-center text-muted py-5">
 
-                    No supplier quotations found.
+                    <?= __('no_supplier_quotations_found') ?>
 
                 </td>
             </tr>

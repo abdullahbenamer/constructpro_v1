@@ -1,5 +1,5 @@
 <h2>
-    Create Supplier Quotation
+    <?= __('create_supplier_quotation') ?>
 </h2>
 
 <form method="POST">
@@ -9,7 +9,7 @@
         <div class="col-md-4 mb-3">
 
             <label class="form-label">
-                Supplier *
+                <?= __('supplier_required') ?>
             </label>
 
             <select name="supplier_id"
@@ -17,7 +17,7 @@
                     required>
 
                 <option value="">
-                    Select Supplier
+                    <?= __('select_supplier') ?>
                 </option>
 
                 <?php foreach ($suppliers as $supplier): ?>
@@ -39,7 +39,7 @@
         <div class="col-md-4 mb-3">
 
             <label class="form-label">
-                Supplier Quotation No.
+                <?= __('supplier_quotation_no') ?>
             </label>
 
             <input type="text"
@@ -51,16 +51,16 @@
         <div class="col-md-4 mb-3">
 
             <label class="form-label">
-                Procurement Reference
+                <?= __('procurement_reference') ?>
             </label>
 
             <input type="text"
                    name="procurement_reference"
                    class="form-control"
-                   placeholder="e.g. PR-2026-001">
+                   placeholder="<?= __('procurement_reference_placeholder') ?>">
 
             <small class="text-muted">
-                Use the same reference for quotations being compared for the same requirement.
+                <?= __('procurement_reference_help') ?>
             </small>
 
         </div>
@@ -73,7 +73,7 @@
         <div class="col-md-4 mb-3">
 
             <label class="form-label">
-                Quotation Date *
+                <?= __('quotation_date_required') ?>
             </label>
 
             <input type="date"
@@ -87,7 +87,7 @@
         <div class="col-md-4 mb-3">
 
             <label class="form-label">
-                Valid Until
+                <?= __('valid_until') ?>
             </label>
 
             <input type="date"
@@ -99,7 +99,7 @@
         <div class="col-md-4 mb-3">
 
             <label class="form-label">
-                Required Delivery Date
+                <?= __('required_delivery_date') ?>
             </label>
 
             <input type="date"
@@ -116,7 +116,7 @@
         <div class="col-md-4 mb-3">
 
             <label class="form-label">
-                Supplier Promised Delivery Date
+                <?= __('supplier_promised_delivery_date') ?>
             </label>
 
             <input type="date"
@@ -131,13 +131,13 @@
     <div class="mb-3">
 
         <label class="form-label">
-            Procurement / Evaluation Notes
+            <?= __('procurement_evaluation_notes') ?>
         </label>
 
         <textarea name="evaluation_notes"
                   class="form-control"
                   rows="3"
-                  placeholder="General procurement evaluation, commercial observations, supplier experience, etc."></textarea>
+                  placeholder="<?= __('procurement_evaluation_notes_placeholder') ?>"></textarea>
 
     </div>
 
@@ -145,7 +145,7 @@
     <div class="mb-3">
 
         <label class="form-label">
-            Notes
+            <?= __('notes') ?>
         </label>
 
         <textarea name="notes"
@@ -158,14 +158,14 @@
     <button class="btn btn-success">
 
         <i class="fas fa-save"></i>
-        Create Quotation
+        <?= __('create_quotation') ?>
 
     </button>
 
     <a href="<?= URLROOT ?>/supplierquotations"
        class="btn btn-secondary">
 
-        Cancel
+        <?= __('cancel') ?>
 
     </a>
 
