@@ -1,32 +1,31 @@
-
 <div class="container-fluid py-4">
 
-    <!-- ================================================================
-         PAGE HEADER
-    ================================================================= -->
+    <!-- PAGE HEADER -->
 
     <div class="d-flex justify-content-between align-items-center mb-4">
 
         <div>
 
             <h3 class="mb-1">
+
                 <i class="fas fa-clipboard-check me-2"></i>
-                RESOURCE REQUISITION FULFILLMENT
+
+                <?= __('resource_requisition_fulfillment') ?>
+
             </h3>
 
             <div class="text-muted">
 
-                Fulfillment #<?= $fulfillment->id ?>
+                <?= __('fulfillment_number') ?> #<?= $fulfillment->id ?>
 
             </div>
 
         </div>
-       
+
     </div>
 
-    <!-- ================================================================
-         SUCCESS / ERROR MESSAGES
-    ================================================================= -->
+
+    <!-- SUCCESS / ERROR MESSAGES -->
 
     <?php if (!empty($_SESSION['success'])): ?>
 
@@ -37,8 +36,8 @@
             <button
                 type="button"
                 class="btn-close"
-                data-bs-dismiss="alert"
-            ></button>
+                data-bs-dismiss="alert">
+            </button>
 
         </div>
 
@@ -56,8 +55,8 @@
             <button
                 type="button"
                 class="btn-close"
-                data-bs-dismiss="alert"
-            ></button>
+                data-bs-dismiss="alert">
+            </button>
 
         </div>
 
@@ -66,16 +65,14 @@
     <?php endif; ?>
 
 
-    <!-- ================================================================
-         FULFILLMENT INFORMATION
-    ================================================================= -->
+    <!-- FULFILLMENT INFORMATION -->
 
     <div class="card shadow-sm mb-4">
 
         <div class="card-header bg-light">
 
             <strong>
-                FULFILLMENT INFORMATION
+                <?= __('fulfillment_information') ?>
             </strong>
 
         </div>
@@ -91,7 +88,7 @@
 
                     <label class="text-muted small">
 
-                        FULFILLMENT ID
+                        <?= __('fulfillment_id') ?>
 
                     </label>
 
@@ -110,7 +107,7 @@
 
                     <label class="text-muted small">
 
-                        REQUISITION
+                        <?= __('requisition') ?>
 
                     </label>
 
@@ -132,7 +129,7 @@
 
                     <label class="text-muted small">
 
-                        PROJECT
+                        <?= __('project') ?>
 
                     </label>
 
@@ -154,7 +151,7 @@
 
                     <label class="text-muted small">
 
-                        FULFILLMENT DATE
+                        <?= __('fulfillment_date') ?>
 
                     </label>
 
@@ -181,7 +178,7 @@
 
                     <label class="text-muted small">
 
-                        FULFILLED BY
+                        <?= __('fulfilled_by') ?>
 
                     </label>
 
@@ -204,7 +201,7 @@
 
                     <label class="text-muted small">
 
-                        CREATED AT
+                        <?= __('created_at') ?>
 
                     </label>
 
@@ -231,7 +228,7 @@
 
                     <label class="text-muted small">
 
-                        STATUS
+                        <?= __('status') ?>
 
                     </label>
 
@@ -239,7 +236,7 @@
 
                         <span class="badge bg-success">
 
-                            PROCESSED
+                            <?= __('processed') ?>
 
                         </span>
 
@@ -258,7 +255,7 @@
 
                 <label class="text-muted small">
 
-                    REMARKS
+                    <?= __('remarks') ?>
 
                 </label>
 
@@ -279,9 +276,7 @@
     </div>
 
 
-    <!-- ================================================================
-         FULFILLED ITEMS
-    ================================================================= -->
+    <!-- FULFILLED ITEMS -->
 
     <div class="card shadow-sm">
 
@@ -291,7 +286,7 @@
 
                 <i class="fas fa-boxes me-2"></i>
 
-                FULFILLED MATERIALS
+                <?= __('fulfilled_materials') ?>
 
             </strong>
 
@@ -313,35 +308,35 @@
                             </th>
 
                             <th>
-                                MATERIAL
+                                <?= __('material') ?>
                             </th>
 
                             <th>
-                                SKU
+                                <?= __('sku') ?>
                             </th>
 
                             <th>
-                                LOCATION
+                                <?= __('location') ?>
                             </th>
 
                             <th class="text-end">
-                                QUANTITY
+                                <?= __('quantity') ?>
                             </th>
 
                             <th>
-                                UOM
+                                <?= __('uom') ?>
                             </th>
 
                             <th class="text-end">
-                                UNIT COST
+                                <?= __('unit_cost') ?>
                             </th>
 
                             <th class="text-end">
-                                TOTAL COST
+                                <?= __('total_cost') ?>
                             </th>
 
                             <th>
-                                REMARKS
+                                <?= __('remarks') ?>
                             </th>
 
                         </tr>
@@ -503,9 +498,7 @@
                             <?php endforeach; ?>
 
 
-                            <!-- =================================================
-                                 GRAND TOTAL
-                            ================================================== -->
+                            <!-- GRAND TOTAL -->
 
                             <tr class="table-light">
 
@@ -514,7 +507,7 @@
                                     class="text-end fw-bold"
                                 >
 
-                                    TOTAL MATERIAL COST
+                                    <?= __('total_material_cost') ?>
 
                                 </td>
 
@@ -540,7 +533,7 @@
                                     class="text-center text-muted py-4"
                                 >
 
-                                    NO FULFILLMENT ITEMS FOUND.
+                                    <?= __('no_fulfillment_items_found') ?>
 
                                 </td>
 
@@ -559,20 +552,18 @@
     </div>
 
 
-    <!-- ================================================================
-         ACTION BUTTONS
-    ================================================================= -->
+    <!-- ACTION BUTTONS -->
 
     <div class="mt-4 d-flex gap-2">
 
-              <a
+        <a
             href="<?= URLROOT ?>/ResourceRequisitions/details/<?= $fulfillment->requisition_id ?>"
             class="btn btn-outline-primary"
         >
 
             <i class="fas fa-clipboard-list me-1"></i>
 
-            VIEW REQUISITION
+            <?= __('view_requisition') ?>
 
         </a>
 

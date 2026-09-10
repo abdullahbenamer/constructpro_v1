@@ -12,19 +12,20 @@
 
                 <i class="fas fa-dolly text-primary"></i>
 
-                Fulfill Material Requisition
+                <?= __('fulfill_material_requisition') ?>
 
             </h2>
 
             <p class="text-muted mb-0">
 
-                Issue materials from inventory to fulfill the approved requisition.
+                <?= __('issue_materials_from_inventory') ?>
 
             </p>
 
         </div>
-     
+
     </div>
+
 
     <!-- ==========================================================
      REQUISITION INFORMATION
@@ -38,7 +39,7 @@
 
                 <i class="fas fa-clipboard-list"></i>
 
-                Requisition Information
+                <?= __('requisition_information') ?>
 
             </strong>
 
@@ -55,7 +56,7 @@
 
                     <label class="form-label text-muted">
 
-                        Requisition No.
+                        <?= __('requisition_no') ?>
 
                     </label>
 
@@ -76,7 +77,7 @@
 
                     <label class="form-label text-muted">
 
-                        Project
+                        <?= __('project') ?>
 
                     </label>
 
@@ -97,7 +98,7 @@
 
                     <label class="form-label text-muted">
 
-                        Status
+                        <?= __('status') ?>
 
                     </label>
 
@@ -122,7 +123,7 @@
 
                     <label class="form-label text-muted">
 
-                        Priority
+                        <?= __('priority') ?>
 
                     </label>
 
@@ -171,7 +172,7 @@
 
                     <i class="fas fa-file-alt"></i>
 
-                    Fulfillment Details
+                    <?= __('fulfillment_details') ?>
 
                 </strong>
 
@@ -183,13 +184,15 @@
                 <div class="col-md-4 mb-3">
 
                     <label class="form-label">
-                        Fulfillment Reference
+
+                        <?= __('fulfillment_reference') ?>
+
                     </label>
 
                     <input
                         type="text"
                         class="form-control"
-                        value="Auto-generated after processing"
+                        value="<?= __('auto_generated_after_processing') ?>"
                         readonly>
 
                 </div>
@@ -201,7 +204,7 @@
 
                     <label class="form-label">
 
-                        Fulfillment Date
+                        <?= __('fulfillment_date') ?>
 
                         <span class="text-danger">*</span>
 
@@ -222,13 +225,13 @@
 
                     <label class="form-label">
 
-                        Fulfillment Type
+                        <?= __('fulfillment_type') ?>
 
                     </label>
 
                     <input type="text"
                         class="form-control"
-                        value="MATERIAL / INVENTORY"
+                        value="<?= __('material_inventory') ?>"
                         readonly>
 
                 </div>
@@ -242,384 +245,395 @@
 
                 <label class="form-label">
 
-                    Remarks
+                    <?= __('remarks') ?>
 
                 </label>
 
                 <textarea name="remarks"
                     class="form-control"
                     rows="3"
-                    placeholder="Enter fulfillment remarks or notes..."></textarea>
+                    placeholder="<?= __('fulfillment_remarks_placeholder') ?>"></textarea>
 
             </div>
 
         </div>
 
-</div>
-
-
-<!-- ======================================================
-         MATERIAL ITEMS
-        =========================================================== -->
-
-<div class="card shadow-sm">
-
-    <div class="card-header bg-success text-white">
-
-        <strong>
-
-            <i class="fas fa-boxes"></i>
-
-            Material Items to Fulfill
-
-        </strong>
-
     </div>
 
 
-    <div class="card-body p-0">
+    <!-- ======================================================
+     MATERIAL ITEMS
+    =========================================================== -->
 
-        <?php if (!empty($data['items'])): ?>
+    <div class="card shadow-sm">
 
+        <div class="card-header bg-success text-white">
 
-            <div class="table-responsive">
+            <strong>
 
-                <table class="table table-bordered table-hover mb-0 align-middle">
+                <i class="fas fa-boxes"></i>
 
-                    <thead class="table-light">
+                <?= __('material_items_to_fulfill') ?>
 
-                        <tr>
+            </strong>
 
-                            <th style="min-width: 250px;">
+        </div>
 
-                                Material
 
-                            </th>
+        <div class="card-body p-0">
 
+            <?php if (!empty($data['items'])): ?>
 
-                            <th class="text-center">
 
-                                UOM
+                <div class="table-responsive">
 
-                            </th>
+                    <table class="table table-bordered table-hover mb-0 align-middle">
 
+                        <thead class="table-light">
 
-                            <th class="text-end">
+                            <tr>
 
-                                Requested
+                                <th style="min-width: 250px;">
 
-                            </th>
+                                    <?= __('material') ?>
 
+                                </th>
 
-                            <th class="text-end">
 
-                                Previously Fulfilled
+                                <th class="text-center">
 
-                            </th>
+                                    <?= __('uom') ?>
 
+                                </th>
 
-                            <th class="text-end">
 
-                                Remaining
+                                <th class="text-end">
 
-                            </th>
+                                    <?= __('requested') ?>
 
+                                </th>
 
-                            <th style="min-width: 220px;">
 
-                                Issue From Location
+                                <th class="text-end">
 
-                            </th>
+                                    <?= __('previously_fulfilled') ?>
 
+                                </th>
 
-                            <th class="text-end">
 
-                                Available Stock
+                                <th class="text-end">
 
-                            </th>
+                                    <?= __('remaining') ?>
 
+                                </th>
 
-                            <th style="min-width: 150px;">
 
-                                Quantity to Fulfill
+                                <th style="min-width: 220px;">
 
-                            </th>
+                                    <?= __('issue_from_location') ?>
 
-                        </tr>
+                                </th>
 
-                    </thead>
 
+                                <th class="text-end">
 
-                    <tbody>
+                                    <?= __('available_stock') ?>
 
+                                </th>
 
-                        <?php foreach ($data['items'] as $item): ?>
 
+                                <th style="min-width: 150px;">
 
-                            <?php
+                                    <?= __('quantity_to_fulfill') ?>
 
-                            /*
-                                    |--------------------------------------------------
-                                    | NORMALIZE VALUES
-                                    |--------------------------------------------------
-                                    */
-
-                            $requested_qty =
-                                (float) (
-                                    $item->quantity ?? 0
-                                );
-
-
-                            $fulfilled_qty =
-                                (float) (
-                                    $item->fulfilled_qty ?? 0
-                                );
-
-
-                            $remaining_qty =
-                                (float) (
-                                    $item->remaining_qty ?? 0
-                                );
-
-
-                            ?>
-
-
-                            <tr
-                                data-item-id="<?= $item->id ?>"
-                                data-inventory-id="<?= $item->resource_id ?>">
-
-                                <!-- ======================================
-                                         MATERIAL
-                                        ======================================= -->
-
-                                <td>
-
-                                    <strong>
-
-                                        <?= htmlspecialchars(
-                                            $item->inventory_name
-                                                ?? $item->description
-                                        ) ?>
-
-                                    </strong>
-
-                                    <br>
-
-                                    <small class="text-muted">
-
-                                        SKU:
-
-                                        <?= htmlspecialchars(
-                                            $item->sku ?? '-'
-                                        ) ?>
-
-                                    </small>
-
-                                </td>
-
-
-                                <!-- ======================================
-                                         UOM
-                                        ======================================= -->
-
-                                <td>
-
-                                    <?= htmlspecialchars(
-                                        $item->uom
-                                            ?? $item->base_unit
-                                            ?? '-'
-                                    ) ?>
-
-                                </td>
-
-                                <!-- ====================
-                                         REQUESTED
-                                    ==================== -->
-
-                                <td class="text-end">
-
-                                    <?= number_format((float) $item->quantity, 2) ?>
-                                </td>
-
-                                <!-- ======================================
-                                         PREVIOUSLY FULFILLED
-                                        ======================================= -->
-
-                                <td class="text-end">
-
-                                   <?= number_format((float) $item->fulfilled_quantity, 2) ?>
-
-                                </td>
-
-
-                                <!-- ======================================
-                                         REMAINING
-                                        ======================================= -->
-
-                                <td class="text-end">
-
-                                    <strong class="text-primary">
-
-                                       <?= number_format((float) $item->remaining_quantity, 2) ?>
-
-                                    </strong>
-
-                                </td>
-
-
-                                <!-- ======================================
-                                         LOCATION
-                                        ======================================= -->
-
-                                <td>
-
-                                    <select
-                                        class="form-select location-select"
-                                        name="items[<?= $item->id ?>][location_id]"
-                                        data-row="<?= $item->id ?>">
-
-                                        <option value="">
-
-                                            -- Select Location --
-
-                                        </option>
-
-                                        <?php foreach ($item->locations as $location): ?>
-
-                                            <option
-                                                value="<?= $location->location_id ?>"
-                                                data-available="<?= $location->available_qty ?>">
-
-                                                <?= htmlspecialchars(
-                                                    $location->location_name
-                                                ) ?>
-
-                                                <?php if (!empty($location->location_code)): ?>
-
-                                                    (<?= htmlspecialchars(
-                                                            $location->location_code
-                                                        ) ?>)
-
-                                                <?php endif; ?>
-
-                                                — Available:
-                                                <?= number_format(
-                                                    $location->available_qty,
-                                                    2
-                                                ) ?>
-
-                                            </option>
-
-                                        <?php endforeach; ?>
-                                    </select>
-
-                                </td>
-
-                                <!-- ======================================
-                                         AVAILABLE STOCK
-                                        ======================================= -->
-
-                                <td class="text-center">
-
-                                    <strong
-                                        class="available-stock"
-                                        data-row="<?= $item->id ?>">
-                                        0.00
-                                    </strong>
-
-                                </td>
-
-
-                                <!-- ======================================
-                                         FULFILL QUANTITY
-                                        ======================================= -->
-
-                                <td>
-                                    <input
-                                        type="hidden"
-                                        name="items[<?= $item->id ?>][inventory_id]"
-                                        value="<?= $item->resource_id ?>">
-                                    <input
-                                        type="number"
-                                        class="form-control text-end fulfill-quantity"
-                                        name="items[<?= $item->id ?>][fulfilled_quantity]"
-                                        data-item-id="<?= $item->id ?>"
-                                        step="0.01"
-                                        min="0"
-                                    max="<?= (float) $item->remaining_quantity ?>"
-                                        placeholder="0.00">
-
-                                </td>
-
+                                </th>
 
                             </tr>
 
-
-                        <?php endforeach; ?>
-
-
-                    </tbody>
-
-                </table>
-
-            </div>
+                        </thead>
 
 
-        <?php else: ?>
+                        <tbody>
 
 
-            <div class="alert alert-info m-3 mb-0">
-
-                <i class="fas fa-info-circle"></i>
-
-                There are no material items remaining to fulfill.
-
-            </div>
+                            <?php foreach ($data['items'] as $item): ?>
 
 
-        <?php endif; ?>
+                                <?php
+
+                                /*
+                                 |--------------------------------------------------
+                                 | NORMALIZE VALUES
+                                 |--------------------------------------------------
+                                */
+
+                                $requested_qty =
+                                    (float) (
+                                        $item->quantity ?? 0
+                                    );
 
 
-    </div>
+                                $fulfilled_qty =
+                                    (float) (
+                                        $item->fulfilled_qty ?? 0
+                                    );
 
 
-    <!-- ==================================================
-             FORM FOOTER
-            =================================================== -->
-
-    <div class="card-footer">
-
-        <div class="d-flex justify-content-between align-items-center">
-
-            <a href="<?= URLROOT ?>/ResourceRequisitionFulfillments/index/<?= $data['requisition']->id ?>"
-                class="btn btn-secondary">
-
-                <i class="fas fa-times"></i>
-
-                Cancel
-
-            </a>
+                                $remaining_qty =
+                                    (float) (
+                                        $item->remaining_qty ?? 0
+                                    );
 
 
-            <button type="submit"
-                class="btn btn-success"
-                id="submitFulfillment">
+                                ?>
 
-                <i class="fas fa-check-circle"></i>
 
-                Process Material Fulfillment
+                                <tr
+                                    data-item-id="<?= $item->id ?>"
+                                    data-inventory-id="<?= $item->resource_id ?>">
 
-            </button>
+                                    <!-- ======================================
+                                         MATERIAL
+                                        ======================================= -->
+
+                                    <td>
+
+                                        <strong>
+
+                                            <?= htmlspecialchars(
+                                                $item->inventory_name
+                                                    ?? $item->description
+                                            ) ?>
+
+                                        </strong>
+
+                                        <br>
+
+                                        <small class="text-muted">
+
+                                            <?= __('sku') ?>:
+
+                                            <?= htmlspecialchars(
+                                                $item->sku ?? '-'
+                                            ) ?>
+
+                                        </small>
+
+                                    </td>
+
+
+                                    <!-- ======================================
+                                         UOM
+                                        ======================================= -->
+
+                                    <td>
+
+                                        <?= htmlspecialchars(
+                                            $item->uom
+                                                ?? $item->base_unit
+                                                ?? '-'
+                                        ) ?>
+
+                                    </td>
+
+
+                                    <!-- ====================
+                                         REQUESTED
+                                        ==================== -->
+
+                                    <td class="text-end">
+
+                                        <?= number_format((float) $item->quantity, 2) ?>
+
+                                    </td>
+
+
+                                    <!-- ======================================
+                                         PREVIOUSLY FULFILLED
+                                        ======================================= -->
+
+                                    <td class="text-end">
+
+                                        <?= number_format((float) $item->fulfilled_quantity, 2) ?>
+
+                                    </td>
+
+
+                                    <!-- ======================================
+                                         REMAINING
+                                        ======================================= -->
+
+                                    <td class="text-end">
+
+                                        <strong class="text-primary">
+
+                                            <?= number_format((float) $item->remaining_quantity, 2) ?>
+
+                                        </strong>
+
+                                    </td>
+
+
+                                    <!-- ======================================
+                                         LOCATION
+                                        ======================================= -->
+
+                                    <td>
+
+                                        <select
+                                            class="form-select location-select"
+                                            name="items[<?= $item->id ?>][location_id]"
+                                            data-row="<?= $item->id ?>">
+
+                                            <option value="">
+
+                                                <?= __('select_location') ?>
+
+                                            </option>
+
+                                            <?php foreach ($item->locations as $location): ?>
+
+                                                <option
+                                                    value="<?= $location->location_id ?>"
+                                                    data-available="<?= $location->available_qty ?>">
+
+                                                    <?= htmlspecialchars(
+                                                        $location->location_name
+                                                    ) ?>
+
+                                                    <?php if (!empty($location->location_code)): ?>
+
+                                                        (<?= htmlspecialchars(
+                                                            $location->location_code
+                                                        ) ?>)
+
+                                                    <?php endif; ?>
+
+                                                    — <?= __('available') ?>:
+
+                                                    <?= number_format(
+                                                        $location->available_qty,
+                                                        2
+                                                    ) ?>
+
+                                                </option>
+
+                                            <?php endforeach; ?>
+
+                                        </select>
+
+                                    </td>
+
+
+                                    <!-- ======================================
+                                         AVAILABLE STOCK
+                                        ======================================= -->
+
+                                    <td class="text-center">
+
+                                        <strong
+                                            class="available-stock"
+                                            data-row="<?= $item->id ?>">
+
+                                            0.00
+
+                                        </strong>
+
+                                    </td>
+
+
+                                    <!-- ======================================
+                                         FULFILL QUANTITY
+                                        ======================================= -->
+
+                                    <td>
+
+                                        <input
+                                            type="hidden"
+                                            name="items[<?= $item->id ?>][inventory_id]"
+                                            value="<?= $item->resource_id ?>">
+
+                                        <input
+                                            type="number"
+                                            class="form-control text-end fulfill-quantity"
+                                            name="items[<?= $item->id ?>][fulfilled_quantity]"
+                                            data-item-id="<?= $item->id ?>"
+                                            step="0.01"
+                                            min="0"
+                                            max="<?= (float) $item->remaining_quantity ?>"
+                                            placeholder="0.00">
+
+                                    </td>
+
+
+                                </tr>
+
+
+                            <?php endforeach; ?>
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+            <?php else: ?>
+
+
+                <div class="alert alert-info m-3 mb-0">
+
+                    <i class="fas fa-info-circle"></i>
+
+                    <?= __('no_material_items_remaining') ?>
+
+                </div>
+
+
+            <?php endif; ?>
+
 
         </div>
 
+
+        <!-- ==================================================
+             FORM FOOTER
+            =================================================== -->
+
+        <div class="card-footer">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <a href="<?= URLROOT ?>/ResourceRequisitionFulfillments/index/<?= $data['requisition']->id ?>"
+                    class="btn btn-secondary">
+
+                    <i class="fas fa-times"></i>
+
+                    <?= __('cancel') ?>
+
+                </a>
+
+
+                <button type="submit"
+                    class="btn btn-success"
+                    id="submitFulfillment">
+
+                    <i class="fas fa-check-circle"></i>
+
+                    <?= __('process_material_fulfillment') ?>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
     </div>
 
-</div>
 
-
-</form>
+    </form>
 
 
 </div>
@@ -695,7 +709,7 @@
                             if (!locationId) {
 
                                 stockDisplay.innerHTML =
-                                    'Select location';
+                                    <?= json_encode(__('select_location')) ?>;
 
 
                                 stockDisplay.className =
@@ -723,7 +737,7 @@
                             if (!inventoryId) {
 
                                 stockDisplay.innerHTML =
-                                    'Invalid material';
+                                    <?= json_encode(__('invalid_material')) ?>;
 
 
                                 stockDisplay.className =
@@ -805,7 +819,7 @@
 
                                 this.setCustomValidity(
 
-                                    'Quantity cannot exceed the remaining requisition quantity.'
+                                    <?= json_encode(__('quantity_cannot_exceed_remaining')) ?>
 
                                 );
 
@@ -817,6 +831,7 @@
                             | ABOVE AVAILABLE STOCK
                             |----------------------------------------------------------
                             */
+
                             else if (
 
                                 !isNaN(
@@ -832,7 +847,7 @@
 
                                 this.setCustomValidity(
 
-                                    'Quantity exceeds available stock at the selected location.'
+                                    <?= json_encode(__('quantity_exceeds_available_stock')) ?>
 
                                 );
 
@@ -959,7 +974,7 @@
 
                                 alert(
 
-                                    'Please select an inventory location for every item being fulfilled.'
+                                    <?= json_encode(__('select_inventory_location_for_every_item')) ?>
 
                                 );
 
@@ -1050,6 +1065,7 @@
 
                             validItems++;
 
+
                         }.bind(this)
                     );
 
@@ -1069,7 +1085,7 @@
 
                         alert(
 
-                            'Please enter a fulfillment quantity for at least one material item.'
+                            <?= json_encode(__('enter_fulfillment_quantity_for_at_least_one_material')) ?>
 
                         );
 
@@ -1102,7 +1118,9 @@
     );
 </script>
 
+
 <script>
+
     document.addEventListener('DOMContentLoaded', function() {
 
         document.querySelectorAll('.location-select').forEach(function(select) {
@@ -1163,10 +1181,13 @@
 
                     stockDisplay.textContent =
                         available.toFixed(2);
+
                 }
+
             }
 
         });
 
     });
+
 </script>

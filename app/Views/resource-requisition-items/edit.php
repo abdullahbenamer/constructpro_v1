@@ -10,13 +10,13 @@
 
                 <i class="fas fa-edit"></i>
 
-                Edit Requisition Item #<?= $data['item']->id ?>
+                <?= __('edit_requisition_item') ?> #<?= $data['item']->id ?>
 
             </h4>
 
             <small class="text-muted">
 
-                You can Edit/Update quantity, description, and remarks Only
+                <?= __('edit_update_quantity_description_remarks_only') ?>
 
             </small>
 
@@ -29,7 +29,7 @@
 
             <i class="fas fa-arrow-left"></i>
 
-            Back
+            <?= __('back') ?>
 
         </a>
 
@@ -40,10 +40,9 @@
 
     <div class="alert alert-danger">
 
-        <strong>Note:</strong>
+        <strong><?= __('note') ?>:</strong>
 
-        Changing the material/resource or resource type requires
-        deleting the existing item and creating a new item.
+        <?= __('changing_material_resource_requires_new_item') ?>
 
     </div>
 
@@ -58,7 +57,7 @@
 
                 <i class="fas fa-box"></i>
 
-                Requisition Item
+                <?= __('requisition_item') ?>
 
             </strong>
 
@@ -86,7 +85,7 @@
 
                         <label class="form-label">
 
-                            Resource Type
+                            <?= __('resource_type') ?>
 
                         </label>
 
@@ -121,7 +120,7 @@
 
                         <label class="form-label">
 
-                            Description
+                            <?= __('description') ?>
 
                         </label>
 
@@ -145,7 +144,7 @@
 
                         <label class="form-label">
 
-                            Quantity
+                            <?= __('quantity') ?>
 
                         </label>
 
@@ -167,7 +166,7 @@
 
                         <label class="form-label">
 
-                            UOM
+                            <?= __('uom') ?>
 
                         </label>
 
@@ -199,8 +198,8 @@
                         <label class="form-label">
 
                             <?= $data['item']->resource_source === 'INVENTORY'
-                                ? 'Inventory Item'
-                                : 'Resource' ?>
+                                ? __('inventory_item')
+                                : __('resource') ?>
 
                         </label>
 
@@ -225,7 +224,7 @@
 
                     <label class="form-label">
 
-                        Remarks
+                        <?= __('remarks') ?>
 
                     </label>
 
@@ -249,7 +248,7 @@
 
                         <i class="fas fa-save"></i>
 
-                        Update Item
+                        <?= __('update_item') ?>
 
                     </button>
 
@@ -258,7 +257,7 @@
                         href="<?= URLROOT ?>/ResourceRequisitions/details/<?= $data['item']->requisition_id ?>"
                         class="btn btn-secondary">
 
-                        Cancel
+                        <?= __('cancel') ?>
 
                     </a>
 

@@ -1,4 +1,3 @@
-
 <div class="container-fluid">
 
     <!-- PAGE HEADER -->
@@ -6,12 +5,12 @@
     <div class="mb-4">
 
         <h2>
-            Resource Fulfillment
+            <?= __('resource_fulfillment') ?>
         </h2>
 
         <p class="text-muted mb-0">
 
-            Requisition:
+            <?= __('requisition') ?>:
 
             <strong>
                 <?= htmlspecialchars(
@@ -47,7 +46,7 @@
 
                         <label class="form-label">
 
-                            Fulfillment Remarks
+                            <?= __('fulfillment_remarks') ?>
 
                         </label>
 
@@ -55,7 +54,7 @@
                             name="remarks"
                             class="form-control"
                             rows="3"
-                            placeholder="Enter fulfillment remarks or notes..."></textarea>
+                            placeholder="<?= __('enter_fulfillment_remarks') ?>"></textarea>
 
                     </div>
 
@@ -73,7 +72,7 @@
             <div class="card-header bg-primary text-white">
 
                 <strong>
-                    Resource Items to Fulfill
+                    <?= __('resource_items_to_fulfill') ?>
                 </strong>
 
             </div>
@@ -88,39 +87,39 @@
                         <tr>
 
                             <th>
-                                Resource
+                                <?= __('resource') ?>
                             </th>
 
                             <th>
-                                Type
+                                <?= __('type') ?>
                             </th>
 
                             <th>
-                                UOM
+                                <?= __('uom') ?>
                             </th>
 
                             <th class="text-end">
-                                Requested
+                                <?= __('requested') ?>
                             </th>
 
                             <th class="text-end">
-                                Previously Fulfilled
+                                <?= __('previously_fulfilled') ?>
                             </th>
 
                             <th class="text-end">
-                                Remaining
+                                <?= __('remaining') ?>
                             </th>
 
                             <th style="min-width: 160px;">
-                                Quantity to Fulfill
+                                <?= __('quantity_to_fulfill') ?>
                             </th>
 
                             <th style="min-width: 160px;">
-                                Actual Unit Cost
+                                <?= __('actual_unit_cost') ?>
                             </th>
 
                             <th style="min-width: 220px;">
-                                Remarks
+                                <?= __('remarks') ?>
                             </th>
 
                         </tr>
@@ -131,7 +130,7 @@
                     <tbody>
 
                         <?php foreach ($data['items'] as $item): ?>
-                            
+
                             <tr>
 
                                 <!-- RESOURCE -->
@@ -223,7 +222,7 @@
 
 
                                 <!-- REMAINING -->
-                             
+
                                 <td class="text-end fw-bold text-primary">
 
                                     <?= number_format(
@@ -262,11 +261,11 @@
                                         min="0"
                                         step="0.01"
                                         value="<?= number_format(
-                                                    (float) $item->estimated_unit_cost,
-                                                    2,
-                                                    '.',
-                                                    ''
-                                                ) ?>">
+                                            (float) $item->estimated_unit_cost,
+                                            2,
+                                            '.',
+                                            ''
+                                        ) ?>">
 
                                 </td>
 
@@ -279,7 +278,7 @@
                                         type="text"
                                         class="form-control"
                                         name="items[<?= (int) $item->id ?>][remarks]"
-                                        placeholder="Optional remarks...">
+                                        placeholder="<?= __('optional_remarks') ?>">
 
                                 </td>
 
@@ -304,7 +303,7 @@
 
                     <i class="fa fa-times"></i>
 
-                    Cancel
+                    <?= __('cancel') ?>
 
                 </a>
 
@@ -315,7 +314,7 @@
 
                     <i class="fa fa-check-circle"></i>
 
-                    Process Resource Fulfillment
+                    <?= __('process_resource_fulfillment') ?>
 
                 </button>
 
@@ -352,7 +351,7 @@
                     if (quantity > remaining) {
 
                         alert(
-                            'Quantity cannot exceed the remaining requisition quantity.'
+                            '<?= __('quantity_exceeds_remaining') ?>'
                         );
 
 
