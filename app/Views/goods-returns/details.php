@@ -1,13 +1,13 @@
 <h2>
     <i class="fas fa-undo"></i>
-    Goods Return Details
+    <?= __('goods_return_details') ?>
 </h2>
 
 <div class="card mb-4">
 
     <div class="card-header">
         <strong>
-            Return Information
+            <?= __('return_information') ?>
         </strong>
     </div>
 
@@ -17,7 +17,7 @@
 
             <div class="col-md-4 mb-3">
 
-                <strong>Return Number</strong>
+                <strong><?= __('return_number') ?></strong>
 
                 <div>
                     <?= htmlspecialchars(
@@ -29,7 +29,7 @@
 
             <div class="col-md-4 mb-3">
 
-                <strong>Supplier</strong>
+                <strong><?= __('supplier') ?></strong>
 
                 <div>
                     <?= htmlspecialchars(
@@ -41,7 +41,7 @@
 
             <div class="col-md-4 mb-3">
 
-                <strong>Return Date</strong>
+                <strong><?= __('return_date') ?></strong>
 
                 <div>
                     <?= htmlspecialchars(
@@ -53,7 +53,7 @@
 
             <div class="col-md-4 mb-3">
 
-                <strong>GRN</strong>
+                <strong><?= __('grn') ?></strong>
 
                 <div>
                     <?= htmlspecialchars(
@@ -65,7 +65,7 @@
 
             <div class="col-md-4 mb-3">
 
-                <strong>Purchase Order</strong>
+                <strong><?= __('purchase_order') ?></strong>
 
                 <div>
                     <?= htmlspecialchars(
@@ -77,7 +77,7 @@
 
             <div class="col-md-4 mb-3">
 
-                <strong>Total Amount</strong>
+                <strong><?= __('total_amount') ?></strong>
 
                 <div class="fw-bold">
                     <?= number_format(
@@ -90,7 +90,7 @@
 
             <div class="col-md-6 mb-3">
 
-                <strong>Reason</strong>
+                <strong><?= __('reason') ?></strong>
 
                 <div>
                     <?= htmlspecialchars(
@@ -102,7 +102,7 @@
 
             <div class="col-md-6 mb-3">
 
-                <strong>Notes</strong>
+                <strong><?= __('notes') ?></strong>
 
                 <div>
                     <?= nl2br(
@@ -125,7 +125,7 @@
 
     <div class="card-header">
         <strong>
-            Returned Items
+            <?= __('returned_items') ?>
         </strong>
     </div>
 
@@ -140,13 +140,13 @@
                     <tr>
 
                         <th>#</th>
-                        <th>Item</th>
-                        <th>SKU</th>
-                        <th>Original GRN Location</th>
-                        <th>Returned From</th>
-                        <th>Quantity</th>
-                        <th>Unit Cost</th>
-                        <th>Total</th>
+                        <th><?= __('item') ?></th>
+                        <th><?= __('sku') ?></th>
+                        <th><?= __('original_grn_location') ?></th>
+                        <th><?= __('returned_from') ?></th>
+                        <th><?= __('quantity') ?></th>
+                        <th><?= __('unit_cost') ?></th>
+                        <th><?= __('total') ?></th>
 
                     </tr>
 
@@ -161,7 +161,7 @@
                         <td colspan="8"
                             class="text-center text-muted">
 
-                            No returned items found.
+                            <?= __('no_returned_items_found') ?>
 
                         </td>
 
@@ -190,16 +190,16 @@
                             </td>
 
                             <td>
-    <?= htmlspecialchars(
-        $item->original_location_name ?? 'N/A'
-    ) ?>
-</td>
+                                <?= htmlspecialchars(
+                                    $item->original_location_name ?? 'N/A'
+                                ) ?>
+                            </td>
 
-<td>
-    <?= htmlspecialchars(
-        $item->return_location_name ?? 'N/A'
-    ) ?>
-</td>
+                            <td>
+                                <?= htmlspecialchars(
+                                    $item->return_location_name ?? 'N/A'
+                                ) ?>
+                            </td>
 
                             <td>
                                 <?= number_format(
@@ -248,7 +248,7 @@
        class="btn btn-secondary">
 
         <i class="fas fa-arrow-left"></i>
-        Back to Goods Returns
+        <?= __('back_to_goods_returns') ?>
 
     </a>
 

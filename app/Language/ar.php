@@ -580,4 +580,16 @@ return [
 'no_resource_requisitions_found'   => 'لم يتم العثور على طلبات موارد.',
 'create_first_requisition'         => 'إنشاء أول طلب',
 
+
+// GOODS RETURN - DETAILS
+'goods_return_details'       => 'تفاصيل مرتجع البضائع',
+'return_information'         => 'معلومات المرتجع',
+'total_amount'               => 'إجمالي المبلغ',
+'returned_items'             => 'الأصناف المرتجعة',
+'original_grn_location'      => 'موقع إذن الاستلام الأصلي',
+'returned_from'              => 'تم الإرجاع من',
+'no_returned_items_found'    => 'لم يتم العثور على أصناف مرتجعة.',
+'back_to_goods_returns'      => 'العودة إلى مرتجعات البضائع',
+
+
 ];

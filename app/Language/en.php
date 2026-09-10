@@ -594,6 +594,19 @@ return [
 'no_resource_requisitions_found'   => 'No Resource Requisitions found.',
 'create_first_requisition'         => 'Create First Requisition',
 
+// GOODS RETURN - DETAILS
+'goods_return_details'       => 'Goods Return Details',
+'return_information'         => 'Return Information',
+'total_amount'               => 'Total Amount',
+'returned_items'             => 'Returned Items',
+'original_grn_location'      => 'Original GRN Location',
+'returned_from'              => 'Returned From',
+'no_returned_items_found'    => 'No returned items found.',
+'back_to_goods_returns'      => 'Back to Goods Returns',
+
+
+
+
 
 
 
