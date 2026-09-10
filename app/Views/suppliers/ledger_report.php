@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= htmlspecialchars(Language::get()) ?>"
+      dir="<?= htmlspecialchars(Language::direction()) ?>">
 
 <head>
 
     <meta charset="UTF-8">
 
     <title>
-        Supplier Financial Ledger
+        <?= __('supplier_financial_ledger') ?>
     </title>
 
     <link
@@ -17,187 +18,110 @@
     <style>
 
         body {
-
             font-family:
                 'Tajawal',
                 'Roboto',
                 sans-serif;
 
             font-size: 14px;
-
             color: #000;
-
         }
-
 
         .header {
-
             text-align: center;
-
             margin-bottom: 20px;
-
         }
-
 
         .company {
-
             font-size: 24px;
-
             font-weight: bold;
-
         }
-
 
         .report-title {
-
             font-size: 18px;
-
             margin-top: 5px;
-
         }
-
 
         .info-table {
-
             width: 100%;
-
             margin-bottom: 20px;
-
         }
-
 
         .info-table td {
-
             padding: 4px;
-
         }
-
 
         .summary {
-
             margin-bottom: 20px;
-
             border: 1px solid #ccc;
-
             padding: 10px;
-
         }
-
 
         table {
-
             width: 100%;
-
             border-collapse: collapse;
-
         }
-
 
         th {
-
             background: #f2f2f2;
-
         }
-
 
         th,
         td {
-
             border: 1px solid #ccc;
-
             padding: 6px;
-
         }
-
 
         .text-right {
-
             text-align: right;
-
         }
-
 
         .debit {
-
             color: red;
-
             font-weight: bold;
-
         }
-
 
         .credit {
-
             color: green;
-
             font-weight: bold;
-
         }
-
 
         .balance {
-
             font-weight: bold;
-
         }
-
 
         .balance-positive {
-
             color: green;
-
             font-weight: bold;
-
         }
-
 
         .balance-negative {
-
             color: red;
-
             font-weight: bold;
-
         }
-
 
         .footer {
-
             margin-top: 30px;
-
             font-size: 11px;
-
         }
-
 
         table tbody tr:nth-child(odd) {
-
             background-color: #ffffff;
-
         }
-
 
         table tbody tr:nth-child(even) {
-
             background-color: #f7f7f7;
-
         }
-
 
         @media print {
 
             @page {
-
                 size: A4;
-
                 margin: 10mm;
-
             }
 
-
             .no-print {
-
                 display: none !important;
-
             }
 
         }
@@ -278,14 +202,14 @@
 
     <div class="company">
 
-        CONSTRUCT PRO
+        <?= __('construct_pro') ?>
 
     </div>
 
 
     <div class="report-title">
 
-        SUPPLIER FINANCIAL LEDGER REPORT
+        <?= __('supplier_financial_ledger_report') ?>
 
     </div>
 
@@ -301,7 +225,7 @@
     <tr>
 
         <td>
-            <strong>Supplier:</strong>
+            <strong><?= __('supplier') ?>:</strong>
         </td>
 
         <td>
@@ -313,7 +237,7 @@
         </td>
 
         <td>
-            <strong>Contact Person:</strong>
+            <strong><?= __('contact_person') ?>:</strong>
         </td>
 
         <td>
@@ -328,7 +252,7 @@
     <tr>
 
         <td>
-            <strong>Phone:</strong>
+            <strong><?= __('phone') ?>:</strong>
         </td>
 
         <td>
@@ -338,7 +262,7 @@
         </td>
 
         <td>
-            <strong>Email:</strong>
+            <strong><?= __('email') ?>:</strong>
         </td>
 
         <td>
@@ -353,7 +277,7 @@
     <tr>
 
         <td>
-            <strong>Address:</strong>
+            <strong><?= __('address') ?>:</strong>
         </td>
 
         <td colspan="3">
@@ -374,7 +298,7 @@
 <div class="summary">
 
     <strong>
-        Total Debit:
+        <?= __('total_debit') ?>:
     </strong>
 
     <?= number_format(
@@ -387,7 +311,7 @@
 
 
     <strong>
-        Total Credit:
+        <?= __('total_credit') ?>:
     </strong>
 
     <?= number_format(
@@ -400,7 +324,7 @@
 
 
     <strong>
-        Outstanding Balance:
+        <?= __('outstanding_balance') ?>:
     </strong>
 
     <?php
@@ -435,31 +359,31 @@
         <tr>
 
             <th width="100">
-                Date
+                <?= __('date') ?>
             </th>
 
             <th width="100">
-                Type
+                <?= __('type') ?>
             </th>
 
             <th>
-                Reference
+                <?= __('reference') ?>
             </th>
 
             <th>
-                Description
+                <?= __('description') ?>
             </th>
 
             <th class="text-right">
-                Debit
+                <?= __('debit') ?>
             </th>
 
             <th class="text-right">
-                Credit
+                <?= __('credit') ?>
             </th>
 
             <th class="text-right">
-                Balance
+                <?= __('balance') ?>
             </th>
 
         </tr>
@@ -533,19 +457,19 @@
                             ($row->type ?? '') === 'GRN'
                         ) {
 
-                            echo 'Goods Receipt';
+                            echo __('goods_receipt');
 
                         } elseif (
                             ($row->type ?? '') === 'PAYMENT'
                         ) {
 
-                            echo 'Supplier Payment';
+                            echo __('supplier_payment');
 
                         } elseif (
                             ($row->type ?? '') === 'RETURN'
                         ) {
 
-                            echo 'Goods Return';
+                            echo __('goods_return');
 
                         } else {
 
@@ -616,7 +540,7 @@
                     style="text-align:center;"
                 >
 
-                    No ledger transactions found.
+                    <?= __('no_ledger_transactions_found') ?>
 
                 </td>
 
@@ -636,7 +560,7 @@
 
 <div class="footer">
 
-    Printed:
+    <?= __('printed') ?>:
 
     <?= date(
         'Y-m-d H:i'

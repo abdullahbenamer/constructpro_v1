@@ -1,9 +1,11 @@
-<h3><?= __('project_advance_payments') ?></h3>
+<h4>
+    <?= __('project') ?> -
+    <a href="<?= URLROOT ?>/projectcosts/<?= (int)$project->id ?>" class="text-decoration-none">
+        <?= htmlspecialchars(strtoupper($project->title)) ?>
+    </a>
+</h4>
 
-<h5>
-    <?= __('project') ?>:
-    <?= $project->title ?>
-</h5>
+<h3><?= __('project_advance_payments') ?></h3>
 
 <br>
 

@@ -1,5 +1,6 @@
 <h2>
-     <i class="fas fa-file-invoice-dollar"></i> Supplier Quotation
+    <i class="fas fa-file-invoice-dollar"></i>
+    <?= __('supplier_quotation') ?>
 </h2>
 
 
@@ -12,126 +13,126 @@
             <div class="col-md-6">
 
                 <p>
-                    <strong>Quotation #:</strong>
+                    <strong><?= __('quotation_number_label') ?></strong>
                     <?= htmlspecialchars(
                         $quotation->quotation_number
                     ) ?>
                 </p>
 
                 <p>
-                    <strong>Supplier:</strong>
+                    <strong><?= __('supplier_label') ?></strong>
                     <?= htmlspecialchars(
                         $quotation->supplier_name
                     ) ?>
                 </p>
 
                 <p>
-                    <strong>Supplier Reference:</strong>
+                    <strong><?= __('supplier_reference_label') ?></strong>
                     <?= htmlspecialchars(
                         $quotation->supplier_reference ?? '-'
                     ) ?>
                 </p>
 
                 <p>
-    <strong>Procurement Reference:</strong>
-    <?= htmlspecialchars(
-        $quotation->procurement_reference ?? '-'
-    ) ?>
-</p>
+                    <strong><?= __('procurement_reference_label') ?></strong>
+                    <?= htmlspecialchars(
+                        $quotation->procurement_reference ?? '-'
+                    ) ?>
+                </p>
 
-<p>
-    <strong>Required Delivery:</strong>
-    <?= htmlspecialchars(
-        $quotation->required_delivery_date ?? '-'
-    ) ?>
-</p>
+                <p>
+                    <strong><?= __('required_delivery_label') ?></strong>
+                    <?= htmlspecialchars(
+                        $quotation->required_delivery_date ?? '-'
+                    ) ?>
+                </p>
 
-<p>
-    <strong>Supplier Promised Delivery:</strong>
-    <?= htmlspecialchars(
-        $quotation->promised_delivery_date ?? '-'
-    ) ?>
-</p>
+                <p>
+                    <strong><?= __('supplier_promised_delivery_label') ?></strong>
+                    <?= htmlspecialchars(
+                        $quotation->promised_delivery_date ?? '-'
+                    ) ?>
+                </p>
 
             </div>
+
 
             <div class="col-md-6">
 
                 <p>
-                    <strong>Quotation Date:</strong>
+                    <strong><?= __('quotation_date_label') ?></strong>
                     <?= htmlspecialchars(
                         $quotation->quotation_date
                     ) ?>
                 </p>
 
                 <p>
-                    <strong>Valid Until:</strong>
+                    <strong><?= __('valid_until_label') ?></strong>
                     <?= htmlspecialchars(
                         $quotation->valid_until ?? '-'
                     ) ?>
                 </p>
 
                 <p>
-                    <strong>Status:</strong>
+                    <strong><?= __('status') ?>:</strong>
 
                     <?php if ($quotation->status === 'DRAFT'): ?>
 
                         <span class="badge bg-secondary">
-                            DRAFT
+                            <?= __('draft') ?>
                         </span>
 
                     <?php elseif ($quotation->status === 'ACCEPTED'): ?>
 
                         <span class="badge bg-success">
-                            ACCEPTED
+                            <?= __('accepted') ?>
                         </span>
 
                     <?php else: ?>
 
                         <span class="badge bg-danger">
-                            CANCELLED
+                            <?= __('cancelled') ?>
                         </span>
 
                     <?php endif; ?>
 
                 </p>
 
-                
-
             </div>
 
         </div>
-
 
 
         <?php if (!empty($quotation->notes)): ?>
 
             <hr>
 
-            <strong>Notes:</strong><br>
+            <strong><?= __('notes') ?>:</strong><br>
 
             <?= nl2br(
                 htmlspecialchars($quotation->notes)
             ) ?>
 
         <?php endif; ?>
-        
+
+
         <?php if (!empty($quotation->evaluation_notes)): ?>
 
-    <hr>
+            <hr>
 
-    <strong>
-        Procurement / Evaluation Notes:
-    </strong>
-    <br>
+            <strong>
+                <?= __('procurement_evaluation_notes') ?>:
+            </strong>
 
-    <?= nl2br(
-        htmlspecialchars(
-            $quotation->evaluation_notes
-        )
-    ) ?>
+            <br>
 
-<?php endif; ?>
+            <?= nl2br(
+                htmlspecialchars(
+                    $quotation->evaluation_notes
+                )
+            ) ?>
+
+        <?php endif; ?>
 
     </div>
 
@@ -145,7 +146,7 @@
     <div class="card-body">
 
         <h5>
-            Add Quotation Item
+            <?= __('add_quotation_item') ?>
         </h5>
 
         <form method="POST"
@@ -156,14 +157,14 @@
                 <div class="col-md-4 mb-3">
 
                     <label class="form-label">
-                        Existing Inventory Item
+                        <?= __('existing_inventory_item') ?>
                     </label>
 
                     <select name="inventory_id"
                             class="form-select">
 
                         <option value="">
-                            -- New / Not Yet in Inventory --
+                            <?= __('new_not_yet_in_inventory') ?>
                         </option>
 
                         <?php foreach ($inventory ?? [] as $item): ?>
@@ -188,10 +189,11 @@
 
                 </div>
 
+
                 <div class="col-md-4 mb-3">
 
                     <label class="form-label">
-                        Description *
+                        <?= __('description') ?> *
                     </label>
 
                     <input type="text"
@@ -201,17 +203,18 @@
 
                 </div>
 
+
                 <div class="col-md-4 mb-3">
 
                     <label class="form-label">
-                        UOM
+                        <?= __('uom') ?>
                     </label>
 
                     <select name="unit_id"
                             class="form-select">
 
                         <option value="">
-                            Select UOM
+                            <?= __('select_uom') ?>
                         </option>
 
                         <?php foreach ($units ?? [] as $unit): ?>
@@ -223,6 +226,7 @@
                                 ) ?>
 
                                 -
+
                                 <?= htmlspecialchars(
                                     $unit->unit_name
                                 ) ?>
@@ -241,13 +245,13 @@
             <div class="mb-3">
 
                 <label class="form-label">
-                    Specification
+                    <?= __('specification') ?>
                 </label>
 
                 <textarea name="specification"
                           class="form-control"
                           rows="3"
-                          placeholder="Supplier specification, size, length, weight, model, etc."></textarea>
+                          placeholder="<?= __('supplier_specification_placeholder') ?>"></textarea>
 
             </div>
 
@@ -257,7 +261,7 @@
                 <div class="col-md-3 mb-3">
 
                     <label class="form-label">
-                        Quantity
+                        <?= __('quantity') ?>
                     </label>
 
                     <input type="number"
@@ -269,10 +273,11 @@
 
                 </div>
 
+
                 <div class="col-md-3 mb-3">
 
                     <label class="form-label">
-                        Unit Price
+                        <?= __('unit_price') ?>
                     </label>
 
                     <input type="number"
@@ -284,56 +289,59 @@
 
                 </div>
 
-<div class="row">
 
-    <div class="col-md-4 mb-3">
+                <div class="row">
 
-        <label class="form-label">
-            Quality / Specification Assessment
-        </label>
+                    <div class="col-md-4 mb-3">
 
-        <select name="quality_status"
-                class="form-select">
+                        <label class="form-label">
+                            <?= __('quality_specification_assessment') ?>
+                        </label>
 
-            <option value="">
-                -- Not Evaluated --
-            </option>
+                        <select name="quality_status"
+                                class="form-select">
 
-            <option value="MEETS">
-                Meets Specification
-            </option>
+                            <option value="">
+                                <?= __('not_evaluated') ?>
+                            </option>
 
-            <option value="PARTIAL">
-                Partially Meets
-            </option>
+                            <option value="MEETS">
+                                <?= __('meets_specification') ?>
+                            </option>
 
-            <option value="DOES_NOT_MEET">
-                Does Not Meet
-            </option>
+                            <option value="PARTIAL">
+                                <?= __('partially_meets') ?>
+                            </option>
 
-        </select>
+                            <option value="DOES_NOT_MEET">
+                                <?= __('does_not_meet_specification') ?>
+                            </option>
 
-    </div>
+                        </select>
 
-    <div class="col-md-8 mb-3">
+                    </div>
 
-        <label class="form-label">
-            Quality / Evaluation Notes
-        </label>
 
-        <input type="text"
-               name="quality_notes"
-               class="form-control"
-               placeholder="Technical remarks, manufacturer/model confirmation, deviations, etc.">
+                    <div class="col-md-8 mb-3">
 
-    </div>
+                        <label class="form-label">
+                            <?= __('quality_evaluation_notes') ?>
+                        </label>
 
-</div>
+                        <input type="text"
+                               name="quality_notes"
+                               class="form-control"
+                               placeholder="<?= __('quality_notes_placeholder') ?>">
+
+                    </div>
+
+                </div>
+
 
                 <div class="col-md-6 mb-3">
 
                     <label class="form-label">
-                        Notes
+                        <?= __('notes') ?>
                     </label>
 
                     <input type="text"
@@ -348,7 +356,7 @@
             <button class="btn btn-success">
 
                 <i class="fas fa-plus"></i>
-                Add Item
+                <?= __('add_item') ?>
 
             </button>
 
@@ -362,8 +370,9 @@
 
 
 <h4>
-    Quotation Items
+    <?= __('quotation_items') ?>
 </h4>
+
 
 <table class="table table-bordered table-striped">
 
@@ -372,21 +381,22 @@
         <tr>
 
             <th>#</th>
-            <th>Item</th>
-            <th>Specification</th>
-            <th>UOM</th>
-            <th>Qty</th>
-            <th>Quality</th>
-            <th>Unit Price</th>
-            <th>Total</th>
+            <th><?= __('item') ?></th>
+            <th><?= __('specification') ?></th>
+            <th><?= __('uom') ?></th>
+            <th><?= __('qty') ?></th>
+            <th><?= __('quality') ?></th>
+            <th><?= __('unit_price') ?></th>
+            <th><?= __('total') ?></th>
 
             <?php if ($quotation->status === 'DRAFT'): ?>
-                <th>Actions</th>
+                <th><?= __('actions') ?></th>
             <?php endif; ?>
 
         </tr>
 
     </thead>
+
 
     <tbody>
 
@@ -425,7 +435,7 @@
                             ) ?>
 
                             <span class="badge bg-warning text-dark">
-                                New Item
+                                <?= __('new_item') ?>
                             </span>
 
                         <?php endif; ?>
@@ -457,45 +467,46 @@
 
                     <td>
 
-    <?php if ($item->quality_status === 'MEETS'): ?>
+                        <?php if ($item->quality_status === 'MEETS'): ?>
 
-        <span class="badge bg-success">
-            MEETS
-        </span>
+                            <span class="badge bg-success">
+                                <?= __('meets') ?>
+                            </span>
 
-    <?php elseif ($item->quality_status === 'PARTIAL'): ?>
+                        <?php elseif ($item->quality_status === 'PARTIAL'): ?>
 
-        <span class="badge bg-warning text-dark">
-            PARTIAL
-        </span>
+                            <span class="badge bg-warning text-dark">
+                                <?= __('partial') ?>
+                            </span>
 
-    <?php elseif ($item->quality_status === 'DOES_NOT_MEET'): ?>
+                        <?php elseif ($item->quality_status === 'DOES_NOT_MEET'): ?>
 
-        <span class="badge bg-danger">
-            DOES NOT MEET
-        </span>
+                            <span class="badge bg-danger">
+                                <?= __('does_not_meet') ?>
+                            </span>
 
-    <?php else: ?>
+                        <?php else: ?>
 
-        <span class="text-muted">
-            Not Evaluated
-        </span>
+                            <span class="text-muted">
+                                <?= __('not_evaluated') ?>
+                            </span>
 
-    <?php endif; ?>
+                        <?php endif; ?>
 
-    <?php if (!empty($item->quality_notes)): ?>
 
-        <div class="small text-muted mt-1">
+                        <?php if (!empty($item->quality_notes)): ?>
 
-            <?= htmlspecialchars(
-                $item->quality_notes
-            ) ?>
+                            <div class="small text-muted mt-1">
 
-        </div>
+                                <?= htmlspecialchars(
+                                    $item->quality_notes
+                                ) ?>
 
-    <?php endif; ?>
+                            </div>
 
-</td>
+                        <?php endif; ?>
+
+                    </td>
 
                     <td>
                         <?= number_format(
@@ -511,15 +522,16 @@
                         ) ?>
                     </td>
 
+
                     <?php if ($quotation->status === 'DRAFT'): ?>
 
                         <td>
 
                             <a href="<?= URLROOT ?>/supplierquotations/deleteItem/<?= $item->id ?>"
                                class="btn btn-sm btn-danger"
-                               onclick="return confirm('Delete this quotation item?')">
+                               onclick="return confirm(<?= json_encode(__('delete_quotation_item_confirm')) ?>)">
 
-                                Delete
+                                <?= __('delete') ?>
 
                             </a>
 
@@ -538,7 +550,7 @@
                 <td colspan="8"
                     class="text-center text-muted">
 
-                    No items added yet.
+                    <?= __('no_items_added_yet') ?>
 
                 </td>
 
@@ -548,6 +560,7 @@
 
     </tbody>
 
+
     <tfoot>
 
         <tr>
@@ -555,15 +568,17 @@
             <th colspan="6"
                 class="text-end">
 
-                Grand Total
+                <?= __('grand_total') ?>
 
             </th>
 
             <th>
+
                 <?= number_format(
                     $grandTotal,
                     2
                 ) ?>
+
             </th>
 
             <?php if ($quotation->status === 'DRAFT'): ?>
@@ -582,59 +597,64 @@
     <a href="<?= URLROOT ?>/supplierquotations"
        class="btn btn-secondary">
 
-        Back
+        <?= __('back') ?>
 
     </a>
+
 
     <?php if ($quotation->status === 'DRAFT'): ?>
 
         <a href="<?= URLROOT ?>/supplierquotations/accept/<?= $quotation->id ?>"
            class="btn btn-success"
-           onclick="return confirm('Accept this supplier quotation?')">
+           onclick="return confirm(<?= json_encode(__('accept_supplier_quotation_confirm')) ?>)">
 
-            Accept Quotation
+            <?= __('accept_quotation') ?>
 
         </a>
+
 
         <a href="<?= URLROOT ?>/supplierquotations/cancel/<?= $quotation->id ?>"
            class="btn btn-danger"
-           onclick="return confirm('Cancel this quotation?')">
+           onclick="return confirm(<?= json_encode(__('cancel_quotation_confirm')) ?>)">
 
-            Cancel
-
-        </a>
-
-   <?php elseif ($quotation->status === 'ACCEPTED'): ?>
-
-    <span class="badge bg-success fs-6">
-        ACCEPTED
-    </span>
-
-    <?php if (empty($quotation->purchase_order_id)): ?>
-
-        <a
-            href="<?= URLROOT ?>/supplierquotations/createPO/<?= $quotation->id ?>"
-            class="btn btn-primary ms-2"
-            onclick="return confirm('Create a Purchase Order from this accepted quotation?')">
-
-            <i class="fas fa-file-invoice"></i>
-            Create PO
+            <?= __('cancel') ?>
 
         </a>
 
-    <?php else: ?>
 
-        <a
-            href="<?= URLROOT ?>/purchaseorders/details/<?= $quotation->purchase_order_id ?>"
-            class="btn btn-info ms-2">
+    <?php elseif ($quotation->status === 'ACCEPTED'): ?>
 
-            <i class="fas fa-file-invoice"></i>
-            View PO
+        <span class="badge bg-success fs-6">
+            <?= __('accepted') ?>
+        </span>
 
-        </a>
+
+        <?php if (empty($quotation->purchase_order_id)): ?>
+
+            <a
+                href="<?= URLROOT ?>/supplierquotations/createPO/<?= $quotation->id ?>"
+                class="btn btn-primary ms-2"
+                onclick="return confirm(<?= json_encode(__('create_po_from_accepted_quotation_confirm')) ?>)">
+
+                <i class="fas fa-file-invoice"></i>
+                <?= __('create_po') ?>
+
+            </a>
+
+
+        <?php else: ?>
+
+            <a
+                href="<?= URLROOT ?>/purchaseorders/details/<?= $quotation->purchase_order_id ?>"
+                class="btn btn-info ms-2">
+
+                <i class="fas fa-file-invoice"></i>
+                <?= __('view_po') ?>
+
+            </a>
+
+        <?php endif; ?>
 
     <?php endif; ?>
-
-<?php endif; ?>
 
 </div>

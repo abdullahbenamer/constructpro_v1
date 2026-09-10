@@ -1,9 +1,9 @@
-<h2>Edit Supplier</h2>
+<h2><?= __('edit_supplier') ?></h2>
 
 <form method="POST">
 
     <div class="mb-3">
-        <label>Company Name</label>
+        <label><?= __('company_name') ?></label>
 
         <input type="text"
                name="company_name"
@@ -13,7 +13,7 @@
     </div>
 
     <div class="mb-3">
-        <label>Contact Person</label>
+        <label><?= __('contact_person') ?></label>
 
         <input type="text"
                name="contact_person"
@@ -22,7 +22,7 @@
     </div>
 
     <div class="mb-3">
-        <label>Phone</label>
+        <label><?= __('phone') ?></label>
 
         <input type="text"
                name="phone"
@@ -31,7 +31,7 @@
     </div>
 
     <div class="mb-3">
-        <label>Email</label>
+        <label><?= __('email') ?></label>
 
         <input type="email"
                name="email"
@@ -40,21 +40,21 @@
     </div>
 
     <div class="mb-3">
-        <label>Address</label>
+        <label><?= __('address') ?></label>
 
         <textarea name="address"
                   class="form-control"><?= htmlspecialchars($supplier->address) ?></textarea>
     </div>
 
     <div class="mb-3">
-        <label>Notes</label>
+        <label><?= __('notes') ?></label>
 
         <textarea name="notes"
                   class="form-control"><?= htmlspecialchars($supplier->notes) ?></textarea>
     </div>
 
     <button class="btn btn-success">
-        Update Supplier
+        <?= __('update_supplier') ?>
     </button>
 
 </form>

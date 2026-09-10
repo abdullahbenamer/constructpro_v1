@@ -7,27 +7,27 @@
     <div class="card-body">
 
         <p>
-            <strong>Contact:</strong>
+            <strong><?= __('contact') ?>:</strong>
             <?= htmlspecialchars($supplier->contact_person) ?>
         </p>
 
         <p>
-            <strong>Phone:</strong>
+            <strong><?= __('phone') ?>:</strong>
             <?= htmlspecialchars($supplier->phone) ?>
         </p>
 
         <p>
-            <strong>Email:</strong>
+            <strong><?= __('email') ?>:</strong>
             <?= htmlspecialchars($supplier->email) ?>
         </p>
 
         <p>
-            <strong>Address:</strong>
+            <strong><?= __('address') ?>:</strong>
             <?= htmlspecialchars($supplier->address) ?>
         </p>
 
         <p>
-            <strong>Total Purchases:</strong>
+            <strong><?= __('total_purchases') ?>:</strong>
 
             <?= number_format($total_purchases ?? 0, 2) ?>
         </p>
@@ -36,16 +36,16 @@
 
 </div>
 
-<h4>Purchase Orders</h4>
+<h4><?= __('purchase_orders') ?></h4>
 
 <table class="table table-bordered">
 
     <thead>
         <tr>
-            <th>PO Number</th>
-            <th>Status</th>
-            <th>Total</th>
-            <th>Date</th>
+            <th><?= __('po_number') ?></th>
+            <th><?= __('status') ?></th>
+            <th><?= __('total') ?></th>
+            <th><?= __('date') ?></th>
         </tr>
     </thead>
 

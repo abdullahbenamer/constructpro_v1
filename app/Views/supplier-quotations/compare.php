@@ -1,13 +1,13 @@
 <h2>
     <i class="fas fa-balance-scale"></i>
-    Supplier Quotation Comparison
+    <?= __('supplier_quotation_comparison') ?>
 </h2>
 
 <div class="card mb-4">
 
     <div class="card-body">
 
-        <strong>Procurement Reference:</strong>
+        <strong><?= __('procurement_reference') ?>:</strong>
 
         <span class="badge bg-primary fs-6">
 
@@ -58,7 +58,7 @@
 
                     <div class="col-md-3">
 
-                        Quote:
+                        <?= __('quote') ?>:
 
                         <?= htmlspecialchars(
                             $quotation->supplier_reference
@@ -70,7 +70,7 @@
                     <div class="col-md-2">
 
                         <strong>
-                            Total:
+                            <?= __('total') ?>:
                         </strong>
 
                         <?= number_format(
@@ -87,7 +87,7 @@
                         ): ?>
 
                             <span class="badge bg-success">
-                                ACCEPTED
+                                <?= __('accepted') ?>
                             </span>
 
                         <?php elseif (
@@ -95,13 +95,13 @@
                         ): ?>
 
                             <span class="badge bg-danger">
-                                CANCELLED
+                                <?= __('cancelled') ?>
                             </span>
 
                         <?php else: ?>
 
                             <span class="badge bg-secondary">
-                                DRAFT
+                                <?= __('draft') ?>
                             </span>
 
                         <?php endif; ?>
@@ -120,7 +120,7 @@
                     <div class="col-md-4">
 
                         <strong>
-                            Quotation Date
+                            <?= __('quotation_date') ?>
                         </strong><br>
 
                         <?= htmlspecialchars(
@@ -132,7 +132,7 @@
                     <div class="col-md-4">
 
                         <strong>
-                            Required Delivery
+                            <?= __('required_delivery') ?>
                         </strong><br>
 
                         <?= htmlspecialchars(
@@ -145,7 +145,7 @@
                     <div class="col-md-4">
 
                         <strong>
-                            Supplier Promised Delivery
+                            <?= __('supplier_promised_delivery') ?>
                         </strong><br>
 
                         <?php
@@ -170,13 +170,13 @@
                             ): ?>
 
                                 <span class="badge bg-success">
-                                    Can Meet
+                                    <?= __('can_meet') ?>
                                 </span>
 
                             <?php else: ?>
 
                                 <span class="badge bg-danger">
-                                    Late
+                                    <?= __('late') ?>
                                 </span>
 
                             <?php endif; ?>
@@ -184,7 +184,7 @@
                         <?php else: ?>
 
                             <span class="text-muted">
-                                Not specified
+                                <?= __('not_specified') ?>
                             </span>
 
                         <?php endif; ?>
@@ -203,31 +203,31 @@
                             <tr>
 
                                 <th>
-                                    Item
+                                    <?= __('item') ?>
                                 </th>
 
                                 <th>
-                                    Specification
+                                    <?= __('specification') ?>
                                 </th>
 
                                 <th>
-                                    UOM
+                                    <?= __('uom') ?>
                                 </th>
 
                                 <th>
-                                    Qty
+                                    <?= __('qty') ?>
                                 </th>
 
                                 <th>
-                                    Unit Price
+                                    <?= __('unit_price') ?>
                                 </th>
 
                                 <th>
-                                    Total
+                                    <?= __('total') ?>
                                 </th>
 
                                 <th>
-                                    Quality
+                                    <?= __('quality') ?>
                                 </th>
 
                             </tr>
@@ -268,7 +268,9 @@
 
                                                 <span
                                                     class="badge bg-warning text-dark">
-                                                    New Item
+
+                                                    <?= __('new_item') ?>
+
                                                 </span>
 
                                             <?php endif; ?>
@@ -335,7 +337,9 @@
 
                                                 <span
                                                     class="badge bg-success">
-                                                    MEETS
+
+                                                    <?= __('meets') ?>
+
                                                 </span>
 
                                             <?php elseif (
@@ -344,7 +348,9 @@
 
                                                 <span
                                                     class="badge bg-warning text-dark">
-                                                    PARTIAL
+
+                                                    <?= __('partial') ?>
+
                                                 </span>
 
                                             <?php elseif (
@@ -353,14 +359,18 @@
 
                                                 <span
                                                     class="badge bg-danger">
-                                                    DOES NOT MEET
+
+                                                    <?= __('does_not_meet') ?>
+
                                                 </span>
 
                                             <?php else: ?>
 
                                                 <span
                                                     class="text-muted">
+
                                                     —
+
                                                 </span>
 
                                             <?php endif; ?>
@@ -379,7 +389,7 @@
                                         colspan="7"
                                         class="text-center text-muted">
 
-                                        No quotation items.
+                                        <?= __('no_quotation_items') ?>
 
                                     </td>
 
@@ -403,7 +413,7 @@
                     <div class="alert alert-light border mt-3">
 
                         <strong>
-                            Procurement Evaluation:
+                            <?= __('procurement_evaluation') ?>:
                         </strong>
 
                         <br>
@@ -434,7 +444,7 @@
         class="btn btn-secondary">
 
         <i class="fas fa-arrow-left"></i>
-        Back
+        <?= __('back') ?>
 
     </a>
 

@@ -1,6 +1,6 @@
 <h2>
     <i class="fas fa-truck"></i>
-    Add Supplier
+    <?= __('add_supplier') ?>
 </h2>
 
 <form method="POST">
@@ -9,7 +9,7 @@
 
         <div class="col-md-6 mb-3">
             <label class="form-label">
-                Company Name *
+                <?= __('company_name') ?> *
             </label>
 
             <input type="text"
@@ -20,7 +20,7 @@
 
         <div class="col-md-6 mb-3">
             <label class="form-label">
-                Contact Person
+                <?= __('contact_person') ?>
             </label>
 
             <input type="text"
@@ -34,7 +34,7 @@
 
         <div class="col-md-4 mb-3">
             <label class="form-label">
-                Phone
+                <?= __('phone') ?>
             </label>
 
             <input type="text"
@@ -44,7 +44,7 @@
 
         <div class="col-md-4 mb-3">
             <label class="form-label">
-                Email
+                <?= __('email') ?>
             </label>
 
             <input type="email"
@@ -54,7 +54,7 @@
 
         <div class="col-md-4 mb-3">
             <label class="form-label">
-                Address
+                <?= __('address') ?>
             </label>
 
             <input type="text"
@@ -66,7 +66,7 @@
 
     <div class="mb-3">
         <label class="form-label">
-            Notes
+            <?= __('notes') ?>
         </label>
 
         <textarea name="notes"
@@ -77,14 +77,14 @@
     <button class="btn btn-success">
 
         <i class="fas fa-save"></i>
-        Save Supplier
+        <?= __('save_supplier') ?>
 
     </button>
 
     <a href="<?= URLROOT ?>/suppliers"
        class="btn btn-secondary">
 
-        Cancel
+        <?= __('cancel') ?>
 
     </a>
 
