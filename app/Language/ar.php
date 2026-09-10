@@ -1032,4 +1032,46 @@ return [
 'dedicated_to_quality'            => 'ملتزمون بالجودة',
 'construction_professional_system'=> 'النظام الاحترافي للإنشاءات',
 'home'                            => 'الرئيسية',
+
+// ADMIN
+'permission_name'           => 'اسم الصلاحية',
+'add_permission'            => 'إضافة صلاحية',
+'edit_permission'           => 'تعديل الصلاحية',
+'delete_permission_confirm' => 'هل تريد حذف الصلاحية؟',
+
+'assign_permissions'        => 'تعيين الصلاحيات',
+'for'                       => 'لـ',
+'select_all'                => 'تحديد الكل',
+'save_permissions'          => 'حفظ الصلاحيات',
+
+'edit_role'                 => 'تعديل الدور',
+'delete_role_confirm'      => 'هل تريد حذف الدور؟',
+'no_permissions'            => 'لا توجد صلاحيات',
+
+'system_settings'           => 'إعدادات النظام',
+'contacts'                  => 'بيانات الاتصال',
+'company_logo'              => 'شعار الشركة',
+'save_settings'             => 'حفظ الإعدادات',
+
+'manage_users'              => 'إدارة المستخدمين',
+'manage_roles'              => 'إدارة الأدوار',
+'manage_permissions'        => 'إدارة الصلاحيات',
+
+'create_user'                              => 'إنشاء مستخدم',
+'full_name'                                => 'الاسم الكامل',
+'short_name'                               => 'الاسم المختصر',
+'password'                                 => 'كلمة المرور',
+'warehouse_access'                         => 'صلاحية الوصول إلى المستودعات',
+'default_warehouse'                        => 'المستودع الافتراضي',
+'select_default_warehouse'                 => 'اختر المستودع الافتراضي',
+'edit_user'                                => 'تعديل المستخدم',
+'name'                                      => 'الاسم',
+'password_leave_blank_to_keep_current'     => 'كلمة المرور (اتركها فارغة للإبقاء على الحالية)',
+'update_user'                               => 'تحديث المستخدم',
+'users'                                     => 'المستخدمون',
+'add_user'                                  => 'إضافة مستخدم',
+'delete_user_confirm'                      => 'هل تريد حذف هذا المستخدم؟',
+'login' => 'تسجيل الدخول',
+
+
 ];

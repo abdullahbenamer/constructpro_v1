@@ -1045,4 +1045,45 @@ return [
 'construction_professional_system'=> 'Construction Professional System',
 'home'                            => 'Home',
 
+// ADMIN
+'permission_name'          => 'Permission name',
+'add_permission'           => 'Add Permission',
+'edit_permission'          => 'Edit Permission',
+'delete_permission_confirm'=> 'Delete permission?',
+
+'assign_permissions'       => 'Assign Permissions',
+'for'                      => 'For',
+'select_all'               => 'Select All',
+'save_permissions'         => 'Save Permissions',
+
+'edit_role'                => 'Edit Role',
+'delete_role_confirm'     => 'Delete role?',
+'no_permissions'           => 'No permissions',
+
+'system_settings'          => 'System Settings',
+'contacts'                 => 'Contacts',
+'company_logo'             => 'Company Logo',
+'save_settings'            => 'Save Settings',
+
+'manage_users'             => 'Manage Users',
+'manage_roles'             => 'Manage Roles',
+'manage_permissions'       => 'Manage Permissions',
+
+'create_user'                              => 'Create User',
+'full_name'                                => 'Full Name',
+'short_name'                               => 'Short Name',
+'password'                                 => 'Password',
+'warehouse_access'                         => 'Warehouse Access',
+'default_warehouse'                        => 'Default Warehouse',
+'select_default_warehouse'                 => 'Select Default Warehouse',
+'edit_user'                                => 'Edit User',
+'name'                                      => 'Name',
+'password_leave_blank_to_keep_current'     => 'Password (leave blank to keep current)',
+'update_user'                               => 'Update User',
+'users'                                     => 'Users',
+'add_user'                                  => 'Add User',
+'delete_user_confirm'                      => 'Delete this user?',
+
+'login' => 'Login',
+
 ];
