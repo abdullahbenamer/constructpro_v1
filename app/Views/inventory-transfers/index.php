@@ -1,39 +1,42 @@
 <h2>
-    Inventory Transfers
+    <?= __('transfer_inventory') ?>
 </h2>
 
 <a href="<?= URLROOT ?>/inventorytransfers/create"
    class="btn btn-primary mb-3">
 
-    New Transfer
+    <?= __('new_transfer') ?>
 
 </a>
 
+
 <table class="table table-striped">
 
-  <thead>
+    <thead>
 
-    <tr>
+        <tr>
 
-        <th>Date</th>
-        <th>Item</th>
-        <th>SKU</th>
-        <th>From</th>
-        <th>To</th>
-        <th>Qty</th>
-        <th>Reference</th>
-        <th>Status</th>
-        <th>Actions</th>
+            <th><?= __('date') ?></th>
+            <th><?= __('item') ?></th>
+            <th><?= __('sku') ?></th>
+            <th><?= __('from') ?></th>
+            <th><?= __('to') ?></th>
+            <th><?= __('qty') ?></th>
+            <th><?= __('reference') ?></th>
+            <th><?= __('status') ?></th>
+            <th><?= __('actions') ?></th>
 
-    </tr>
+        </tr>
 
-</thead>
+    </thead>
 
-  <tbody>
+
+    <tbody>
 
 <?php if (!empty($transfers)): ?>
 
     <?php
+
     /*
     |--------------------------------------------------------------------------
     | IDENTIFY SYSTEM-GENERATED REVERSAL TRANSFERS
@@ -57,9 +60,13 @@
 
             $reversalTransferIds[] =
                 (int) $row->reversal_transfer_id;
+
         }
+
     }
+
     ?>
+
 
     <?php foreach ($transfers as $t): ?>
 
@@ -76,96 +83,165 @@
 
         ?>
 
+
         <tr>
 
             <!-- DATE -->
+
             <td>
-                <?= htmlspecialchars($t->created_at ?? '') ?>
+                <?= htmlspecialchars(
+                    $t->created_at ?? ''
+                ) ?>
             </td>
+
 
             <!-- ITEM -->
+
             <td>
-                <?= htmlspecialchars($t->item_name ?? '') ?>
+                <?= htmlspecialchars(
+                    $t->item_name ?? ''
+                ) ?>
             </td>
+
 
             <!-- SKU -->
+
             <td>
-                <?= htmlspecialchars($t->item_sku ?? '') ?>
+                <?= htmlspecialchars(
+                    $t->item_sku ?? ''
+                ) ?>
             </td>
+
 
             <!-- FROM -->
+
             <td>
+
                 <span class="badge bg-secondary">
-                    <?= htmlspecialchars($t->from_code ?? '') ?>
+
+                    <?= htmlspecialchars(
+                        $t->from_code ?? ''
+                    ) ?>
+
                 </span>
+
                 <br>
+
                 <small>
-                    <?= htmlspecialchars($t->from_name ?? '') ?>
+
+                    <?= htmlspecialchars(
+                        $t->from_name ?? ''
+                    ) ?>
+
                 </small>
+
             </td>
+
 
             <!-- TO -->
+
             <td>
+
                 <span class="badge bg-secondary">
-                    <?= htmlspecialchars($t->to_code ?? '') ?>
+
+                    <?= htmlspecialchars(
+                        $t->to_code ?? ''
+                    ) ?>
+
                 </span>
+
                 <br>
+
                 <small>
-                    <?= htmlspecialchars($t->to_name ?? '') ?>
+
+                    <?= htmlspecialchars(
+                        $t->to_name ?? ''
+                    ) ?>
+
                 </small>
+
             </td>
+
 
             <!-- QUANTITY -->
+
             <td>
+
                 <strong>
-                    <?= htmlspecialchars($t->quantity ?? '0') ?>
+
+                    <?= htmlspecialchars(
+                        $t->quantity ?? '0'
+                    ) ?>
+
                 </strong>
+
             </td>
+
 
             <!-- REFERENCE -->
+
             <td>
-                <?= htmlspecialchars($t->reference ?? '') ?>
+
+                <?= htmlspecialchars(
+                    $t->reference ?? ''
+                ) ?>
+
             </td>
 
+
             <!-- STATUS -->
+
             <td>
 
                 <?php if ($isReversal): ?>
 
                     <span class="badge bg-info">
+
                         <i class="fas fa-undo"></i>
-                        REVERSAL
+
+                        <?= __('reversal') ?>
+
                     </span>
 
                 <?php elseif ($isReversed): ?>
 
                     <span class="badge bg-danger">
+
                         <i class="fas fa-ban"></i>
-                        REVERSED
+
+                        <?= __('reversed') ?>
+
                     </span>
 
                 <?php else: ?>
 
                     <span class="badge bg-success">
+
                         <i class="fas fa-check"></i>
-                        COMPLETED
+
+                        <?= __('completed') ?>
+
                     </span>
 
                 <?php endif; ?>
 
             </td>
 
+
             <!-- ACTIONS -->
+
             <td class="text-nowrap">
 
-                <!-- <a href="<?//= URLROOT ?>/inventorytransfers/view/<?//= $t->id ?>"
+                <!--
+                <a href="<?= URLROOT ?>/inventorytransfers/view/<?= $t->id ?>"
                    class="btn btn-sm btn-info">
 
                     <i class="fas fa-eye"></i>
-                    View
+                    <?= __('view') ?>
 
                 </a>
- -->
+                -->
+
 
                 <?php if (
                     !$isReversal &&
@@ -176,11 +252,12 @@
                     <a href="<?= URLROOT ?>/inventorytransfers/reverse/<?= $t->id ?>"
                        class="btn btn-sm btn-warning"
                        onclick="return confirm(
-                           'Are you sure you want to reverse this transfer?'
+                           '<?= __('reverse_transfer_confirm') ?>'
                        )">
 
                         <i class="fas fa-undo"></i>
-                        Reverse
+
+                        <?= __('reverse') ?>
 
                     </a>
 
@@ -192,27 +269,34 @@
 
     <?php endforeach; ?>
 
+
 <?php else: ?>
 
     <tr>
 
-        <td colspan="9" class="text-center py-5">
+        <td colspan="9"
+            class="text-center py-5">
 
             <i class="fas fa-exchange-alt fa-3x text-muted mb-3"></i>
 
             <h5 class="text-muted">
-                No Inventory Transfers Found
+
+                <?= __('no_inventory_transfers_found') ?>
+
             </h5>
 
             <p class="text-muted mb-3">
-                There are currently no inventory transfer records.
+
+                <?= __('no_inventory_transfer_records') ?>
+
             </p>
 
             <a href="<?= URLROOT ?>/inventorytransfers/create"
                class="btn btn-primary">
 
                 <i class="fas fa-plus"></i>
-                Create First Transfer
+
+                <?= __('create_first_transfer') ?>
 
             </a>
 
@@ -222,6 +306,6 @@
 
 <?php endif; ?>
 
-</tbody>
+    </tbody>
 
 </table>

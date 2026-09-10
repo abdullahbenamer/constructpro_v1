@@ -779,4 +779,30 @@ return [
 'no_inventory_reservations_currently'=> 'لا توجد حالياً حجوزات للمخزون.',
 'create_first_reservation'           => 'إنشاء أول حجز',
 
+// INVENTORY TRANSFERS
+'transfer_inventory'             => 'نقل المخزون',
+'scan_enter_sku_barcode'         => 'امسح / أدخل SKU أو الباركود',
+'scan_barcode_or_type_sku'       => 'امسح الباركود أو أدخل SKU...',
+'select_manually_below'          => 'يمكنك أيضاً الاختيار يدوياً أدناه',
+'select_item'                    => 'اختر الصنف',
+'from_location'                  => 'من الموقع',
+'select_source'                  => 'اختر المصدر',
+'available_qty'                  => 'الكمية المتاحة',
+'to_location'                    => 'إلى الموقع',
+'select_destination'             => 'اختر الوجهة',
+'transfer'                       => 'نقل',
+'stock_load_error'               => 'خطأ في تحميل المخزون',
+'source_destination_same'        => 'لا يمكن أن يكون موقع المصدر والوجهة متطابقين.',
+
+'new_transfer'                   => 'نقل جديد',
+'from'                           => 'من',
+'to'                             => 'إلى',
+'reversal'                       => 'عكس الحركة',
+'reversed'                       => 'تم عكس الحركة',
+'reverse'                        => 'عكس الحركة',
+'reverse_transfer_confirm'       => 'هل أنت متأكد من رغبتك في عكس عملية النقل هذه؟',
+'no_inventory_transfers_found'  => 'لم يتم العثور على عمليات نقل للمخزون',
+'no_inventory_transfer_records' => 'لا توجد حالياً سجلات لنقل المخزون.',
+'create_first_transfer'          => 'إنشاء أول عملية نقل',
+
 ];

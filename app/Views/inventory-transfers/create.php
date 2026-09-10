@@ -1,53 +1,86 @@
 <?php if (!empty($_SESSION['error'])) : ?>
+
     <div class="alert alert-danger">
         <?= $_SESSION['error'] ?>
     </div>
+
     <?php unset($_SESSION['error']); ?>
+
 <?php endif; ?>
+
 <h2>
-    Transfer Inventory
+    <?= __('transfer_inventory') ?>
 </h2>
+
 <!-- bootstrap error notification container -->
 <div id="jsNotification"></div>
+
 <form method="POST">
+
     <div class="mb-3">
-        <label>Scan / Enter SKU or Barcode</label>
+
+        <label>
+            <?= __('scan_enter_sku_barcode') ?>
+        </label>
+
         <input type="text"
-            id="skuInput"
-            class="form-control"
-            placeholder="Scan barcode or type SKU...">
+               id="skuInput"
+               class="form-control"
+               placeholder="<?= __('scan_barcode_or_type_sku') ?>">
+
         <small class="text-muted">
-            You can also select manually below
+            <?= __('select_manually_below') ?>
         </small>
+
     </div>
+
+
     <div class="mb-3">
-        <label>Item</label>
-        <select name="inventory_id" id="inventorySelect" class="form-select" required>
+
+        <label>
+            <?= __('item') ?>
+        </label>
+
+        <select name="inventory_id"
+                id="inventorySelect"
+                class="form-select"
+                required>
+
             <option value="">
-                Select Item
+                <?= __('select_item') ?>
             </option>
+
             <?php foreach ($inventory as $item) : ?>
+
                 <option value="<?= $item->id ?>"
-                    data-sku="<?= htmlspecialchars($item->sku) ?>">
+                        data-sku="<?= htmlspecialchars($item->sku) ?>">
+
                     <?= htmlspecialchars($item->name) ?>
+
                 </option>
+
             <?php endforeach; ?>
+
         </select>
+
     </div>
+
 
     <div class="row">
 
         <div class="col-md-6 mb-3">
 
-            <label>From Location</label>
+            <label>
+                <?= __('from_location') ?>
+            </label>
 
             <select name="from_location_id"
-                id="fromLocation"
-                class="form-select"
-                required>
+                    id="fromLocation"
+                    class="form-select"
+                    required>
 
                 <option value="">
-                    Select Source
+                    <?= __('select_source') ?>
                 </option>
 
                 <?php foreach ($locations as $loc): ?>
@@ -64,21 +97,34 @@
 
             </select>
 
-            <div class="alert alert-info d-none mt-2" id="stockInfo">
-    <strong>Available Qty:</strong>
-    <span id="availableQty">0</span>
-</div>
+
+            <div class="alert alert-info d-none mt-2"
+                 id="stockInfo">
+
+                <strong>
+                    <?= __('available_qty') ?>:
+                </strong>
+
+                <span id="availableQty">0</span>
+
+            </div>
 
         </div>
 
+
         <div class="col-md-6 mb-3">
 
-            <label>To Location</label>
+            <label>
+                <?= __('to_location') ?>
+            </label>
 
-            <select name="to_location_id"  id="toLocation" class="form-select" required>
+            <select name="to_location_id"
+                    id="toLocation"
+                    class="form-select"
+                    required>
 
                 <option value="">
-                    Select Destination
+                    <?= __('select_destination') ?>
                 </option>
 
                 <?php foreach ($locations as $loc) : ?>
@@ -88,225 +134,428 @@
                         <?= htmlspecialchars($loc->code) ?>
                         -
                         <?= htmlspecialchars($loc->name) ?>
+
                     </option>
+
                 <?php endforeach; ?>
+
             </select>
+
         </div>
+
     </div>
+
 
     <div class="mb-3">
 
-        <label>Quantity</label>
+        <label>
+            <?= __('quantity') ?>
+        </label>
 
-        <input type="number" step="0.01" min="0.01" name="quantity" class="form-control" required>
+        <input type="number"
+               step="0.01"
+               min="0.01"
+               name="quantity"
+               class="form-control"
+               required>
 
     </div>
+
 
     <div class="mb-3">
 
-        <label>Reference</label>
+        <label>
+            <?= __('reference') ?>
+        </label>
 
-        <input type="text" name="reference" class="form-control">
+        <input type="text"
+               name="reference"
+               class="form-control">
 
     </div>
+
 
     <div class="mb-3">
 
-        <label>Notes</label>
+        <label>
+            <?= __('notes') ?>
+        </label>
 
-        <textarea name="notes" class="form-control"></textarea>
+        <textarea name="notes"
+                  class="form-control"></textarea>
 
     </div>
+
 
     <button class="btn btn-primary">
 
-        Transfer
+        <?= __('transfer') ?>
 
     </button>
 
 </form>
 
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-    const inventorySelect = document.getElementById('inventorySelect');
-    const fromLocation = document.getElementById('fromLocation');
-    const skuInput = document.getElementById('skuInput');
+    const inventorySelect =
+        document.getElementById('inventorySelect');
 
-    const stockInfo = document.getElementById('stockInfo');
-    const availableQty = document.getElementById('availableQty');
+    const fromLocation =
+        document.getElementById('fromLocation');
+
+    const skuInput =
+        document.getElementById('skuInput');
+
+    const stockInfo =
+        document.getElementById('stockInfo');
+
+    const availableQty =
+        document.getElementById('availableQty');
+
 
     // -----------------------------
     // STOCK BY LOCATION
     // -----------------------------
- function loadStock() {
 
-const inventory_id = inventorySelect.value;
-const location_id = fromLocation.value;
+    function loadStock() {
 
-if (!inventory_id || !location_id) {
-    stockInfo.classList.add('d-none');
-    availableQty.textContent = 0;
-    return;
-}
+        const inventory_id =
+            inventorySelect.value;
 
-fetch('<?= URLROOT ?>/inventorytransfers/getLocationStock', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: 'inventory_id=' + inventory_id +
-          '&location_id=' + location_id
-})
-.then(res => res.json())
-.then(data => {
+        const location_id =
+            fromLocation.value;
 
-    stockInfo.classList.remove('d-none');
+        if (!inventory_id || !location_id) {
 
-    const qty = parseFloat(data.quantity ?? 0);
+            stockInfo.classList.add('d-none');
 
-    availableQty.textContent = qty;
+            availableQty.textContent = 0;
 
-    stockInfo.classList.remove('alert-info', 'alert-danger', 'alert-warning');
+            return;
+        }
 
-    if (qty <= 0) {
-        stockInfo.classList.add('alert-danger');
-    } else if (qty < 10) {
-        stockInfo.classList.add('alert-warning');
-    } else {
-        stockInfo.classList.add('alert-info');
+
+        fetch(
+            '<?= URLROOT ?>/inventorytransfers/getLocationStock',
+            {
+                method: 'POST',
+
+                headers: {
+                    'Content-Type':
+                        'application/x-www-form-urlencoded'
+                },
+
+                body:
+                    'inventory_id=' +
+                    inventory_id +
+                    '&location_id=' +
+                    location_id
+            }
+        )
+
+        .then(res => res.json())
+
+        .then(data => {
+
+            stockInfo.classList.remove('d-none');
+
+            const qty =
+                parseFloat(data.quantity ?? 0);
+
+            availableQty.textContent =
+                qty;
+
+            stockInfo.classList.remove(
+                'alert-info',
+                'alert-danger',
+                'alert-warning'
+            );
+
+            if (qty <= 0) {
+
+                stockInfo.classList.add(
+                    'alert-danger'
+                );
+
+            } else if (qty < 10) {
+
+                stockInfo.classList.add(
+                    'alert-warning'
+                );
+
+            } else {
+
+                stockInfo.classList.add(
+                    'alert-info'
+                );
+
+            }
+
+        })
+
+        .catch(err => {
+
+            console.error(
+                '<?= __('stock_load_error') ?>:',
+                err
+            );
+
+            stockInfo.classList.add(
+                'd-none'
+            );
+
+        });
+
     }
-    
-})
-.catch(err => {
-    console.error('Stock load error:', err);
-    stockInfo.classList.add('d-none');
-});
 
-}
 
     // -----------------------------
     // LOAD LOCATIONS FOR ITEM
     // -----------------------------
- function loadLocations(itemId) {
 
-    fetch('<?= URLROOT ?>/inventorytransfers/getItemLocations', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: 'inventory_id=' + itemId
-    })
-    .then(res => res.json())
-    .then(locations => {
+    function loadLocations(itemId) {
 
-        fromLocation.innerHTML = '<option value="">Select Source</option>';
+        fetch(
+            '<?= URLROOT ?>/inventorytransfers/getItemLocations',
+            {
+                method: 'POST',
 
-        locations.forEach(loc => {
-            fromLocation.innerHTML += `
-                <option value="${loc.location_id}">
-                    ${loc.code} - ${loc.name} (${loc.quantity})
-                </option>
-            `;
+                headers: {
+                    'Content-Type':
+                        'application/x-www-form-urlencoded'
+                },
+
+                body:
+                    'inventory_id=' +
+                    itemId
+            }
+        )
+
+        .then(res => res.json())
+
+        .then(locations => {
+
+            fromLocation.innerHTML =
+                '<option value=""><?= __('select_source') ?></option>';
+
+            locations.forEach(loc => {
+
+                fromLocation.innerHTML += `
+                    <option value="${loc.location_id}">
+                        ${loc.code} - ${loc.name} (${loc.quantity})
+                    </option>
+                `;
+
+            });
+
+
+            // 👇 auto-select first location (important fix)
+
+            if (locations.length > 0) {
+
+                fromLocation.value =
+                    locations[0].location_id;
+
+                loadStock();
+
+            }
+
         });
 
-        // 👇 auto-select first location (important fix)
-        if (locations.length > 0) {
-            fromLocation.value = locations[0].location_id;
-            loadStock(); 
-        }
-    });
-}
+    }
+
 
     // -----------------------------
     // SKU SEARCH
     // -----------------------------
+
     let typingTimer;
 
-    skuInput.addEventListener('input', function() {
+    skuInput.addEventListener(
+        'input',
+        function() {
 
-        clearTimeout(typingTimer);
+            clearTimeout(typingTimer);
 
-        const value = this.value.trim();
+            const value =
+                this.value.trim();
 
-        if (value.length < 2) return;
+            if (value.length < 2) {
+                return;
+            }
 
-        typingTimer = setTimeout(() => {
 
-            fetch('<?= URLROOT ?>/inventorytransfers/getBySku', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                body: 'value=' + encodeURIComponent(value)
-            })
-            .then(res => res.text())
-            .then(text => {
-                try {
-                    return JSON.parse(text);
-                } catch (e) {
-                    console.error("Invalid JSON:", text);
-                    return null;
-                }
-            })
-            .then(item => {
+            typingTimer = setTimeout(() => {
 
-                if (!item || !item.id) {
-                    inventorySelect.value = '';
-                    inventorySelect.dispatchEvent(new Event('change'));
-                    return;
-                }
+                fetch(
+                    '<?= URLROOT ?>/inventorytransfers/getBySku',
+                    {
+                        method: 'POST',
 
-                inventorySelect.value = item.id;
-                inventorySelect.dispatchEvent(new Event('change'));
-            });
+                        headers: {
+                            'Content-Type':
+                                'application/x-www-form-urlencoded'
+                        },
 
-        }, 300);
-    });
+                        body:
+                            'value=' +
+                            encodeURIComponent(value)
+                    }
+                )
+
+                .then(res => res.text())
+
+                .then(text => {
+
+                    try {
+
+                        return JSON.parse(text);
+
+                    } catch (e) {
+
+                        console.error(
+                            "Invalid JSON:",
+                            text
+                        );
+
+                        return null;
+
+                    }
+
+                })
+
+                .then(item => {
+
+                    if (!item || !item.id) {
+
+                        inventorySelect.value = '';
+
+                        inventorySelect.dispatchEvent(
+                            new Event('change')
+                        );
+
+                        return;
+
+                    }
+
+                    inventorySelect.value =
+                        item.id;
+
+                    inventorySelect.dispatchEvent(
+                        new Event('change')
+                    );
+
+                });
+
+            }, 300);
+
+        }
+    );
+
 
     // -----------------------------
     // MAIN CHANGE HANDLER
     // -----------------------------
-  inventorySelect.addEventListener('change', function() {
 
-    loadLocations(this.value);
+    inventorySelect.addEventListener(
+        'change',
+        function() {
 
-    // reset stock display on item change
-    stockInfo.classList.add('d-none');
-    availableQty.textContent = 0;
+            loadLocations(
+                this.value
+            );
 
-    if (this.value && fromLocation.value) {
-        loadStock();
-    }
+            // reset stock display on item change
+
+            stockInfo.classList.add(
+                'd-none'
+            );
+
+            availableQty.textContent =
+                0;
+
+            if (
+                this.value &&
+                fromLocation.value
+            ) {
+
+                loadStock();
+
+            }
+
+        }
+    );
+
+
+    // Prevent same source/destination
+
+    const form =
+        document.querySelector('form');
+
+    const toLocation =
+        document.getElementById('toLocation');
+
+
+    form.addEventListener(
+        'submit',
+        function(e) {
+
+            if (
+                fromLocation.value ===
+                toLocation.value
+            ) {
+
+                e.preventDefault();
+
+                showNotification(
+                    '<?= __('source_destination_same') ?>',
+                    'danger'
+                );
+
+                return;
+
+            }
+
+        }
+    );
+
+
+    fromLocation.addEventListener(
+        'change',
+        loadStock
+    );
+
 });
 
-// Prevent same source/destination
-const form = document.querySelector('form');
-const toLocation = document.getElementById('toLocation');
 
-form.addEventListener('submit', function(e) {
+function showNotification(
+    message,
+    type = 'danger'
+) {
 
-    if (fromLocation.value === toLocation.value) {
-
-        e.preventDefault();
-
-        showNotification(
-            'Source and destination locations cannot be the same.',
-            'danger'
+    const container =
+        document.getElementById(
+            'jsNotification'
         );
 
-        return;
-    }
-});
-
-    fromLocation.addEventListener('change', loadStock);
-
-});
-function showNotification(message, type = 'danger') {
-
-    const container = document.getElementById('jsNotification');
-
     container.innerHTML = `
-        <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+
+        <div class="alert alert-${type} alert-dismissible fade show"
+             role="alert">
+
             ${message}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="<?= __('close') ?>">
+            </button>
+
         </div>
+
     `;
+
 }
 </script>

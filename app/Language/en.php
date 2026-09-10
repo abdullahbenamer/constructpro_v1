@@ -792,6 +792,32 @@ return [
 'no_inventory_reservations_currently'=> 'There are currently no inventory reservations.',
 'create_first_reservation'           => 'Create First Reservation',
 
+// INVENTORY TRANSFERS
+'transfer_inventory'             => 'Transfer Inventory',
+'scan_enter_sku_barcode'         => 'Scan / Enter SKU or Barcode',
+'scan_barcode_or_type_sku'       => 'Scan barcode or type SKU...',
+'select_manually_below'          => 'You can also select manually below',
+'select_item'                    => 'Select Item',
+'from_location'                  => 'From Location',
+'select_source'                  => 'Select Source',
+'available_qty'                  => 'Available Qty',
+'to_location'                    => 'To Location',
+'select_destination'             => 'Select Destination',
+'transfer'                       => 'Transfer',
+'stock_load_error'               => 'Stock load error',
+'source_destination_same'        => 'Source and destination locations cannot be the same.',
+
+'new_transfer'                   => 'New Transfer',
+'from'                           => 'From',
+'to'                             => 'To',
+'reversal'                       => 'REVERSAL',
+'reversed'                       => 'REVERSED',
+'reverse'                        => 'Reverse',
+'reverse_transfer_confirm'       => 'Are you sure you want to reverse this transfer?',
+'no_inventory_transfers_found'  => 'No Inventory Transfers Found',
+'no_inventory_transfer_records' => 'There are currently no inventory transfer records.',
+'create_first_transfer'          => 'Create First Transfer',
+
 
 
 
