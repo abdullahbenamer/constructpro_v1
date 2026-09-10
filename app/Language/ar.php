@@ -1071,6 +1071,31 @@ return [
 'users'                                     => 'المستخدمون',
 'add_user'                                  => 'إضافة مستخدم',
 'delete_user_confirm'                      => 'هل تريد حذف هذا المستخدم؟',
+
+//Permession groups
+'permission_group_admin'         => 'الإدارة',
+'permission_group_costs'         => 'التكاليف',
+'permission_group_customers'     => 'العملاء',
+'permission_group_finance'      => 'المالية',
+'permission_group_inventory'    => 'المخزون',
+'permission_group_projects'     => 'المشاريع',
+'permission_group_procurement'  => 'المشتريات',
+'permission_group_suppliers'    => 'الموردون',
+'permission_group_users'        => 'المستخدمون',
+'permission_group_roles'        => 'الأدوار',
+'permission_group_permissions'  => 'الصلاحيات',
+'permission_group_reports'      => 'التقارير',
+'permission_group_goods_returns'         => 'مرتجعات البضائع',
+'permission_group_inventory_locations'   => 'مواقع المخزون',
+'permission_group_inventory_movements'   => 'حركات المخزون',
+'permission_group_inventory_reservations'=> 'حجوزات المخزون',
+'permission_group_pos'                   => 'نقطة البيع',
+'permission_group_purchase_orders'       => 'أوامر الشراء',
+'permission_group_quotation'             => 'عروض الأسعار',
+'permission_group_resource_requisitions' => 'طلبات الموارد',
+'permission_group_services'              => 'الخدمات',
+'permission_group_stock_transfers'       => 'تحويلات المخزون',
+
 'login' => 'تسجيل الدخول',
 
 

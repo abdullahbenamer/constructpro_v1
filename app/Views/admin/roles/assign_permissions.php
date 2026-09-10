@@ -48,10 +48,13 @@ foreach ($permissions as $perm) {
 
     <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
 
-        <strong>
-            <?= strtoupper($group) ?>
-        </strong>
+      <?php
+$groupTranslationKey = 'permission_group_' . strtolower($group);
+?>
 
+<strong>
+    <?= __($groupTranslationKey) ?>
+</strong>
 
         <button
             type="button"

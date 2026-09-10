@@ -1084,6 +1084,30 @@ return [
 'add_user'                                  => 'Add User',
 'delete_user_confirm'                      => 'Delete this user?',
 
+// Permission Groups
+'permission_group_admin'         => 'ADMIN',
+'permission_group_costs'         => 'COSTS',
+'permission_group_customers'     => 'CUSTOMERS',
+'permission_group_finance'      => 'FINANCE',
+'permission_group_inventory'    => 'INVENTORY',
+'permission_group_projects'     => 'PROJECTS',
+'permission_group_procurement'  => 'PROCUREMENT',
+'permission_group_suppliers'    => 'SUPPLIERS',
+'permission_group_users'        => 'USERS',
+'permission_group_roles'        => 'ROLES',
+'permission_group_permissions'  => 'PERMISSIONS',
+'permission_group_reports'      => 'REPORTS',
+'permission_group_goods_returns'         => 'GOODS RETURNS',
+'permission_group_inventory_locations'   => 'INVENTORY LOCATIONS',
+'permission_group_inventory_movements'   => 'INVENTORY MOVEMENTS',
+'permission_group_inventory_reservations'=> 'INVENTORY RESERVATIONS',
+'permission_group_pos'                   => 'POS',
+'permission_group_purchase_orders'       => 'PURCHASE ORDERS',
+'permission_group_quotation'             => 'QUOTATIONS',
+'permission_group_resource_requisitions' => 'RESOURCE REQUISITIONS',
+'permission_group_services'              => 'SERVICES',
+'permission_group_stock_transfers'       => 'STOCK TRANSFERS',
+
 'login' => 'Login',
 
 ];
