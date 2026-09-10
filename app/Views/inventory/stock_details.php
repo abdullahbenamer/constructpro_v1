@@ -1,8 +1,10 @@
 <h2 class="mb-4">
-    <i class="fas fa-boxes"></i>
-    Global Stock Details
-</h2>
 
+    <i class="fas fa-boxes"></i>
+
+    <?= __('global_stock_details') ?>
+
+</h2>
 
 <!-- ITEM INFORMATION -->
 
@@ -22,7 +24,7 @@
 
             <div class="col-md-4">
 
-                <strong>SKU:</strong>
+                <strong><?= __('sku') ?>:</strong>
 
                 <?= htmlspecialchars($item->sku) ?>
 
@@ -30,7 +32,7 @@
 
             <div class="col-md-4">
 
-                <strong>Category:</strong>
+                <strong><?= __('category') ?>:</strong>
 
                 <?= htmlspecialchars(
                     $item->category ?? '-'
@@ -40,7 +42,7 @@
 
             <div class="col-md-4">
 
-                <strong>Base Unit:</strong>
+                <strong><?= __('base_unit') ?>:</strong>
 
                 <?= htmlspecialchars(
                     $item->base_unit ?? 'unit'
@@ -54,7 +56,6 @@
 
 </div>
 
-
 <!-- STOCK SUMMARY -->
 
 <div class="row mb-4">
@@ -66,7 +67,7 @@
             <div class="card-body">
 
                 <small class="text-muted">
-                    System Quantity
+                    <?= __('system_quantity') ?>
                 </small>
 
                 <h3 class="mt-2">
@@ -83,7 +84,6 @@
 
     </div>
 
-
     <div class="col-md-3 mb-3">
 
         <div class="card text-center h-100">
@@ -91,7 +91,7 @@
             <div class="card-body">
 
                 <small class="text-muted">
-                    Location Physical Total
+                    <?= __('location_physical_total') ?>
                 </small>
 
                 <h3 class="mt-2">
@@ -108,7 +108,6 @@
 
     </div>
 
-
     <div class="col-md-3 mb-3">
 
         <div class="card text-center h-100">
@@ -116,7 +115,7 @@
             <div class="card-body">
 
                 <small class="text-muted">
-                    Active Reserved
+                    <?= __('active_reserved') ?>
                 </small>
 
                 <h3 class="mt-2 text-warning">
@@ -133,7 +132,6 @@
 
     </div>
 
-
     <div class="col-md-3 mb-3">
 
         <div class="card text-center h-100">
@@ -141,7 +139,7 @@
             <div class="card-body">
 
                 <small class="text-muted">
-                    Total Available
+                    <?= __('total_available') ?>
                 </small>
 
                 <h3 class="mt-2 text-success">
@@ -160,7 +158,6 @@
 
 </div>
 
-
 <!-- STOCK MATCH STATUS -->
 
 <?php
@@ -171,17 +168,17 @@ $difference =
 
 ?>
 
-
 <?php if (abs($difference) < 0.01): ?>
 
     <div class="alert alert-success">
 
         <i class="fas fa-check-circle"></i>
 
-        <strong>Stock Matched.</strong>
+        <strong>
+            <?= __('stock_matched') ?>
+        </strong>
 
-        System quantity matches the total physical
-        quantity across all inventory locations.
+        <?= __('stock_quantity_matches_locations') ?>
 
     </div>
 
@@ -191,9 +188,11 @@ $difference =
 
         <i class="fas fa-exclamation-triangle"></i>
 
-        <strong>Stock Mismatch Detected.</strong>
+        <strong>
+            <?= __('stock_mismatch_detected') ?>
+        </strong>
 
-        Difference:
+        <?= __('difference') ?>:
 
         <?= number_format(abs($difference), 2) ?>
 
@@ -202,7 +201,6 @@ $difference =
     </div>
 
 <?php endif; ?>
-
 
 <!-- LOCATION BREAKDOWN -->
 
@@ -214,12 +212,11 @@ $difference =
 
             <i class="fas fa-warehouse"></i>
 
-            Location Stock Distribution
+            <?= __('location_stock_distribution') ?>
 
         </strong>
 
     </div>
-
 
     <div class="card-body p-0">
 
@@ -231,28 +228,27 @@ $difference =
 
                     <tr>
 
-                        <th>Location</th>
+                        <th><?= __('location') ?></th>
 
                         <th class="text-end">
-                            Physical Qty
+                            <?= __('physical_qty') ?>
                         </th>
 
                         <th class="text-end">
-                            Reserved Qty
+                            <?= __('reserved_qty') ?>
                         </th>
 
                         <th class="text-end">
-                            Available Qty
+                            <?= __('available_qty') ?>
                         </th>
 
                         <th>
-                            Status
+                            <?= __('status') ?>
                         </th>
 
                     </tr>
 
                 </thead>
-
 
                 <tbody>
 
@@ -263,7 +259,7 @@ $difference =
                             <td colspan="5"
                                 class="text-center text-muted py-4">
 
-                                No location stock found for this item.
+                                <?= __('no_location_stock_found') ?>
 
                             </td>
 
@@ -298,9 +294,7 @@ $difference =
 
                                     </strong>
 
-                                    <?php if (
-                                        !empty($location->location_name)
-                                    ): ?>
+                                    <?php if (!empty($location->location_name)): ?>
 
                                         <br>
 
@@ -316,7 +310,6 @@ $difference =
 
                                 </td>
 
-
                                 <td class="text-end">
 
                                     <?= number_format(
@@ -325,7 +318,6 @@ $difference =
                                     ) ?>
 
                                 </td>
-
 
                                 <td class="text-end text-warning">
 
@@ -336,7 +328,6 @@ $difference =
 
                                 </td>
 
-
                                 <td class="text-end text-success">
 
                                     <?= number_format(
@@ -346,31 +337,30 @@ $difference =
 
                                 </td>
 
-
                                 <td>
 
                                     <?php if ($physical <= 0): ?>
 
                                         <span class="badge bg-danger">
-                                            Out of Stock
+                                            <?= __('out_of_stock') ?>
                                         </span>
 
                                     <?php elseif ($available <= 0): ?>
 
                                         <span class="badge bg-warning text-dark">
-                                            Fully Reserved
+                                            <?= __('fully_reserved') ?>
                                         </span>
 
                                     <?php elseif ($reserved > 0): ?>
 
                                         <span class="badge bg-info">
-                                            Partially Reserved
+                                            <?= __('partially_reserved') ?>
                                         </span>
 
                                     <?php else: ?>
 
                                         <span class="badge bg-success">
-                                            Available
+                                            <?= __('available') ?>
                                         </span>
 
                                     <?php endif; ?>
@@ -385,13 +375,12 @@ $difference =
 
                 </tbody>
 
-
                 <tfoot>
 
                     <tr class="table-dark">
 
                         <th>
-                            TOTAL
+                            <?= __('total') ?>
                         </th>
 
                         <th class="text-end">
@@ -435,7 +424,6 @@ $difference =
 
 </div>
 
-
 <!-- ACTIONS -->
 
 <div class="mt-4">
@@ -445,17 +433,16 @@ $difference =
 
         <i class="fas fa-arrow-left"></i>
 
-        Back to Inventory
+        <?= __('back_to_inventory') ?>
 
     </a>
-
 
     <a href="<?= URLROOT ?>/inventory/details/<?= $item->id ?>"
        class="btn btn-outline-primary">
 
         <i class="fas fa-history"></i>
 
-        Item Details & History
+        <?= __('item_details_history') ?>
 
     </a>
 

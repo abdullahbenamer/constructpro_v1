@@ -1,10 +1,16 @@
 <h2>
+
     <i class="fas fa-box"></i>
-    Inventory Details
+
+    <?= __('inventory_details') ?>
+
 </h2>
 
-<a href="<?= URLROOT ?>/inventory" class="btn btn-secondary mb-3">
-    Back
+<a href="<?= URLROOT ?>/inventory"
+   class="btn btn-secondary mb-3">
+
+    <?= __('back') ?>
+
 </a>
 
 <!-- ITEM INFO -->
@@ -20,32 +26,46 @@
         <div class="row">
 
             <div class="col-md-3">
-                <strong>SKU:</strong><br>
+
+                <strong><?= __('sku') ?>:</strong><br>
+
                 <?= htmlspecialchars($item->sku) ?>
+
             </div>
 
             <div class="col-md-3">
-                <strong>Category:</strong><br>
+
+                <strong><?= __('category') ?>:</strong><br>
+
                 <?= htmlspecialchars($item->category) ?>
+
             </div>
 
             <div class="col-md-3">
-                <strong>Current Stock:</strong><br>
+
+                <strong><?= __('current_stock') ?>:</strong><br>
 
                 <span class="badge bg-primary">
+
                     <?= $item->quantity ?>
                     <?= $item->base_unit ?>
+
                 </span>
+
             </div>
 
             <div class="col-md-3">
-                <strong>Total Value:</strong><br>
+
+                <strong><?= __('total_value') ?>:</strong><br>
 
                 LYD
+
                 <?= number_format(
-                    $item->quantity * $item->cost_price,
+                    $item->quantity *
+                    $item->cost_price,
                     2
                 ) ?>
+
             </div>
 
         </div>
@@ -59,7 +79,11 @@
 <div class="card mb-4">
 
     <div class="card-header">
-        <strong>Stock Movements</strong>
+
+        <strong>
+            <?= __('stock_movements') ?>
+        </strong>
+
     </div>
 
     <div class="card-body">
@@ -67,15 +91,19 @@
         <table class="table table-striped">
 
             <thead>
+
                 <tr>
-                    <th>Date</th>
-                    <th>Type</th>
-                    <th>Qty</th>
-                    <th>Balance</th>
-                    <th>Supplier</th>
-                    <th>Reference</th>
-                    <th>Notes</th>
+
+                    <th><?= __('date') ?></th>
+                    <th><?= __('type') ?></th>
+                    <th><?= __('qty') ?></th>
+                    <th><?= __('balance') ?></th>
+                    <th><?= __('supplier') ?></th>
+                    <th><?= __('reference') ?></th>
+                    <th><?= __('notes') ?></th>
+
                 </tr>
+
             </thead>
 
             <tbody>
@@ -93,19 +121,19 @@
                             <?php if ($m->type == 'IN') : ?>
 
                                 <span class="badge bg-success">
-                                    IN
+                                    <?= __('in') ?>
                                 </span>
 
                             <?php elseif ($m->type == 'OUT') : ?>
 
                                 <span class="badge bg-danger">
-                                    OUT
+                                    <?= __('out') ?>
                                 </span>
 
                             <?php else : ?>
 
                                 <span class="badge bg-warning">
-                                    ADJUSTMENT
+                                    <?= __('adjustment') ?>
                                 </span>
 
                             <?php endif; ?>
@@ -121,15 +149,21 @@
                         </td>
 
                         <td>
-                            <?= htmlspecialchars($m->supplier_name ?? '-') ?>
+                            <?= htmlspecialchars(
+                                $m->supplier_name ?? '-'
+                            ) ?>
                         </td>
 
                         <td>
-                            <?= htmlspecialchars($m->reference ?? '-') ?>
+                            <?= htmlspecialchars(
+                                $m->reference ?? '-'
+                            ) ?>
                         </td>
 
                         <td>
-                            <?= htmlspecialchars($m->notes ?? '-') ?>
+                            <?= htmlspecialchars(
+                                $m->notes ?? '-'
+                            ) ?>
                         </td>
 
                     </tr>
@@ -149,7 +183,11 @@
 <div class="card">
 
     <div class="card-header">
-        <strong>Project Usage</strong>
+
+        <strong>
+            <?= __('project_usage') ?>
+        </strong>
+
     </div>
 
     <div class="card-body">
@@ -157,13 +195,17 @@
         <table class="table table-striped">
 
             <thead>
+
                 <tr>
-                    <th>Project</th>
-                    <th>Quantity</th>
-                    <th>Unit Cost</th>
-                    <th>Total</th>
-                    <th>Date</th>
+
+                    <th><?= __('project') ?></th>
+                    <th><?= __('quantity') ?></th>
+                    <th><?= __('unit_cost') ?></th>
+                    <th><?= __('total') ?></th>
+                    <th><?= __('date') ?></th>
+
                 </tr>
+
             </thead>
 
             <tbody>
@@ -173,7 +215,9 @@
                     <tr>
 
                         <td>
-                            <?= htmlspecialchars($u->project_title) ?>
+                            <?= htmlspecialchars(
+                                $u->project_title
+                            ) ?>
                         </td>
 
                         <td>
@@ -181,15 +225,23 @@
                         </td>
 
                         <td>
-                            LYD <?= number_format($u->unit_price, 2) ?>
+                            LYD
+                            <?= number_format(
+                                $u->unit_price,
+                                2
+                            ) ?>
                         </td>
 
                         <td>
+
                             LYD
+
                             <?= number_format(
-                                $u->quantity * $u->unit_price,
+                                $u->quantity *
+                                $u->unit_price,
                                 2
                             ) ?>
+
                         </td>
 
                         <td>

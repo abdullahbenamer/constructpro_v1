@@ -1,161 +1,197 @@
 <h2>
-    Location:
+
+    <?= __('location') ?>:
+
     <?= htmlspecialchars($location->code) ?>
+
 </h2>
 
 <p>
     <?= htmlspecialchars($location->name) ?>
 </p>
 
-<!-- sort and filter -->
- <div class="row mb-3">
+<!-- SORT AND FILTER -->
+
+<div class="row mb-3">
 
     <div class="col-md-3">
-        <select id="stockFilter" class="form-select">
-            <option value="">All Items</option>
-            <option value="low">Low Stock</option>
-            <option value="out">Out Of Stock</option>
+
+        <select id="stockFilter"
+                class="form-select">
+
+            <option value="">
+                <?= __('all_items') ?>
+            </option>
+
+            <option value="low">
+                <?= __('low_stock') ?>
+            </option>
+
+            <option value="out">
+                <?= __('out_of_stock') ?>
+            </option>
+
         </select>
+
     </div>
 
 </div>
-<!-- Search -->
+
+<!-- SEARCH -->
+
 <div class="row mb-3">
+
     <div class="col-md-4">
+
         <input type="text"
                id="searchInput"
                class="form-control"
-               placeholder="Search Item or SKU...">
+               placeholder="<?= __('search_item_or_sku') ?>">
+
     </div>
+
 </div>
+
 <table class="table table-bordered table-striped">
 
     <thead>
-    <tr>
-        <th>Item</th>
-        <th>SKU</th>
-        <th class="text-end">Physical Qty</th>
-        <th class="text-end">Reserved Qty</th>
-        <th class="text-end">Available Qty</th>
-        <th>Status</th>
-    </tr>
-</thead>
 
-<tbody>
+        <tr>
 
-<?php foreach ($items as $item): ?>
+            <th><?= __('item') ?></th>
 
-    <?php
+            <th><?= __('sku') ?></th>
 
-        // Status should be based on AVAILABLE quantity,
-        // not the physical quantity.
+            <th class="text-end">
+                <?= __('physical_qty') ?>
+            </th>
 
-        $stockStatus =
-            ($item->available_quantity <= 0)
-                ? 'out'
-                : (($item->available_quantity <= ($item->min_stock ?? 0))
-                    ? 'low'
-                    : 'ok');
+            <th class="text-end">
+                <?= __('reserved_qty') ?>
+            </th>
 
-    ?>
+            <th class="text-end">
+                <?= __('available_qty') ?>
+            </th>
 
-    <tr
-        data-name="<?= strtolower($item->name) ?>"
-        data-sku="<?= strtolower($item->sku) ?>"
-        data-stock="<?= $stockStatus ?>"
-    >
+            <th><?= __('status') ?></th>
 
-        <!-- ITEM -->
+        </tr>
 
-        <td>
-            <?= htmlspecialchars($item->name) ?>
-        </td>
+    </thead>
 
-        <!-- SKU -->
+    <tbody>
 
-        <td>
-            <?= htmlspecialchars($item->sku) ?>
-        </td>
+    <?php foreach ($items as $item): ?>
 
-        <!-- PHYSICAL QUANTITY -->
+        <?php
 
-        <td class="text-end">
+            // Status should be based on AVAILABLE quantity,
+            // not the physical quantity.
 
-            <?= number_format(
-                (float) $item->quantity,
-                2
-            ) ?>
+            $stockStatus =
+                ($item->available_quantity <= 0)
+                    ? 'out'
+                    : (($item->available_quantity <= ($item->min_stock ?? 0))
+                        ? 'low'
+                        : 'ok');
 
-            <?= htmlspecialchars(
-                $item->base_unit
-            ) ?>
+        ?>
 
-        </td>
+        <tr
+            data-name="<?= strtolower($item->name) ?>"
+            data-sku="<?= strtolower($item->sku) ?>"
+            data-stock="<?= $stockStatus ?>"
+        >
 
-        <!-- RESERVED QUANTITY -->
+            <!-- ITEM -->
 
-        <td class="text-end text-warning fw-bold">
+            <td>
+                <?= htmlspecialchars($item->name) ?>
+            </td>
 
-            <?= number_format(
-                (float) $item->reserved_quantity,
-                2
-            ) ?>
+            <!-- SKU -->
 
-        </td>
+            <td>
+                <?= htmlspecialchars($item->sku) ?>
+            </td>
 
-        <!-- AVAILABLE QUANTITY -->
+            <!-- PHYSICAL QUANTITY -->
 
-        <td class="text-end text-success fw-bold">
+            <td class="text-end">
 
-            <?= number_format(
-                (float) $item->available_quantity,
-                2
-            ) ?>
+                <?= number_format(
+                    (float) $item->quantity,
+                    2
+                ) ?>
 
-        </td>
+                <?= htmlspecialchars(
+                    $item->base_unit
+                ) ?>
 
-        <!-- STATUS -->
+            </td>
 
-        <td>
+            <!-- RESERVED QUANTITY -->
 
-            <?php
+            <td class="text-end text-warning fw-bold">
 
-                if ($stockStatus === 'out') {
+                <?= number_format(
+                    (float) $item->reserved_quantity,
+                    2
+                ) ?>
 
-                    echo '<span class="badge bg-danger">
-                            Fully Reserved / Out of Stock
-                          </span>';
+            </td>
 
-                } elseif ($stockStatus === 'low') {
+            <!-- AVAILABLE QUANTITY -->
 
-                    echo '<span class="badge bg-warning text-dark">
-                            Low Available Stock
-                          </span>';
+            <td class="text-end text-success fw-bold">
 
-                } else {
+                <?= number_format(
+                    (float) $item->available_quantity,
+                    2
+                ) ?>
 
-                    echo '<span class="badge bg-success">
-                            Available
-                          </span>';
+            </td>
 
-                }
+            <!-- STATUS -->
 
-            ?>
+            <td>
 
-        </td>
+                <?php
 
-    </tr>
+                    if ($stockStatus === 'out') {
 
-<?php endforeach; ?>
+                        echo '<span class="badge bg-danger">
+                                ' . __('fully_reserved_out_of_stock') . '
+                              </span>';
 
-</tbody>
+                    } elseif ($stockStatus === 'low') {
 
-   
+                        echo '<span class="badge bg-warning text-dark">
+                                ' . __('low_available_stock') . '
+                              </span>';
+
+                    } else {
+
+                        echo '<span class="badge bg-success">
+                                ' . __('available') . '
+                              </span>';
+
+                    }
+
+                ?>
+
+            </td>
+
+        </tr>
+
+    <?php endforeach; ?>
+
+    </tbody>
 
 </table>
 
 <script>
-    // Search and Filter Functionality
 document.addEventListener('DOMContentLoaded', function() {
 
     const searchInput =
@@ -175,8 +211,11 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('tbody tr')
             .forEach(row => {
 
-            const name = (row.dataset.name || '');
-const sku  = (row.dataset.sku || '');
+                const name =
+                    (row.dataset.name || '');
+
+                const sku =
+                    (row.dataset.sku || '');
 
                 const stock =
                     row.dataset.stock;
@@ -193,6 +232,7 @@ const sku  = (row.dataset.sku || '');
                     (matchesSearch && matchesFilter)
                     ? ''
                     : 'none';
+
             });
     }
 

@@ -1,18 +1,24 @@
 <h2>
-    Edit Inventory Reservation
+    <?= __('edit_inventory_reservation') ?>
 </h2>
 
 <form method="POST">
 
     <div class="mb-3">
 
-        <label>Inventory Item</label>
+        <label>
+            <?= __('inventory_item') ?>
+        </label>
 
-        <select name="inventory_id" class="form-select" required>
+        <select name="inventory_id"
+                class="form-select"
+                required>
 
             <?php foreach ($inventory as $item) : ?>
 
-                <option value="<?= $item->id ?>" <?= $reservation->inventory_id == $item->id ? 'selected' : '' ?>>
+                <option value="<?= $item->id ?>"
+                    <?= $reservation->inventory_id == $item->id ? 'selected' : '' ?>>
+
                     <?= htmlspecialchars($item->name) ?>
 
                 </option>
@@ -23,69 +29,115 @@
 
     </div>
 
+
     <div class="mb-3">
 
-        <label>Location</label>
+        <label>
+            <?= __('location') ?>
+        </label>
 
-        <select name="location_id" class="form-select">
+        <select name="location_id"
+                class="form-select">
+
             <option value="">
-                Any Location
+                <?= __('any_location') ?>
             </option>
+
             <?php foreach ($locations as $loc) : ?>
-<option value="<?= $loc->id ?>" <?= $reservation->location_id == $loc->id
-                                                    ? 'selected'
-                                                    : '' ?>>
+
+                <option value="<?= $loc->id ?>"
+                    <?= $reservation->location_id == $loc->id
+                        ? 'selected'
+                        : '' ?>>
+
                     <?= htmlspecialchars($loc->code) ?>
+
                 </option>
+
             <?php endforeach; ?>
+
         </select>
+
     </div>
 
+
     <div class="mb-3">
-        <label>Project</label>
-        <select name="project_id" class="form-select">
+
+        <label>
+            <?= __('project') ?>
+        </label>
+
+        <select name="project_id"
+                class="form-select">
+
             <option value="">
-                No Project
+                <?= __('no_project') ?>
             </option>
+
             <?php foreach ($projects as $p) : ?>
-<option value="<?= $p->id ?>" <?= $reservation->project_id == $p->id
-                                                    ? 'selected'
-                                                    : '' ?>>
+
+                <option value="<?= $p->id ?>"
+                    <?= $reservation->project_id == $p->id
+                        ? 'selected'
+                        : '' ?>>
+
                     <?= htmlspecialchars($p->title) ?>
+
                 </option>
+
             <?php endforeach; ?>
 
         </select>
 
     </div>
 
-    <div class="mb-3">
-
-        <label>Quantity</label>
-
-        <input type="number" step="0.01" min="0.01" name="quantity" value="<?= $reservation->quantity ?>" class="form-control" required>
-
-    </div>
 
     <div class="mb-3">
 
-        <label>Reference</label>
+        <label>
+            <?= __('quantity') ?>
+        </label>
 
-        <input type="text" name="reference" value="<?= htmlspecialchars($reservation->reference) ?>" class="form-control">
+        <input type="number"
+               step="0.01"
+               min="0.01"
+               name="quantity"
+               value="<?= $reservation->quantity ?>"
+               class="form-control"
+               required>
 
     </div>
+
 
     <div class="mb-3">
 
-        <label>Notes</label>
+        <label>
+            <?= __('reference') ?>
+        </label>
 
-        <textarea name="notes" class="form-control"><?= htmlspecialchars($reservation->notes) ?></textarea>
+        <input type="text"
+               name="reference"
+               value="<?= htmlspecialchars($reservation->reference) ?>"
+               class="form-control">
 
     </div>
+
+
+    <div class="mb-3">
+
+        <label>
+            <?= __('notes') ?>
+        </label>
+
+        <textarea name="notes"
+                  class="form-control"><?= htmlspecialchars($reservation->notes) ?></textarea>
+
+    </div>
+
 
     <button class="btn btn-primary">
 
-        Save Update
+        <?= __('save_update') ?>
 
     </button>
 

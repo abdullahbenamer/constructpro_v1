@@ -1,9 +1,16 @@
-<h2>Add Inventory Location</h2>
+<h2><?= __('add_inventory_location') ?></h2>
 
 <?php if (isset($error)): ?>
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
+
         <?= htmlspecialchars($error) ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="<?= __('close') ?>">
+        </button>
+
     </div>
 <?php endif; ?>
 
@@ -11,46 +18,83 @@
 
     <!-- Code -->
     <div class="mb-3">
-        <label>Code</label>
-        <input type="text" name="code" class="form-control"
-            value="<?= htmlspecialchars($_POST['code'] ?? '') ?>" required>
+
+        <label>
+            <?= __('code') ?>
+        </label>
+
+        <input type="text"
+               name="code"
+               class="form-control"
+               value="<?= htmlspecialchars($_POST['code'] ?? '') ?>"
+               required>
+
     </div>
 
     <!-- Name -->
     <div class="mb-3">
-        <label>Warehouse Name</label>
-        <input type="text" name="name" class="form-control"
-            value="<?= htmlspecialchars($_POST['name'] ?? '') ?>" required>
+
+        <label>
+            <?= __('warehouse_name') ?>
+        </label>
+
+        <input type="text"
+               name="name"
+               class="form-control"
+               value="<?= htmlspecialchars($_POST['name'] ?? '') ?>"
+               required>
+
     </div>
 
     <!-- Address -->
     <div class="mb-3">
-        <label>Address / Location</label>
-        <textarea name="address" class="form-control" rows="2"><?= htmlspecialchars($_POST['address'] ?? '') ?></textarea>
+
+        <label>
+            <?= __('address_location') ?>
+        </label>
+
+        <textarea name="address"
+                  class="form-control"
+                  rows="2"><?= htmlspecialchars($_POST['address'] ?? '') ?></textarea>
+
     </div>
 
     <!-- Storekeeper -->
     <div class="mb-3">
-        <label>Responsible Storekeeper</label>
-        <select name="storekeeper_id" class="form-select">
-            <option value="">-- Select Storekeeper --</option>
+
+        <label>
+            <?= __('responsible_storekeeper') ?>
+        </label>
+
+        <select name="storekeeper_id"
+                class="form-select">
+
+            <option value="">
+                <?= __('select_storekeeper') ?>
+            </option>
 
             <?php foreach ($storekeepers as $user): ?>
+
                 <option value="<?= $user->id ?>"
                     <?= (($_POST['storekeeper_id'] ?? '') == $user->id) ? 'selected' : '' ?>>
+
                     <?= htmlspecialchars($user->full_name) ?>
+
                 </option>
+
             <?php endforeach; ?>
 
         </select>
+
     </div>
 
     <!-- Warehouse Team -->
     <div class="mb-3">
 
         <label class="form-label">
-            Authorized Users
+            <?= __('authorized_users') ?>
         </label>
+
         <select
             name="user_locations[]"
             class="form-select"
@@ -70,25 +114,43 @@
         </select>
 
         <small class="text-muted">
-            Hold Ctrl to select multiple users.
-            Select the users who are authorized to access this inventory location.
+
+            <?= __('hold_ctrl_multiple_users') ?>
+
+            <?= __('authorized_users_access_location') ?>
+
         </small>
 
     </div>
 
     <!-- Mobile -->
     <div class="mb-3">
-        <label>Mobile Number</label>
-        <input type="text" name="mobile" class="form-control"
-            value="<?= htmlspecialchars($_POST['mobile'] ?? '') ?>">
+
+        <label>
+            <?= __('mobile_number') ?>
+        </label>
+
+        <input type="text"
+               name="mobile"
+               class="form-control"
+               value="<?= htmlspecialchars($_POST['mobile'] ?? '') ?>">
+
     </div>
 
     <!-- Notes -->
     <div class="mb-3">
-        <label>Notes</label>
-        <textarea name="notes" class="form-control"><?= htmlspecialchars($_POST['notes'] ?? '') ?></textarea>
+
+        <label>
+            <?= __('notes') ?>
+        </label>
+
+        <textarea name="notes"
+                  class="form-control"><?= htmlspecialchars($_POST['notes'] ?? '') ?></textarea>
+
     </div>
 
-    <button class="btn btn-success">Save Warehouse</button>
+    <button class="btn btn-success">
+        <?= __('save_warehouse') ?>
+    </button>
 
 </form>

@@ -1,22 +1,51 @@
-<h3>Add Stock Movement</h3>
+<h3>
+    <?= __('add_stock_movement') ?>
+</h3>
 
 <form method="POST">
-    <input type="hidden" name="inventory_id" value="<?= $inventory_id ?>">
+
+    <input type="hidden"
+           name="inventory_id"
+           value="<?= $inventory_id ?>">
 
     <div class="mb-3">
-        <label>Type</label>
-        <select name="type" class="form-select">
-            <option value="IN">Stock In</option>
-            <option value="OUT">Stock Out</option>
-            <option value="ADJUSTMENT">Adjustment</option>
+
+        <label>
+            <?= __('type') ?>
+        </label>
+
+        <select name="type"
+                class="form-select">
+
+            <option value="IN">
+                <?= __('stock_in') ?>
+            </option>
+
+            <option value="OUT">
+                <?= __('stock_out') ?>
+            </option>
+
+            <option value="ADJUSTMENT">
+                <?= __('adjustment') ?>
+            </option>
+
         </select>
+
     </div>
+
     <div class="mb-3">
-        <label>Location</label>
 
-        <select name="location_id" class="form-select" required>
+        <label>
+            <?= __('location') ?>
+        </label>
 
-            <option value="">-- Select Stock Location --</option>
+        <select name="location_id"
+                class="form-select"
+                required>
+
+            <option value="">
+                <?= __('select_stock_location') ?>
+            </option>
 
             <?php foreach ($locations as $location) : ?>
 
@@ -31,21 +60,51 @@
             <?php endforeach; ?>
 
         </select>
-    </div>
-    <div class="mb-3">
-        <label>Quantity</label>
-        <input type="number" name="quantity" class="form-control" step="0.01" min="0.01" required>
-    </div>
 
-     <div class="mb-3">
-        <label>Reference</label>
-        <input type="text" name="reference" class="form-control">
     </div>
 
     <div class="mb-3">
-        <label>Notes</label>
-        <textarea name="notes" class="form-control"></textarea>
+
+        <label>
+            <?= __('quantity') ?>
+        </label>
+
+        <input type="number"
+               name="quantity"
+               class="form-control"
+               step="0.01"
+               min="0.01"
+               required>
+
     </div>
 
-    <button class="btn btn-success">Save</button>
+    <div class="mb-3">
+
+        <label>
+            <?= __('reference') ?>
+        </label>
+
+        <input type="text"
+               name="reference"
+               class="form-control">
+
+    </div>
+
+    <div class="mb-3">
+
+        <label>
+            <?= __('notes') ?>
+        </label>
+
+        <textarea name="notes"
+                  class="form-control"></textarea>
+
+    </div>
+
+    <button class="btn btn-success">
+
+        <?= __('save') ?>
+
+    </button>
+
 </form>
