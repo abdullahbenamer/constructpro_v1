@@ -26,6 +26,20 @@ return [
     'stock_transfers'        => 'تحويلات المخزون',
     'stock_movements_report' => 'حركات المخزون (تقرير)',
 
+// Inventory Categories
+    'civil_structural'      => 'الأعمال المدنية والإنشائية',
+'building_finishing'    => 'مواد البناء والتشطيبات',
+'plumbing_drainage'     => 'السباكة والصرف الصحي',
+'hvac'                   => 'التكييف والتهوية',
+'electrical'             => 'الكهرباء',
+'fire_fighting_alarm'   => 'مكافحة الحريق والإنذار',
+'low_current'            => 'التيار الخفيف',
+'hand_tools'             => 'العدد اليدوية',
+'equipment'              => 'المعدات',
+'safety_ppe'             => 'السلامة ومعدات الحماية الشخصية',
+'consumables'            => 'المواد الاستهلاكية',
+'other'                  => 'أخرى',
+
     // PROCUREMENT
     'supplier_quotations'    => 'عروض أسعار الموردين',
     'purchase_orders'        => 'أوامر الشراء',

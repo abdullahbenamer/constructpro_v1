@@ -25,6 +25,20 @@ return [
     'material_reservations'  => 'Material Reservations',
     'stock_transfers'        => 'Stock Transfers',
     'stock_movements_report' => 'Stock Movements (Report)',
+    
+    //Inventory Categories
+    'civil_structural'      => 'CIVIL & STRUCTURAL',
+'building_finishing'    => 'BUILDING & FINISHING',
+'plumbing_drainage'     => 'PLUMBING & DRAINAGE',
+'hvac'                   => 'HVAC',
+'electrical'             => 'ELECTRICAL',
+'fire_fighting_alarm'   => 'FIRE FIGHTING & ALARM',
+'low_current'            => 'LOW CURRENT',
+'hand_tools'             => 'HAND TOOLS',
+'equipment'              => 'EQUIPMENT',
+'safety_ppe'             => 'SAFETY & PPE',
+'consumables'            => 'CONSUMABLES',
+'other'                  => 'OTHER',
 
     // PROCUREMENT
     'supplier_quotations'    => 'Supplier Quotations',

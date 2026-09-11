@@ -82,17 +82,24 @@
 
     <div class="row mt-2">
 
-        <div class="col-md-4">
-            <label class="form-label"><?= __('category') ?></label>
+       <div class="col-md-4">
+    <label class="form-label"><?= __('category') ?></label>
 
-            <select name="category" class="form-select">
-                <option value="Switchgear"><?= __('switchgear') ?></option>
-                <option value="Component"><?= __('component') ?></option>
-                <option value="Instrumentation"><?= __('instrumentation') ?></option>
-                <option value="Protection"><?= __('protection') ?></option>
-                <option value="Tools"><?= __('tools') ?></option>
-            </select>
-        </div>
+    <select name="category" class="form-select">
+        <option value="CIVIL & STRUCTURAL"><?= __('civil_structural') ?></option>
+        <option value="BUILDING & FINISHING"><?= __('building_finishing') ?></option>
+        <option value="PLUMBING & DRAINAGE"><?= __('plumbing_drainage') ?></option>
+        <option value="HVAC"><?= __('hvac') ?></option>
+        <option value="ELECTRICAL"><?= __('electrical') ?></option>
+        <option value="FIRE FIGHTING & ALARM"><?= __('fire_fighting_alarm') ?></option>
+        <option value="LOW CURRENT"><?= __('low_current') ?></option>
+        <option value="HAND TOOLS"><?= __('hand_tools') ?></option>
+        <option value="EQUIPMENT"><?= __('equipment') ?></option>
+        <option value="SAFETY & PPE"><?= __('safety_ppe') ?></option>
+        <option value="CONSUMABLES"><?= __('consumables') ?></option>
+        <option value="OTHER"><?= __('other') ?></option>
+    </select>
+</div>
 
         <div class="col-md-4">
             <label class="form-label"><?= __('quantity') ?></label>
