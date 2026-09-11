@@ -35,13 +35,19 @@ $locations = $locations ?? [];
 
         <div class="col-md-3">
             <label class="form-label"><?= __('cost_type') ?></label>
-
             <select name="cost_type" id="costType" class="form-select">
-                <option value="materials"><?= __('materials') ?></option>
-                <option value="labor"><?= __('labor') ?></option>
-                <option value="transport"><?= __('transport') ?></option>
-                <option value="subcontract"><?= __('subcontract') ?></option>
-                <option value="misc"><?= __('miscellaneous') ?></option>
+                <option value="MATERIALS"><?= __('materials') ?></option>
+                <option value="HUMAN_RESOURCES"><?= __('human_resources') ?></option>
+                <option value="TRANSPORT"><?= __('transport') ?></option>
+                <option value="EQUIPMENT"><?= __('equipment') ?></option>
+                <option value="SUBCONTRACT"><?= __('subcontract') ?></option>
+                <option value="SITE_EXPENSES"><?= __('site_expenses') ?></option>
+                <option value="PROFESSIONAL_SERVICES"><?= __('professional_services') ?></option>
+                <option value="PERMITS_FEES"><?= __('permits_fees') ?></option>
+                <option value="INSURANCE"><?= __('insurance') ?></option>
+                <option value="BANK_CHARGES"><?= __('bank_charges') ?></option>
+                <option value="TAXES"><?= __('taxes') ?></option>
+                <option value="MISCELLANEOUS"><?= __('miscellaneous') ?></option>
             </select>
         </div>
 
@@ -109,16 +115,16 @@ $locations = $locations ?? [];
                 <?= __('unit_cost') ?> (LYD)
             </label>
             <input type="number" name="unit_price" class="form-control" step="0.01" required placeholder="<?= __('autofill_materials') ?>">
-                </div>
         </div>
+    </div>
 
-        <button type="submit" class="btn btn-primary mt-3">
-            <i class="fas fa-save"></i> <?= __('add_cost') ?>
-        </button>
-        <a href="<?= URLROOT ?>/project-costs/<?= $project_id ?>"
-            class="btn btn-secondary mt-3">
-            <?= __('cancel') ?>
-        </a>
+    <button type="submit" class="btn btn-primary mt-3">
+        <i class="fas fa-save"></i> <?= __('add_cost') ?>
+    </button>
+    <a href="<?= URLROOT ?>/project-costs/<?= $project_id ?>"
+        class="btn btn-secondary mt-3">
+        <?= __('cancel') ?>
+    </a>
 </form>
 
 

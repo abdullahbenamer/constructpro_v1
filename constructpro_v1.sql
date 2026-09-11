@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 07, 2026 at 07:02 PM
+-- Generation Time: Sep 11, 2026 at 02:40 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -164,7 +164,8 @@ CREATE TABLE `goods_receipts` (
 
 INSERT INTO `goods_receipts` (`id`, `grn_number`, `purchase_order_id`, `supplier_id`, `receipt_date`, `subtotal`, `total_amount`, `remarks`, `created_by`, `created_at`) VALUES
 (37, 'GRN-20260906210130', 56, 3, '2026-09-06', 1150.00, 1150.00, '', 1, '2026-09-06 19:01:30'),
-(38, 'GRN-20260906210253', 56, 3, '2026-09-06', 10320.00, 10320.00, '', 1, '2026-09-06 19:02:53');
+(38, 'GRN-20260906210253', 56, 3, '2026-09-06', 10320.00, 10320.00, '', 1, '2026-09-06 19:02:53'),
+(39, 'GRN-20260910114958', 57, 4, '2026-09-10', 600.00, 600.00, '', 1, '2026-09-10 09:49:58');
 
 -- --------------------------------------------------------
 
@@ -189,7 +190,8 @@ CREATE TABLE `goods_receipt_items` (
 
 INSERT INTO `goods_receipt_items` (`id`, `goods_receipt_id`, `purchase_order_item_id`, `inventory_id`, `location_id`, `quantity`, `unit_cost`, `total_cost`) VALUES
 (29, 37, 57, 156, 1, 200.00, 5.75, 1150.00),
-(30, 38, 58, 122, 1, 400.00, 25.80, 10320.00);
+(30, 38, 58, 122, 1, 400.00, 25.80, 10320.00),
+(31, 39, 59, 155, 1, 25.00, 24.00, 600.00);
 
 -- --------------------------------------------------------
 
@@ -211,6 +213,13 @@ CREATE TABLE `goods_returns` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `goods_returns`
+--
+
+INSERT INTO `goods_returns` (`id`, `return_number`, `supplier_id`, `goods_receipt_id`, `purchase_order_id`, `return_date`, `reason`, `notes`, `total_amount`, `created_by`, `created_at`) VALUES
+(7, 'RTS-260910122040', 4, 39, 57, '2026-09-10', 'كسور واعطاب في الاصناف', '', 360.00, 1, '2026-09-10 10:20:40');
+
 -- --------------------------------------------------------
 
 --
@@ -228,6 +237,13 @@ CREATE TABLE `goods_return_items` (
   `total_cost` decimal(15,2) NOT NULL DEFAULT 0.00,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `goods_return_items`
+--
+
+INSERT INTO `goods_return_items` (`id`, `goods_return_id`, `goods_receipt_item_id`, `inventory_id`, `location_id`, `quantity`, `unit_cost`, `total_cost`, `created_at`) VALUES
+(7, 7, 31, 155, 1, 15.00, 24.00, 360.00, '2026-09-10 10:20:40');
 
 -- --------------------------------------------------------
 
@@ -270,7 +286,7 @@ INSERT INTO `inventory` (`id`, `name`, `category`, `sku`, `quantity`, `location_
 (119, 'Red Brick', 'MASONRY', 'BRK-RED-001', 5000.00, NULL, 1000, 0.65, 'PCS', 0, NULL, 1, 0.81, NULL, NULL, 12),
 (120, 'Plastering Cement', 'CONSTRUCTION MATERIAL', 'PLS-CEM-001', 300.00, NULL, 50, 11.50, 'BAG', 0, NULL, 1, 14.38, NULL, 36, 12),
 (121, 'Gypsum Board 12.5mm', 'FINISHING', 'GYP-125-001', 400.00, NULL, 50, 18.00, 'PCS', 0, NULL, 1, 22.50, NULL, NULL, 12),
-(122, 'Ceramic Floor Tile 60x60', 'FINISHING', 'TIL-6060-001', 1200.00, NULL, 100, 25.80, 'M2', 1, NULL, 1, 8.13, NULL, NULL, 12),
+(122, 'Ceramic Floor Tile 60x60', 'FINISHING', 'TIL-6060-001', 700.00, NULL, 100, 25.80, 'M2', 1, NULL, 1, 8.13, NULL, NULL, 12),
 (123, 'Ceramic Wall Tile 30x60', 'FINISHING', 'TIL-3060-001', 650.00, NULL, 100, 6.00, 'M2', 1, NULL, 1, 7.25, NULL, NULL, 12),
 (124, 'Waterproofing Membrane 4mm', 'WATERPROOFING', 'WPM-4-001', 120.00, NULL, 20, 42.00, 'ROLL', 0, NULL, 1, 52.50, NULL, NULL, 12),
 (125, 'PVC Water Tank 1000L', 'PLUMBING', 'TANK-1000-001', 20.00, NULL, 5, 450.00, 'PCS', 0, NULL, 1, 562.50, NULL, NULL, 12),
@@ -296,14 +312,14 @@ INSERT INTO `inventory` (`id`, `name`, `category`, `sku`, `quantity`, `location_
 (145, 'MCB 1P 16A', 'ELECTRICAL PROTECTION', 'MCB-1P16-001', 150.00, NULL, 30, 8.50, 'PCS', 0, 'BOX', 12, 10.63, 102.00, 5, 9),
 (146, 'MCB 3P 32A', 'ELECTRICAL PROTECTION', 'MCB-3P32-001', 80.00, NULL, 15, 24.00, 'PCS', 0, 'BOX', 6, 30.00, 144.00, 5, 9),
 (147, 'Distribution Board 12-Way', 'ELECTRICAL PANEL', 'DB-12W-001', 25.00, NULL, 5, 95.00, 'PCS', 0, NULL, 1, 118.75, NULL, 5, 9),
-(148, 'Contactor 25A', 'CONTROL GEAR', 'CNT-25A-001', 40.00, NULL, 10, 32.00, 'PCS', 0, 'BOX', 1, 40.00, 32.00, 1, 1),
+(148, 'Contactor 25A', 'CONTROL GEAR', 'CNT-25A-001', 35.00, NULL, 10, 32.00, 'PCS', 0, 'BOX', 1, 40.00, 32.00, 1, 1),
 (149, 'Terminal Block 6mm²', 'ELECTRICAL ACCESSORY', 'TB-6-001', 500.00, NULL, 100, 0.75, 'PCS', 0, 'BOX', 100, 0.94, 75.00, 21, 1),
 (150, 'PVC Pipe 20mm', 'PLUMBING', 'PVC-20-001', 800.00, NULL, 100, 2.40, 'M', 1, NULL, 1, 3.00, NULL, NULL, 12),
 (151, 'PVC Pipe 32mm', 'PLUMBING', 'PVC-32-001', 600.00, NULL, 100, 3.80, 'M', 1, NULL, 1, 4.75, NULL, NULL, 12),
 (152, 'PVC Pipe 50mm', 'PLUMBING', 'PVC-50-001', 450.00, NULL, 80, 5.90, 'M', 1, NULL, 1, 7.38, NULL, NULL, 12),
 (153, 'PPR Pipe 25mm', 'PLUMBING', 'PPR-25-001', 400.00, NULL, 80, 4.80, 'M', 1, NULL, 1, 6.00, NULL, NULL, 12),
 (154, 'PVC Elbow 90° 25mm', 'PLUMBING FITTING', 'ELB-25-90-001', 300.00, NULL, 50, 1.20, 'PCS', 0, 'BOX', 20, 1.50, 24.00, NULL, 12),
-(155, 'Brass Ball Valve 1\"', 'PLUMBING VALVE', 'VAL-BV-1-001', 80.00, NULL, 15, 18.00, 'PCS', 0, NULL, 1, 22.50, NULL, NULL, 12),
+(155, 'Brass Ball Valve 1\"', 'PLUMBING VALVE', 'VAL-BV-1-001', 90.00, NULL, 15, 24.00, 'PCS', 0, NULL, 1, 22.50, NULL, NULL, 12),
 (156, 'Bearing 6204', 'MECHANICAL', 'BRG-6204-001', 240.00, NULL, 10, 5.75, 'PCS', 0, 'BOX', 10, 15.00, 120.00, 6, 3),
 (157, 'Bearing 6205', 'MECHANICAL', 'BRG-6205-001', 41.00, NULL, 10, 14.50, 'PCS', 0, 'BOX', 10, 18.13, 145.00, 6, 3),
 (158, 'V-Belt A-42', 'MECHANICAL', 'VBT-A42-001', 25.00, NULL, 5, 9.50, 'PCS', 0, NULL, 1, 11.88, NULL, NULL, 12),
@@ -367,7 +383,10 @@ INSERT INTO `inventory_locations` (`id`, `code`, `name`, `notes`, `address`, `st
 (24, 'PRJ-48', 'PROJECT - 48# Building Studio in Janzour', 'Project inventory location', 'Sara, Iloilo', NULL, NULL, '2026-09-07 12:43:08'),
 (25, 'PRJ-49', 'PROJECT - 49# Our Tiny house in Sara', 'Project inventory location', 'Sara, Iloilo', NULL, NULL, '2026-09-07 16:32:52'),
 (26, 'PRJ-50', 'PROJECT - 50# Bamboo House In Aldeguer', 'Project inventory location', 'Ajuy, Tipacla', NULL, NULL, '2026-09-07 16:36:35'),
-(27, 'PRJ-51', 'PROJECT - 51# a test project', 'Project inventory location', 'Alzahra Tripoli', NULL, NULL, '2026-09-07 16:59:38');
+(27, 'PRJ-51', 'PROJECT - 51# a test project', 'Project inventory location', 'Alzahra Tripoli', NULL, NULL, '2026-09-07 16:59:38'),
+(28, 'PRJ-52', 'PROJECT - 52# abc', 'Project inventory location', 'ABCDEF', NULL, NULL, '2026-09-07 17:10:47'),
+(29, 'PRJ-2026-0053', 'PROJECT - PRJ-2026-0053 # any test project', 'Project inventory location', 'Ajuy Tipacla LOT 4', NULL, NULL, '2026-09-07 19:42:16'),
+(30, 'PRJ-2026-0054', 'PROJECT - PRJ-2026-0054 # بناء مدرسة ثانوية', 'Project inventory location', 'عين زارة طرابلس', NULL, NULL, '2026-09-08 19:56:38');
 
 -- --------------------------------------------------------
 
@@ -420,7 +439,7 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (286, 121, 1, 200.00),
 (287, 121, 2, 120.00),
 (288, 121, 3, 80.00),
-(289, 122, 1, 800.00),
+(289, 122, 1, 300.00),
 (290, 122, 2, 240.00),
 (291, 122, 3, 160.00),
 (292, 123, 1, 325.00),
@@ -498,7 +517,7 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (364, 147, 1, 12.50),
 (365, 147, 2, 7.50),
 (366, 147, 3, 5.00),
-(367, 148, 1, 20.00),
+(367, 148, 1, 15.00),
 (368, 148, 2, 12.00),
 (369, 148, 3, 8.00),
 (370, 149, 1, 250.00),
@@ -519,7 +538,7 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (385, 154, 1, 150.00),
 (386, 154, 2, 90.00),
 (387, 154, 3, 60.00),
-(388, 155, 1, 40.00),
+(388, 155, 1, 50.00),
 (389, 155, 2, 24.00),
 (390, 155, 3, 16.00),
 (391, 156, 1, 220.00),
@@ -650,7 +669,11 @@ CREATE TABLE `inventory_movements` (
 
 INSERT INTO `inventory_movements` (`id`, `inventory_id`, `location_id`, `type`, `quantity`, `unit_cost`, `supplier_id`, `supplier`, `movement_by`, `balance_after`, `global_balance_after`, `reference`, `notes`, `created_by`, `created_at`) VALUES
 (319, 156, 1, 'IN', 200.00, NULL, 3, NULL, NULL, 220.00, 240.00, 'GRN-37 / PO-PO-260906205731', NULL, 1, '2026-09-06 19:01:30'),
-(320, 122, 1, 'IN', 400.00, NULL, 3, NULL, NULL, 800.00, 1200.00, 'GRN-38 / PO-PO-260906205731', NULL, 1, '2026-09-06 19:02:53');
+(320, 122, 1, 'IN', 400.00, NULL, 3, NULL, NULL, 800.00, 1200.00, 'GRN-38 / PO-PO-260906205731', NULL, 1, '2026-09-06 19:02:53'),
+(321, 148, 1, 'OUT', 5.00, NULL, NULL, NULL, NULL, 15.00, 35.00, 'PROJECT #54', 'Contactor 25A', 1, '2026-09-09 06:38:09'),
+(322, 155, 1, 'IN', 25.00, NULL, 4, NULL, NULL, 65.00, 105.00, 'GRN-39 / PO-PO-260909203253', NULL, 1, '2026-09-10 09:49:59'),
+(323, 155, 1, 'OUT', 15.00, NULL, 4, NULL, NULL, 50.00, 90.00, 'RTS-260910122040', 'Return to supplier: كسور واعطاب في الاصناف', 1, '2026-09-10 10:20:40'),
+(324, 122, 1, 'OUT', 500.00, NULL, NULL, NULL, NULL, 300.00, 700.00, 'PROJECT #51', 'Ceramic Floor Tile 60x60', 1, '2026-09-10 14:30:10');
 
 -- --------------------------------------------------------
 
@@ -671,6 +694,13 @@ CREATE TABLE `inventory_reservations` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `required_by_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `inventory_reservations`
+--
+
+INSERT INTO `inventory_reservations` (`id`, `inventory_id`, `location_id`, `project_id`, `quantity`, `status`, `reference`, `notes`, `created_by`, `created_at`, `required_by_date`) VALUES
+(30, 123, 1, 47, 150.00, 'CANCELLED', 'الاحتفاظ بهذه الكمية من الصنف لنقصها من السوق', 'الاحتفاظ بهذه الكمية من الصنف لنقصها من السوق ويتم تسليمها للمشروع قبل التاريخ المذكور', 1, '2026-09-10 12:44:21', '2026-09-16');
 
 -- --------------------------------------------------------
 
@@ -723,7 +753,6 @@ INSERT INTO `permissions` (`id`, `name`, `description`) VALUES
 (11, 'projects.edit', 'Edit projects'),
 (12, 'inventory.edit', 'Edit inventory items'),
 (13, 'finance.view', 'View finance'),
-(15, 'services.view', 'View services'),
 (16, 'reports.view', 'View reports'),
 (17, 'customers.view', 'View customers'),
 (18, 'customers.create', 'Create customers'),
@@ -732,11 +761,6 @@ INSERT INTO `permissions` (`id`, `name`, `description`) VALUES
 (21, 'inventory.create', 'Create inventory items'),
 (22, 'inventory.delete', 'Delete inventory items'),
 (23, 'projects.delete', 'Delete projects'),
-(24, 'services.create', 'Create services'),
-(25, 'services.edit', 'Edit services'),
-(26, 'services.delete', 'Delete services'),
-(27, 'pos.view', 'View POS'),
-(28, 'pos.create', 'Create POS sales'),
 (29, 'inventory_movements.view', 'View inventory movements'),
 (30, 'inventory_movements.create', 'Create inventory movements'),
 (31, 'inventory_locations.view', 'View inventory locations'),
@@ -749,15 +773,14 @@ INSERT INTO `permissions` (`id`, `name`, `description`) VALUES
 (38, 'purchase_orders.create', 'Create purchase orders'),
 (39, 'suppliers.view', 'View suppliers'),
 (40, 'suppliers.create', 'Create suppliers'),
-(42, 'pos.change_location', 'Allow user to change POS warehouse/location'),
 (43, 'resource_requisitions.approve', 'Approve Resource Requisitions'),
-(44, 'goods_returns.create', NULL),
+(44, 'goods_returns.create', 'Create goods return'),
 (45, 'resource_requisitions.fulfill', 'User can Fulfill Resources Requestions for projects'),
-(46, 'purchase_orders.approve', NULL),
-(47, 'quotation.view', NULL),
-(48, 'quotation.create', NULL),
-(49, 'inventory.adjustment.view', NULL),
-(50, 'inventory.adjustment.create', NULL);
+(46, 'purchase_orders.approve', 'Approving purchase orders'),
+(47, 'quotation.view', 'view quotations'),
+(48, 'quotation.create', 'create quotations'),
+(49, 'inventory.adjustment.view', 'view inventory adjustments'),
+(50, 'inventory.adjustment.create', 'create inventory adjustments');
 
 -- --------------------------------------------------------
 
@@ -790,13 +813,16 @@ CREATE TABLE `projects` (
 --
 
 INSERT INTO `projects` (`id`, `location_id`, `customer_id`, `title`, `project_type`, `description`, `deadline`, `status`, `budget`, `created_at`, `is_archived`, `site_location`, `start_date`, `project_manager_id`, `contract_number`, `project_code`, `priority`) VALUES
-(45, 22, 5, 'Construction of XYZ Building', 'construction', 'Construction of XYZ Building including facilities', '2026-12-24', 'planning', 1750000.00, '2026-09-01 09:55:13', 0, 'South Tripoli', '2026-08-15', 14, 'CT-000119', 'ABC-001', 'medium'),
-(46, 21, 2, 'New Office Building', 'construction', 'Renovating and extending the New Office Building', '2026-10-22', 'planning', 500000.00, '2026-09-04 04:59:13', 0, 'Tarhouna the mountains', '2026-09-07', 1, 'NOB-2026', 'NOB-1773', 'medium'),
-(47, 23, 5, 'Maintaining The Corniche', 'maintenance', '', '2026-11-06', 'planning', 600000.00, '2026-09-04 10:36:10', 0, 'Musrata North', '2026-09-11', 1, '26009', 'MTC-7864', 'medium'),
-(48, 24, 2, 'Building Studio in Janzour', 'construction', 'Building Studio in Janzour for 76000 LYD', '2026-11-08', 'planning', 79000.00, '2026-09-07 12:43:08', 0, 'Sara, Iloilo', '2026-09-09', 1, '26907', 'Proj-BSJ22', 'critical'),
-(49, 25, 5, 'Our Tiny house in Sara', 'construction', 'Tiny house in Sara', '2026-11-12', 'planning', 600000.00, '2026-09-07 16:32:52', 0, 'Sara, Iloilo', '2026-09-13', 1, '5548', 'OTH-147', 'high'),
-(50, 26, 2, 'Bamboo House In Aldeguer', 'construction', 'Bamboo House In Aldeguer', '2026-10-15', 'planning', 40000.00, '2026-09-07 16:36:35', 0, 'Ajuy, Tipacla', '2026-09-14', 14, '111190', 'bamboo-26', 'medium'),
-(51, 27, 2, 'a test project', 'maintenance', 'a test project', '2026-10-29', 'in_progress', 300000.00, '2026-09-07 16:59:38', 0, 'Alzahra Tripoli, north', '2026-09-16', 1, 'con-1733', 'New-246', 'critical');
+(45, 22, 5, 'Construction of XYZ Building', 'Construction', 'Construction of XYZ Building including facilities', '2026-12-24', 'planning', 1750000.00, '2026-09-01 09:55:13', 0, 'South Tripoli', '2026-08-15', 14, 'CT-000119', 'ABC-001', 'medium'),
+(46, 21, 2, 'New Office Building', 'Construction', 'Renovating and extending the New Office Building', '2026-10-22', 'planning', 500000.00, '2026-09-04 04:59:13', 0, 'Tarhouna the mountains', '2026-09-07', 1, 'NOB-2026', 'NOB-1773', 'medium'),
+(47, 23, 5, 'Maintaining The Corniche', 'Maintenance', '', '2026-11-06', 'planning', 600000.00, '2026-09-04 10:36:10', 0, 'Musrata North', '2026-09-11', 1, '26009', 'MTC-7864', 'medium'),
+(48, 24, 2, 'Building Studio in Janzour', 'Construction', 'Building Studio in Janzour for 76000 LYD', '2026-11-08', 'planning', 79000.00, '2026-09-07 12:43:08', 0, 'Sara, Iloilo', '2026-09-09', 1, '26907', 'Proj-BSJ22', 'critical'),
+(49, 25, 5, 'Our Tiny house in Sara', 'Construction', 'Tiny house in Sara', '2026-11-12', 'planning', 600000.00, '2026-09-07 16:32:52', 0, 'Sara, Iloilo', '2026-09-13', 1, '5548', 'OTH-147', 'high'),
+(50, 26, 2, 'Bamboo House In Aldeguer', 'Construction', 'Bamboo House In Aldeguer', '2026-10-15', 'planning', 40000.00, '2026-09-07 16:36:35', 0, 'Ajuy, Tipacla', '2026-09-14', 14, '111190', 'bamboo-26', 'medium'),
+(51, 27, 2, 'a test project', 'Maintenance', 'a test project', '2026-10-29', 'in_progress', 300000.00, '2026-09-07 16:59:38', 0, 'Alzahra Tripoli, north', '2026-09-16', 1, 'con-1733', 'New-246', 'critical'),
+(52, 28, 5, 'abc', 'Maintenance', 'small project', '2026-09-22', 'planning', 1900000.00, '2026-09-07 17:10:47', 0, 'ABCDEF', '2026-09-16', 1, 'XYZ', 'AAA', 'high'),
+(53, 29, 5, 'any test project', 'Maintenance', 'any test project  any test project  any test project.', '2026-10-10', 'planning', 50000.00, '2026-09-07 19:42:16', 0, 'Ajuy Tipacla LOT 4', '2026-09-23', 1, 'CONT-18765', 'PRJ-2026-0053', 'medium'),
+(54, 30, 5, 'بناء مدرسة ثانوية', 'Construction', 'بناء مدرسة ثانوية بمنطقة عين زارة طرابلس', '2026-11-25', 'planning', 1500000.00, '2026-09-08 19:56:38', 0, 'عين زارة طرابلس', '2026-09-13', 14, '892026', 'PRJ-2026-0054', 'high');
 
 -- --------------------------------------------------------
 
@@ -818,6 +844,16 @@ CREATE TABLE `project_advances` (
   `attachment` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `project_advances`
+--
+
+INSERT INTO `project_advances` (`id`, `project_id`, `amount`, `payment_method`, `reference`, `notes`, `received_by`, `advance_date`, `created_at`, `status`, `attachment`) VALUES
+(18, 51, 150000.00, 'Cash', 'دفعة مبدئية', 'تصفى بعد المصاريف', 1, '2026-09-10', '2026-09-10 14:28:46', 'received', NULL),
+(19, 48, 20000.00, 'Cash', 'test', '', 1, '2026-09-10', '2026-09-10 14:38:02', 'received', NULL),
+(20, 51, 50000.00, 'Cash', 'tets 2', '', 1, '2026-09-10', '2026-09-10 14:39:03', 'received', NULL),
+(21, 54, 10000.00, 'Bank Transfer', 'لطلب بعض المواد الاولية', 'يجب تقديم تفاصيل الصرف في غضون اسبوع', 1, '2026-09-07', '2026-09-11 09:24:33', 'received', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -832,13 +868,24 @@ CREATE TABLE `project_costs` (
   `inventory_id` int(11) DEFAULT NULL,
   `resource_id` int(11) DEFAULT NULL,
   `location_id` int(11) DEFAULT NULL,
-  `cost_type` enum('materials','labor','transport','subcontract','misc') NOT NULL,
+  `cost_type` enum('MATERIALS','HUMAN_RESOURCES','TRANSPORT','EQUIPMENT','SUBCONTRACT','SITE_EXPENSES','PROFESSIONAL_SERVICES','PERMITS_FEES','INSURANCE','BANK_CHARGES','TAXES','MISCELLANEOUS') NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `quantity` decimal(10,2) DEFAULT 1.00,
   `unit_price` decimal(10,2) DEFAULT NULL,
   `total_cost` decimal(10,2) GENERATED ALWAYS AS (`quantity` * `unit_price`) STORED,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `project_costs`
+--
+
+INSERT INTO `project_costs` (`id`, `project_id`, `requisition_id`, `fulfillment_id`, `inventory_id`, `resource_id`, `location_id`, `cost_type`, `description`, `quantity`, `unit_price`, `created_at`) VALUES
+(205, 48, NULL, NULL, NULL, NULL, NULL, '', 'عمال مساعدين', 12.00, 50.00, '2026-09-08 06:53:20'),
+(206, 54, NULL, NULL, 148, NULL, 1, 'MATERIALS', 'Contactor 25A', 5.00, 32.00, '2026-09-09 06:38:09'),
+(207, 51, NULL, NULL, NULL, NULL, NULL, '', 'بنائين', 20.00, 500.00, '2026-09-10 14:17:26'),
+(208, 51, NULL, NULL, 122, NULL, 1, 'MATERIALS', 'Ceramic Floor Tile 60x60', 500.00, 25.80, '2026-09-10 14:30:10'),
+(209, 54, NULL, NULL, NULL, NULL, NULL, '', 'Payment of Permission', 1.00, 1500.00, '2026-09-11 12:12:34');
 
 -- --------------------------------------------------------
 
@@ -861,6 +908,14 @@ CREATE TABLE `project_documents` (
   `uploaded_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `project_documents`
+--
+
+INSERT INTO `project_documents` (`id`, `project_id`, `category`, `title`, `description`, `original_name`, `stored_name`, `file_type`, `file_size`, `document_date`, `uploaded_by`, `uploaded_at`) VALUES
+(24, 53, 'quotation', 'QUOTATION - 123', 'QUOTATION - 123 for the project ', 'DWUA.pdf', '6a9f141355a60_DWUA.pdf', 'application/pdf', 431635, '2026-09-02', 1, '2026-09-07 19:44:19'),
+(25, 53, 'quotation', 'QUOTATION - 123', 'QUOTATION - 123 for the project ', 'fatura.pdf', '6a9f14135678c_fatura.pdf', 'application/pdf', 184156, '2026-09-02', 1, '2026-09-07 19:44:19');
+
 -- --------------------------------------------------------
 
 --
@@ -879,6 +934,23 @@ CREATE TABLE `project_ledger` (
   `balance_after` decimal(15,2) DEFAULT 0.00,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `project_ledger`
+--
+
+INSERT INTO `project_ledger` (`id`, `project_id`, `entry_type`, `ref_table`, `ref_id`, `description`, `debit`, `credit`, `balance_after`, `created_at`) VALUES
+(88, 48, 'cost', 'project_costs', 205, 'عمال مساعدين', 600.00, 0.00, -600.00, '2026-09-08 06:53:20'),
+(89, 54, 'cost', 'project_costs', 206, 'Contactor 25A', 160.00, 0.00, -160.00, '2026-09-09 06:38:09'),
+(90, 51, 'cost', 'project_costs', 207, 'بنائين', 10000.00, 0.00, -10000.00, '2026-09-10 14:17:26'),
+(91, 51, 'advance', 'project_advances', 18, 'دفعة مبدئية', 0.00, 150000.00, 140000.00, '2026-09-10 14:28:46'),
+(92, 51, 'cost', 'project_costs', 208, 'Ceramic Floor Tile 60x60', 12900.00, 0.00, 127100.00, '2026-09-10 14:30:10'),
+(93, 48, 'advance', 'project_advances', 19, 'test', 0.00, 20000.00, 19400.00, '2026-09-10 14:38:02'),
+(94, 51, 'advance', 'project_advances', 20, 'tets 2', 0.00, 50000.00, 177100.00, '2026-09-10 14:39:03'),
+(95, 54, 'advance', 'project_advances', 21, 'لطلب بعض المواد الاولية', 0.00, 10000.00, 9840.00, '2026-09-11 09:24:33'),
+(96, 54, 'cost', 'project_costs', 209, 'Payment of Permission', 1500.00, 0.00, 8340.00, '2026-09-11 12:12:34'),
+(97, 54, 'cost', 'project_costs', 210, 'ظرائب حكومية', 5000.00, 0.00, 3340.00, '2026-09-11 12:35:41'),
+(98, 54, 'cost', 'project_costs', 210, 'Reversal: ظرائب حكومية', 0.00, 5000.00, 8340.00, '2026-09-11 12:36:44');
 
 -- --------------------------------------------------------
 
@@ -906,10 +978,15 @@ INSERT INTO `project_scopes` (`id`, `project_id`, `scope`) VALUES
 (12, 49, 'Structural'),
 (18, 50, 'Finishing'),
 (17, 50, 'Structural'),
-(22, 51, 'Civil'),
-(24, 51, 'Finishing'),
-(23, 51, 'MEP'),
-(25, 51, 'Telecommunications');
+(32, 51, 'Civil'),
+(34, 51, 'Finishing'),
+(33, 51, 'MEP'),
+(28, 52, 'Finishing'),
+(31, 53, 'Architectural'),
+(36, 54, 'Architectural'),
+(35, 54, 'Civil'),
+(38, 54, 'MEP'),
+(37, 54, 'Structural');
 
 -- --------------------------------------------------------
 
@@ -962,7 +1039,8 @@ CREATE TABLE `purchase_orders` (
 --
 
 INSERT INTO `purchase_orders` (`id`, `po_number`, `supplier_id`, `project_id`, `requisition_id`, `target_warehouse_id`, `delivery_method`, `status`, `order_date`, `expected_date`, `subtotal`, `tax_amount`, `discount_amount`, `total_amount`, `notes`, `created_by`, `approved_by`, `approved_at`, `received_at`, `created_at`, `receiving_status`) VALUES
-(56, 'PO-260906205731', 3, NULL, NULL, NULL, 'WAREHOUSE', 'received', '2026-09-06', '2026-09-12', 11470.00, 0.00, 0.00, 11470.00, '', 1, 1, '2026-09-06 21:00:08', '2026-09-06 21:02:53', '2026-09-06 18:57:31', 'RECEIVED');
+(56, 'PO-260906205731', 3, NULL, NULL, NULL, 'WAREHOUSE', 'received', '2026-09-06', '2026-09-12', 11470.00, 0.00, 0.00, 11470.00, '', 1, 1, '2026-09-06 21:00:08', '2026-09-06 21:02:53', '2026-09-06 18:57:31', 'RECEIVED'),
+(57, 'PO-260909203253', 4, NULL, NULL, NULL, 'WAREHOUSE', 'partial', '2026-09-09', '2026-09-23', 2400.00, 0.00, 0.00, 2400.00, '', 1, 1, '2026-09-09 20:36:40', NULL, '2026-09-09 18:32:53', 'PARTIAL');
 
 -- --------------------------------------------------------
 
@@ -988,7 +1066,8 @@ CREATE TABLE `purchase_order_items` (
 
 INSERT INTO `purchase_order_items` (`id`, `purchase_order_id`, `inventory_id`, `quantity`, `received_quantity`, `unit_cost`, `total_cost`, `notes`, `created_at`) VALUES
 (57, 56, 156, 200.00, 200.00, 5.75, 0.00, NULL, '2026-09-06 18:59:32'),
-(58, 56, 122, 400.00, 400.00, 25.80, 0.00, NULL, '2026-09-06 18:59:51');
+(58, 56, 122, 400.00, 400.00, 25.80, 0.00, NULL, '2026-09-06 18:59:51'),
+(59, 57, 155, 100.00, 25.00, 24.00, 0.00, NULL, '2026-09-09 18:36:19');
 
 -- --------------------------------------------------------
 
@@ -1016,12 +1095,12 @@ CREATE TABLE `resources` (
 INSERT INTO `resources` (`id`, `resource_code`, `resource_name`, `resource_name_a`, `resource_type`, `unit_id`, `description`, `status`, `created_at`, `category_id`) VALUES
 (12, 'EQP-0001', 'Concrete Mixer', 'خلاطة خرسانة', 'EQUIPMENT', 7, 'Portable concrete mixer', 'ACTIVE', '2026-07-13 07:52:15', 6),
 (13, 'EQP-0002', 'Plate Compactor', 'دكاكة تربة', 'EQUIPMENT', 7, 'Soil compaction machine', 'ACTIVE', '2026-07-13 07:52:15', 6),
-(14, 'EQP-0003', 'Excavator', 'حفارة', 'EQUIPMENT', 8, 'Hydraulic excavator', 'ACTIVE', '2026-07-13 07:52:15', 6),
+(14, 'EQP-0003', 'Excavator', 'ألة حفر', 'EQUIPMENT', 17, 'Hydraulic excavator', 'ACTIVE', '2026-07-13 07:52:15', 6),
 (15, 'EQP-0004', 'Tower Crane', 'رافعة برجية', 'EQUIPMENT', 8, 'Heavy lifting equipment', 'ACTIVE', '2026-07-13 07:52:15', 6),
-(16, 'EQP-0005', 'Generator 100kVA', 'مولد كهرباء', 'EQUIPMENT', 8, 'Diesel generator', 'ACTIVE', '2026-07-13 07:52:15', 6),
+(16, 'EQP-0005', 'Electric Generator', 'مولد كهرباء', 'EQUIPMENT', 8, 'Diesel generator', 'ACTIVE', '2026-07-13 07:52:15', 6),
 (17, 'LAB-0001', 'Civil Engineer', 'مهندس مدني', 'LABOR', 9, 'Professional engineer', 'ACTIVE', '2026-07-13 07:52:15', 7),
 (18, 'LAB-0002', 'Site Supervisor', 'مشرف موقع', 'LABOR', 9, 'Construction supervisor', 'ACTIVE', '2026-07-13 07:52:15', 7),
-(19, 'LAB-0003', 'Mason', 'عامل بناء', 'LABOR', 9, 'Block laying and plastering', 'ACTIVE', '2026-07-13 07:52:15', 7),
+(19, 'LAB-0003', 'Masonery', 'أسطى بناء', 'LABOR', 9, 'Block laying and plastering', 'ACTIVE', '2026-07-13 07:52:15', 7),
 (20, 'LAB-0004', 'Carpenter', 'نجار', 'LABOR', 9, 'Formwork carpenter', 'ACTIVE', '2026-07-13 07:52:15', 7),
 (21, 'LAB-0005', 'Steel Fixer', 'حداد تسليح', 'LABOR', 9, 'Rebar installation', 'ACTIVE', '2026-07-13 07:52:15', 7),
 (22, 'LAB-0006', 'Electrician', 'كهربائي', 'LABOR', 9, 'Electrical installation', 'ACTIVE', '2026-07-13 07:52:15', 7),
@@ -1099,7 +1178,8 @@ CREATE TABLE `resource_requisitions` (
 
 INSERT INTO `resource_requisitions` (`id`, `req_number`, `project_id`, `request_date`, `required_date`, `target_warehouse_id`, `delivery_method`, `priority`, `status`, `remarks`, `submitted_by`, `submitted_at`, `requested_by`, `approved_by`, `approved_at`, `approval_remarks`, `approval_notes`, `created_at`, `updated_at`) VALUES
 (43, 'REQ-260906224746', 46, '2026-09-06', '2026-09-19', 3, 'WAREHOUSE', 'MEDIUM', 'APPROVED', 'test RR to show in the dashboard', 1, '2026-09-06 22:53:24', 1, 1, '2026-09-06 22:55:02', '', NULL, '2026-09-06 20:47:46', '2026-09-06 20:55:02'),
-(44, 'REQ-260906231019', 45, '2026-09-06', '2026-09-23', 22, 'WAREHOUSE', 'MEDIUM', 'DRAFT', '', NULL, NULL, 1, NULL, NULL, NULL, NULL, '2026-09-06 21:10:19', NULL);
+(44, 'REQ-260906231019', 45, '2026-09-06', '2026-09-23', 22, 'WAREHOUSE', 'MEDIUM', 'APPROVED', '', 1, '2026-09-09 20:38:57', 1, 1, '2026-09-09 20:39:08', '', NULL, '2026-09-06 21:10:19', '2026-09-09 18:39:08'),
+(45, 'REQ-260911114053', 51, '2026-09-11', '2026-09-23', 27, 'WAREHOUSE', 'MEDIUM', 'DRAFT', '', NULL, NULL, 1, NULL, NULL, NULL, NULL, '2026-09-11 09:40:53', NULL);
 
 -- --------------------------------------------------------
 
@@ -1122,7 +1202,9 @@ CREATE TABLE `resource_requisition_approvals` (
 
 INSERT INTO `resource_requisition_approvals` (`id`, `requisition_id`, `action`, `action_by`, `remarks`, `action_date`) VALUES
 (54, 43, 'SUBMITTED', 1, NULL, '2026-09-06 22:53:24'),
-(55, 43, 'APPROVED', 1, '', '2026-09-06 22:55:02');
+(55, 43, 'APPROVED', 1, '', '2026-09-06 22:55:02'),
+(56, 44, 'SUBMITTED', 1, NULL, '2026-09-09 20:38:57'),
+(57, 44, 'APPROVED', 1, '', '2026-09-09 20:39:08');
 
 -- --------------------------------------------------------
 
@@ -1218,7 +1300,8 @@ CREATE TABLE `resource_requisition_items` (
 --
 
 INSERT INTO `resource_requisition_items` (`id`, `requisition_id`, `resource_source`, `inventory_id`, `resource_id`, `description`, `uom`, `quantity`, `fulfilled_quantity`, `estimated_unit_cost`, `estimated_total`, `remarks`, `status`, `created_at`) VALUES
-(41, 43, 'INVENTORY', NULL, 181, 'Dust Mask FFP2', 'PCS', 150.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-09-06 20:52:51');
+(41, 43, 'INVENTORY', NULL, 181, 'Dust Mask FFP2', 'PCS', 150.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-09-06 20:52:51'),
+(42, 44, 'INVENTORY', NULL, 134, 'Binding Wire', 'KG', 190.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-09-09 18:38:41');
 
 -- --------------------------------------------------------
 
@@ -1443,7 +1526,9 @@ INSERT INTO `supplier_ledger` (`id`, `supplier_id`, `type`, `reference_type`, `r
 (34, 3, 'GRN', 'GoodsReceipt', 37, 1150.00, 'DEBIT', '2026-09-06 19:01:30'),
 (35, 3, 'GRN', 'GoodsReceipt', 38, 10320.00, 'DEBIT', '2026-09-06 19:02:53'),
 (36, 3, 'PAYMENT', 'SupplierPayment', 12, 10000.00, 'CREDIT', '2026-09-06 19:04:01'),
-(37, 3, 'PAYMENT', 'SupplierPayment', 13, 1000.00, 'CREDIT', '2026-09-06 19:45:19');
+(37, 3, 'PAYMENT', 'SupplierPayment', 13, 1000.00, 'CREDIT', '2026-09-06 19:45:19'),
+(38, 4, 'GRN', 'GoodsReceipt', 39, 600.00, 'DEBIT', '2026-09-10 09:49:59'),
+(39, 4, '', 'GoodsReturn', 7, 360.00, 'CREDIT', '2026-09-10 10:20:40');
 
 -- --------------------------------------------------------
 
@@ -1796,6 +1881,7 @@ ALTER TABLE `permissions`
 --
 ALTER TABLE `projects`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uq_projects_project_code` (`project_code`),
   ADD KEY `project_customer_fk` (`customer_id`),
   ADD KEY `project_manager_fk` (`project_manager_id`),
   ADD KEY `fk_projects_location` (`location_id`);
@@ -2072,25 +2158,25 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `goods_receipts`
 --
 ALTER TABLE `goods_receipts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `goods_receipt_items`
 --
 ALTER TABLE `goods_receipt_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `goods_returns`
 --
 ALTER TABLE `goods_returns`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `goods_return_items`
 --
 ALTER TABLE `goods_return_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `inventory`
@@ -2102,7 +2188,7 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `inventory_locations`
 --
 ALTER TABLE `inventory_locations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `inventory_location_stock`
@@ -2114,13 +2200,13 @@ ALTER TABLE `inventory_location_stock`
 -- AUTO_INCREMENT for table `inventory_movements`
 --
 ALTER TABLE `inventory_movements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=321;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=325;
 
 --
 -- AUTO_INCREMENT for table `inventory_reservations`
 --
 ALTER TABLE `inventory_reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `inventory_transfers`
@@ -2138,37 +2224,37 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `project_advances`
 --
 ALTER TABLE `project_advances`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `project_costs`
 --
 ALTER TABLE `project_costs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=205;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=211;
 
 --
 -- AUTO_INCREMENT for table `project_documents`
 --
 ALTER TABLE `project_documents`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `project_ledger`
 --
 ALTER TABLE `project_ledger`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT for table `project_scopes`
 --
 ALTER TABLE `project_scopes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `purchase_items`
@@ -2180,13 +2266,13 @@ ALTER TABLE `purchase_items`
 -- AUTO_INCREMENT for table `purchase_orders`
 --
 ALTER TABLE `purchase_orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `purchase_order_items`
 --
 ALTER TABLE `purchase_order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `resources`
@@ -2204,13 +2290,13 @@ ALTER TABLE `resource_categories`
 -- AUTO_INCREMENT for table `resource_requisitions`
 --
 ALTER TABLE `resource_requisitions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `resource_requisition_approvals`
 --
 ALTER TABLE `resource_requisition_approvals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `resource_requisition_attachments`
@@ -2240,7 +2326,7 @@ ALTER TABLE `resource_requisition_fulfillment_items`
 -- AUTO_INCREMENT for table `resource_requisition_items`
 --
 ALTER TABLE `resource_requisition_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -2264,7 +2350,7 @@ ALTER TABLE `suppliers`
 -- AUTO_INCREMENT for table `supplier_ledger`
 --
 ALTER TABLE `supplier_ledger`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `supplier_payments`

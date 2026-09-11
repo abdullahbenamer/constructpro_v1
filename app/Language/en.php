@@ -66,6 +66,29 @@ return [
     'budget_lyd'               => 'Budget LYD',
     'costs_lyd'                => 'Costs LYD',
     'cost_status'              => 'Cost Status',
+
+
+
+
+    // ----------------
+'materials' => 'MATERIALS',
+'human_resources' => 'HUMAN RESOURCES',
+'transport' => 'TRANSPORT',
+'equipment' => 'EQUIPMENT',
+'subcontract' => 'SUBCONTRACT',
+'site_expenses' => 'SITE EXPENSES',
+'professional_services' => 'PROFESSIONAL SERVICES',
+'permits_fees' => 'PERMITS & FEES',
+'insurance' => 'INSURANCE',
+'bank_charges' => 'BANK CHARGES',
+'taxes' => 'TAXES',
+'miscellaneous' => 'MISCELLANEOUS',
+
+    // ----------------
+
+
+
+
     'actions'                  => 'Actions',
 
     'no_archived_projects'     => 'No archived projects available.',

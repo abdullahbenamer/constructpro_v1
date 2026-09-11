@@ -66,6 +66,29 @@ return [
     'budget_lyd'               => 'الميزانية LYD',
     'costs_lyd'                => 'التكاليف LYD',
     'cost_status'              => 'حالة التكلفة',
+
+
+// -----------------------
+
+
+'materials' => 'المواد',
+'human_resources' => 'الموارد البشرية',
+'transport' => 'النقل',
+'equipment' => 'المعدات',
+'subcontract' => 'المقاولات من الباطن',
+'site_expenses' => 'مصاريف الموقع',
+'professional_services' => 'الخدمات المهنية',
+'permits_fees' => 'التراخيص والرسوم',
+'insurance' => 'التأمين',
+'bank_charges' => 'الرسوم المصرفية',
+'taxes' => 'الضرائب',
+'miscellaneous' => 'متفرقات',
+
+// ---------------------
+
+
+
+
     'actions'                  => 'الإجراءات',
 
     'no_archived_projects'     => 'لا توجد مشاريع مؤرشفة متاحة.',
@@ -173,16 +196,12 @@ return [
     'add_first_cost' => 'إضافة أول تكلفة',
     'project_warehouse' => 'مستودع المشروع',
     'add_cost_to_project' => 'إضافة تكلفة إلى المشروع',
-    'materials'     => 'المواد',
-    'labor'         => 'العمالة',
-    'transport'     => 'النقل',
-    'subcontract'   => 'مقاولة من الباطن',
-    'miscellaneous' => 'متفرقات',
-    'inventory_item' => 'صنف المخزون',
+      'labor'         => 'العمالة',
+         'inventory_item' => 'صنف المخزون',
     'select_item' => 'اختر الصنف',
     'available' => 'المتاح',
     'physical'  => 'الفعلي',
-    'resource_description_placeholder' => 'وصف الصنف ....',
+    'resource_description_placeholder' => 'الوصف ....',
     'select_location' => 'اختر الموقع - المستودع',
     'quantity_warning' => 'لا يمكن تجاوز الكمية المتاحة في المستودع الذي تم اختياره',
     'unit_cost' => 'تكلفة الوحدة',
