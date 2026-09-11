@@ -28,17 +28,20 @@ return [
 
 // Inventory Categories
     'civil_structural'      => 'الأعمال المدنية والإنشائية',
-'building_finishing'    => 'مواد البناء والتشطيبات',
+'building_and_finishing'    => 'مواد البناء والتشطيبات',
 'plumbing_drainage'     => 'السباكة والصرف الصحي',
 'hvac'                   => 'التكييف والتهوية',
 'electrical'             => 'الكهرباء',
 'fire_fighting_alarm'   => 'مكافحة الحريق والإنذار',
 'low_current'            => 'التيار الخفيف',
 'hand_tools'             => 'العدد اليدوية',
-'equipment'              => 'المعدات',
+'equipment'              => 'الالات',
 'safety_ppe'             => 'السلامة ومعدات الحماية الشخصية',
 'consumables'            => 'المواد الاستهلاكية',
 'other'                  => 'أخرى',
+'material'     => 'بضاعة - مواد',
+'materials'     => 'المواد',
+'non_material' => 'غير المواد',
 
     // PROCUREMENT
     'supplier_quotations'    => 'عروض أسعار الموردين',
@@ -84,11 +87,8 @@ return [
 
 // -----------------------
 
-
-'materials' => 'المواد',
 'human_resources' => 'الموارد البشرية',
 'transport' => 'النقل',
-'equipment' => 'المعدات',
 'subcontract' => 'المقاولات من الباطن',
 'site_expenses' => 'مصاريف الموقع',
 'professional_services' => 'الخدمات المهنية',
@@ -823,7 +823,6 @@ return [
     'source_rr'                       => 'طلب الموارد المصدر',
     'direct_to_site'                  => 'مباشرة إلى الموقع',
     'materials_to_purchase'           => 'المواد المطلوب شراؤها',
-    'material'                        => 'المادة',
     'uom'                             => 'وحدة القياس',
     'rr_remaining'                    => 'المتبقي في طلب الموارد',
     'quantity_to_purchase'            => 'الكمية المطلوب شراؤها',
@@ -869,7 +868,7 @@ return [
 'enter_fulfillment_quantity_for_at_least_one_material' => 'يرجى إدخال كمية تنفيذ لمادة واحدة على الأقل.',
 
 'add_resource_requisition_item'                    => 'إضافة بند إلى طلب الموارد',
-'add_new_item_to_requisition'                     => 'إضافة بند جديد إلى طلب الموارد هذا',
+'add_new_item_to_requisition'                     => 'إضافة بند جديد إلى طلب الموارد',
 'back_to_requisition'                              => 'العودة إلى طلب الموارد',
 'item_details'                                     => 'تفاصيل البند',
 'select_resource_type'                             => 'اختر نوع المورد',

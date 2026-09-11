@@ -28,7 +28,7 @@ return [
     
     //Inventory Categories
     'civil_structural'      => 'CIVIL & STRUCTURAL',
-'building_finishing'    => 'BUILDING & FINISHING',
+'building_and_finishing'    => 'BUILDING & FINISHING',
 'plumbing_drainage'     => 'PLUMBING & DRAINAGE',
 'hvac'                   => 'HVAC',
 'electrical'             => 'ELECTRICAL',
@@ -39,6 +39,7 @@ return [
 'safety_ppe'             => 'SAFETY & PPE',
 'consumables'            => 'CONSUMABLES',
 'other'                  => 'OTHER',
+'non_material' => 'Non Material',
 
     // PROCUREMENT
     'supplier_quotations'    => 'Supplier Quotations',

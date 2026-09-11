@@ -78,11 +78,11 @@
                             class="form-select">
 
                             <option value="INVENTORY">
-                                MATERIAL
+                                <?= __('material') ?>
                             </option>
 
                             <option value="RESOURCE">
-                                NON MATERIAL
+                                <?= __('non_material') ?>
                             </option>
 
                         </select>
@@ -111,8 +111,7 @@
                                         data-unit="<?= htmlspecialchars($item->base_unit) ?>"
                                         data-description="<?= htmlspecialchars($item->name) ?>">
 
-                                        <?= htmlspecialchars($item->sku) ?>
-                                        -
+                                        <!-- <?//= htmlspecialchars($item->sku) ?> - -->
                                         <?= htmlspecialchars($item->name) ?>
 
                                         (<?= __('available') ?>:
@@ -778,7 +777,6 @@
                     | NON-MATERIAL
                     |--------------------------------------------------------------
                     */
-
                     else {
 
                         const selectedId =
@@ -832,6 +830,18 @@
                 }
             );
 
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Resource Type INITIAL STATE
+        |--------------------------------------------------------------------------
+        */
+
+        if (type.value === 'INVENTORY') {
+            showMaterial();
+        } else {
+            showResource();
         }
 
     });

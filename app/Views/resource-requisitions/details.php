@@ -448,53 +448,51 @@
     <br>
 
 
-<!-- FULFILLMENT ACTIONS -->
+    <!-- FULFILLMENT ACTIONS -->
 
-<?php if (
-    $data['requisition']->status === 'APPROVED'
-    ||
-    $data['requisition']->status === 'PARTIAL'
-): ?>
+    <?php if (
+        $data['requisition']->status === 'APPROVED'
+        ||
+        $data['requisition']->status === 'PARTIAL'
+    ): ?>
 
-    <div class="d-flex gap-2 mb-3">
+        <div class="d-flex gap-2 mb-3">
 
-        <?php if (!empty($data['hasMaterialItems'])): ?>
+            <?php if (!empty($data['hasMaterialItems'])): ?>
 
-            <a
-                href="<?= URLROOT ?>/ResourceRequisitionFulfillments/create/<?= $data['requisition']->id ?>"
-                class="btn btn-success"
-            >
-                <i class="fas fa-boxes"></i>
-                <?= __('fulfill_materials') ?>
-            </a>
+                <a
+                    href="<?= URLROOT ?>/ResourceRequisitionFulfillments/create/<?= $data['requisition']->id ?>"
+                    class="btn btn-success">
+                    <i class="fas fa-boxes"></i>
+                    <?= __('fulfill_materials') ?>
+                </a>
 
-        <?php endif; ?>
-
-        <a
-            href="<?= URLROOT ?>/requisitionpurchaseorders/create/<?= $data['requisition']->id ?>"
-            class="btn btn-primary">
-
-            <i class="fas fa-shopping-cart"></i>
-            <?= __('create_po_for_materials') ?>
-
-        </a>
-
-
-        <?php if (!empty($data['hasResourceItems'])): ?>
+            <?php endif; ?>
 
             <a
-                href="<?= URLROOT ?>/ResourceRequisitionFulfillments/createResource/<?= $data['requisition']->id ?>"
-                class="btn btn-primary"
-            >
-                <i class="fas fa-tools"></i>
-                <?= __('fulfill_resources') ?>
+                href="<?= URLROOT ?>/requisitionpurchaseorders/create/<?= $data['requisition']->id ?>"
+                class="btn btn-primary">
+
+                <i class="fas fa-shopping-cart"></i>
+                <?= __('create_po_for_materials') ?>
+
             </a>
 
-        <?php endif; ?>
 
-    </div>
+            <?php if (!empty($data['hasResourceItems'])): ?>
 
-<?php endif; ?>
+                <a
+                    href="<?= URLROOT ?>/ResourceRequisitionFulfillments/createResource/<?= $data['requisition']->id ?>"
+                    class="btn btn-primary">
+                    <i class="fas fa-tools"></i>
+                    <?= __('fulfill_resources') ?>
+                </a>
+
+            <?php endif; ?>
+
+        </div>
+
+    <?php endif; ?>
 
     <!-- REQUISITION ITEMS -->
 
@@ -578,12 +576,23 @@
 
 
                                         <?= $item->resource_name ?? $item->description ?>
-
-
                                         <br>
                                         <small class="text-muted">
                                             <?= __('category') ?>:
-                                            <?= $item->category_name ?? '-' ?>
+
+                                            <?php
+                                            $categoryKey = strtolower(
+                                                str_replace(
+                                                    [' ', '&'],
+                                                    ['_', 'and'],
+                                                    $item->category_name ?? ''
+                                                )
+                                            );
+                                            ?>
+
+                                            <?= $item->category_name
+                                                ? __($categoryKey)
+                                                : '-' ?>
                                         </small>
                                     </td>
 
