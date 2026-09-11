@@ -4,8 +4,6 @@ return [
 
     // GENERAL
     'constructpro_system' => 'نظام ConstructPro',
-    'constructpro_system_title' => 'النظام الاحترافي للمشاريع والانشاءات',
-    'about_constructpro'     => 'حول النظام',
     'dashboard'              => 'لوحة التحكم',
     'projects'               => 'المشاريع',
     'customers'              => 'العملاء',
@@ -970,7 +968,7 @@ return [
 
 // footer
 'dedicated_to_quality'            => 'ملتزمون بالجودة',
-'construction_professional_system'=> 'النظام الاحترافي للمشروعات والإنشاءات',
+'construction_professional_system'=> 'النظام الاحترافي للإنشاءات',
 'home'                            => 'الرئيسية',
 
 // ADMIN
@@ -1013,8 +1011,6 @@ return [
 'delete_user_confirm'                      => 'هل تريد حذف هذا المستخدم؟',
 
 //Permession groups
-'permission'         => 'صلاحية',
-'permissions'         => 'الصلاحيات',
 'permission_group_admin'         => 'الإدارة',
 'permission_group_costs'         => 'التكاليف',
 'permission_group_customers'     => 'العملاء',
@@ -1031,56 +1027,14 @@ return [
 'permission_group_inventory_locations'   => 'مواقع المخزون',
 'permission_group_inventory_movements'   => 'حركات المخزون',
 'permission_group_inventory_reservations'=> 'حجوزات المخزون',
+'permission_group_pos'                   => 'نقطة البيع',
 'permission_group_purchase_orders'       => 'أوامر الشراء',
 'permission_group_quotation'             => 'عروض الأسعار',
 'permission_group_resource_requisitions' => 'طلبات الموارد',
+'permission_group_services'              => 'الخدمات',
 'permission_group_stock_transfers'       => 'تحويلات المخزون',
 
 'login' => 'تسجيل الدخول',
 
-'permission_admin_access' => 'الوصول إلى لوحة الإدارة',
-'permission_resource_requisitions_approve' => 'اعتماد طلبات الموارد',
-'permission_purchase_orders_approve' => 'اعتماد أوامر الشراء',
-'permission_customers_create' => 'إنشاء العملاء',
-'permission_inventory_adjustment_create' => 'إنشاء تسويات المخزون',
-'permission_inventory_create' => 'إنشاء أصناف المخزون',
-'permission_inventory_locations_create' => 'إنشاء مواقع المخزون',
-'permission_inventory_movements_create' => 'إنشاء حركات المخزون',
-'permission_inventory_reservations_create' => 'إنشاء حجوزات المخزون',
-'permission_projects_create' => 'إنشاء المشاريع',
-'permission_purchase_orders_create' => 'إنشاء أوامر الشراء',
-'permission_quotation_create' => 'إنشاء عروض الأسعار',
-'permission_stock_transfers_create' => 'إنشاء تحويلات المخزون',
-'permission_suppliers_create' => 'إنشاء الموردين',
-'permission_users_create' => 'إنشاء المستخدمين',
-
-'permission_customers_delete' => 'حذف العملاء',
-'permission_inventory_delete' => 'حذف أصناف المخزون',
-'permission_projects_delete' => 'حذف المشاريع',
-'permission_users_delete' => 'حذف المستخدمين',
-
-'permission_customers_edit' => 'تعديل العملاء',
-'permission_inventory_edit' => 'تعديل أصناف المخزون',
-'permission_projects_edit' => 'تعديل المشاريع',
-'permission_users_edit' => 'تعديل المستخدمين',
-
-'permission_resource_requisitions_fulfill' => 'تنفيذ طلبات الموارد',
-'permission_goods_returns_create' => 'إنشاء نماذج إرجاع البضائع',
-
-'permission_customers_view' => 'عرض العملاء',
-'permission_finance_view' => 'عرض المالية',
-'permission_inventory_view' => 'عرض المخزون',
-'permission_inventory_adjustment_view' => 'عرض تسويات المخزون',
-'permission_inventory_locations_view' => 'عرض مواقع المخزون',
-'permission_inventory_movements_view' => 'عرض حركات المخزون',
-'permission_inventory_reservations_view' => 'عرض حجوزات المخزون',
-'permission_costs_view' => 'عرض تكاليف المشاريع',
-'permission_projects_view' => 'عرض المشاريع',
-'permission_purchase_orders_view' => 'عرض أوامر الشراء',
-'permission_quotation_view' => 'عرض عروض الأسعار',
-'permission_reports_view' => 'عرض التقارير',
-'permission_stock_transfers_view' => 'عرض تحويلات المخزون',
-'permission_suppliers_view' => 'عرض الموردين',
-'permission_users_view' => 'عرض المستخدمين',
 
 ];

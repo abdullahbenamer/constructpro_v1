@@ -772,7 +772,6 @@ $direction = Language::direction();
                 <?= __('constructpro_system') ?>
 
                 <i class="fas fa-drafting-compass"></i>
-
             </a>
 
 
@@ -1264,7 +1263,7 @@ $direction = Language::direction();
                                 <?php if (AuthHelper::canView('reports.view')) : ?>
 
                                     <li>
-                                                                            <a
+                                        <a
                                             class="dropdown-item"
                                             href="<?= URLROOT ?>/reports">
 
@@ -1284,8 +1283,11 @@ $direction = Language::direction();
                         </li>
 
                     <?php endif; ?>
+                    
+                    <hr style="color: #ffffff; margin: 10px 0;">
 
-
+                    <li> <a class="nav-link <?= App::$current_url == 'about' ? 'active' : '' ?>" href="#">
+                            <i class="fas fa-info-circle"></i> <?= __('about_constructpro') ?></a></li>
 
                     <!-- =================================================
                      USER AREA

@@ -23,7 +23,7 @@
 
             <h5 class="card-title">
                 <i class="fas fa-city"></i>
-                <?= __('construction_professional_system') ?>
+                <?= __('constructpro_system_title') ?>
                 <i class="fas fa-drafting-compass"></i>
             </h5>
 

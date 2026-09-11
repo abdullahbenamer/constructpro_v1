@@ -3,9 +3,7 @@
 return [
 
     // GENERAL
-    'constructpro_system' => 'ConstructPro',
-    'constructpro_system_title' => 'The Professional System for Projects & Construction',
-     'about_constructpro'     => 'ِAbout the System',
+    'constructpro_system' => 'ConstructPro System',
     'dashboard'              => 'Dashboard',
     'projects'               => 'Projects',
     'customers'              => 'Customers',
@@ -1026,8 +1024,6 @@ return [
 'delete_user_confirm'                      => 'Delete this user?',
 
 // Permission Groups
-'permission'         => 'Permission',
-'permissions'         => 'Permissions',
 'permission_group_admin'         => 'ADMIN',
 'permission_group_costs'         => 'COSTS',
 'permission_group_customers'     => 'CUSTOMERS',
@@ -1050,52 +1046,5 @@ return [
 'permission_group_stock_transfers'       => 'STOCK TRANSFERS',
 
 'login' => 'Login',
-
-// permissions translation
-
-'permission_admin_access' => 'Access admin panel',
-'permission_resource_requisitions_approve' => 'Approve Resource Requisitions',
-'permission_purchase_orders_approve' => 'Approving purchase orders',
-'permission_customers_create' => 'Create customers',
-'permission_inventory_adjustment_create' => 'Create inventory adjustments',
-'permission_inventory_create' => 'Create inventory items',
-'permission_inventory_locations_create' => 'Create inventory locations',
-'permission_inventory_movements_create' => 'Create inventory movements',
-'permission_inventory_reservations_create' => 'Create inventory reservations',
-'permission_projects_create' => 'Create projects',
-'permission_purchase_orders_create' => 'Create purchase orders',
-'permission_quotation_create' => 'Create quotations',
-'permission_stock_transfers_create' => 'Create stock transfers',
-'permission_suppliers_create' => 'Create suppliers',
-'permission_users_create' => 'Create users',
-
-'permission_customers_delete' => 'Delete customers',
-'permission_inventory_delete' => 'Delete inventory items',
-'permission_projects_delete' => 'Delete projects',
-'permission_users_delete' => 'Delete users',
-
-'permission_customers_edit' => 'Edit customers',
-'permission_inventory_edit' => 'Edit inventory items',
-'permission_projects_edit' => 'Edit projects',
-'permission_users_edit' => 'Edit users',
-
-'permission_resource_requisitions_fulfill' => 'Fulfilling Resource Requisitions',
-'permission_goods_returns_create' => 'Create Goods Return',
-
-'permission_customers_view' => 'View customers',
-'permission_finance_view' => 'View finance',
-'permission_inventory_view' => 'View inventory',
-'permission_inventory_adjustment_view' => 'View inventory adjustments',
-'permission_inventory_locations_view' => 'View inventory locations',
-'permission_inventory_movements_view' => 'View inventory movements',
-'permission_inventory_reservations_view' => 'View inventory reservations',
-'permission_costs_view' => 'View project costs',
-'permission_projects_view' => 'View projects',
-'permission_purchase_orders_view' => 'View purchase orders',
-'permission_quotation_view' => 'View quotations',
-'permission_reports_view' => 'View reports',
-'permission_stock_transfers_view' => 'View stock transfers',
-'permission_suppliers_view' => 'View suppliers',
-'permission_users_view' => 'View users',
 
 ];

@@ -116,7 +116,7 @@
             <div class="card-body">
 
                 <h6>
-                    <?= __('budget_utilization') ?>
+                    <?= __('budget_utilization') ?> %
                 </h6>
 
                 <div class="progress" style="height:25px;">
@@ -143,7 +143,7 @@
             <div class="card-body">
 
                 <h6>
-                    <?= __('project_timeline_utilization') ?>
+                    <?= __('project_timeline_utilization') ?> %
                 </h6>
 
                 <div class="progress" style="height:25px;">
@@ -197,7 +197,7 @@
         <div class="card-body">
 
             <h6>
-                <?= __('advance_funding_vs_budget') ?>
+                <?= __('advance_funding_vs_budget') ?> %
             </h6>
 
             <div class="d-flex justify-content-between mb-2">
@@ -251,7 +251,7 @@
 
             <small class="text-muted">
 
-                <?= __('budget_funded_by_advances') ?>
+                <?= __('budget_funded_by_advances') ?> %
 
             </small>
 

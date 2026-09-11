@@ -89,13 +89,27 @@ $groupTranslationKey = 'permission_group_' . strtolower($group);
                             <?= in_array($perm->id, $assigned) ? 'checked' : '' ?>>
 
 
-                        <label
-                            class="form-check-label"
-                            for="perm<?= $perm->id ?>">
+                     <label
+    class="form-check-label"
+    for="perm<?= $perm->id ?>">
 
-                            <?= $perm->name ?>
+    <strong><?= htmlspecialchars($perm->name) ?></strong>
 
-                        </label>
+    <br>
+
+    <small class="text-muted">
+        <?php
+        $permissionTranslationKey = 'permission_' . str_replace(
+            ['.', '_'],
+            '_',
+            $perm->name
+        );
+        ?>
+
+        <?= htmlspecialchars(__($permissionTranslationKey)) ?>
+    </small>
+
+</label>
 
                     </div>
 
