@@ -58,41 +58,45 @@
         <!-- CATEGORY -->
         <div class="col-md-4">
 
-            <div class="mb-3">
+          <div class="mb-3">
 
-                <label class="form-label">
-                    <?= __('category') ?>
-                </label>
+    <label class="form-label">
+        <?= __('category') ?>
+    </label>
 
-                <select name="category" class="form-select">
+    <select name="category" class="form-select">
 
-                    <?php
-                    $categories = [
-                        'Switchgear',
-                        'Protection',
-                        'Instrumentation',
-                        'General'
-                    ];
+        <?php
+        $categories = [
+            'CIVIL & STRUCTURAL'   => 'civil_structural',
+            'BUILDING & FINISHING' => 'building_finishing',
+            'PLUMBING & DRAINAGE'  => 'plumbing_drainage',
+            'HVAC'                 => 'hvac',
+            'ELECTRICAL'          => 'electrical',
+            'FIRE FIGHTING & ALARM'=> 'fire_fighting_alarm',
+            'LOW CURRENT'          => 'low_current',
+            'HAND TOOLS'           => 'hand_tools',
+            'EQUIPMENT'            => 'equipment',
+            'SAFETY & PPE'         => 'safety_ppe',
+            'CONSUMABLES'          => 'consumables',
+            'OTHER'                => 'other'
+        ];
 
-                    foreach ($categories as $cat):
-                    ?>
+        foreach ($categories as $value => $translationKey):
+        ?>
 
-                        <option value="<?= $cat ?>"
-                            <?= ($inventory->category == $cat) ? 'selected' : '' ?>>
+            <option value="<?= htmlspecialchars($value) ?>"
+                <?= ($inventory->category === $value) ? 'selected' : '' ?>>
 
-                            <?= __(
-                                strtolower(
-                                    str_replace(' ', '_', $cat)
-                                )
-                            ) ?>
+                <?= __($translationKey) ?>
 
-                        </option>
+            </option>
 
-                    <?php endforeach; ?>
+        <?php endforeach; ?>
 
-                </select>
+    </select>
 
-            </div>
+</div>
 
         </div>
 
