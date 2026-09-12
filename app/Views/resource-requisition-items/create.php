@@ -108,7 +108,7 @@
                                     <option
                                         value="<?= (int)$item->id ?>"
                                         data-source="INVENTORY"
-                                        data-unit="<?= htmlspecialchars($item->base_unit) ?>"
+                                    data-unit="<?= htmlspecialchars($item->unit_name) ?>"
                                         data-description="<?= htmlspecialchars($item->name) ?>">
 
                                         <!-- <?//= htmlspecialchars($item->sku) ?> - -->
@@ -154,8 +154,8 @@
                                         data-unit="<?= htmlspecialchars($resource->unit_name) ?>"
                                         data-description="<?= htmlspecialchars($resource->resource_name) ?>">
 
-                                        <?= htmlspecialchars($resource->resource_code) ?>
-                                        -
+                                        <!-- <?//= htmlspecialchars($resource->resource_code) ?>
+                                        - -->
                                         <?= htmlspecialchars($resource->resource_name) ?>
 
                                     </option>

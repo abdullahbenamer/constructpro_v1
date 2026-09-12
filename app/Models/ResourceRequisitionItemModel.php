@@ -26,11 +26,11 @@ class ResourceRequisitionItemModel
             |--------------------------------------------------------------------------
             */
 
-            CASE
-                WHEN ri.resource_source = 'INVENTORY'
-                    THEN i.name
-                ELSE r.resource_name
-            END AS resource_name,
+       CASE
+    WHEN ri.resource_source = 'INVENTORY'
+        THEN iu.unit_name
+    ELSE u.unit_name
+END AS uom,
 
             /*
             |--------------------------------------------------------------------------
@@ -104,9 +104,12 @@ END AS available_qty
         |--------------------------------------------------------------------------
         */
 
-        LEFT JOIN resources r
-            ON r.id = ri.resource_id
-           AND ri.resource_source = 'RESOURCE'
+       LEFT JOIN units iu
+    ON iu.unit_code = i.base_unit
+
+LEFT JOIN resources r
+    ON r.id = ri.resource_id
+   AND ri.resource_source = 'RESOURCE'
 
         /*
         |--------------------------------------------------------------------------

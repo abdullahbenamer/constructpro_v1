@@ -12,7 +12,7 @@
         </h5>
 
         <form method="POST"
-              action="<?= URLROOT ?>/purchaseorders/addItem/<?= $po->id ?>">
+            action="<?= URLROOT ?>/purchaseorders/addItem/<?= $po->id ?>">
 
             <div class="row">
 
@@ -132,7 +132,8 @@
 
         <?php foreach ($items as $row): ?>
 
-            <!-- <pre><?php //print_r($row); ?></pre> -->
+            <!-- <pre><?php //print_r($row); 
+                        ?></pre> -->
 
             <tr>
 
@@ -149,9 +150,8 @@
                 </td>
 
                 <td>
-
                     <?= $row->quantity ?>
-                    <?= $row->base_unit ?>
+                    <?= htmlspecialchars($row->unit_name) ?>
 
                 </td>
 
@@ -181,10 +181,10 @@
                         href="<?= URLROOT ?>/purchaseorders/deleteItem/<?= $row->id ?>"
                         class="btn btn-danger btn-sm"
                         onclick="return confirm('<?= htmlspecialchars(
-                            __('delete_item_confirm'),
-                            ENT_QUOTES,
-                            'UTF-8'
-                        ) ?>')">
+                                                        __('delete_item_confirm'),
+                                                        ENT_QUOTES,
+                                                        'UTF-8'
+                                                    ) ?>')">
 
                         <?= __('delete') ?>
 
