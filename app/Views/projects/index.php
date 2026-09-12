@@ -66,9 +66,9 @@
 
                         <th><?= __('type') ?></th>
 
-                        <th><?= __('location') ?></th>
+                        <!-- <th><?//= __('location') ?></th> -->
 
-                        <th><?= __('doc') ?></th>
+                        <!-- <th><?//= __('doc') ?></th> -->
 
                         <th>
                             <i class="fas fa-tools"></i>
@@ -153,29 +153,36 @@
                         ?>
                             <tr>
                                 <td><?= $project->id ?></td>
-                                <td class="text-nowrap"><?= htmlspecialchars($project->title) ?></td>
-                                <!-- <td class="text-nowrap"><? //= htmlspecialchars($project->customer_name ?? 'N/A') 
-                                                                ?></td> -->
+                                <td>
+                                    <div class="text-nowrap">
+                                        <?= htmlspecialchars($project->title) ?>
+                                    </div>
+
+                                    <small class="text-muted d-block">
+                                        <?= htmlspecialchars($project->customer_name ?? 'N/A') ?>
+                                    </small>
+                                </td>
                                 <td class="text-nowrap">
                                     <?= ucfirst($project->project_type ?? '-') ?>
                                 </td>
 
-                                <td>
-                                    <?= htmlspecialchars($project->site_location ?? '-') ?>
-                                </td>
+                                <!-- <td>
+                                    <?//= htmlspecialchars($project->site_location ?? '-') ?>
+                                </td> -->
 
-                                <td>
-                                    <a href="<?= URLROOT ?>/projects/documents/<?= $project->id ?>"
+                                <!-- <td>
+                                    <a href="<?//= URLROOT ?>/projects/documents/<?//= $project->id ?>"
                                         class="btn btn-sm btn-dark"
                                         style="white-space: nowrap;">
 
                                         <i class="fas fa-folder"></i>
                                         <span class="badge bg-light text-dark ms-1">
-                                            <?= $project->document_count ?? 0 ?>
+                                            <?//= $project->document_count ?? 0 ?>
                                         </span>
 
                                     </a>
-                                </td>
+                                </td> -->
+
                                 <!-- Project Work Status -->
                                 <td>
                                     <?php

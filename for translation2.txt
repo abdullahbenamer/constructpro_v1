@@ -1,22 +1,9 @@
 for translation:
-view_requestion
-actual_unit_cost
-process_resouce_fulfillment
-fulfilled_materials
- resource_requisition_fulfillment
-fulfillment_information
-fulfillment_id
-requisition
-fulfilled_by
-fulfillment_number
- material_items_to_fulfill
-resource_items_to_fulfill
-resource_fulfillment
-requisition:
-fulfillment_remarks
-enter_fulfillment_remarks
-optional_remarks
-actual_unit_cost
+الاولوية 
+medium
+والحالة
+fulfilled
+في طلب الموارد
 
 
 
@@ -27,6 +14,7 @@ Created from Resource Requisition
 
 Flashhelp: Purchase Order created successfully from Resource Requisition.
 : Purchase Order approved successfully.
+: Resource requisition fulfilled successfully
 -------------------------
 ResourceRequisitionFulfillments/create/48:
 الحالة

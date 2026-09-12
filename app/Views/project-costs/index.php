@@ -165,18 +165,34 @@
                 </div>
 
 
-                <!-- PRIORITY -->
-                <div class="col-md-3">
-                    <div class="text-muted small">
-                        <?= __('priority') ?>
-                    </div>
+             <!-- PRIORITY -->
+<div class="col-md-3">
+    <div class="text-muted small">
+        <?= __('priority') ?>
+    </div>
 
-                    <strong>
-                        <?= htmlspecialchars(
-                            ucfirst($project->priority ?? 'N/A')
-                        ) ?>
-                    </strong>
-                </div>
+    <?php
+    $priority = strtolower($project->priority ?? '');
+
+    $priorityLabels = [
+        'low'      => __('low'),
+        'medium'   => __('medium'),
+        'high'     => __('high'),
+        'critical' => __('critical'),
+    ];
+
+    $priorityClasses = [
+        'low'      => 'bg-secondary',
+        'medium'   => 'bg-info',
+        'high'     => 'bg-warning text-dark',
+        'critical' => 'bg-danger',
+    ];
+    ?>
+
+   <span class="badge fs-6 <?= $priorityClasses[$priority] ?? 'bg-secondary' ?>">
+    <?= htmlspecialchars($priorityLabels[$priority] ?? 'N/A') ?>
+</span>
+</div>
 
 
                 <!-- START DATE -->

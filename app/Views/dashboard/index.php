@@ -469,18 +469,12 @@ if ($usedPercent >= 90) {
                                         href="<?= URLROOT ?>/customers/details/<?= $project->customer_id ?>"
                                         class="text-decoration-none text-muted"
                                     >
-
                                         <?= htmlspecialchars(
                                             $project->customer_name
                                         ) ?>
-
                                     </a>
-
                                 </small>
-
                             </div>
-
-
                             <span
                                 class="badge bg-<?=
                                     $project->status == 'in_progress'
