@@ -5,12 +5,7 @@ require_once '../app/Models/ProjectLedgerModel.php';
 
 class ResourceRequisitionFulfillmentModel extends Model
 {
-    /*
-    |--------------------------------------------------------------------------
-    | GET REQUISITION
-    |--------------------------------------------------------------------------
-    */
-
+  
 /*
 |--------------------------------------------------------------------------
 | GET REQUISITION

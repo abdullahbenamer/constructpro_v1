@@ -1,0 +1,33 @@
+for translation:
+view_requestion
+	actual_unit_cost
+process_resouce_fulfillment
+fulfilled_materials
+ resource_requisition_fulfillment
+fulfillment_information
+fulfillment_id
+requisition
+fulfilled_by
+fulfillment_number
+ material_items_to_fulfill
+resource_items_to_fulfill
+resource_fulfillment
+requisition:
+fulfillment_remarks
+enter_fulfillment_remarks
+optional_remarks
+
+-------------------------
+ResourceRequisitionFulfillments/create/48:
+الحالة
+PARTIAL
+الأولوية
+MEDIUM
+------------------------
+
+
+
+
+-------------------------------
+ResourceRequisitionFulfillments/details/39
+Units Name

@@ -603,30 +603,24 @@
 
         <div class="card-footer">
 
-            <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex justify-content-between align-items-center">
 
-                <a href="<?= URLROOT ?>/ResourceRequisitionFulfillments/index/<?= $data['requisition']->id ?>"
-                    class="btn btn-secondary">
+    <button type="button"
+                class="btn btn-secondary"
+                onclick="history.back();">
 
-                    <i class="fas fa-times"></i>
+            <i class="fas fa-arrow-left"></i>
+            <?= __('back') ?>
 
-                    <?= __('cancel') ?>
-
-                </a>
-
-
-                <button type="submit"
-                    class="btn btn-success"
-                    id="submitFulfillment">
-
-                    <i class="fas fa-check-circle"></i>
-
-                    <?= __('process_material_fulfillment') ?>
-
-                </button>
-
-            </div>
-
+        </button>
+        
+    <button type="submit"
+        class="btn btn-success"
+        id="submitFulfillment">
+        <i class="fas fa-check-circle"></i>
+        <?= __('process_material_fulfillment') ?>
+    </button>
+</div>
         </div>
 
 
