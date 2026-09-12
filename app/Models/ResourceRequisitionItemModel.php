@@ -243,11 +243,6 @@ class ResourceRequisitionItemModel
         );
     }
 
-
-    /**
-     * GET ITEM BY ID
-     */
-
     /**
      * GET ITEM BY ID
      */

@@ -287,11 +287,16 @@ public function getAll()
 
             i.*,
 
-            COALESCE(SUM(ls.quantity),0) AS quantity,
+            u.unit_name,
 
-            COALESCE(SUM(ls.quantity),0) AS available_qty
+            COALESCE(SUM(ls.quantity), 0) AS quantity,
+
+            COALESCE(SUM(ls.quantity), 0) AS available_qty
 
         FROM inventory i
+
+        LEFT JOIN units u
+            ON u.unit_code = i.base_unit
 
         LEFT JOIN inventory_location_stock ls
             ON ls.inventory_id = i.id
@@ -301,6 +306,28 @@ public function getAll()
         ORDER BY i.name
     ")->fetchAll();
 }
+
+// public function getAll()
+// {
+//     return $this->db->query("
+//         SELECT
+
+//             i.*,
+
+//             COALESCE(SUM(ls.quantity),0) AS quantity,
+
+//             COALESCE(SUM(ls.quantity),0) AS available_qty
+
+//         FROM inventory i
+
+//         LEFT JOIN inventory_location_stock ls
+//             ON ls.inventory_id = i.id
+
+//         GROUP BY i.id
+
+//         ORDER BY i.name
+//     ")->fetchAll();
+// }
 
 // public function getAll()
 // {
