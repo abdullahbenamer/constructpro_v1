@@ -176,7 +176,7 @@ public function create($data)
     |--------------------------------------------------------------------------
     */
 
-    public function getItems($po_id)
+   public function getItems($po_id)
 {
     return $this->db->query(
         "
@@ -184,12 +184,16 @@ public function create($data)
             poi.*,
             i.name,
             i.sku,
-            i.base_unit
+            i.base_unit,
+            u.unit_name
 
         FROM purchase_order_items poi
 
         JOIN inventory i
             ON i.id = poi.inventory_id
+
+        LEFT JOIN units u
+            ON u.unit_code = i.base_unit
 
         WHERE poi.purchase_order_id = ?
 
@@ -271,7 +275,6 @@ public function isEditable($id)
 
 public function items($po_id)
 {
-  
     $data = $this->db->query("
         SELECT
             poi.id,
@@ -282,12 +285,16 @@ public function items($po_id)
 
             i.name,
             i.sku,
-            i.base_unit
+            i.base_unit,
+            u.unit_name
 
         FROM purchase_order_items poi
 
         JOIN inventory i
             ON i.id = poi.inventory_id
+
+        LEFT JOIN units u
+            ON u.unit_code = i.base_unit
 
         WHERE poi.purchase_order_id = ?
     ", [$po_id])->fetchAll();
@@ -314,11 +321,20 @@ public function getPOItems($po_id)
             poi.*,
             i.name,
             i.sku,
-            i.base_unit
+            i.base_unit,
+            u.unit_name
+
         FROM purchase_order_items poi
-        INNER JOIN inventory i ON i.id = poi.inventory_id
+
+        INNER JOIN inventory i
+            ON i.id = poi.inventory_id
+
+        LEFT JOIN units u
+            ON u.unit_code = i.base_unit
+
         WHERE poi.purchase_order_id = ?
         AND poi.quantity > poi.received_quantity
+
         ORDER BY i.name
     ", [$po_id])->fetchAll();
 }
