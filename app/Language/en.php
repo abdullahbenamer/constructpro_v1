@@ -28,7 +28,7 @@ return [
 
     //Inventory Categories
     'civil_structural'      => 'CIVIL & STRUCTURAL',
-    'building_and_finishing'    => 'BUILDING & FINISHING',
+    'building_finishing'    => 'BUILDING & FINISHING',
     'plumbing_drainage'     => 'PLUMBING & DRAINAGE',
     'hvac'                   => 'HVAC',
     'electrical'             => 'ELECTRICAL',
@@ -99,6 +99,7 @@ return [
     'budget_lyd'               => 'Budget LYD',
     'costs_lyd'                => 'Costs LYD',
     'cost_status'              => 'Cost Status',
+    'select_one_or_more_project_scopes.' => 'Select one or more applicable project scopes.',
 
 
 

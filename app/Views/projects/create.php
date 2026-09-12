@@ -112,7 +112,7 @@ echo "<p>Customers loaded: " . count($customers) . "</p>";
             </div>
 
             <small class="text-muted">
-                Select one or more applicable project scopes.
+                <?= __('select_one_or_more_project_scopes.') ?>
             </small>
         </div>
 

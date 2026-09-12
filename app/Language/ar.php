@@ -28,7 +28,7 @@ return [
 
     // Inventory Categories
     'civil_structural'      => 'الأعمال المدنية والإنشائية',
-    'building_and_finishing'    => 'مواد البناء والتشطيبات',
+    'building_finishing'    => 'مواد البناء والتشطيبات',
     'plumbing_drainage'     => 'السباكة والصرف الصحي',
     'hvac'                   => 'التكييف والتهوية',
     'electrical'             => 'الكهرباء',
@@ -101,6 +101,7 @@ return [
     'budget_lyd'               => 'الميزانية LYD',
     'costs_lyd'                => 'التكاليف LYD',
     'cost_status'              => 'حالة التكلفة',
+    'select_one_or_more_project_scopes.' => 'اختر نطاقاً واحداً أو أكثر من نطاقات المشروع المنطبقة.',
 
 
     // -----------------------

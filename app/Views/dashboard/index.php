@@ -475,23 +475,34 @@ if ($usedPercent >= 90) {
                                     </a>
                                 </small>
                             </div>
-                            <span
-                                class="badge bg-<?=
-                                    $project->status == 'in_progress'
-                                    ? 'warning'
-                                    : (
-                                        $project->status == 'testing'
-                                        ? 'info'
-                                        : 'success'
-                                    )
-                                ?>"
-                            >
+                           <?php
+$statusLabels = [
+    'planning'    => __('planning'),
+    'in_progress' => __('in_progress'),
+    'testing'     => __('testing'),
+    'completed'   => __('completed_status'),
+    'cancelled'   => __('cancelled')
+];
 
-                                <?= ucfirst(
-                                    $project->status
-                                ) ?>
+$status = strtolower($project->status ?? '');
 
-                            </span>
+$statusClass =
+    $status === 'in_progress'
+        ? 'warning'
+        : (
+            $status === 'testing'
+                ? 'info'
+                : 'success'
+        );
+?>
+
+<span class="badge bg-<?= $statusClass ?>">
+
+    <?= htmlspecialchars(
+        $statusLabels[$status] ?? $project->status ?? 'N/A'
+    ) ?>
+
+</span>
 
                         </div>
 
