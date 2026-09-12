@@ -11,32 +11,19 @@ class ResourceRequisitionItemModel
         $this->db = new Database;
     }
 
-
     public function getByRequisition($requisition_id)
-    {
-        return $this->db->query(
-            "
+{
+    return $this->db->query(
+        "
         SELECT
 
             ri.*,
 
-            /*
-            |--------------------------------------------------------------------------
-            | RESOURCE / INVENTORY NAME
-            |--------------------------------------------------------------------------
-            */
-
-       CASE
-    WHEN ri.resource_source = 'INVENTORY'
-        THEN iu.unit_name
-    ELSE u.unit_name
-END AS uom,
-
-            /*
-            |--------------------------------------------------------------------------
-            | RESOURCE / INVENTORY CODE
-            |--------------------------------------------------------------------------
-            */
+            CASE
+                WHEN ri.resource_source = 'INVENTORY'
+                    THEN i.name
+                ELSE r.resource_name
+            END AS resource_name,
 
             CASE
                 WHEN ri.resource_source = 'INVENTORY'
@@ -44,87 +31,35 @@ END AS uom,
                 ELSE r.resource_code
             END AS resource_code,
 
-            /*
-            |--------------------------------------------------------------------------
-            | UOM
-            |--------------------------------------------------------------------------
-            */
-
             CASE
                 WHEN ri.resource_source = 'INVENTORY'
-                    THEN i.base_unit
+                    THEN iu.unit_name
                 ELSE u.unit_name
             END AS uom,
 
-            /*
-            |--------------------------------------------------------------------------
-            | RESOURCE CATEGORY
-            |--------------------------------------------------------------------------
-            */
+            rc.category_name,
 
-           /*
-|--------------------------------------------------------------------------
-| RESOURCE CATEGORY
-|--------------------------------------------------------------------------
-*/
-
-CASE
-    WHEN ri.resource_source = 'INVENTORY'
-        THEN i.category
-    ELSE rc.category_name
-END AS category_name,
-
-            /*
-            |--------------------------------------------------------------------------
-            | CURRENT GLOBAL INVENTORY AVAILABILITY
-            |--------------------------------------------------------------------------
-            */
-
-           CASE
-    WHEN ri.resource_source = 'INVENTORY'
-        THEN i.quantity
-    ELSE NULL
-END AS available_qty
+            CASE
+                WHEN ri.resource_source = 'INVENTORY'
+                    THEN i.quantity
+                ELSE NULL
+            END AS available_qty
 
         FROM resource_requisition_items ri
-
-        /*
-        |--------------------------------------------------------------------------
-        | INVENTORY
-        |--------------------------------------------------------------------------
-        */
 
         LEFT JOIN inventory i
             ON i.id = ri.resource_id
            AND ri.resource_source = 'INVENTORY'
 
-        /*
-        |--------------------------------------------------------------------------
-        | RESOURCE
-        |--------------------------------------------------------------------------
-        */
+        LEFT JOIN units iu
+            ON iu.unit_code = i.base_unit
 
-       LEFT JOIN units iu
-    ON iu.unit_code = i.base_unit
-
-LEFT JOIN resources r
-    ON r.id = ri.resource_id
-   AND ri.resource_source = 'RESOURCE'
-
-        /*
-        |--------------------------------------------------------------------------
-        | UNIT
-        |--------------------------------------------------------------------------
-        */
+        LEFT JOIN resources r
+            ON r.id = ri.resource_id
+           AND ri.resource_source = 'RESOURCE'
 
         LEFT JOIN units u
             ON u.id = r.unit_id
-
-        /*
-        |--------------------------------------------------------------------------
-        | CATEGORY
-        |--------------------------------------------------------------------------
-        */
 
         LEFT JOIN resource_categories rc
             ON rc.id = r.category_id
@@ -133,11 +68,140 @@ LEFT JOIN resources r
 
         ORDER BY ri.id ASC
         ",
-            [
-                $requisition_id
-            ]
-        )->fetchAll();
-    }
+        [
+            $requisition_id
+        ]
+    )->fetchAll();
+}
+
+
+// Replaced by the above method for the Unit Name 
+//     public function getByRequisition($requisition_id)
+//     {
+//         return $this->db->query(
+//             "
+//         SELECT
+
+//             ri.*,
+
+//             /*
+//             |--------------------------------------------------------------------------
+//             | RESOURCE / INVENTORY NAME
+//             |--------------------------------------------------------------------------
+//             */
+
+//        CASE
+//     WHEN ri.resource_source = 'INVENTORY'
+//         THEN iu.unit_name
+//     ELSE u.unit_name
+// END AS uom,
+
+//             /*
+//             |--------------------------------------------------------------------------
+//             | RESOURCE / INVENTORY CODE
+//             |--------------------------------------------------------------------------
+//             */
+
+//             CASE
+//                 WHEN ri.resource_source = 'INVENTORY'
+//                     THEN i.sku
+//                 ELSE r.resource_code
+//             END AS resource_code,
+
+//             /*
+//             |--------------------------------------------------------------------------
+//             | UOM
+//             |--------------------------------------------------------------------------
+//             */
+
+//             CASE
+//                 WHEN ri.resource_source = 'INVENTORY'
+//                     THEN i.base_unit
+//                 ELSE u.unit_name
+//             END AS uom,
+
+//             /*
+//             |--------------------------------------------------------------------------
+//             | RESOURCE CATEGORY
+//             |--------------------------------------------------------------------------
+//             */
+
+//            /*
+// |--------------------------------------------------------------------------
+// | RESOURCE CATEGORY
+// |--------------------------------------------------------------------------
+// */
+
+// CASE
+//     WHEN ri.resource_source = 'INVENTORY'
+//         THEN i.category
+//     ELSE rc.category_name
+// END AS category_name,
+
+//             /*
+//             |--------------------------------------------------------------------------
+//             | CURRENT GLOBAL INVENTORY AVAILABILITY
+//             |--------------------------------------------------------------------------
+//             */
+
+//            CASE
+//     WHEN ri.resource_source = 'INVENTORY'
+//         THEN i.quantity
+//     ELSE NULL
+// END AS available_qty
+
+//         FROM resource_requisition_items ri
+
+//         /*
+//         |--------------------------------------------------------------------------
+//         | INVENTORY
+//         |--------------------------------------------------------------------------
+//         */
+
+//         LEFT JOIN inventory i
+//             ON i.id = ri.resource_id
+//            AND ri.resource_source = 'INVENTORY'
+
+//         /*
+//         |--------------------------------------------------------------------------
+//         | RESOURCE
+//         |--------------------------------------------------------------------------
+//         */
+
+//        LEFT JOIN units iu
+//     ON iu.unit_code = i.base_unit
+
+// LEFT JOIN resources r
+//     ON r.id = ri.resource_id
+//    AND ri.resource_source = 'RESOURCE'
+
+//         /*
+//         |--------------------------------------------------------------------------
+//         | UNIT
+//         |--------------------------------------------------------------------------
+//         */
+
+//         LEFT JOIN units u
+//             ON u.id = r.unit_id
+
+//         /*
+//         |--------------------------------------------------------------------------
+//         | CATEGORY
+//         |--------------------------------------------------------------------------
+//         */
+
+//         LEFT JOIN resource_categories rc
+//             ON rc.id = r.category_id
+
+//         WHERE ri.requisition_id = ?
+
+//         ORDER BY ri.id ASC
+//         ",
+//             [
+//                 $requisition_id
+//             ]
+//         )->fetchAll();
+//     }
     /**
      * Add requisition item
      */
