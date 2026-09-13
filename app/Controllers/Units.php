@@ -9,7 +9,7 @@ class Units extends Controller
     public function index()
     {
 
-        AuthHelper::can('projects.view');
+        AuthHelper::can('admin.access');
 
         $model = $this->model('UnitModel');
 
@@ -31,7 +31,7 @@ class Units extends Controller
     public function create()
     {
 
-        AuthHelper::can('projects.view');
+        AuthHelper::can('admin.access');
 
         $this->view('units/create');
 
@@ -45,7 +45,7 @@ class Units extends Controller
     public function store()
     {
 
-        AuthHelper::can('projects.view');
+        AuthHelper::can('admin.access');
 
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
@@ -81,7 +81,7 @@ class Units extends Controller
     public function edit($id)
     {
 
-        AuthHelper::can('projects.view');
+        AuthHelper::can('admin.access');
 
         $model = $this->model('UnitModel');
 
@@ -103,7 +103,7 @@ class Units extends Controller
     public function update($id)
     {
 
-        AuthHelper::can('projects.view');
+        AuthHelper::can('admin.access');
 
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
@@ -133,21 +133,29 @@ class Units extends Controller
 
 
 
-    /**
-     * DELETE
-     */
-    public function delete($id)
-    {
+  /**
+ * DELETE
+ */
+public function delete($id)
+{
+    AuthHelper::can('admin.access');
 
-        AuthHelper::can('projects.view');
+    $model = $this->model('Unit');
 
-        $model = $this->model('UnitModel');
+    $result = $model->delete($id);
 
-        $model->delete($id);
+    if (!$result['success']) {
+
+        $_SESSION['error'] = $result['message'];
 
         header('Location: ' . URLROOT . '/Units');
         exit;
-
     }
+
+    $_SESSION['success'] = $result['message'];
+
+    header('Location: ' . URLROOT . '/Units');
+    exit;
+}
 
 }

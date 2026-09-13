@@ -63,4 +63,12 @@
 
     </div>
 
+    <div class="col-md-4">
+
+    <a href="<?= URLROOT ?>/Units"  class="btn btn-primary w-100 mb-3">
+    <i class="fas fa-ruler"></i>
+    <?= __('units') ?>
+</a>
+    </div>
+
 </div>

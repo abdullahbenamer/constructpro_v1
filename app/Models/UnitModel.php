@@ -103,17 +103,62 @@ class UnitModel extends Model
     /**
      * DELETE UNIT
      */
-    public function delete($id)
-    {
+    
+public function delete($id)
+{
+    // Get the unit first
+    $unit = $this->getById($id);
 
-        return $this->db->query(
-            "
-            DELETE
-            FROM units
-            WHERE id = '$id'
-            "
-        );
+    if (!$unit) {
+        return [
+            'success' => false,
+            'message' => 'Unit not found.'
+        ];
+    }
+
+    // Check if used by resources
+    $resourceCount = $this->db->query(
+        "
+        SELECT COUNT(*) AS total
+        FROM resources
+        WHERE unit_id = ?
+        ",
+        [$id]
+    )->fetch()->total;
+
+    // Check if used by inventory/materials
+    $inventoryCount = $this->db->query(
+        "
+        SELECT COUNT(*) AS total
+        FROM inventory
+        WHERE base_unit = ?
+        ",
+        [$unit->unit_code]
+    )->fetch()->total;
+
+    // Do not delete if the unit is in use
+    if ($resourceCount > 0 || $inventoryCount > 0) {
+
+        return [
+            'success' => false,
+            'message' => 'This unit cannot be deleted because it is currently in use.'
+        ];
 
     }
+
+    // Safe to delete
+    $this->db->query(
+        "
+        DELETE FROM units
+        WHERE id = ?
+        ",
+        [$id]
+    );
+
+    return [
+        'success' => true,
+        'message' => 'Unit deleted successfully.'
+    ];
+}
 
 }
