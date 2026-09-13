@@ -149,7 +149,7 @@
         </div>
 
         <div class="col-md-4">
-
+<br>
             <label class="form-label"><?= __('min_stock') ?></label>
 
             <input type="number"

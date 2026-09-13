@@ -432,7 +432,7 @@ return [
     'account_manager'  => 'مدير الحساب',
     'not_assigned'     => 'غير محدد',
     'action'           => 'الإجراء',
-    'n_a'              => 'غير متاح',
+    'n_a'              => 'لا ينطبق',
 
     // CUSTOMER EDIT
     'edit_customer'          => 'تعديل العميل',
@@ -635,7 +635,7 @@ return [
     'storage_location'                => 'موقع التخزين',
     'select_location_option'          => '-- اختر الموقع --',
     'default'                         => '⭐ افتراضي',
-    'confirm_storage_location'        => 'أؤكد موقع التخزين هذا',
+    'confirm_storage_location'        => 'أؤكد على موقع التخزين هذا',
     'min_stock'                       => 'الحد الأدنى للمخزون',
     'cost_price'                      => 'سعر التكلفة',
     'unit_configuration'              => 'إعدادات الوحدات',
