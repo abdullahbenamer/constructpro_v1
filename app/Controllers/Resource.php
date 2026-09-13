@@ -43,7 +43,7 @@ class Resources extends Controller
         AuthHelper::can('projects.view');
 
 
-        $categoryModel = $this->model('ResourceCategoryModel');
+        $categoryModel = $this->model('ResourceCategory');
 
         $unitModel = $this->model('UnitModel');
 
@@ -152,7 +152,7 @@ class Resources extends Controller
         $model = $this->model('ResourceModel');
 
 
-        $categoryModel = $this->model('ResourceCategoryModel');
+        $categoryModel = $this->model('ResourceCategory');
 
 
         $unitModel = $this->model('UnitModel');

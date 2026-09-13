@@ -114,6 +114,8 @@
             <th><?= __('sku') ?></th>
 
             <th><?= __('qty') ?></th>
+            
+            <th><?= __('unit_name') ?></th>
 
             <th><?= __('unit_cost') ?></th>
 
@@ -151,6 +153,9 @@
 
                 <td>
                     <?= $row->quantity ?>
+                </td>
+
+                 <td>
                     <?= htmlspecialchars($row->unit_name) ?>
 
                 </td>

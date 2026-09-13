@@ -405,10 +405,10 @@
             href="<?= URLROOT ?>/purchaseorders/approve/<?= $po->id ?>"
             class="btn btn-success"
             onclick="return confirm('<?= htmlspecialchars(
-                __('approve_purchase_order_confirm'),
-                ENT_QUOTES,
-                'UTF-8'
-            ) ?>')">
+                                            __('approve_purchase_order_confirm'),
+                                            ENT_QUOTES,
+                                            'UTF-8'
+                                        ) ?>')">
 
             <?= __('approve_purchase_order') ?>
 
@@ -466,6 +466,10 @@
                 <?= __('qty') ?>
             </th>
 
+            <th>
+                <?= __('unit') ?>
+            </th>
+
             <th width="150">
                 <?= __('unit_cost') ?>
             </th>
@@ -502,6 +506,10 @@
                         ) ?>
                     </td>
 
+                      <td>
+                        <?= htmlspecialchars($item->unit_name) ?>
+                    </td>
+
                     <td>
                         <?= number_format(
                             $item->unit_cost,
@@ -527,7 +535,7 @@
             <tr>
 
                 <td
-                    colspan="5"
+                    colspan="6"
                     class="text-center text-muted">
 
                     <?= __('no_items_added_yet') ?>
@@ -545,7 +553,7 @@
 
         <tr>
 
-            <th colspan="3" class="text-end">
+            <th colspan="5" class="text-end">
 
                 <?= __('grand_total') ?>
 

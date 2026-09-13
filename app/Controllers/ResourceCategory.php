@@ -13,7 +13,7 @@ class ResourceCategories extends Controller
         AuthHelper::can('projects.view');
 
 
-        $model = $this->model('ResourceCategoryModel');
+        $model = $this->model('ResourceCategory');
 
 
         $data = [
@@ -74,7 +74,7 @@ class ResourceCategories extends Controller
 
 
 
-        $model = $this->model('ResourceCategoryModel');
+        $model = $this->model('ResourceCategory');
 
 
 
@@ -119,7 +119,7 @@ class ResourceCategories extends Controller
         AuthHelper::can('projects.view');
 
 
-        $model = $this->model('ResourceCategoryModel');
+        $model = $this->model('ResourceCategory');
 
 
 
@@ -163,7 +163,7 @@ class ResourceCategories extends Controller
 
 
 
-        $model = $this->model('ResourceCategoryModel');
+        $model = $this->model('ResourceCategory');
 
 
 
@@ -208,7 +208,7 @@ class ResourceCategories extends Controller
         AuthHelper::can('projects.view');
 
 
-        $model = $this->model('ResourceCategoryModel');
+        $model = $this->model('ResourceCategory');
 
 
 
