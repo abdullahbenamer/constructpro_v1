@@ -10,7 +10,7 @@ class Resources extends Controller
     public function index()
     {
 
-        AuthHelper::can('projects.view');
+        AuthHelper::can('admin.access');
 
 
         $model = $this->model('ResourceModel');
@@ -40,7 +40,7 @@ class Resources extends Controller
     public function create()
     {
 
-        AuthHelper::can('projects.view');
+        AuthHelper::can('admin.access');
 
 
         $categoryModel = $this->model('ResourceCategory');
@@ -76,7 +76,7 @@ class Resources extends Controller
     public function store()
     {
 
-        AuthHelper::can('projects.view');
+        AuthHelper::can('admin.access');
 
 
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
@@ -145,7 +145,7 @@ class Resources extends Controller
     public function edit($id)
     {
 
-        AuthHelper::can('projects.view');
+        AuthHelper::can('admin.access');
 
 
 
@@ -194,7 +194,7 @@ class Resources extends Controller
     public function update($id)
     {
 
-        AuthHelper::can('projects.view');
+        AuthHelper::can('admin.access');
 
 
 
@@ -264,7 +264,7 @@ class Resources extends Controller
     public function delete($id)
     {
 
-        AuthHelper::can('projects.view');
+        AuthHelper::can('admin.access');
 
 
 
