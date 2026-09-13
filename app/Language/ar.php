@@ -735,6 +735,8 @@ return [
     'please_explain_reason'                  => 'يرجى توضيح السبب...',
     'adjustment_quantity_exceeds_available'  => 'لا يمكن أن تتجاوز كمية التسوية الكمية المتاحة من المخزون.',
 
+    'manage_units'           => 'إدارة وحدات القياس',
+
     // INVENTORY LOCATIONS
     'add_inventory_location'              => 'إضافة موقع للمخزون',
     'code'                                => 'الرمز',

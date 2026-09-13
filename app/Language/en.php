@@ -753,6 +753,7 @@ return [
     'error_loading_stock'                    => 'Error loading stock',
     'please_explain_reason'                  => 'Please explain the reason...',
     'adjustment_quantity_exceeds_available'  => 'The adjustment quantity cannot exceed the available stock.',
+    'manage_units'           => 'Manage Units of Measure',
 
     // INVENTORY LOCATIONS
     'add_inventory_location'              => 'Add Inventory Location',
@@ -1081,6 +1082,7 @@ return [
     'users'                                     => 'Users',
     'add_user'                                  => 'Add User',
     'delete_user_confirm'                      => 'Delete this user?',
+
 
     // Permission Groups
     'permission'         => 'Permission',
