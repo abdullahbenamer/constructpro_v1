@@ -65,6 +65,10 @@ return [
     'enter_fulfillment_remarks'         => 'Enter fulfillment remarks',
     'optional_remarks'                  => 'Optional Remarks',
     'no_fulfillment_items_found' => 'No fulfillment items found.',
+    'delivery_method'    => 'Delivery Method',
+'delivery_warehouse' => 'Delivery Warehouse',
+'select_project'     => 'Select Project (Warehouse)',
+
 
     // FINANCE
     'projects_cost_report'   => 'Projects Cost (Report)',
@@ -101,14 +105,10 @@ return [
     'cost_status'              => 'Cost Status',
     'select_one_or_more_project_scopes.' => 'Select one or more applicable project scopes.',
 
-
-
-
     // ----------------
     'materials' => 'MATERIALS',
     'human_resources' => 'HUMAN RESOURCES',
     'transport' => 'TRANSPORT',
-    'equipment' => 'EQUIPMENT',
     'subcontract' => 'SUBCONTRACT',
     'site_expenses' => 'SITE EXPENSES',
     'professional_services' => 'PROFESSIONAL SERVICES',
@@ -117,19 +117,12 @@ return [
     'bank_charges' => 'BANK CHARGES',
     'taxes' => 'TAXES',
     'miscellaneous' => 'MISCELLANEOUS',
-
     // ----------------
-
-
-
-
     'actions'                  => 'Actions',
-
     'no_archived_projects'     => 'No archived projects available.',
     'no_active_projects_available' => 'No active projects available.',
     'no_archived_projects_currently' => 'There are currently no archived projects.',
     'create_first_project'     => 'Create your first project to get started.',
-
     'not_started'              => 'Not Started',
     'healthy'                  => 'Healthy',
     'warning'                  => 'Warning',
@@ -242,11 +235,7 @@ return [
     'add_first_cost' => 'ADD FIRST COST',
     'project_warehouse' => 'Project Warehouse',
     'add_cost_to_project' => 'Add Cost to Project',
-    'materials'     => 'MATERIALS',
     'labor'         => 'LABOR',
-    'transport'     => 'TRANSPORT',
-    'subcontract'   => 'SUBCONTRACT',
-    'miscellaneous' => 'MISCELLANEOUS',
     'inventory_item' => 'Inventory Item',
     'select_item' => 'Select Item',
     'available' => 'Available',

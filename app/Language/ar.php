@@ -67,6 +67,9 @@ return [
     'enter_fulfillment_remarks'         => 'أدخل ملاحظات التنفيذ',
     'optional_remarks'                  => 'ملاحظات اختيارية',
     'no_fulfillment_items_found' => 'لم يتم العثور على بنود تنفيذ.',
+    'delivery_method'    => 'طريقة التسليم',
+    'delivery_warehouse' => 'مستودع التسليم',
+    'select_project'     => 'اختر (مستودع) المشروع',
 
     // FINANCE
     'projects_cost_report'   => 'تكاليف المشاريع (تقرير)',
@@ -1066,20 +1069,20 @@ return [
     'delete_user_confirm'                      => 'هل تريد حذف هذا المستخدم؟',
 
     'resources'                  => 'الموارد',
-'new_resource'               => 'مورد جديد',
-'resource_code'              => 'رمز المورد',
-'resource_name'              => 'اسم المورد',
+    'new_resource'               => 'مورد جديد',
+    'resource_code'              => 'رمز المورد',
+    'resource_name'              => 'اسم المورد',
 
-'select_unit'                => 'اختر الوحدة',
-'select_category'            => 'اختر الفئة',
+    'select_unit'                => 'اختر الوحدة',
+    'select_category'            => 'اختر الفئة',
 
-'service'                    => 'خدمة',
-'save_resource'              => 'حفظ المورد',
-'edit_resource'              => 'تعديل المورد',
-'update_resource'            => 'تحديث المورد',
-'delete_resource_confirm'    => 'هل تريد حذف هذا المورد؟',
-'no_resources_found'         => 'لم يتم العثور على موارد.',
-'resource_not_found'         => 'المورد غير موجود.',
+    'service'                    => 'خدمة',
+    'save_resource'              => 'حفظ المورد',
+    'edit_resource'              => 'تعديل المورد',
+    'update_resource'            => 'تحديث المورد',
+    'delete_resource_confirm'    => 'هل تريد حذف هذا المورد؟',
+    'no_resources_found'         => 'لم يتم العثور على موارد.',
+    'resource_not_found'         => 'المورد غير موجود.',
 
     //Permession groups
     'permission'         => 'صلاحية',

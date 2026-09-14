@@ -2,7 +2,7 @@
 
 class PurchaseOrders extends Controller
 {
-// list all purchase orders
+    // list all purchase orders
     public function index()
     {
         AuthHelper::can('purchase-orders.view');
@@ -14,57 +14,151 @@ class PurchaseOrders extends Controller
         $this->view('purchase-orders/index', $data);
     }
 
-    public function create()
-    {
-        AuthHelper::can('purchase_orders.create');
+    // public function create()
+    // {
+    //     AuthHelper::can('purchase_orders.create');
 
-        $supplierModel = $this->model('Supplier');
-        $model = $this->model('PurchaseOrder');
+    //     $supplierModel = $this->model('Supplier');
+    //     $model = $this->model('PurchaseOrder');
 
-        // =========================
-        // HANDLE POST
-        // =========================
+    //     // =========================
+    //     // HANDLE POST
+    //     // =========================
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $po_number =
-                'PO-' . date('ymdHis');
+    //         $po_number =
+    //             'PO-' . date('ymdHis');
 
-            $id = $model->create([
+    //         $id = $model->create([
 
-                'po_number'    => $po_number,
-                'supplier_id'  => $_POST['supplier_id'],
-                'order_date'   => $_POST['order_date'],
-                'expected_date' => $_POST['expected_date'],
-                'notes'        => $_POST['notes']
+    //             'po_number'    => $po_number,
+    //             'supplier_id'  => $_POST['supplier_id'],
+    //             'order_date'   => $_POST['order_date'],
+    //             'expected_date' => $_POST['expected_date'],
+    //             'notes'        => $_POST['notes']
 
-            ]);
+    //         ]);
 
-            header(
-                'Location: ' .
-                    URLROOT .
-                    '/purchaseorders/details/' .
-                    $id
-            );
+    //         header(
+    //             'Location: ' .
+    //                 URLROOT .
+    //                 '/purchaseorders/details/' .
+    //                 $id
+    //         );
 
-            exit;
-        }
+    //         exit;
+    //     }
 
-        // =========================
-        // LOAD FORM
-        // =========================
+    //     // =========================
+    //     // LOAD FORM
+    //     // =========================
 
-        $data['suppliers'] =
-            $supplierModel->getAll();
+    //     $data['suppliers'] =
+    //         $supplierModel->getAll();
 
-        $this->view('purchase-orders/create', $data);
-    }
+    //     $this->view('purchase-orders/create', $data);
+    // }
 
     /*
     |--------------------------------------------------------------------------
     | DETAILS
     |--------------------------------------------------------------------------
     */
+
+
+    public function create()
+    {
+        $supplierModel = $this->model('Supplier');
+        $locationModel = $this->model('InventoryLocation');
+        $projectModel  = $this->model('Project');
+
+        $data = [
+            'suppliers' => $supplierModel->getAll(),
+            // 'warehouses' => $locationModel->getAll(),
+
+            // prevent project inventory locations from appearing in the warehouse selector.
+            'warehouses' => array_filter(
+                $locationModel->getAll(),
+                function ($location) {
+                    return strpos($location->code ?? '', 'PRJ-') !== 0;
+                }
+            ),
+
+            'projects' => $projectModel->getAll()
+        ];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $po_number = 'PO-' . date('YmdHis');
+
+            $delivery_method = $_POST['delivery_method'] ?? 'WAREHOUSE';
+
+            $target_warehouse_id = null;
+            $project_id = null;
+
+            if ($delivery_method === 'WAREHOUSE') {
+
+                $target_warehouse_id = !empty($_POST['target_warehouse_id'])
+                    ? (int)$_POST['target_warehouse_id']
+                    : null;
+
+                if (!$target_warehouse_id) {
+                    FlashHelper::error('Delivery warehouse is required.');
+                    $this->view('purchase-orders/create', $data);
+                    return;
+                }
+            } elseif ($delivery_method === 'DIRECT_TO_PROJECT_SITE') {
+
+                $project_id = !empty($_POST['project_id'])
+                    ? (int)$_POST['project_id']
+                    : null;
+
+                if (!$project_id) {
+                    FlashHelper::error('Project is required.');
+                    $this->view('purchase-orders/create', $data);
+                    return;
+                }
+            }
+
+            $poData = [
+                'po_number'           => $po_number,
+                'supplier_id'         => (int)$_POST['supplier_id'],
+                'project_id'          => $project_id,
+                'requisition_id'      => null,
+                'target_warehouse_id' => $target_warehouse_id,
+                'delivery_method'     => $delivery_method,
+                'order_date'          => $_POST['order_date'] ?? null,
+                'expected_date'       => $_POST['expected_date'] ?? null,
+                'notes'               => trim($_POST['notes'] ?? '')
+            ];
+
+            try {
+
+                $model = $this->model('PurchaseOrderModel');
+
+                $id = $model->create($poData);
+
+                if ($id) {
+                    FlashHelper::success('Purchase order created successfully.');
+
+                    header(
+                        'Location: ' .
+                            URLROOT .
+                            '/PurchaseOrders/details/' .
+                            $id
+                    );
+                    exit;
+                }
+            } catch (Throwable $e) {
+
+                FlashHelper::error($e->getMessage());
+            }
+        }
+
+        $this->view('purchase-orders/create', $data);
+    }
+
 
     public function details($id)
     {
@@ -161,16 +255,16 @@ class PurchaseOrders extends Controller
         }
 
         $total =
-    $_POST['quantity'] *
-    $_POST['unit_cost'];
+            $_POST['quantity'] *
+            $_POST['unit_cost'];
 
-$itemModel->create([
-    'purchase_order_id'=>$po_id,
-    'inventory_id'=>$_POST['inventory_id'],
-    'quantity'=>$_POST['quantity'],
-    'unit_cost'=>$_POST['unit_cost'],
-    'total_cost'=>$total
-]);
+        $itemModel->create([
+            'purchase_order_id' => $po_id,
+            'inventory_id' => $_POST['inventory_id'],
+            'quantity' => $_POST['quantity'],
+            'unit_cost' => $_POST['unit_cost'],
+            'total_cost' => $total
+        ]);
 
         // 🔥 ADD THIS
         $poModel = $this->model('PurchaseOrder');
@@ -222,189 +316,187 @@ $itemModel->create([
         exit;
     }
 
-public function approve($id)
-{
-    AuthHelper::can('purchase_orders.edit');
+    public function approve($id)
+    {
+        AuthHelper::can('purchase_orders.edit');
 
-    $model = $this->model('PurchaseOrder');
+        $model = $this->model('PurchaseOrder');
 
-    $po = $model->getById($id);
+        $po = $model->getById($id);
 
-    if (!$po) {
+        if (!$po) {
 
-        $_SESSION['error'] =
-            'Purchase Order not found.';
+            $_SESSION['error'] =
+                'Purchase Order not found.';
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/purchaseorders'
-        );
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/purchaseorders'
+            );
 
-        exit;
-    }
+            exit;
+        }
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | ONLY DRAFT PURCHASE ORDERS CAN BE APPROVED
     |--------------------------------------------------------------------------
     */
 
-    if ($po->status !== 'draft') {
+        if ($po->status !== 'draft') {
 
-        $_SESSION['error'] =
-            'Only draft purchase orders can be approved.';
+            $_SESSION['error'] =
+                'Only draft purchase orders can be approved.';
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/purchaseorders/details/' .
-            $id
-        );
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/purchaseorders/details/' .
+                    $id
+            );
 
-        exit;
-    }
+            exit;
+        }
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | PO MUST CONTAIN AT LEAST ONE ITEM
     |--------------------------------------------------------------------------
     */
 
-    $items = $model->getItems($id);
+        $items = $model->getItems($id);
 
-    if (empty($items)) {
+        if (empty($items)) {
 
-        $_SESSION['error'] =
-            'Please add at least one item before approving this Purchase Order.';
+            $_SESSION['error'] =
+                'Please add at least one item before approving this Purchase Order.';
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/purchaseorders/details/' .
-            $id
-        );
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/purchaseorders/details/' .
+                    $id
+            );
 
-        exit;
-    }
+            exit;
+        }
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | APPROVE
     |--------------------------------------------------------------------------
     */
 
-    $model->approve(
-        $id,
-        $_SESSION['user_id']
-    );
-
-    $_SESSION['success'] =
-        'Purchase Order approved successfully.';
-
-    header(
-        'Location: ' .
-        URLROOT .
-        '/purchaseorders/details/' .
-        $id
-    );
-
-    exit;
-}
-
-    public function cancel($id)
-{
-    AuthHelper::can('purchase_orders.edit');
-
-    try {
-
-        $service = $this->service('PurchaseOrder');
-
-        $service->cancel((int)$id);
-
-        FlashHelper::success(
-            'Purchase Order cancelled successfully.'
+        $model->approve(
+            $id,
+            $_SESSION['user_id']
         );
 
-    } catch (Throwable $e) {
-
-        FlashHelper::error(
-            $e->getMessage()
-        );
-    }
-
-    header(
-        'Location: ' .
-        URLROOT .
-        '/purchaseorders'
-    );
-
-    exit;
-}
-
-/*
-|--------------------------------------------------------------------------
-| PRINT PURCHASE ORDER
-|--------------------------------------------------------------------------
-*/
-
-public function print($id)
-{
-    AuthHelper::can('purchase_orders.view');
-
-    $model = $this->model('PurchaseOrder');
-
-    $po = $model->getById((int)$id);
-
-    if (!$po) {
+        $_SESSION['success'] =
+            'Purchase Order approved successfully.';
 
         header(
             'Location: ' .
-            URLROOT .
-            '/purchaseorders'
+                URLROOT .
+                '/purchaseorders/details/' .
+                $id
+        );
+
+        exit;
+    }
+
+    public function cancel($id)
+    {
+        AuthHelper::can('purchase_orders.edit');
+
+        try {
+
+            $service = $this->service('PurchaseOrder');
+
+            $service->cancel((int)$id);
+
+            FlashHelper::success(
+                'Purchase Order cancelled successfully.'
+            );
+        } catch (Throwable $e) {
+
+            FlashHelper::error(
+                $e->getMessage()
+            );
+        }
+
+        header(
+            'Location: ' .
+                URLROOT .
+                '/purchaseorders'
         );
 
         exit;
     }
 
     /*
+|--------------------------------------------------------------------------
+| PRINT PURCHASE ORDER
+|--------------------------------------------------------------------------
+*/
+
+    public function print($id)
+    {
+        AuthHelper::can('purchase_orders.view');
+
+        $model = $this->model('PurchaseOrder');
+
+        $po = $model->getById((int)$id);
+
+        if (!$po) {
+
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/purchaseorders'
+            );
+
+            exit;
+        }
+
+        /*
     |--------------------------------------------------------------------------
     | ONLY APPROVED / RECEIVED POs SHOULD BE PRINTED AS OFFICIAL PO
     |--------------------------------------------------------------------------
     */
 
-    if (
-        !in_array(
-            $po->status,
-            ['approved', 'partial', 'received'],
-            true
-        )
-    ) {
+        if (
+            !in_array(
+                $po->status,
+                ['approved', 'partial', 'received'],
+                true
+            )
+        ) {
 
-        $_SESSION['error'] =
-            'Only approved Purchase Orders can be printed.';
+            $_SESSION['error'] =
+                'Only approved Purchase Orders can be printed.';
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/purchaseorders/details/' .
-            $id
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/purchaseorders/details/' .
+                    $id
+            );
+
+            exit;
+        }
+
+        $data['po'] =
+            $po;
+
+        $data['items'] =
+            $model->getItems((int)$id);
+
+        $this->view(
+            'purchase-orders/print',
+            $data,
+            False // preventing from loading web page Header and footer
         );
-
-        exit;
     }
-
-    $data['po'] =
-        $po;
-
-    $data['items'] =
-        $model->getItems((int)$id);
-
-    $this->view(
-        'purchase-orders/print',
-        $data,
-        False // preventing from loading web page Header and footer
-    );
-}
-
 }
