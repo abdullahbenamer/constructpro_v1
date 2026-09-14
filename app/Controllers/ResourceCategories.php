@@ -10,7 +10,7 @@ class ResourceCategories extends Controller
     public function index()
     {
 
-        AuthHelper::can('projects.view');
+        AuthHelper::can('admin.access');
 
 
         $model = $this->model('ResourceCategory');
@@ -40,7 +40,7 @@ class ResourceCategories extends Controller
     public function create()
     {
 
-        AuthHelper::can('projects.view');
+        AuthHelper::can('admin.access');
 
 
         $this->view(
@@ -59,7 +59,7 @@ class ResourceCategories extends Controller
     public function store()
     {
 
-        AuthHelper::can('projects.view');
+        AuthHelper::can('admin.access');
 
 
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
@@ -116,7 +116,7 @@ class ResourceCategories extends Controller
     public function edit($id)
     {
 
-        AuthHelper::can('projects.view');
+        AuthHelper::can('admin.access');
 
 
         $model = $this->model('ResourceCategory');
@@ -148,7 +148,7 @@ class ResourceCategories extends Controller
     public function update($id)
     {
 
-        AuthHelper::can('projects.view');
+        AuthHelper::can('admin.access');
 
 
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
@@ -200,29 +200,35 @@ class ResourceCategories extends Controller
 
 
     /**
-     * DELETE CATEGORY
-     */
-    public function delete($id)
-    {
+ * DELETE CATEGORY
+ */
+public function delete($id)
+{
+    AuthHelper::can('admin.access');
 
-        AuthHelper::can('projects.view');
+    $model = $this->model('ResourceCategory');
 
+    $result = $model->delete($id);
 
-        $model = $this->model('ResourceCategory');
+    if (!$result['success']) {
 
-
-
-        $model->delete($id);
-
-
+        $_SESSION['error'] = $result['message'];
 
         header(
             'Location: ' . URLROOT . '/ResourceCategories'
         );
 
         exit;
-
     }
+
+    $_SESSION['success'] = $result['message'];
+
+    header(
+        'Location: ' . URLROOT . '/ResourceCategories'
+    );
+
+    exit;
+}
 
 
 }

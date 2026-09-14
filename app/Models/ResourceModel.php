@@ -202,26 +202,89 @@ class ResourceModel extends Model
 
     }
 
+  /**
+ * DELETE RESOURCE
+ */
+public function delete($id)
+{
+    // Get the resource first
+    $resource = $this->getById($id);
 
+    if (!$resource) {
 
-
-
-    /**
-     * DELETE RESOURCE
-     */
-    public function delete($id)
-    {
-
-        return $this->db->query(
-            "
-            DELETE FROM resources
-
-            WHERE id='$id'
-
-            "
-        );
+        return [
+            'success' => false,
+            'message' => 'Resource not found.'
+        ];
 
     }
+
+
+    /*
+     * Check if the resource is used in project costs
+     */
+    $projectCostCount = $this->db->query(
+        "
+        SELECT COUNT(*) AS total
+
+        FROM project_costs
+
+        WHERE resource_id = ?
+        ",
+        [$id]
+    )->fetch()->total;
+
+
+    /*
+     * Check if the resource is used in resource requisitions
+     */
+    $requisitionCount = $this->db->query(
+        "
+        SELECT COUNT(*) AS total
+
+        FROM resource_requisition_items
+
+        WHERE resource_id = ?
+
+          AND resource_source = 'RESOURCE'
+        ",
+        [$id]
+    )->fetch()->total;
+
+
+    /*
+     * Do not delete a resource that has
+     * already been used anywhere.
+     */
+    if ($projectCostCount > 0 || $requisitionCount > 0) {
+
+        return [
+            'success' => false,
+            'message' =>
+                'This resource cannot be deleted because it is already in use.'
+        ];
+
+    }
+
+
+    /*
+     * Safe to delete.
+     */
+    $this->db->query(
+        "
+        DELETE FROM resources
+
+        WHERE id = ?
+        ",
+        [$id]
+    );
+
+
+    return [
+        'success' => true,
+        'message' => 'Resource deleted successfully.'
+    ];
+}
 
 public function getNonMaterialResources()
 {

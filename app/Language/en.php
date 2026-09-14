@@ -172,7 +172,6 @@ return [
     'maintenance'                 => 'Maintenance',
     'inspection'                  => 'Inspection',
     'consultancy'                 => 'Consultancy',
-    'other'                       => 'Other',
 
     'project_scope'               => 'PROJECT SCOPE',
     'civil'                       => 'Civil',
@@ -1082,6 +1081,21 @@ return [
     'users'                                     => 'Users',
     'add_user'                                  => 'Add User',
     'delete_user_confirm'                      => 'Delete this user?',
+
+    'resources'                  => 'Resources',
+'new_resource'               => 'New Resource',
+'resource_code'              => 'Resource Code',
+'resource_name'              => 'Resource Name',
+'select_unit'                => 'Select Unit',
+'select_category'            => 'Select Category',
+
+'service'                    => 'Service',
+'save_resource'              => 'Save Resource',
+'edit_resource'              => 'Edit Resource',
+'update_resource'            => 'Update Resource',
+'delete_resource_confirm'    => 'Delete this resource?',
+'no_resources_found'         => 'No resources found.',
+'resource_not_found'         => 'Resource not found.',
 
 
     // Permission Groups

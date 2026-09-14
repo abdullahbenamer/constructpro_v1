@@ -255,33 +255,39 @@ class Resources extends Controller
     }
 
 
+/**
+ * DELETE RESOURCE
+ */
+public function delete($id)
+{
+    AuthHelper::can('admin.access');
+
+    $model = $this->model('ResourceModel');
+
+    $result = $model->delete($id);
 
 
+    if (!$result['success']) {
 
-    /**
-     * DELETE RESOURCE
-     */
-    public function delete($id)
-    {
-
-        AuthHelper::can('admin.access');
-
-
-
-        $model = $this->model('ResourceModel');
-
-
-        $model->delete($id);
-
-
+        $_SESSION['error'] = $result['message'];
 
         header(
             'Location: ' . URLROOT . '/Resources'
         );
 
         exit;
-
     }
+
+
+    $_SESSION['success'] = $result['message'];
+
+
+    header(
+        'Location: ' . URLROOT . '/Resources'
+    );
+
+    exit;
+}
 
 
 }

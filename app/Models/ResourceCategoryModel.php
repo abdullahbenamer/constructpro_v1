@@ -111,20 +111,56 @@ class ResourceCategoryModel extends Model
 
 
 
-    public function delete($id)
-    {
+    /**
+ * DELETE CATEGORY
+ */
+public function delete($id)
+{
+    // Get the category first
+    $category = $this->getById($id);
 
-        return $this->db->query(
-            "
-            DELETE
+    if (!$category) {
 
-            FROM resource_categories
-
-            WHERE id='$id'
-            "
-        );
+        return [
+            'success' => false,
+            'message' => 'Resource category not found.'
+        ];
 
     }
 
+    // Check if the category is used by resources
+    $resourceCount = $this->db->query(
+        "
+        SELECT COUNT(*) AS total
+        FROM resources
+        WHERE category_id = ?
+        ",
+        [$id]
+    )->fetch()->total;
+
+    // Do not delete a category that is currently in use
+    if ($resourceCount > 0) {
+
+        return [
+            'success' => false,
+            'message' => 'This resource category cannot be deleted because it is currently in use.'
+        ];
+
+    }
+
+    // Safe to delete
+    $this->db->query(
+        "
+        DELETE FROM resource_categories
+        WHERE id = ?
+        ",
+        [$id]
+    );
+
+    return [
+        'success' => true,
+        'message' => 'Resource category deleted successfully.'
+    ];
+}
 
 }

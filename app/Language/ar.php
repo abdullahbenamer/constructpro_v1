@@ -232,7 +232,7 @@ return [
     'labor'         => 'العمالة',
     'inventory_item' => 'صنف المخزون',
     'select_item' => 'اختر الصنف',
-    'available' => 'المتاح',
+    'available' => 'متوفر/متاح',
     'physical'  => 'الفعلي',
     'resource_description_placeholder' => 'الوصف ....',
     'select_location' => 'اختر الموقع - المستودع',
@@ -346,7 +346,7 @@ return [
 
     // PURCHASE ORDERS
     'create_purchase_order' => 'إنشاء أمر شراء',
-    'select_supplier'      => 'اختر المورد',
+    'select_supplier'      => 'اختر المزوّد/ المورّد',
     'order_date'           => 'تاريخ الطلب',
     'expected_date'        => 'التاريخ المتوقع',
 
@@ -379,7 +379,7 @@ return [
     'grand_total'                  => 'الإجمالي الكلي',
 
     // PURCHASE ORDERS INDEX
-    'supplier'                     => 'المورد',
+    'supplier'                     => 'المزوّد/المورّد',
     'open'                         => 'فتح',
     'items'                        => 'الأصناف',
     'approve'                      => 'اعتماد',
@@ -1064,6 +1064,22 @@ return [
     'users'                                     => 'المستخدمون',
     'add_user'                                  => 'إضافة مستخدم',
     'delete_user_confirm'                      => 'هل تريد حذف هذا المستخدم؟',
+
+    'resources'                  => 'الموارد',
+'new_resource'               => 'مورد جديد',
+'resource_code'              => 'رمز المورد',
+'resource_name'              => 'اسم المورد',
+
+'select_unit'                => 'اختر الوحدة',
+'select_category'            => 'اختر الفئة',
+
+'service'                    => 'خدمة',
+'save_resource'              => 'حفظ المورد',
+'edit_resource'              => 'تعديل المورد',
+'update_resource'            => 'تحديث المورد',
+'delete_resource_confirm'    => 'هل تريد حذف هذا المورد؟',
+'no_resources_found'         => 'لم يتم العثور على موارد.',
+'resource_not_found'         => 'المورد غير موجود.',
 
     //Permession groups
     'permission'         => 'صلاحية',

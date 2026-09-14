@@ -100,7 +100,6 @@
 
                                 default:
                                     $badge = 'secondary';
-
                             }
 
                             ?>
@@ -186,6 +185,10 @@
                                                 echo __('normal');
                                                 break;
 
+                                            case 'MEDIUM':
+                                                echo __('medium');
+                                                break;
+
                                             case 'HIGH':
                                                 echo __('high');
                                                 break;
@@ -232,6 +235,10 @@
 
                                             case 'PARTIALLY_FULFILLED':
                                                 echo __('partially_fulfilled');
+                                                break;
+
+                                            case 'FULFILLED':
+                                                echo __('fulfilled');
                                                 break;
 
                                             case 'COMPLETED':
