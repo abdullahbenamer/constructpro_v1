@@ -5,103 +5,303 @@
 
 <head>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Tajawal:wght@300;400;500;700;800&display=swap"
-        rel="stylesheet">
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1">
 
     <title>
         <?= __('project_financial_ledger_report') ?>
     </title>
 
+
+    <!-- FONTS -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Tajawal:wght@300;400;500;700;800&display=swap"
+        rel="stylesheet">
+
+
     <style>
 
+        * {
+            box-sizing: border-box;
+        }
+
+
         body {
-            font-family: 'Tajawal', 'Roboto', sans-serif;
-            font-size: 14px;
+            font-family: "Tajawal", "Roboto", Arial, sans-serif;
+            font-size: 13px;
+            line-height: 1.6;
             color: #000;
+            margin: 0;
+            padding: 30px;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
+
+        html[dir="rtl"] body {
+            font-family: "Tajawal", "Roboto", Arial, sans-serif;
         }
 
-        .company {
+
+        .document {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+
+        /* =========================================
+           COMPANY HEADER
+        ========================================= */
+
+        .company-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 40px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ccc;
+        }
+
+
+        .company-brand {
+            flex: 1;
+        }
+
+
+        .company-logo {
+            margin-bottom: 10px;
+        }
+
+
+        .company-logo img {
+            max-width: 180px;
+            max-height: 75px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+
+        .company-name {
             font-size: 24px;
-            font-weight: bold;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 5px;
         }
+
+
+        .company-detail {
+            font-size: 12px;
+            color: #444;
+            line-height: 1.5;
+            margin-top: 2px;
+        }
+
+
+        .report-heading {
+            width: 300px;
+            text-align: right;
+        }
+
+
+        html[dir="rtl"] .report-heading {
+            text-align: left;
+        }
+
 
         .report-title {
-            font-size: 18px;
-            margin-top: 5px;
+            font-size: 21px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 7px;
         }
+
+
+        .report-date {
+            font-size: 12px;
+            color: #555;
+        }
+
+
+        /* =========================================
+           PROJECT INFORMATION
+        ========================================= */
 
         .info-table {
             width: 100%;
+            border-collapse: collapse;
             margin-bottom: 20px;
         }
+
 
         .info-table td {
-            padding: 4px;
+            padding: 7px 9px;
+            border: 1px solid #ccc;
+            vertical-align: middle;
         }
+
+
+        .info-label {
+            width: 13%;
+            font-weight: 700;
+            background: #f2f2f2;
+            white-space: nowrap;
+        }
+
+
+        .info-value {
+            width: 37%;
+        }
+
+
+        /* =========================================
+           SUMMARY
+        ========================================= */
 
         .summary {
+            border: 1px solid #bbb;
+            padding: 13px 16px;
             margin-bottom: 20px;
-            border: 1px solid #ccc;
-            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            align-items: center;
         }
 
-        table {
+
+        .summary-item {
+            flex: 1;
+        }
+
+
+        .summary-label {
+            display: block;
+            font-size: 11px;
+            color: #555;
+            margin-bottom: 3px;
+        }
+
+
+        .summary-value {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+
+        .balance-positive {
+            font-weight: 700;
+        }
+
+
+        .balance-negative {
+            font-weight: 700;
+        }
+
+
+        .credit {
+            font-weight: 700;
+        }
+
+
+        .debit {
+            font-weight: 700;
+        }
+
+
+        /* =========================================
+           LEDGER TABLE
+        ========================================= */
+
+        .ledger-table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        th {
-            background: #f2f2f2;
+
+        .ledger-table th,
+        .ledger-table td {
+            border: 1px solid #999;
+            padding: 7px 8px;
+            vertical-align: middle;
+            line-height: 1.5;
         }
 
-        th,
-        td {
-            border: 1px solid #ccc;
-            padding: 6px;
+
+        .ledger-table th {
+            background: #eee;
+            font-weight: 700;
+            text-align: left;
         }
+
+
+        html[dir="rtl"] .ledger-table th {
+            text-align: right;
+        }
+
+
+        .ledger-table tbody tr:nth-child(even) {
+            background-color: #f7f7f7;
+        }
+
 
         .text-right {
             text-align: right;
         }
 
-        .credit {
-            color: green;
-            font-weight: bold;
+
+        html[dir="rtl"] .text-right {
+            text-align: left;
         }
 
-        .debit {
-            color: red;
-            font-weight: bold;
+
+        .number {
+            direction: ltr;
+            text-align: right;
+            white-space: nowrap;
         }
+
+
+        html[dir="rtl"] .number {
+            text-align: left;
+        }
+
+
+        .entry-type {
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+
+        .advance {
+            font-weight: 700;
+        }
+
+
+        .cost {
+            font-weight: 700;
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
 
         .footer {
             margin-top: 30px;
+            padding-top: 10px;
+            border-top: 1px solid #ccc;
             font-size: 11px;
+            color: #555;
         }
 
-        .balance-positive {
-            color: green;
-            font-weight: bold;
-        }
 
-        .balance-negative {
-            color: red;
-            font-weight: bold;
-        }
-
-        table tbody tr:nth-child(odd) {
-            background-color: #ffffff;
-        }
-
-        table tbody tr:nth-child(even) {
-            background-color: #f7f7f7;
-        }
+        /* =========================================
+           PRINT
+        ========================================= */
 
         @media print {
 
@@ -110,8 +310,29 @@
                 margin: 10mm;
             }
 
+
+            body {
+                padding: 0;
+            }
+
+
+            .document {
+                max-width: none;
+            }
+
+
             .no-print {
                 display: none !important;
+            }
+
+
+            .ledger-table thead {
+                display: table-header-group;
+            }
+
+
+            .ledger-table tr {
+                page-break-inside: avoid;
             }
 
         }
@@ -120,77 +341,149 @@
 
 </head>
 
+
 <body>
 
-    <!-- Logo -->
+<div class="document">
 
-    <div style="display:flex; justify-content:space-between; align-items:left; margin-bottom:20px;">
 
-        <div>
+    <!-- =========================================
+         COMPANY HEADER
+    ========================================= -->
+
+    <div class="company-header">
+
+
+        <!-- COMPANY -->
+
+        <div class="company-brand">
+
 
             <?php if (!empty($settings->logo)): ?>
 
-                <img
-                    src="<?= URLROOT ?>/<?= $settings->logo ?>"
-                    style="height:100px;">
+                <div class="company-logo">
+
+                    <img
+                        src="<?= URLROOT ?>/<?= htmlspecialchars(
+                            ltrim($settings->logo, '/')
+                        ) ?>"
+                        alt="<?= htmlspecialchars(
+                            $settings->company_name ?? 'Company'
+                        ) ?>">
+
+                </div>
 
             <?php endif; ?>
 
+
+            <div class="company-name">
+
+                <?= htmlspecialchars(
+                    $settings->company_name ?? 'Company Name'
+                ) ?>
+
+            </div>
+
+
+            <?php if (!empty($settings->address)): ?>
+
+                <div class="company-detail">
+
+                    <?= nl2br(
+                        htmlspecialchars($settings->address)
+                    ) ?>
+
+                </div>
+
+            <?php endif; ?>
+
+
+            <?php if (!empty($settings->contacts)): ?>
+
+                <div class="company-detail">
+
+                    <?= nl2br(
+                        htmlspecialchars($settings->contacts)
+                    ) ?>
+
+                </div>
+
+            <?php endif; ?>
+
+
         </div>
 
 
-        <div style="text-align:left;">
+        <!-- REPORT TITLE -->
 
-            <h2>
-                <?= htmlspecialchars($settings->company_name) ?>
-            </h2>
+        <div class="report-heading">
 
-            <div>
-                <?= htmlspecialchars($settings->address) ?>
+            <div class="report-title">
+
+                <?= __('project_financial_ledger_report') ?>
+
             </div>
 
-            <div>
-                <?= htmlspecialchars($settings->contacts) ?>
+
+            <div class="report-date">
+
+                <?= __('printed') ?>:
+
+                <span dir="ltr">
+
+                    <?= date('Y-m-d H:i') ?>
+
+                </span>
+
             </div>
 
         </div>
+
 
     </div>
 
 
-    <div class="header">
-
-        <div class="company">
-            CONSTRUCT PRO
-        </div>
-
-        <div class="report-title">
-
-            <?= __('project_financial_ledger_report') ?>
-
-        </div>
-
-    </div>
-
+    <!-- =========================================
+         PROJECT INFORMATION
+    ========================================= -->
 
     <table class="info-table">
 
         <tr>
 
-            <td>
-                <strong><?= __('project') ?>:</strong>
+            <td class="info-label">
+
+                <?= __('project') ?>:
+
             </td>
 
-            <td>
-                <strong><?= $project->title ?></strong>
+
+            <td class="info-value">
+
+                <strong>
+
+                    <?= htmlspecialchars(
+                        $project->title ?? '-'
+                    ) ?>
+
+                </strong>
+
             </td>
 
-            <td>
-                <strong><?= __('status') ?>:</strong>
+
+            <td class="info-label">
+
+                <?= __('status') ?>:
+
             </td>
 
-            <td>
-                <?= $project->status ?>
+
+            <td class="info-value">
+
+                <?= htmlspecialchars(
+                    $project->status ?? '-'
+                ) ?>
+
             </td>
 
         </tr>
@@ -198,20 +491,39 @@
 
         <tr>
 
-            <td>
-                <strong><?= __('customer') ?>:</strong>
+            <td class="info-label">
+
+                <?= __('customer') ?>:
+
             </td>
 
-            <td>
-                <?= $project->customer_name ?>
+
+            <td class="info-value">
+
+                <?= htmlspecialchars(
+                    $project->customer_name ?? '-'
+                ) ?>
+
             </td>
 
-            <td>
-                <strong><?= __('deadline') ?>:</strong>
+
+            <td class="info-label">
+
+                <?= __('deadline') ?>:
+
             </td>
 
-            <td>
-                <?= $project->deadline ?>
+
+            <td class="info-value">
+
+                <span dir="ltr">
+
+                    <?= htmlspecialchars(
+                        $project->deadline ?? '-'
+                    ) ?>
+
+                </span>
+
             </td>
 
         </tr>
@@ -219,34 +531,106 @@
     </table>
 
 
+    <!-- =========================================
+         FINANCIAL SUMMARY
+    ========================================= -->
+
     <div class="summary">
 
-        <strong>
-            <?= __('total_advances') ?>:
-        </strong>
 
-        <?= number_format($summary->total_advances, 2) ?>
+        <!-- ADVANCES -->
 
-        &nbsp;&nbsp;&nbsp;
+        <div class="summary-item">
 
-        <strong>
-            <?= __('total_costs') ?>:
-        </strong>
+            <span class="summary-label">
 
-        <?= number_format($summary->total_costs, 2) ?>
+                <?= __('total_advances') ?>
 
-        &nbsp;&nbsp;&nbsp;
+            </span>
 
-        <strong>
-            <?= __('balance') ?>:
-        </strong>
 
-        <?= number_format($summary->balance, 2) ?>
+            <span class="summary-value">
+
+                <span dir="ltr">
+
+                    <?= number_format(
+                        (float)$summary->total_advances,
+                        2
+                    ) ?>
+
+                </span>
+
+            </span>
+
+        </div>
+
+
+        <!-- COSTS -->
+
+        <div class="summary-item">
+
+            <span class="summary-label">
+
+                <?= __('total_costs') ?>
+
+            </span>
+
+
+            <span class="summary-value">
+
+                <span dir="ltr">
+
+                    <?= number_format(
+                        (float)$summary->total_costs,
+                        2
+                    ) ?>
+
+                </span>
+
+            </span>
+
+        </div>
+
+
+        <!-- BALANCE -->
+
+        <div class="summary-item">
+
+            <span class="summary-label">
+
+                <?= __('balance') ?>
+
+            </span>
+
+
+            <span class="summary-value
+                <?= $summary->balance < 0
+                    ? 'balance-negative'
+                    : 'balance-positive'
+                ?>">
+
+                <span dir="ltr">
+
+                    <?= number_format(
+                        (float)$summary->balance,
+                        2
+                    ) ?>
+
+                </span>
+
+            </span>
+
+        </div>
+
 
     </div>
 
 
-    <table>
+    <!-- =========================================
+         LEDGER
+    ========================================= -->
+
+    <table class="ledger-table">
 
         <thead>
 
@@ -264,19 +648,19 @@
                     <?= __('description') ?>
                 </th>
 
-                <th>
+                <th class="text-right">
                     <?= __('qty') ?>
                 </th>
 
-                <th>
+                <th class="text-right">
                     <?= __('debit') ?>
                 </th>
 
-                <th>
+                <th class="text-right">
                     <?= __('credit') ?>
                 </th>
 
-                <th>
+                <th class="text-right">
                     <?= __('balance') ?>
                 </th>
 
@@ -291,41 +675,69 @@
 
                 <tr>
 
-                    <td>
-                        <?= date(
-                            'Y-m-d',
-                            strtotime($row->created_at)
-                        ); ?>
-                    </td>
 
+                    <!-- DATE -->
 
                     <td>
 
-                        <?= $row->entry_type === 'advance'
+                        <span dir="ltr">
 
-                            ? '<span class="badge bg-success">'
-                                . __('advance') .
-                              '</span>'
+                            <?= date(
+                                'Y-m-d',
+                                strtotime($row->created_at)
+                            ) ?>
 
-                            : '<span class="badge bg-danger">'
-                                . __('cost') .
-                              '</span>'
-                        ?>
+                        </span>
 
                     </td>
 
 
-                    <td>
-                        <?= htmlspecialchars($row->description) ?>
+                    <!-- TYPE -->
+
+                    <td class="entry-type">
+
+                        <?php if (
+                            $row->entry_type === 'advance'
+                        ): ?>
+
+                            <span class="advance">
+
+                                <?= __('advance') ?>
+
+                            </span>
+
+                        <?php else: ?>
+
+                            <span class="cost">
+
+                                <?= __('cost') ?>
+
+                            </span>
+
+                        <?php endif; ?>
+
                     </td>
 
 
-                    <td class="text-right">
+                    <!-- DESCRIPTION -->
+
+                    <td>
+
+                        <?= htmlspecialchars(
+                            $row->description ?? ''
+                        ) ?>
+
+                    </td>
+
+
+                    <!-- QTY -->
+
+                    <td class="number">
 
                         <?= !empty($row->quantity)
 
                             ? number_format(
-                                $row->quantity,
+                                (float)$row->quantity,
                                 2
                             )
 
@@ -334,34 +746,52 @@
                     </td>
 
 
-                    <td>
-                        <?= number_format($row->debit, 2) ?>
-                    </td>
+                    <!-- DEBIT -->
 
-
-                    <td>
-                        <?= number_format($row->credit, 2) ?>
-                    </td>
-
-
-                    <?php
-
-                    $balanceClass = ($row->balance_after < 0)
-
-                        ? 'balance-negative'
-
-                        : 'balance-positive';
-
-                    ?>
-
-                    <td class="<?= $balanceClass ?>">
+                    <td class="number">
 
                         <?= number_format(
-                            $row->balance_after,
+                            (float)$row->debit,
                             2
                         ) ?>
 
                     </td>
+
+
+                    <!-- CREDIT -->
+
+                    <td class="number">
+
+                        <?= number_format(
+                            (float)$row->credit,
+                            2
+                        ) ?>
+
+                    </td>
+
+
+                    <!-- BALANCE -->
+
+                    <?php
+
+                    $balanceClass =
+                        ($row->balance_after < 0)
+                            ? 'balance-negative'
+                            : 'balance-positive';
+
+                    ?>
+
+
+                    <td
+                        class="number <?= $balanceClass ?>">
+
+                        <?= number_format(
+                            (float)$row->balance_after,
+                            2
+                        ) ?>
+
+                    </td>
+
 
                 </tr>
 
@@ -372,22 +802,33 @@
     </table>
 
 
+    <!-- =========================================
+         FOOTER
+    ========================================= -->
+
     <div class="footer">
 
         <?= __('printed') ?>:
 
-        <?= date('Y-m-d H:i') ?>
+        <span dir="ltr">
+
+            <?= date('Y-m-d H:i') ?>
+
+        </span>
 
     </div>
 
 
-    <!--
-    <script>
-        window.onload = function () {
-            window.print();
-        };
-    </script>
-    -->
+</div>
+
+
+<!--
+<script>
+    window.onload = function () {
+        window.print();
+    };
+</script>
+-->
 
 </body>
 

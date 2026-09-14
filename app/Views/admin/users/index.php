@@ -14,7 +14,7 @@
 
     <tr>
 
-        <th><?= __('name') ?></th>
+        <th><?= __('full_name') ?></th>
 
         <th><?= __('email') ?></th>
 
@@ -30,7 +30,7 @@
         <tr>
 
             <td>
-                <?= $user->name ?>
+                <?= $user->full_name ?>
             </td>
 
             <td>
@@ -40,10 +40,7 @@
             <td>
                 <?= $user->role_name ?>
             </td>
-
-
             <td>
-
                 <a
                     href="<?= URLROOT ?>/admin/editUser/<?= $user->id ?>"
                     class="btn btn-sm btn-warning">
@@ -52,13 +49,11 @@
 
                 </a>
 
-
                 <?php
                 // HIDE DELETE BUTTON for last admin
                 $is_self = ($user->id == $_SESSION['user_id']);
                 $is_admin = (strtoupper($user->role_name) === 'ADMIN');
                 ?>
-
 
                 <?php if (!$is_self) : ?>
 

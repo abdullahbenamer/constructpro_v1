@@ -2,7 +2,7 @@
 
 <form method="POST">
 
-    <<div class="mb-2">
+    <div class="mb-2">
 
     <label><?= __('full_name') ?></label>
 

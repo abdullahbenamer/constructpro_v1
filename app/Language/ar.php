@@ -1054,7 +1054,7 @@ return [
     'manage_permissions'        => 'إدارة الصلاحيات',
 
     'create_user'                              => 'إنشاء مستخدم',
-    'full_name'                                => 'الاسم الكامل',
+    'full_name'                                => 'الاسم بالكامل',
     'short_name'                               => 'الاسم المختصر',
     'password'                                 => 'كلمة المرور',
     'warehouse_access'                         => 'صلاحية الوصول إلى المستودعات',

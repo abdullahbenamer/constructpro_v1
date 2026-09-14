@@ -17,17 +17,23 @@
         content="width=device-width, initial-scale=1">
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+
+        html {
+            font-family: "Tajawal", "Cairo", Arial, sans-serif;
+        }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: "Tajawal", "Cairo", Arial, sans-serif;
             font-size: 13px;
+            line-height: 1.6;
             color: #000;
             margin: 0;
             padding: 30px;
         }
 
         html[dir="rtl"] body {
-            font-family: "Tajawal", Arial, Helvetica, sans-serif;
+            font-family: "Tajawal", "Cairo", Arial, sans-serif;
         }
 
         .document {
@@ -50,14 +56,38 @@
             line-height: 1.5;
         }
 
+        .company-logo {
+    margin-bottom: 10px;
+}
+
+.company-logo img {
+    max-width: 180px;
+    max-height: 70px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
         .company-name {
             font-size: 24px;
             font-weight: 700;
-            margin-bottom: 8px;
-            letter-spacing: 0.3px;
+            line-height: 1.3;
         }
 
-        .company-detail {
+        .document-title {
+            font-size: 23px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .meta {
+            margin-top: 7px;
+            font-size: 12.5px;
+            line-height: 1.5;
+        }
+
+            .company-detail {
             font-size: 12px;
             color: #444;
             margin-top: 3px;
@@ -85,21 +115,61 @@
             margin-bottom: 5px;
         }
 
-        .document-title {
-            font-size: 24px;
-            font-weight: bold;
-            text-align: right;
-        }
 
-        .meta {
-            margin-top: 8px;
-            font-size: 13px;
-        }
-
+        /* Supplier */
         .supplier-box {
             border: 1px solid #ccc;
             padding: 12px;
             margin-bottom: 25px;
+        }
+
+        .info-box {
+            border: 1px solid #ccc;
+            padding: 14px 16px;
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .supplier-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 35px;
+            row-gap: 7px;
+        }
+
+        .supplier-main {
+            grid-column: 1 / -1;
+        }
+
+        .supplier-company {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .supplier-detail {
+            font-size: 12.5px;
+        }
+
+        .supplier-detail .label {
+            font-weight: 700;
+            margin-right: 4px;
+        }
+
+        html[dir="rtl"] .supplier-detail .label {
+            margin-right: 0;
+            margin-left: 4px;
+        }
+
+        .supplier-address {
+            grid-column: 1 / -1;
         }
 
         table {
@@ -107,7 +177,7 @@
             border-collapse: collapse;
         }
 
-        th,
+        /* th,
         td {
             border: 1px solid #999;
             padding: 8px;
@@ -116,6 +186,18 @@
 
         th {
             background: #eee;
+        } */
+        th,
+        td {
+            border: 1px solid #999;
+            padding: 8px 9px;
+            vertical-align: middle;
+            line-height: 1.5;
+        }
+
+        th {
+            background: #eee;
+            font-weight: 700;
         }
 
         .text-end {
@@ -169,7 +251,6 @@
             }
 
         }
-
     </style>
 
 </head>
@@ -197,44 +278,62 @@
 
         <div class="header">
 
-            <!-- COMPANY INFORMATION -->
+      <!-- COMPANY INFORMATION -->
 
-            <div class="company-block">
+<div class="company-block">
 
-                <div class="company-name">
+    <?php if (!empty($settings->logo)): ?>
 
-                    <?= htmlspecialchars(
-                        $settings->company_name ?? 'Company Name'
-                    ) ?>
+        <div class="company-logo">
 
-                </div>
+            <img
+                src="<?= URLROOT ?>/<?= htmlspecialchars(
+                    ltrim($settings->logo, '/')
+                ) ?>"
+                alt="<?= htmlspecialchars(
+                    $settings->company_name ?? 'Company'
+                ) ?>">
 
-                <?php if (!empty($settings->address)): ?>
+        </div>
 
-                    <div class="company-detail">
-
-                        <?= nl2br(
-                            htmlspecialchars($settings->address)
-                        ) ?>
-
-                    </div>
-
-                <?php endif; ?>
+    <?php endif; ?>
 
 
-                <?php if (!empty($settings->contacts)): ?>
+    <div class="company-name">
 
-                    <div class="company-detail">
+        <?= htmlspecialchars(
+            $settings->company_name ?? 'Company Name'
+        ) ?>
 
-                        <?= nl2br(
-                            htmlspecialchars($settings->contacts)
-                        ) ?>
+    </div>
 
-                    </div>
 
-                <?php endif; ?>
+    <?php if (!empty($settings->address)): ?>
 
-            </div>
+        <div class="company-detail">
+
+            <?= nl2br(
+                htmlspecialchars($settings->address)
+            ) ?>
+
+        </div>
+
+    <?php endif; ?>
+
+
+    <?php if (!empty($settings->contacts)): ?>
+
+        <div class="company-detail">
+
+            <?= nl2br(
+                htmlspecialchars($settings->contacts)
+            ) ?>
+
+        </div>
+
+    <?php endif; ?>
+
+</div>
 
 
             <!-- PURCHASE ORDER INFORMATION -->
@@ -254,8 +353,9 @@
                         <?= __('po_number') ?>:
                     </strong>
 
-                    <?= htmlspecialchars($po->po_number) ?>
-
+                    <span dir="ltr">
+                        <?= htmlspecialchars($po->po_number) ?>
+                    </span>
                 </div>
 
 
@@ -265,8 +365,9 @@
                         <?= __('order_date') ?>:
                     </strong>
 
-                    <?= htmlspecialchars($po->order_date) ?>
-
+                    <span dir="ltr">
+                        <?= htmlspecialchars($po->order_date) ?>
+                    </span>
                 </div>
 
 
@@ -289,15 +390,113 @@
 
         <!-- SUPPLIER -->
 
-        <div class="supplier-box">
+        <div class="info-box supplier-box">
 
-            <strong>
+            <div class="section-title">
                 <?= __('supplier') ?>
-            </strong>
+            </div>
 
-            <div style="margin-top: 8px;">
+            <div class="supplier-grid">
 
-                <?= htmlspecialchars($po->supplier_name) ?>
+                <!-- COMPANY NAME -->
+
+                <div class="supplier-main">
+
+                    <div class="supplier-company">
+
+                        <?= htmlspecialchars(
+                            $po->supplier_name ?? '-'
+                        ) ?>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CONTACT PERSON -->
+
+                <?php if (!empty($po->supplier_contact_person)): ?>
+
+                    <div class="supplier-detail">
+
+                        <span class="label">
+                            <?= __('contact_person') ?>:
+                        </span>
+
+                        <span>
+                            <?= htmlspecialchars(
+                                $po->supplier_contact_person
+                            ) ?>
+                        </span>
+
+                    </div>
+
+                <?php endif; ?>
+
+
+                <!-- PHONE -->
+
+                <?php if (!empty($po->supplier_phone)): ?>
+
+                    <div class="supplier-detail">
+
+                        <span class="label">
+                            <?= __('mobile') ?>:
+                        </span>
+
+                        <span dir="ltr">
+                            <?= htmlspecialchars(
+                                $po->supplier_phone
+                            ) ?>
+                        </span>
+
+                    </div>
+
+                <?php endif; ?>
+
+
+                <!-- EMAIL -->
+
+                <?php if (!empty($po->supplier_email)): ?>
+
+                    <div class="supplier-detail">
+
+                        <span class="label">
+                            <?= __('email') ?>:
+                        </span>
+
+                        <span dir="ltr">
+                            <?= htmlspecialchars(
+                                $po->supplier_email
+                            ) ?>
+                        </span>
+
+                    </div>
+
+                <?php endif; ?>
+
+
+                <!-- ADDRESS -->
+
+                <?php if (!empty($po->supplier_address)): ?>
+
+                    <div class="supplier-detail supplier-address">
+
+                        <span class="label">
+                            <?= __('address') ?>:
+                        </span>
+
+                        <span>
+                            <?= nl2br(
+                                htmlspecialchars(
+                                    $po->supplier_address
+                                )
+                            ) ?>
+                        </span>
+
+                    </div>
+
+                <?php endif; ?>
 
             </div>
 
@@ -602,7 +801,7 @@
 
                                 <?= number_format(
                                     (float)$item->quantity *
-                                    (float)$item->unit_cost,
+                                        (float)$item->unit_cost,
                                     2
                                 ) ?>
 

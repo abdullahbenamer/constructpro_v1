@@ -10,18 +10,31 @@
     </h4>
 
 
-    <p>
+  <p>
 
-        <strong>
-            <?= __('account_manager') ?>:
-        </strong>
+    <strong>
+        <?= __('account_manager') ?>:
+    </strong>
 
-        <?= htmlspecialchars(
-            $data['customer']->account_manager
-                ?? __('not_assigned')
-        ) ?>
+    <?php if (!empty($data['customer']->account_manager_id)): ?>
 
-    </p>
+        <a
+            href="<?= URLROOT ?>/users/details/<?= (int)$data['customer']->account_manager_id ?>"
+            class="text-decoration-none">
+
+            <?= htmlspecialchars(
+                $data['customer']->account_manager ?? __('not_assigned')
+            ) ?>
+
+        </a>
+
+    <?php else: ?>
+
+        <?= __('not_assigned') ?>
+
+    <?php endif; ?>
+
+</p>
 
 </div>
 

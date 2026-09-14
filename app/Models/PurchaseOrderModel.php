@@ -52,6 +52,10 @@ public function getById($id)
             po.*,
 
             s.company_name AS supplier_name,
+    s.contact_person AS supplier_contact_person,
+    s.phone AS supplier_phone,
+    s.email AS supplier_email,
+    s.address AS supplier_address,
 
             /* PROJECT */
             p.title AS project_name,
