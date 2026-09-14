@@ -120,7 +120,7 @@ class ProjectModel extends Model
                 throw new Exception('Unable to create project.');
             }
             // Create Project Code
-            $projectCode = 'PRJ-' . date('Y') . '-' . str_pad(
+            $projectCode = 'PRJ-' . date('y') . '-' . str_pad(
                 $projectId,
                 4,
                 '0',
