@@ -371,42 +371,93 @@ public function getAll()
     )->fetch();
 }
     
-    public function create($data)
-{
-     $this->db->query(
-        "INSERT INTO inventory 
-        (name, category, sku, brand_id, country_id, location_id,
-         quantity, min_stock, cost_price,
-         base_unit, allow_fraction, sale_unit, units_per_sale,
-         price_per_base, price_per_sale)
+//     public function create($data)
+// {
+//      $this->db->query(
+//         "INSERT INTO inventory 
+//         (name, category, sku, brand_id, country_id, location_id,
+//          quantity, min_stock, cost_price,
+//          base_unit, allow_fraction, sale_unit, units_per_sale,
+//          price_per_base, price_per_sale)
 
-        VALUES (?, ?, ?, ?, ?, ?,
-                ?, ?, ?,
-                ?, ?, ?, ?,
-                ?, ?)",
+//         VALUES (?, ?, ?, ?, ?, ?,
+//                 ?, ?, ?,
+//                 ?, ?, ?, ?,
+//                 ?, ?)",
+//         [
+//             $data['name'],
+//             $data['category'],
+//             $data['sku'],
+//             $data['brand_id'],
+//             $data['country_id'],
+//             $data['location_id'],   
+
+//             $data['quantity'],
+//             $data['min_stock'],
+//             $data['cost_price'],
+
+//             $data['base_unit'] ?? 'unit',
+//             $data['allow_fraction'] ?? 0,
+//             $data['sale_unit'] ?? null,
+//             $data['units_per_sale'] ?? 1,
+
+//             $data['price_per_base'] ?? 0,
+//             $data['price_per_sale'] ?? 0
+//         ]
+//     )->rowCount() > 0;
+
+//      return $this->db->lastInsertId();
+// }
+
+public function create($data)
+{
+    $this->db->query(
+        "INSERT INTO inventory
+        (
+            name,
+            category,
+            sku,
+            brand_id,
+            country_id,
+            quantity,
+            min_stock,
+            cost_price,
+            base_unit,
+            allow_fraction,
+            sale_unit,
+            units_per_sale,
+            price_per_base,
+            price_per_sale
+        )
+        VALUES
+        (
+            ?, ?, ?, ?, ?,
+            0,
+            ?, ?, ?, ?, ?,
+            ?, ?, ?
+        )",
         [
             $data['name'],
             $data['category'],
             $data['sku'],
             $data['brand_id'],
             $data['country_id'],
-            $data['location_id'],   
 
-            $data['quantity'],
             $data['min_stock'],
             $data['cost_price'],
 
             $data['base_unit'] ?? 'unit',
             $data['allow_fraction'] ?? 0,
             $data['sale_unit'] ?? null,
+
             $data['units_per_sale'] ?? 1,
 
             $data['price_per_base'] ?? 0,
             $data['price_per_sale'] ?? 0
         ]
-    )->rowCount() > 0;
+    );
 
-     return $this->db->lastInsertId();
+    return $this->db->lastInsertId();
 }
 
     public function getByBarcode($barcode)

@@ -18,101 +18,200 @@ class Inventory extends Controller
         $this->view('inventory/index', $data);
     }
 
+    // public function create()
+    // {
+    //     AuthHelper::can('inventory.create');
+
+    //     $inventoryModel = $this->model('Inventory');
+    //     $inventoryStockModel = $this->model('InventoryLocationStock');
+    //     $brandModel = $this->model('Brand');
+    //     $countryModel = $this->model('Country');
+    //     $locationModel = $this->model('InventoryLocation');
+
+    //     // ALWAYS LOAD VIEW DATA
+    //     $viewData = [
+    //         'brands' => $brandModel->getAll(),
+    //         'countries' => $countryModel->getAll(),
+    //         'locations' => $locationModel->getAll(),
+    //         'default_location_id' => 1
+    //     ];
+
+    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    //         // =========================
+    //         // REQUIRED VALIDATION FIRST
+    //         // =========================
+    //         if (!isset($_POST['location_id']) || empty($_POST['location_id'])) {
+    //             $_SESSION['error'] = "Storage location is required";
+    //             $_SESSION['old'] = $_POST;
+
+    //             header('Location: ' . URLROOT . '/inventory/create');
+    //             exit;
+    //         }
+
+    //         // =========================
+    //         // COLLECT INPUT
+    //         // =========================
+    //         $input = [
+    //             'name'         => trim($_POST['name'] ?? ''),
+    //             'sku'          => trim($_POST['sku'] ?? ''),
+    //             'category'     => $_POST['category'] ?? null,
+
+    //             'brand_id'     => !empty($_POST['brand_id']) ? (int)$_POST['brand_id'] : null,
+    //             'country_id'   => !empty($_POST['country_id']) ? (int)$_POST['country_id'] : null,
+
+    //             'location_id'  => (int)$_POST['location_id'],
+
+    //             'quantity'     => (float)($_POST['quantity'] ?? 0),
+    //             'min_stock'    => (int)($_POST['min_stock'] ?? 10),
+
+    //             'cost_price'   => (float)($_POST['cost_price'] ?? 0),
+    //         ];
+
+    //         // =========================
+    //         // BASIC VALIDATION
+    //         // =========================
+    //         if ($input['name'] === '' || $input['sku'] === '') {
+    //             $_SESSION['error'] = "Name and SKU are required";
+    //             $_SESSION['old'] = $_POST;
+
+    //             header('Location: ' . URLROOT . '/inventory/create');
+    //             exit;
+    //         }
+
+    //         if ($input['quantity'] < 0) {
+    //             $_SESSION['error'] = "Invalid quantity";
+    //             $_SESSION['old'] = $_POST;
+
+    //             header('Location: ' . URLROOT . '/inventory/create');
+    //             exit;
+    //         }
+
+    //         // =========================
+    //         // SAVE
+    //         // =========================
+    //         $inventoryId = $inventoryModel->create($input);
+
+    //         if ($inventoryId) {
+
+    //             $inventoryStockModel->createInitialStock(
+    //                 $inventoryId,
+    //                 $input['location_id'],
+    //                 $input['quantity']
+    //             );
+
+    //             header('Location: ' . URLROOT . '/inventory');
+    //             exit;
+    //         }
+
+    //         $_SESSION['error'] = "Insert failed";
+    //         $_SESSION['old'] = $_POST;
+
+    //         header('Location: ' . URLROOT . '/inventory/create');
+    //         exit;
+    //     }
+
+    //     $this->view('inventory/create', $viewData);
+    // }
+
+
+
     public function create()
-    {
-        AuthHelper::can('inventory.create');
+{
+    AuthHelper::can('inventory.create');
 
-        $inventoryModel = $this->model('Inventory');
-        $inventoryStockModel = $this->model('InventoryLocationStock');
-        $brandModel = $this->model('Brand');
-        $countryModel = $this->model('Country');
-        $locationModel = $this->model('InventoryLocation');
+    $inventoryModel = $this->model('Inventory');
+    $brandModel = $this->model('Brand');
+    $countryModel = $this->model('Country');
 
-        // ALWAYS LOAD VIEW DATA
-        $viewData = [
-            'brands' => $brandModel->getAll(),
-            'countries' => $countryModel->getAll(),
-            'locations' => $locationModel->getAll(),
-            'default_location_id' => 1
+    $viewData = [
+        'brands' => $brandModel->getAll(),
+        'countries' => $countryModel->getAll()
+    ];
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        $input = [
+            'name'         => trim($_POST['name'] ?? ''),
+            'sku'          => trim($_POST['sku'] ?? ''),
+            'category'     => $_POST['category'] ?? null,
+
+            'brand_id'     => !empty($_POST['brand_id'])
+                ? (int)$_POST['brand_id']
+                : null,
+
+            'country_id'   => !empty($_POST['country_id'])
+                ? (int)$_POST['country_id']
+                : null,
+
+            'min_stock'    => (int)($_POST['min_stock'] ?? 10),
+
+            'cost_price'   => (float)($_POST['cost_price'] ?? 0),
+
+            'base_unit'    => $_POST['base_unit'] ?? 'unit',
+
+            'allow_fraction' =>
+                !empty($_POST['allow_fraction']) ? 1 : 0,
+
+            'sale_unit' =>
+                !empty($_POST['sale_unit'])
+                    ? $_POST['sale_unit']
+                    : null,
+
+            'units_per_sale' =>
+                (int)($_POST['units_per_sale'] ?? 1),
+
+            'price_per_base' =>
+                (float)($_POST['price_per_base'] ?? 0),
+
+            'price_per_sale' =>
+                (float)($_POST['price_per_sale'] ?? 0)
         ];
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($input['name'] === '' || $input['sku'] === '') {
 
-            // =========================
-            // REQUIRED VALIDATION FIRST
-            // =========================
-            if (!isset($_POST['location_id']) || empty($_POST['location_id'])) {
-                $_SESSION['error'] = "Storage location is required";
-                $_SESSION['old'] = $_POST;
-
-                header('Location: ' . URLROOT . '/inventory/create');
-                exit;
-            }
-
-            // =========================
-            // COLLECT INPUT
-            // =========================
-            $input = [
-                'name'         => trim($_POST['name'] ?? ''),
-                'sku'          => trim($_POST['sku'] ?? ''),
-                'category'     => $_POST['category'] ?? null,
-
-                'brand_id'     => !empty($_POST['brand_id']) ? (int)$_POST['brand_id'] : null,
-                'country_id'   => !empty($_POST['country_id']) ? (int)$_POST['country_id'] : null,
-
-                'location_id'  => (int)$_POST['location_id'],
-
-                'quantity'     => (float)($_POST['quantity'] ?? 0),
-                'min_stock'    => (int)($_POST['min_stock'] ?? 10),
-
-                'cost_price'   => (float)($_POST['cost_price'] ?? 0),
-            ];
-
-            // =========================
-            // BASIC VALIDATION
-            // =========================
-            if ($input['name'] === '' || $input['sku'] === '') {
-                $_SESSION['error'] = "Name and SKU are required";
-                $_SESSION['old'] = $_POST;
-
-                header('Location: ' . URLROOT . '/inventory/create');
-                exit;
-            }
-
-            if ($input['quantity'] < 0) {
-                $_SESSION['error'] = "Invalid quantity";
-                $_SESSION['old'] = $_POST;
-
-                header('Location: ' . URLROOT . '/inventory/create');
-                exit;
-            }
-
-            // =========================
-            // SAVE
-            // =========================
-            $inventoryId = $inventoryModel->create($input);
-
-            if ($inventoryId) {
-
-                $inventoryStockModel->createInitialStock(
-                    $inventoryId,
-                    $input['location_id'],
-                    $input['quantity']
-                );
-
-                header('Location: ' . URLROOT . '/inventory');
-                exit;
-            }
-
-            $_SESSION['error'] = "Insert failed";
+            $_SESSION['error'] = "Name and SKU are required";
             $_SESSION['old'] = $_POST;
 
-            header('Location: ' . URLROOT . '/inventory/create');
+            header(
+                'Location: ' .
+                URLROOT .
+                '/inventory/create'
+            );
+
             exit;
         }
 
-        $this->view('inventory/create', $viewData);
+        $inventoryId = $inventoryModel->create($input);
+
+        if ($inventoryId) {
+
+            header(
+                'Location: ' .
+                URLROOT .
+                '/inventory'
+            );
+
+            exit;
+        }
+
+        $_SESSION['error'] = "Insert failed";
+        $_SESSION['old'] = $_POST;
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/inventory/create'
+        );
+
+        exit;
     }
+
+    $this->view(
+        'inventory/create',
+        $viewData
+    );
+}
 
     public function edit($id)
     {
