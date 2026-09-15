@@ -5,15 +5,22 @@
     <?= __('edit_inventory_item') ?> #<?= $inventory->id ?>
 </h2>
 
+
 <form method="POST">
 
-    <input type="hidden"
-           name="id"
-           value="<?= $inventory->id ?>">
+    <input
+        type="hidden"
+        name="id"
+        value="<?= $inventory->id ?>"
+    >
+
+
+    <!-- NAME + SKU -->
 
     <div class="row">
 
         <!-- NAME -->
+
         <div class="col-md-6">
 
             <div class="mb-3">
@@ -22,17 +29,21 @@
                     <?= __('item_name') ?> *
                 </label>
 
-                <input type="text"
-                       name="name"
-                       value="<?= htmlspecialchars($inventory->name ?? '') ?>"
-                       class="form-control"
-                       required>
+                <input
+                    type="text"
+                    name="name"
+                    value="<?= htmlspecialchars($inventory->name ?? '') ?>"
+                    class="form-control"
+                    required
+                >
 
             </div>
 
         </div>
 
+
         <!-- SKU -->
+
         <div class="col-md-6">
 
             <div class="mb-3">
@@ -41,11 +52,13 @@
                     <?= __('sku') ?> *
                 </label>
 
-                <input type="text"
-                       name="sku"
-                       value="<?= htmlspecialchars($inventory->sku ?? '') ?>"
-                       class="form-control"
-                       required>
+                <input
+                    type="text"
+                    name="sku"
+                    value="<?= htmlspecialchars($inventory->sku ?? '') ?>"
+                    class="form-control"
+                    required
+                >
 
             </div>
 
@@ -53,54 +66,71 @@
 
     </div>
 
+
+    <!-- CATEGORY + MIN STOCK -->
+
     <div class="row">
 
         <!-- CATEGORY -->
+
         <div class="col-md-4">
 
-          <div class="mb-3">
+            <div class="mb-3">
 
-    <label class="form-label">
-        <?= __('category') ?>
-    </label>
+                <label class="form-label">
+                    <?= __('category') ?>
+                </label>
 
-    <select name="category" class="form-select">
+                <select
+                    name="category"
+                    class="form-select"
+                >
 
-        <?php
-        $categories = [
-            'CIVIL & STRUCTURAL'   => 'civil_structural',
-            'BUILDING & FINISHING' => 'building_finishing',
-            'PLUMBING & DRAINAGE'  => 'plumbing_drainage',
-            'HVAC'                 => 'hvac',
-            'ELECTRICAL'          => 'electrical',
-            'FIRE FIGHTING & ALARM'=> 'fire_fighting_alarm',
-            'LOW CURRENT'          => 'low_current',
-            'HAND TOOLS'           => 'hand_tools',
-            'EQUIPMENT'            => 'equipment',
-            'SAFETY & PPE'         => 'safety_ppe',
-            'CONSUMABLES'          => 'consumables',
-            'OTHER'                => 'other'
-        ];
+                    <?php
 
-        foreach ($categories as $value => $translationKey):
-        ?>
+                    $categories = [
+                        'CIVIL & STRUCTURAL'    => 'civil_structural',
+                        'BUILDING & FINISHING'  => 'building_finishing',
+                        'PLUMBING & DRAINAGE'   => 'plumbing_drainage',
+                        'HVAC'                  => 'hvac',
+                        'ELECTRICAL'            => 'electrical',
+                        'FIRE FIGHTING & ALARM' => 'fire_fighting_alarm',
+                        'LOW CURRENT'           => 'low_current',
+                        'HAND TOOLS'            => 'hand_tools',
+                        'EQUIPMENT'             => 'equipment',
+                        'SAFETY & PPE'          => 'safety_ppe',
+                        'CONSUMABLES'           => 'consumables',
+                        'OTHER'                 => 'other'
+                    ];
 
-            <option value="<?= htmlspecialchars($value) ?>"
-                <?= ($inventory->category === $value) ? 'selected' : '' ?>>
+                    foreach (
+                        $categories
+                        as $value => $translationKey
+                    ):
+                    ?>
 
-                <?= __($translationKey) ?>
+                        <option
+                            value="<?= htmlspecialchars($value) ?>"
+                            <?= (
+                                $inventory->category === $value
+                            ) ? 'selected' : '' ?>
+                        >
 
-            </option>
+                            <?= __($translationKey) ?>
 
-        <?php endforeach; ?>
+                        </option>
 
-    </select>
+                    <?php endforeach; ?>
 
-</div>
+                </select>
+
+            </div>
 
         </div>
 
+
         <!-- MIN STOCK -->
+
         <div class="col-md-4">
 
             <div class="mb-3">
@@ -109,10 +139,13 @@
                     <?= __('min_stock') ?>
                 </label>
 
-                <input type="number"
-                       name="min_stock"
-                       value="<?= $inventory->min_stock ?? 10 ?>"
-                       class="form-control">
+                <input
+                    type="number"
+                    name="min_stock"
+                    value="<?= $inventory->min_stock ?? 10 ?>"
+                    class="form-control"
+                    min="0"
+                >
 
             </div>
 
@@ -120,20 +153,28 @@
 
     </div>
 
-    <!-- UNIT PRICE -->
+
+    <!-- COST PRICE -->
+
     <div class="mb-3">
 
         <label class="form-label">
             <?= __('cost_price') ?>
         </label>
 
-        <input type="number"
-               step="0.01"
-               name="cost_price"
-               value="<?= htmlspecialchars($inventory->cost_price ?? '') ?>"
-               class="form-control">
+        <input
+            type="number"
+            step="0.01"
+            min="0"
+            name="cost_price"
+            value="<?= htmlspecialchars($inventory->cost_price ?? '') ?>"
+            class="form-control"
+        >
 
     </div>
+
+
+    <!-- PRICE PER BASE UNIT -->
 
     <div class="mb-3">
 
@@ -141,13 +182,19 @@
             <?= __('price_per_base_unit') ?>
         </label>
 
-        <input type="number"
-               step="0.01"
-               name="price_per_base"
-               value="<?= htmlspecialchars($inventory->price_per_base ?? '') ?>"
-               class="form-control">
+        <input
+            type="number"
+            step="0.01"
+            min="0"
+            name="price_per_base"
+            value="<?= htmlspecialchars($inventory->price_per_base ?? '') ?>"
+            class="form-control"
+        >
 
     </div>
+
+
+    <!-- PRICE PER SALE UNIT -->
 
     <div class="mb-3">
 
@@ -155,23 +202,36 @@
             <?= __('price_per_sale_unit') ?>
         </label>
 
-        <input type="number"
-               step="0.01"
-               name="price_per_sale"
-               value="<?= htmlspecialchars($inventory->price_per_sale ?? '') ?>"
-               class="form-control">
+        <input
+            type="number"
+            step="0.01"
+            min="0"
+            name="price_per_sale"
+            value="<?= htmlspecialchars($inventory->price_per_sale ?? '') ?>"
+            class="form-control"
+        >
 
     </div>
 
-    <button type="submit" class="btn btn-success">
+
+    <!-- ACTIONS -->
+
+    <button
+        type="submit"
+        class="btn btn-success"
+    >
 
         <i class="fas fa-save"></i>
+
         <?= __('update_item') ?>
 
     </button>
 
-    <a href="<?= URLROOT ?>/inventory"
-       class="btn btn-secondary">
+
+    <a
+        href="<?= URLROOT ?>/inventory"
+        class="btn btn-secondary"
+    >
 
         <?= __('cancel') ?>
 
@@ -179,19 +239,26 @@
 
 </form>
 
+
 <?php else: ?>
+
 
 <div class="alert alert-danger">
 
-    <h4><?= __('item_not_found') ?></h4>
+    <h4>
+        <?= __('item_not_found') ?>
+    </h4>
 
-    <a href="<?= URLROOT ?>/inventory"
-       class="btn btn-primary">
+    <a
+        href="<?= URLROOT ?>/inventory"
+        class="btn btn-primary"
+    >
 
         <?= __('back_to_inventory') ?>
 
     </a>
 
 </div>
+
 
 <?php endif; ?>
