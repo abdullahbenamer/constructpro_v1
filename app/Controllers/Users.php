@@ -1,105 +1,163 @@
 <?php
+
 class Users extends Controller
 {
-
     public function index()
     {
-        AuthHelper::can('users.view'); // ✅ permission check
+        AuthHelper::can('users.view');
 
         $userModel = $this->model('User');
+
         $data['users'] = $userModel->getAllUsers();
 
-        $this->view('users/index', $data);
+        $this->view('admin/users/index', $data);
     }
 
     public function create()
-    {
-        AuthHelper::can('users.create');
+{
+    AuthHelper::can('users.create');
 
-        $userModel = $this->model('User');
-        $roleModel = $this->model('Role');
-        $locationModel = $this->model('InventoryLocationStock');
+    $userModel = $this->model('User');
+    $roleModel = $this->model('Role');
 
-        if ($_POST) {
-  if (empty(trim($_POST['full_name']))) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        if (empty(trim($_POST['full_name'] ?? ''))) {
             die('Full Name is required');
-            
-            $locations = $_POST['locations'] ?? [];
-            $default   = $_POST['default_location_id'] ?? null;
-
-            if ($default && !in_array($default, $locations)) {
-                die("Default warehouse must be one of the allowed warehouses");
-            }
-
-            $user_id = $userModel->createUser($_POST);
-
-            $userModel->saveLocations($user_id, $locations);
-
-            header('Location: ' . URLROOT . '/users');
-            exit;
         }
 
-        $data['roles'] = $roleModel->getAll();
-        $data['locations'] = $locationModel->getLocations();
+        if (empty(trim($_POST['user_name'] ?? ''))) {
+            die('User Name is required');
+        }
 
-        $this->view('users/create', $data);
-    }
-    }
-    public function edit($id)
-    {
-        AuthHelper::can('users.edit');
+        if (empty(trim($_POST['email'] ?? ''))) {
+            die('Email is required');
+        }
 
-        $userModel = $this->model('User');
+        if (empty($_POST['password'] ?? '')) {
+            die('Password is required');
+        }
 
-        if ($_POST) {
+        $photo = null;
 
-            if (!empty($_POST['password'])) {
+        if (!empty($_FILES['photo']['name'])) {
 
-                $_POST['password'] =
-                    password_hash(
-                        $_POST['password'],
-                        PASSWORD_DEFAULT
-                    );
-            } else {
-                unset($_POST['password']);
+            $uploadDir = 'uploads/users/';
+
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
             }
 
-            $userModel->update($id, $_POST);
-
-            $locations = $_POST['locations'] ?? [];
-
-            $default = $_POST['default_location_id'] ?? null;
-
-            if ($default && !in_array($default, $locations)) {
-
-                die("Default warehouse must be one of the allowed warehouses");
-            }
-
-            $userModel->saveLocations(
-                $id,
-                $_POST['locations'] ?? []
+            $extension = strtolower(
+                pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION)
             );
 
-            header('Location: ' . URLROOT . '/users');
-            exit;
+            $allowed = ['jpg', 'jpeg', 'png', 'webp'];
+
+            if (!in_array($extension, $allowed, true)) {
+                die('Invalid photo format');
+            }
+
+            $filename = uniqid('user_', true) . '.' . $extension;
+
+            if (!move_uploaded_file(
+                $_FILES['photo']['tmp_name'],
+                $uploadDir . $filename
+            )) {
+                die('Unable to upload photo');
+            }
+
+            $photo = $uploadDir . $filename;
         }
 
-        $item = $userModel->getById($id);
+        $_POST['photo'] = $photo;
 
-        if (!$item) {
-            header('Location: ' . URLROOT . '/users');
-            exit;
-        }
+        $userModel->createUser($_POST);
 
-        $locationModel =
-            $this->model('InventoryLocationStock');
-
-        $data['user'] = $item;
-        $data['locations'] = $locationModel->getLocations();
-        $data['assigned_locations'] = $userModel->getLocationIds($id);
-
-        $this->view('users/edit', $data);
+        header('Location: ' . URLROOT . '/users');
+        exit;
     }
+
+    $data['roles'] = $roleModel->getAll();
+
+    $this->view('admin/users/create', $data);
+}
+
+
+public function edit($id)
+{
+    AuthHelper::can('users.edit');
+
+    $userModel = $this->model('User');
+    $roleModel = $this->model('Role');
+
+    $user = $userModel->getById($id);
+
+    if (!$user) {
+        header('Location: ' . URLROOT . '/users');
+        exit;
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        $updateData = [
+            'full_name' => trim($_POST['full_name'] ?? ''),
+            'user_name' => trim($_POST['user_name'] ?? ''),
+            'email'     => trim($_POST['email'] ?? ''),
+            'mobile'    => trim($_POST['mobile'] ?? ''),
+            'role_id'   => $_POST['role_id'] ?? $user->role_id,
+            'photo'     => $user->photo
+        ];
+
+        if (!empty($_POST['password'])) {
+
+            $updateData['password'] = password_hash(
+                $_POST['password'],
+                PASSWORD_DEFAULT
+            );
+        }
+
+        if (!empty($_FILES['photo']['name'])) {
+
+            $uploadDir = 'uploads/users/';
+
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+            }
+
+            $extension = strtolower(
+                pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION)
+            );
+
+            $allowed = ['jpg', 'jpeg', 'png', 'webp'];
+
+            if (!in_array($extension, $allowed, true)) {
+                die('Invalid photo format');
+            }
+
+            $filename = uniqid('user_', true) . '.' . $extension;
+
+            if (!move_uploaded_file(
+                $_FILES['photo']['tmp_name'],
+                $uploadDir . $filename
+            )) {
+                die('Unable to upload photo');
+            }
+
+            $updateData['photo'] = $uploadDir . $filename;
+        }
+
+        $userModel->update($id, $updateData);
+
+        header('Location: ' . URLROOT . '/users');
+        exit;
+    }
+
+    $data['user']  = $user;
+    $data['roles'] = $roleModel->getAll();
+
+    $this->view('admin/users/edit', $data);
+}
 
     public function delete($id)
     {
@@ -110,39 +168,24 @@ class Users extends Controller
         $user = $userModel->getById($id);
 
         if (!$user) {
-
             header('Location: ' . URLROOT . '/users');
             exit;
         }
 
-        // =====================================
-        // PREVENT SELF DELETE
-        // =====================================
-
         if ($user->id == $_SESSION['user_id']) {
-
-            die("❌ You cannot delete your own account");
+            die('You cannot delete your own account');
         }
 
-        $role_name = $userModel->getRoleName($user->role_id);
+        $roleName = $userModel->getRoleName($user->role_id);
 
-        // =====================================
-        // PREVENT DELETING LAST ADMIN
-        // =====================================
+        if ($roleName === 'ADMIN') {
 
-        if ($role_name === 'ADMIN') {
+            $adminCount = $userModel->countAdmins();
 
-            $admin_count = $userModel->countAdmins();
-
-            if ($admin_count <= 1) {
-
-                die("❌ Cannot delete the last admin account");
+            if ($adminCount <= 1) {
+                die('Cannot delete the last admin account');
             }
         }
-
-        // =====================================
-        // DELETE USER
-        // =====================================
 
         $userModel->delete($id);
 
@@ -150,43 +193,23 @@ class Users extends Controller
         exit;
     }
 
-    public function profile($id)
+    public function details($id)
     {
         AuthHelper::can('users.view');
 
         $userModel = $this->model('User');
 
-        $user = $userModel->getById($id);
+        $user = $userModel->getUserById((int)$id);
 
         if (!$user) {
-
             header('Location: ' . URLROOT . '/users');
             exit;
         }
 
-        $data['user'] = $user;
+        $data = [
+            'user' => $user
+        ];
 
-        $this->view('users/profile', $data);
+        $this->view('users/details', $data);
     }
-
-   public function details($id)
-{
-    AuthHelper::can('users.view');
-
-    $userModel = $this->model('User');
-
-    $user = $userModel->getUserById((int)$id);
-
-    if (!$user) {
-        header("Location: " . URLROOT . "/users");
-        exit;
-    }
-
-    $data = [
-        'user' => $user
-    ];
-
-    $this->view('users/details', $data);
 }
-}
-

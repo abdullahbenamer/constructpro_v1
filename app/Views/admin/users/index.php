@@ -1,78 +1,78 @@
 <h3><?= __('users') ?></h3>
 
-
-<a
-    href="<?= URLROOT ?>/admin/createUser"
-    class="btn btn-primary mb-2">
+<a href="<?= URLROOT ?>/admin/createUser"
+   class="btn btn-primary mb-3">
 
     <?= __('add_user') ?>
 
 </a>
 
+<div class="table-responsive">
 
-<table class="table table-bordered">
+    <table class="table table-bordered table-hover align-middle">
 
-    <tr>
+        <thead>
+            <tr>
+                <th><?= __('full_name') ?></th>
+                <th><?= __('user_name') ?></th>
+                <th><?= __('email') ?></th>
+                <th><?= __('mobile') ?></th>
+                <th><?= __('role') ?></th>
+                <th><?= __('actions') ?></th>
+            </tr>
+        </thead>
 
-        <th><?= __('full_name') ?></th>
+        <tbody>
 
-        <th><?= __('email') ?></th>
+        <?php foreach ($users as $user): ?>
 
-        <th><?= __('role') ?></th>
+            <tr>
 
-        <th><?= __('actions') ?></th>
+                <td>
+                    <?= htmlspecialchars($user->full_name) ?>
+                </td>
 
-    </tr>
+                <td>
+                    <?= htmlspecialchars($user->user_name) ?>
+                </td>
 
+                <td>
+                    <?= htmlspecialchars($user->email) ?>
+                </td>
 
-    <?php foreach ($users as $user) : ?>
+                <td>
+                    <?= htmlspecialchars($user->mobile) ?>
+                </td>
 
-        <tr>
+                <td>
+                    <?= htmlspecialchars($user->role_name ?? '-') ?>
+                </td>
 
-            <td>
-                <?= $user->full_name ?>
-            </td>
+                <td>
 
-            <td>
-                <?= $user->email ?>
-            </td>
-
-            <td>
-                <?= $user->role_name ?>
-            </td>
-            <td>
-                <a
-                    href="<?= URLROOT ?>/admin/editUser/<?= $user->id ?>"
-                    class="btn btn-sm btn-warning">
-
-                    <?= __('edit') ?>
-
-                </a>
-
-                <?php
-                // HIDE DELETE BUTTON for last admin
-                $is_self = ($user->id == $_SESSION['user_id']);
-                $is_admin = (strtoupper($user->role_name) === 'ADMIN');
-                ?>
-
-                <?php if (!$is_self) : ?>
-
-                    <a
-                        href="<?= URLROOT ?>/users/delete/<?= $user->id ?>"
-                        class="btn btn-sm btn-danger"
-
-                        onclick="return confirm(<?= json_encode(__('delete_user_confirm')) ?>)">
-
-                        <?= __('delete') ?>
-
+                    <a href="<?= URLROOT ?>/admin/editUser/<?= $user->id ?>"
+                       class="btn btn-sm btn-warning">
+                        <?= __('edit') ?>
                     </a>
 
-                <?php endif; ?>
+                    <?php if ($user->id != $_SESSION['user_id']): ?>
 
-            </td>
+                        <a href="<?= URLROOT ?>/users/delete/<?= $user->id ?>"
+                           class="btn btn-sm btn-danger"
+                           onclick="return confirm(<?= json_encode(__('delete_user_confirm')) ?>)">
+                            <?= __('delete') ?>
+                        </a>
 
-        </tr>
+                    <?php endif; ?>
 
-    <?php endforeach; ?>
+                </td>
 
-</table>
+            </tr>
+
+        <?php endforeach; ?>
+
+        </tbody>
+
+    </table>
+
+</div>

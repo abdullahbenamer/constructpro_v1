@@ -6,14 +6,14 @@ return [
     'constructpro_system' => 'نظام ConstructPro',
     'constructpro_system_title' => 'النظام الاحترافي للمشاريع والانشاءات',
     'about_constructpro'     => 'حول النظام',
-    'dashboard'              => 'لوحة التحكم',
+    'dashboard'              => 'لوحة المعلومات الرئيسة',
     'projects'               => 'المشاريع',
     'customers'              => 'العملاء',
     'inventory'              => 'المخزون',
     'procurement'            => 'المشتريات',
     'suppliers'              => 'الموردون',
     'finance'                => 'المالية',
-    'admin_panel'            => 'لوحة الإدارة',
+    'admin_panel'            => 'لوحة ادارة المنظومة',
     'logout'                 => 'تسجيل الخروج',
 
     // RESOURCE REQUISITIONS
@@ -1034,6 +1034,7 @@ return [
     'add_permission'            => 'إضافة صلاحية',
     'edit_permission'           => 'تعديل الصلاحية',
     'delete_permission_confirm' => 'هل تريد حذف الصلاحية؟',
+    'user_name' =>  'أسم المستخدم',
 
     'assign_permissions'        => 'تعيين الصلاحيات',
     'for'                       => 'لـ',
@@ -1067,6 +1068,11 @@ return [
     'users'                                     => 'المستخدمون',
     'add_user'                                  => 'إضافة مستخدم',
     'delete_user_confirm'                      => 'هل تريد حذف هذا المستخدم؟',
+
+    'user_details' => 'تفاصيل المستخدم',
+    'user_information' => 'معلومات المستخدم',
+    'select_role' => 'اختر الدور',
+    'create' => 'إنشاء',
 
     'resources'                  => 'الموارد',
     'new_resource'               => 'مورد جديد',
@@ -1154,5 +1160,9 @@ return [
     'permission_stock_transfers_view' => 'عرض تحويلات المخزون',
     'permission_suppliers_view' => 'عرض الموردين',
     'permission_users_view' => 'عرض المستخدمين',
+
+
+    'about_system_english' => 'عن نظام ConstructPro ERP',
+'about_system_arabic'  => 'عن نظام ConstructPro ERP (العربية)',
 
 ];

@@ -66,8 +66,8 @@ return [
     'optional_remarks'                  => 'Optional Remarks',
     'no_fulfillment_items_found' => 'No fulfillment items found.',
     'delivery_method'    => 'Delivery Method',
-'delivery_warehouse' => 'Delivery Warehouse',
-'select_project'     => 'Select Project (Warehouse)',
+    'delivery_warehouse' => 'Delivery Warehouse',
+    'select_project'     => 'Select Project (Warehouse)',
 
 
     // FINANCE
@@ -1037,6 +1037,7 @@ return [
     'add_permission'           => 'Add Permission',
     'edit_permission'          => 'Edit Permission',
     'delete_permission_confirm' => 'Delete permission?',
+    'user_name' =>  'User Name',
 
     'assign_permissions'       => 'Assign Permissions',
     'for'                      => 'For',
@@ -1071,20 +1072,25 @@ return [
     'add_user'                                  => 'Add User',
     'delete_user_confirm'                      => 'Delete this user?',
 
-    'resources'                  => 'Resources',
-'new_resource'               => 'New Resource',
-'resource_code'              => 'Resource Code',
-'resource_name'              => 'Resource Name',
-'select_unit'                => 'Select Unit',
-'select_category'            => 'Select Category',
+    'user_details' => 'User Details',
+    'user_information' => 'User Information',
+    'select_role' => 'Select Role',
+    'create' => 'Create',
 
-'service'                    => 'Service',
-'save_resource'              => 'Save Resource',
-'edit_resource'              => 'Edit Resource',
-'update_resource'            => 'Update Resource',
-'delete_resource_confirm'    => 'Delete this resource?',
-'no_resources_found'         => 'No resources found.',
-'resource_not_found'         => 'Resource not found.',
+    'resources'                  => 'Resources',
+    'new_resource'               => 'New Resource',
+    'resource_code'              => 'Resource Code',
+    'resource_name'              => 'Resource Name',
+    'select_unit'                => 'Select Unit',
+    'select_category'            => 'Select Category',
+
+    'service'                    => 'Service',
+    'save_resource'              => 'Save Resource',
+    'edit_resource'              => 'Edit Resource',
+    'update_resource'            => 'Update Resource',
+    'delete_resource_confirm'    => 'Delete this resource?',
+    'no_resources_found'         => 'No resources found.',
+    'resource_not_found'         => 'Resource not found.',
 
 
     // Permission Groups
@@ -1160,4 +1166,7 @@ return [
     'permission_suppliers_view' => 'View suppliers',
     'permission_users_view' => 'View users',
 
+
+    'about_system_english' => 'About ConstructPro ERP',
+'about_system_arabic'  => 'About ConstructPro ERP (Arabic)',
 ];

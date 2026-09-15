@@ -85,59 +85,71 @@ class Admin extends Controller
         $this->view('admin/permissions/index', $data);
     }
 
-    // Create User
-    public function createUser()
-    {
-        AuthHelper::can('users.create');
 
-        $userModel     = $this->model('User');
-        $roleModel     = $this->model('Role');
-        $locationModel = $this->model('InventoryLocationStock');
+public function createUser()
+{
+    AuthHelper::can('users.create');
 
-        if ($_POST) {
+    $userModel = $this->model('User');
+    $roleModel = $this->model('Role');
 
-            $locations = $_POST['locations'] ?? [];
-            $default   = $_POST['default_location_id'] ?? null;
+    if ($_POST) {
 
-            if (
-                $default &&
-                !in_array($default, $locations)
-            ) {
-                die('Default warehouse must be one of the assigned warehouses');
+        $photo = null;
+
+        if (!empty($_FILES['photo']['name'])) {
+
+            $uploadDir = 'uploads/users/';
+
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
             }
 
-            $user_id = $userModel->createUser($_POST);
-
-            $userModel->saveLocations(
-                $user_id,
-                $locations
+            $extension = strtolower(
+                pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION)
             );
 
-            header('Location: ' . URLROOT . '/admin/users');
-            exit;
+            $allowed = ['jpg', 'jpeg', 'png', 'webp'];
+
+            if (!in_array($extension, $allowed, true)) {
+                die('Invalid photo format');
+            }
+
+            $filename = uniqid('user_', true) . '.' . $extension;
+
+            if (!move_uploaded_file(
+                $_FILES['photo']['tmp_name'],
+                $uploadDir . $filename
+            )) {
+                die('Unable to upload photo');
+            }
+
+            $photo = $uploadDir . $filename;
         }
 
-        $data['roles'] = $roleModel->getAll();
+        $_POST['photo'] = $photo;
 
-        $data['locations'] =
-            $locationModel->getLocations();
+        $userModel->createUser($_POST);
 
-        $this->view(
-            'admin/users/create',
-            $data
-        );
+        header('Location: ' . URLROOT . '/admin/users');
+        exit;
     }
-  
-    public function editUser($id)
+
+    $data['roles'] = $roleModel->getAll();
+
+    $this->view(
+        'admin/users/create',
+        $data
+    );
+}
+
+
+public function editUser($id)
 {
     AuthHelper::can('users.edit');
 
-    $userModel     = $this->model('User');
-    $roleModel     = $this->model('Role');
-    $locationModel = $this->model('InventoryLocationStock');
-
-    $data['locations'] = $locationModel->getLocations();
-    $data['assigned_locations'] = $userModel->getLocationIds($id);
+    $userModel = $this->model('User');
+    $roleModel = $this->model('Role');
 
     $data['user'] = $userModel->getById($id);
     $data['roles'] = $roleModel->getAll();
@@ -152,58 +164,56 @@ class Admin extends Controller
         exit;
     }
 
-    // =========================
-    // POST HANDLER
-    // =========================
     if ($_POST) {
 
-        $locations =
-            $_POST['locations'] ?? [];
-
-        $default =
-            $_POST['default_location_id'] ?? null;
-
-        if (
-            $default !== null &&
-            !in_array($default, $locations)
-        ) {
-
-            FlashHelper::error(
-                'Default warehouse must be one of the assigned warehouses.'
-            );
-
-            header(
-                'Location: ' . URLROOT . '/admin/editUser/' . $id
-            );
-            exit;
-        }
-
         $updateData = [
-            'name' => $_POST['name'],
-            'email' => $_POST['email'],
-            'role_id' => $_POST['role_id'],
-            'default_location_id' =>
-                $_POST['default_location_id'] ?? null
+            'full_name' => trim($_POST['full_name'] ?? ''),
+            'user_name' => trim($_POST['user_name'] ?? ''),
+            'email'     => trim($_POST['email'] ?? ''),
+            'mobile'    => trim($_POST['mobile'] ?? ''),
+            'role_id'   => $_POST['role_id'],
+            'photo'     => $data['user']->photo
         ];
 
         if (!empty($_POST['password'])) {
 
-            $updateData['password'] =
-                password_hash(
-                    $_POST['password'],
-                    PASSWORD_DEFAULT
-                );
+            $updateData['password'] = password_hash(
+                $_POST['password'],
+                PASSWORD_DEFAULT
+            );
         }
 
-        $userModel->update(
-            $id,
-            $updateData
-        );
+        if (!empty($_FILES['photo']['name'])) {
 
-        $userModel->saveLocations(
-            $id,
-            $locations
-        );
+            $uploadDir = 'uploads/users/';
+
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+            }
+
+            $extension = strtolower(
+                pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION)
+            );
+
+            $allowed = ['jpg', 'jpeg', 'png', 'webp'];
+
+            if (!in_array($extension, $allowed, true)) {
+                die('Invalid photo format');
+            }
+
+            $filename = uniqid('user_', true) . '.' . $extension;
+
+            if (!move_uploaded_file(
+                $_FILES['photo']['tmp_name'],
+                $uploadDir . $filename
+            )) {
+                die('Unable to upload photo');
+            }
+
+            $updateData['photo'] = $uploadDir . $filename;
+        }
+
+        $userModel->update($id, $updateData);
 
         FlashHelper::success(
             'User updated successfully.'
@@ -219,7 +229,7 @@ class Admin extends Controller
         'admin/users/edit',
         $data
     );
-}
+}  
 
  public function assignPermissions($role_id)
 {

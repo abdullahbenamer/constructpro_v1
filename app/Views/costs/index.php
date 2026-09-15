@@ -76,8 +76,8 @@
                             <td>
 
                                 Prj-<?= htmlspecialchars(
-                                    $cost->project_id
-                                ) ?>
+                                        $cost->project_id
+                                    ) ?>
 
                                 <a
                                     class="btn btn-sm btn-info"
@@ -103,19 +103,24 @@
 
                             </td>
 
-
                             <td>
 
                                 <?php
 
                                 $costTypeLabels = [
-                                    'materials'     => __('materials'),
-                                    'labor'         => __('labor'),
-                                    'transport'     => __('transport'),
-                                    'subcontract'   => __('subcontract'),
-                                    'miscellaneous' => __('miscellaneous')
+                                    'MATERIALS'              => __('materials'),
+                                    'HUMAN_RESOURCES'        => __('human_resources'),
+                                    'TRANSPORT'              => __('transport'),
+                                    'EQUIPMENT'              => __('equipment'),
+                                    'SUBCONTRACT'            => __('subcontract'),
+                                    'SITE_EXPENSES'          => __('site_expenses'),
+                                    'PROFESSIONAL_SERVICES'  => __('professional_services'),
+                                    'PERMITS_FEES'           => __('permits_fees'),
+                                    'INSURANCE'              => __('insurance'),
+                                    'BANK_CHARGES'           => __('bank_charges'),
+                                    'TAXES'                  => __('taxes'),
+                                    'MISCELLANEOUS'          => __('miscellaneous')
                                 ];
-
                                 ?>
 
                                 <span class="badge bg-info">
@@ -148,9 +153,9 @@
                             <td>
 
                                 $<?= number_format(
-                                    $cost->unit_price,
-                                    2
-                                ) ?>
+                                        $cost->unit_price,
+                                        2
+                                    ) ?>
 
                             </td>
 
@@ -160,10 +165,10 @@
                                 <strong>
 
                                     $<?= number_format(
-                                        $cost->quantity *
-                                        $cost->unit_price,
-                                        2
-                                    ) ?>
+                                            $cost->quantity *
+                                                $cost->unit_price,
+                                            2
+                                        ) ?>
 
                                 </strong>
 

@@ -1,140 +1,105 @@
 <h3><?= __('edit_user') ?></h3>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
 
-    <div class="mb-2">
+    <div class="row g-3">
 
-        <label><?= __('name') ?></label>
-
-        <input
-            type="text"
-            name="name"
-            class="form-control"
-            value="<?= htmlspecialchars($user->name) ?>"
-            required>
-
-    </div>
-
-
-    <div class="mb-2">
-
-        <label><?= __('email') ?></label>
-
-        <input
-            type="email"
-            name="email"
-            class="form-control"
-            value="<?= htmlspecialchars($user->email) ?>"
-            required>
-
-    </div>
-
-
-    <div class="mb-2">
-
-        <label>
-            <?= __('password_leave_blank_to_keep_current') ?>
-        </label>
-
-        <input
-            type="password"
-            name="password"
-            class="form-control">
-
-    </div>
-
-
-    <div class="mb-2">
-
-        <label><?= __('role') ?></label>
-
-        <select
-            name="role_id"
-            class="form-control">
-
-            <?php foreach ($roles as $role): ?>
-
-                <option
-                    value="<?= $role->id ?>"
-                    <?= $user->role_id == $role->id
-                        ? 'selected'
-                        : '' ?>>
-
-                    <?= $role->name ?>
-
-                </option>
-
-            <?php endforeach; ?>
-
-        </select>
-
-    </div>
-
-
-    <h5><?= __('warehouse_access') ?></h5>
-
-
-    <?php foreach ($locations as $loc): ?>
-
-        <div class="form-check">
-
-            <input
-                class="form-check-input"
-                type="checkbox"
-                name="locations[]"
-                value="<?= $loc->id ?>"
-
-                <?= in_array(
-                    $loc->id,
-                    $assigned_locations
-                )
-                    ? 'checked'
-                    : '' ?>>
-
-            <label class="form-check-label">
-
-                <?= htmlspecialchars($loc->name) ?>
-
-            </label>
-
+        <div class="col-md-6">
+            <label class="form-label"><?= __('full_name') ?></label>
+            <input type="text"
+                   name="full_name"
+                   class="form-control"
+                   value="<?= htmlspecialchars($user->full_name) ?>"
+                   required>
         </div>
 
-    <?php endforeach; ?>
+        <div class="col-md-6">
+            <label class="form-label"><?= __('user_name') ?></label>
+            <input type="text"
+                   name="user_name"
+                   class="form-control"
+                   value="<?= htmlspecialchars($user->user_name) ?>"
+                   required>
+        </div>
 
+        <div class="col-md-6">
+            <label class="form-label"><?= __('email') ?></label>
+            <input type="email"
+                   name="email"
+                   class="form-control"
+                   value="<?= htmlspecialchars($user->email) ?>"
+                   required>
+        </div>
 
-    <!-- Default warehouse -->
+        <div class="col-md-6">
+            <label class="form-label"><?= __('mobile') ?></label>
+            <input type="text"
+                   name="mobile"
+                   class="form-control"
+                   value="<?= htmlspecialchars($user->mobile) ?>"
+                   required>
+        </div>
 
-    <div class="mb-3">
+        <div class="col-md-6">
+            <label class="form-label">
+                <?= __('password_leave_blank_to_keep_current') ?>
+            </label>
 
-        <label><?= __('default_warehouse') ?></label>
+            <input type="password"
+                   name="password"
+                   class="form-control">
+        </div>
 
-        <select
-            name="default_location_id"
-            class="form-control">
+        <div class="col-md-6">
+            <label class="form-label"><?= __('role') ?></label>
 
-            <?php foreach ($locations as $loc): ?>
+            <select name="role_id"
+                    class="form-select"
+                    required>
 
-                <option
-                    value="<?= $loc->id ?>"
-                    <?= $user->default_location_id == $loc->id
-                        ? 'selected'
-                        : '' ?>>
+                <?php foreach ($roles as $role): ?>
 
-                    <?= htmlspecialchars($loc->name) ?>
+                    <option value="<?= $role->id ?>"
+                        <?= $user->role_id == $role->id ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($role->name) ?>
+                    </option>
 
-                </option>
+                <?php endforeach; ?>
 
-            <?php endforeach; ?>
+            </select>
+        </div>
 
-        </select>
+        <div class="col-md-6">
+            <label class="form-label"><?= __('photo') ?></label>
+
+            <?php if (!empty($user->photo)): ?>
+                <div class="mb-2">
+                    <img src="<?= URLROOT . '/' . htmlspecialchars($user->photo) ?>"
+                         alt="<?= __('photo') ?>"
+                         style="width:80px;height:80px;object-fit:cover;border-radius:50%;">
+                </div>
+            <?php endif; ?>
+
+            <input type="file"
+                   name="photo"
+                   class="form-control"
+                   accept=".jpg,.jpeg,.png,.webp">
+        </div>
 
     </div>
 
+    <div class="mt-4">
 
-    <button class="btn btn-success">
+        <button type="submit"
+                class="btn btn-success">
+            <?= __('update_user') ?>
+        </button>
 
-        <?= __('update_user') ?>
+        <a href="<?= URLROOT ?>/admin/users"
+           class="btn btn-secondary">
+            <?= __('cancel') ?>
+        </a>
 
-    </button>
+    </div>
 
 </form>

@@ -1,58 +1,113 @@
-<h2>
-    <?= __('employee_details') ?>
-</h2>
+<h3><?= __('user_details') ?></h3>
 
-<div class="card">
+<div class="row g-4">
 
-    <div class="card-body">
+    <div class="col-md-4 text-center">
 
-        <h4>
-            <?= htmlspecialchars($data['user']->full_name) ?>
+        <?php if (!empty($user->photo)): ?>
+
+            <img src="<?= URLROOT . '/' . htmlspecialchars($user->photo) ?>"
+                 alt="<?= __('photo') ?>"
+                 class="img-thumbnail rounded-circle"
+                 style="width:160px;height:160px;object-fit:cover;">
+
+        <?php else: ?>
+
+            <div class="border rounded-circle d-flex align-items-center justify-content-center mx-auto"
+                 style="width:160px;height:160px;">
+                <i class="bi bi-person fs-1 text-muted"></i>
+            </div>
+
+        <?php endif; ?>
+
+        <h4 class="mt-3">
+            <?= htmlspecialchars($user->full_name) ?>
         </h4>
 
-        <p>
+        <div class="text-muted">
+            <?= htmlspecialchars($user->role_name ?? '-') ?>
+        </div>
 
-            <strong><?= __('email') ?>:</strong>
+    </div>
 
-            <?= htmlspecialchars($data['user']->email) ?>
+    <div class="col-md-8">
 
-        </p>
+        <div class="card">
+            <div class="card-header">
+                <?= __('user_information') ?>
+            </div>
 
+            <div class="card-body">
 
-        <p>
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">
+                        <?= __('full_name') ?>
+                    </div>
+                    <div class="col-md-8">
+                        <?= htmlspecialchars($user->full_name) ?>
+                    </div>
+                </div>
 
-            <strong><?= __('mobile') ?>:</strong>
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">
+                        <?= __('user_name') ?>
+                    </div>
+                    <div class="col-md-8">
+                        <?= htmlspecialchars($user->user_name) ?>
+                    </div>
+                </div>
 
-            <?= htmlspecialchars($data['user']->mobile) ?>
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">
+                        <?= __('email') ?>
+                    </div>
+                    <div class="col-md-8">
+                        <?= htmlspecialchars($user->email) ?>
+                    </div>
+                </div>
 
-        </p>
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">
+                        <?= __('mobile') ?>
+                    </div>
+                    <div class="col-md-8">
+                        <?= htmlspecialchars($user->mobile) ?>
+                    </div>
+                </div>
 
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">
+                        <?= __('role') ?>
+                    </div>
+                    <div class="col-md-8">
+                        <?= htmlspecialchars($user->role_name ?? '-') ?>
+                    </div>
+                </div>
 
-        <p>
+                <div class="row">
+                    <div class="col-md-4 fw-bold">
+                        <?= __('created_at') ?>
+                    </div>
+                    <div class="col-md-8">
+                        <?= htmlspecialchars($user->created_at) ?>
+                    </div>
+                </div>
 
-            <strong><?= __('role') ?>:</strong>
-
-            <?= htmlspecialchars($data['user']->role_name ?? '-') ?>
-
-        </p>
-
-
-        <p>
-
-            <strong><?= __('status') ?>:</strong>
-
-            <?= htmlspecialchars($data['user']->status ?? 'Active') ?>
-
-        </p>
+            </div>
+        </div>
 
     </div>
 
 </div>
 
+<div class="mt-4">
+    <a href="<?= URLROOT ?>/admin/editUser/<?= $user->id ?>"
+       class="btn btn-warning">
+        <?= __('edit') ?>
+    </a>
 
-<a href="<?= URLROOT ?>/users"
-   class="btn btn-secondary mt-3">
-
-    <?= __('back') ?>
-
-</a>
+    <a href="<?= URLROOT ?>/admin/users"
+       class="btn btn-secondary">
+        <?= __('back') ?>
+    </a>
+</div>

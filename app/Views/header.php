@@ -85,19 +85,19 @@ $direction = Language::direction();
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
         rel="stylesheet"> -->
 
-<?php if ($current_language === 'ar'): ?>
+    <?php if ($current_language === 'ar'): ?>
 
-<link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css"
-    rel="stylesheet">
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css"
+            rel="stylesheet">
 
-<?php else: ?>
+    <?php else: ?>
 
-<link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    rel="stylesheet">
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet">
 
-<?php endif; ?>
+    <?php endif; ?>
 
 
     <!-- Select2 -->
@@ -1292,37 +1292,39 @@ $direction = Language::direction();
                                     </li>
 
                                 <?php endif; ?>
-
-
                             </ul>
-
                         </li>
-
                     <?php endif; ?>
-                    
-                    <hr style="color: #ffffff; margin: 10px 0;">
 
-                    <li> <a class="nav-link <?= App::$current_url == 'about' ? 'active' : '' ?>" href="#">
-                            <i class="fas fa-info-circle"></i> <?= __('about_constructpro') ?></a></li>
-
-                    <!-- =================================================
-                     USER AREA
-                ================================================== -->
+                     <hr style="color: #ffffff; margin: 1px 0;">
+                                      <!-- ========== USER AREA ========= -->
 
                     <div class="sidebar-user">
-
 
                         <?php if (isset($_SESSION['user_name'])) : ?>
 
                             <li class="nav-item">
 
-                                <span class="nav-link text-light">
+                                <span class="nav-link text-light d-flex align-items-center">
 
-                                    <i class="fas fa-user-circle"></i>
+                                    <?php if (!empty($_SESSION['user_photo'])) : ?>
 
-                                    <?= $_SESSION['user_name'] ?>
+                                        <img
+                                            src="<?= URLROOT . '/' . htmlspecialchars($_SESSION['user_photo']) ?>"
+                                            alt="<?= __('photo') ?>"
+                                            class="rounded-circle me-2"
+                                            style="width:45px;height:45px;object-fit:cover;">
 
-                                    (<?= $role_name ?>)
+                                    <?php else : ?>
+
+                                        <i class="fas fa-user-circle me-2"></i>
+
+                                    <?php endif; ?>
+
+                                    <span>
+                                        <?= htmlspecialchars($_SESSION['user_name']) ?>
+                                        (<?= htmlspecialchars($role_name) ?>)
+                                    </span>
 
                                 </span>
 
@@ -1372,10 +1374,21 @@ $direction = Language::direction();
 
                         <?php endif; ?>
 
-
                     </div>
 
-
+ <!-- About -->
+                    <?php
+                    $aboutPdf = Language::get() === 'ar'
+                        ? 'constructpro_erp_about_the_system_arabic.pdf'
+                        : 'constructpro_erp_about_the_system_english.pdf';
+                    $pdfUrl = URLROOT . '/about/' . $aboutPdf;
+                    ?>
+                   <li><a class="nav-link" href="<?= htmlspecialchars($pdfUrl) ?>"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onclick="event.stopPropagation();">
+                         <i class="fas fa-info-circle"></i> <?= __('about_constructpro')  ?>
+                    </a></li> 
                 </ul>
 
 

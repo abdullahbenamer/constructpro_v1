@@ -14,20 +14,22 @@
 <form method="POST">
 
     <input type="hidden"
-           name="project_id"
-           value="<?= $project_id ?>">
+        name="project_id"
+        value="<?= $project_id ?>">
 
     <input type="hidden"
-           name="cost_type"
-           value="<?= $cost->cost_type ?>">
+        name="cost_type"
+        value="<?= $cost->cost_type ?>">
 
     <!-- <input type="hidden"
            name="inventory_id"
-           value="<?//= $cost->inventory_id ?>">
+           value="<? //= $cost->inventory_id 
+                    ?>">
 
     <input type="hidden"
            name="location_id"
-           value="<?//= $cost->location_id ?>"> -->
+           value="<? //= $cost->location_id 
+                    ?>"> -->
 
     <div class="row">
 
@@ -38,9 +40,30 @@
                 <?= __('cost_type') ?>
             </label>
 
-            <span class="badge bg-primary">
-                <?= strtoupper($cost->cost_type) ?>
-            </span>
+            <?php
+
+            $costTypeLabels = [
+                'MATERIALS'              => __('materials'),
+                'HUMAN_RESOURCES'        => __('human_resources'),
+                'TRANSPORT'              => __('transport'),
+                'EQUIPMENT'              => __('equipment'),
+                'SUBCONTRACT'            => __('subcontract'),
+                'SITE_EXPENSES'          => __('site_expenses'),
+                'PROFESSIONAL_SERVICES'  => __('professional_services'),
+                'PERMITS_FEES'           => __('permits_fees'),
+                'INSURANCE'              => __('insurance'),
+                'BANK_CHARGES'           => __('bank_charges'),
+                'TAXES'                  => __('taxes'),
+                'MISCELLANEOUS'          => __('miscellaneous')
+            ];
+            ?>
+
+            <span class="badge bg-info">
+
+                <?= htmlspecialchars(
+                    $costTypeLabels[$cost->cost_type]
+                        ?? ucfirst($cost->cost_type)
+                ) ?>
 
         </div>
 
@@ -199,8 +222,8 @@
 
 <!-- JS scripts -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {  
-        
+    document.addEventListener('DOMContentLoaded', function() {
+
         const unitPrice = document.getElementById('unitPrice');
         const priceLabel = document.getElementById('priceLabel');
 

@@ -1,141 +1,94 @@
 <h3><?= __('create_user') ?></h3>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
 
-    <div class="mb-2">
+    <div class="row g-3">
 
-    <label><?= __('full_name') ?></label>
+        <div class="col-md-6">
+            <label class="form-label"><?= __('full_name') ?></label>
+            <input type="text"
+                   name="full_name"
+                   class="form-control"
+                   required>
+        </div>
 
-    <input
-        type="text"
-        name="full_name"
-        class="form-control"
-        required>
+        <div class="col-md-6">
+            <label class="form-label"><?= __('user_name') ?></label>
+            <input type="text"
+                   name="user_name"
+                   class="form-control"
+                   required>
+        </div>
 
-</div>
+        <div class="col-md-6">
+            <label class="form-label"><?= __('email') ?></label>
+            <input type="email"
+                   name="email"
+                   class="form-control"
+                   required>
+        </div>
 
+        <div class="col-md-6">
+            <label class="form-label"><?= __('mobile') ?></label>
+            <input type="text"
+                   name="mobile"
+                   class="form-control"
+                   required>
+        </div>
 
-<div class="mb-2">
+        <div class="col-md-6">
+            <label class="form-label"><?= __('password') ?></label>
+            <input type="password"
+                   name="password"
+                   class="form-control"
+                   required>
+        </div>
 
-    <label><?= __('short_name') ?></label>
+        <div class="col-md-6">
+            <label class="form-label"><?= __('role') ?></label>
 
-    <input
-        type="text"
-        name="name"
-        class="form-control"
-        required>
+            <select name="role_id"
+                    class="form-select"
+                    required>
 
-</div>
+                <option value="">
+                    <?= __('select_role') ?>
+                </option>
 
+                <?php foreach ($roles as $role): ?>
 
-<div class="mb-2">
+                    <option value="<?= $role->id ?>">
+                        <?= htmlspecialchars($role->name) ?>
+                    </option>
 
-    <label><?= __('email') ?></label>
+                <?php endforeach; ?>
 
-    <input
-        type="email"
-        name="email"
-        class="form-control"
-        required>
+            </select>
+        </div>
 
-</div>
+        <div class="col-md-6">
+            <label class="form-label"><?= __('photo') ?></label>
 
-
-<div class="mb-2">
-
-    <label><?= __('password') ?></label>
-
-    <input
-        type="password"
-        name="password"
-        class="form-control"
-        required>
-
-</div>
-
-
-<div class="mb-2">
-
-    <label><?= __('role') ?></label>
-
-    <select
-        name="role_id"
-        class="form-control">
-
-        <?php foreach ($roles as $role): ?>
-
-            <option value="<?= $role->id ?>">
-
-                <?= $role->name ?>
-
-            </option>
-
-        <?php endforeach; ?>
-
-    </select>
-
-</div>
-
-
-<h5><?= __('warehouse_access') ?></h5>
-
-
-<?php foreach ($locations as $loc): ?>
-
-    <div class="form-check">
-
-        <input
-            type="checkbox"
-            class="form-check-input"
-            name="locations[]"
-            value="<?= $loc->id ?>">
-
-        <label class="form-check-label">
-
-            <?= htmlspecialchars($loc->name) ?>
-
-        </label>
+            <input type="file"
+                   name="photo"
+                   class="form-control"
+                   accept=".jpg,.jpeg,.png,.webp">
+        </div>
 
     </div>
 
-<?php endforeach; ?>
+    <div class="mt-4">
 
+        <button type="submit"
+                class="btn btn-success">
+            <?= __('create') ?>
+        </button>
 
-<hr>
+        <a href="<?= URLROOT ?>/admin/users"
+           class="btn btn-secondary">
+            <?= __('cancel') ?>
+        </a>
 
-
-<label><?= __('default_warehouse') ?></label>
-
-
-<select
-    name="default_location_id"
-    class="form-control">
-
-    <option value="">
-
-        <?= __('select_default_warehouse') ?>
-
-    </option>
-
-
-    <?php foreach ($locations as $loc): ?>
-
-        <option value="<?= $loc->id ?>">
-
-            <?= htmlspecialchars($loc->name) ?>
-
-        </option>
-
-    <?php endforeach; ?>
-
-</select>
-
-
-<button class="btn btn-success">
-
-    <?= __('create') ?>
-
-</button>
-
+    </div>
 
 </form>
