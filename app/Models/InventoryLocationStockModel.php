@@ -175,8 +175,8 @@ public function getLocationInventory($location_id)
             i.id,
             i.name,
             i.sku,
-            i.base_unit,
             i.min_stock,
+            u.unit_name,
 
             COALESCE(
                 reservations.reserved_quantity,
@@ -196,6 +196,9 @@ public function getLocationInventory($location_id)
 
         JOIN inventory i
             ON i.id = ils.inventory_id
+
+        LEFT JOIN units u
+    ON u.id = i.unit_id
 
         LEFT JOIN
         (

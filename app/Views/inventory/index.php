@@ -328,10 +328,11 @@ foreach ($stock as $inventory) {
                     <td>
 
                         <span class="badge bg-secondary">
-                            <?= htmlspecialchars($inventory->category) ?>
-                        </span>
+                         <?= __($inventory->category) ?>
+                                                </span>
 
-                    </td>
+                
+                                    </td>
 
                     <td>
 

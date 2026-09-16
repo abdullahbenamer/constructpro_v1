@@ -40,7 +40,7 @@ public function create(array $data)
 
             i.name,
             i.sku,
-            i.base_unit,
+            u.unit_name,
 
             /*
             |----------------------------------------------------------
@@ -65,6 +65,9 @@ public function create(array $data)
 
         INNER JOIN goods_receipt_items grri
             ON grri.id = gri.goods_receipt_item_id
+
+            LEFT JOIN units u
+    ON u.id = i.unit_id
 
         LEFT JOIN inventory_locations grl
             ON grl.id = grri.location_id

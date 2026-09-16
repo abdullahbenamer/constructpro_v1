@@ -188,7 +188,6 @@ public function create($data)
             poi.*,
             i.name,
             i.sku,
-            i.base_unit,
             u.unit_name
 
         FROM purchase_order_items poi
@@ -196,8 +195,8 @@ public function create($data)
         JOIN inventory i
             ON i.id = poi.inventory_id
 
-        LEFT JOIN units u
-            ON u.unit_code = i.base_unit
+      LEFT JOIN units u
+    ON u.id = i.unit_id
 
         WHERE poi.purchase_order_id = ?
 
@@ -289,16 +288,14 @@ public function items($po_id)
 
             i.name,
             i.sku,
-            i.base_unit,
             u.unit_name
 
         FROM purchase_order_items poi
 
         JOIN inventory i
             ON i.id = poi.inventory_id
-
-        LEFT JOIN units u
-            ON u.unit_code = i.base_unit
+LEFT JOIN units u
+    ON u.id = i.unit_id
 
         WHERE poi.purchase_order_id = ?
     ", [$po_id])->fetchAll();
@@ -325,7 +322,6 @@ public function getPOItems($po_id)
             poi.*,
             i.name,
             i.sku,
-            i.base_unit,
             u.unit_name
 
         FROM purchase_order_items poi
@@ -333,8 +329,8 @@ public function getPOItems($po_id)
         INNER JOIN inventory i
             ON i.id = poi.inventory_id
 
-        LEFT JOIN units u
-            ON u.unit_code = i.base_unit
+     LEFT JOIN units u
+    ON u.id = i.unit_id
 
         WHERE poi.purchase_order_id = ?
         AND poi.quantity > poi.received_quantity

@@ -1,4 +1,15 @@
-app\Views\inventory\index.php:
-  306  
-  307:                                 • 1 <?= $inventory->sale_unit ?>
-  308 
+send me sql statement to update unit_id with the id of the base_unit from units database table. and after that create constraint , fk unit_id  reference units(id)
+desc inventory;
+id	int(11)	NO	PRI	NULL	auto_increment
+name	varchar(255)	YES		NULL
+category	varchar(100)	YES		NULL
+sku	varchar(50)	YES	UNI	NULL
+quantity	decimal(12,2)	NO		0.00
+location_id	int(11)	YES	MUL	NULL
+min_stock	int(11)	YES		10
+cost_price	decimal(10,2)	YES		0.00
+base_unit	varchar(20)	YES		unit
+unit_id	int(11)	NO		NULL
+allow_fraction	tinyint(1)	YES		0
+brand_id	int(11)	YES	MUL	NULL
+country_id	int(11)	YES	MUL	NULL

@@ -13,7 +13,7 @@ class PurchaseOrderItemModel extends Model
 
             i.name,
             i.sku,
-            i.base_unit,
+            u.unit_name,
 
             (poi.quantity * poi.unit_cost) as total,
 
@@ -24,6 +24,9 @@ class PurchaseOrderItemModel extends Model
         JOIN inventory i
             ON i.id = poi.inventory_id
 
+            LEFT JOIN units u
+    ON u.id = i.unit_id
+
         WHERE poi.purchase_order_id = ?
 
         ORDER BY poi.id DESC
@@ -31,6 +34,7 @@ class PurchaseOrderItemModel extends Model
             [$po_id]
         )->fetchAll();
     }
+
     public function create($data)
     {
         return $this->db->query(

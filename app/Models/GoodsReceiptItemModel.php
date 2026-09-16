@@ -51,7 +51,7 @@ class GoodsReceiptItemModel extends Model
 
                 i.name,
                 i.sku,
-                i.base_unit,
+                u.unit_name,
 
                 l.code AS location_code,
                 l.name AS location_name
@@ -61,10 +61,13 @@ class GoodsReceiptItemModel extends Model
             INNER JOIN inventory i
                 ON i.id = gri.inventory_id
 
+                       LEFT JOIN units u
+                ON u.id = i.unit_id
+
             LEFT JOIN inventory_locations l
                 ON l.id = gri.location_id
 
-            WHERE gri.goods_receipt_id = ?
+                 WHERE gri.goods_receipt_id = ?
 
             ORDER BY gri.id
 
@@ -90,9 +93,9 @@ class GoodsReceiptItemModel extends Model
                 gr.id AS goods_receipt_id,
                 gr.grn_number,
 
-                i.name,
-                i.sku,
-                i.base_unit,
+             i.name,
+i.sku,
+u.unit_name,
 
                 l.code AS location_code,
                 l.name AS location_name
@@ -104,6 +107,9 @@ class GoodsReceiptItemModel extends Model
 
             INNER JOIN inventory i
                 ON i.id = gri.inventory_id
+
+                LEFT JOIN units u
+    ON u.id = i.unit_id
 
             LEFT JOIN inventory_locations l
                 ON l.id = gri.location_id
