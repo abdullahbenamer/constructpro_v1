@@ -1,0 +1,4 @@
+app\Views\inventory\index.php:
+  306  
+  307:                                 • 1 <?= $inventory->sale_unit ?>
+  308 

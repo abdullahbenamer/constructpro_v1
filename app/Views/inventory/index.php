@@ -4,7 +4,7 @@
 </h2>
 
 <a href="<?= URLROOT ?>/inventory/create"
-   class="btn btn-primary mb-3">
+    class="btn btn-primary mb-3">
 
     <i class="fas fa-plus"></i>
     <?= __('add_item') ?>
@@ -168,7 +168,7 @@ foreach ($stock as $inventory) {
         <div class="d-flex flex-wrap gap-2">
 
             <a href="<?= URLROOT ?>/inventory/create"
-               class="btn btn-primary">
+                class="btn btn-primary">
 
                 <i class="fas fa-plus"></i>
                 <?= __('add_item') ?>
@@ -176,7 +176,7 @@ foreach ($stock as $inventory) {
             </a>
 
             <a href="<?= URLROOT ?>/inventorymovements/receive"
-               class="btn btn-success">
+                class="btn btn-success">
 
                 <i class="fas fa-truck-loading"></i>
                 <?= __('receive_stock_from_po') ?>
@@ -184,7 +184,7 @@ foreach ($stock as $inventory) {
             </a>
 
             <a href="<?= URLROOT ?>/inventorytransfers"
-               class="btn btn-warning">
+                class="btn btn-warning">
 
                 <i class="fas fa-exchange-alt"></i>
                 <?= __('stock_transfers') ?>
@@ -192,7 +192,7 @@ foreach ($stock as $inventory) {
             </a>
 
             <a href="<?= URLROOT ?>/inventoryreservations"
-               class="btn btn-info">
+                class="btn btn-info">
 
                 <i class="fas fa-lock"></i>
                 <?= __('material_reservations') ?>
@@ -200,7 +200,7 @@ foreach ($stock as $inventory) {
             </a>
 
             <a href="<?= URLROOT ?>/purchaseorders"
-               class="btn btn-dark">
+                class="btn btn-dark">
 
                 <i class="fas fa-file-invoice"></i>
                 <?= __('purchase_orders') ?>
@@ -231,9 +231,9 @@ foreach ($stock as $inventory) {
                 <br>
 
                 <input type="text"
-                       id="inventorySearch"
-                       class="form-control"
-                       placeholder="<?= __('search_inventory_placeholder') ?>">
+                    id="inventorySearch"
+                    class="form-control"
+                    placeholder="<?= __('search_inventory_placeholder') ?>">
 
             </div>
 
@@ -246,7 +246,7 @@ foreach ($stock as $inventory) {
 <div class="table-responsive">
 
     <table class="table table-striped"
-           id="inventoryTable">
+        id="inventoryTable">
 
         <thead class="table-dark">
 
@@ -282,219 +282,206 @@ foreach ($stock as $inventory) {
 
         <tbody>
 
-        <?php foreach ($stock as $inventory) : ?>
+            <?php foreach ($stock as $inventory) : ?>
 
-            <tr class="<?= $inventory->quantity < $inventory->min_stock ? 'table-warning' : '' ?>">
+                <tr class="<?= $inventory->quantity < $inventory->min_stock ? 'table-warning' : '' ?>">
 
-                <td>
-                    <?= $inventory->id ?>
-                </td>
+                    <td>
+                        <?= $inventory->id ?>
+                    </td>
 
-                <td>
+                    <td>
 
-                    <strong>
-                        <?= htmlspecialchars($inventory->name) ?>
-                    </strong>
+                        <strong>
+                            <?= htmlspecialchars($inventory->name) ?>
+                        </strong>
 
-                    <br>
+                        <br>
 
-                    <small class="text-muted">
+                        <small class="text-muted">
 
+                        <?= __('uom') ?>:
                         <?= $inventory->base_unit ?>
+                         
+                        </small>
 
-                        <?php if ($inventory->units_per_sale > 1) : ?>
+                    </td>
 
-                            • 1 <?= $inventory->sale_unit ?>
+                    <td>
+                        <code>
+                            <?= htmlspecialchars($inventory->sku) ?>
+                        </code>
+                    </td>
 
-                            =
+                    <td>
+                        <?= htmlspecialchars($inventory->brand_name ?? '-') ?>
+                    </td>
 
-                            <?= $inventory->units_per_sale ?>
+                    <td>
+
+                        <?= htmlspecialchars($inventory->brand_country ?? '-') ?>
+
+                        <?= htmlspecialchars($inventory->country_code ?? '-') ?>
+
+                    </td>
+
+                    <td>
+
+                        <span class="badge bg-secondary">
+                            <?= htmlspecialchars($inventory->category) ?>
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <strong>
+
+                            <?= $inventory->quantity ?>
                             <?= $inventory->base_unit ?>
+
+                        </strong>
+
+                    </td>
+
+                    <td>
+
+                        <?php if ($inventory->reserved_qty > 0) : ?>
+
+                            <span class="badge bg-warning text-dark">
+                                <?= $inventory->reserved_qty ?>
+                            </span>
+
+                        <?php else : ?>
+
+                            <span class="text-muted">0</span>
 
                         <?php endif; ?>
 
-                    </small>
+                    </td>
 
-                </td>
+                    <td>
 
-                <td>
-                    <code>
-                        <?= htmlspecialchars($inventory->sku) ?>
-                    </code>
-                </td>
+                        <?php if ($inventory->available_qty <= 0) : ?>
 
-                <td>
-                    <?= htmlspecialchars($inventory->brand_name ?? '-') ?>
-                </td>
+                            <span class="badge bg-danger">
+                                <?= __('out') ?>
+                            </span>
 
-                <td>
+                        <?php else : ?>
 
-                    <?= htmlspecialchars($inventory->brand_country ?? '-') ?>
+                            <strong class="text-success">
+                                <?= $inventory->available_qty ?>
+                            </strong>
 
-                    <?= htmlspecialchars($inventory->country_code ?? '-') ?>
+                        <?php endif; ?>
 
-                </td>
+                    </td>
 
-                <td>
+                    <!-- PRICING -->
+                    <td>
 
-                    <span class="badge bg-secondary">
-                        <?= htmlspecialchars($inventory->category) ?>
-                    </span>
+                        <small class="d-block">
 
-                </td>
+                            <?= __('cost') ?>:
 
-                <td>
+                            <strong class="text-danger">
+                                <?= number_format(
+                                    $inventory->cost_price,
+                                    2
+                                ) ?>
+                            </strong>
 
-                    <strong>
+                        </small>
 
-                        <?= $inventory->quantity ?>
-                        <?= $inventory->base_unit ?>
+                        <!-- <small class="d-block">
 
-                    </strong>
+                        <?//= __('sale') ?>:
 
-                </td>
+                <strong class="text-success">
+                <? //= number_format($inventory->price_per_base,  2) ?>
+                </strong>
 
-                <td>
+                    </small> -->
 
-                    <?php if ($inventory->reserved_qty > 0) : ?>
+                    </td>
 
-                        <span class="badge bg-warning text-dark">
-                            <?= $inventory->reserved_qty ?>
-                        </span>
+                    <!-- STATUS -->
+                    <td>
 
-                    <?php else : ?>
+                        <?php if ($inventory->quantity <= 0) : ?>
 
-                        <span class="text-muted">0</span>
+                            <span class="badge bg-danger">
+                                <?= __('out') ?>
+                            </span>
 
-                    <?php endif; ?>
+                        <?php elseif ($inventory->quantity < $inventory->min_stock) : ?>
 
-                </td>
+                            <span class="badge bg-warning text-dark">
+                                <?= __('low') ?>
+                            </span>
 
-                <td>
+                        <?php else : ?>
 
-                    <?php if ($inventory->available_qty <= 0) : ?>
+                            <span class="badge bg-success">
+                                <?= __('ok') ?>
+                            </span>
 
-                        <span class="badge bg-danger">
-                            <?= __('out') ?>
-                        </span>
+                        <?php endif; ?>
 
-                    <?php else : ?>
+                    </td>
 
-                        <strong class="text-success">
-                            <?= $inventory->available_qty ?>
-                        </strong>
+                    <!-- ACTIONS -->
+                    <td>
 
-                    <?php endif; ?>
+                        <div class="btn-group btn-group-sm">
 
-                </td>
+                            <a href="<?= URLROOT ?>/inventory/stockDetails/<?= $inventory->id ?>"
+                                class="btn btn-sm btn-primary"
+                                title="<?= __('view_global_stock_details') ?>">
 
-                <!-- PRICING -->
-                <td>
+                                <?= __('stock_details') ?>
 
-                    <small class="d-block">
+                                <i class="fas fa-chart-bar"></i>
 
-                        <?= __('cost') ?>:
+                            </a>
 
-                        <strong class="text-danger">
-                            <?= number_format(
-                                $inventory->cost_price,
-                                2
-                            ) ?>
-                        </strong>
+                            <a href="<?= URLROOT ?>/inventory/details/<?= $inventory->id ?>"
+                                class="btn btn-info">
 
-                    </small>
+                                <?= __('view') ?>
 
-                    <small class="d-block">
+                            </a>
 
-                        <?= __('sale') ?>:
+                            <a href="<?= URLROOT ?>/inventory/edit/<?= $inventory->id ?>"
+                                class="btn btn-warning">
 
-                        <strong class="text-success">
-                            <?= number_format(
-                                $inventory->price_per_base,
-                                2
-                            ) ?>
-                        </strong>
+                                <?= __('edit') ?>
 
-                    </small>
+                            </a>
 
-                </td>
+                            <a href="<?= URLROOT ?>/stockadjustments/create/<?= $inventory->id ?>"
+                                class="btn btn-success">
 
-                <!-- STATUS -->
-                <td>
+                                <?= __('adjust_quantity') ?>
 
-                    <?php if ($inventory->quantity <= 0) : ?>
+                            </a>
 
-                        <span class="badge bg-danger">
-                            <?= __('out') ?>
-                        </span>
+                            <a href="<?= URLROOT ?>/inventory/delete/<?= $inventory->id ?>"
+                                class="btn btn-danger"
+                                onclick="return confirm('<?= __('delete_item_confirm') ?>')">
 
-                    <?php elseif ($inventory->quantity < $inventory->min_stock) : ?>
+                                <?= __('delete') ?>
 
-                        <span class="badge bg-warning text-dark">
-                            <?= __('low') ?>
-                        </span>
+                            </a>
 
-                    <?php else : ?>
+                        </div>
 
-                        <span class="badge bg-success">
-                            <?= __('ok') ?>
-                        </span>
+                    </td>
 
-                    <?php endif; ?>
+                </tr>
 
-                </td>
-
-                <!-- ACTIONS -->
-                <td>
-
-                    <div class="btn-group btn-group-sm">
-
-                        <a href="<?= URLROOT ?>/inventory/stockDetails/<?= $inventory->id ?>"
-                           class="btn btn-sm btn-primary"
-                           title="<?= __('view_global_stock_details') ?>">
-
-                            <?= __('stock_details') ?>
-
-                            <i class="fas fa-chart-bar"></i>
-
-                        </a>
-
-                        <a href="<?= URLROOT ?>/inventory/details/<?= $inventory->id ?>"
-                           class="btn btn-info">
-
-                            <?= __('view') ?>
-
-                        </a>
-
-                        <a href="<?= URLROOT ?>/inventory/edit/<?= $inventory->id ?>"
-                           class="btn btn-warning">
-
-                            <?= __('edit') ?>
-
-                        </a>
-
-                        <a href="<?= URLROOT ?>/stockadjustments/create/<?= $inventory->id ?>"
-                           class="btn btn-success">
-
-                            <?= __('adjust_quantity') ?>
-
-                        </a>
-
-                        <a href="<?= URLROOT ?>/inventory/delete/<?= $inventory->id ?>"
-                           class="btn btn-danger"
-                           onclick="return confirm('<?= __('delete_item_confirm') ?>')">
-
-                            <?= __('delete') ?>
-
-                        </a>
-
-                    </div>
-
-                </td>
-
-            </tr>
-
-        <?php endforeach; ?>
+            <?php endforeach; ?>
 
         </tbody>
 
@@ -503,24 +490,24 @@ foreach ($stock as $inventory) {
 </div>
 
 <script>
-document
-    .getElementById('inventorySearch')
-    .addEventListener('input', function() {
+    document
+        .getElementById('inventorySearch')
+        .addEventListener('input', function() {
 
-        let value = this.value.toLowerCase();
+            let value = this.value.toLowerCase();
 
-        document
-            .querySelectorAll('#inventoryTable tbody tr')
-            .forEach(row => {
+            document
+                .querySelectorAll('#inventoryTable tbody tr')
+                .forEach(row => {
 
-                let text =
-                    row.innerText.toLowerCase();
+                    let text =
+                        row.innerText.toLowerCase();
 
-                row.style.display =
-                    text.includes(value)
-                        ? ''
-                        : 'none';
-            });
+                    row.style.display =
+                        text.includes(value) ?
+                        '' :
+                        'none';
+                });
 
-    });
+        });
 </script>
