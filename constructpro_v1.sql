@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 16, 2026 at 07:15 AM
+-- Generation Time: Sep 17, 2026 at 12:06 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -300,11 +300,8 @@ CREATE TABLE `inventory` (
   `min_stock` int(11) DEFAULT 10,
   `cost_price` decimal(10,2) DEFAULT 0.00,
   `base_unit` varchar(20) DEFAULT 'unit',
+  `unit_id` int(11) NOT NULL,
   `allow_fraction` tinyint(1) DEFAULT 0,
-  `sale_unit` varchar(20) DEFAULT NULL,
-  `units_per_sale` int(11) DEFAULT 1,
-  `price_per_base` decimal(10,2) DEFAULT NULL,
-  `price_per_sale` decimal(10,2) DEFAULT NULL,
   `brand_id` int(11) DEFAULT NULL,
   `country_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -313,85 +310,86 @@ CREATE TABLE `inventory` (
 -- Dumping data for table `inventory`
 --
 
-INSERT INTO `inventory` (`id`, `name`, `category`, `sku`, `quantity`, `location_id`, `min_stock`, `cost_price`, `base_unit`, `allow_fraction`, `sale_unit`, `units_per_sale`, `price_per_base`, `price_per_sale`, `brand_id`, `country_id`) VALUES
-(111, 'Portland Cement 42.5N', 'BUILDING & FINISHING', 'CEM-42-001', 500.00, NULL, 50, 12.50, 'BAG', 0, NULL, 1, 15.63, 0.00, 36, 12),
-(112, 'Portland Cement 52.5N', 'BUILDING & FINISHING', 'CEM-52-001', 230.00, NULL, 50, 15.50, 'BAG', 0, NULL, 1, 19.38, NULL, 36, 12),
-(113, 'Ready Mix Concrete C25', 'BUILDING & FINISHING', 'CON-C25-001', 25.00, NULL, 5, 95.00, 'M3', 1, NULL, 1, 118.75, NULL, NULL, 12),
-(114, 'Concrete Block 20cm', 'BUILDING & FINISHING', 'BLK-20-001', 3275.00, NULL, 500, 3.25, 'PCS', 0, NULL, 1, 2.25, NULL, NULL, 12),
-(115, 'Concrete Block 15cm', 'BUILDING & FINISHING', 'BLK-15-001', 2435.00, NULL, 500, 1.55, 'PCS', 0, NULL, 1, 1.94, NULL, NULL, 12),
-(116, 'Fine Sand', 'BUILDING & FINISHING', 'SND-FINE-001', 40.00, NULL, 10, 75.00, 'M3', 1, NULL, 1, 93.75, NULL, NULL, 12),
-(117, 'Coarse Aggregate 20mm', 'BUILDING & FINISHING', 'AGR-20-001', 60.00, NULL, 15, 85.00, 'M3', 1, NULL, 1, 106.25, NULL, NULL, 12),
-(118, 'Construction Gravel', 'BUILDING & FINISHING', 'GRV-001', 50.00, NULL, 10, 80.00, 'M3', 1, NULL, 1, 100.00, NULL, NULL, 12),
-(119, 'Red Brick', 'BUILDING & FINISHING', 'BRK-RED-001', 5000.00, NULL, 1000, 0.65, 'PCS', 0, NULL, 1, 0.81, NULL, NULL, 12),
-(120, 'Plastering Cement', 'BUILDING & FINISHING', 'PLS-CEM-001', 300.00, NULL, 50, 11.50, 'BAG', 0, NULL, 1, 14.38, NULL, 36, 12),
-(121, 'Gypsum Board 12.5mm', 'BUILDING & FINISHING', 'GYP-125-001', 400.00, NULL, 50, 18.00, 'PCS', 0, NULL, 1, 22.50, NULL, NULL, 12),
-(122, 'Ceramic Floor Tile 60x60', 'BUILDING & FINISHING', 'TIL-6060-001', 700.00, NULL, 100, 25.80, 'M2', 1, NULL, 1, 8.13, NULL, NULL, 12),
-(123, 'Ceramic Wall Tile 30x60', 'BUILDING & FINISHING', 'TIL-3060-001', 650.00, NULL, 100, 6.00, 'M2', 1, NULL, 1, 7.25, NULL, NULL, 12),
-(124, 'Waterproofing Membrane 4mm', 'BUILDING & FINISHING', 'WPM-4-001', 120.00, NULL, 20, 42.00, 'ROLL', 0, NULL, 1, 52.50, NULL, NULL, 12),
-(125, 'PVC Water Tank 1000L', 'PLUMBING & DRAINAGE', 'TANK-1000-001', 20.00, NULL, 5, 450.00, 'PCS', 0, NULL, 1, 562.50, NULL, NULL, 12),
-(126, 'Rebar 8mm', 'BUILDING & FINISHING', 'REB-08-001', 3500.00, NULL, 500, 3.20, 'M', 1, NULL, 1, 4.00, NULL, 34, 12),
-(127, 'Rebar 10mm', 'BUILDING & FINISHING', 'REB-10-001', 2800.00, NULL, 500, 4.80, 'M', 1, NULL, 1, 6.00, NULL, 34, 12),
-(128, 'Rebar 12mm', 'BUILDING & FINISHING', 'REB-12-001', 3200.00, NULL, 500, 6.90, 'M', 1, NULL, 1, 8.63, NULL, 34, 12),
-(129, 'Rebar 16mm', 'BUILDING & FINISHING', 'REB-16-001', 2200.00, NULL, 400, 11.80, 'M', 1, NULL, 1, 14.75, NULL, 34, 12),
-(130, 'Rebar 20mm', 'BUILDING & FINISHING', 'REB-20-001', 1200.00, NULL, 250, 18.20, 'M', 1, NULL, 1, 22.75, NULL, 34, 12),
-(131, 'Steel Angle 50x50x5mm', 'BUILDING & FINISHING', 'ANG-50505-001', 400.00, NULL, 50, 28.00, 'M', 1, NULL, 1, 35.00, NULL, 34, 12),
-(132, 'Steel Channel 100mm', 'BUILDING & FINISHING', 'CHN-100-001', 250.00, NULL, 50, 42.00, 'M', 1, NULL, 1, 52.50, NULL, 34, 12),
-(133, 'Steel Plate 6mm', 'BUILDING & FINISHING', 'PLT-6-001', 120.00, NULL, 20, 145.00, 'M2', 1, NULL, 1, 181.25, NULL, 34, 12),
-(134, 'Binding Wire', 'BUILDING & FINISHING', 'BW-001', 79.00, NULL, 15, 4.50, 'KG', 1, NULL, 1, 5.63, NULL, NULL, 12),
-(135, 'Electrical Cable 1.5mm² Single Core', 'ELECTRICAL CABLE', 'CAB-1.5-001', 2500.00, NULL, 500, 1.15, 'M', 1, NULL, 1, 1.44, NULL, 3, 3),
-(136, 'Electrical Cable 2.5mm² Single Core', 'ELECTRICAL CABLE', 'CAB-2.5-001', 3000.00, NULL, 500, 1.75, 'M', 1, NULL, 1, 2.19, NULL, 3, 3),
-(137, 'Electrical Cable 4mm² Single Core', 'ELECTRICAL CABLE', 'CAB-4-001', 1800.00, NULL, 400, 2.80, 'M', 1, NULL, 1, 3.50, NULL, 3, 3),
-(138, 'Electrical Cable 6mm² Single Core', 'ELECTRICAL CABLE', 'CAB-6-001', 1400.00, NULL, 300, 3.95, 'M', 1, NULL, 1, 4.94, NULL, 3, 3),
-(139, 'Power Cable 4C x 16mm²', 'ELECTRICAL', 'PWC-4C16-001', 600.00, NULL, 100, 18.50, 'M', 1, NULL, 1, 23.13, NULL, 19, 6),
-(140, 'Power Cable 4C x 35mm²', 'ELECTRICAL', 'PWC-4C35-001', 500.00, NULL, 100, 34.50, 'M', 1, NULL, 1, 43.13, NULL, 20, 9),
-(141, 'Power Cable 4C x 70mm²', 'ELECTRICAL', 'PWC-4C70-001', 300.00, NULL, 50, 58.00, 'M', 1, NULL, 1, 72.50, NULL, 19, 6),
-(142, 'Wall Socket 13A UK', 'ELECTRICAL', 'WS-13A-UK-001', 1000.00, NULL, 100, 2.25, 'PCS', 0, 'BOX', 10, 2.81, 22.50, 8, 9),
-(143, 'Double Wall Socket 13A UK', 'ELECTRICAL', 'WS-D13A-001', 490.00, NULL, 100, 3.40, 'PCS', 0, 'BOX', 10, 4.25, 34.00, 8, 9),
-(144, 'LED Panel Light 600x600 40W', 'ELECTRICAL', 'LED-PNL-40-001', 100.00, NULL, 20, 28.00, 'PCS', 0, 'BOX', 1, 35.00, 28.00, 5, 9),
-(145, 'MCB 1P 16A', 'ELECTRICAL', 'MCB-1P16-001', 150.00, NULL, 30, 8.50, 'PCS', 0, 'BOX', 12, 10.63, 102.00, 5, 9),
-(146, 'MCB 3P 32A', 'ELECTRICAL', 'MCB-3P32-001', 80.00, NULL, 15, 24.00, 'PCS', 0, 'BOX', 6, 30.00, 144.00, 5, 9),
-(147, 'Distribution Board 12-Way', 'ELECTRICAL', 'DB-12W-001', 25.00, NULL, 5, 95.00, 'PCS', 0, NULL, 1, 118.75, NULL, 5, 9),
-(148, 'Contactor 25A', 'ELECTRICAL', 'CNT-25A-001', 35.00, NULL, 10, 32.00, 'PCS', 0, 'BOX', 1, 40.00, 32.00, 1, 1),
-(149, 'Terminal Block 6mm²', 'ELECTRICAL', 'TB-6-001', 500.00, NULL, 100, 0.75, 'PCS', 0, 'BOX', 100, 0.94, 75.00, 21, 1),
-(150, 'PVC Pipe 20mm', 'PLUMBING & DRAINAGE', 'PVC-20-001', 800.00, NULL, 100, 2.40, 'M', 1, NULL, 1, 3.00, NULL, NULL, 12),
-(151, 'PVC Pipe 32mm', 'PLUMBING & DRAINAGE', 'PVC-32-001', 600.00, NULL, 100, 3.80, 'M', 1, NULL, 1, 4.75, NULL, NULL, 12),
-(152, 'PVC Pipe 50mm', 'PLUMBING & DRAINAGE', 'PVC-50-001', 450.00, NULL, 80, 5.90, 'M', 1, NULL, 1, 7.38, NULL, NULL, 12),
-(153, 'PPR Pipe 25mm', 'PLUMBING & DRAINAGE', 'PPR-25-001', 400.00, NULL, 80, 4.80, 'M', 1, NULL, 1, 6.00, NULL, NULL, 12),
-(154, 'PVC Elbow 90° 25mm', 'PLUMBING & DRAINAGE', 'ELB-25-90-001', 300.00, NULL, 50, 1.20, 'PCS', 0, 'BOX', 20, 1.50, 24.00, NULL, 12),
-(155, 'Brass Ball Valve 1\"', 'PLUMBING & DRAINAGE', 'VAL-BV-1-001', 90.00, NULL, 15, 24.00, 'PCS', 0, NULL, 1, 22.50, NULL, NULL, 12),
-(156, 'Bearing 6204', 'OTHER', 'BRG-6204-001', 240.00, NULL, 10, 5.75, 'PCS', 0, 'BOX', 10, 15.00, 120.00, 6, 3),
-(157, 'Bearing 6205', 'OTHER', 'BRG-6205-001', 41.00, NULL, 10, 14.50, 'PCS', 0, 'BOX', 10, 18.13, 145.00, 6, 3),
-(158, 'V-Belt A-42', 'OTHER', 'VBT-A42-001', 25.00, NULL, 5, 9.50, 'PCS', 0, NULL, 1, 11.88, NULL, NULL, 12),
-(159, 'Hydraulic Hose 1/2\"', 'OTHER', 'HYD-HS-12-001', 250.00, NULL, 50, 8.50, 'M', 1, NULL, 1, 10.63, NULL, NULL, 12),
-(160, 'Hydraulic Oil ISO 46', 'CONSUMABLES', 'OIL-ISO46-001', 200.00, NULL, 50, 4.80, 'LTR', 1, NULL, 1, 6.00, NULL, 7, 12),
-(161, 'Engine Oil 15W40', 'CONSUMABLES', 'OIL-15W40-001', 145.00, NULL, 30, 5.50, 'LTR', 1, NULL, 1, 6.88, NULL, 34, 12),
-(162, 'Grease EP2', 'CONSUMABLES', 'GRS-EP2-001', 80.00, NULL, 20, 7.25, 'KG', 1, NULL, 1, 9.06, NULL, 34, 12),
-(163, 'Hex Bolt M8x40', 'OTHER', 'BLT-M8-40-001', 1000.00, NULL, 200, 0.18, 'PCS', 0, 'BOX', 100, 0.23, 18.00, NULL, 12),
-(164, 'Hex Bolt M10x50', 'OTHER', 'BLT-M10-50-001', 1000.00, NULL, 200, 0.28, 'PCS', 0, 'BOX', 100, 0.35, 28.00, NULL, 12),
-(165, 'Hex Nut M10', 'OTHER', 'NUT-M10-001', 1200.00, NULL, 200, 0.12, 'PCS', 0, 'BOX', 100, 0.15, 12.00, NULL, 12),
-(166, 'Washer M10', 'OTHER', 'WSR-M10-001', 1500.00, NULL, 300, 0.06, 'PCS', 0, 'BOX', 100, 0.08, 6.00, NULL, 12),
-(167, 'Anchor Bolt M16', 'OTHER', 'ANC-M16-001', 310.00, NULL, 50, 3.00, 'PCS', 0, 'BOX', 25, 3.50, 70.00, NULL, 12),
-(168, 'Acrylic Wall Paint White', 'BUILDING & FINISHING', 'PNT-WHT-001', 250.00, NULL, 50, 18.00, 'LTR', 1, NULL, 1, 22.50, NULL, NULL, 12),
-(169, 'Exterior Paint White', 'BUILDING & FINISHING', 'PNT-EXT-WHT-001', 180.00, NULL, 30, 21.00, 'LTR', 1, NULL, 1, 26.25, NULL, NULL, 12),
-(170, 'Epoxy Primer', 'CONSUMABLES', 'EPX-PRM-001', 100.00, NULL, 20, 24.00, 'LTR', 1, NULL, 1, 30.00, NULL, NULL, 12),
-(171, 'Silicone Sealant', 'CONSUMABLES', 'SIL-001', 126.00, NULL, 20, 3.80, 'PCS', 0, 'BOX', 24, 4.75, 91.20, NULL, 12),
-(172, 'Construction Adhesive', 'CONSUMABLES', 'ADH-001', 83.00, NULL, 20, 6.50, 'PCS', 0, 'BOX', 12, 8.13, 78.00, NULL, 12),
-(173, 'Safety Shoes S1P', 'SAFETY & PPE', 'PPE-SHOE-S1P-001', 40.00, NULL, 10, 42.00, 'PAIR', 0, NULL, 1, 52.50, NULL, 4, 4),
-(174, 'Safety Helmet', 'SAFETY & PPE', 'PPE-HELMET-001', 80.00, NULL, 20, 8.50, 'PCS', 0, 'BOX', 20, 10.63, 170.00, 4, 4),
-(175, 'Safety Goggles', 'SAFETY & PPE', 'PPE-GOGGLE-001', 100.00, NULL, 20, 3.25, 'PCS', 0, 'BOX', 20, 4.06, 65.00, 4, 4),
-(176, 'Reflective Safety Vest', 'SAFETY & PPE', 'PPE-VEST-001', 80.00, NULL, 20, 6.50, 'PCS', 0, 'BOX', 10, 8.13, 65.00, 4, 4),
-(177, 'Nitrile Work Gloves', 'SAFETY & PPE', 'PPE-GLOVE-001', 500.00, NULL, 100, 0.75, 'PAIR', 0, 'BOX', 100, 0.94, 75.00, 4, 4),
-(178, 'Cut Resistant Gloves', 'SAFETY & PPE', 'PPE-CUT-001', 100.00, NULL, 20, 4.50, 'PAIR', 0, 'BOX', 10, 5.63, 45.00, 4, 4),
-(179, 'Safety Harness', 'SAFETY & PPE', 'PPE-HARNESS-001', 25.00, NULL, 5, 65.00, 'SET', 0, NULL, 1, 81.25, NULL, 4, 4),
-(180, 'Ear Protection Plugs', 'SAFETY & PPE', 'PPE-EAR-001', 300.00, NULL, 50, 0.45, 'PAIR', 0, 'BOX', 100, 0.56, 45.00, 4, 4),
-(181, 'Dust Mask FFP2', 'SAFETY & PPE', 'PPE-MASK-001', 500.00, NULL, 100, 0.55, 'PCS', 0, 'BOX', 50, 0.69, 27.50, 4, 4),
-(182, 'Cutting Disc 115mm', 'OTHER', 'DISC-115-001', 200.00, NULL, 30, 1.20, 'PCS', 0, 'BOX', 25, 1.50, 30.00, 8, 9),
-(183, 'Grinding Disc 115mm', 'OTHER', 'GRD-115-001', 150.00, NULL, 30, 1.50, 'PCS', 0, 'BOX', 25, 1.88, 37.50, 8, 9),
-(184, 'Welding Electrode 3.2mm', 'CONSUMABLES', 'WELD-32-001', 100.00, NULL, 20, 4.80, 'KG', 1, NULL, 1, 6.00, NULL, NULL, 12),
-(185, 'Silica Sandpaper 120 Grit', 'CONSUMABLES', 'SAND-120-001', 200.00, NULL, 40, 0.85, 'PCS', 0, 'BOX', 50, 1.06, 42.50, NULL, 12),
-(186, 'PVC Electrical Tape', 'CONSUMABLES', 'TAPE-PVC-001', 150.00, NULL, 30, 1.20, 'ROLL', 0, 'BOX', 20, 1.50, 24.00, NULL, 12),
-(187, 'Wheelbarrow', 'HAND TOOLS', 'WLW-50', 60.00, 1, 5, 45.00, 'unit', 0, NULL, 1, 60.00, 60.00, 37, 14),
-(188, 'Light Bulb 100W', 'ELECTRICAL', 'LB-100', 0.00, NULL, 100, 0.00, 'piece', 0, NULL, 1, 0.00, 0.00, 35, 7);
+INSERT INTO `inventory` (`id`, `name`, `category`, `sku`, `quantity`, `location_id`, `min_stock`, `cost_price`, `base_unit`, `unit_id`, `allow_fraction`, `brand_id`, `country_id`) VALUES
+(111, 'Portland Cement 42.5N', 'BUILDING & FINISHING', 'CEM-42-001', 500.00, NULL, 50, 12.50, 'BAG', 0, 0, 36, 12),
+(112, 'Portland Cement 52.5N', 'BUILDING & FINISHING', 'CEM-52-001', 230.00, NULL, 50, 15.50, 'BAG', 0, 0, 36, 12),
+(113, 'Ready Mix Concrete C25', 'BUILDING & FINISHING', 'CON-C25-001', 25.00, NULL, 5, 95.00, 'M3', 0, 1, NULL, 12),
+(114, 'Concrete Block 20cm', 'BUILDING & FINISHING', 'BLK-20-001', 3275.00, NULL, 500, 3.25, 'PCS', 0, 0, NULL, 12),
+(115, 'Concrete Block 15cm', 'BUILDING & FINISHING', 'BLK-15-001', 2435.00, NULL, 500, 1.55, 'PCS', 0, 0, NULL, 12),
+(116, 'Fine Sand', 'BUILDING & FINISHING', 'SND-FINE-001', 40.00, NULL, 10, 75.00, 'M3', 0, 1, NULL, 12),
+(117, 'Coarse Aggregate 20mm', 'BUILDING & FINISHING', 'AGR-20-001', 60.00, NULL, 15, 85.00, 'M3', 0, 1, NULL, 12),
+(118, 'Construction Gravel', 'BUILDING & FINISHING', 'GRV-001', 50.00, NULL, 10, 80.00, 'M3', 0, 1, NULL, 12),
+(119, 'Red Brick', 'BUILDING & FINISHING', 'BRK-RED-001', 5000.00, NULL, 1000, 0.65, 'PCS', 0, 0, NULL, 12),
+(120, 'Plastering Cement', 'BUILDING & FINISHING', 'PLS-CEM-001', 300.00, NULL, 50, 11.50, 'BAG', 0, 0, 36, 12),
+(121, 'Gypsum Board 12.5mm', 'BUILDING & FINISHING', 'GYP-125-001', 400.00, NULL, 50, 18.00, 'PCS', 0, 0, NULL, 12),
+(122, 'Ceramic Floor Tile 60x60', 'BUILDING & FINISHING', 'TIL-6060-001', 700.00, NULL, 100, 25.80, 'M2', 0, 1, NULL, 12),
+(123, 'Ceramic Wall Tile 30x60', 'BUILDING & FINISHING', 'TIL-3060-001', 620.00, NULL, 100, 6.00, 'M2', 0, 1, NULL, 12),
+(124, 'Waterproofing Membrane 4mm', 'BUILDING & FINISHING', 'WPM-4-001', 120.00, NULL, 20, 42.00, 'ROLL', 0, 0, NULL, 12),
+(125, 'PVC Water Tank 1000L', 'PLUMBING & DRAINAGE', 'TANK-1000-001', 20.00, NULL, 5, 450.00, 'PCS', 0, 0, NULL, 12),
+(126, 'Rebar 8mm', 'BUILDING & FINISHING', 'REB-08-001', 3500.00, NULL, 500, 3.20, 'M', 0, 1, 34, 12),
+(127, 'Rebar 10mm', 'BUILDING & FINISHING', 'REB-10-001', 2800.00, NULL, 500, 4.80, 'M', 0, 1, 34, 12),
+(128, 'Rebar 12mm', 'BUILDING & FINISHING', 'REB-12-001', 3200.00, NULL, 500, 6.90, 'M', 0, 1, 34, 12),
+(129, 'Rebar 16mm', 'BUILDING & FINISHING', 'REB-16-001', 2200.00, NULL, 400, 11.80, 'M', 0, 1, 34, 12),
+(130, 'Rebar 20mm', 'BUILDING & FINISHING', 'REB-20-001', 1200.00, NULL, 250, 18.20, 'M', 0, 1, 34, 12),
+(131, 'Steel Angle 50x50x5mm', 'BUILDING & FINISHING', 'ANG-50505-001', 400.00, NULL, 50, 28.00, 'M', 0, 1, 34, 12),
+(132, 'Steel Channel 100mm', 'BUILDING & FINISHING', 'CHN-100-001', 250.00, NULL, 50, 42.00, 'M', 0, 1, 34, 12),
+(133, 'Steel Plate 6mm', 'BUILDING & FINISHING', 'PLT-6-001', 120.00, NULL, 20, 145.00, 'M2', 0, 1, 34, 12),
+(134, 'Binding Wire', 'BUILDING & FINISHING', 'BW-001', 79.00, NULL, 15, 4.50, 'KG', 0, 1, NULL, 12),
+(135, 'Electrical Cable 1.5mm² Single Core', 'ELECTRICAL CABLE', 'CAB-1.5-001', 2500.00, NULL, 500, 1.15, 'M', 0, 1, 3, 3),
+(136, 'Electrical Cable 2.5mm² Single Core', 'ELECTRICAL CABLE', 'CAB-2.5-001', 3000.00, NULL, 500, 1.75, 'M', 0, 1, 3, 3),
+(137, 'Electrical Cable 4mm² Single Core', 'ELECTRICAL CABLE', 'CAB-4-001', 1800.00, NULL, 400, 2.80, 'M', 0, 1, 3, 3),
+(138, 'Electrical Cable 6mm² Single Core', 'ELECTRICAL CABLE', 'CAB-6-001', 1400.00, NULL, 300, 3.95, 'M', 0, 1, 3, 3),
+(139, 'Power Cable 4C x 16mm²', 'ELECTRICAL', 'PWC-4C16-001', 600.00, NULL, 100, 18.50, 'M', 0, 1, 19, 6),
+(140, 'Power Cable 4C x 35mm²', 'ELECTRICAL', 'PWC-4C35-001', 500.00, NULL, 100, 34.50, 'M', 0, 1, 20, 9),
+(141, 'Power Cable 4C x 70mm²', 'ELECTRICAL', 'PWC-4C70-001', 300.00, NULL, 50, 58.00, 'M', 0, 1, 19, 6),
+(142, 'Wall Socket 13A UK', 'ELECTRICAL', 'WS-13A-UK-001', 1000.00, NULL, 100, 2.25, 'PCS', 0, 0, 8, 9),
+(143, 'Double Wall Socket 13A UK', 'ELECTRICAL', 'WS-D13A-001', 490.00, NULL, 100, 3.40, 'PCS', 0, 0, 8, 9),
+(144, 'LED Panel Light 600x600 40W', 'ELECTRICAL', 'LED-PNL-40-001', 100.00, NULL, 20, 28.00, 'PCS', 0, 0, 5, 9),
+(145, 'MCB 1P 16A', 'ELECTRICAL', 'MCB-1P16-001', 150.00, NULL, 30, 8.50, 'PCS', 0, 0, 5, 9),
+(146, 'MCB 3P 32A', 'ELECTRICAL', 'MCB-3P32-001', 80.00, NULL, 15, 24.00, 'PCS', 0, 0, 5, 9),
+(147, 'Distribution Board 12-Way', 'ELECTRICAL', 'DB-12W-001', 25.00, NULL, 5, 95.00, 'PCS', 0, 0, 5, 9),
+(148, 'Contactor 25A', 'ELECTRICAL', 'CNT-25A-001', 35.00, NULL, 10, 32.00, 'PCS', 0, 0, 1, 1),
+(149, 'Terminal Block 6mm²', 'ELECTRICAL', 'TB-6-001', 500.00, NULL, 100, 0.75, 'PCS', 0, 0, 21, 1),
+(150, 'PVC Pipe 20mm', 'PLUMBING & DRAINAGE', 'PVC-20-001', 800.00, NULL, 100, 2.40, 'M', 0, 1, NULL, 12),
+(151, 'PVC Pipe 32mm', 'PLUMBING & DRAINAGE', 'PVC-32-001', 600.00, NULL, 100, 3.80, 'M', 0, 1, NULL, 12),
+(152, 'PVC Pipe 50mm', 'PLUMBING & DRAINAGE', 'PVC-50-001', 450.00, NULL, 80, 5.90, 'M', 0, 1, NULL, 12),
+(153, 'PPR Pipe 25mm', 'PLUMBING & DRAINAGE', 'PPR-25-001', 400.00, NULL, 80, 4.80, 'M', 0, 1, NULL, 12),
+(154, 'PVC Elbow 90° 25mm', 'PLUMBING & DRAINAGE', 'ELB-25-90-001', 300.00, NULL, 50, 1.20, 'PCS', 0, 0, NULL, 12),
+(155, 'Brass Ball Valve 1\"', 'PLUMBING & DRAINAGE', 'VAL-BV-1-001', 90.00, NULL, 15, 24.00, 'PCS', 0, 0, NULL, 12),
+(156, 'Bearing 6204', 'OTHER', 'BRG-6204-001', 240.00, NULL, 10, 5.75, 'PCS', 0, 0, 6, 3),
+(157, 'Bearing 6205', 'OTHER', 'BRG-6205-001', 41.00, NULL, 10, 14.50, 'PCS', 0, 0, 6, 3),
+(158, 'V-Belt A-42', 'OTHER', 'VBT-A42-001', 25.00, NULL, 5, 9.50, 'PCS', 0, 0, NULL, 12),
+(159, 'Hydraulic Hose 1/2\"', 'OTHER', 'HYD-HS-12-001', 250.00, NULL, 50, 8.50, 'M', 0, 1, NULL, 12),
+(160, 'Hydraulic Oil ISO 46', 'CONSUMABLES', 'OIL-ISO46-001', 200.00, NULL, 50, 4.80, 'LTR', 0, 1, 7, 12),
+(161, 'Engine Oil 15W40', 'CONSUMABLES', 'OIL-15W40-001', 145.00, NULL, 30, 5.50, 'LTR', 0, 1, 34, 12),
+(162, 'Grease EP2', 'CONSUMABLES', 'GRS-EP2-001', 80.00, NULL, 20, 7.25, 'KG', 0, 1, 34, 12),
+(163, 'Hex Bolt M8x40', 'OTHER', 'BLT-M8-40-001', 1000.00, NULL, 200, 0.18, 'PCS', 0, 0, NULL, 12),
+(164, 'Hex Bolt M10x50', 'OTHER', 'BLT-M10-50-001', 1000.00, NULL, 200, 0.28, 'PCS', 0, 0, NULL, 12),
+(165, 'Hex Nut M10', 'OTHER', 'NUT-M10-001', 1200.00, NULL, 200, 0.12, 'PCS', 0, 0, NULL, 12),
+(166, 'Washer M10', 'OTHER', 'WSR-M10-001', 1500.00, NULL, 300, 0.06, 'PCS', 0, 0, NULL, 12),
+(167, 'Anchor Bolt M16', 'OTHER', 'ANC-M16-001', 310.00, NULL, 50, 3.00, 'PCS', 0, 0, NULL, 12),
+(168, 'Acrylic Wall Paint White', 'BUILDING & FINISHING', 'PNT-WHT-001', 250.00, NULL, 50, 18.00, 'LTR', 0, 1, NULL, 12),
+(169, 'Exterior Paint White', 'BUILDING & FINISHING', 'PNT-EXT-WHT-001', 180.00, NULL, 30, 21.00, 'LTR', 0, 1, NULL, 12),
+(170, 'Epoxy Primer', 'CONSUMABLES', 'EPX-PRM-001', 100.00, NULL, 20, 24.00, 'LTR', 0, 1, NULL, 12),
+(171, 'Silicone Sealant', 'CONSUMABLES', 'SIL-001', 126.00, NULL, 20, 3.80, 'PCS', 0, 0, NULL, 12),
+(172, 'Construction Adhesive', 'CONSUMABLES', 'ADH-001', 83.00, NULL, 20, 6.50, 'PCS', 0, 0, NULL, 12),
+(173, 'Safety Shoes S1P', 'SAFETY & PPE', 'PPE-SHOE-S1P-001', 40.00, NULL, 10, 42.00, 'PAIR', 0, 0, 4, 4),
+(174, 'Safety Helmet', 'SAFETY & PPE', 'PPE-HELMET-001', 80.00, NULL, 20, 8.50, 'PCS', 0, 0, 4, 4),
+(175, 'Safety Goggles', 'SAFETY & PPE', 'PPE-GOGGLE-001', 100.00, NULL, 20, 3.25, 'PCS', 0, 0, 4, 4),
+(176, 'Reflective Safety Vest', 'SAFETY & PPE', 'PPE-VEST-001', 80.00, NULL, 20, 6.50, 'PCS', 0, 0, 4, 4),
+(177, 'Nitrile Work Gloves', 'SAFETY & PPE', 'PPE-GLOVE-001', 500.00, NULL, 100, 0.75, 'PAIR', 0, 0, 4, 4),
+(178, 'Cut Resistant Gloves', 'SAFETY & PPE', 'PPE-CUT-001', 100.00, NULL, 20, 4.50, 'PAIR', 0, 0, 4, 4),
+(179, 'Safety Harness', 'SAFETY & PPE', 'PPE-HARNESS-001', 25.00, NULL, 5, 65.00, 'SET', 0, 0, 4, 4),
+(180, 'Ear Protection Plugs', 'SAFETY & PPE', 'PPE-EAR-001', 300.00, NULL, 50, 0.45, 'PAIR', 0, 0, 4, 4),
+(181, 'Dust Mask FFP2', 'SAFETY & PPE', 'PPE-MASK-001', 500.00, NULL, 100, 0.55, 'PCS', 0, 0, 4, 4),
+(182, 'Cutting Disc 115mm', 'OTHER', 'DISC-115-001', 200.00, NULL, 30, 1.20, 'PCS', 0, 0, 8, 9),
+(183, 'Grinding Disc 115mm', 'OTHER', 'GRD-115-001', 150.00, NULL, 30, 1.50, 'PCS', 0, 0, 8, 9),
+(184, 'Welding Electrode 3.2mm', 'CONSUMABLES', 'WELD-32-001', 100.00, NULL, 20, 4.80, 'KG', 0, 1, NULL, 12),
+(185, 'Silica Sandpaper 120 Grit', 'CONSUMABLES', 'SAND-120-001', 200.00, NULL, 40, 0.85, 'PCS', 0, 0, NULL, 12),
+(186, 'PVC Electrical Tape', 'CONSUMABLES', 'TAPE-PVC-001', 150.00, NULL, 30, 1.20, 'ROLL', 0, 0, NULL, 12),
+(187, 'Wheelbarrow', 'HAND TOOLS', 'WLW-50', 60.00, 1, 5, 45.00, 'unit', 0, 0, 37, 14),
+(188, 'Light Bulb 100W', 'ELECTRICAL', 'LB-100', 0.00, NULL, 100, 0.00, 'piece', 0, 0, 35, 7),
+(189, 'Light Bulb 200W', 'ELECTRICAL', 'LB-200', 0.00, NULL, 100, 0.00, 'piece', 0, 0, 8, 8);
 
 -- --------------------------------------------------------
 
@@ -486,7 +484,7 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (291, 122, 3, 160.00),
 (292, 123, 1, 325.00),
 (293, 123, 2, 195.00),
-(294, 123, 3, 130.00),
+(294, 123, 3, 100.00),
 (295, 124, 1, 60.00),
 (296, 124, 2, 36.00),
 (297, 124, 3, 24.00),
@@ -726,7 +724,8 @@ INSERT INTO `inventory_movements` (`id`, `inventory_id`, `location_id`, `type`, 
 (329, 134, 2, 'OUT', 1.00, 4.50, NULL, NULL, 1, 23.00, 79.00, 'RR-FUL-20260912080439-350', 'Resource requisition fulfillment: REQ-260911204609', 1, '2026-09-12 06:04:39'),
 (330, 111, 1, 'OUT', 100.00, NULL, NULL, NULL, NULL, 150.00, 500.00, 'طلب تاسيسات لمبني العمال', 'Warehouse Transfer #47', 1, '2026-09-12 13:55:16'),
 (331, 111, 31, 'IN', 100.00, NULL, NULL, NULL, NULL, 100.00, 500.00, 'طلب تاسيسات لمبني العمال', 'Warehouse Transfer #47', 1, '2026-09-12 13:55:16'),
-(332, 112, 1, 'OUT', 20.00, NULL, NULL, NULL, NULL, 105.00, 230.00, 'PROJECT #55', 'Reservation Fulfillment: Portland Cement 52.5N', 1, '2026-09-12 14:07:30');
+(332, 112, 1, 'OUT', 20.00, NULL, NULL, NULL, NULL, 105.00, 230.00, 'PROJECT #55', 'Reservation Fulfillment: Portland Cement 52.5N', 1, '2026-09-12 14:07:30'),
+(333, 123, 3, 'OUT', 30.00, NULL, NULL, NULL, NULL, 100.00, 620.00, 'PROJECT #55', 'Reservation Fulfillment: Ceramic Wall Tile 30x60', 1, '2026-09-16 05:44:20');
 
 -- --------------------------------------------------------
 
@@ -754,7 +753,8 @@ CREATE TABLE `inventory_reservations` (
 
 INSERT INTO `inventory_reservations` (`id`, `inventory_id`, `location_id`, `project_id`, `quantity`, `status`, `reference`, `notes`, `created_by`, `created_at`, `required_by_date`) VALUES
 (30, 123, 1, 47, 150.00, 'CANCELLED', 'الاحتفاظ بهذه الكمية من الصنف لنقصها من السوق', 'الاحتفاظ بهذه الكمية من الصنف لنقصها من السوق ويتم تسليمها للمشروع قبل التاريخ المذكور', 1, '2026-09-10 12:44:21', '2026-09-16'),
-(31, 112, 1, 55, 20.00, 'FULFILLED', 'نقص في توريدات الاسمنت', 'يجب التسليم الى مخزن المشروع', 1, '2026-09-12 14:05:54', '2026-09-14');
+(31, 112, 1, 55, 20.00, 'FULFILLED', 'نقص في توريدات الاسمنت', 'يجب التسليم الى مخزن المشروع', 1, '2026-09-12 14:05:54', '2026-09-14'),
+(32, 123, 3, 55, 30.00, 'FULFILLED', 'اختبار', 'اختبار', 1, '2026-09-16 05:42:47', '2026-09-23');
 
 -- --------------------------------------------------------
 
@@ -950,7 +950,8 @@ INSERT INTO `project_costs` (`id`, `project_id`, `requisition_id`, `fulfillment_
 (212, 49, NULL, NULL, 134, NULL, 2, 'MATERIALS', 'Binding Wire', 1.00, 4.50, '2026-09-12 06:04:39'),
 (214, 55, NULL, NULL, 112, NULL, 1, 'MATERIALS', 'Reservation Fulfillment: Portland Cement 52.5N', 20.00, 15.50, '2026-09-12 14:07:30'),
 (215, 49, NULL, NULL, NULL, NULL, NULL, 'HUMAN_RESOURCES', 'عمالة طرح التربة', 12.00, 250.00, '2026-09-15 06:15:58'),
-(216, 47, NULL, NULL, NULL, NULL, NULL, 'SITE_EXPENSES', 'اعداد الموقع لبدء العمل', 1.00, 2000.00, '2026-09-15 06:36:08');
+(216, 47, NULL, NULL, NULL, NULL, NULL, 'SITE_EXPENSES', 'اعداد الموقع لبدء العمل', 1.00, 2000.00, '2026-09-15 06:36:08'),
+(217, 55, NULL, NULL, 123, NULL, 3, 'MATERIALS', 'Reservation Fulfillment: Ceramic Wall Tile 30x60', 30.00, 6.00, '2026-09-16 05:44:20');
 
 -- --------------------------------------------------------
 
@@ -1025,7 +1026,8 @@ INSERT INTO `project_ledger` (`id`, `project_id`, `entry_type`, `ref_table`, `re
 (105, 54, 'cost', 'project_costs', 209, 'Reversal: Payment of Permission', 0.00, 1500.00, 9840.00, '2026-09-15 06:33:00'),
 (106, 51, 'cost', 'project_costs', 207, 'Reversal: بنائين', 0.00, 10000.00, 187100.00, '2026-09-15 06:33:51'),
 (107, 48, 'cost', 'project_costs', 205, 'Reversal: عمال مساعدين', 0.00, 600.00, 20000.00, '2026-09-15 06:34:38'),
-(108, 47, 'cost', 'project_costs', 216, 'اعداد الموقع لبدء العمل', 2000.00, 0.00, -2000.00, '2026-09-15 06:36:08');
+(108, 47, 'cost', 'project_costs', 216, 'اعداد الموقع لبدء العمل', 2000.00, 0.00, -2000.00, '2026-09-15 06:36:08'),
+(109, 55, 'cost', 'project_costs', 217, 'Reservation Fulfillment: Ceramic Wall Tile 30x60', 180.00, 0.00, -490.00, '2026-09-16 05:44:20');
 
 -- --------------------------------------------------------
 
@@ -2331,7 +2333,7 @@ ALTER TABLE `goods_return_items`
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=189;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=190;
 
 --
 -- AUTO_INCREMENT for table `inventory_locations`
@@ -2349,13 +2351,13 @@ ALTER TABLE `inventory_location_stock`
 -- AUTO_INCREMENT for table `inventory_movements`
 --
 ALTER TABLE `inventory_movements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=333;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=334;
 
 --
 -- AUTO_INCREMENT for table `inventory_reservations`
 --
 ALTER TABLE `inventory_reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `inventory_transfers`
@@ -2385,7 +2387,7 @@ ALTER TABLE `project_advances`
 -- AUTO_INCREMENT for table `project_costs`
 --
 ALTER TABLE `project_costs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=217;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=218;
 
 --
 -- AUTO_INCREMENT for table `project_documents`
@@ -2397,7 +2399,7 @@ ALTER TABLE `project_documents`
 -- AUTO_INCREMENT for table `project_ledger`
 --
 ALTER TABLE `project_ledger`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- AUTO_INCREMENT for table `project_scopes`
