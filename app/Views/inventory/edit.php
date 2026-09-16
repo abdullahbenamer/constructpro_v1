@@ -1,8 +1,11 @@
 <?php if (isset($inventory) && $inventory): ?>
 
 <h2>
+
     <i class="fas fa-edit"></i>
+
     <?= __('edit_inventory_item') ?> #<?= $inventory->id ?>
+
 </h2>
 
 
@@ -15,11 +18,11 @@
     >
 
 
-    <!-- NAME + SKU -->
+    <!-- BASIC INFO -->
 
     <div class="row">
 
-        <!-- NAME -->
+        <!-- ITEM NAME -->
 
         <div class="col-md-6">
 
@@ -67,13 +70,113 @@
     </div>
 
 
+    <!-- BRAND + COUNTRY -->
+
+    <div class="row">
+
+        <!-- BRAND -->
+
+        <div class="col-md-6">
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    <?= __('brand') ?>
+                </label>
+
+                <select name="brand_id" class="form-select">
+
+                    <option value="">
+                        <?= __('select_brand') ?>
+                    </option>
+
+                    <?php if (!empty($data['brands'])): ?>
+
+                        <?php foreach ($data['brands'] as $brand): ?>
+
+                            <option
+                                value="<?= $brand->id ?>"
+                                <?= (
+                                    (string)($inventory->brand_id ?? '') ===
+                                    (string)$brand->id
+                                ) ? 'selected' : '' ?>
+                            >
+
+                                <?= htmlspecialchars($brand->brand_name) ?>
+
+                                <?php if (!empty($brand->country)): ?>
+                                    (<?= htmlspecialchars($brand->country) ?>)
+                                <?php endif; ?>
+
+                            </option>
+
+                        <?php endforeach; ?>
+
+                    <?php endif; ?>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- MADE IN COUNTRY -->
+
+        <div class="col-md-6">
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    <?= __('made_in_country') ?>
+                </label>
+
+                <select name="country_id" class="form-select">
+
+                    <option value="">
+                        <?= __('select_country') ?>
+                    </option>
+
+                    <?php if (!empty($data['countries'])): ?>
+
+                        <?php foreach ($data['countries'] as $country): ?>
+
+                            <option
+                                value="<?= $country->id ?>"
+                                <?= (
+                                    (string)($inventory->country_id ?? '') ===
+                                    (string)$country->id
+                                ) ? 'selected' : '' ?>
+                            >
+
+                                <?= htmlspecialchars($country->country_name) ?>
+
+                                <?php if (!empty($country->country_code)): ?>
+                                    (<?= htmlspecialchars($country->country_code) ?>)
+                                <?php endif; ?>
+
+                            </option>
+
+                        <?php endforeach; ?>
+
+                    <?php endif; ?>
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
     <!-- CATEGORY + MIN STOCK -->
 
     <div class="row">
 
         <!-- CATEGORY -->
 
-        <div class="col-md-4">
+        <div class="col-md-6">
 
             <div class="mb-3">
 
@@ -81,13 +184,9 @@
                     <?= __('category') ?>
                 </label>
 
-                <select
-                    name="category"
-                    class="form-select"
-                >
+                <select name="category" class="form-select">
 
                     <?php
-
                     $categories = [
                         'CIVIL & STRUCTURAL'    => 'civil_structural',
                         'BUILDING & FINISHING'  => 'building_finishing',
@@ -103,10 +202,7 @@
                         'OTHER'                 => 'other'
                     ];
 
-                    foreach (
-                        $categories
-                        as $value => $translationKey
-                    ):
+                    foreach ($categories as $value => $translationKey):
                     ?>
 
                         <option
@@ -129,9 +225,9 @@
         </div>
 
 
-        <!-- MIN STOCK -->
+        <!-- MINIMUM STOCK -->
 
-        <div class="col-md-4">
+        <div class="col-md-6">
 
             <div class="mb-3">
 
@@ -142,7 +238,7 @@
                 <input
                     type="number"
                     name="min_stock"
-                    value="<?= $inventory->min_stock ?? 10 ?>"
+                    value="<?= htmlspecialchars($inventory->min_stock ?? 10) ?>"
                     class="form-control"
                     min="0"
                 >
@@ -154,62 +250,105 @@
     </div>
 
 
-    <!-- COST PRICE -->
+    <!-- UNIT CONFIGURATION -->
 
-    <div class="mb-3">
-
-        <label class="form-label">
-            <?= __('cost_price') ?>
-        </label>
-
-        <input
-            type="number"
-            step="0.01"
-            min="0"
-            name="cost_price"
-            value="<?= htmlspecialchars($inventory->cost_price ?? '') ?>"
-            class="form-control"
-        >
-
-    </div>
+    <h5 class="mt-4">
+        <?= __('unit_configuration') ?>
+    </h5>
 
 
-    <!-- PRICE PER BASE UNIT -->
+    <div class="row">
 
-    <div class="mb-3">
+        <!-- BASE UNIT -->
 
-        <label class="form-label">
-            <?= __('price_per_base_unit') ?>
-        </label>
+        <div class="col-md-6">
 
-        <input
-            type="number"
-            step="0.01"
-            min="0"
-            name="price_per_base"
-            value="<?= htmlspecialchars($inventory->price_per_base ?? '') ?>"
-            class="form-control"
-        >
+            <div class="mb-3">
 
-    </div>
+                <label class="form-label">
+                    <?= __('base_unit') ?>
+                </label>
+
+                <select name="base_unit" class="form-select">
+
+                    <option
+                        value="piece"
+                        <?= ($inventory->base_unit ?? 'piece') === 'piece'
+                            ? 'selected'
+                            : '' ?>
+                    >
+                        <?= __('piece') ?>
+                    </option>
+
+                    <option
+                        value="meter"
+                        <?= ($inventory->base_unit ?? '') === 'meter'
+                            ? 'selected'
+                            : '' ?>
+                    >
+                        <?= __('meter') ?>
+                    </option>
+
+                    <option
+                        value="kg"
+                        <?= ($inventory->base_unit ?? '') === 'kg'
+                            ? 'selected'
+                            : '' ?>
+                    >
+                        <?= __('kg') ?>
+                    </option>
+
+                    <option
+                        value="liter"
+                        <?= ($inventory->base_unit ?? '') === 'liter'
+                            ? 'selected'
+                            : '' ?>
+                    >
+                        <?= __('liter') ?>
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
 
 
-    <!-- PRICE PER SALE UNIT -->
+        <!-- ALLOW FRACTION -->
 
-    <div class="mb-3">
+        <div class="col-md-6">
 
-        <label class="form-label">
-            <?= __('price_per_sale_unit') ?>
-        </label>
+            <div class="mb-3">
 
-        <input
-            type="number"
-            step="0.01"
-            min="0"
-            name="price_per_sale"
-            value="<?= htmlspecialchars($inventory->price_per_sale ?? '') ?>"
-            class="form-control"
-        >
+                <label class="form-label">
+                    <?= __('allow_fraction') ?>
+                </label>
+
+                <div class="form-check mt-2">
+
+                    <input
+                        type="checkbox"
+                        name="allow_fraction"
+                        value="1"
+                        class="form-check-input"
+                        id="allow_fraction"
+                        <?= !empty($inventory->allow_fraction)
+                            ? 'checked'
+                            : '' ?>
+                    >
+
+                    <label
+                        class="form-check-label"
+                        for="allow_fraction"
+                    >
+                        <?= __('example_fraction') ?>
+                    </label>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
@@ -218,7 +357,7 @@
 
     <button
         type="submit"
-        class="btn btn-success"
+        class="btn btn-success mt-4"
     >
 
         <i class="fas fa-save"></i>
@@ -230,7 +369,7 @@
 
     <a
         href="<?= URLROOT ?>/inventory"
-        class="btn btn-secondary"
+        class="btn btn-secondary mt-4"
     >
 
         <?= __('cancel') ?>

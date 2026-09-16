@@ -1,14 +1,20 @@
 <?php if (!empty($_SESSION['error'])) : ?>
+
     <div class="alert alert-danger">
-        <?= $_SESSION['error']; ?>
+        <?= htmlspecialchars($_SESSION['error']) ?>
     </div>
+
     <?php unset($_SESSION['error']); ?>
+
 <?php endif; ?>
 
+
 <?php if (!empty($data['error'])): ?>
+
     <div class="alert alert-danger">
-        <?= $data['error']; ?>
+        <?= htmlspecialchars($data['error']) ?>
     </div>
+
 <?php endif; ?>
 
 
@@ -24,128 +30,142 @@
 
     <div class="row">
 
+        <!-- ITEM NAME -->
+
         <div class="col-md-6">
-<br>
-            <label class="form-label">
-                <?= __('item_name') ?> *
-            </label>
+            <div class="mb-3">
 
-            <input
-                type="text"
-                name="name"
-                class="form-control"
-                value="<?= htmlspecialchars($_SESSION['old']['name'] ?? '') ?>"
-                required
-            >
+                <label class="form-label">
+                    <?= __('item_name') ?> *
+                </label>
 
+                <input
+                    type="text"
+                    name="name"
+                    class="form-control"
+                    value="<?= htmlspecialchars($_SESSION['old']['name'] ?? '') ?>"
+                    required
+                >
+
+            </div>
         </div>
 
 
+        <!-- SKU -->
+
         <div class="col-md-6">
-<br>
-            <label class="form-label">
-                <?= __('sku') ?> *
-            </label>
+            <div class="mb-3">
 
-            <input
-                type="text"
-                name="sku"
-                class="form-control"
-                value="<?= htmlspecialchars($_SESSION['old']['sku'] ?? '') ?>"
-                required
-            >
+                <label class="form-label">
+                    <?= __('sku') ?> *
+                </label>
 
+                <input
+                    type="text"
+                    name="sku"
+                    class="form-control"
+                    value="<?= htmlspecialchars($_SESSION['old']['sku'] ?? '') ?>"
+                    required
+                >
+
+            </div>
         </div>
 
     </div>
 
 
-    <!-- BRAND -->
+    <!-- BRAND + COUNTRY -->
 
     <div class="row mt-2">
 
+        <!-- BRAND -->
+
         <div class="col-md-6">
-<br>
-            <label class="form-label">
-                <?= __('brand') ?>
-            </label>
+            <div class="mb-3">
 
-            <select name="brand_id" class="form-select">
+                <label class="form-label">
+                    <?= __('brand') ?>
+                </label>
 
-                <option value="">
-                    <?= __('select_brand') ?>
-                </option>
+                <select name="brand_id" class="form-select">
 
-                <?php if (!empty($data['brands'])): ?>
-
-                    <?php foreach ($data['brands'] as $brand): ?>
-
-                        <option
-                            value="<?= $brand->id ?>"
-                            <?= (
-                                !empty($_SESSION['old']['brand_id']) &&
-                                $_SESSION['old']['brand_id'] == $brand->id
-                            ) ? 'selected' : '' ?>
-                        >
-
-                            <?= htmlspecialchars($brand->brand_name) ?>
-
-                            <?php if (!empty($brand->country)): ?>
-                                (<?= htmlspecialchars($brand->country) ?>)
-                            <?php endif; ?>
-
-                        </option>
-
-                    <?php endforeach; ?>
-
-                <?php endif; ?>
-
-            </select>
-
-        </div>
-
-    </div>
-
-
-    <!-- COUNTRY (MADE IN) -->
-
-    <div class="col-md-6">
-<br>
-        <label class="form-label">
-            <?= __('made_in_country') ?>
-        </label>
-
-        <select name="country_id" class="form-select">
-
-            <option value="">
-                <?= __('select_country') ?>
-            </option>
-
-            <?php if (!empty($data['countries'])): ?>
-
-                <?php foreach ($data['countries'] as $country): ?>
-
-                    <option
-                        value="<?= $country->id ?>"
-                        <?= (
-                            !empty($_SESSION['old']['country_id']) &&
-                            $_SESSION['old']['country_id'] == $country->id
-                        ) ? 'selected' : '' ?>
-                    >
-
-                        <?= htmlspecialchars($country->country_name) ?>
-
-                        <?php if (!empty($country->country_code)): ?>
-                            (<?= htmlspecialchars($country->country_code) ?>)
-                        <?php endif; ?>
-
+                    <option value="">
+                        <?= __('select_brand') ?>
                     </option>
 
-                <?php endforeach; ?>
+                    <?php if (!empty($data['brands'])): ?>
 
-            <?php endif; ?>
+                        <?php foreach ($data['brands'] as $brand): ?>
 
-        </select>
+                            <option
+                                value="<?= $brand->id ?>"
+                                <?= (
+                                    !empty($_SESSION['old']['brand_id']) &&
+                                    $_SESSION['old']['brand_id'] == $brand->id
+                                ) ? 'selected' : '' ?>
+                            >
+
+                                <?= htmlspecialchars($brand->brand_name) ?>
+
+                                <?php if (!empty($brand->country)): ?>
+                                    (<?= htmlspecialchars($brand->country) ?>)
+                                <?php endif; ?>
+
+                            </option>
+
+                        <?php endforeach; ?>
+
+                    <?php endif; ?>
+
+                </select>
+
+            </div>
+        </div>
+
+
+        <!-- MADE IN COUNTRY -->
+
+        <div class="col-md-6">
+            <div class="mb-3">
+
+                <label class="form-label">
+                    <?= __('made_in_country') ?>
+                </label>
+
+                <select name="country_id" class="form-select">
+
+                    <option value="">
+                        <?= __('select_country') ?>
+                    </option>
+
+                    <?php if (!empty($data['countries'])): ?>
+
+                        <?php foreach ($data['countries'] as $country): ?>
+
+                            <option
+                                value="<?= $country->id ?>"
+                                <?= (
+                                    !empty($_SESSION['old']['country_id']) &&
+                                    $_SESSION['old']['country_id'] == $country->id
+                                ) ? 'selected' : '' ?>
+                            >
+
+                                <?= htmlspecialchars($country->country_name) ?>
+
+                                <?php if (!empty($country->country_code)): ?>
+                                    (<?= htmlspecialchars($country->country_code) ?>)
+                                <?php endif; ?>
+
+                            </option>
+
+                        <?php endforeach; ?>
+
+                    <?php endif; ?>
+
+                </select>
+
+            </div>
+        </div>
 
     </div>
 
@@ -153,115 +173,76 @@
     <?php unset($_SESSION['old']); ?>
 
 
-    <!-- CATEGORY / MIN STOCK -->
+    <!-- CATEGORY + MIN STOCK -->
 
     <div class="row mt-2">
 
-        <div class="col-md-4">
-<br>
-            <label class="form-label">
-                <?= __('category') ?>
-            </label>
+        <!-- CATEGORY -->
 
-            <select name="category" class="form-select">
+        <div class="col-md-6">
+            <div class="mb-3">
 
-                <option value="CIVIL & STRUCTURAL">
-                    <?= __('civil_structural') ?>
-                </option>
+                <label class="form-label">
+                    <?= __('category') ?>
+                </label>
 
-                <option value="BUILDING & FINISHING">
-                    <?= __('building_finishing') ?>
-                </option>
+                <select name="category" class="form-select">
 
-                <option value="PLUMBING & DRAINAGE">
-                    <?= __('plumbing_drainage') ?>
-                </option>
+                    <?php
+                    $categories = [
+                        'CIVIL & STRUCTURAL'   => 'civil_structural',
+                        'BUILDING & FINISHING' => 'building_finishing',
+                        'PLUMBING & DRAINAGE'  => 'plumbing_drainage',
+                        'HVAC'                 => 'hvac',
+                        'ELECTRICAL'           => 'electrical',
+                        'FIRE FIGHTING & ALARM'=> 'fire_fighting_alarm',
+                        'LOW CURRENT'          => 'low_current',
+                        'HAND TOOLS'           => 'hand_tools',
+                        'EQUIPMENT'            => 'equipment',
+                        'SAFETY & PPE'         => 'safety_ppe',
+                        'CONSUMABLES'          => 'consumables',
+                        'OTHER'                => 'other'
+                    ];
 
-                <option value="HVAC">
-                    <?= __('hvac') ?>
-                </option>
+                    foreach ($categories as $value => $translationKey):
+                    ?>
 
-                <option value="ELECTRICAL">
-                    <?= __('electrical') ?>
-                </option>
+                        <option value="<?= htmlspecialchars($value) ?>">
+                            <?= __($translationKey) ?>
+                        </option>
 
-                <option value="FIRE FIGHTING & ALARM">
-                    <?= __('fire_fighting_alarm') ?>
-                </option>
+                    <?php endforeach; ?>
 
-                <option value="LOW CURRENT">
-                    <?= __('low_current') ?>
-                </option>
+                </select>
 
-                <option value="HAND TOOLS">
-                    <?= __('hand_tools') ?>
-                </option>
-
-                <option value="EQUIPMENT">
-                    <?= __('equipment') ?>
-                </option>
-
-                <option value="SAFETY & PPE">
-                    <?= __('safety_ppe') ?>
-                </option>
-
-                <option value="CONSUMABLES">
-                    <?= __('consumables') ?>
-                </option>
-
-                <option value="OTHER">
-                    <?= __('other') ?>
-                </option>
-
-            </select>
-
+            </div>
         </div>
 
 
-        <div class="col-md-4">
-<br>
-            <label class="form-label">
-                <?= __('min_stock') ?>
-            </label>
+        <!-- MINIMUM STOCK -->
 
-            <input
-                type="number"
-                name="min_stock"
-                class="form-control"
-                value="10"
-                min="0"
-            >
+        <div class="col-md-6">
+            <div class="mb-3">
 
+                <label class="form-label">
+                    <?= __('min_stock') ?>
+                </label>
+
+                <input
+                    type="number"
+                    name="min_stock"
+                    class="form-control"
+                    value="10"
+                    min="0"
+                >
+
+            </div>
         </div>
 
     </div>
 
 
-    <!-- COST -->
-
-    <div class="row mt-3">
-
-        <div class="col-md-4">
-<br>
-            <label class="form-label">
-                <?= __('cost_price') ?> *
-            </label>
-
-            <input
-                type="number"
-                name="cost_price"
-                step="0.01"
-                min="0"
-                class="form-control"
-                required
-            >
-
-        </div>
-
-    </div>
-
-
-    <!-- UNIT SYSTEM -->
+    <!-- UNIT CONFIGURATION -->
 
     <h5 class="mt-4">
         <?= __('unit_configuration') ?>
@@ -270,130 +251,71 @@
 
     <div class="row">
 
-        <div class="col-md-3">
-
-            <label class="form-label">
-                <?= __('base_unit') ?>
-            </label>
-
-            <select name="base_unit" class="form-select">
-
-                <option value="piece">
-                    <?= __('piece') ?>
-                </option>
-
-                <option value="meter">
-                    <?= __('meter') ?>
-                </option>
-
-                <option value="kg">
-                    <?= __('kg') ?>
-                </option>
-
-                <option value="liter">
-                    <?= __('liter') ?>
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <div class="col-md-3">
-
-            <label class="form-label">
-                <?= __('allow_fraction') ?>
-            </label>
-
-            <br>
-
-            <input
-                type="checkbox"
-                name="allow_fraction"
-                value="1"
-            >
-
-            <small class="text-muted">
-                <?= __('example_fraction') ?>
-            </small>
-
-        </div>
-
-
-        <div class="col-md-3">
-
-            <label class="form-label">
-                <?= __('sale_unit') ?>
-            </label>
-
-            <input
-                type="text"
-                name="sale_unit"
-                class="form-control"
-                placeholder="<?= __('sale_unit_placeholder') ?>"
-            >
-
-        </div>
-
-
-        <div class="col-md-3">
-
-            <label class="form-label">
-                <?= __('units_per_sale') ?>
-            </label>
-
-            <input
-                type="number"
-                name="units_per_sale"
-                class="form-control"
-                value="1"
-                min="1"
-            >
-
-        </div>
-
-    </div>
-
-
-    <!-- PRICING -->
-
-    <h5 class="mt-4">
-        <?= __('selling_prices') ?>
-    </h5>
-
-
-    <div class="row">
+        <!-- BASE UNIT -->
 
         <div class="col-md-6">
 
-            <label class="form-label">
-                <?= __('price_per_base_unit') ?>
-            </label>
+            <div class="mb-3">
 
-            <input
-                type="number"
-                name="price_per_base"
-                step="0.01"
-                min="0"
-                class="form-control"
-            >
+                <label class="form-label">
+                    <?= __('base_unit') ?>
+                </label>
+
+                <select name="base_unit" class="form-select">
+
+                    <option value="piece">
+                        <?= __('piece') ?>
+                    </option>
+
+                    <option value="meter">
+                        <?= __('meter') ?>
+                    </option>
+
+                    <option value="kg">
+                        <?= __('kg') ?>
+                    </option>
+
+                    <option value="liter">
+                        <?= __('liter') ?>
+                    </option>
+
+                </select>
+
+            </div>
 
         </div>
 
 
+        <!-- ALLOW FRACTION -->
+
         <div class="col-md-6">
 
-            <label class="form-label">
-                <?= __('price_per_sale_unit') ?>
-            </label>
+            <div class="mb-3">
 
-            <input
-                type="number"
-                name="price_per_sale"
-                step="0.01"
-                min="0"
-                class="form-control"
-            >
+                <label class="form-label">
+                    <?= __('allow_fraction') ?>
+                </label>
+
+                <div class="form-check mt-2">
+
+                    <input
+                        type="checkbox"
+                        name="allow_fraction"
+                        value="1"
+                        class="form-check-input"
+                        id="allow_fraction"
+                    >
+
+                    <label
+                        class="form-check-label"
+                        for="allow_fraction"
+                    >
+                        <?= __('example_fraction') ?>
+                    </label>
+
+                </div>
+
+            </div>
 
         </div>
 
