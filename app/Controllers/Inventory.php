@@ -18,267 +18,169 @@ class Inventory extends Controller
         $this->view('inventory/index', $data);
     }
 
-    // public function create()
-    // {
-    //     AuthHelper::can('inventory.create');
-
-    //     $inventoryModel = $this->model('Inventory');
-    //     $inventoryStockModel = $this->model('InventoryLocationStock');
-    //     $brandModel = $this->model('Brand');
-    //     $countryModel = $this->model('Country');
-    //     $locationModel = $this->model('InventoryLocation');
-
-    //     // ALWAYS LOAD VIEW DATA
-    //     $viewData = [
-    //         'brands' => $brandModel->getAll(),
-    //         'countries' => $countryModel->getAll(),
-    //         'locations' => $locationModel->getAll(),
-    //         'default_location_id' => 1
-    //     ];
-
-    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    //         // =========================
-    //         // REQUIRED VALIDATION FIRST
-    //         // =========================
-    //         if (!isset($_POST['location_id']) || empty($_POST['location_id'])) {
-    //             $_SESSION['error'] = "Storage location is required";
-    //             $_SESSION['old'] = $_POST;
-
-    //             header('Location: ' . URLROOT . '/inventory/create');
-    //             exit;
-    //         }
-
-    //         // =========================
-    //         // COLLECT INPUT
-    //         // =========================
-    //         $input = [
-    //             'name'         => trim($_POST['name'] ?? ''),
-    //             'sku'          => trim($_POST['sku'] ?? ''),
-    //             'category'     => $_POST['category'] ?? null,
-
-    //             'brand_id'     => !empty($_POST['brand_id']) ? (int)$_POST['brand_id'] : null,
-    //             'country_id'   => !empty($_POST['country_id']) ? (int)$_POST['country_id'] : null,
-
-    //             'location_id'  => (int)$_POST['location_id'],
-
-    //             'quantity'     => (float)($_POST['quantity'] ?? 0),
-    //             'min_stock'    => (int)($_POST['min_stock'] ?? 10),
-
-    //             'cost_price'   => (float)($_POST['cost_price'] ?? 0),
-    //         ];
-
-    //         // =========================
-    //         // BASIC VALIDATION
-    //         // =========================
-    //         if ($input['name'] === '' || $input['sku'] === '') {
-    //             $_SESSION['error'] = "Name and SKU are required";
-    //             $_SESSION['old'] = $_POST;
-
-    //             header('Location: ' . URLROOT . '/inventory/create');
-    //             exit;
-    //         }
-
-    //         if ($input['quantity'] < 0) {
-    //             $_SESSION['error'] = "Invalid quantity";
-    //             $_SESSION['old'] = $_POST;
-
-    //             header('Location: ' . URLROOT . '/inventory/create');
-    //             exit;
-    //         }
-
-    //         // =========================
-    //         // SAVE
-    //         // =========================
-    //         $inventoryId = $inventoryModel->create($input);
-
-    //         if ($inventoryId) {
-
-    //             $inventoryStockModel->createInitialStock(
-    //                 $inventoryId,
-    //                 $input['location_id'],
-    //                 $input['quantity']
-    //             );
-
-    //             header('Location: ' . URLROOT . '/inventory');
-    //             exit;
-    //         }
-
-    //         $_SESSION['error'] = "Insert failed";
-    //         $_SESSION['old'] = $_POST;
-
-    //         header('Location: ' . URLROOT . '/inventory/create');
-    //         exit;
-    //     }
-
-    //     $this->view('inventory/create', $viewData);
-    // }
-
-
-
     public function create()
-{
-    AuthHelper::can('inventory.create');
+    {
+        AuthHelper::can('inventory.create');
 
-    $inventoryModel = $this->model('Inventory');
-    $brandModel = $this->model('Brand');
-    $countryModel = $this->model('Country');
+        $inventoryModel = $this->model('Inventory');
+        $brandModel = $this->model('Brand');
+        $countryModel = $this->model('Country');
 
-    $viewData = [
-        'brands' => $brandModel->getAll(),
-        'countries' => $countryModel->getAll()
-    ];
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-      $input = [
-    'name' => trim($_POST['name'] ?? ''),
-    'sku' => trim($_POST['sku'] ?? ''),
-    'category' => $_POST['category'] ?? null,
-
-    'brand_id' => !empty($_POST['brand_id'])
-        ? (int)$_POST['brand_id']
-        : null,
-
-    'country_id' => !empty($_POST['country_id'])
-        ? (int)$_POST['country_id']
-        : null,
-
-    'min_stock' => (int)($_POST['min_stock'] ?? 10),
-
-    'allow_fraction' =>
-        !empty($_POST['allow_fraction']) ? 1 : 0
-];
-
-        if ($input['name'] === '' || $input['sku'] === '') {
-
-            $_SESSION['error'] = "Name and SKU are required";
-            $_SESSION['old'] = $_POST;
-
-            header(
-                'Location: ' .
-                URLROOT .
-                '/inventory/create'
-            );
-
-            exit;
-        }
-
-        $inventoryId = $inventoryModel->create($input);
-
-        if ($inventoryId) {
-
-            header(
-                'Location: ' .
-                URLROOT .
-                '/inventory'
-            );
-
-            exit;
-        }
-
-        $_SESSION['error'] = "Insert failed";
-        $_SESSION['old'] = $_POST;
-
-        header(
-            'Location: ' .
-            URLROOT .
-            '/inventory/create'
-        );
-
-        exit;
-    }
-
-    $this->view(
-        'inventory/create',
-        $viewData
-    );
-}
-
- public function edit($id)
-{
-    AuthHelper::can('inventory.edit');
-
-    $inventoryModel = $this->model('Inventory');
-    $brandModel     = $this->model('Brand');
-    $countryModel   = $this->model('Country');
-
-    $inventory = $inventoryModel->getById($id);
-
-    if (!$inventory) {
-
-        header('Location: ' . URLROOT . '/inventory');
-        exit;
-    }
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-        $input = [
-
-            'name' => trim($_POST['name'] ?? ''),
-
-            'sku' => trim($_POST['sku'] ?? ''),
-
-            'category' => $_POST['category'] ?? null,
-
-            'brand_id' => !empty($_POST['brand_id'])
-                ? (int)$_POST['brand_id']
-                : null,
-
-            'country_id' => !empty($_POST['country_id'])
-                ? (int)$_POST['country_id']
-                : null,
-
-            'min_stock' => (int)($_POST['min_stock'] ?? 10),
-
-            'allow_fraction' =>
-                !empty($_POST['allow_fraction']) ? 1 : 0
+        $viewData = [
+            'brands' => $brandModel->getAll(),
+            'countries' => $countryModel->getAll()
         ];
 
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        if ($input['name'] === '' || $input['sku'] === '') {
+            $input = [
+                'name' => trim($_POST['name'] ?? ''),
+                'sku' => trim($_POST['sku'] ?? ''),
+                'category' => $_POST['category'] ?? null,
 
-            $_SESSION['error'] = 'Name and SKU are required';
+                'brand_id' => !empty($_POST['brand_id'])
+                    ? (int)$_POST['brand_id']
+                    : null,
 
+                'country_id' => !empty($_POST['country_id'])
+                    ? (int)$_POST['country_id']
+                    : null,
+
+                'min_stock' => (int)($_POST['min_stock'] ?? 10),
+
+                'allow_fraction' =>
+                !empty($_POST['allow_fraction']) ? 1 : 0
+            ];
+
+            if ($input['name'] === '' || $input['sku'] === '') {
+
+                $_SESSION['error'] = "Name and SKU are required";
+                $_SESSION['old'] = $_POST;
+
+                header(
+                    'Location: ' .
+                        URLROOT .
+                        '/inventory/create'
+                );
+
+                exit;
+            }
+
+            $inventoryId = $inventoryModel->create($input);
+
+            if ($inventoryId) {
+
+                header(
+                    'Location: ' .
+                        URLROOT .
+                        '/inventory'
+                );
+
+                exit;
+            }
+
+            $_SESSION['error'] = "Insert failed";
             $_SESSION['old'] = $_POST;
 
             header(
                 'Location: ' .
-                URLROOT .
-                '/inventory/edit/' .
-                (int)$id
+                    URLROOT .
+                    '/inventory/create'
+            );
+
+            exit;
+        }
+
+        $this->view(
+            'inventory/create',
+            $viewData
+        );
+    }
+
+    public function edit($id)
+    {
+        AuthHelper::can('inventory.edit');
+
+        $inventoryModel = $this->model('Inventory');
+        $brandModel     = $this->model('Brand');
+        $countryModel   = $this->model('Country');
+
+        $inventory = $inventoryModel->getById($id);
+
+        if (!$inventory) {
+
+            header('Location: ' . URLROOT . '/inventory');
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $input = [
+
+                'name' => trim($_POST['name'] ?? ''),
+
+                'sku' => trim($_POST['sku'] ?? ''),
+
+                'category' => $_POST['category'] ?? null,
+
+                'brand_id' => !empty($_POST['brand_id'])
+                    ? (int)$_POST['brand_id']
+                    : null,
+
+                'country_id' => !empty($_POST['country_id'])
+                    ? (int)$_POST['country_id']
+                    : null,
+
+                'min_stock' => (int)($_POST['min_stock'] ?? 10),
+
+                'allow_fraction' =>
+                !empty($_POST['allow_fraction']) ? 1 : 0
+            ];
+
+
+            if ($input['name'] === '' || $input['sku'] === '') {
+
+                $_SESSION['error'] = 'Name and SKU are required';
+
+                $_SESSION['old'] = $_POST;
+
+                header(
+                    'Location: ' .
+                        URLROOT .
+                        '/inventory/edit/' .
+                        (int)$id
+                );
+
+                exit;
+            }
+
+
+            $inventoryModel->update($id, $input);
+
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/inventory'
             );
 
             exit;
         }
 
 
-        $inventoryModel->update($id, $input);
+        $data['inventory'] = $inventory;
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/inventory'
+        $data['brands'] = $brandModel->getAll();
+
+        $data['countries'] = $countryModel->getAll();
+
+        $data['units'] = $unitModel->getActive();
+
+
+        $this->view(
+            'inventory/edit',
+            $data
         );
-
-        exit;
     }
-
-
-    $data['inventory'] = $inventory;
-
-    $data['brands'] = $brandModel->getAll();
-
-    $data['countries'] = $countryModel->getAll();
-
-    $data['units'] = $unitModel->getActive();
-
-
-    $this->view(
-        'inventory/edit',
-        $data
-    );
-}
 
     public function delete($id)
     {
@@ -323,122 +225,121 @@ class Inventory extends Controller
         $this->view('inventory/view', $data);
     }
 
-//* show stock details for a specific inventory item stored in different locations, including reserved quantities and available stock *//
+    //* show stock details for a specific inventory item stored in different locations, including reserved quantities and available stock *//
     public function stockDetails($id)
-{
-    AuthHelper::can('inventory.view');
+    {
+        AuthHelper::can('inventory.view');
 
-    $inventoryModel =
-        $this->model('Inventory');
+        $inventoryModel =
+            $this->model('Inventory');
 
-    $reservationModel =
-        $this->model('InventoryReservation');
+        $reservationModel =
+            $this->model('InventoryReservation');
 
 
-    /*
+        /*
     |--------------------------------------------------------------
     | GET INVENTORY ITEM
     |--------------------------------------------------------------
     */
 
-    $item =
-        $inventoryModel->getById($id);
+        $item =
+            $inventoryModel->getById($id);
 
-    if (!$item) {
+        if (!$item) {
 
-        FlashHelper::error(
-            'Inventory item not found.'
-        );
+            FlashHelper::error(
+                'Inventory item not found.'
+            );
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/inventory'
-        );
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/inventory'
+            );
 
-        exit;
-    }
+            exit;
+        }
 
 
-    /*
+        /*
     |--------------------------------------------------------------
     | GET LOCATION STOCK BREAKDOWN
     |--------------------------------------------------------------
     */
 
-    $locations =
-        $inventoryModel
+        $locations =
+            $inventoryModel
             ->getLocationBreakdown(
                 (int)$id
             );
 
 
-    /*
+        /*
     |--------------------------------------------------------------
     | TOTAL ACTIVE RESERVATIONS
     |--------------------------------------------------------------
     */
 
-    $reservedQty =
-        $reservationModel
+        $reservedQty =
+            $reservationModel
             ->getActiveReservedQty(
                 (int)$id
             );
 
 
-    /*
+        /*
     |--------------------------------------------------------------
     | CALCULATE TOTAL PHYSICAL STOCK
     |--------------------------------------------------------------
     */
 
-    $locationTotal = 0;
+        $locationTotal = 0;
 
-    foreach ($locations as $location) {
+        foreach ($locations as $location) {
 
-        $locationTotal +=
-            (float)$location->physical_qty;
-    }
+            $locationTotal +=
+                (float)$location->physical_qty;
+        }
 
 
-    /*
+        /*
     |--------------------------------------------------------------
     | PREPARE VIEW DATA
     |--------------------------------------------------------------
     */
 
-    $data = [
+        $data = [
 
-        'item' => $item,
+            'item' => $item,
 
-        'locations' => $locations,
+            'locations' => $locations,
 
-        // Existing stored global quantity
-        'system_qty' =>
+            // Existing stored global quantity
+            'system_qty' =>
             (float)$item->quantity,
 
-        // Actual total from all locations
-        'location_total' =>
+            // Actual total from all locations
+            'location_total' =>
             $locationTotal,
 
-        // Active reservations
-        'reserved_qty' =>
+            // Active reservations
+            'reserved_qty' =>
             (float)$reservedQty,
 
-        // Actual available stock
-        'available_qty' =>
+            // Actual available stock
+            'available_qty' =>
             max(
                 0,
                 $locationTotal - $reservedQty
             )
 
-    ];
+        ];
 
 
-    $this->view(
-        'inventory/stock_details',
-        $data
-    );
-}
-
+        $this->view(
+            'inventory/stock_details',
+            $data
+        );
     }
+}

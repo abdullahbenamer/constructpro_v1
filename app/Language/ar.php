@@ -651,7 +651,7 @@ return [
     'example_fraction'                 => 'مثال: 2.5 متر',
     // 'sale_unit'                        => 'وحدة البيع',
     //'sale_unit_placeholder'            => 'لفة / صندوق',
-    'units_per_sale'                   => 'الوحدات لكل عملية بيع',
+   // 'units_per_sale'                   => 'الوحدات لكل عملية بيع',
     'selling_prices'                   => 'أسعار البيع',
     'price_per_base_unit'              => 'السعر لكل وحدة أساسية',
    // 'price_per_sale_unit'              => 'السعر لكل وحدة بيع',
