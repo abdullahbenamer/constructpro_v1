@@ -218,7 +218,7 @@ public function getByLocation($location_id)
         LEFT JOIN countries c
             ON c.id = b.country_id
 
-        WHERE inventory.quantity >= 0
+        WHERE inventory.id > 0
     ";
 
     $params = [];
@@ -345,13 +345,20 @@ public function getAll()
 //     )->fetchAll();
 // }
 
-    public function getInventoryValue()
+public function getInventoryValue()
 {
-    return $this->db->query("
+    $result = $this->db->query("
         SELECT
-            SUM(quantity * cost_price) AS total_value
-        FROM inventory
-    ")->fetch()->total_value;
+            COALESCE(
+                SUM(ils.quantity * i.cost_price),
+                0
+            ) AS total_value
+        FROM inventory i
+        LEFT JOIN inventory_location_stock ils
+            ON ils.inventory_id = i.id
+    ")->fetch();
+
+    return (float)$result->total_value;
 }
 
   public function getById($id)
@@ -460,51 +467,72 @@ public function create($data)
     return $this->db->lastInsertId();
 }
 
-    public function getByBarcode($barcode)
-    {
-        return $this->db->query(
+public function getByBarcode($barcode)
+{
+    return $this->db->query(
+        "
+        SELECT
+            inventory.*,
 
-            "
-            SELECT
-                inventory.*,
-                b.brand_name AS brand_name,
-                c.country_name AS brand_country,
-                    c.country_code AS country_code,
-    
+            b.brand_name AS brand_name,
+            c.country_name AS brand_country,
+            c.country_code AS country_code,
+
+            (
+                SELECT COALESCE(
+                    SUM(ils.quantity),
+                    0
+                )
+                FROM inventory_location_stock ils
+                WHERE ils.inventory_id = inventory.id
+            ) AS location_total,
+
+            (
+                SELECT COALESCE(
+                    SUM(ir.quantity),
+                    0
+                )
+                FROM inventory_reservations ir
+                WHERE ir.inventory_id = inventory.id
+                AND ir.status = 'ACTIVE'
+            ) AS reserved_qty,
+
+            (
                 (
-                    SELECT COALESCE(SUM(ir.quantity), 0)
-    
+                    SELECT COALESCE(
+                        SUM(ils.quantity),
+                        0
+                    )
+                    FROM inventory_location_stock ils
+                    WHERE ils.inventory_id = inventory.id
+                )
+                -
+                (
+                    SELECT COALESCE(
+                        SUM(ir.quantity),
+                        0
+                    )
                     FROM inventory_reservations ir
-    
                     WHERE ir.inventory_id = inventory.id
                     AND ir.status = 'ACTIVE'
-    
-                ) AS reserved_qty,
-    
-                (
-                    inventory.quantity -
-    
-                    (
-                        SELECT COALESCE(SUM(ir.quantity), 0)
-    
-                        FROM inventory_reservations ir
-    
-                        WHERE ir.inventory_id = inventory.id
-                        AND ir.status = 'ACTIVE'
-                    )
-    
-                ) AS available_qty
-    
-            FROM inventory
-            LEFT JOIN brands b ON b.id = inventory.brand_id
-            LEFT JOIN countries c  ON c.id = b.country_id    
-            WHERE inventory.sku = ?
-            LIMIT 1
-            ",
-            [$barcode]
+                )
+            ) AS available_qty
 
-        )->fetch();
-    }
+        FROM inventory
+
+        LEFT JOIN brands b
+            ON b.id = inventory.brand_id
+
+        LEFT JOIN countries c
+            ON c.id = b.country_id
+
+        WHERE inventory.sku = ?
+
+        LIMIT 1
+        ",
+        [$barcode]
+    )->fetch();
+}
 
     public function update($id, $data)
     {
