@@ -677,18 +677,38 @@ public function getByBarcode($barcode)
 
 public function getAvailableStock($inventory_id)
 {
-    $item = $this->getById($inventory_id);
+    $inventory_id = (int)$inventory_id;
 
-    if (!$item) {
+    if ($inventory_id <= 0) {
         return 0;
     }
 
-    $reserved = $this->getReservedQty($inventory_id);
+    $result = $this->db->query(
+        "
+        SELECT
+            GREATEST(
+                COALESCE(SUM(ils.quantity), 0)
+                -
+                COALESCE((
+                    SELECT SUM(ir.quantity)
+                    FROM inventory_reservations ir
+                    WHERE ir.inventory_id = ?
+                    AND ir.status = 'ACTIVE'
+                ), 0),
+                0
+            ) AS available_qty
 
-    return max(
-        0,
-        (float)$item->quantity - $reserved
-    );
+        FROM inventory_location_stock ils
+
+        WHERE ils.inventory_id = ?
+        ",
+        [
+            $inventory_id,
+            $inventory_id
+        ]
+    )->fetch();
+
+    return (float)($result->available_qty ?? 0);
 }
 
     // Reserved quantity
