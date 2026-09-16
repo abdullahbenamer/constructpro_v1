@@ -581,51 +581,88 @@ public function getByBarcode($barcode)
     }
 
        // reduce avoiding (Race Condition)
-    public function reduceStockSafe($id, $qty)
-    {
-        $stmt = $this->db->query(
-            "UPDATE inventory 
-         SET quantity = quantity - ? 
-         WHERE id = ? AND quantity >= ?",
-            [$qty, $id, $qty]
-        );
+  public function reduceStockSafe($id, $location_id, $qty)
+{
+    $qty = (float)$qty;
 
-        return $stmt->rowCount() > 0;
+    if ($id <= 0 || $location_id <= 0 || $qty <= 0) {
+        return false;
     }
 
-    // address the RACE CONDITION in inventory reservation
-    public function reduceAvailableStockSafe($id, $qty)
-    {
-        $stmt = $this->db->query(
-
-            "
-        UPDATE inventory
-
+    $stmt = $this->db->query(
+        "
+        UPDATE inventory_location_stock
         SET quantity = quantity - ?
+        WHERE inventory_id = ?
+        AND location_id = ?
+        AND quantity >= ?
+        ",
+        [
+            $qty,
+            $id,
+            $location_id,
+            $qty
+        ]
+    );
 
-        WHERE id = ?
+    if ($stmt->rowCount() <= 0) {
+        return false;
+    }
+
+    return true;
+}
+
+    // address the RACE CONDITION in inventory reservation
+ public function reduceAvailableStockSafe(
+    $id,
+    $location_id,
+    $qty
+) {
+    $qty = (float)$qty;
+
+    if ($id <= 0 || $location_id <= 0 || $qty <= 0) {
+        return false;
+    }
+
+    $stmt = $this->db->query(
+        "
+        UPDATE inventory_location_stock ils
+
+        SET ils.quantity = ils.quantity - ?
+
+        WHERE ils.inventory_id = ?
+        AND ils.location_id = ?
 
         AND
         (
-            quantity -
+            ils.quantity -
 
             (
-                SELECT COALESCE(SUM(ir.quantity), 0)
+                SELECT COALESCE(
+                    SUM(ir.quantity),
+                    0
+                )
 
                 FROM inventory_reservations ir
 
-                WHERE ir.inventory_id = inventory.id
+                WHERE ir.inventory_id = ?
+                AND ir.location_id = ?
                 AND ir.status = 'ACTIVE'
             )
-
         ) >= ?
         ",
-            [$qty, $id, $qty]
+        [
+            $qty,
+            $id,
+            $location_id,
+            $id,
+            $location_id,
+            $qty
+        ]
+    );
 
-        );
-
-        return $stmt->rowCount() > 0;
-    }
+    return $stmt->rowCount() > 0;
+}
 
 
     public function skuExists($sku)
@@ -638,23 +675,21 @@ public function getByBarcode($barcode)
         return $stmt->fetch() ? true : false;
     }
 
-    public function getAvailableStock($inventory_id)
-    {
-        $item = $this->getById($inventory_id);
+public function getAvailableStock($inventory_id)
+{
+    $item = $this->getById($inventory_id);
 
-        if (!$item) {
-            return 0;
-        }
-
-        $reservationModel =
-            new InventoryReservationModel();
-
-        $reserved =
-            $reservationModel
-            ->getActiveReservedQty($inventory_id);
-
-        return (float)$item->quantity - $reserved;
+    if (!$item) {
+        return 0;
     }
+
+    $reserved = $this->getReservedQty($inventory_id);
+
+    return max(
+        0,
+        (float)$item->quantity - $reserved
+    );
+}
 
     // Reserved quantity
     public function getReservedQty($inventory_id)
@@ -691,22 +726,10 @@ public function reduceAvailableStockByLocationSafe($inventory_id, $location_id, 
     return $stmt->rowCount() > 0;
 }
 
-    public function getAvailableQty($inventory_id)
-    {
-        $item = $this->getById($inventory_id);
-
-        if (!$item) {
-            return 0;
-        }
-
-        $reserved =
-            $this->getReservedQty($inventory_id);
-
-        return
-            (float)$item->quantity
-            -
-            $reserved;
-    }
+public function getAvailableQty($inventory_id)
+{
+    return $this->getAvailableStock($inventory_id);
+}
 
 public function getBySku($sku)
 {
