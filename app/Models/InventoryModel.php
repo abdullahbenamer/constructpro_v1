@@ -428,19 +428,13 @@ public function create($data)
             country_id,
             quantity,
             min_stock,
-            cost_price,
             base_unit,
-            allow_fraction,
-            sale_unit,
-            units_per_sale,
-            price_per_base,
-            price_per_sale
+            allow_fraction
         )
         VALUES
         (
             ?, ?, ?, ?, ?,
             0,
-            ?, ?, ?, ?, ?,
             ?, ?, ?
         )",
         [
@@ -449,18 +443,9 @@ public function create($data)
             $data['sku'],
             $data['brand_id'],
             $data['country_id'],
-
             $data['min_stock'],
-            $data['cost_price'],
-
-            $data['base_unit'] ?? 'unit',
-            $data['allow_fraction'] ?? 0,
-            $data['sale_unit'] ?? null,
-
-            $data['units_per_sale'] ?? 1,
-
-            $data['price_per_base'] ?? 0,
-            $data['price_per_sale'] ?? 0
+            $data['base_unit'] ?? 'piece',
+            $data['allow_fraction'] ?? 0
         ]
     );
 

@@ -131,42 +131,26 @@ class Inventory extends Controller
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        $input = [
-            'name'         => trim($_POST['name'] ?? ''),
-            'sku'          => trim($_POST['sku'] ?? ''),
-            'category'     => $_POST['category'] ?? null,
+      $input = [
+    'name' => trim($_POST['name'] ?? ''),
+    'sku' => trim($_POST['sku'] ?? ''),
+    'category' => $_POST['category'] ?? null,
 
-            'brand_id'     => !empty($_POST['brand_id'])
-                ? (int)$_POST['brand_id']
-                : null,
+    'brand_id' => !empty($_POST['brand_id'])
+        ? (int)$_POST['brand_id']
+        : null,
 
-            'country_id'   => !empty($_POST['country_id'])
-                ? (int)$_POST['country_id']
-                : null,
+    'country_id' => !empty($_POST['country_id'])
+        ? (int)$_POST['country_id']
+        : null,
 
-            'min_stock'    => (int)($_POST['min_stock'] ?? 10),
+    'min_stock' => (int)($_POST['min_stock'] ?? 10),
 
-            'cost_price'   => (float)($_POST['cost_price'] ?? 0),
+    'base_unit' => $_POST['base_unit'] ?? 'piece',
 
-            'base_unit'    => $_POST['base_unit'] ?? 'unit',
-
-            'allow_fraction' =>
-                !empty($_POST['allow_fraction']) ? 1 : 0,
-
-            'sale_unit' =>
-                !empty($_POST['sale_unit'])
-                    ? $_POST['sale_unit']
-                    : null,
-
-            'units_per_sale' =>
-                (int)($_POST['units_per_sale'] ?? 1),
-
-            'price_per_base' =>
-                (float)($_POST['price_per_base'] ?? 0),
-
-            'price_per_sale' =>
-                (float)($_POST['price_per_sale'] ?? 0)
-        ];
+    'allow_fraction' =>
+        !empty($_POST['allow_fraction']) ? 1 : 0
+];
 
         if ($input['name'] === '' || $input['sku'] === '') {
 
