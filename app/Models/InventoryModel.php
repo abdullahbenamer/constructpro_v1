@@ -378,44 +378,6 @@ public function getInventoryValue()
     )->fetch();
 }
     
-//     public function create($data)
-// {
-//      $this->db->query(
-//         "INSERT INTO inventory 
-//         (name, category, sku, brand_id, country_id, location_id,
-//          quantity, min_stock, cost_price,
-//          base_unit, allow_fraction, sale_unit, units_per_sale,
-//          price_per_base, price_per_sale)
-
-//         VALUES (?, ?, ?, ?, ?, ?,
-//                 ?, ?, ?,
-//                 ?, ?, ?, ?,
-//                 ?, ?)",
-//         [
-//             $data['name'],
-//             $data['category'],
-//             $data['sku'],
-//             $data['brand_id'],
-//             $data['country_id'],
-//             $data['location_id'],   
-
-//             $data['quantity'],
-//             $data['min_stock'],
-//             $data['cost_price'],
-
-//             $data['base_unit'] ?? 'unit',
-//             $data['allow_fraction'] ?? 0,
-//             $data['sale_unit'] ?? null,
-//             $data['units_per_sale'] ?? 1,
-
-//             $data['price_per_base'] ?? 0,
-//             $data['price_per_sale'] ?? 0
-//         ]
-//     )->rowCount() > 0;
-
-//      return $this->db->lastInsertId();
-// }
-
 public function create($data)
 {
     $this->db->query(
@@ -428,14 +390,13 @@ public function create($data)
             country_id,
             quantity,
             min_stock,
-            base_unit,
             allow_fraction
         )
         VALUES
         (
             ?, ?, ?, ?, ?,
             0,
-            ?, ?, ?
+            ?, ?
         )",
         [
             $data['name'],
@@ -444,7 +405,6 @@ public function create($data)
             $data['brand_id'],
             $data['country_id'],
             $data['min_stock'],
-            $data['base_unit'] ?? 'piece',
             $data['allow_fraction'] ?? 0
         ]
     );
@@ -519,46 +479,33 @@ public function getByBarcode($barcode)
     )->fetch();
 }
 
-    public function update($id, $data)
-    {
-        $existing = $this->getById($id);
-
-        return $this->db->query(
-            "UPDATE inventory SET 
-            name = ?, 
-            category = ?, 
-            sku = ?, 
-              brand_id = ?,
-              country_id = ?,
-            quantity = ?, 
-            min_stock = ?, 
-            cost_price = ?, 
-            base_unit = ?, 
-            allow_fraction = ?, 
-            sale_unit = ?, 
-            units_per_sale = ?, 
-            price_per_base = ?, 
-            price_per_sale = ?
-         WHERE id = ?",
-            [
-                $data['name'] ?? $existing->name,
-                $data['category'] ?? $existing->category,
-                $data['sku'] ?? $existing->sku,
-                $data['brand_id'] ?? $existing->brand_id,
-                 $data['country_id'] ?? $existing->country_id,
-                $data['quantity'] ?? $existing->quantity,
-                $data['min_stock'] ?? $existing->min_stock,
-                $data['cost_price'] ?? $existing->cost_price,
-                $data['base_unit'] ?? $existing->base_unit,
-                $data['allow_fraction'] ?? $existing->allow_fraction,
-                $data['sale_unit'] ?? $existing->sale_unit,
-                $data['units_per_sale'] ?? $existing->units_per_sale,
-                $data['price_per_base'] ?? $existing->price_per_base,
-                $data['price_per_sale'] ?? $existing->price_per_sale,
-                $id
-            ]
-        )->rowCount() > 0;
-    }
+  public function update($id, $data)
+{
+    return $this->db->query(
+        "
+        UPDATE inventory
+        SET
+            name = ?,
+            sku = ?,
+            category = ?,
+            brand_id = ?,
+            country_id = ?,
+            min_stock = ?,
+            allow_fraction = ?
+        WHERE id = ?
+        ",
+        [
+            $data['name'],
+            $data['sku'],
+            $data['category'],
+            $data['brand_id'],
+            $data['country_id'],
+            $data['min_stock'],
+            $data['allow_fraction'] ?? 0,
+            (int)$id
+        ]
+    );
+}
 
     public function delete($id)
     {

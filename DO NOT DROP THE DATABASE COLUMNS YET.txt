@@ -7,6 +7,7 @@ cost_price
 price_per_base
 price_per_sale
 sale_unit
+base_unit,
 units_per_sale
 because we need to audit the rest of the system first and make sure nothing still references them.
 In particular, cost_price is different from selling prices: the ERP may legitimately need it for procurement/project-cost calculations and Goods Receipts.

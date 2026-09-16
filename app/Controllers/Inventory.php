@@ -146,8 +146,6 @@ class Inventory extends Controller
 
     'min_stock' => (int)($_POST['min_stock'] ?? 10),
 
-    'base_unit' => $_POST['base_unit'] ?? 'piece',
-
     'allow_fraction' =>
         !empty($_POST['allow_fraction']) ? 1 : 0
 ];
@@ -197,30 +195,90 @@ class Inventory extends Controller
     );
 }
 
-    public function edit($id)
-    {
-        AuthHelper::can('inventory.edit'); // ✅ ADD THIS
+ public function edit($id)
+{
+    AuthHelper::can('inventory.edit');
 
-        $model = $this->model('Inventory');
+    $inventoryModel = $this->model('Inventory');
+    $brandModel     = $this->model('Brand');
+    $countryModel   = $this->model('Country');
 
-        if ($_POST) {
-            if ($model->update($id, $_POST)) {
-                header('Location: ' . URLROOT . '/inventory');
-                exit;
-            }
-        }
+    $inventory = $inventoryModel->getById($id);
 
-        $item = $model->getById($id);
+    if (!$inventory) {
 
-        if (!$item) {
-            header('Location: ' . URLROOT . '/inventory');
+        header('Location: ' . URLROOT . '/inventory');
+        exit;
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        $input = [
+
+            'name' => trim($_POST['name'] ?? ''),
+
+            'sku' => trim($_POST['sku'] ?? ''),
+
+            'category' => $_POST['category'] ?? null,
+
+            'brand_id' => !empty($_POST['brand_id'])
+                ? (int)$_POST['brand_id']
+                : null,
+
+            'country_id' => !empty($_POST['country_id'])
+                ? (int)$_POST['country_id']
+                : null,
+
+            'min_stock' => (int)($_POST['min_stock'] ?? 10),
+
+            'allow_fraction' =>
+                !empty($_POST['allow_fraction']) ? 1 : 0
+        ];
+
+
+        if ($input['name'] === '' || $input['sku'] === '') {
+
+            $_SESSION['error'] = 'Name and SKU are required';
+
+            $_SESSION['old'] = $_POST;
+
+            header(
+                'Location: ' .
+                URLROOT .
+                '/inventory/edit/' .
+                (int)$id
+            );
+
             exit;
         }
 
-        $data['inventory'] = $item;
 
-        $this->view('inventory/edit', $data);
+        $inventoryModel->update($id, $input);
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/inventory'
+        );
+
+        exit;
     }
+
+
+    $data['inventory'] = $inventory;
+
+    $data['brands'] = $brandModel->getAll();
+
+    $data['countries'] = $countryModel->getAll();
+
+    $data['units'] = $unitModel->getActive();
+
+
+    $this->view(
+        'inventory/edit',
+        $data
+    );
+}
 
     public function delete($id)
     {
