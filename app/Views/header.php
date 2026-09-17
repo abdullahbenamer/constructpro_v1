@@ -119,6 +119,22 @@ $direction = Language::direction();
         rel="stylesheet">
 
 
+
+        <!-- Using local files -->
+
+        <!-- <link rel="stylesheet"
+      href="/assets/css/bootstrap.min.css">
+
+<link rel="stylesheet"
+      href="/assets/css/select2.min.css">
+
+<link rel="stylesheet"
+      href="/assets/fontawesome/css/all.min.css">
+
+<link rel="stylesheet"
+      href="/assets/css/fonts.css"> -->
+
+
     <!-- =====================================================
          SIDEBAR CSS
     ====================================================== -->

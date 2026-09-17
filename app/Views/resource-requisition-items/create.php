@@ -13,18 +13,13 @@
                 <?= __('add_new_item_to_requisition') ?>
             </small>
         </div>
-
         <a href="<?= URLROOT ?>/ResourceRequisitions/details/<?= $data['requisition_id']; ?>"
             class="btn btn-secondary">
 
             <i class="fas fa-arrow-left"></i>
             <?= __('back_to_requisition') ?>
-
         </a>
-
     </div>
-
-
     <div class="card shadow-sm">
 
         <div class="card-header">
@@ -151,7 +146,7 @@
                                     <option
                                         value="<?= (int)$resource->id ?>"
                                         data-source="RESOURCE"
-                                        data-unit="<?= htmlspecialchars($resource->unit_name) ?>"
+                                       data-unit="<?= htmlspecialchars($resource->unit_name ?? '') ?>"
                                         data-description="<?= htmlspecialchars($resource->resource_name) ?>">
 
                                         <!-- <?//= htmlspecialchars($resource->resource_code) ?>

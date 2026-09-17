@@ -3,14 +3,6 @@
     <?= __('inventory_management') ?>
 </h2>
 
-<a href="<?= URLROOT ?>/inventory/create"
-    class="btn btn-primary mb-3">
-
-    <i class="fas fa-plus"></i>
-    <?= __('add_item') ?>
-
-</a>
-
 <?php if (count($low_stock ?? []) > 0) : ?>
 
     <div class="alert alert-warning">

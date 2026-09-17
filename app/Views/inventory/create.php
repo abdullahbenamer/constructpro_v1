@@ -1,3 +1,7 @@
+<?php
+$old = $_SESSION['old'] ?? [];
+unset($_SESSION['old']);
+?>
 <?php if (!empty($_SESSION['error'])) : ?>
 
     <div class="alert alert-danger">
@@ -217,9 +221,53 @@
 
             </div>
         </div>
+      
+    <!-- UNIT CONFIGURATION -->
 
+    <h5 class="mt-4">
+        <?= __('unit_configuration') ?>
+    </h5>
 
-        <!-- MINIMUM STOCK -->
+   <div class="col-md-6">
+    <label class="form-label"><?= __('unit') ?></label>
+
+    <select name="unit_id" class="form-select" required>
+        <option value="">--- <?= __('select_unit') ?> ---</option>
+
+        <?php foreach ($units as $unit): ?>
+            <option value="<?= $unit->id ?>"
+                <?= (($old['unit_id'] ?? '') == $unit->id) ? 'selected' : '' ?>>
+                <?= htmlspecialchars(
+                    Language::get() === 'ar'
+                        ? ($unit->unit_name_a ?: $unit->unit_name)
+                        : $unit->unit_name
+                ) ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
+
+<div class="col-md-6">
+    <br>
+    <label class="form-label"><?= __('allow_fraction') ?></label>
+
+    <div class="form-check mt-2">
+        <input
+            type="checkbox"
+            name="allow_fraction"
+            value="1"
+            class="form-check-input"
+            id="allow_fraction"
+            <?= !empty($old['allow_fraction']) ? 'checked' : '' ?>
+        >
+
+        <label class="form-check-label" for="allow_fraction">
+            <?= __('allow_fraction_tick') ?>
+        </label>
+    </div>
+</div>
+
+  <!-- MINIMUM STOCK -->
 
         <div class="col-md-6">
             <div class="mb-3">
@@ -240,87 +288,6 @@
         </div>
 
     </div>
-
-
-    <!-- UNIT CONFIGURATION -->
-
-    <h5 class="mt-4">
-        <?= __('unit_configuration') ?>
-    </h5>
-
-
-    <div class="row">
-
-        <!-- BASE UNIT -->
-
-        <div class="col-md-6">
-
-            <div class="mb-3">
-
-                <label class="form-label">
-                    <?= __('base_unit') ?>
-                </label>
-
-                <select name="base_unit" class="form-select">
-
-                    <option value="piece">
-                        <?= __('piece') ?>
-                    </option>
-
-                    <option value="meter">
-                        <?= __('meter') ?>
-                    </option>
-
-                    <option value="kg">
-                        <?= __('kg') ?>
-                    </option>
-
-                    <option value="liter">
-                        <?= __('liter') ?>
-                    </option>
-
-                </select>
-
-            </div>
-
-        </div>
-
-
-        <!-- ALLOW FRACTION -->
-
-        <div class="col-md-6">
-
-            <div class="mb-3">
-
-                <label class="form-label">
-                    <?= __('allow_fraction') ?>
-                </label>
-
-                <div class="form-check mt-2">
-
-                    <input
-                        type="checkbox"
-                        name="allow_fraction"
-                        value="1"
-                        class="form-check-input"
-                        id="allow_fraction"
-                    >
-
-                    <label
-                        class="form-check-label"
-                        for="allow_fraction"
-                    >
-                        <?= __('example_fraction') ?>
-                    </label>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
 
     <!-- ACTIONS -->
 

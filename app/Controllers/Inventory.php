@@ -25,11 +25,13 @@ class Inventory extends Controller
         $inventoryModel = $this->model('Inventory');
         $brandModel = $this->model('Brand');
         $countryModel = $this->model('Country');
+        $unitModel = $this->model('Unit');
 
-        $viewData = [
-            'brands' => $brandModel->getAll(),
-            'countries' => $countryModel->getAll()
-        ];
+       $viewData = [
+    'brands' => $brandModel->getAll(),
+    'countries' => $countryModel->getAll(),
+    'units' => $unitModel->getActive()
+];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -45,6 +47,10 @@ class Inventory extends Controller
                 'country_id' => !empty($_POST['country_id'])
                     ? (int)$_POST['country_id']
                     : null,
+
+                    'unit_id' => !empty($_POST['unit_id'])
+    ? (int)$_POST['unit_id']
+    : null,
 
                 'min_stock' => (int)($_POST['min_stock'] ?? 10),
 
@@ -104,6 +110,7 @@ class Inventory extends Controller
         $inventoryModel = $this->model('Inventory');
         $brandModel     = $this->model('Brand');
         $countryModel   = $this->model('Country');
+        $unitModel = $this->model('Unit');
 
         $inventory = $inventoryModel->getById($id);
 
@@ -130,6 +137,10 @@ class Inventory extends Controller
                 'country_id' => !empty($_POST['country_id'])
                     ? (int)$_POST['country_id']
                     : null,
+
+                    'unit_id' => !empty($_POST['unit_id'])
+    ? (int)$_POST['unit_id']
+    : null,
 
                 'min_stock' => (int)($_POST['min_stock'] ?? 10),
 

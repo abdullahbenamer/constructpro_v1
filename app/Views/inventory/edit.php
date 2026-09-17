@@ -252,105 +252,45 @@
 
     <!-- UNIT CONFIGURATION -->
 
-    <h5 class="mt-4">
-        <?= __('unit_configuration') ?>
-    </h5>
+   <div class="col-md-6">
+    <label class="form-label"><?= __('unit') ?></label>
 
+    <select name="unit_id" class="form-select" required>
+        <option value=""><?= __('select_unit') ?></option>
 
-    <div class="row">
+        <?php foreach ($units as $unit): ?>
+            <option value="<?= $unit->id ?>"
+                <?= $inventory->unit_id == $unit->id ? 'selected' : '' ?>>
 
-        <!-- BASE UNIT -->
+                <?= htmlspecialchars(
+                    Language::get() === 'ar'
+                        ? ($unit->unit_name_a ?: $unit->unit_name)
+                        : $unit->unit_name
+                ) ?>
 
-        <div class="col-md-6">
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
 
-            <div class="mb-3">
+<div class="col-md-6">
+    <label class="form-label"><?= __('allow_fraction') ?></label>
 
-                <label class="form-label">
-                    <?= __('base_unit') ?>
-                </label>
+    <div class="form-check mt-2">
+        <input
+            type="checkbox"
+            name="allow_fraction"
+            value="1"
+            class="form-check-input"
+            id="allow_fraction"
+            <?= !empty($inventory->allow_fraction) ? 'checked' : '' ?>
+        >
 
-                <select name="base_unit" class="form-select">
-
-                    <option
-                        value="piece"
-                        <?= ($inventory->base_unit ?? 'piece') === 'piece'
-                            ? 'selected'
-                            : '' ?>
-                    >
-                        <?= __('piece') ?>
-                    </option>
-
-                    <option
-                        value="meter"
-                        <?= ($inventory->base_unit ?? '') === 'meter'
-                            ? 'selected'
-                            : '' ?>
-                    >
-                        <?= __('meter') ?>
-                    </option>
-
-                    <option
-                        value="kg"
-                        <?= ($inventory->base_unit ?? '') === 'kg'
-                            ? 'selected'
-                            : '' ?>
-                    >
-                        <?= __('kg') ?>
-                    </option>
-
-                    <option
-                        value="liter"
-                        <?= ($inventory->base_unit ?? '') === 'liter'
-                            ? 'selected'
-                            : '' ?>
-                    >
-                        <?= __('liter') ?>
-                    </option>
-
-                </select>
-
-            </div>
-
-        </div>
-
-
-        <!-- ALLOW FRACTION -->
-
-        <div class="col-md-6">
-
-            <div class="mb-3">
-
-                <label class="form-label">
-                    <?= __('allow_fraction') ?>
-                </label>
-
-                <div class="form-check mt-2">
-
-                    <input
-                        type="checkbox"
-                        name="allow_fraction"
-                        value="1"
-                        class="form-check-input"
-                        id="allow_fraction"
-                        <?= !empty($inventory->allow_fraction)
-                            ? 'checked'
-                            : '' ?>
-                    >
-
-                    <label
-                        class="form-check-label"
-                        for="allow_fraction"
-                    >
-                        <?= __('example_fraction') ?>
-                    </label>
-
-                </div>
-
-            </div>
-
-        </div>
-
+        <label class="form-check-label" for="allow_fraction">
+            <?= __('allow_fraction_tick') ?>
+        </label>
     </div>
+</div>
 
 
     <!-- ACTIONS -->

@@ -127,14 +127,14 @@ public function delete($id)
     )->fetch()->total;
 
     // Check if used by inventory/materials
-    $inventoryCount = $this->db->query(
-        "
-        SELECT COUNT(*) AS total
-        FROM inventory
-        WHERE base_unit = ?
-        ",
-        [$unit->unit_code]
-    )->fetch()->total;
+  $inventoryCount = $this->db->query(
+    "
+    SELECT COUNT(*) AS total
+    FROM inventory
+    WHERE unit_id = ?
+    ",
+    [$id]
+)->fetch()->total;
 
     // Do not delete if the unit is in use
     if ($resourceCount > 0 || $inventoryCount > 0) {

@@ -352,13 +352,14 @@ public function create($data)
             country_id,
             quantity,
             min_stock,
+            unit_id,
             allow_fraction
         )
         VALUES
         (
             ?, ?, ?, ?, ?,
             0,
-            ?, ?
+            ?, ?, ?
         )",
         [
             $data['name'],
@@ -367,6 +368,7 @@ public function create($data)
             $data['brand_id'],
             $data['country_id'],
             $data['min_stock'],
+            $data['unit_id'] ?? null,
             $data['allow_fraction'] ?? 0
         ]
     );
@@ -441,7 +443,7 @@ public function getByBarcode($barcode)
     )->fetch();
 }
 
-  public function update($id, $data)
+public function update($id, $data)
 {
     return $this->db->query(
         "
@@ -453,6 +455,7 @@ public function getByBarcode($barcode)
             brand_id = ?,
             country_id = ?,
             min_stock = ?,
+            unit_id = ?,
             allow_fraction = ?
         WHERE id = ?
         ",
@@ -463,6 +466,7 @@ public function getByBarcode($barcode)
             $data['brand_id'],
             $data['country_id'],
             $data['min_stock'],
+            $data['unit_id'] ?? null,
             $data['allow_fraction'] ?? 0,
             (int)$id
         ]
@@ -715,21 +719,21 @@ public function getByIdAndLocation($id, $location_id)
     return $stmt->fetch();
 }
 
-public function getMaterialItems()
-{
-    return $this->db->query(
-        "
-        SELECT
-            id,
-            sku,
-            name,
-            base_unit,
-            available_qty
-        FROM inventory_stock_view
-        ORDER BY name
-        "
-    )->fetchAll();
-}
+// public function getMaterialItems()
+// {
+//     return $this->db->query(
+//         "
+//         SELECT
+//             id,
+//             sku,
+//             name,
+//             base_unit,
+//             available_qty
+//         FROM inventory_stock_view // Wrong source !!!
+//         ORDER BY name
+//         "
+//     )->fetchAll();
+// }
 
 public function getLocationBreakdown(int $inventory_id)
 {

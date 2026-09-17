@@ -8,6 +8,14 @@
 <!-- Select2 -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+<!-- If you want to load scripts from Local files -->
+<!-- 
+<script src="/assets/js/jquery.min.js"></script>
+
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+<script src="/assets/js/select2.min.js"></script> -->
+
 <!-- Footer -->
 <div style="margin-top: 25px; padding-top: 25px;">
     <div class="card text-center">
