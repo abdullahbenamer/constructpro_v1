@@ -292,9 +292,9 @@ foreach ($stock as $inventory) {
 
                         <small class="text-muted">
 
-                        <?= __('uom') ?>:
-                        <?= $inventory->base_unit ?>
-                         
+                            <?= __('uom') ?>:
+                            <?= $inventory->base_unit ?>
+
                         </small>
 
                     </td>
@@ -310,21 +310,19 @@ foreach ($stock as $inventory) {
                     </td>
 
                     <td>
-
-                        <?= htmlspecialchars($inventory->brand_country ?? '-') ?>
-
-                        <?= htmlspecialchars($inventory->country_code ?? '-') ?>
-
+                        <?= htmlspecialchars($inventory->country_name ?? '-') ?>
+                        <?php if (!empty($inventory->country_code)): ?>
+                            <?= htmlspecialchars($inventory->country_code) ?>
+                        <?php endif; ?>
                     </td>
-
                     <td>
 
                         <span class="badge bg-secondary">
-                         <?= __($inventory->category) ?>
-                                                </span>
+                            <?= __($inventory->category) ?>
+                        </span>
 
-                
-                                    </td>
+
+                    </td>
 
                     <td>
 
@@ -389,10 +387,12 @@ foreach ($stock as $inventory) {
 
                         <!-- <small class="d-block">
 
-                        <?//= __('sale') ?>:
+                        <? //= __('sale') 
+                        ?>:
 
                 <strong class="text-success">
-                <? //= number_format($inventory->price_per_base,  2) ?>
+                <? //= number_format($inventory->price_per_base,  2) 
+                ?>
                 </strong>
 
                     </small> -->

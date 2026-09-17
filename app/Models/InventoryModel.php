@@ -282,29 +282,35 @@ public function getStockByLocation($location_id)
 
 public function getAll()
 {
-    return $this->db->query("
+    return $this->db->query(
+        "
         SELECT
-
             i.*,
 
             u.unit_name,
+
+            c.country_name,
 
             COALESCE(SUM(ls.quantity), 0) AS quantity,
 
             COALESCE(SUM(ls.quantity), 0) AS available_qty
 
-            FROM inventory i
+        FROM inventory i
 
-            LEFT JOIN units u
+        LEFT JOIN units u
             ON u.id = i.unit_id
 
-            LEFT JOIN inventory_location_stock ls
+        LEFT JOIN countries c
+            ON c.id = i.country_id
+
+        LEFT JOIN inventory_location_stock ls
             ON ls.inventory_id = i.id
 
-            GROUP BY i.id
+        GROUP BY i.id
 
-            ORDER BY i.name
-    ")->fetchAll();
+        ORDER BY i.name
+        "
+    )->fetchAll();
 }
 
 public function getInventoryValue()
@@ -329,11 +335,26 @@ public function getInventoryValue()
         "
         SELECT
             i.*,
-            COALESCE(SUM(ls.quantity),0) AS quantity
+
+            u.unit_name,
+
+            c.country_name,
+
+            COALESCE(SUM(ls.quantity), 0) AS quantity
+
         FROM inventory i
+
+        LEFT JOIN units u
+            ON u.id = i.unit_id
+
+        LEFT JOIN countries c
+            ON c.id = i.country_id
+
         LEFT JOIN inventory_location_stock ls
-            ON ls.inventory_id=i.id
-        WHERE i.id=?
+            ON ls.inventory_id = i.id
+
+        WHERE i.id = ?
+
         GROUP BY i.id
         ",
         [$id]
