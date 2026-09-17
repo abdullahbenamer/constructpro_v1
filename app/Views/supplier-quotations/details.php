@@ -169,19 +169,15 @@
 
                         <?php foreach ($inventory ?? [] as $item): ?>
 
-                            <option value="<?= $item->id ?>">
-
-                                <?= htmlspecialchars(
-                                    $item->name
-                                ) ?>
-
-                                -
-
-                                <?= htmlspecialchars(
-                                    $item->sku
-                                ) ?>
-
-                            </option>
+                         <option
+    value="<?= $item->id ?>"
+    data-description="<?= htmlspecialchars($item->name ?? '') ?>"
+    data-unit-id="<?= (int)($item->unit_id ?? 0) ?>"
+>
+    <?= htmlspecialchars($item->name ?? '') ?>
+    -
+    <?= htmlspecialchars($item->sku ?? '') ?>
+</option>
 
                         <?php endforeach; ?>
 
@@ -190,54 +186,52 @@
                 </div>
 
 
-                <div class="col-md-4 mb-3">
+             <div class="col-md-4 mb-3">
 
-                    <label class="form-label">
-                        <?= __('description') ?> *
-                    </label>
+    <label class="form-label">
+        <?= __('description') ?> *
+    </label>
 
-                    <input type="text"
-                           name="description"
-                           class="form-control"
-                           required>
+    <input
+        type="text"
+        name="description"
+        id="quotationItemDescription"
+        class="form-control"
+        readonly
+        required>
 
-                </div>
+</div>
 
 
-                <div class="col-md-4 mb-3">
+              <div class="col-md-4 mb-3">
 
-                    <label class="form-label">
-                        <?= __('uom') ?>
-                    </label>
+    <label class="form-label">
+        <?= __('uom') ?>
+    </label>
 
-                    <select name="unit_id"
-                            class="form-select">
+    <select
+        name="unit_id"
+        id="quotationItemUnit"
+        class="form-select"
+        required>
 
-                        <option value="">
-                            <?= __('select_uom') ?>
-                        </option>
+        <option value="">
+            <?= __('select_uom') ?>
+        </option>
 
-                        <?php foreach ($units ?? [] as $unit): ?>
+        <?php foreach ($units ?? [] as $unit): ?>
 
-                            <option value="<?= $unit->id ?>">
+            <option value="<?= (int)$unit->id ?>">
+                <?= htmlspecialchars($unit->unit_code ?? '') ?>
+                -
+                <?= htmlspecialchars($unit->unit_name ?? '') ?>
+            </option>
 
-                                <?= htmlspecialchars(
-                                    $unit->unit_code
-                                ) ?>
+        <?php endforeach; ?>
 
-                                -
+    </select>
 
-                                <?= htmlspecialchars(
-                                    $unit->unit_name
-                                ) ?>
-
-                            </option>
-
-                        <?php endforeach; ?>
-
-                    </select>
-
-                </div>
+</div>
 
             </div>
 
@@ -658,3 +652,55 @@
     <?php endif; ?>
 
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const inventorySelect = document.querySelector(
+        'select[name="inventory_id"]'
+    );
+
+    const description = document.getElementById(
+        'quotationItemDescription'
+    );
+
+    const unitSelect = document.getElementById(
+        'quotationItemUnit'
+    );
+
+    if (!inventorySelect || !description || !unitSelect) {
+        return;
+    }
+
+    function updateInventoryDetails() {
+
+        const option =
+            inventorySelect.options[
+                inventorySelect.selectedIndex
+            ];
+
+        if (!option || !inventorySelect.value) {
+
+            description.value = '';
+            unitSelect.value = '';
+
+            return;
+        }
+
+        description.value =
+            option.getAttribute('data-description') || '';
+
+        const unitId =
+            option.getAttribute('data-unit-id') || '';
+
+        unitSelect.value = unitId;
+    }
+
+    inventorySelect.addEventListener(
+        'change',
+        updateInventoryDetails
+    );
+
+    updateInventoryDetails();
+
+});
+</script>
