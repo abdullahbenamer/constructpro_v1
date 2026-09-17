@@ -51,8 +51,8 @@ class ResourceRequisitionItemModel
             ON i.id = ri.resource_id
            AND ri.resource_source = 'INVENTORY'
 
-        LEFT JOIN units iu
-            ON iu.unit_code = i.base_unit
+      LEFT JOIN units iu
+    ON iu.id = i.unit_id
 
         LEFT JOIN resources r
             ON r.id = ri.resource_id
@@ -173,7 +173,7 @@ class ResourceRequisitionItemModel
 
             CASE
                 WHEN ri.resource_source = 'INVENTORY'
-                THEN i.base_unit
+             THEN iu.unit_name
                 ELSE u.unit_name
             END AS unit_name,
 
@@ -197,6 +197,15 @@ class ResourceRequisitionItemModel
         LEFT JOIN inventory i
             ON i.id = ri.resource_id
            AND ri.resource_source = 'INVENTORY'
+
+           /*
+        |--------------------------------------------------------------------------
+        | Units
+        |--------------------------------------------------------------------------
+        */
+
+           LEFT JOIN units iu
+    ON iu.id = i.unit_id
 
 
         /*
