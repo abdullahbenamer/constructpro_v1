@@ -315,11 +315,29 @@ foreach ($stock as $inventory) {
                             <?= htmlspecialchars($inventory->country_code) ?>
                         <?php endif; ?>
                     </td>
+
+                    <!-- item Category -->
+                    <?php
+                    $categoryTranslations = [
+                        'CIVIL & STRUCTURAL'    => 'civil_structural',
+                        'BUILDING & FINISHING'  => 'building_finishing',
+                        'PLUMBING & DRAINAGE'   => 'plumbing_drainage',
+                        'HVAC'                  => 'hvac',
+                        'ELECTRICAL'            => 'electrical',
+                        'FIRE FIGHTING & ALARM' => 'fire_fighting_alarm',
+                        'LOW CURRENT'           => 'low_current',
+                        'HAND TOOLS'            => 'hand_tools',
+                        'EQUIPMENT'             => 'equipment',
+                        'SAFETY & PPE'          => 'safety_ppe',
+                        'CONSUMABLES'            => 'consumables',
+                        'OTHER'                  => 'other'
+                    ];
+                    ?>
                     <td>
 
                         <span class="badge bg-secondary">
-                            <?= __($inventory->category) ?>
-                        </span>
+    <?= __($categoryTranslations[$inventory->category] ?? $inventory->category) ?>
+</span>
 
 
                     </td>

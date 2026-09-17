@@ -4,8 +4,8 @@ require_once '../app/Core/Model.php';
 class InventoryModel extends Model
 {
     public function getLowStockAlerts()
-{
-    return $this->db->query("
+    {
+        return $this->db->query("
         SELECT
             i.*,
             COALESCE(SUM(ls.quantity),0) AS current_stock
@@ -16,11 +16,11 @@ class InventoryModel extends Model
         HAVING current_stock < i.min_stock
         ORDER BY current_stock ASC
     ")->fetchAll();
-}
+    }
 
-public function getByLocation($location_id)
-{
-    $sql = "
+    public function getByLocation($location_id)
+    {
+        $sql = "
         SELECT 
             i.*,
             s.quantity AS available_qty,
@@ -31,75 +31,21 @@ public function getByLocation($location_id)
         WHERE s.location_id = :location_id
     ";
 
-  return $this->db->query($sql, $params)->fetchAll();
-}
+        return $this->db->query($sql, $params)->fetchAll();
+    }
 
-    // public function getStock($category = null)
-    // {
-    //     $sql = "
-    //     SELECT
-    //         inventory.*,
-    //        b.brand_name AS brand_name,
-    //         c.country_name AS brand_country,
-    //         c.country_code AS country_code,
-
-    //         (
-    //             SELECT COALESCE(SUM(ir.quantity), 0)
-
-    //             FROM inventory_reservations ir
-
-    //             WHERE ir.inventory_id = inventory.id
-    //             AND ir.status = 'ACTIVE'
-
-    //         ) AS reserved_qty,
-
-    //         (
-    //             inventory.quantity -
-
-    //             (
-    //                 SELECT COALESCE(SUM(ir.quantity), 0)
-
-    //                 FROM inventory_reservations ir
-
-    //                 WHERE ir.inventory_id = inventory.id
-    //                 AND ir.status = 'ACTIVE'
-    //             )
-
-    //         ) AS available_qty
-
-    //     FROM inventory
-    //     LEFT JOIN brands b ON b.id = inventory.brand_id
-    //     LEFT JOIN countries c  ON c.id = b.country_id
-
-    //     WHERE inventory.quantity >= 0
-    // ";
-
-    //     $params = [];
-
-    //     if ($category) {
-
-    //         $sql .= " AND inventory.category = ?";
-
-    //         $params[] = $category;
-    //     }
-
-    //     $sql .= " ORDER BY inventory.category, inventory.name";
-
-    //     return $this->db->query($sql, $params)->fetchAll();
-    // }
-
+   
     public function getStock($category = null)
-{
-    $sql = "
+    {
+        $sql = "
         SELECT
             inventory.*,
 
-            b.brand_name AS brand_name,
+           b.brand_name AS brand_name,
 
-            c.country_name AS brand_country,
+c.country_name AS country_name,
 
-            c.country_code AS country_code,
-
+c.country_code AS country_code,
 
             /*
             |----------------------------------------------------------
@@ -215,41 +161,41 @@ public function getByLocation($location_id)
         LEFT JOIN brands b
             ON b.id = inventory.brand_id
 
-        LEFT JOIN countries c
-            ON c.id = b.country_id
+       LEFT JOIN countries c
+    ON c.id = inventory.country_id
 
         WHERE inventory.id > 0
     ";
 
-    $params = [];
+        $params = [];
 
-    if ($category) {
+        if ($category) {
 
-        $sql .= "
+            $sql .= "
             AND inventory.category = ?
         ";
 
-        $params[] = $category;
-    }
+            $params[] = $category;
+        }
 
-    $sql .= "
+        $sql .= "
         ORDER BY
             inventory.category,
             inventory.name
     ";
 
-    return $this->db
-        ->query(
-            $sql,
-            $params
-        )
-        ->fetchAll();
-}
+        return $this->db
+            ->query(
+                $sql,
+                $params
+            )
+            ->fetchAll();
+    }
 
-public function getStockByLocation($location_id)
-{
-    return $this->db->query(
-        "
+    public function getStockByLocation($location_id)
+    {
+        return $this->db->query(
+            "
         SELECT 
             i.*,
             s.quantity AS available_qty,
@@ -276,20 +222,22 @@ public function getStockByLocation($location_id)
             ON s.inventory_id = i.id
         WHERE s.location_id = ?
         ",
-        [$location_id]
-    )->fetchAll();
-}
+            [$location_id]
+        )->fetchAll();
+    }
 
-public function getAll()
-{
-    return $this->db->query(
-        "
+    public function getAll()
+    {
+        return $this->db->query(
+            "
         SELECT
             i.*,
 
             u.unit_name,
 
-            c.country_name,
+           c.country_name,
+           
+           c.country_code,
 
             COALESCE(SUM(ls.quantity), 0) AS quantity,
 
@@ -310,12 +258,12 @@ public function getAll()
 
         ORDER BY i.name
         "
-    )->fetchAll();
-}
+        )->fetchAll();
+    }
 
-public function getInventoryValue()
-{
-    $result = $this->db->query("
+    public function getInventoryValue()
+    {
+        $result = $this->db->query("
         SELECT
             COALESCE(
                 SUM(ils.quantity * i.cost_price),
@@ -326,13 +274,13 @@ public function getInventoryValue()
             ON ils.inventory_id = i.id
     ")->fetch();
 
-    return (float)$result->total_value;
-}
+        return (float)$result->total_value;
+    }
 
-  public function getById($id)
-{
-    return $this->db->query(
-        "
+    public function getById($id)
+    {
+        return $this->db->query(
+            "
         SELECT
             i.*,
 
@@ -357,14 +305,14 @@ public function getInventoryValue()
 
         GROUP BY i.id
         ",
-        [$id]
-    )->fetch();
-}
-    
-public function create($data)
-{
-    $this->db->query(
-        "INSERT INTO inventory
+            [$id]
+        )->fetch();
+    }
+
+    public function create($data)
+    {
+        $this->db->query(
+            "INSERT INTO inventory
         (
             name,
             category,
@@ -382,31 +330,31 @@ public function create($data)
             0,
             ?, ?, ?
         )",
-        [
-            $data['name'],
-            $data['category'],
-            $data['sku'],
-            $data['brand_id'],
-            $data['country_id'],
-            $data['min_stock'],
-            $data['unit_id'] ?? null,
-            $data['allow_fraction'] ?? 0
-        ]
-    );
+            [
+                $data['name'],
+                $data['category'],
+                $data['sku'],
+                $data['brand_id'],
+                $data['country_id'],
+                $data['min_stock'],
+                $data['unit_id'] ?? null,
+                $data['allow_fraction'] ?? 0
+            ]
+        );
 
-    return $this->db->lastInsertId();
-}
+        return $this->db->lastInsertId();
+    }
 
-public function getByBarcode($barcode)
-{
-    return $this->db->query(
-        "
+    public function getByBarcode($barcode)
+    {
+        return $this->db->query(
+            "
         SELECT
             inventory.*,
 
             b.brand_name AS brand_name,
-            c.country_name AS brand_country,
-            c.country_code AS country_code,
+           c.country_name AS country_name,
+c.country_code AS country_code,
 
             (
                 SELECT COALESCE(
@@ -453,21 +401,21 @@ public function getByBarcode($barcode)
         LEFT JOIN brands b
             ON b.id = inventory.brand_id
 
-        LEFT JOIN countries c
-            ON c.id = b.country_id
+       LEFT JOIN countries c
+    ON c.id = inventory.country_id
 
         WHERE inventory.sku = ?
 
         LIMIT 1
         ",
-        [$barcode]
-    )->fetch();
-}
+            [$barcode]
+        )->fetch();
+    }
 
-public function update($id, $data)
-{
-    return $this->db->query(
-        "
+    public function update($id, $data)
+    {
+        return $this->db->query(
+            "
         UPDATE inventory
         SET
             name = ?,
@@ -480,71 +428,71 @@ public function update($id, $data)
             allow_fraction = ?
         WHERE id = ?
         ",
-        [
-            $data['name'],
-            $data['sku'],
-            $data['category'],
-            $data['brand_id'],
-            $data['country_id'],
-            $data['min_stock'],
-            $data['unit_id'] ?? null,
-            $data['allow_fraction'] ?? 0,
-            (int)$id
-        ]
-    );
-}
+            [
+                $data['name'],
+                $data['sku'],
+                $data['category'],
+                $data['brand_id'],
+                $data['country_id'],
+                $data['min_stock'],
+                $data['unit_id'] ?? null,
+                $data['allow_fraction'] ?? 0,
+                (int)$id
+            ]
+        );
+    }
 
     public function delete($id)
     {
         return $this->db->query("DELETE FROM inventory WHERE id = ?", [$id])->rowCount() > 0;
     }
 
-       // reduce avoiding (Race Condition)
-  public function reduceStockSafe($id, $location_id, $qty)
-{
-    $qty = (float)$qty;
+    // reduce avoiding (Race Condition)
+    public function reduceStockSafe($id, $location_id, $qty)
+    {
+        $qty = (float)$qty;
 
-    if ($id <= 0 || $location_id <= 0 || $qty <= 0) {
-        return false;
-    }
+        if ($id <= 0 || $location_id <= 0 || $qty <= 0) {
+            return false;
+        }
 
-    $stmt = $this->db->query(
-        "
+        $stmt = $this->db->query(
+            "
         UPDATE inventory_location_stock
         SET quantity = quantity - ?
         WHERE inventory_id = ?
         AND location_id = ?
         AND quantity >= ?
         ",
-        [
-            $qty,
-            $id,
-            $location_id,
-            $qty
-        ]
-    );
+            [
+                $qty,
+                $id,
+                $location_id,
+                $qty
+            ]
+        );
 
-    if ($stmt->rowCount() <= 0) {
-        return false;
+        if ($stmt->rowCount() <= 0) {
+            return false;
+        }
+
+        return true;
     }
-
-    return true;
-}
 
     // address the RACE CONDITION in inventory reservation
- public function reduceAvailableStockSafe(
-    $id,
-    $location_id,
-    $qty
-) {
-    $qty = (float)$qty;
+    public function reduceAvailableStockSafe(
+        $id,
+        $location_id,
+        $qty
+    ) {
+        $qty = (float)$qty;
 
-    if ($id <= 0 || $location_id <= 0 || $qty <= 0) {
-        return false;
-    }
+        if ($id <= 0 || $location_id <= 0 || $qty <= 0) {
+            return false;
+        }
 
-    $stmt = $this->db->query(
-        "
+        $stmt = $this->db->query(
+            "
         UPDATE inventory_location_stock ils
 
         SET ils.quantity = ils.quantity - ?
@@ -570,18 +518,18 @@ public function update($id, $data)
             )
         ) >= ?
         ",
-        [
-            $qty,
-            $id,
-            $location_id,
-            $id,
-            $location_id,
-            $qty
-        ]
-    );
+            [
+                $qty,
+                $id,
+                $location_id,
+                $id,
+                $location_id,
+                $qty
+            ]
+        );
 
-    return $stmt->rowCount() > 0;
-}
+        return $stmt->rowCount() > 0;
+    }
 
 
     public function skuExists($sku)
@@ -594,16 +542,16 @@ public function update($id, $data)
         return $stmt->fetch() ? true : false;
     }
 
-public function getAvailableStock($inventory_id)
-{
-    $inventory_id = (int)$inventory_id;
+    public function getAvailableStock($inventory_id)
+    {
+        $inventory_id = (int)$inventory_id;
 
-    if ($inventory_id <= 0) {
-        return 0;
-    }
+        if ($inventory_id <= 0) {
+            return 0;
+        }
 
-    $result = $this->db->query(
-        "
+        $result = $this->db->query(
+            "
         SELECT
             GREATEST(
                 COALESCE(SUM(ils.quantity), 0)
@@ -621,14 +569,14 @@ public function getAvailableStock($inventory_id)
 
         WHERE ils.inventory_id = ?
         ",
-        [
-            $inventory_id,
-            $inventory_id
-        ]
-    )->fetch();
+            [
+                $inventory_id,
+                $inventory_id
+            ]
+        )->fetch();
 
-    return (float)($result->available_qty ?? 0);
-}
+        return (float)($result->available_qty ?? 0);
+    }
 
     // Reserved quantity
     public function getReservedQty($inventory_id)
@@ -649,42 +597,42 @@ public function getAvailableStock($inventory_id)
         return (float)$result->total;
     }
 
-public function reduceAvailableStockByLocationSafe($inventory_id, $location_id, $qty)
-{
-    $stmt = $this->db->query(
-        "
+    public function reduceAvailableStockByLocationSafe($inventory_id, $location_id, $qty)
+    {
+        $stmt = $this->db->query(
+            "
         UPDATE inventory_location_stock
         SET quantity = quantity - ?
         WHERE inventory_id = ?
         AND location_id = ?
         AND quantity >= ?
         ",
-        [$qty, $inventory_id, $location_id, $qty]
-    );
+            [$qty, $inventory_id, $location_id, $qty]
+        );
 
-    return $stmt->rowCount() > 0;
-}
+        return $stmt->rowCount() > 0;
+    }
 
-public function getAvailableQty($inventory_id)
-{
-    return $this->getAvailableStock($inventory_id);
-}
+    public function getAvailableQty($inventory_id)
+    {
+        return $this->getAvailableStock($inventory_id);
+    }
 
-public function getBySku($sku)
-{
-    return $this->db->query(
-        "SELECT id, name, sku
+    public function getBySku($sku)
+    {
+        return $this->db->query(
+            "SELECT id, name, sku
          FROM inventory
          WHERE sku = ?
          LIMIT 1",
-        [$sku]
-    )->fetch();
-}
+            [$sku]
+        )->fetch();
+    }
 
-public function getByIdAndLocation($id, $location_id)
-{
-    $stmt = $this->db->query(
-        "
+    public function getByIdAndLocation($id, $location_id)
+    {
+        $stmt = $this->db->query(
+            "
         SELECT
             inventory.*,
 
@@ -692,8 +640,8 @@ public function getByIdAndLocation($id, $location_id)
             ils.location_id,
 
             b.brand_name AS brand_name,
-            c.country_name AS brand_country,
-            c.country_code AS country_code,
+          c.country_name AS country_name,
+c.country_code AS country_code,
 
             (
                 SELECT COALESCE(SUM(ir.quantity),0)
@@ -726,40 +674,40 @@ public function getByIdAndLocation($id, $location_id)
         LEFT JOIN brands b
             ON b.id = inventory.brand_id
 
-        LEFT JOIN countries c
-            ON c.id = b.country_id
+    LEFT JOIN countries c
+    ON c.id = inventory.country_id
 
         WHERE inventory.id = ?
         AND ils.location_id = ?
 
         LIMIT 1
         ",
-        [$id, $location_id]
-    );
+            [$id, $location_id]
+        );
 
-    return $stmt->fetch();
-}
+        return $stmt->fetch();
+    }
 
-// public function getMaterialItems()
-// {
-//     return $this->db->query(
-//         "
-//         SELECT
-//             id,
-//             sku,
-//             name,
-//             base_unit,
-//             available_qty
-//         FROM inventory_stock_view // Wrong source !!!
-//         ORDER BY name
-//         "
-//     )->fetchAll();
-// }
+    // public function getMaterialItems()
+    // {
+    //     return $this->db->query(
+    //         "
+    //         SELECT
+    //             id,
+    //             sku,
+    //             name,
+    //             base_unit,
+    //             available_qty
+    //         FROM inventory_stock_view // Wrong source !!!
+    //         ORDER BY name
+    //         "
+    //     )->fetchAll();
+    // }
 
-public function getLocationBreakdown(int $inventory_id)
-{
-    return $this->db->query(
-        "
+    public function getLocationBreakdown(int $inventory_id)
+    {
+        return $this->db->query(
+            "
         SELECT
             il.id AS location_id,
 
@@ -823,12 +771,11 @@ public function getLocationBreakdown(int $inventory_id)
 
         ORDER BY il.code
         ",
-        [
-            $inventory_id,
-            $inventory_id,
-            $inventory_id
-        ]
-    )->fetchAll();
-}
-
+            [
+                $inventory_id,
+                $inventory_id,
+                $inventory_id
+            ]
+        )->fetchAll();
+    }
 }
