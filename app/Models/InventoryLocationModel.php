@@ -230,15 +230,28 @@ public function getUserLocations($user_id)
 {
     return $this->db->query(
         "
-        SELECT l.*
+        SELECT
+            l.*,
+            u.full_name AS storekeeper,
+            COALESCE(SUM(ils.quantity), 0) AS total_stock
         FROM inventory_locations l
+
         INNER JOIN user_locations ul
             ON ul.location_id = l.id
+
+        LEFT JOIN users u
+            ON u.id = l.storekeeper_id
+
+        LEFT JOIN inventory_location_stock ils
+            ON ils.location_id = l.id
+
         WHERE ul.user_id = ?
+
+        GROUP BY l.id
+
         ORDER BY l.code
         ",
         [(int)$user_id]
     )->fetchAll();
 }
-
 }

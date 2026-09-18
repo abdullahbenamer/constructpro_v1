@@ -959,184 +959,87 @@ require_once '../app/Models/InventoryLocationModel.php';
                     <?php endif; ?>
 
 
-                    <!-- ==============================
-                     INVENTORY
-                ===================================== -->
+<!-- ==============================
+     INVENTORY
+===================================== -->
 
-
-<?php
-$inventoryLocationModel = new InventoryLocationModel();
-
-$currentUserId = $_SESSION['user_id'] ?? 0;
-$currentRole = strtoupper($_SESSION['role_name'] ?? '');
-
-if ($currentRole === 'ADMIN') {
-    $authorizedLocations = $inventoryLocationModel->getAll();
-} else {
-    $authorizedLocations =
-        $inventoryLocationModel->getUserLocations($currentUserId);
-}
-?>
-
-                    <?php if (
-
-                        AuthHelper::canView('inventory.view') ||
-
-                        AuthHelper::canView('inventory-movements.view') ||
-
-                        AuthHelper::canView('inventory-locations.view') ||
-
-                        AuthHelper::canView('stock-transfers.view') ||
-
-                        AuthHelper::canView('inventory-reservations.view')
-
-                    ) : ?>
-
-
-                        <li class="nav-item dropdown dropend">
-
-
-                            <a
-                                class="nav-link dropdown-toggle"
-                                href="#"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false">
-
-                                <i class="fas fa-warehouse"></i>
-
-                                <?= __('inventory') ?>
-
-                            </a>
-
-
-                            <ul class="dropdown-menu">
-
-
-                                <?php if (AuthHelper::canView('inventory.view')) : ?>
-
-                                    <li>
-
-                                        <a
-                                            class="dropdown-item"
-                                            href="<?= URLROOT ?>/inventory">
-
-                                            <i class="fas fa-boxes"></i>
-
-                                            <?= __('inventory_list') ?>
-
-                                        </a>
-
-                                    </li>
-
-                                <?php endif; ?>
-
-<?php if (AuthHelper::canView('inventory_locations.view')) : ?>
-
-    <li>
-
-        <a
-            class="dropdown-item"
-            href="<?= URLROOT ?>/inventorylocations">
-
-            <i class="fas fa-map-marker-alt"></i>
-            <?= __('locations_warehouse') ?>
-
-        </a>
-
-    </li>
-<!-- ////////////////////////////// -->
 <?php if (
-    $currentRole !== 'ADMIN' &&
-    !empty($authorizedLocations)
+    AuthHelper::canView('inventory.view') ||
+    AuthHelper::canView('inventory-movements.view') ||
+    AuthHelper::canView('inventory-locations.view') ||
+    AuthHelper::canView('stock-transfers.view') ||
+    AuthHelper::canView('inventory-reservations.view')
 ) : ?>
 
-    <?php foreach ($authorizedLocations as $location) : ?>
+<li class="nav-item dropdown dropend">
 
-        <li>
+    <a class="nav-link dropdown-toggle"
+       href="#"
+       data-bs-toggle="dropdown"
+       aria-expanded="false">
+        <i class="fas fa-warehouse"></i>
+        <?= __('inventory') ?>
+    </a>
 
-            <a
-                class="dropdown-item ps-4"
-                href="<?= URLROOT ?>/inventorylocations/details/<?= (int)$location->id ?>">
+    <ul class="dropdown-menu">
 
-                <i class="fas fa-warehouse me-1"></i>
+        <?php if (AuthHelper::canView('inventory.view')) : ?>
+            <li>
+                <a class="dropdown-item" href="<?= URLROOT ?>/inventory">
+                    <i class="fas fa-boxes"></i>
+                    <?= __('inventory_list') ?>
+                </a>
+            </li>
+        <?php endif; ?>
 
-                <?= htmlspecialchars($location->code) ?>
 
-                <?php if (!empty($location->name)) : ?>
-                    - <?= htmlspecialchars($location->name) ?>
-                <?php endif; ?>
+        <?php if (AuthHelper::canView('inventory_locations.view')) : ?>
+            <li>
+                <a class="dropdown-item"
+                   href="<?= URLROOT ?>/inventorylocations">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <?= __('locations_warehouse') ?>
+                </a>
+            </li>
+        <?php endif; ?>
 
-            </a>
 
-        </li>
+        <?php if (AuthHelper::canView('inventory-movements.view')) : ?>
+            <li>
+                <a class="dropdown-item"
+                   href="<?= URLROOT ?>/inventorymovements">
+                    <i class="fas fa-exchange-alt"></i>
+                    <?= __('inventory_movements') ?>
+                </a>
+            </li>
+        <?php endif; ?>
 
-    <?php endforeach; ?>
+
+        <?php if (AuthHelper::canView('stock-transfers.view')) : ?>
+            <li>
+                <a class="dropdown-item"
+                   href="<?= URLROOT ?>/inventorytransfers">
+                    <i class="fas fa-random"></i>
+                    <?= __('stock_transfers') ?>
+                </a>
+            </li>
+        <?php endif; ?>
+
+
+        <?php if (AuthHelper::canView('inventory-reservations.view')) : ?>
+            <li>
+                <a class="dropdown-item"
+                   href="<?= URLROOT ?>/inventoryreservations">
+                    <i class="fas fa-bookmark"></i>
+                    <?= __('inventory_reservations') ?>
+                </a>
+            </li>
+        <?php endif; ?>
+
+    </ul>
+</li>
 
 <?php endif; ?>
-<!-- ////////// -->
-
-
-                                <?php if (AuthHelper::canView('inventory-reservations.view')) : ?>
-
-                                    <li>
-
-                                        <a
-                                            class="dropdown-item"
-                                            href="<?= URLROOT ?>/inventoryreservations">
-
-                                            <i class="fas fa-lock"></i>
-                                            <?= __('material_reservations') ?>
-
-                                        </a>
-
-                                    </li>
-
-                                <?php endif; ?>
-
-
-                                <?php if (AuthHelper::canView('inventory-transfers.view')) : ?>
-
-                                    <li>
-
-                                        <a
-                                            class="dropdown-item"
-                                            href="<?= URLROOT ?>/inventory-transfers">
-
-                                            <i class="fas fa-random"></i>
-
-                                            <?= __('stock_transfers') ?>
-
-                                        </a>
-
-                                    </li>
-
-                                <?php endif; ?>
-
-
-                                <?php if (AuthHelper::canView('inventory-movements.view')) : ?>
-
-                                    <li>
-
-                                        <a
-                                            class="dropdown-item"
-                                            href="<?= URLROOT ?>/inventory-movements">
-
-                                            <i class="fas fa-exchange-alt"></i>
-
-                                            <?= __('stock_movements_report') ?>
-
-                                        </a>
-
-                                    </li>
-
-                                <?php endif; ?>
-
-
-                            </ul>
-
-                        </li>
-
-                    <?php endif; ?>
 
 
                     <!-- =================================================
