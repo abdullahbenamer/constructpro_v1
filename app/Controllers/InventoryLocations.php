@@ -3,13 +3,34 @@
 class InventoryLocations extends Controller
 {
     public function index()
-    {
-        $model = $this->model('InventoryLocation');
+{
+
+echo '<pre>';
+print_r([
+    'user_id' => $_SESSION['user_id'] ?? null,
+    'user_name' => $_SESSION['user_name'] ?? null,
+    'full_name' => $_SESSION['full_name'] ?? null,
+    'role_name' => $_SESSION['role_name'] ?? null
+]);
+echo '</pre>';
+exit;
+    $model = $this->model('InventoryLocation');
+
+    $userId = $_SESSION['user_id'] ?? 0;
+    $roleName = strtoupper($_SESSION['role_name'] ?? '');
+
+    if ($roleName === 'ADMIN') {
 
         $data['locations'] = $model->getAll();
 
-        $this->view('inventory-locations/index', $data);
+    } else {
+
+        $data['locations'] =
+            $model->getUserLocations($userId);
     }
+
+    $this->view('inventory-locations/index', $data);
+}
 
     public function create()
     {

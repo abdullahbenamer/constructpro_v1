@@ -226,4 +226,19 @@ public function userHasAccess($location_id, $user_id)
     return (bool)$result;
 }
 
+public function getUserLocations($user_id)
+{
+    return $this->db->query(
+        "
+        SELECT l.*
+        FROM inventory_locations l
+        INNER JOIN user_locations ul
+            ON ul.location_id = l.id
+        WHERE ul.user_id = ?
+        ORDER BY l.code
+        ",
+        [(int)$user_id]
+    )->fetchAll();
+}
+
 }

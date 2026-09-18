@@ -8,6 +8,10 @@ $direction = Language::direction();
 
 ?>
 
+<?php
+require_once '../app/Models/InventoryLocationModel.php';
+?>
+
 <!-- =========================================================
      GLOBAL BOOTSTRAP ALERT BLOCK
 ========================================================= -->
@@ -955,9 +959,24 @@ $direction = Language::direction();
                     <?php endif; ?>
 
 
-                    <!-- =================================================
+                    <!-- ==============================
                      INVENTORY
-                ================================================== -->
+                ===================================== -->
+
+
+<?php
+$inventoryLocationModel = new InventoryLocationModel();
+
+$currentUserId = $_SESSION['user_id'] ?? 0;
+$currentRole = strtoupper($_SESSION['role_name'] ?? '');
+
+if ($currentRole === 'ADMIN') {
+    $authorizedLocations = $inventoryLocationModel->getAll();
+} else {
+    $authorizedLocations =
+        $inventoryLocationModel->getUserLocations($currentUserId);
+}
+?>
 
                     <?php if (
 
@@ -1011,23 +1030,48 @@ $direction = Language::direction();
 
                                 <?php endif; ?>
 
+<?php if (AuthHelper::canView('inventory-locations.view')) : ?>
 
-                                <?php if (AuthHelper::canView('inventory-locations.view')) : ?>
+    <li>
 
-                                    <li>
+        <a
+            class="dropdown-item"
+            href="<?= URLROOT ?>/inventorylocations">
 
-                                        <a
-                                            class="dropdown-item"
-                                            href="<?= URLROOT ?>/inventory-locations">
+            <i class="fas fa-map-marker-alt"></i>
+            <?= __('locations_warehouse') ?>
 
-                                            <i class="fas fa-map-marker-alt"></i>
-                                            <?= __('locations_warehouse') ?>
+        </a>
 
-                                        </a>
+    </li>
 
-                                    </li>
+    <?php if (!empty($authorizedLocations)) : ?>
 
-                                <?php endif; ?>
+        <?php foreach ($authorizedLocations as $location) : ?>
+
+            <li>
+
+                <a
+                    class="dropdown-item ps-4"
+                    href="<?= URLROOT ?>/inventorylocations/details/<?= (int)$location->id ?>">
+
+                    <i class="fas fa-warehouse me-1"></i>
+
+                    <?= htmlspecialchars($location->code) ?>
+
+                    <?php if (!empty($location->name)) : ?>
+                        - <?= htmlspecialchars($location->name) ?>
+                    <?php endif; ?>
+
+                </a>
+
+            </li>
+
+        <?php endforeach; ?>
+
+    <?php endif; ?>
+
+<?php endif; ?>
 
 
                                 <?php if (AuthHelper::canView('inventory-reservations.view')) : ?>
