@@ -65,6 +65,9 @@
             <th class="text-end">
                 <?= __('physical_qty') ?>
             </th>
+              <th class="text-end">
+                <?= __('uom') ?>
+            </th>
 
             <th class="text-end">
                 <?= __('reserved_qty') ?>
@@ -124,10 +127,9 @@
                     (float) $item->quantity,
                     2
                 ) ?>
-
-                <?= htmlspecialchars(
-                    $item->base_unit
-                ) ?>
+</td>
+<td>
+              <?= htmlspecialchars($item->unit_name ?? '-') ?>
 
             </td>
 

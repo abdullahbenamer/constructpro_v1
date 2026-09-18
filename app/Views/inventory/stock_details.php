@@ -45,7 +45,7 @@
                 <strong><?= __('base_unit') ?>:</strong>
 
                 <?= htmlspecialchars(
-                    $item->base_unit ?? 'unit'
+                     $item->unit_name ?? 'unit'
                 ) ?>
 
             </div>
@@ -75,7 +75,7 @@
                 </h3>
 
                 <small>
-                    <?= htmlspecialchars($item->base_unit) ?>
+                    <?= htmlspecialchars( $item->unit_name) ?>
                 </small>
 
             </div>
@@ -99,7 +99,7 @@
                 </h3>
 
                 <small>
-                    <?= htmlspecialchars($item->base_unit) ?>
+                    <?= htmlspecialchars( $item->unit_name) ?>
                 </small>
 
             </div>
@@ -123,7 +123,7 @@
                 </h3>
 
                 <small>
-                    <?= htmlspecialchars($item->base_unit) ?>
+                    <?= htmlspecialchars( $item->unit_name) ?>
                 </small>
 
             </div>
@@ -147,7 +147,7 @@
                 </h3>
 
                 <small>
-                    <?= htmlspecialchars($item->base_unit) ?>
+                    <?= htmlspecialchars( $item->unit_name) ?>
                 </small>
 
             </div>
@@ -196,7 +196,7 @@ $difference =
 
         <?= number_format(abs($difference), 2) ?>
 
-        <?= htmlspecialchars($item->base_unit) ?>
+        <?= htmlspecialchars( $item->unit_name) ?>
 
     </div>
 
