@@ -1030,7 +1030,7 @@ if ($currentRole === 'ADMIN') {
 
                                 <?php endif; ?>
 
-<?php if (AuthHelper::canView('inventory-locations.view')) : ?>
+<?php if (AuthHelper::canView('inventory_locations.view')) : ?>
 
     <li>
 
@@ -1044,34 +1044,36 @@ if ($currentRole === 'ADMIN') {
         </a>
 
     </li>
+<!-- ////////////////////////////// -->
+<?php if (
+    $currentRole !== 'ADMIN' &&
+    !empty($authorizedLocations)
+) : ?>
 
-    <?php if (!empty($authorizedLocations)) : ?>
+    <?php foreach ($authorizedLocations as $location) : ?>
 
-        <?php foreach ($authorizedLocations as $location) : ?>
+        <li>
 
-            <li>
+            <a
+                class="dropdown-item ps-4"
+                href="<?= URLROOT ?>/inventorylocations/details/<?= (int)$location->id ?>">
 
-                <a
-                    class="dropdown-item ps-4"
-                    href="<?= URLROOT ?>/inventorylocations/details/<?= (int)$location->id ?>">
+                <i class="fas fa-warehouse me-1"></i>
 
-                    <i class="fas fa-warehouse me-1"></i>
+                <?= htmlspecialchars($location->code) ?>
 
-                    <?= htmlspecialchars($location->code) ?>
+                <?php if (!empty($location->name)) : ?>
+                    - <?= htmlspecialchars($location->name) ?>
+                <?php endif; ?>
 
-                    <?php if (!empty($location->name)) : ?>
-                        - <?= htmlspecialchars($location->name) ?>
-                    <?php endif; ?>
+            </a>
 
-                </a>
+        </li>
 
-            </li>
-
-        <?php endforeach; ?>
-
-    <?php endif; ?>
+    <?php endforeach; ?>
 
 <?php endif; ?>
+<!-- ////////// -->
 
 
                                 <?php if (AuthHelper::canView('inventory-reservations.view')) : ?>

@@ -3,34 +3,24 @@
 class InventoryLocations extends Controller
 {
     public function index()
-{
+    {
 
-echo '<pre>';
-print_r([
-    'user_id' => $_SESSION['user_id'] ?? null,
-    'user_name' => $_SESSION['user_name'] ?? null,
-    'full_name' => $_SESSION['full_name'] ?? null,
-    'role_name' => $_SESSION['role_name'] ?? null
-]);
-echo '</pre>';
-exit;
-    $model = $this->model('InventoryLocation');
+        $model = $this->model('InventoryLocation');
 
-    $userId = $_SESSION['user_id'] ?? 0;
-    $roleName = strtoupper($_SESSION['role_name'] ?? '');
+        $userId = $_SESSION['user_id'] ?? 0;
+        $roleName = strtoupper($_SESSION['role_name'] ?? '');
 
-    if ($roleName === 'ADMIN') {
+        if ($roleName === 'ADMIN') {
 
-        $data['locations'] = $model->getAll();
+            $data['locations'] = $model->getAll();
+        } else {
 
-    } else {
+            $data['locations'] =
+                $model->getUserLocations($userId);
+        }
 
-        $data['locations'] =
-            $model->getUserLocations($userId);
+        $this->view('inventory-locations/index', $data);
     }
-
-    $this->view('inventory-locations/index', $data);
-}
 
     public function create()
     {
@@ -55,16 +45,16 @@ exit;
                 'notes'          => trim($_POST['notes'] ?? '')
             ]);
 
-        if ($result['success']) {
+            if ($result['success']) {
 
-    $model->saveLocationUsers(
-        $result['id'],
-        $_POST['user_locations'] ?? []
-    );
+                $model->saveLocationUsers(
+                    $result['id'],
+                    $_POST['user_locations'] ?? []
+                );
 
-    header('Location: ' . URLROOT . '/inventorylocations');
-    exit;
-}
+                header('Location: ' . URLROOT . '/inventorylocations');
+                exit;
+            }
 
             $data['error'] = $result['message'] ?? 'Unable to save location';
         }
@@ -127,18 +117,18 @@ exit;
                 'notes' => trim($_POST['notes'] ?? '')
             ]);
 
-      if ($result['success']) {
+            if ($result['success']) {
 
-    $model->saveLocationUsers(
-        $id,
-        $_POST['user_locations'] ?? []
-    );
+                $model->saveLocationUsers(
+                    $id,
+                    $_POST['user_locations'] ?? []
+                );
 
-    $_SESSION['success'] = 'Location updated successfully';
+                $_SESSION['success'] = 'Location updated successfully';
 
-    header('Location: ' . URLROOT . '/inventorylocations');
-    exit;
-}
+                header('Location: ' . URLROOT . '/inventorylocations');
+                exit;
+            }
 
             $data['error'] =
                 $result['message'];
@@ -146,14 +136,14 @@ exit;
 
         $assigned = $model->getLocationUsers($id);
 
-$assignedUsers = array_map(function($row){
-    return $row->user_id;
-}, $assigned);
+        $assignedUsers = array_map(function ($row) {
+            return $row->user_id;
+        }, $assigned);
 
-$data['location'] = $location;
-$data['storekeepers'] = $storekeepers;
-$data['users'] = $model->getUsers();
-$data['assignedUsers'] = $assignedUsers;
+        $data['location'] = $location;
+        $data['storekeepers'] = $storekeepers;
+        $data['users'] = $model->getUsers();
+        $data['assignedUsers'] = $assignedUsers;
 
         $this->view(
             'inventory-locations/edit',
