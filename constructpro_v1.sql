@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 18, 2026 at 08:58 AM
+-- Generation Time: Sep 18, 2026 at 10:14 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -315,7 +315,7 @@ INSERT INTO `inventory` (`id`, `name`, `category`, `sku`, `quantity`, `location_
 (112, 'Portland Cement 52.5N', 'BUILDING & FINISHING', 'CEM-52-001', 230.00, NULL, 50, 15.50, 'BAG', 3, 0, 36, 12),
 (113, 'Ready Mix Concrete C25', 'BUILDING & FINISHING', 'CON-C25-001', 25.00, NULL, 5, 95.00, 'M3', 15, 1, NULL, 12),
 (114, 'Concrete Block 20cm', 'BUILDING & FINISHING', 'BLK-20-001', 3275.00, NULL, 500, 3.25, 'PCS', 1, 0, 36, 12),
-(115, 'Concrete Block 15cm', 'BUILDING & FINISHING', 'BLK-15-001', 2435.00, NULL, 500, 1.55, 'PCS', 1, 0, NULL, 12),
+(115, 'Concrete Block 15cm', 'BUILDING & FINISHING', 'BLK-15-001', 3285.00, NULL, 500, 1.55, 'PCS', 1, 0, NULL, 12),
 (116, 'Fine Sand', 'BUILDING & FINISHING', 'SND-FINE-001', 40.00, NULL, 10, 75.00, 'M3', 15, 1, NULL, 12),
 (117, 'Coarse Aggregate 20mm', 'BUILDING & FINISHING', 'AGR-20-001', 60.00, NULL, 15, 85.00, 'M3', 15, 1, NULL, 12),
 (118, 'Construction Gravel', 'BUILDING & FINISHING', 'GRV-001', 50.00, NULL, 10, 80.00, 'M3', 15, 1, NULL, 12),
@@ -429,7 +429,8 @@ INSERT INTO `inventory_locations` (`id`, `code`, `name`, `notes`, `address`, `st
 (28, 'PRJ-52', 'PROJECT - 52# abc', 'Project inventory location', 'ABCDEF', NULL, NULL, '2026-09-07 17:10:47'),
 (29, 'PRJ-2026-0053', 'PROJECT - PRJ-2026-0053 # any test project', 'Project inventory location', 'Ajuy Tipacla LOT 4', NULL, NULL, '2026-09-07 19:42:16'),
 (30, 'PRJ-2026-0054', 'PROJECT - PRJ-2026-0054 # بناء مدرسة ثانوية', 'Project inventory location', 'عين زارة طرابلس', NULL, NULL, '2026-09-08 19:56:38'),
-(31, 'PRJ-2026-0055', 'PROJECT - PRJ-2026-0055 # بناء مركز صحي بمنطقة المراونة، تاجوراء', 'Project inventory location', 'منطقة المراونة، تاجوراء، 12 الشارع الرابع.', NULL, NULL, '2026-09-12 13:50:51');
+(31, 'PRJ-2026-0055', 'PROJECT - PRJ-2026-0055 # بناء مركز صحي بمنطقة المراونة، تاجوراء', 'Project inventory location', 'منطقة المراونة، تاجوراء، 12 الشارع الرابع.', NULL, NULL, '2026-09-12 13:50:51'),
+(32, 'N-TAJ', 'مخزن النشيع تاجوراء', 'مواعيد العمل من 9 صباحا الى 5 مساء', 'النشيع - تاجوراء - شارع اللطعي بقرب ملعب الجولف', 15, '+21898635442', '2026-09-18 07:11:34');
 
 -- --------------------------------------------------------
 
@@ -458,12 +459,12 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (262, 113, 1, 12.50),
 (263, 113, 2, 7.50),
 (264, 113, 3, 5.00),
-(265, 114, 1, 1500.00),
+(265, 114, 1, 1000.00),
 (266, 114, 2, 900.00),
 (267, 114, 3, 600.00),
 (268, 115, 1, 1250.00),
 (269, 115, 2, 685.00),
-(270, 115, 3, 500.00),
+(270, 115, 3, 350.00),
 (271, 116, 1, 20.00),
 (272, 116, 2, 12.00),
 (273, 116, 3, 8.00),
@@ -684,7 +685,9 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (488, 187, 1, 55.00),
 (489, 187, 2, 5.00),
 (490, 111, 31, 100.00),
-(491, 134, 21, 20.00);
+(491, 134, 21, 20.00),
+(492, 115, 29, 1000.00),
+(493, 114, 32, 500.00);
 
 -- --------------------------------------------------------
 
@@ -730,7 +733,11 @@ INSERT INTO `inventory_movements` (`id`, `inventory_id`, `location_id`, `type`, 
 (331, 111, 31, 'IN', 100.00, NULL, NULL, NULL, NULL, 100.00, 500.00, 'طلب تاسيسات لمبني العمال', 'Warehouse Transfer #47', 1, '2026-09-12 13:55:16'),
 (332, 112, 1, 'OUT', 20.00, NULL, NULL, NULL, NULL, 105.00, 230.00, 'PROJECT #55', 'Reservation Fulfillment: Portland Cement 52.5N', 1, '2026-09-12 14:07:30'),
 (333, 123, 3, 'OUT', 30.00, NULL, NULL, NULL, NULL, 100.00, 620.00, 'PROJECT #55', 'Reservation Fulfillment: Ceramic Wall Tile 30x60', 1, '2026-09-16 05:44:20'),
-(334, 134, 21, 'ADJUSTMENT', 20.00, NULL, NULL, NULL, NULL, 20.00, 99.00, 'ADJ-260918080908', 'FOUND', 1, '2026-09-18 06:09:08');
+(334, 134, 21, 'ADJUSTMENT', 20.00, NULL, NULL, NULL, NULL, 20.00, 99.00, 'ADJ-260918080908', 'FOUND', 1, '2026-09-18 06:09:08'),
+(335, 115, 29, 'ADJUSTMENT', 1000.00, NULL, NULL, NULL, NULL, 1000.00, 3435.00, 'ADJ-260918094500', 'FOUND', 16, '2026-09-18 07:45:00'),
+(336, 115, 3, 'ADJUSTMENT', -150.00, NULL, NULL, NULL, NULL, 350.00, 3285.00, 'ADJ-260918094651', 'BROKEN', 16, '2026-09-18 07:46:52'),
+(337, 114, 1, 'OUT', 500.00, NULL, NULL, NULL, NULL, 1000.00, 3275.00, 'for next project', 'Warehouse Transfer #48', 1, '2026-09-18 13:27:30'),
+(338, 114, 32, 'IN', 500.00, NULL, NULL, NULL, NULL, 500.00, 3275.00, 'for next project', 'Warehouse Transfer #48', 1, '2026-09-18 13:27:30');
 
 -- --------------------------------------------------------
 
@@ -789,7 +796,8 @@ CREATE TABLE `inventory_transfers` (
 
 INSERT INTO `inventory_transfers` (`id`, `inventory_id`, `from_location_id`, `to_location_id`, `quantity`, `reference`, `notes`, `created_by`, `created_at`, `reversed_at`, `reversed_by`, `reversal_transfer_id`, `status`) VALUES
 (46, 187, 1, 2, 5.00, 'updating Tajora WH', 'for daily work', 1, '2026-09-11 14:42:53', NULL, NULL, NULL, 'COMPLETED'),
-(47, 111, 1, 31, 100.00, 'طلب تاسيسات لمبني العمال', 'يتم نقل المادة المحولة فورا', 1, '2026-09-12 13:55:16', NULL, NULL, NULL, 'COMPLETED');
+(47, 111, 1, 31, 100.00, 'طلب تاسيسات لمبني العمال', 'يتم نقل المادة المحولة فورا', 1, '2026-09-12 13:55:16', NULL, NULL, NULL, 'COMPLETED'),
+(48, 114, 1, 32, 500.00, 'for next project', 'we keep it in WH N-TAJ before prices go up.', 1, '2026-09-18 13:27:30', NULL, NULL, NULL, 'COMPLETED');
 
 -- --------------------------------------------------------
 
@@ -1464,14 +1472,14 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`) VALUES
-(5, 'accountant'),
-(1, 'admin'),
-(7, 'cashier'),
-(3, 'engineer'),
-(2, 'manager'),
+(5, 'ACCOUNTANT'),
+(1, 'ADMIN'),
+(7, 'CASHIER'),
+(3, 'ENGINEER'),
+(10, 'FORMAN'),
+(2, 'MANAGER'),
 (8, 'STOREKEEPER'),
-(4, 'technician'),
-(10, 'test'),
+(4, 'TECHNICIAN'),
 (9, 'USER');
 
 -- --------------------------------------------------------
@@ -1566,13 +1574,16 @@ INSERT INTO `role_permissions` (`role_id`, `permission_id`) VALUES
 (5, 42),
 (5, 50),
 (7, 6),
+(7, 7),
 (7, 12),
 (7, 17),
 (7, 18),
 (7, 19),
 (7, 21),
-(7, 27),
-(7, 28),
+(7, 29),
+(7, 31),
+(7, 35),
+(7, 50),
 (8, 5),
 (8, 6),
 (8, 12),
@@ -1888,7 +1899,6 @@ INSERT INTO `users` (`id`, `full_name`, `user_name`, `email`, `mobile`, `photo`,
 (18, 'sami khalid', 'sami', 'sami@ems.com', '+2189123457687', NULL, '$2y$10$KclciMNyrrKA/6MZSlCGy.aEY0ekS4bMttTrcTmKMeP6Nv17VVbpO', '2026-06-25 05:50:21', 5),
 (19, 'test permissions', 'test perm', 'test@ems.com', '+218911112233', NULL, '$2y$10$ODoFA.hgkqfKgTZ6WZI.teb00KNkJFl13C2vn8/smTFvyAe8WmKtS', '2026-07-22 16:42:24', 10),
 (20, 'فرج المفيربي', 'faraj', 'faraj@ems.com', '+218972763765', NULL, '$2y$10$.HaOLKzSERJPuNOKHOlVLeSJlxwLrh2UCTBuUTQA4r5SJtCbxthx2', '2026-09-14 12:41:37', 3),
-(22, 'فرج المفيربي', 'faraj', 'farajm@ems.com', '+218972763765', 'uploads/users/user_6aa7f06234d521.63391475.jpg', '$2y$10$r2eMr/eWnngTRaYQzlAVLOhfHlgwhMk8/5MbFy078ziBfG3uGDfnW', '2026-09-14 12:45:11', 3),
 (23, 'عبدالباسط المغيربي', 'abdelbaset', 'abdelbaset@ems.com', '+218982658736', 'uploads/users/user_6aa7f02a799083.87514601.jpg', '$2y$10$pChk5ib7vSOAm6ZRIjI1xu5/PR3RsTWn4o.dn/5qTijL4FTyZjc.e', '2026-09-14 12:46:29', 2);
 
 -- --------------------------------------------------------
@@ -1914,6 +1924,7 @@ INSERT INTO `user_locations` (`user_id`, `location_id`) VALUES
 (6, 21),
 (6, 22),
 (8, 21),
+(16, 32),
 (17, 22);
 
 --
@@ -2370,19 +2381,19 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `inventory_locations`
 --
 ALTER TABLE `inventory_locations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `inventory_location_stock`
 --
 ALTER TABLE `inventory_location_stock`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=492;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=494;
 
 --
 -- AUTO_INCREMENT for table `inventory_movements`
 --
 ALTER TABLE `inventory_movements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=335;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=339;
 
 --
 -- AUTO_INCREMENT for table `inventory_reservations`
@@ -2394,7 +2405,7 @@ ALTER TABLE `inventory_reservations`
 -- AUTO_INCREMENT for table `inventory_transfers`
 --
 ALTER TABLE `inventory_transfers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `permissions`
