@@ -1,0 +1,241 @@
+COMPLETE MASTER PERMISSION VOCABULARY
+This is the finalized vocabulary we should use before inserting anything into the database.
+PROJECTS
+projects.view
+projects.create
+projects.edit
+projects.delete
+projects.archive
+projects.restore
+projects.documents.create
+projects.documents.delete
+PROJECT ADVANCES
+project_advances.view
+project_advances.create
+project_advances.settle
+PROJECT COSTS & FINANCE
+project_costs.view
+project_costs.create
+project_costs.edit
+project_costs.delete
+project_finance.view
+INVENTORY
+inventory.view
+inventory.create
+inventory.edit
+inventory.delete
+INVENTORY LOCATIONS
+inventory_locations.view
+inventory_locations.create
+inventory_locations.edit
+inventory_locations.delete
+INVENTORY MOVEMENTS
+inventory_movements.view
+inventory_movements.create
+INVENTORY RESERVATIONS
+inventory_reservations.view
+inventory_reservations.create
+inventory_reservations.edit
+inventory_reservations.delete
+inventory_reservations.fulfill
+inventory_reservations.cancel
+STOCK TRANSFERS
+stock_transfers.view
+stock_transfers.create
+stock_transfers.reverse
+INVENTORY ADJUSTMENTS
+inventory_adjustments.view
+inventory_adjustments.create
+GOODS RECEIPTS
+goods_receipts.create
+GOODS RETURNS
+goods_returns.view
+goods_returns.create
+PURCHASE ORDERS
+purchase_orders.view
+purchase_orders.create
+purchase_orders.edit
+purchase_orders.approve
+purchase_orders.cancel
+SUPPLIER QUOTATIONS
+supplier_quotations.view
+supplier_quotations.create
+supplier_quotations.edit
+supplier_quotations.accept
+supplier_quotations.cancel
+supplier_quotations.create_po
+SUPPLIER PAYMENTS
+supplier_payments.view
+supplier_payments.create
+SUPPLIERS
+suppliers.view
+suppliers.create
+suppliers.edit
+suppliers.delete
+suppliers.ledger
+CUSTOMERS
+customers.view
+customers.create
+customers.edit
+customers.delete
+RESOURCE REQUISITIONS
+resource_requisitions.view
+resource_requisitions.create
+resource_requisitions.edit
+resource_requisitions.delete
+resource_requisitions.submit
+resource_requisitions.approve
+resource_requisitions.reject
+resource_requisitions.fulfill
+RESOURCES
+resources.view
+resources.create
+resources.edit
+resources.delete
+RESOURCE CATEGORIES
+resource_categories.view
+resource_categories.create
+resource_categories.edit
+resource_categories.delete
+UNITS
+units.view
+units.create
+units.edit
+units.delete
+USERS
+users.view
+users.create
+users.edit
+users.delete
+REPORTS
+reports.view
+TECHNICIANS
+technicians.view
+PURCHASES
+purchases.view
+ADMINISTRATION
+admin.access
+
+
+DASHBOARD
+No dashboard.view permission.
+The Dashboard remains available to authenticated users according to the application's normal access flow.
+
+
+-----------------------------
+
+DRAFT MASTER PERMISSION VOCABULARY
+We have completed the controller audit. Consolidating the proposed permissions gives us the following master vocabulary.
+PROJECTS
+projects.view
+projects.create
+projects.edit
+projects.delete
+projects.archive
+projects.restore
+projects.documents.create
+projects.documents.delete
+PROJECT ADVANCES
+project_advances.view
+project_advances.create
+project_advances.settle
+PROJECT COSTS / FINANCE
+project_costs.view
+project_costs.create
+project_costs.edit
+project_costs.delete
+project_finance.view
+INVENTORY
+inventory.view
+inventory.create
+inventory.edit
+inventory.delete
+INVENTORY LOCATIONS
+inventory_locations.view
+inventory_locations.create
+inventory_locations.edit
+inventory_locations.delete
+INVENTORY MOVEMENTS
+inventory_movements.view
+inventory_movements.create
+INVENTORY RESERVATIONS
+inventory_reservations.view
+inventory_reservations.create
+inventory_reservations.edit
+inventory_reservations.delete
+inventory_reservations.fulfill
+inventory_reservations.cancel
+STOCK TRANSFERS
+stock_transfers.view
+stock_transfers.create
+stock_transfers.reverse
+INVENTORY ADJUSTMENTS
+inventory_adjustments.view
+inventory_adjustments.create
+PURCHASE ORDERS
+purchase_orders.view
+purchase_orders.create
+purchase_orders.edit
+purchase_orders.approve
+purchase_orders.cancel
+GOODS RECEIPTS
+goods_receipts.create
+GOODS RETURNS
+goods_returns.view
+goods_returns.create
+CUSTOMERS
+customers.view
+customers.create
+customers.edit
+customers.delete
+SUPPLIERS
+suppliers.view
+suppliers.create
+suppliers.edit
+suppliers.delete
+suppliers.ledger
+SUPPLIER QUOTATIONS
+supplier_quotations.view
+supplier_quotations.create
+supplier_quotations.edit
+supplier_quotations.accept
+supplier_quotations.cancel
+supplier_quotations.create_po
+SUPPLIER PAYMENTS
+supplier_payments.view
+supplier_payments.create
+RESOURCE REQUISITIONS
+resource_requisitions.view
+resource_requisitions.create
+resource_requisitions.edit
+resource_requisitions.delete
+resource_requisitions.submit
+resource_requisitions.approve
+resource_requisitions.reject
+resource_requisitions.fulfill
+RESOURCES
+resources.view
+resources.create
+resources.edit
+resources.delete
+RESOURCE CATEGORIES
+resource_categories.view
+resource_categories.create
+resource_categories.edit
+resource_categories.delete
+UNITS
+units.view
+units.create
+units.edit
+units.delete
+USERS
+users.view
+users.create
+users.edit
+users.delete
+REPORTS
+reports.view
+TECHNICIANS
+technicians.view
+PURCHASES
+purchases.view

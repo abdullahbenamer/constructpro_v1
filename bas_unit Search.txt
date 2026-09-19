@@ -1,186 +1,28 @@
-app\Models\GoodsReceiptItemModel.php:
-  53                  i.sku,
-  54:                 i.base_unit,
-  55  
+permission vocabulary:
+-----------------------
+inventory.view
+inventory.create
+inventory.edit
+inventory.delete
 
-  94                  i.sku,
-  95:                 i.base_unit,
-  96  
+inventory_locations.view
+inventory_locations.create
+inventory_locations.edit
+inventory_locations.delete
 
-app\Models\GoodsReturnItemModel.php:
-  42              i.sku,
-  43:             i.base_unit,
-  44  
+inventory_movements.view
+inventory_movements.create
 
-app\Models\InventoryLocationStockModel.php:
-  177              i.sku,
-  178:             i.base_unit,
-  179              i.min_stock,
+inventory_reservations.view
+inventory_reservations.create
+inventory_reservations.edit
+inventory_reservations.delete
+inventory_reservations.fulfill
+inventory_reservations.cancel
 
-app\Models\InventoryModel.php:
-  298          LEFT JOIN units u
-  299:             ON u.unit_code = i.base_unit
-  300  
+stock_transfers.view
+stock_transfers.create
+stock_transfers.reverse
 
-  763              name,
-  764:             base_unit,
-  765              available_qty
-
-app\Models\PurchaseOrderItemModel.php:
-  15              i.sku,
-  16:             i.base_unit,
-  17  
-
-app\Models\PurchaseOrderModel.php:
-  190              i.sku,
-  191:             i.base_unit,
-  192              u.unit_name
-
-  199          LEFT JOIN units u
-  200:             ON u.unit_code = i.base_unit
-  201  
-
-  291              i.sku,
-  292:             i.base_unit,
-  293              u.unit_name
-
-  300          LEFT JOIN units u
-  301:             ON u.unit_code = i.base_unit
-  302  
-
-  327              i.sku,
-  328:             i.base_unit,
-  329              u.unit_name
-
-  336          LEFT JOIN units u
-  337:             ON u.unit_code = i.base_unit
-  338  
-
-app\Models\ResourceRequisitionFulfillmentModel.php:
-   154  
-   155: i.base_unit AS inventory_uom,
-   156  
-
-   463  
-   464:                 i.base_unit,
-   465  
-
-   587  
-   588:                 i.base_unit,
-   589  
-
-  2429              i.name AS inventory_name,
-  2430:             i.base_unit AS inventory_uom
-  2431  
-
-app\Models\ResourceRequisitionItemModel.php:
-   54          LEFT JOIN units iu
-   55:             ON iu.unit_code = i.base_unit
-   56  
-
-  175                  WHEN ri.resource_source = 'INVENTORY'
-  176:                 THEN i.base_unit
-  177                  ELSE u.unit_name
-
-app\Models\UnitModel.php:
-  133          FROM inventory
-  134:         WHERE base_unit = ?
-  135          ",
-
-app\Views\goods-returns\details.php:
-  209                                  <?= htmlspecialchars(
-  210:                                     $item->base_unit ?? ''
-  211                                  ) ?>
-
-app\Views\inventory\create.php:
-  260                  <label class="form-label">
-  261:                     <?= __('base_unit') ?>
-  262                  </label>
-  263  
-  264:                 <select name="base_unit" class="form-select">
-  265  
-
-app\Views\inventory\edit.php:
-  268                  <label class="form-label">
-  269:                     <?= __('base_unit') ?>
-  270                  </label>
-  271  
-  272:                 <select name="base_unit" class="form-select">
-  273  
-
-  275                          value="piece"
-  276:                         <?= ($inventory->base_unit ?? 'piece') === 'piece'
-  277                              ? 'selected'
-
-  284                          value="meter"
-  285:                         <?= ($inventory->base_unit ?? '') === 'meter'
-  286                              ? 'selected'
-
-  293                          value="kg"
-  294:                         <?= ($inventory->base_unit ?? '') === 'kg'
-  295                              ? 'selected'
-
-  302                          value="liter"
-  303:                         <?= ($inventory->base_unit ?? '') === 'liter'
-  304                              ? 'selected'
-
-app\Views\inventory\index.php:
-  302  
-  303:                             <?= $inventory->base_unit ?>
-  304  
-
-  311                                  <?= $inventory->units_per_sale ?>
-  312:                                 <?= $inventory->base_unit ?>
-  313  
-
-  350                              <?= $inventory->quantity ?>
-  351:                             <?= $inventory->base_unit ?>
-  352  
-
-app\Views\inventory\stock_details.php:
-   44  
-   45:                 <strong><?= __('base_unit') ?>:</strong>
-   46  
-   47                  <?= htmlspecialchars(
-   48:                     $item->base_unit ?? 'unit'
-   49                  ) ?>
-
-   77                  <small>
-   78:                     <?= htmlspecialchars($item->base_unit) ?>
-   79                  </small>
-
-  101                  <small>
-  102:                     <?= htmlspecialchars($item->base_unit) ?>
-  103                  </small>
-
-  125                  <small>
-  126:                     <?= htmlspecialchars($item->base_unit) ?>
-  127                  </small>
-
-  149                  <small>
-  150:                     <?= htmlspecialchars($item->base_unit) ?>
-  151                  </small>
-
-  198  
-  199:         <?= htmlspecialchars($item->base_unit) ?>
-  200  
-
-app\Views\inventory\view.php:
-  50                      <?= $item->quantity ?>
-  51:                     <?= $item->base_unit ?>
-  52  
-
-app\Views\inventory-locations\view.php:
-  128                  <?= htmlspecialchars(
-  129:                     $item->base_unit
-  130                  ) ?>
-
-app\Views\resource-requisition-fulfillments\create.php:
-  432                                              $item->uom
-  433:                                                 ?? $item->base_unit
-  434                                                  ?? '-'
-
-app\Views\resource-requisition-fulfillments\details.php:
-  449                                          <?= htmlspecialchars(
-  450:                                             $item->base_unit
-  451                                              ?? '-'
+inventory_adjustments.view
+inventory_adjustments.create
