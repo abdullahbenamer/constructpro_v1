@@ -1166,4 +1166,92 @@ return [
     'about_system_english' => 'عن نظام ConstructPro ERP',
 'about_system_arabic'  => 'عن نظام ConstructPro ERP (العربية)',
 
+'permission_goods_receipts_create' => 'إنشاء مستندات استلام البضائع',
+'permission_goods_returns_view' => 'عرض مرتجعات البضائع',
+
+'permission_group_inventory_adjustments' => 'تسويات المخزون',
+'permission_inventory_adjustments_create' => 'إنشاء تسويات المخزون',
+'permission_inventory_adjustments_view' => 'عرض تسويات المخزون',
+
+'permission_inventory_locations_delete' => 'حذف مواقع المخزون',
+'permission_inventory_locations_edit' => 'تعديل مواقع المخزون',
+
+'permission_inventory_reservations_cancel' => 'إلغاء حجوزات المخزون',
+'permission_inventory_reservations_delete' => 'حذف حجوزات المخزون',
+'permission_inventory_reservations_edit' => 'تعديل حجوزات المخزون',
+'permission_inventory_reservations_fulfill' => 'تنفيذ حجوزات المخزون',
+
+'permission_projects_archive' => 'أرشفة المشاريع',
+'permission_projects_documents_create' => 'رفع مستندات المشاريع',
+'permission_projects_documents_delete' => 'حذف مستندات المشاريع',
+'permission_projects_restore' => 'استعادة المشاريع',
+
+'permission_group_project_advances' => 'سلف المشاريع',
+'permission_project_advances_create' => 'إنشاء سلف المشاريع',
+'permission_project_advances_settle' => 'تسوية سلف المشاريع',
+'permission_project_advances_view' => 'عرض سلف المشاريع',
+
+'permission_group_project_costs' => 'تكاليف المشاريع',
+'permission_project_costs_create' => 'إنشاء تكاليف المشاريع',
+'permission_project_costs_delete' => 'حذف تكاليف المشاريع',
+'permission_project_costs_edit' => 'تعديل تكاليف المشاريع',
+'permission_project_costs_view' => 'عرض تكاليف المشاريع',
+
+'permission_group_project_finance' => 'مالية المشاريع',
+'permission_project_finance_view' => 'عرض مالية المشاريع',
+
+'permission_group_purchases' => 'المشتريات',
+'permission_purchases_view' => 'عرض المشتريات',
+
+'permission_purchase_orders_cancel' => 'إلغاء أوامر الشراء',
+'permission_purchase_orders_edit' => 'تعديل أوامر الشراء',
+
+'permission_group_resources' => 'الموارد',
+'permission_resources_create' => 'إنشاء الموارد',
+'permission_resources_delete' => 'حذف الموارد',
+'permission_resources_edit' => 'تعديل الموارد',
+'permission_resources_view' => 'عرض الموارد',
+
+'permission_group_resource_categories' => 'فئات الموارد',
+'permission_resource_categories_create' => 'إنشاء فئات الموارد',
+'permission_resource_categories_delete' => 'حذف فئات الموارد',
+'permission_resource_categories_edit' => 'تعديل فئات الموارد',
+'permission_resource_categories_view' => 'عرض فئات الموارد',
+
+'permission_resource_requisitions_create' => 'إنشاء طلبات الموارد',
+'permission_resource_requisitions_delete' => 'حذف طلبات الموارد',
+'permission_resource_requisitions_edit' => 'تعديل طلبات الموارد',
+'permission_resource_requisitions_fulfill' => 'تنفيذ طلبات الموارد',
+'permission_resource_requisitions_reject' => 'رفض طلبات الموارد',
+'permission_resource_requisitions_submit' => 'إرسال طلبات الموارد',
+'permission_resource_requisitions_view' => 'عرض طلبات الموارد',
+
+'permission_stock_transfers_reverse' => 'عكس تحويلات المخزون',
+
+'permission_suppliers_delete' => 'حذف الموردين',
+'permission_suppliers_edit' => 'تعديل الموردين',
+'permission_suppliers_ledger' => 'عرض حساب المورد',
+
+'permission_group_supplier_payments' => 'مدفوعات الموردين',
+'permission_supplier_payments_create' => 'إنشاء مدفوعات الموردين',
+'permission_supplier_payments_view' => 'عرض مدفوعات الموردين',
+
+'permission_group_supplier_quotations' => 'عروض أسعار الموردين',
+'permission_supplier_quotations_accept' => 'اعتماد عروض أسعار الموردين',
+'permission_supplier_quotations_cancel' => 'إلغاء عروض أسعار الموردين',
+'permission_supplier_quotations_create' => 'إنشاء عروض أسعار الموردين',
+'permission_supplier_quotations_create_po' => 'إنشاء أمر شراء من عرض السعر',
+'permission_supplier_quotations_edit' => 'تعديل عروض أسعار الموردين',
+'permission_supplier_quotations_view' => 'عرض عروض أسعار الموردين',
+
+'permission_group_technicians' => 'الفنيون',
+'permission_technicians_view' => 'عرض الفنيين',
+
+'permission_group_units' => 'وحدات القياس',
+'permission_units_create' => 'إنشاء وحدات القياس',
+'permission_units_delete' => 'حذف وحدات القياس',
+'permission_units_edit' => 'تعديل وحدات القياس',
+'permission_units_view' => 'عرض وحدات القياس',
+'permission_group_goods_receipts' => 'استلام البضائع',
 ];
+

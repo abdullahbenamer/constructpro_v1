@@ -1170,4 +1170,92 @@ return [
 
     'about_system_english' => 'About ConstructPro ERP',
 'about_system_arabic'  => 'About ConstructPro ERP (Arabic)',
+'permission_goods_receipts_create' => 'Create Goods Receipts',
+'permission_goods_returns_view' => 'View Goods Returns',
+
+'permission_group_inventory_adjustments' => 'Inventory Adjustments',
+'permission_inventory_adjustments_create' => 'Create Inventory Adjustments',
+'permission_inventory_adjustments_view' => 'View Inventory Adjustments',
+
+'permission_inventory_locations_delete' => 'Delete Inventory Locations',
+'permission_inventory_locations_edit' => 'Edit Inventory Locations',
+
+'permission_inventory_reservations_cancel' => 'Cancel Inventory Reservations',
+'permission_inventory_reservations_delete' => 'Delete Inventory Reservations',
+'permission_inventory_reservations_edit' => 'Edit Inventory Reservations',
+'permission_inventory_reservations_fulfill' => 'Fulfill Inventory Reservations',
+
+'permission_projects_archive' => 'Archive Projects',
+'permission_projects_documents_create' => 'Upload Project Documents',
+'permission_projects_documents_delete' => 'Delete Project Documents',
+'permission_projects_restore' => 'Restore Projects',
+
+'permission_group_project_advances' => 'Project Advances',
+'permission_project_advances_create' => 'Create Project Advances',
+'permission_project_advances_settle' => 'Settle Project Advances',
+'permission_project_advances_view' => 'View Project Advances',
+
+'permission_group_project_costs' => 'Project Costs',
+'permission_project_costs_create' => 'Create Project Costs',
+'permission_project_costs_delete' => 'Delete Project Costs',
+'permission_project_costs_edit' => 'Edit Project Costs',
+'permission_project_costs_view' => 'View Project Costs',
+
+'permission_group_project_finance' => 'Project Finance',
+'permission_project_finance_view' => 'View Project Finance',
+
+'permission_group_purchases' => 'Purchases',
+'permission_purchases_view' => 'View Purchases',
+
+'permission_purchase_orders_cancel' => 'Cancel Purchase Orders',
+'permission_purchase_orders_edit' => 'Edit Purchase Orders',
+
+'permission_group_resources' => 'Resources',
+'permission_resources_create' => 'Create Resources',
+'permission_resources_delete' => 'Delete Resources',
+'permission_resources_edit' => 'Edit Resources',
+'permission_resources_view' => 'View Resources',
+
+'permission_group_resource_categories' => 'Resource Categories',
+'permission_resource_categories_create' => 'Create Resource Categories',
+'permission_resource_categories_delete' => 'Delete Resource Categories',
+'permission_resource_categories_edit' => 'Edit Resource Categories',
+'permission_resource_categories_view' => 'View Resource Categories',
+
+'permission_resource_requisitions_create' => 'Create Resource Requisitions',
+'permission_resource_requisitions_delete' => 'Delete Resource Requisitions',
+'permission_resource_requisitions_edit' => 'Edit Resource Requisitions',
+'permission_resource_requisitions_fulfill' => 'Fulfill Resource Requisitions',
+'permission_resource_requisitions_reject' => 'Reject Resource Requisitions',
+'permission_resource_requisitions_submit' => 'Submit Resource Requisitions',
+'permission_resource_requisitions_view' => 'View Resource Requisitions',
+
+'permission_stock_transfers_reverse' => 'Reverse Stock Transfers',
+
+'permission_suppliers_delete' => 'Delete Suppliers',
+'permission_suppliers_edit' => 'Edit Suppliers',
+'permission_suppliers_ledger' => 'View Supplier Ledger',
+
+'permission_group_supplier_payments' => 'Supplier Payments',
+'permission_supplier_payments_create' => 'Create Supplier Payments',
+'permission_supplier_payments_view' => 'View Supplier Payments',
+
+'permission_group_supplier_quotations' => 'Supplier Quotations',
+'permission_supplier_quotations_accept' => 'Accept Supplier Quotations',
+'permission_supplier_quotations_cancel' => 'Cancel Supplier Quotations',
+'permission_supplier_quotations_create' => 'Create Supplier Quotations',
+'permission_supplier_quotations_create_po' => 'Create Purchase Order from Quotation',
+'permission_supplier_quotations_edit' => 'Edit Supplier Quotations',
+'permission_supplier_quotations_view' => 'View Supplier Quotations',
+
+'permission_group_technicians' => 'Technicians',
+'permission_technicians_view' => 'View Technicians',
+
+'permission_group_units' => 'Units',
+'permission_units_create' => 'Create Units',
+'permission_units_delete' => 'Delete Units',
+'permission_units_edit' => 'Edit Units',
+'permission_units_view' => 'View Units',
+'permission_group_goods_receipts' => 'Goods Receipts',
+
 ];
