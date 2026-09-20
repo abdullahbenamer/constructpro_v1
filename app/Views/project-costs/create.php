@@ -156,7 +156,7 @@ $locations = $locations ?? [];
 
         function updateMode() {
 
-            const material = (costType.value === 'materials');
+            const material = (costType.value === 'MATERIALS');
 
             inventoryBlock.style.display = material ? '' : 'none';
             locationBlock.style.display = material ? '' : 'none';

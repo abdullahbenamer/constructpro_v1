@@ -21,7 +21,12 @@
             <div class="d-flex flex-wrap align-items-center gap-2">
 
     <!-- PROJECT CODE -->
+     <span class="d-inline-flex align-items-center gap-1">
+        <span class="text-muted small fw-semibold">
+            <?= __('code') ?>:
+        </span>
     <span class="badge bg-primary fs-6">
+             
         <?= htmlspecialchars($project->project_code ?? 'N/A') ?>
     </span>
 
