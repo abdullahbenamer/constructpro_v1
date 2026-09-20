@@ -21,10 +21,21 @@ class CustomerModel extends Model {
     }
     
 
-    public function getById($id) {
-        $result = $this->db->query("SELECT * FROM customers WHERE id = ?", [$id])->fetch();
-        return $result ?: null;  
-    }
+  public function getById($id)
+{
+    return $this->db->query(
+        "
+        SELECT
+            c.*,
+            u.full_name AS account_manager
+        FROM customers c
+        LEFT JOIN users u
+            ON u.id = c.account_manager_id
+        WHERE c.id = ?
+        ",
+        [(int)$id]
+    )->fetch();
+}
     
     public function create($data) {
         return $this->db->query(

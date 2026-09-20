@@ -1253,5 +1253,19 @@ return [
 'permission_units_edit' => 'تعديل وحدات القياس',
 'permission_units_view' => 'عرض وحدات القياس',
 'permission_group_goods_receipts' => 'استلام البضائع',
+
+'my_profile' => 'ملفي الشخصي',
+'edit_profile' => 'تعديل الملف الشخصي',
+'update_profile' => 'تحديث الملف الشخصي',
+'change_password' => 'تغيير كلمة المرور',
+'current_password' => 'كلمة المرور الحالية',
+'new_password' => 'كلمة المرور الجديدة',
+'confirm_password' => 'تأكيد كلمة المرور',
+'profile_updated_successfully' => 'تم تحديث الملف الشخصي بنجاح.',
+'password_changed_successfully' => 'تم تغيير كلمة المرور بنجاح.',
+'current_password_incorrect' => 'كلمة المرور الحالية غير صحيحة.',
+'passwords_do_not_match' => 'كلمتا المرور غير متطابقتين.',
+'new_password_required' => 'كلمة المرور الجديدة مطلوبة.',
+'phase' => 'المرحلة',
 ];
 

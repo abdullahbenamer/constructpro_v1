@@ -1258,4 +1258,17 @@ return [
 'permission_units_view' => 'View Units',
 'permission_group_goods_receipts' => 'Goods Receipts',
 
+'my_profile' => 'My Profile',
+'edit_profile' => 'Edit Profile',
+'update_profile' => 'Update Profile',
+'change_password' => 'Change Password',
+'current_password' => 'Current Password',
+'new_password' => 'New Password',
+'confirm_password' => 'Confirm Password',
+'profile_updated_successfully' => 'Profile updated successfully.',
+'password_changed_successfully' => 'Password changed successfully.',
+'current_password_incorrect' => 'Current password is incorrect.',
+'passwords_do_not_match' => 'Passwords do not match.',
+'new_password_required' => 'New password is required.',
+'phase' => 'Phase',
 ];

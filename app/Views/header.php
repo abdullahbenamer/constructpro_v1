@@ -124,9 +124,9 @@ require_once '../app/Models/InventoryLocationModel.php';
 
 
 
-        <!-- Using local files -->
+    <!-- Using local files -->
 
-        <!-- <link rel="stylesheet"
+    <!-- <link rel="stylesheet"
       href="/assets/css/bootstrap.min.css">
 
 <link rel="stylesheet"
@@ -959,87 +959,87 @@ require_once '../app/Models/InventoryLocationModel.php';
                     <?php endif; ?>
 
 
-<!-- ==============================
+                    <!-- ==============================
      INVENTORY
 ===================================== -->
 
-<?php if (
-    AuthHelper::canView('inventory.view') ||
-    AuthHelper::canView('inventory-movements.view') ||
-    AuthHelper::canView('inventory-locations.view') ||
-    AuthHelper::canView('stock-transfers.view') ||
-    AuthHelper::canView('inventory-reservations.view')
-) : ?>
+                    <?php if (
+                        AuthHelper::canView('inventory.view') ||
+                        AuthHelper::canView('inventory-movements.view') ||
+                        AuthHelper::canView('inventory-locations.view') ||
+                        AuthHelper::canView('stock-transfers.view') ||
+                        AuthHelper::canView('inventory-reservations.view')
+                    ) : ?>
 
-<li class="nav-item dropdown dropend">
+                        <li class="nav-item dropdown dropend">
 
-    <a class="nav-link dropdown-toggle"
-       href="#"
-       data-bs-toggle="dropdown"
-       aria-expanded="false">
-        <i class="fas fa-warehouse"></i>
-        <?= __('inventory') ?>
-    </a>
+                            <a class="nav-link dropdown-toggle"
+                                href="#"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="fas fa-warehouse"></i>
+                                <?= __('inventory') ?>
+                            </a>
 
-    <ul class="dropdown-menu">
+                            <ul class="dropdown-menu">
 
-        <?php if (AuthHelper::canView('inventory.view')) : ?>
-            <li>
-                <a class="dropdown-item" href="<?= URLROOT ?>/inventory">
-                    <i class="fas fa-boxes"></i>
-                    <?= __('inventory_list') ?>
-                </a>
-            </li>
-        <?php endif; ?>
-
-
-        <?php if (AuthHelper::canView('inventory_locations.view')) : ?>
-            <li>
-                <a class="dropdown-item"
-                   href="<?= URLROOT ?>/inventorylocations">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <?= __('locations_warehouse') ?>
-                </a>
-            </li>
-        <?php endif; ?>
+                                <?php if (AuthHelper::canView('inventory.view')) : ?>
+                                    <li>
+                                        <a class="dropdown-item" href="<?= URLROOT ?>/inventory">
+                                            <i class="fas fa-boxes"></i>
+                                            <?= __('inventory_list') ?>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
 
 
-        <?php if (AuthHelper::canView('inventory-movements.view')) : ?>
-            <li>
-                <a class="dropdown-item"
-                   href="<?= URLROOT ?>/inventorymovements">
-                    <i class="fas fa-exchange-alt"></i>
-                    <?= __('inventory_movements') ?>
-                </a>
-            </li>
-        <?php endif; ?>
+                                <?php if (AuthHelper::canView('inventory_locations.view')) : ?>
+                                    <li>
+                                        <a class="dropdown-item"
+                                            href="<?= URLROOT ?>/inventorylocations">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <?= __('locations_warehouse') ?>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
 
 
-        <?php if (AuthHelper::canView('stock-transfers.view')) : ?>
-            <li>
-                <a class="dropdown-item"
-                   href="<?= URLROOT ?>/inventorytransfers">
-                    <i class="fas fa-random"></i>
-                    <?= __('stock_transfers') ?>
-                </a>
-            </li>
-        <?php endif; ?>
+                                <?php if (AuthHelper::canView('inventory-movements.view')) : ?>
+                                    <li>
+                                        <a class="dropdown-item"
+                                            href="<?= URLROOT ?>/inventorymovements">
+                                            <i class="fas fa-exchange-alt"></i>
+                                            <?= __('inventory_movements') ?>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
 
 
-        <?php if (AuthHelper::canView('inventory-reservations.view')) : ?>
-            <li>
-                <a class="dropdown-item"
-                   href="<?= URLROOT ?>/inventoryreservations">
-                    <i class="fas fa-bookmark"></i>
-                    <?= __('inventory_reservations') ?>
-                </a>
-            </li>
-        <?php endif; ?>
+                                <?php if (AuthHelper::canView('stock-transfers.view')) : ?>
+                                    <li>
+                                        <a class="dropdown-item"
+                                            href="<?= URLROOT ?>/inventorytransfers">
+                                            <i class="fas fa-random"></i>
+                                            <?= __('stock_transfers') ?>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
 
-    </ul>
-</li>
 
-<?php endif; ?>
+                                <?php if (AuthHelper::canView('inventory-reservations.view')) : ?>
+                                    <li>
+                                        <a class="dropdown-item"
+                                            href="<?= URLROOT ?>/inventoryreservations">
+                                            <i class="fas fa-bookmark"></i>
+                                            <?= __('inventory_reservations') ?>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
+
+                            </ul>
+                        </li>
+
+                    <?php endif; ?>
 
 
                     <!-- =================================================
@@ -1261,8 +1261,8 @@ require_once '../app/Models/InventoryLocationModel.php';
                         </li>
                     <?php endif; ?>
 
-                     <hr style="color: #ffffff; margin: 1px 0;">
-                                      <!-- ========== USER AREA ========= -->
+                    <hr style="color: #ffffff; margin: 1px 0;">
+                    <!-- ========== USER AREA ========= -->
 
                     <div class="sidebar-user">
 
@@ -1341,19 +1341,24 @@ require_once '../app/Models/InventoryLocationModel.php';
 
                     </div>
 
- <!-- About -->
+                    <li><a class="nav-link" href="<?= URLROOT ?>/users/profile">
+                            <i class="fas fa-user me-2"></i>
+                            <?= __('my_profile') ?>
+                        </a></li>
+
+                    <!-- About -->
                     <?php
                     $aboutPdf = Language::get() === 'ar'
                         ? 'constructpro_erp_about_the_system_arabic.pdf'
                         : 'constructpro_erp_about_the_system_english.pdf';
                     $pdfUrl = URLROOT . '/about/' . $aboutPdf;
                     ?>
-                   <li><a class="nav-link" href="<?= htmlspecialchars($pdfUrl) ?>"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onclick="event.stopPropagation();">
-                         <i class="fas fa-info-circle"></i> <?= __('about_constructpro')  ?>
-                    </a></li> 
+                    <li><a class="nav-link" href="<?= htmlspecialchars($pdfUrl) ?>"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onclick="event.stopPropagation();">
+                            <i class="fas fa-info-circle"></i> <?= __('about_constructpro')  ?>
+                        </a></li>
                 </ul>
 
 

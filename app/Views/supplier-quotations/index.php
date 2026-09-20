@@ -23,7 +23,7 @@
             <th><?= __('items') ?></th>
             <th><?= __('delivery') ?></th>
             <th><?= __('status') ?></th>
-            <th width="250"><?= __('actions') ?></th>
+            <th><?= __('actions') ?></th>
         </tr>
     </thead>
 
@@ -163,21 +163,14 @@
                             </a>
 
                         <?php endif; ?>
-
-                        <?php if (
-                            !empty($quotation->procurement_reference)
-                        ): ?>
-
-                            <a
-                                href="<?= URLROOT ?>/supplierquotations/compare/<?= urlencode($quotation->procurement_reference) ?>"
+ 
+                        <?php if (!empty($quotation->procurement_reference)): ?>
+                            <a href="<?= URLROOT ?>/supplierquotations/compare/<?= urlencode($quotation->procurement_reference) ?>"
                                 class="btn btn-sm btn-outline-primary"
                                 title="<?= htmlspecialchars(__('compare_quotations_for_procurement'), ENT_QUOTES) ?>">
-
                                 <i class="fas fa-balance-scale"></i>
                                 <?= __('compare') ?>
-
                             </a>
-
                         <?php endif; ?>
 
                     </td>

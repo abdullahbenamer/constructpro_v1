@@ -1,177 +1,293 @@
-<h2>
+<h2 class="mb-3">
     <?= __('customer_details') ?>
 </h2>
 
+<!-- CUSTOMER INFORMATION -->
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-user-tie me-2"></i>
+        <?= __('customer_information') ?>
+    </div>
 
-<div class="card p-3 mb-3">
+    <div class="card-body">
 
-    <h4>
-        <?= htmlspecialchars($data['customer']->company) ?>
-    </h4>
+        <div class="row g-4">
 
+            <!-- NAME -->
+            <div class="col-md-4">
+                <div class="text-muted small">
+                    <?= __('name') ?>
+                </div>
 
-  <p>
+                <strong>
+                    <?= htmlspecialchars($data['customer']->name ?? 'N/A') ?>
+                </strong>
+            </div>
 
-    <strong>
-        <?= __('account_manager') ?>:
-    </strong>
+            <!-- COMPANY -->
+            <div class="col-md-4">
+                <div class="text-muted small">
+                    <?= __('company') ?>
+                </div>
 
-    <?php if (!empty($data['customer']->account_manager_id)): ?>
+                <strong>
+                    <?= htmlspecialchars($data['customer']->company ?? 'N/A') ?>
+                </strong>
+            </div>
 
-        <a
-            href="<?= URLROOT ?>/users/details/<?= (int)$data['customer']->account_manager_id ?>"
-            class="text-decoration-none">
+            <!-- STATUS -->
+            <div class="col-md-4">
+                <div class="text-muted small">
+                    <?= __('status') ?>
+                </div>
 
-            <?= htmlspecialchars(
-                $data['customer']->account_manager ?? __('not_assigned')
-            ) ?>
+                <?php
+                $status = strtolower($data['customer']->status ?? '');
 
-        </a>
+                $statusClass = [
+                    'active'   => 'success',
+                    'inactive' => 'secondary'
+                ][$status] ?? 'secondary';
+                ?>
 
-    <?php else: ?>
+                <span class="badge bg-<?= $statusClass ?>">
+                    <?= htmlspecialchars(
+                        $status === 'active'
+                            ? __('active')
+                            : ($status === 'inactive'
+                                ? __('inactive')
+                                : ($data['customer']->status ?? 'N/A'))
+                    ) ?>
+                </span>
+            </div>
 
-        <?= __('not_assigned') ?>
+            <!-- EMAIL -->
+            <div class="col-md-4">
+                <div class="text-muted small">
+                    <?= __('email') ?>
+                </div>
 
-    <?php endif; ?>
+                <?php if (!empty($data['customer']->email)): ?>
+                    <a href="mailto:<?= htmlspecialchars($data['customer']->email) ?>">
+                        <?= htmlspecialchars($data['customer']->email) ?>
+                    </a>
+                <?php else: ?>
+                    <span class="text-muted">N/A</span>
+                <?php endif; ?>
+            </div>
 
-</p>
+            <!-- PHONE -->
+            <div class="col-md-4">
+                <div class="text-muted small">
+                    <?= __('phone') ?>
+                </div>
 
+                <?php if (!empty($data['customer']->phone)): ?>
+                    <a href="tel:<?= htmlspecialchars($data['customer']->phone) ?>">
+                        <?= htmlspecialchars($data['customer']->phone) ?>
+                    </a>
+                <?php else: ?>
+                    <span class="text-muted">N/A</span>
+                <?php endif; ?>
+            </div>
+
+            <!-- ACCOUNT MANAGER -->
+            <div class="col-md-4">
+                <div class="text-muted small">
+                    <?= __('account_manager') ?>
+                </div>
+
+                <?php if (!empty($data['customer']->account_manager_id)): ?>
+
+                    <a
+                        href="<?= URLROOT ?>/users/details/<?= (int)$data['customer']->account_manager_id ?>"
+                        class="text-decoration-none fw-semibold">
+
+                        <?= htmlspecialchars(
+                            $data['customer']->account_manager ?? __('not_assigned')
+                        ) ?>
+
+                    </a>
+
+                <?php else: ?>
+
+                    <span class="text-muted">
+                        <?= __('not_assigned') ?>
+                    </span>
+
+                <?php endif; ?>
+            </div>
+
+            <!-- ADDRESS -->
+            <div class="col-md-8">
+                <div class="text-muted small">
+                    <?= __('address') ?>
+                </div>
+
+                <strong>
+                    <?= !empty($data['customer']->address)
+                        ? nl2br(htmlspecialchars($data['customer']->address))
+                        : 'N/A'
+                    ?>
+                </strong>
+            </div>
+
+            <!-- CREATED AT -->
+            <div class="col-md-4">
+                <div class="text-muted small">
+                    <?= __('created_at') ?>
+                </div>
+
+                <strong>
+                    <?= !empty($data['customer']->created_at)
+                        ? date('d M Y', strtotime($data['customer']->created_at))
+                        : 'N/A'
+                    ?>
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
 </div>
 
 
-<h4>
-    <?= __('projects') ?>
-</h4>
+<!-- CUSTOMER PROJECTS -->
+<div class="card">
 
+    <div class="card-header">
+        <i class="fas fa-building me-2"></i>
+        <?= __('projects') ?>
+    </div>
 
-<table class="table table-bordered">
+    <div class="card-body">
 
-    <thead>
+        <?php if (!empty($data['projects'])): ?>
 
-        <tr>
+            <div class="table-responsive">
 
-            <th>
-                <?= __('project') ?>
-            </th>
+                <table class="table table-bordered table-hover align-middle">
 
-            <th>
-                <?= __('status') ?>
-            </th>
+                    <thead class="table-light">
+                        <tr>
+                            <th><?= __('project') ?></th>
+                            <th><?= __('status') ?></th>
+                            <th><?= __('project_manager') ?></th>
+                            <th><?= __('action') ?></th>
+                        </tr>
+                    </thead>
 
-            <th>
-                <?= __('project_manager') ?>
-            </th>
+                    <tbody>
 
-            <th>
-                <?= __('action') ?>
-            </th>
+                        <?php foreach ($data['projects'] as $project): ?>
 
-        </tr>
+                            <tr>
 
-    </thead>
+                                <!-- PROJECT -->
+                                <td>
+                                    <a
+                                        class="fw-bold text-decoration-none"
+                                        href="<?= URLROOT ?>/project-costs/index/<?= $project->id ?>">
 
+                                        <i class="fas fa-building me-1"></i>
 
-    <tbody>
+                                        <?= strtoupper(
+                                            htmlspecialchars($project->title)
+                                        ) ?>
 
-        <?php foreach ($data['projects'] as $project): ?>
+                                    </a>
+                                </td>
 
-            <tr>
+                                <!-- STATUS -->
+                                <td>
 
-                <td>
+                                    <?php
+                                    $statusLabels = [
+                                        'planning'    => __('planning'),
+                                        'in_progress' => __('in_progress'),
+                                        'testing'     => __('testing'),
+                                        'completed'   => __('completed_status'),
+                                        'cancelled'   => __('cancelled')
+                                    ];
 
-                    <a
-                        class="fw-bold text-decoration-none"
-                        href="<?= URLROOT ?>/project-costs/index/<?= $project->id ?>">
+                                    $statusColors = [
+                                        'planning'    => 'secondary',
+                                        'in_progress' => 'warning',
+                                        'testing'     => 'info',
+                                        'completed'   => 'success',
+                                        'cancelled'   => 'danger'
+                                    ];
 
-                        <i class="fas fa-building"></i> -
+                                    $projectStatus = strtolower(
+                                        $project->status ?? ''
+                                    );
+                                    ?>
 
-                        <?= strtoupper(
-                            htmlspecialchars($project->title)
-                        ) ?>
+                                    <span class="badge bg-<?= $statusColors[$projectStatus] ?? 'secondary' ?>">
 
-                    </a>
+                                        <?= htmlspecialchars(
+                                            $statusLabels[$projectStatus]
+                                                ?? strtoupper($projectStatus)
+                                        ) ?>
 
-                </td>
+                                    </span>
 
+                                </td>
 
-                <td>
+                                <!-- PROJECT MANAGER -->
+                                <td>
 
-                    <?php
+                                    <?php if (!empty($project->project_manager_id)): ?>
 
-                    $statusLabels = [
+                                        <a
+                                            class="text-decoration-none"
+                                            href="<?= URLROOT ?>/users/details/<?= (int)$project->project_manager_id ?>">
 
-                        'planning' =>
-                            __('planning'),
+                                            <?= htmlspecialchars(
+                                                $project->project_manager ?? 'N/A'
+                                            ) ?>
 
-                        'in_progress' =>
-                            __('in_progress'),
+                                        </a>
 
-                        'testing' =>
-                            __('testing'),
+                                    <?php else: ?>
 
-                        'completed' =>
-                            __('completed_status'),
+                                        <?= __('n_a') ?>
 
-                        'cancelled' =>
-                            __('cancelled')
+                                    <?php endif; ?>
 
-                    ];
+                                </td>
 
-                    ?>
+                                <!-- ACTION -->
+                                <td>
 
-                    <span class="badge bg-info">
+                                    <a
+                                        class="btn btn-sm btn-info"
+                                        href="<?= URLROOT ?>/project-costs/<?= $project->id ?>">
 
-                        <?= htmlspecialchars(
-                            $statusLabels[$project->status]
-                                ?? strtoupper($project->status)
-                        ) ?>
+                                        <?= __('details') ?>
 
-                    </span>
+                                    </a>
 
-                </td>
+                                </td>
 
+                            </tr>
 
-                <td>
+                        <?php endforeach; ?>
 
-                    <?php if (
-                        !empty($project->project_manager_id)
-                    ): ?>
+                    </tbody>
 
-                        <a
-                            class="text-decoration-none"
-                            href="<?= URLROOT ?>/users/details/<?= $project->project_manager_id ?>">
+                </table>
 
-                            <?= htmlspecialchars(
-                                $project->project_manager
-                            ) ?>
+            </div>
 
-                        </a>
+        <?php else: ?>
 
-                    <?php else: ?>
+            <div class="text-muted text-center py-4">
+                <?= __('no_projects_found') ?>
+            </div>
 
-                        <?= __('n_a') ?>
+        <?php endif; ?>
 
-                    <?php endif; ?>
+    </div>
 
-                </td>
-
-
-                <td>
-
-                    <a
-                        class="btn btn-sm btn-info"
-                        href="<?= URLROOT ?>/project-costs/<?= $project->id ?>">
-
-                        <?= __('details') ?>
-
-                    </a>
-
-                </td>
-
-            </tr>
-
-        <?php endforeach; ?>
-
-    </tbody>
-
-</table>
+</div>

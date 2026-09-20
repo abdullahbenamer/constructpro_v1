@@ -21,6 +21,7 @@
             <th><?= __('storekeeper') ?></th>
             <th><?= __('mobile_number') ?></th>
             <th><?= __('actions') ?></th>
+              <th><?= __('delete') ?></th>
 
         </tr>
 
@@ -108,7 +109,9 @@
                             <?= __('edit') ?>
 
                         </a>
-
+            </td>
+            
+            <td>
                         <?php if ($loc->total_stock <= 0): ?>
 
                             <a href="<?= URLROOT ?>/inventorylocations/delete/<?= $loc->id ?>"
@@ -132,7 +135,7 @@
 
                                 <?= __('contains_stock') ?>
 
-                                <?= number_format($loc->total_stock, 2) ?>
+                                <?= number_format($loc->total_stock, 0) ?>
 
                                 <?= __('items') ?>
 
