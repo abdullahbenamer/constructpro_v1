@@ -1439,5 +1439,9 @@ return [
 'fully_received_po_cannot_be_cancelled' => 'A fully received Purchase Order cannot be cancelled.',
 'purchase_order_cannot_be_cancelled' => 'Purchase Order cannot be cancelled from its current status.',
 
+'company_name_required' => 'Company name is required.',
+
+'unable_to_delete_customer' => 'Unable to delete customer.',
+
 
 ];

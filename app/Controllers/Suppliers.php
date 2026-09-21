@@ -36,8 +36,10 @@ class Suppliers extends Controller
             // =========================
 
             if (empty($data['company_name'])) {
+                FlashHelper::error(__('company_name_required'));
 
-                die("Company name is required");
+                header('Location: ' . URLROOT . '/suppliers/create');
+                exit;
             }
 
             // =========================
@@ -137,169 +139,169 @@ class Suppliers extends Controller
         $this->view('suppliers/details', $data);
     }
 
-public function info($supplier_id)
-{
-    AuthHelper::can('suppliers.view');
+    public function info($supplier_id)
+    {
+        AuthHelper::can('suppliers.view');
 
-    $supplierModel = $this->model('Supplier');
-    $paymentModel  = $this->model('SupplierPaymentModel');
-    $poModel       = $this->model('PurchaseOrder');
-    $ledgerModel   = $this->model('SupplierLedger');
+        $supplierModel = $this->model('Supplier');
+        $paymentModel  = $this->model('SupplierPaymentModel');
+        $poModel       = $this->model('PurchaseOrder');
+        $ledgerModel   = $this->model('SupplierLedger');
 
-    $data['supplier'] = $supplierModel->getById($supplier_id);
+        $data['supplier'] = $supplierModel->getById($supplier_id);
 
-    if (!$data['supplier']) {
-        header("Location: " . URLROOT . "/suppliers");
-        exit;
-    }
+        if (!$data['supplier']) {
+            header("Location: " . URLROOT . "/suppliers");
+            exit;
+        }
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | DATA SOURCES
     |--------------------------------------------------------------------------
     */
-    $purchase_orders = $poModel->getBySupplier($supplier_id);
-    $ledger          = $ledgerModel->getStatement($supplier_id);
+        $purchase_orders = $poModel->getBySupplier($supplier_id);
+        $ledger          = $ledgerModel->getStatement($supplier_id);
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | SUMMARY (VIEW COMPATIBLE + ERP SAFE)
     |--------------------------------------------------------------------------
     */
-    $ordered_value = 0;
-    foreach ($purchase_orders as $po) {
-        $ordered_value += (float)$po->total_amount;
-    }
-
-    $received_value = 0;
-    foreach ($ledger as $row) {
-        if ($row->type === 'GRN') {
-            $received_value += (float)$row->debit;
+        $ordered_value = 0;
+        foreach ($purchase_orders as $po) {
+            $ordered_value += (float)$po->total_amount;
         }
-    }
 
-    $paid_amount = 0;
-    foreach ($ledger as $row) {
-        if ($row->type === 'PAYMENT') {
-            $paid_amount += (float)$row->credit;
+        $received_value = 0;
+        foreach ($ledger as $row) {
+            if ($row->type === 'GRN') {
+                $received_value += (float)$row->debit;
+            }
         }
-    }
 
-    $balance = 0;
-    foreach ($ledger as $row) {
-        $balance += ((float)$row->debit - (float)$row->credit);
-    }
+        $paid_amount = 0;
+        foreach ($ledger as $row) {
+            if ($row->type === 'PAYMENT') {
+                $paid_amount += (float)$row->credit;
+            }
+        }
 
-    $data['summary'] = [
-        'po_count'       => count($purchase_orders),
-        'ordered_value'  => $ordered_value,
-        'received_value' => $received_value,
-        'paid_amount'    => $paid_amount,
-        'balance'        => $balance
-    ];
+        $balance = 0;
+        foreach ($ledger as $row) {
+            $balance += ((float)$row->debit - (float)$row->credit);
+        }
 
-    /*
+        $data['summary'] = [
+            'po_count'       => count($purchase_orders),
+            'ordered_value'  => $ordered_value,
+            'received_value' => $received_value,
+            'paid_amount'    => $paid_amount,
+            'balance'        => $balance
+        ];
+
+        /*
     |--------------------------------------------------------------------------
     | UI DATA
     |--------------------------------------------------------------------------
     */
-    $data['ledger'] = $ledger;
-    $data['payments'] = $paymentModel->getBySupplier($supplier_id);
-    $data['purchase_orders'] = $purchase_orders;
+        $data['ledger'] = $ledger;
+        $data['payments'] = $paymentModel->getBySupplier($supplier_id);
+        $data['purchase_orders'] = $purchase_orders;
 
-    $this->view('suppliers/supplier_info', $data);
-}
-
-public function ledger($supplier_id)
-{
-    AuthHelper::can('suppliers.view');
-
-    $supplierModel = $this->model('Supplier');
-    $ledgerModel   = $this->model('SupplierLedger');
-
-    $supplier =
-        $supplierModel->getById($supplier_id);
-
-    if (!$supplier) {
-
-        header(
-            'Location: ' .
-            URLROOT .
-            '/suppliers'
-        );
-
-        exit;
+        $this->view('suppliers/supplier_info', $data);
     }
 
-    /*
+    public function ledger($supplier_id)
+    {
+        AuthHelper::can('suppliers.view');
+
+        $supplierModel = $this->model('Supplier');
+        $ledgerModel   = $this->model('SupplierLedger');
+
+        $supplier =
+            $supplierModel->getById($supplier_id);
+
+        if (!$supplier) {
+
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/suppliers'
+            );
+
+            exit;
+        }
+
+        /*
     |--------------------------------------------------------------------------
     | GET SUPPLIER LEDGER
     |--------------------------------------------------------------------------
     */
 
-    $ledger =
-        $ledgerModel->getStatement(
-            $supplier_id
-        );
+        $ledger =
+            $ledgerModel->getStatement(
+                $supplier_id
+            );
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | SUMMARY
     |--------------------------------------------------------------------------
     */
 
-    $totalDebit  = 0;
-    $totalCredit = 0;
+        $totalDebit  = 0;
+        $totalCredit = 0;
 
-    foreach ($ledger as $row) {
+        foreach ($ledger as $row) {
 
-        $totalDebit +=
-            (float)$row->debit;
+            $totalDebit +=
+                (float)$row->debit;
 
-        $totalCredit +=
-            (float)$row->credit;
-    }
+            $totalCredit +=
+                (float)$row->credit;
+        }
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | FINAL BALANCE
     |--------------------------------------------------------------------------
     */
 
-    $balance =
-        $totalDebit -
-        $totalCredit;
+        $balance =
+            $totalDebit -
+            $totalCredit;
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | VIEW DATA
     |--------------------------------------------------------------------------
     */
 
-    $data = [
+        $data = [
 
-        'supplier'     => $supplier,
+            'supplier'     => $supplier,
 
-        'ledger'       => $ledger,
+            'ledger'       => $ledger,
 
-        'total_debit'  => $totalDebit,
+            'total_debit'  => $totalDebit,
 
-        'total_credit' => $totalCredit,
+            'total_credit' => $totalCredit,
 
-        'balance'      => $balance
+            'balance'      => $balance
 
-    ];
+        ];
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | PRINTABLE REPORT
     |--------------------------------------------------------------------------
     */
 
-    $this->view(
-        'suppliers/ledger_report',
-        $data,
-        false
-    );
-}
+        $this->view(
+            'suppliers/ledger_report',
+            $data,
+            false
+        );
+    }
 }

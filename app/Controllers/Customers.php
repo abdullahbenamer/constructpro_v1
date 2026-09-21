@@ -60,9 +60,7 @@ class Customers extends Controller
         try {
 
             if ($model->delete($id)) {
-                FlashHelper::success(__('customer_deleted_successfully'));
-                header('Location: ' . URLROOT . '/customers');
-                exit;
+                FlashHelper::success(__('Customer deleted successfully.'));
             } else {
                 FlashHelper::error(__('customer_not_found'));
                 header('Location: ' . URLROOT . '/customers');
@@ -78,8 +76,7 @@ class Customers extends Controller
                 exit;
             } else {
 
-                FlashHelper::error(
-                    'Unable to delete customer.'
+                FlashHelper::error(__('Unable to delete customer.')
                 );
             }
         }
@@ -95,7 +92,7 @@ class Customers extends Controller
         $customer = $model->getById($id);
 
         if (!$customer) {
-            FlashHelper::error('Customer not found');
+            FlashHelper::error(__('Customer not found'));
             header('Location: ' . URLROOT . '/customers');
             exit;
         }

@@ -1432,6 +1432,13 @@ return [
 'fully_received_po_cannot_be_cancelled' => 'لا يمكن إلغاء أمر شراء تم استلامه بالكامل.',
 'purchase_order_cannot_be_cancelled' => 'لا يمكن إلغاء أمر الشراء من حالته الحالية.',
 
+'company_name_required' => 'اسم الشركة مطلوب.',
+
+'unable_to_delete_customer' => 'تعذر حذف العميل.',
+
+
+
+
 
 ];
 
