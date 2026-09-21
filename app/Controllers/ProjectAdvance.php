@@ -13,7 +13,9 @@ class ProjectAdvance extends Controller
     $data['project'] = $projectModel->getById($project_id);
 
     if (!$data['project']) {
-        FlashHelper::error("Project not found");
+       
+    FlashHelper::error(__('project_not_found'));
+
         header("Location: " . URLROOT . "/projects");
         exit;
     }
@@ -21,7 +23,9 @@ class ProjectAdvance extends Controller
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($_POST['amount'] <= 0) {
-            FlashHelper::error("Invalid amount");
+           
+        FlashHelper::error(__('invalid_amount'));
+
             header("Location: " . URLROOT . "/projectadvance/create/$project_id");
             exit;
         }
@@ -47,7 +51,7 @@ class ProjectAdvance extends Controller
             'credit'      => $_POST['amount']
         ]);
 
-        FlashHelper::success("Advance recorded successfully");
+    FlashHelper::success(__('advance_recorded_successfully'));
 
         header("Location: " . URLROOT . "/projectadvance/list/$project_id");
         exit;

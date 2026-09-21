@@ -1330,5 +1330,20 @@ return [
 'not_enough_stock_in_selected_warehouse' => 'Not enough stock in the selected warehouse.',
 'unable_to_deduct_inventory' => 'Unable to deduct inventory.',
 
+// project advance messages
+'invalid_amount' => 'Invalid amount.',
+'advance_recorded_successfully' => 'Advance recorded successfully.',
+
+//INVENTORY MODULE messages
+'inventory_name_sku_required' => 'Name and SKU are required.',
+'inventory_insert_failed' => 'Insert failed.',
+
+
+
+
+
+
+
+
 
 ];

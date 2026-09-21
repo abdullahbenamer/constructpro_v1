@@ -27,11 +27,11 @@ class Inventory extends Controller
         $countryModel = $this->model('Country');
         $unitModel = $this->model('Unit');
 
-       $viewData = [
-    'brands' => $brandModel->getAll(),
-    'countries' => $countryModel->getAll(),
-    'units' => $unitModel->getActive()
-];
+        $viewData = [
+            'brands' => $brandModel->getAll(),
+            'countries' => $countryModel->getAll(),
+            'units' => $unitModel->getActive()
+        ];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -48,9 +48,9 @@ class Inventory extends Controller
                     ? (int)$_POST['country_id']
                     : null,
 
-                    'unit_id' => !empty($_POST['unit_id'])
-    ? (int)$_POST['unit_id']
-    : null,
+                'unit_id' => !empty($_POST['unit_id'])
+                    ? (int)$_POST['unit_id']
+                    : null,
 
                 'min_stock' => (int)($_POST['min_stock'] ?? 10),
 
@@ -60,7 +60,8 @@ class Inventory extends Controller
 
             if ($input['name'] === '' || $input['sku'] === '') {
 
-                $_SESSION['error'] = "Name and SKU are required";
+                FlashHelper::error(__('inventory_name_sku_required'));
+
                 $_SESSION['old'] = $_POST;
 
                 header(
@@ -85,7 +86,8 @@ class Inventory extends Controller
                 exit;
             }
 
-            $_SESSION['error'] = "Insert failed";
+            FlashHelper::error(__('inventory_insert_failed'));
+
             $_SESSION['old'] = $_POST;
 
             header(
@@ -138,9 +140,9 @@ class Inventory extends Controller
                     ? (int)$_POST['country_id']
                     : null,
 
-                    'unit_id' => !empty($_POST['unit_id'])
-    ? (int)$_POST['unit_id']
-    : null,
+                'unit_id' => !empty($_POST['unit_id'])
+                    ? (int)$_POST['unit_id']
+                    : null,
 
                 'min_stock' => (int)($_POST['min_stock'] ?? 10),
 
@@ -151,7 +153,7 @@ class Inventory extends Controller
 
             if ($input['name'] === '' || $input['sku'] === '') {
 
-                $_SESSION['error'] = 'Name and SKU are required';
+                FlashHelper::error(__('inventory_name_sku_required'));
 
                 $_SESSION['old'] = $_POST;
 
@@ -259,9 +261,9 @@ class Inventory extends Controller
 
         if (!$item) {
 
-            FlashHelper::error(
-                'Inventory item not found.'
-            );
+       FlashHelper::error(
+    __('inventory_item_not_found')
+);
 
             header(
                 'Location: ' .

@@ -1323,6 +1323,13 @@ return [
 'not_enough_stock_in_selected_warehouse' => 'لا توجد كمية كافية في المستودع المحدد.',
 'unable_to_deduct_inventory' => 'تعذر خصم الكمية من المخزون.',
 
+// project advance
+'invalid_amount' => 'المبلغ المدخل غير مقبول.',
+'advance_recorded_successfully' => 'تم تسجيل دفعة المشروع بنجاح.',
+
+//INVENTORY MODULE messages
+'inventory_name_sku_required' => 'الاسم ورقم الصنف (SKU) مطلوبان.',
+'inventory_insert_failed' => 'فشلت عملية الإدخال.',
 
 
 
