@@ -1267,5 +1267,49 @@ return [
 'passwords_do_not_match' => 'كلمتا المرور غير متطابقتين.',
 'new_password_required' => 'كلمة المرور الجديدة مطلوبة.',
 'phase' => 'المرحلة',
+
+
+// User controller messages 
+'full_name_required' => 'الاسم الكامل مطلوب.',
+'user_name_required' => 'اسم المستخدم مطلوب.',
+'email_required' => 'البريد الإلكتروني مطلوب.',
+'password_required' => 'كلمة المرور مطلوبة.',
+'invalid_photo_format' => 'صيغة الصورة غير صالحة. يرجى رفع صورة بصيغة JPG أو JPEG أو PNG أو WEBP.',
+'unable_to_upload_photo' => 'تعذر رفع الصورة.',
+'user_created_successfully' => 'تم إنشاء المستخدم بنجاح.',
+'user_updated_successfully' => 'تم تحديث المستخدم بنجاح.',
+'user_deleted_successfully' => 'تم حذف المستخدم بنجاح.',
+'cannot_delete_own_account' => 'لا يمكنك حذف حسابك الخاص.',
+'cannot_delete_last_admin' => 'لا يمكن حذف آخر حساب مدير للنظام.',
+
+
+// Customers messages
+'customer_created_successfully' => 'تم إنشاء العميل بنجاح.',
+'customer_updated_successfully' => 'تم تحديث العميل بنجاح.',
+'customer_deleted_successfully' => 'تم حذف العميل بنجاح.',
+'customer_cannot_be_deleted' => 'لا يمكن حذف هذا العميل لأنه مرتبط بمشاريع موجودة.',
+
+//projects messages
+
+'project_created_successfully' => 'تم إنشاء المشروع بنجاح.',
+'project_updated_successfully' => 'تم تحديث المشروع بنجاح.',
+'project_deleted_successfully' => 'تم حذف المشروع بنجاح.',
+'project_archived_successfully' => 'تمت أرشفة المشروع بنجاح.',
+'project_restored_successfully' => 'تمت استعادة المشروع بنجاح.',
+'unable_to_create_project' => 'تعذر إنشاء المشروع.',
+'unable_to_update_project' => 'تعذر تحديث المشروع.',
+'project_not_found' => 'المشروع غير موجود.',
+'cannot_delete_project_costs' => 'لا يمكن حذف المشروع. يجب حذف جميع تكاليف المشروع أولاً.',
+'archive_failed' => 'فشلت أرشفة المشروع.',
+'uploaded_files_successfully' => 'تم رفع %s ملف/ملفات بنجاح.',
+'document_not_found' => 'المستند غير موجود.',
+'document_deleted_successfully' => 'تم حذف المستند بنجاح.',
+
+
+
+
+
+
+
 ];
 

@@ -1271,4 +1271,40 @@ return [
 'passwords_do_not_match' => 'Passwords do not match.',
 'new_password_required' => 'New password is required.',
 'phase' => 'Phase',
+
+// User controller messages
+'full_name_required' => 'Full Name is required.',
+'user_name_required' => 'User Name is required.',
+'email_required' => 'Email is required.',
+'password_required' => 'Password is required.',
+'invalid_photo_format' => 'Invalid photo format. Please upload a JPG, JPEG, PNG, or WEBP image.',
+'unable_to_upload_photo' => 'Unable to upload the photo.',
+'user_created_successfully' => 'User created successfully.',
+'user_updated_successfully' => 'User updated successfully.',
+'user_deleted_successfully' => 'User deleted successfully.',
+'cannot_delete_own_account' => 'You cannot delete your own account.',
+'cannot_delete_last_admin' => 'The last administrator account cannot be deleted.',
+
+// customers messages
+'customer_created_successfully' => 'Customer created successfully.',
+'customer_updated_successfully' => 'Customer updated successfully.',
+'customer_deleted_successfully' => 'Customer deleted successfully.',
+'customer_cannot_be_deleted' => 'This customer cannot be deleted because it is linked to existing projects.',
+
+
+// projects messages
+'project_created_successfully' => 'Project created successfully.',
+'project_updated_successfully' => 'Project updated successfully.',
+'project_deleted_successfully' => 'Project deleted successfully.',
+'project_archived_successfully' => 'Project archived successfully.',
+'project_restored_successfully' => 'Project restored successfully.',
+'unable_to_create_project' => 'Unable to create project.',
+'unable_to_update_project' => 'Unable to update project.',
+'project_not_found' => 'Project not found.',
+'cannot_delete_project_costs' => 'Cannot delete project. Remove all project costs first.',
+'archive_failed' => 'Archive failed.',
+'uploaded_files_successfully' => 'Uploaded %s file(s) successfully.',
+'document_not_found' => 'Document not found.',
+'document_deleted_successfully' => 'Document deleted successfully.',
+
 ];

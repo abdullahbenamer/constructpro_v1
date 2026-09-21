@@ -44,18 +44,17 @@ class Projects extends Controller
                 $projectId = $projectModel->create($data);
 
                 if ($projectId) {
-                    FlashHelper::success('Project created successfully.');
+                  FlashHelper::success(__('project_created_successfully'));
                     header('Location: ' . URLROOT . '/projects');
                     exit;
                 }
             } catch (Throwable $e) {
 
-                FlashHelper::error(
-                    $e->getMessage()
-                );
+            FlashHelper::error($e->getMessage());
+            
             }
 
-            FlashHelper::error('Unable to create project.');
+        FlashHelper::error(__('unable_to_create_project'));
         }
 
         $data['customers'] = $this->model('Customer')->getAll();
@@ -89,12 +88,12 @@ class Projects extends Controller
             ];
 
             if ($model->update($id, $data)) {
-                FlashHelper::success('Project updated successfully.');
+            FlashHelper::success(__('project_updated_successfully'));
                 header('Location: ' . URLROOT . '/projects');
                 exit;
             }
 
-            FlashHelper::error('Unable to update project.');
+           FlashHelper::error(__('unable_to_update_project'));
         }
 
         $data['project'] = $model->getById($id);
@@ -116,11 +115,9 @@ class Projects extends Controller
 
         if (!$project) {
 
-            $_SESSION['error'] =
-                'Project not found';
-
-            header('Location: ' . URLROOT . '/projects');
-            exit;
+           FlashHelper::error(__('project_not_found'));
+header('Location: ' . URLROOT . '/projects');
+exit;
         }
 
         $costs =
@@ -128,17 +125,12 @@ class Projects extends Controller
 
         if (!empty($costs)) {
 
-            $_SESSION['error'] =
-                'Cannot delete project. Remove all project costs first.';
-
-            header('Location: ' . URLROOT . '/projects');
-            exit;
+           FlashHelper::error(__('cannot_delete_project_costs'));
         }
 
         $projectModel->delete($id);
 
-        $_SESSION['success'] =
-            'Project deleted successfully';
+       FlashHelper::success(__('project_deleted_successfully'));
 
         header('Location: ' . URLROOT . '/projects');
         exit;
@@ -150,12 +142,11 @@ class Projects extends Controller
 
         if ($projectModel->archive($id)) {
 
-            $_SESSION['success'] =
-                'Project archived successfully';
+        FlashHelper::success(__('project_archived_successfully'));
+
         } else {
 
-            $_SESSION['error'] =
-                'Archive failed';
+         FlashHelper::error(__('archive_failed'));
         }
 
         header('Location: ' . URLROOT . '/projects');
@@ -169,7 +160,7 @@ class Projects extends Controller
 
         $model->restore($id);
 
-        FlashHelper::success('Project restored successfully.');
+   FlashHelper::success(__('project_restored_successfully'));
 
         header('Location: ' . URLROOT . '/projects');
         exit;
@@ -187,7 +178,7 @@ class Projects extends Controller
 
         if (!$project) {
 
-            $_SESSION['error'] = "Project not found";
+          FlashHelper::error(__('project_not_found'));
 
             header(
                 "Location: " . URLROOT . "/projects"
@@ -255,7 +246,7 @@ class Projects extends Controller
 
         if (!$project) {
 
-            FlashHelper::error("Project not found");
+           FlashHelper::error(__('project_not_found'));
 
             header("Location: " . URLROOT . "/projects");
 
@@ -282,7 +273,7 @@ class Projects extends Controller
 
         if (!$project) {
 
-            FlashHelper::error("Project not found");
+                 FlashHelper::error(__('project_not_found'));
 
             header("Location: " . URLROOT . "/projects");
 
@@ -341,7 +332,9 @@ class Projects extends Controller
                 }
             }
 
-            FlashHelper::success("Uploaded {$uploadedCount} file(s) successfully");
+          FlashHelper::success(
+    sprintf(__('uploaded_files_successfully'), $uploadedCount)
+);
 
             header("Location: " . URLROOT . "/projects/documents/" . $project_id);
             exit;
@@ -362,7 +355,8 @@ class Projects extends Controller
         $doc = $documentModel->getById($id);
 
         if (!$doc) {
-            FlashHelper::error('Document not found.');
+            
+           FlashHelper::error(__('document_not_found'));
             header('Location: ' . URLROOT . '/projects');
             exit;
         }
@@ -377,7 +371,7 @@ class Projects extends Controller
 
         $documentModel->delete($id);
 
-        FlashHelper::success('Document deleted.');
+    FlashHelper::success(__('document_deleted_successfully'));
 
         header('Location: ' . URLROOT . '/projects/documents/' . $doc->project_id);
         exit;

@@ -22,21 +22,29 @@ class Users extends Controller
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        if (empty(trim($_POST['full_name'] ?? ''))) {
-            die('Full Name is required');
-        }
+      if (empty(trim($_POST['full_name'] ?? ''))) {
+    FlashHelper::error(__('full_name_required'));
+    header('Location: ' . URLROOT . '/users/create');
+    exit;
+}
 
-        if (empty(trim($_POST['user_name'] ?? ''))) {
-            die('User Name is required');
-        }
+      if (empty(trim($_POST['user_name'] ?? ''))) {
+    FlashHelper::error(__('user_name_required'));
+    header('Location: ' . URLROOT . '/users/create');
+    exit;
+}
 
-        if (empty(trim($_POST['email'] ?? ''))) {
-            die('Email is required');
-        }
+if (empty(trim($_POST['email'] ?? ''))) {
+    FlashHelper::error(__('email_required'));
+    header('Location: ' . URLROOT . '/users/create');
+    exit;
+}
 
-        if (empty($_POST['password'] ?? '')) {
-            die('Password is required');
-        }
+if (empty($_POST['password'] ?? '')) {
+    FlashHelper::error(__('password_required'));
+    header('Location: ' . URLROOT . '/users/create');
+    exit;
+}
 
         $photo = null;
 
@@ -54,18 +62,19 @@ class Users extends Controller
 
             $allowed = ['jpg', 'jpeg', 'png', 'webp'];
 
-            if (!in_array($extension, $allowed, true)) {
-                die('Invalid photo format');
-            }
+         if (!in_array($extension, $allowed, true)) {
+    FlashHelper::error(__('invalid_photo_format'));
+    header('Location: ' . URLROOT . '/users/create');
+    exit;
+}
 
             $filename = uniqid('user_', true) . '.' . $extension;
 
-            if (!move_uploaded_file(
-                $_FILES['photo']['tmp_name'],
-                $uploadDir . $filename
-            )) {
-                die('Unable to upload photo');
-            }
+        if (!move_uploaded_file($_FILES['photo']['tmp_name'], $uploadDir . $filename)) {
+    FlashHelper::error(__('unable_to_upload_photo'));
+    header('Location: ' . URLROOT . '/users/create');
+    exit;
+}
 
             $photo = $uploadDir . $filename;
         }
@@ -73,6 +82,8 @@ class Users extends Controller
         $_POST['photo'] = $photo;
 
         $userModel->createUser($_POST);
+
+        FlashHelper::success(__('user_created_successfully'));
 
         header('Location: ' . URLROOT . '/users');
         exit;
@@ -131,23 +142,26 @@ public function edit($id)
 
             $allowed = ['jpg', 'jpeg', 'png', 'webp'];
 
-            if (!in_array($extension, $allowed, true)) {
-                die('Invalid photo format');
-            }
+         if (!in_array($extension, $allowed, true)) {
+    FlashHelper::error(__('invalid_photo_format'));
+    header('Location: ' . URLROOT . '/users/edit/' . (int)$id);
+    exit;
+}
 
             $filename = uniqid('user_', true) . '.' . $extension;
 
-            if (!move_uploaded_file(
-                $_FILES['photo']['tmp_name'],
-                $uploadDir . $filename
-            )) {
-                die('Unable to upload photo');
-            }
+          if (!move_uploaded_file($_FILES['photo']['tmp_name'], $uploadDir . $filename)) {
+    FlashHelper::error(__('unable_to_upload_photo'));
+    header('Location: ' . URLROOT . '/users/edit/' . (int)$id);
+    exit;
+}
 
             $updateData['photo'] = $uploadDir . $filename;
         }
 
         $userModel->update($id, $updateData);
+
+        FlashHelper::success(__('user_updated_successfully'));
 
         header('Location: ' . URLROOT . '/users');
         exit;
@@ -171,10 +185,11 @@ public function edit($id)
             header('Location: ' . URLROOT . '/users');
             exit;
         }
-
-        if ($user->id == $_SESSION['user_id']) {
-            die('You cannot delete your own account');
-        }
+if ($user->id == $_SESSION['user_id']) {
+    FlashHelper::error(__('cannot_delete_own_account'));
+    header('Location: ' . URLROOT . '/users');
+    exit;
+}
 
         $roleName = $userModel->getRoleName($user->role_id);
 
@@ -182,12 +197,15 @@ public function edit($id)
 
             $adminCount = $userModel->countAdmins();
 
-            if ($adminCount <= 1) {
-                die('Cannot delete the last admin account');
-            }
+        if ($adminCount <= 1) {
+    FlashHelper::error(__('cannot_delete_last_admin'));
+    header('Location: ' . URLROOT . '/users');
+    exit;
+}
         }
 
         $userModel->delete($id);
+        FlashHelper::success(__('user_deleted_successfully'));
 
         header('Location: ' . URLROOT . '/users');
         exit;
