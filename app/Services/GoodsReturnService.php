@@ -53,19 +53,19 @@ class GoodsReturnService extends BaseService
 
             if ($receiptItemId <= 0) {
                 throw new Exception(
-                    'Invalid goods receipt item.'
+                    __('invalid_goods_receipt_item')
                 );
             }
 
             if ($locationId <= 0) {
                 throw new Exception(
-                    'Invalid warehouse location.'
+                    __('invalid_warehouse_location')
                 );
             }
 
             if ($quantity <= 0) {
                 throw new Exception(
-                    'Return quantity must be greater than zero.'
+                    __('return_quantity_must_be_greater_than_zero')
                 );
             }
 
@@ -82,24 +82,24 @@ class GoodsReturnService extends BaseService
 
             if (!$receiptItem) {
                 throw new Exception(
-                    'Goods receipt item not found.'
+                    __('goods_receipt_item_not_found')
                 );
             }
 
             $receiptLocationId =
-    (int)($receiptItem->location_id ?? 0);
+                (int)($receiptItem->location_id ?? 0);
 
-if ($receiptLocationId <= 0) {
-    throw new Exception(
-        'The original goods receipt does not have a receiving location.'
-    );
-}
+            if ($receiptLocationId <= 0) {
+                throw new Exception(
+                    __('goods_receipt_no_receiving_location')
+                );
+            }
 
-if ($locationId !== $receiptLocationId) {
-    throw new Exception(
-        'The selected warehouse does not match the warehouse where this goods receipt was received.'
-    );
-}
+            if ($locationId !== $receiptLocationId) {
+                throw new Exception(
+                    __('return_location_does_not_match_receiving_location')
+                );
+            }
 
             /*
             |--------------------------------------------------------------------------
@@ -109,9 +109,9 @@ if ($locationId !== $receiptLocationId) {
 
             $alreadyReturned =
                 $this->returnItemModel
-                    ->getReturnedQuantity(
-                        $receiptItemId
-                    );
+                ->getReturnedQuantity(
+                    $receiptItemId
+                );
 
             $receivedQuantity =
                 (float)$receiptItem->quantity;
@@ -121,17 +121,17 @@ if ($locationId !== $receiptLocationId) {
 
             if ($returnable <= 0) {
                 throw new Exception(
-                    'This goods receipt item has already been fully returned.'
+                    __('goods_receipt_item_already_fully_returned')
                 );
             }
 
             if ($quantity > $returnable) {
                 throw new Exception(
-                    'Cannot return '
-                    . number_format($quantity, 2)
-                    . ' units. Only '
-                    . number_format($returnable, 2)
-                    . ' units remain returnable.'
+                    sprintf(
+                        __('cannot_return_remaining_quantity'),
+                        number_format($quantity, 2),
+                        number_format($returnable, 2)
+                    )
                 );
             }
 
@@ -172,12 +172,12 @@ if ($locationId !== $receiptLocationId) {
                 );
 
             if ($quantity > $available) {
-                throw new Exception(
-                    'Not enough stock in the selected warehouse. '
-                    . 'Available quantity: '
-                    . number_format($available, 2)
-                    . '.'
-                );
+               throw new Exception(
+    sprintf(
+        __('not_enough_stock_selected_warehouse_available'),
+        number_format($available, 2)
+    )
+);
             }
 
             /*
@@ -193,32 +193,32 @@ if ($locationId !== $receiptLocationId) {
                 $this->returnModel->create([
 
                     'return_number' =>
-                        $returnNumber,
+                    $returnNumber,
 
                     'supplier_id' =>
-                        $supplierId,
+                    $supplierId,
 
                     'goods_receipt_id' =>
-                        $goodsReceiptId,
+                    $goodsReceiptId,
 
                     'purchase_order_id' =>
-                        $purchaseOrderId,
+                    $purchaseOrderId,
 
                     'return_date' =>
-                        $data['return_date']
+                    $data['return_date']
                         ?? date('Y-m-d'),
 
                     'reason' =>
-                        $data['reason'] ?? null,
+                    $data['reason'] ?? null,
 
                     'notes' =>
-                        $data['notes'] ?? null,
+                    $data['notes'] ?? null,
 
                     'total_amount' =>
-                        $total,
+                    $total,
 
                     'created_by' =>
-                        $this->currentUserId()
+                    $this->currentUserId()
                 ]);
 
             /*
@@ -230,25 +230,25 @@ if ($locationId !== $receiptLocationId) {
             $this->returnItemModel->create([
 
                 'goods_return_id' =>
-                    $returnId,
+                $returnId,
 
                 'goods_receipt_item_id' =>
-                    $receiptItemId,
+                $receiptItemId,
 
                 'inventory_id' =>
-                    $inventoryId,
+                $inventoryId,
 
                 'location_id' =>
-                    $locationId,
+                $locationId,
 
                 'quantity' =>
-                    $quantity,
+                $quantity,
 
                 'unit_cost' =>
-                    $unitCost,
+                $unitCost,
 
                 'total_cost' =>
-                    $total
+                $total
             ]);
 
             /*
@@ -260,25 +260,25 @@ if ($locationId !== $receiptLocationId) {
             $this->inventoryService->issue([
 
                 'inventory_id' =>
-                    $inventoryId,
+                $inventoryId,
 
                 'location_id' =>
-                    $locationId,
+                $locationId,
 
                 'quantity' =>
-                    $quantity,
+                $quantity,
 
                 'unit_cost' =>
-                    $unitCost,
+                $unitCost,
 
                 'supplier_id' =>
-                    $supplierId,
+                $supplierId,
 
                 'reference' =>
-                    $returnNumber,
+                $returnNumber,
 
                 'notes' =>
-                    'Return to supplier'
+                'Return to supplier'
                     . (
                         !empty($data['reason'])
                         ? ': ' . $data['reason']
@@ -286,7 +286,7 @@ if ($locationId !== $receiptLocationId) {
                     ),
 
                 'created_by' =>
-                    $this->currentUserId()
+                $this->currentUserId()
             ]);
 
             /*
@@ -298,22 +298,22 @@ if ($locationId !== $receiptLocationId) {
             $this->ledgerModel->add([
 
                 'supplier_id' =>
-                    $supplierId,
+                $supplierId,
 
                 'type' =>
-                    'RETURN',
+                'RETURN',
 
                 'reference_type' =>
-                    'GoodsReturn',
+                'GoodsReturn',
 
                 'reference_id' =>
-                    $returnId,
+                $returnId,
 
                 'amount' =>
-                    $total,
+                $total,
 
                 'direction' =>
-                    'CREDIT'
+                'CREDIT'
             ]);
 
             /*

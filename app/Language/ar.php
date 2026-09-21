@@ -1407,5 +1407,31 @@ return [
 'invalid_purchase_order' => 'أمر الشراء غير صحيح.',
 'invalid_supplier' => 'المورد غير صحيح.',
 
+'goods_returned_successfully' => 'تمت اجراءات إعادة البضائع إلى المورد بنجاح.',
+
+'invalid_goods_receipt_item' => 'صنف استلام البضائع غير صحيح.',
+'return_quantity_must_be_greater_than_zero' => 'يجب أن تكون كمية الإرجاع أكبر من صفر.',
+'goods_receipt_item_not_found' => 'صنف استلام البضائع غير موجود.',
+'goods_receipt_no_receiving_location' => 'لا يحتوي استلام البضائع الأصلي على موقع استلام.',
+'return_location_does_not_match_receiving_location' => 'المستودع المحدد لا يطابق المستودع الذي تم فيه استلام هذه البضائع.',
+'goods_receipt_item_already_fully_returned' => 'تم إرجاع صنف استلام البضائع هذا بالكامل بالفعل.',
+'cannot_return_remaining_quantity' => 'لا يمكن إرجاع %s وحدة. الكمية المتبقية القابلة للإرجاع هي %s وحدة فقط.',
+'not_enough_stock_selected_warehouse_available' => 'لا توجد كمية كافية في المستودع المحدد. الكمية المتاحة: %s.',
+
+'delivery_warehouse_required' => 'مستودع التسليم مطلوب.',
+'project_required' => 'المشروع مطلوب.',
+'purchase_order_created_successfully' => 'تم إنشاء أمر الشراء بنجاح.',
+'purchase_order_locked' => 'أمر الشراء مقفل ولا يمكن تعديله.',
+'draft_purchase_orders_only_approve' => 'لا يمكن اعتماد سوى أوامر الشراء بحالة المسودة.',
+'add_item_before_approving_po' => 'يرجى إضافة صنف واحد على الأقل قبل اعتماد أمر الشراء هذا.',
+'purchase_order_approved_successfully' => 'تم اعتماد أمر الشراء بنجاح.',
+'purchase_order_cancelled_successfully' => 'تم إلغاء أمر الشراء بنجاح.',
+'approved_purchase_orders_only_print' => 'لا يمكن طباعة سوى أوامر الشراء المعتمدة.',
+
+'purchase_order_already_cancelled' => 'أمر الشراء ملغى بالفعل.',
+'fully_received_po_cannot_be_cancelled' => 'لا يمكن إلغاء أمر شراء تم استلامه بالكامل.',
+'purchase_order_cannot_be_cancelled' => 'لا يمكن إلغاء أمر الشراء من حالته الحالية.',
+
+
 ];
 

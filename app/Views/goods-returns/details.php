@@ -2,7 +2,7 @@
     <i class="fas fa-undo"></i>
     <?= __('goods_return_details') ?>
 </h2>
-
+<!-- <div id="jsNotification"></div> -->
 <div class="card mb-4">
 
     <div class="card-header">

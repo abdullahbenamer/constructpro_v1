@@ -3,6 +3,8 @@
     <?= __('return_goods_to_supplier') ?>
 </h2>
 
+<div id="jsNotification"></div>
+
 <form method="POST">
 
     <!-- GRN -->
@@ -329,7 +331,31 @@ let currentItem = null;
 
 let currentLocations = [];
 
+function showNotification(message)
+{
+    const notification =
+        document.getElementById('jsNotification');
 
+    notification.innerHTML = `
+        <div class="alert alert-danger alert-dismissible fade show"
+             role="alert">
+
+            ${message}
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="<?= __('close') ?>">
+            </button>
+
+        </div>
+    `;
+
+    notification.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+    });
+}
 // ======================================================
 // SELECT GRN
 // ======================================================
@@ -460,9 +486,9 @@ grnSelect.addEventListener('change', function () {
     })
     .catch(error => {
 
-        alert(error.message);
+    showNotification(error.message);
 
-    });
+});
 
 });
 
@@ -674,13 +700,12 @@ function loadLocations(inventoryId)
     })
     .catch(error => {
 
-        locationSelect.innerHTML =
-            '<option value=""><?= htmlspecialchars(__('unable_to_load_warehouses'), ENT_QUOTES) ?></option>';
+    locationSelect.innerHTML =
+        '<option value=""><?= htmlspecialchars(__('unable_to_load_warehouses'), ENT_QUOTES) ?></option>';
 
-        alert(error.message);
+    showNotification(error.message);
 
-    });
-
+});
 }
 
 

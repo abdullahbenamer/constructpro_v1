@@ -1413,4 +1413,31 @@ return [
 'invalid_purchase_order' => 'Invalid purchase order.',
 'invalid_supplier' => 'Invalid supplier.',
 
+'goods_returned_successfully' => 'Goods return procedure to supplier successfully completed.',
+
+'invalid_goods_receipt_item' => 'Invalid goods receipt item.',
+'return_quantity_must_be_greater_than_zero' => 'Return quantity must be greater than zero.',
+'goods_receipt_item_not_found' => 'Goods receipt item not found.',
+'goods_receipt_no_receiving_location' => 'The original goods receipt does not have a receiving location.',
+'return_location_does_not_match_receiving_location' => 'The selected warehouse does not match the warehouse where this goods receipt was received.',
+'goods_receipt_item_already_fully_returned' => 'This goods receipt item has already been fully returned.',
+'cannot_return_remaining_quantity' => 'Cannot return %s units. Only %s units remain returnable.',
+'not_enough_stock_selected_warehouse_available' => 'Not enough stock in the selected warehouse. Available quantity: %s.',
+
+'delivery_warehouse_required' => 'Delivery warehouse is required.',
+'project_required' => 'Project is required.',
+'purchase_order_created_successfully' => 'Purchase order created successfully.',
+'purchase_order_locked' => 'Purchase Order is locked and cannot be modified.',
+
+'draft_purchase_orders_only_approve' => 'Only draft purchase orders can be approved.',
+'add_item_before_approving_po' => 'Please add at least one item before approving this Purchase Order.',
+'purchase_order_approved_successfully' => 'Purchase Order approved successfully.',
+'purchase_order_cancelled_successfully' => 'Purchase Order cancelled successfully.',
+'approved_purchase_orders_only_print' => 'Only approved Purchase Orders can be printed.',
+
+'purchase_order_already_cancelled' => 'Purchase Order is already cancelled.',
+'fully_received_po_cannot_be_cancelled' => 'A fully received Purchase Order cannot be cancelled.',
+'purchase_order_cannot_be_cancelled' => 'Purchase Order cannot be cancelled from its current status.',
+
+
 ];

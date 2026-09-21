@@ -2,7 +2,7 @@
     <i class="fas fa-undo"></i>
     <?= __('goods_returns') ?>
 </h2>
-
+<!-- <div id="jsNotification"></div> -->
 <div class="mb-3">
     <a href="<?= URLROOT ?>/goodsreturns/create"
        class="btn btn-primary">

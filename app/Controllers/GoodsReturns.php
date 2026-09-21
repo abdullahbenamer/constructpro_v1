@@ -88,9 +88,9 @@ class GoodsReturns extends Controller
 
                 $service->returnGoods($_POST);
 
-                FlashHelper::success(
-                    'Goods returned to supplier successfully.'
-                );
+             FlashHelper::success(
+    __('goods_returned_successfully')
+);
 
                 header(
                     'Location: ' .
