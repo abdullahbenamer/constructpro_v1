@@ -1305,8 +1305,23 @@ return [
 'document_not_found' => 'المستند غير موجود.',
 'document_deleted_successfully' => 'تم حذف المستند بنجاح.',
 
+// project costs module messages
+'project_cost_added_successfully' => 'تمت إضافة تكلفة المشروع بنجاح.',
+'project_cost_updated_successfully' => 'تم تحديث تكلفة المشروع بنجاح.',
+'project_cost_deleted_successfully' => 'تم حذف تكلفة المشروع بنجاح.',
+'project_cost_not_found' => 'تكلفة المشروع غير موجودة.',
 
 
+//PROJECT COST SERVICE — ERROR MESSAGES
+'cost_type_required' => 'نوع التكلفة مطلوب.',
+'quantity_must_be_greater_than_zero' => 'يجب أن تكون الكمية أكبر من صفر.',
+'unit_price_must_be_greater_than_zero' => 'يجب أن يكون سعر الوحدة أكبر من صفر.',
+'please_select_material' => 'يرجى اختيار مادة.',
+'please_select_warehouse' => 'يرجى اختيار مستودع.',
+'inventory_item_not_found' => 'صنف المخزون غير موجود.',
+'not_enough_stock_selected_warehouse' => 'لا توجد كمية كافية في المستودع المحدد.',
+'not_enough_stock_in_selected_warehouse' => 'لا توجد كمية كافية في المستودع المحدد.',
+'unable_to_deduct_inventory' => 'تعذر خصم الكمية من المخزون.',
 
 
 

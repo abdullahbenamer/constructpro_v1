@@ -27,42 +27,42 @@ class ProjectCostService extends BaseService
         $this->inventoryModel = $inventoryModel;
     }
 
-public function create(array $data): int
-{
-    $data = $this->validate($data);
+    public function create(array $data): int
+    {
+        $data = $this->validate($data);
 
-    return $this->transaction(function () use ($data) {
+        return $this->transaction(function () use ($data) {
 
-        $this->deductInventory($data);
+            $this->deductInventory($data);
 
-        $costId = $this->costModel->create($data);
+            $costId = $this->costModel->create($data);
 
-        $this->recordInventoryMovement(
-            $data,
-            'OUT'
-        );
+            $this->recordInventoryMovement(
+                $data,
+                'OUT'
+            );
 
-        $this->recordLedger(
-            $costId,
-            $data
-        );
+            $this->recordLedger(
+                $costId,
+                $data
+            );
 
-        return $costId;
-    });
-}
-   public function update(int $id, array $data): bool
-{
-    /*
+            return $costId;
+        });
+    }
+    public function update(int $id, array $data): bool
+    {
+        /*
     |--------------------------------------------------------------------------
     | LOAD EXISTING COST
     |--------------------------------------------------------------------------
     */
 
-    $cost = $this->loadCost($id);
+        $cost = $this->loadCost($id);
 
-    $old = $this->normalize($cost);
+        $old = $this->normalize($cost);
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | IMMUTABLE FIELDS
     |--------------------------------------------------------------------------
@@ -72,40 +72,40 @@ public function create(array $data): int
     |
     */
 
-    $data['project_id']   = $old['project_id'];
-    $data['cost_type']    = $old['cost_type'];
-    $data['inventory_id'] = $old['inventory_id'];
-    $data['location_id']  = $old['location_id'];
+        $data['project_id']   = $old['project_id'];
+        $data['cost_type']    = $old['cost_type'];
+        $data['inventory_id'] = $old['inventory_id'];
+        $data['location_id']  = $old['location_id'];
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | CLEAN EDITABLE FIELDS
     |--------------------------------------------------------------------------
     */
 
-    $data['description'] =
-        trim($data['description'] ?? '');
+        $data['description'] =
+            trim($data['description'] ?? '');
 
-    $data['quantity'] =
-        (float)($data['quantity'] ?? 0);
+        $data['quantity'] =
+            (float)($data['quantity'] ?? 0);
 
-    $data['unit_price'] =
-        (float)($data['unit_price'] ?? 0);
+        $data['unit_price'] =
+            (float)($data['unit_price'] ?? 0);
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | VALIDATE
     |--------------------------------------------------------------------------
     */
 
-    if ($data['quantity'] <= 0) {
+        if ($data['quantity'] <= 0) {
 
-        throw new Exception(
-            'Quantity must be greater than zero.'
-        );
-    }
+            throw new Exception(
+                'Quantity must be greater than zero.'
+            );
+        }
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | MATERIAL COST
     |--------------------------------------------------------------------------
@@ -114,486 +114,436 @@ public function create(array $data): int
     |
     */
 
-    if ($this->isMaterial($old)) {
+        if ($this->isMaterial($old)) {
 
-        $item = $this->inventoryModel->getById(
-            $old['inventory_id']
-        );
-
-        if (!$item) {
-
-            throw new Exception(
-                'Inventory item not found.'
+            $item = $this->inventoryModel->getById(
+                $old['inventory_id']
             );
-        }
 
-        $data['unit_price'] =
-            (float)$item->cost_price;
-    }
+            if (!$item) {
 
-    /*
-    |--------------------------------------------------------------------------
-    | NON-MATERIAL COST
-    |--------------------------------------------------------------------------
-    */
+                throw new Exception(
+                    'Inventory item not found.'
+                );
+            }
 
-    else {
-
-        if ($data['unit_price'] <= 0) {
-
-            throw new Exception(
-                'Unit price must be greater than zero.'
-            );
+            $data['unit_price'] =
+                (float)$item->cost_price;
         }
 
         /*
+    |--------------------------------------------------------------------------
+    | NON-MATERIAL COST
+    |--------------------------------------------------------------------------
+    */ else {
+
+            if ($data['unit_price'] <= 0) {
+
+                throw new Exception(
+                    'Unit price must be greater than zero.'
+                );
+            }
+
+            /*
         | Non-material costs have no inventory.
         */
 
-        $data['inventory_id'] = null;
-        $data['location_id']  = null;
-    }
+            $data['inventory_id'] = null;
+            $data['location_id']  = null;
+        }
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | CALCULATE QUANTITY DIFFERENCE
     |--------------------------------------------------------------------------
     */
 
-    $quantityDifference =
-        $data['quantity'] - $old['quantity'];
+        $quantityDifference =
+            $data['quantity'] - $old['quantity'];
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | TRANSACTION
     |--------------------------------------------------------------------------
     */
 
-    return $this->transaction(function () use (
-        $id,
-        $old,
-        $data,
-        $quantityDifference
-    ) {
+        return $this->transaction(function () use (
+            $id,
+            $old,
+            $data,
+            $quantityDifference
+        ) {
 
-        /*
+            /*
         |--------------------------------------------------------------------------
         | MATERIAL STOCK ADJUSTMENT
         |--------------------------------------------------------------------------
         */
 
-        if ($this->isMaterial($old)) {
+            if ($this->isMaterial($old)) {
 
-            /*
+                /*
             | Quantity increased
             | Example: 10 → 15
             | Need OUT 5
             */
 
-            if ($quantityDifference > 0) {
+                if ($quantityDifference > 0) {
 
-                $success = $this->stockModel->adjustStock(
+                    $success = $this->stockModel->adjustStock(
 
-                    $old['inventory_id'],
+                        $old['inventory_id'],
 
-                    $old['location_id'],
+                        $old['location_id'],
 
-                    -$quantityDifference
+                        -$quantityDifference
 
-                );
+                    );
 
-                if (!$success) {
+                    if (!$success) {
 
-                    throw new Exception(
-                        'Not enough stock in the selected warehouse.'
+                        throw new Exception(
+                            __('not_enough_stock_in_selected_warehouse')
+                        );
+                    }
+
+                    $this->recordInventoryMovement(
+
+                        [
+                            'project_id'   => $old['project_id'],
+                            'cost_type'    => $old['cost_type'],
+                            'description'  => $data['description'],
+                            'quantity'     => $quantityDifference,
+                            'unit_price'   => $data['unit_price'],
+                            'inventory_id' => $old['inventory_id'],
+                            'location_id'  => $old['location_id']
+                        ],
+
+                        'OUT'
                     );
                 }
 
-                $this->recordInventoryMovement(
-
-                    [
-                        'project_id'   => $old['project_id'],
-                        'cost_type'    => $old['cost_type'],
-                        'description'  => $data['description'],
-                        'quantity'     => $quantityDifference,
-                        'unit_price'   => $data['unit_price'],
-                        'inventory_id' => $old['inventory_id'],
-                        'location_id'  => $old['location_id']
-                    ],
-
-                    'OUT'
-                );
-            }
-
-            /*
+                /*
             | Quantity decreased
             | Example: 10 → 7
             | Return 3 to stock
-            */
+            */ elseif ($quantityDifference < 0) {
 
-            elseif ($quantityDifference < 0) {
+                    $returnQuantity =
+                        abs($quantityDifference);
 
-                $returnQuantity =
-                    abs($quantityDifference);
+                    $this->stockModel->adjustStock(
 
-                $this->stockModel->adjustStock(
+                        $old['inventory_id'],
 
-                    $old['inventory_id'],
+                        $old['location_id'],
 
-                    $old['location_id'],
+                        $returnQuantity
 
-                    $returnQuantity
+                    );
 
-                );
+                    $this->recordInventoryMovement(
 
-                $this->recordInventoryMovement(
+                        [
+                            'project_id'   => $old['project_id'],
+                            'cost_type'    => $old['cost_type'],
+                            'description'  => $data['description'],
+                            'quantity'     => $returnQuantity,
+                            'unit_price'   => $data['unit_price'],
+                            'inventory_id' => $old['inventory_id'],
+                            'location_id'  => $old['location_id']
+                        ],
 
-                    [
-                        'project_id'   => $old['project_id'],
-                        'cost_type'    => $old['cost_type'],
-                        'description'  => $data['description'],
-                        'quantity'     => $returnQuantity,
-                        'unit_price'   => $data['unit_price'],
-                        'inventory_id' => $old['inventory_id'],
-                        'location_id'  => $old['location_id']
-                    ],
-
-                    'IN'
-                );
+                        'IN'
+                    );
+                }
             }
-        }
 
-        /*
+            /*
         |--------------------------------------------------------------------------
         | UPDATE PROJECT COST
         |--------------------------------------------------------------------------
         */
 
-        $this->costModel->update(
-            $id,
-            $data
-        );
+            $this->costModel->update(
+                $id,
+                $data
+            );
 
-        /*
+            /*
         |--------------------------------------------------------------------------
         | UPDATE PROJECT LEDGER
         |--------------------------------------------------------------------------
         */
 
-        $this->ledgerService->updateCostEntry(
+            $this->ledgerService->updateCostEntry(
 
-            $id,
+                $id,
 
-            $data['description'],
+                $data['description'],
 
-            $this->total($data)
+                $this->total($data)
 
-        );
+            );
 
-        return true;
-    });
-}
+            return true;
+        });
+    }
 
-public function delete(int $id): void
-{
-    $this->transaction(function () use ($id) {
+    public function delete(int $id): void
+    {
+        $this->transaction(function () use ($id) {
 
-        /*
+            /*
         |--------------------------------------------------------------------------
         | Load Cost
         |--------------------------------------------------------------------------
         */
 
-        $data = $this->normalize(
-            $this->loadCost($id)
-        );
+            $data = $this->normalize(
+                $this->loadCost($id)
+            );
 
-        /*
+            /*
         |--------------------------------------------------------------------------
         | Restore Inventory
         |--------------------------------------------------------------------------
         */
 
-        if ($this->isMaterial($data)) {
+            if ($this->isMaterial($data)) {
 
-            $this->restoreInventory($data);
+                $this->restoreInventory($data);
 
-            $this->recordInventoryMovement(
-                $data,
-                'IN'
-            );
-        }
+                $this->recordInventoryMovement(
+                    $data,
+                    'IN'
+                );
+            }
 
-        /*
+            /*
         |--------------------------------------------------------------------------
         | Reverse Project Ledger
         |--------------------------------------------------------------------------
         */
 
-        $this->ledgerService->reverseCost($id);
+            $this->ledgerService->reverseCost($id);
 
-        /*
+            /*
         |--------------------------------------------------------------------------
         | Delete Operational Cost
         |--------------------------------------------------------------------------
 
         */
 
-        $this->costModel->delete($id);
-    });
-}
-
-private function normalize(object $cost): array
-{
-    return [
-
-        'project_id'   => $cost->project_id,
-        'cost_type'    => $cost->cost_type,
-        'description'  => $cost->description,
-        'quantity'     => $cost->quantity,
-        'unit_price'   => $cost->unit_price,
-        'inventory_id' => $cost->inventory_id,
-        'location_id'  => $cost->location_id
-
-    ];
-}
-
-private function validate(array $data): array
-{
-    if (empty($data['cost_type'])) {
-        throw new Exception('Cost type is required.');
+            $this->costModel->delete($id);
+        });
     }
 
-    if ($data['quantity'] <= 0) {
-        throw new Exception('Quantity must be greater than zero.');
+    private function normalize(object $cost): array
+    {
+        return [
+
+            'project_id'   => $cost->project_id,
+            'cost_type'    => $cost->cost_type,
+            'description'  => $cost->description,
+            'quantity'     => $cost->quantity,
+            'unit_price'   => $cost->unit_price,
+            'inventory_id' => $cost->inventory_id,
+            'location_id'  => $cost->location_id
+
+        ];
     }
 
-    if (
-        $data['cost_type'] !== 'materials'
-        && $data['unit_price'] <= 0
-    ) {
-        throw new Exception(
-            'Unit price must be greater than zero.'
+    private function validate(array $data): array
+    {
+        if (empty($data['cost_type'])) {
+            throw new Exception(__('cost_type_required'));
+        }
+
+        if ($data['quantity'] <= 0) {
+            throw new Exception(__('quantity_must_be_greater_than_zero'));
+        }
+
+        if (
+            $data['cost_type'] !== 'materials'
+            && $data['unit_price'] <= 0
+        ) {
+
+            throw new Exception(
+                __('unit_price_must_be_greater_than_zero')
+            );
+        }
+
+        if ($data['cost_type'] !== 'materials') {
+            return $data;
+        }
+
+        if (empty($data['inventory_id'])) {
+            throw new Exception(
+                __('please_select_material')
+            );
+        }
+
+        if (empty($data['location_id'])) {
+            throw new Exception(
+                __('please_select_warehouse')
+            );
+        }
+
+        $item = $this->inventoryModel->getById(
+            $data['inventory_id']
         );
-    }
 
-    if ($data['cost_type'] !== 'materials') {
-        return $data;
-    }
+        if (!$item) {
+            throw new Exception(
+                __('inventory_item_not_found')
+            );
+        }
 
-    if (empty($data['inventory_id'])) {
-        throw new Exception(
-            'Please select a material.'
+        $stock = $this->stockModel->getStock(
+            $data['inventory_id'],
+            $data['location_id']
         );
-    }
 
-    if (empty($data['location_id'])) {
-        throw new Exception(
-            'Please select a warehouse.'
-        );
-    }
+        $available = $stock->quantity ?? 0;
 
-    $item = $this->inventoryModel->getById(
-        $data['inventory_id']
-    );
+        if ($available < $data['quantity']) {
+            throw new Exception(
+                __('not_enough_stock_selected_warehouse')
+            );
+        }
 
-    if (!$item) {
-        throw new Exception(
-            'Inventory item not found.'
-        );
-    }
-
-    $stock = $this->stockModel->getStock(
-        $data['inventory_id'],
-        $data['location_id']
-    );
-
-    $available = $stock->quantity ?? 0;
-
-    if ($available < $data['quantity']) {
-        throw new Exception(
-            'Not enough stock in selected warehouse.'
-        );
-    }
-
-    /*
+        /*
     |--------------------------------------------------------------------------
     | Always use inventory cost price
     |--------------------------------------------------------------------------
     */
 
-    $data['unit_price'] = (float)$item->cost_price;
+        $data['unit_price'] = (float)$item->cost_price;
 
-    return $data;
-}
-
-   private function isMaterial(array $data): bool
-{
-    return strtolower($data['cost_type']) === 'materials';
-}
-
-    
-private function deductInventory(array $data): void
-{
-    if (!$this->isMaterial($data)) {
-        return;
+        return $data;
     }
 
-    $success = $this->stockModel->adjustStock(
+    private function isMaterial(array $data): bool
+    {
+        return strtolower($data['cost_type']) === 'materials';
+    }
 
-        $data['inventory_id'],
 
-        $data['location_id'],
+    private function deductInventory(array $data): void
+    {
+        if (!$this->isMaterial($data)) {
+            return;
+        }
 
-        -$data['quantity']
+        $success = $this->stockModel->adjustStock(
 
-    );
+            $data['inventory_id'],
 
-    if (!$success) {
+            $data['location_id'],
 
-        throw new Exception(
-            'Unable to deduct inventory.'
+            -$data['quantity']
+
         );
 
-    }
-}
+        if (!$success) {
 
-private function restoreInventory(array $data): void
-{
-    if (!$this->isMaterial($data)) {
-        return;
-    }
-
-    $this->stockModel->adjustStock(
-
-        $data['inventory_id'],
-
-        $data['location_id'],
-
-        $data['quantity']
-
-    );
-}
-
-private function recordInventoryMovement(
-    array $data,
-    string $type
-): void
-{
-    if (!$this->isMaterial($data)) {
-        return;
+            throw new Exception(
+                __('unable_to_deduct_inventory')
+            );
+        }
     }
 
-    $this->movementModel->addMovement([
+    private function restoreInventory(array $data): void
+    {
+        if (!$this->isMaterial($data)) {
+            return;
+        }
 
-        'inventory_id' => $data['inventory_id'],
+        $this->stockModel->adjustStock(
 
-        'location_id'  => $data['location_id'],
+            $data['inventory_id'],
 
-        'type'         => strtoupper($type),
+            $data['location_id'],
 
-        'quantity'     => $data['quantity'],
+            $data['quantity']
 
-        'reference'    => 'PROJECT #' . $data['project_id'],
-
-        'notes'        => $data['description'],
-
-        'created_by'   => $_SESSION['user_id']
-
-    ]);
-}
-
-// private function recordLedger(
-//     int $costId,
-//     array $data
-// ): void
-// {
-
-// //    die('RECORD LEDGER CALLED. Cost ID = ' . $costId);
-//     $total = $this->total($data);
-
-//     $this->ledgerService->addEntry([
-
-//         'project_id'   => $data['project_id'],
-
-//         'entry_type'   => 'cost',
-
-//         'ref_table'    => 'project_costs',
-
-//         'ref_id'       => $costId,
-
-//         'description'  => $data['description'],
-
-//         'debit'        => $total,
-
-//         'credit'       => 0,
-
-//         /*
-//          * Your current model expects this.
-//          * We'll improve ledger balances later.
-//          */
-//         'balance_after' => 0
-
-//     ]);
-// }
-
-// temporary recordLedger for testing
-private function recordLedger(
-    int $costId,
-    array $data
-): void
-{
-    $total = $this->total($data);
-
-    $result = $this->ledgerService->addEntry([
-
-        'project_id'   => $data['project_id'],
-
-        'entry_type'   => 'cost',
-
-        'ref_table'    => 'project_costs',
-
-        'ref_id'       => $costId,
-
-        'description'  => $data['description'],
-
-        'debit'        => $total,
-
-        'credit'       => 0,
-
-        'balance_after' => 0
-
-    ]);
-
-    // die(
-    //     '<pre>' .
-    //     'ADD ENTRY RESULT: ' .
-    //     var_export($result, true) .
-    //     "\n" .
-    //     'COST ID: ' . $costId .
-    //     '</pre>'
-    // );
-}
-
-private function loadCost(int $id)
-{
-    $cost = $this->costModel->getById($id);
-
-    if (!$cost) {
-        throw new Exception(
-            'Project cost not found.'
         );
     }
 
-    return $cost;
-}
+    private function recordInventoryMovement(
+        array $data,
+        string $type
+    ): void {
+        if (!$this->isMaterial($data)) {
+            return;
+        }
+
+        $this->movementModel->addMovement([
+
+            'inventory_id' => $data['inventory_id'],
+
+            'location_id'  => $data['location_id'],
+
+            'type'         => strtoupper($type),
+
+            'quantity'     => $data['quantity'],
+
+            'reference'    => 'PROJECT #' . $data['project_id'],
+
+            'notes'        => $data['description'],
+
+            'created_by'   => $_SESSION['user_id']
+
+        ]);
+    }
+
+    // temporary recordLedger for testing
+    private function recordLedger(
+        int $costId,
+        array $data
+    ): void {
+        $total = $this->total($data);
+
+        $result = $this->ledgerService->addEntry([
+
+            'project_id'   => $data['project_id'],
+
+            'entry_type'   => 'cost',
+
+            'ref_table'    => 'project_costs',
+
+            'ref_id'       => $costId,
+
+            'description'  => $data['description'],
+
+            'debit'        => $total,
+
+            'credit'       => 0,
+
+            'balance_after' => 0
+
+        ]);
+    }
+
+    private function loadCost(int $id)
+    {
+        $cost = $this->costModel->getById($id);
+
+        if (!$cost) {
+            throw new Exception(
+                __('project_cost_not_found')
+            );
+        }
+
+        return $cost;
+    }
 
 
-private function total(array $data): float
-{
-    return
-        $data['quantity']
-        * $data['unit_price'];
-}
-
+    private function total(array $data): float
+    {
+        return
+            $data['quantity']
+            * $data['unit_price'];
+    }
 }

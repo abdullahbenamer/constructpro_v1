@@ -79,9 +79,8 @@ class ProjectCosts extends Controller
                 ]);
 
                 FlashHelper::success(
-                    'Project cost added successfully.'
+                    __('project_cost_added_successfully')
                 );
-
                 header(
                     'Location: ' .
                         URLROOT .
@@ -178,8 +177,9 @@ class ProjectCosts extends Controller
                 );
 
                 FlashHelper::success(
-                    'Project cost updated successfully.'
+                    __('project_cost_updated_successfully')
                 );
+
             } catch (Throwable $e) {
 
                 FlashHelper::error(
@@ -225,7 +225,8 @@ class ProjectCosts extends Controller
             $cost = $this->model('ProjectCost')->getById($id);
 
             if (!$cost) {
-                FlashHelper::error('Project cost not found.');
+                
+            FlashHelper::error(__('project_cost_not_found')); 
 
                 header(
                     'Location: ' .
@@ -246,9 +247,9 @@ class ProjectCosts extends Controller
 
             $this->service('ProjectCost')->delete((int)$id);
 
-            FlashHelper::success(
-                'Project cost deleted successfully.'
-            );
+         FlashHelper::success(
+    __('project_cost_deleted_successfully')
+);
 
             header(
                 'Location: ' .
@@ -311,7 +312,9 @@ class ProjectCosts extends Controller
         $project = $projectModel->getById($project_id);
 
         if (!$project) {
-            FlashHelper::error("Project not found");
+           
+        FlashHelper::error(__('project_not_found'));
+
             header('Location: ' . URLROOT . '/projects');
             exit;
         }

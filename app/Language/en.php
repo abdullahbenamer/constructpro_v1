@@ -1307,4 +1307,28 @@ return [
 'document_not_found' => 'Document not found.',
 'document_deleted_successfully' => 'Document deleted successfully.',
 
+// project costs module messages
+
+'project_cost_added_successfully' => 'Project cost added successfully.',
+'project_cost_updated_successfully' => 'Project cost updated successfully.',
+'project_cost_deleted_successfully' => 'Project cost deleted successfully.',
+'project_cost_not_found' => 'Project cost not found.',
+
+'project_cost_added_successfully' => 'تمت إضافة تكلفة المشروع بنجاح.',
+'project_cost_updated_successfully' => 'تم تحديث تكلفة المشروع بنجاح.',
+'project_cost_deleted_successfully' => 'تم حذف تكلفة المشروع بنجاح.',
+'project_cost_not_found' => 'تكلفة المشروع غير موجودة.',
+
+//PROJECT COST SERVICE — ERROR MESSAGES
+'cost_type_required' => 'Cost type is required.',
+'quantity_must_be_greater_than_zero' => 'Quantity must be greater than zero.',
+'unit_price_must_be_greater_than_zero' => 'Unit price must be greater than zero.',
+'please_select_material' => 'Please select a material.',
+'please_select_warehouse' => 'Please select a warehouse.',
+'inventory_item_not_found' => 'Inventory item not found.',
+'not_enough_stock_selected_warehouse' => 'Not enough stock in selected warehouse.',
+'not_enough_stock_in_selected_warehouse' => 'Not enough stock in the selected warehouse.',
+'unable_to_deduct_inventory' => 'Unable to deduct inventory.',
+
+
 ];
