@@ -43,7 +43,7 @@ class Auth extends Controller
 
                 exit;
             } else {
-                $data['error'] = "Invalid email or password";
+               $data['error'] = __('invalid_email_or_password');
             }
         }
 

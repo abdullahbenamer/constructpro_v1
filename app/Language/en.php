@@ -1443,5 +1443,10 @@ return [
 
 'unable_to_delete_customer' => 'Unable to delete customer.',
 
+'user_not_found' => 'User not found.',
+'settings_updated' => 'Settings updated successfully.',
+
+'invalid_email_or_password' => 'Invalid email or password.',
+
 
 ];

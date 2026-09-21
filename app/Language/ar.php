@@ -1436,9 +1436,10 @@ return [
 
 'unable_to_delete_customer' => 'تعذر حذف العميل.',
 
+'user_not_found' => 'المستخدم غير موجود.',
+'settings_updated' => 'تم تحديث الإعدادات بنجاح.',
 
-
-
+'invalid_email_or_password' => 'البريد الإلكتروني أو كلمة المرور غير صحيحة.',
 
 ];
 
