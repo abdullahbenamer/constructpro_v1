@@ -56,7 +56,7 @@ class InventoryLocations extends Controller
                 exit;
             }
 
-            $data['error'] = $result['message'] ?? 'Unable to save location';
+          $data['error'] = $result['message'] ?? __('unable_to_save_location');
         }
 
         $data['storekeepers'] = $storekeepers;
@@ -72,9 +72,11 @@ class InventoryLocations extends Controller
 
         $location = $locationModel->getById($id);
 
-        if (!$location) {
-            die("Location not found");
-        }
+      if (!$location) {
+    FlashHelper::error(__('location_not_found'));
+    header('Location: ' . URLROOT . '/inventorylocations');
+    exit;
+}
 
         $items = $stockModel->getLocationInventory($id);
 
@@ -124,14 +126,14 @@ class InventoryLocations extends Controller
                     $_POST['user_locations'] ?? []
                 );
 
-                $_SESSION['success'] = 'Location updated successfully';
+             FlashHelper::success(__('location_updated_successfully'));
 
                 header('Location: ' . URLROOT . '/inventorylocations');
                 exit;
             }
 
-            $data['error'] =
-                $result['message'];
+         $data['error'] =
+    $result['message'] ?? __('unable_to_save_location');
         }
 
         $assigned = $model->getLocationUsers($id);
@@ -157,9 +159,9 @@ class InventoryLocations extends Controller
 
         if ($model->hasStock($id)) {
 
-            FlashHelper::error(
-                'Cannot delete location because it contains stock.'
-            );
+    FlashHelper::error(
+    __('cannot_delete_location_contains_stock')
+);
 
             header(
                 'Location: ' . URLROOT . '/inventorylocations'
@@ -170,9 +172,9 @@ class InventoryLocations extends Controller
 
         $model->delete($id);
 
-        FlashHelper::success(
-            'Location deleted successfully.'
-        );
+      FlashHelper::success(
+    __('location_deleted_successfully')
+);
 
         header(
             'Location: ' . URLROOT . '/inventorylocations'

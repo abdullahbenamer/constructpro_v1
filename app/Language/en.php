@@ -1339,7 +1339,23 @@ return [
 'inventory_insert_failed' => 'Insert failed.',
 
 
+//INVENTORY LOCATIONS messages
+'unable_to_save_location' => 'Unable to save location.',
+'location_not_found' => 'Location not found.',
+'location_updated_successfully' => 'Location updated successfully.',
+'cannot_delete_location_contains_stock' => 'Cannot delete location because it contains stock.',
+'location_deleted_successfully' => 'Location deleted successfully.',
+'location_code_already_exists' => 'Code already exists.',
 
+'goods_received_successfully' => 'Goods received successfully.',
+
+
+// INVENTORY MOVEMENT MODEL messages
+'invalid_inventory_item' => 'Invalid inventory item.',
+'invalid_location' => 'Invalid location.',
+'invalid_adjustment_quantity' => 'Invalid adjustment quantity.',
+'invalid_quantity' => 'Invalid quantity.',
+'invalid_movement_type' => 'Invalid movement type.',
 
 
 

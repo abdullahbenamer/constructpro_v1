@@ -1333,5 +1333,27 @@ return [
 
 
 
+//INVENTORY LOCATIONS messages
+'unable_to_save_location' => 'تعذر حفظ الموقع (المخزن).',
+'location_not_found' => 'الموقع غير موجود.',
+'location_updated_successfully' => 'تم تحديث الموقع بنجاح.',
+'cannot_delete_location_contains_stock' => 'لا يمكن حذف الموقع لأنه يحتوي على مخزون.',
+'location_deleted_successfully' => 'تم حذف الموقع بنجاح.',
+'location_code_already_exists' => 'رمز الموقع موجود سابقا.',
+
+'goods_received_successfully' => 'تم استلام البضائع بنجاح.',
+
+
+// INVENTORY MOVEMENT MODEL messages
+'invalid_inventory_item' => 'صنف المخزون غير صحيح.',
+'invalid_location' => 'الموقع غير صحيح.',
+'invalid_adjustment_quantity' => 'كمية التعديل غير مقبولة.',
+'invalid_quantity' => 'الكمية غير مقبولة.',
+'invalid_movement_type' => 'نوع حركة المخزون غير صحيحة.',
+
+
+
+
+
 ];
 

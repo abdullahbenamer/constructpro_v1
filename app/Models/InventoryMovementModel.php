@@ -26,25 +26,25 @@ class InventoryMovementModel extends Model
         // =========================
 
         if ($inventory_id <= 0) {
-            die("Invalid inventory item");
+            throw new Exception(__('invalid_inventory_item'));
         }
 
         if ($location_id <= 0) {
-            die("Invalid location");
+            throw new Exception(__('invalid_location'));
         }
 
         if ($type === 'ADJUSTMENT') {
 
             if ($quantity == 0) {
-                die("Invalid adjustment quantity");
+                throw new Exception(__('invalid_adjustment_quantity'));
             }
         } elseif ($quantity <= 0) {
 
-            die("Invalid quantity");
+            throw new Exception(__('invalid_quantity'));
         }
 
         if (!in_array($type, ['IN', 'OUT', 'ADJUSTMENT'])) {
-            die("Invalid movement type");
+            throw new Exception(__('invalid_movement_type'));
         }
 
         /*
@@ -80,14 +80,14 @@ class InventoryMovementModel extends Model
 
         if (!$inventory) {
             throw new Exception(
-                'Inventory item not found.'
+                __('inventory_item_not_found')
             );
         }
 
         $global_balance_after =
             (float)$inventory->quantity;
 
-               // =========================
+        // =========================
         // SAVE MOVEMENT
         // =========================
 

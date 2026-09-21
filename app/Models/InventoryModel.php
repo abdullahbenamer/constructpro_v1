@@ -34,7 +34,7 @@ class InventoryModel extends Model
         return $this->db->query($sql, $params)->fetchAll();
     }
 
-   
+
     public function getStock($category = null)
     {
         $sql = "

@@ -50,9 +50,9 @@ class InventoryMovements extends Controller
 
         $service->receive($_POST);
 
-        FlashHelper::success(
-            'Goods received successfully.'
-        );
+FlashHelper::success(
+    __('goods_received_successfully')
+);
 
     } catch (Throwable $e) {
 

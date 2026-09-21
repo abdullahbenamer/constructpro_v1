@@ -52,7 +52,7 @@ public function create($data)
     if ($exists) {
         return [
             'success' => false,
-            'message' => 'Code already exists'
+            'message' => __('location_code_already_exists')
         ];
     }
 
@@ -110,7 +110,7 @@ public function update($id, $data)
     if ($exists) {
         return [
             'success' => false,
-            'message' => 'Code already exists'
+          'message' => __('location_code_already_exists')
         ];
     }
 
