@@ -15,10 +15,13 @@ class InventoryReservationModel extends Model
     |--------------------------------------------------------------------------
     */
 
-    if ($quantity <= 0) {
-        throw new Exception(
-            'Reservation quantity must be greater than zero.'
-        );
+if ($quantity <= 0) {
+    throw new Exception(
+        __('reservation_quantity_must_be_greater_than_zero')
+    );
+}
+
+}
     }
 
 
@@ -71,16 +74,13 @@ class InventoryReservationModel extends Model
 
     if ($quantity > $availableQty) {
 
-        throw new Exception(
-            'Insufficient available stock. '
-            . 'Available to reserve: '
-            . number_format(
-                max(0, $availableQty),
-                2
-            )
-        );
-    }
-
+    throw new Exception(
+        sprintf(
+            __('insufficient_available_stock'),
+            number_format(max(0, $availableQty), 2)
+        )
+    );
+}
 
     /*
     |--------------------------------------------------------------------------

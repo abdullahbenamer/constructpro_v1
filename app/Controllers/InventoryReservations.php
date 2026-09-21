@@ -38,9 +38,9 @@ class InventoryReservations extends Controller
 
         if (empty($_POST['inventory_id'])) {
 
-            FlashHelper::error(
-                'Please select an inventory item.'
-            );
+        FlashHelper::error(
+    __('please_select_inventory_item')
+);
 
             header(
                 'Location: ' .
@@ -54,7 +54,7 @@ class InventoryReservations extends Controller
         if (empty($_POST['location_id'])) {
 
             FlashHelper::error(
-                'Please select a location.'
+                __('please_select_location')
             );
 
             header(
@@ -68,9 +68,9 @@ class InventoryReservations extends Controller
 
         if (empty($_POST['project_id'])) {
 
-            FlashHelper::error(
-                'Please select a project.'
-            );
+       FlashHelper::error(
+    __('please_select_project')
+);
 
             header(
                 'Location: ' .
@@ -83,9 +83,9 @@ class InventoryReservations extends Controller
 
         if (empty($_POST['required_by_date'])) {
 
-            FlashHelper::error(
-                'Please select the required by date.'
-            );
+         FlashHelper::error(
+    __('please_select_required_by_date')
+);
 
             header(
                 'Location: ' .
@@ -101,9 +101,9 @@ class InventoryReservations extends Controller
             (float) $_POST['quantity'] <= 0
         ) {
 
-            FlashHelper::error(
-                'Reservation quantity must be greater than zero.'
-            );
+      FlashHelper::error(
+    __('reservation_quantity_must_be_greater_than_zero')
+);
 
             header(
                 'Location: ' .
@@ -150,9 +150,9 @@ class InventoryReservations extends Controller
         ]);
 
 
-        FlashHelper::success(
-            'Material reservation created successfully.'
-        );
+    FlashHelper::success(
+    __('reservation_created_successfully')
+);
 
 
         header(
@@ -209,8 +209,8 @@ class InventoryReservations extends Controller
         );
 
         FlashHelper::success(
-            'Reservation fulfilled successfully.'
-        );
+    __('reservation_fulfilled_successfully')
+);
 
     } catch (Throwable $e) {
 
@@ -273,8 +273,9 @@ class InventoryReservations extends Controller
         // Only ACTIVE editable
         if ($reservation->status !== 'ACTIVE') {
 
-            $_SESSION['error'] =
-                'Only ACTIVE reservations can be edited';
+    FlashHelper::error(
+    __('active_reservations_only_editable')
+);
 
             header(
                 'Location: ' .
@@ -357,9 +358,9 @@ class InventoryReservations extends Controller
         // Only ACTIVE deletable
         if ($reservation->status !== 'ACTIVE') {
 
-            $_SESSION['error'] =
-                'Only ACTIVE reservations can be deleted';
-
+           FlashHelper::error(
+    __('active_reservations_only_deletable')
+);
             header(
                 'Location: ' .
                     URLROOT .

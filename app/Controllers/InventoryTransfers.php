@@ -69,9 +69,9 @@ class InventoryTransfers extends Controller
 
                 ]);
 
-                FlashHelper::success(
-                    'Transfer completed successfully.'
-                );
+FlashHelper::success(
+    __('transfer_completed_successfully')
+);
 
                 header('Location: ' . URLROOT . '/inventorytransfers');
                 exit;

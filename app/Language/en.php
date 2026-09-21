@@ -1358,8 +1358,22 @@ return [
 'invalid_movement_type' => 'Invalid movement type.',
 
 
+//INVENTORY RESERVATION MODEL messages
+'reservation_quantity_must_be_greater_than_zero' => 'Reservation quantity must be greater than zero.',
+'insufficient_available_stock' => 'Insufficient available stock. Available to reserve: %s',
 
+//INVENTORY RESERVATIONS CONTROLLER messages
+'please_select_inventory_item' => 'Please select an inventory item.',
+'please_select_location' => 'Please select a location.',
+'please_select_project' => 'Please select a project.',
+'please_select_required_by_date' => 'Please select the required by date.',
+'reservation_created_successfully' => 'Material reservation created successfully.',
+'reservation_fulfilled_successfully' => 'Reservation fulfilled successfully.',
+'active_reservations_only_editable' => 'Only ACTIVE reservations can be edited.',
+'active_reservations_only_deletable' => 'Only ACTIVE reservations can be deleted.',
 
+//INVENTORY RESERVATION VIEWS messages
+'transfer_completed_successfully' => 'Transfer completed successfully.',
 
 
 ];

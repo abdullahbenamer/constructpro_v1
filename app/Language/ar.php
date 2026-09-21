@@ -1352,7 +1352,23 @@ return [
 'invalid_movement_type' => 'نوع حركة المخزون غير صحيحة.',
 
 
+//INVENTORY RESERVATION MODEL messages
+'reservation_quantity_must_be_greater_than_zero' => 'يجب أن تكون كمية الحجز أكبر من صفر.',
+'insufficient_available_stock' => 'الكمية المتاحة غير كافية للحجز. الكمية المتاحة للحجز: %s',
 
+
+//INVENTORY RESERVATIONS CONTROLLER messages
+'please_select_inventory_item' => 'يرجى اختيار صنف من المخزون.',
+'please_select_location' => 'يرجى اختيار الموقع.',
+'please_select_project' => 'يرجى اختيار المشروع.',
+'please_select_required_by_date' => 'يرجى تحديد التاريخ المطلوب.',
+'reservation_created_successfully' => 'تم إنشاء حجز المادة بنجاح.',
+'reservation_fulfilled_successfully' => 'تم تنفيذ الحجز بنجاح.',
+'active_reservations_only_editable' => 'لا يمكن تعديل سوى الحجوزات النشطة.',
+'active_reservations_only_deletable' => 'لا يمكن حذف سوى الحجوزات النشطة.',
+
+
+'transfer_completed_successfully' => 'تم تنفيذ التحويل بنجاح.',
 
 
 ];
