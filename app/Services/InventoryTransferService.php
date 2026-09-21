@@ -130,7 +130,7 @@ public function reverse(int $transferId): array
 
         if (!$transfer) {
             throw new Exception(
-                'Transfer not found.'
+             __('transfer_not_found')
             );
         }
 
@@ -143,7 +143,7 @@ public function reverse(int $transferId): array
 
         if ($transfer->status !== 'COMPLETED') {
             throw new Exception(
-                'Only COMPLETED transfers can be reversed.'
+               __('completed_transfers_only_reverse')
             );
         }
 
@@ -168,10 +168,9 @@ public function reverse(int $transferId): array
         );
 
         if (!$ok) {
-            throw new Exception(
-                'Unable to reverse transfer. '
-                . 'Insufficient stock at destination location.'
-            );
+          throw new Exception(
+    __('unable_to_reverse_transfer')
+);
         }
 
 
@@ -316,8 +315,8 @@ public function reverse(int $transferId): array
 
         return [
             'success' => true,
-            'message' =>
-                'Transfer reversed successfully.',
+          'message' =>
+    __('transfer_reversed_successfully'),
             'reversal_transfer_id' =>
                 $reversalId
         ];

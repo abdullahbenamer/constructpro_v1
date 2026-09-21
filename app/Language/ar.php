@@ -1371,5 +1371,23 @@ return [
 'transfer_completed_successfully' => 'تم تنفيذ التحويل بنجاح.',
 
 
+
+'invalid_warehouse_location' => 'موقع المستودع غير صالح.',
+
+'unit_cost_cannot_be_negative' => 'لا يمكن أن تكون تكلفة الوحدة سالبة.',
+'unable_to_add_stock' => 'تعذر إضافة المخزون إلى المستودع.',
+
+'source_destination_warehouses_same' => 'لا يمكن أن يكون مستودع المصدر والوجهة متطابقين.',
+'not_enough_stock_source_warehouse' => 'لا توجد كمية كافية في مستودع المصدر.',
+'adjustment_quantity_cannot_be_zero' => 'لا يمكن أن تكون كمية التعديل صفراً.',
+'adjustment_exceeds_available_stock' => 'سيؤدي التعديل إلى تجاوز المخزون المتاح. الكمية المتاحة بعد الحجوزات: %s',
+'adjustment_insufficient_stock' => 'سيؤدي التعديل إلى عدم كفاية المخزون.',
+'unable_to_adjust_inventory_stock' => 'تعذر تعديل مخزون الصنف.',
+'transfer_not_found' => 'التحويل غير موجود.',
+'completed_transfers_only_reverse' => 'لا يمكن عكس سوى التحويلات المكتملة.',
+'unable_to_reverse_transfer' => 'تعذر عكس التحويل. لا توجد كمية كافية في موقع الوجهة.',
+'transfer_reversed_successfully' => 'تم عكس التحويل بنجاح.',
+
+
 ];
 

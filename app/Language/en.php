@@ -1376,4 +1376,22 @@ return [
 'transfer_completed_successfully' => 'Transfer completed successfully.',
 
 
+
+'invalid_warehouse_location' => 'Invalid warehouse location.',
+
+'unit_cost_cannot_be_negative' => 'Unit cost cannot be negative.',
+'unable_to_add_stock' => 'Unable to add stock to the warehouse.',
+
+'source_destination_warehouses_same' => 'Source and destination warehouses cannot be the same.',
+'not_enough_stock_source_warehouse' => 'Not enough stock in source warehouse.',
+'adjustment_quantity_cannot_be_zero' => 'Adjustment quantity cannot be zero.',
+'adjustment_exceeds_available_stock' => 'Adjustment would exceed available stock. Available after reservations: %s',
+'adjustment_insufficient_stock' => 'Adjustment would result in insufficient stock.',
+'unable_to_adjust_inventory_stock' => 'Unable to adjust inventory stock.',
+'transfer_not_found' => 'Transfer not found.',
+'completed_transfers_only_reverse' => 'Only COMPLETED transfers can be reversed.',
+'unable_to_reverse_transfer' => 'Unable to reverse transfer. Insufficient stock at destination location.',
+'transfer_reversed_successfully' => 'Transfer reversed successfully.',
+
+
 ];
