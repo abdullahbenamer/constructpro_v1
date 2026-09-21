@@ -23,10 +23,32 @@ class GoodsReceipts extends Controller
                 $this->model('SupplierLedger'),
                 $this->model('InventoryService')
             );
-            $service->receive($_POST);
 
-            header('Location: ' . URLROOT . '/goodsreceipts');
-            exit;
+            try {
+
+                $service->receive($_POST);
+
+                FlashHelper::success(
+                    __('goods_receipt_created_successfully')
+                );
+
+                header(
+                    'Location: ' . URLROOT . '/goodsreceipts'
+                );
+
+                exit;
+            } catch (Throwable $e) {
+
+                FlashHelper::error(
+                    $e->getMessage()
+                );
+
+                header(
+                    'Location: ' . URLROOT . '/goodsreceipts/create'
+                );
+
+                exit;
+            }
         }
 
         $data['purchaseOrders'] = $purchaseOrderModel->getOpenPurchaseOrders();

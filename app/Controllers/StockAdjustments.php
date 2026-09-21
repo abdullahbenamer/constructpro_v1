@@ -37,9 +37,9 @@ class StockAdjustments extends Controller
             */
 
             if ($inventoryId <= 0) {
-                FlashHelper::error(
-                    'Please select an inventory item.'
-                );
+          FlashHelper::error(
+    __('please_select_inventory_item')
+);
 
                 header(
                     'Location: ' .
@@ -51,9 +51,9 @@ class StockAdjustments extends Controller
             }
 
             if ($locationId <= 0) {
-                FlashHelper::error(
-                    'Please select a location.'
-                );
+               FlashHelper::error(
+    __('please_select_location')
+);
 
                 header(
                     'Location: ' .
@@ -71,9 +71,9 @@ class StockAdjustments extends Controller
                     true
                 )
             ) {
-                FlashHelper::error(
-                    'Invalid adjustment type.'
-                );
+             FlashHelper::error(
+    __('invalid_adjustment_type')
+);
 
                 header(
                     'Location: ' .
@@ -85,9 +85,9 @@ class StockAdjustments extends Controller
             }
 
             if ($quantity <= 0) {
-                FlashHelper::error(
-                    'Adjustment quantity must be greater than zero.'
-                );
+          FlashHelper::error(
+    __('adjustment_quantity_must_be_greater_than_zero')
+);
 
                 header(
                     'Location: ' .
@@ -109,9 +109,9 @@ class StockAdjustments extends Controller
             ];
 
             if (!in_array($reason, $allowedReasons, true)) {
-                FlashHelper::error(
-                    'Please select a valid adjustment reason.'
-                );
+              FlashHelper::error(
+    __('valid_adjustment_reason_required')
+);
 
                 header(
                     'Location: ' .
@@ -126,9 +126,9 @@ class StockAdjustments extends Controller
                 $reason === 'OTHER' &&
                 $notes === ''
             ) {
-                FlashHelper::error(
-                    'Please provide notes when the reason is OTHER.'
-                );
+           FlashHelper::error(
+    __('notes_required_for_other_reason')
+);
 
                 header(
                     'Location: ' .
@@ -207,10 +207,12 @@ class StockAdjustments extends Controller
 
                 ]);
 
-                FlashHelper::success(
-                    'Stock adjustment posted successfully. ' .
-                        'Reference: ' . $reference
-                );
+             FlashHelper::success(
+    sprintf(
+        __('stock_adjustment_posted_successfully'),
+        $reference
+    )
+);
 
                 header(
                     'Location: ' .

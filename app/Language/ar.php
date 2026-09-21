@@ -1388,6 +1388,24 @@ return [
 'unable_to_reverse_transfer' => 'تعذر عكس التحويل. لا توجد كمية كافية في موقع الوجهة.',
 'transfer_reversed_successfully' => 'تم عكس التحويل بنجاح.',
 
+'invalid_adjustment_type' => 'نوع التعديل غير صالح.',
+'adjustment_quantity_must_be_greater_than_zero' => 'يجب أن تكون كمية التعديل أكبر من صفر.',
+'valid_adjustment_reason_required' => 'يرجى اختيار سبب صالح للتعديل.',
+'notes_required_for_other_reason' => 'يرجى إدخال ملاحظات عند اختيار السبب "أخرى".',
+'stock_adjustment_posted_successfully' => 'تم تسجيل تعديل المخزون بنجاح. المرجع: %s',
+
+'goods_receipt_created_successfully' => 'تم استلام البضائع بنجاح.',
+
+'received_quantity_must_be_greater_than_zero' => 'يجب أن تكون الكمية المستلمة أكبر من صفر.',
+'purchase_order_not_found' => 'أمر الشراء غير موجود.',
+'purchase_order_not_available_for_receiving' => 'أمر الشراء هذا غير متاح للاستلام.',
+'supplier_does_not_match_purchase_order' => 'المورد المحدد لا يطابق مورد أمر الشراء.',
+'inventory_item_not_in_purchase_order' => 'صنف المخزون المحدد لا ينتمي إلى أمر الشراء هذا.',
+'po_item_already_fully_received' => 'تم استلام صنف أمر الشراء هذا بالكامل بالفعل.',
+'cannot_receive_remaining_quantity' => 'لا يمكن استلام %s وحدة. المتبقي في أمر الشراء هو %s وحدة فقط.',
+
+'invalid_purchase_order' => 'أمر الشراء غير صحيح.',
+'invalid_supplier' => 'المورد غير صحيح.',
 
 ];
 

@@ -47,30 +47,30 @@ class GoodsReceiptService extends BaseService
             $unitCost    = (float)($data['unit_cost'] ?? 0);
 
             if ($poId <= 0) {
-                throw new Exception('Invalid purchase order.');
+                throw new Exception(__('invalid_purchase_order'));
             }
 
             if ($supplierId <= 0) {
-                throw new Exception('Invalid supplier.');
+                throw new Exception(__('Invalid_supplier.'));
             }
 
             if ($inventoryId <= 0) {
-                throw new Exception('Invalid inventory item.');
+                throw new Exception(__('invalid_inventory_item'));
             }
 
             if ($locationId <= 0) {
-                throw new Exception('Invalid warehouse location.');
+                throw new Exception(__('invalid_warehouse_location'));
             }
 
             if ($quantity <= 0) {
                 throw new Exception(
-                    'Received quantity must be greater than zero.'
+                    __('received_quantity_must_be_greater_than_zero')
                 );
             }
 
             if ($unitCost < 0) {
                 throw new Exception(
-                    'Unit cost cannot be negative.'
+                    __('unit_cost_cannot_be_negative')
                 );
             }
 
@@ -84,7 +84,7 @@ class GoodsReceiptService extends BaseService
 
             if (!$po) {
                 throw new Exception(
-                    'Purchase Order not found.'
+                    __('purchase_order_not_found')
                 );
             }
 
@@ -107,13 +107,13 @@ class GoodsReceiptService extends BaseService
                 true
             )) {
                 throw new Exception(
-                    'This Purchase Order is not available for receiving.'
+                    __('purchase_order_not_available_for_receiving')
                 );
             }
 
             if ($supplierId !== (int)$po->supplier_id) {
                 throw new Exception(
-                    'The selected supplier does not match the Purchase Order supplier.'
+                    __('supplier_does_not_match_purchase_order')
                 );
             }
 
@@ -131,7 +131,7 @@ class GoodsReceiptService extends BaseService
 
             if (!$poItem) {
                 throw new Exception(
-                    'The selected inventory item does not belong to this Purchase Order.'
+                    __('inventory_item_not_in_purchase_order')
                 );
             }
 
@@ -155,7 +155,7 @@ class GoodsReceiptService extends BaseService
             if ($remainingQuantity <= 0) {
 
                 throw new Exception(
-                    'This PO item has already been fully received.'
+                    __('po_item_already_fully_received')
                 );
             }
 
@@ -163,11 +163,11 @@ class GoodsReceiptService extends BaseService
             if ($quantity > $remainingQuantity) {
 
                 throw new Exception(
-                    'Cannot receive ' .
-                        number_format($quantity, 2) .
-                        ' units. Only ' .
-                        number_format($remainingQuantity, 2) .
-                        ' units remain on the purchase order.'
+                    sprintf(
+                        __('cannot_receive_remaining_quantity'),
+                        number_format($quantity, 2),
+                        number_format($remainingQuantity, 2)
+                    )
                 );
             }
 

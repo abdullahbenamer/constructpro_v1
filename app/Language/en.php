@@ -1393,5 +1393,24 @@ return [
 'unable_to_reverse_transfer' => 'Unable to reverse transfer. Insufficient stock at destination location.',
 'transfer_reversed_successfully' => 'Transfer reversed successfully.',
 
+'invalid_adjustment_type' => 'Invalid adjustment type.',
+'adjustment_quantity_must_be_greater_than_zero' => 'Adjustment quantity must be greater than zero.',
+'valid_adjustment_reason_required' => 'Please select a valid adjustment reason.',
+'notes_required_for_other_reason' => 'Please provide notes when the reason is OTHER.',
+'stock_adjustment_posted_successfully' => 'Stock adjustment posted successfully. Reference: %s',
+
+'goods_receipt_created_successfully' => 'Goods receipt created successfully.',
+
+
+'received_quantity_must_be_greater_than_zero' => 'Received quantity must be greater than zero.',
+'purchase_order_not_found' => 'Purchase Order not found.',
+'purchase_order_not_available_for_receiving' => 'This Purchase Order is not available for receiving.',
+'supplier_does_not_match_purchase_order' => 'The selected supplier does not match the Purchase Order supplier.',
+'inventory_item_not_in_purchase_order' => 'The selected inventory item does not belong to this Purchase Order.',
+'po_item_already_fully_received' => 'This PO item has already been fully received.',
+'cannot_receive_remaining_quantity' => 'Cannot receive %s units. Only %s units remain on the purchase order.',
+
+'invalid_purchase_order' => 'Invalid purchase order.',
+'invalid_supplier' => 'Invalid supplier.',
 
 ];

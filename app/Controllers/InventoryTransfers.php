@@ -40,7 +40,7 @@ class InventoryTransfers extends Controller
             $reference = trim($_POST['reference'] ?? '');
 
             $notes = trim($_POST['notes'] ?? '');
-            
+
             $service = new InventoryService(
 
                 $this->model('InventoryLocationStock'),
@@ -69,9 +69,9 @@ class InventoryTransfers extends Controller
 
                 ]);
 
-FlashHelper::success(
-    __('transfer_completed_successfully')
-);
+                FlashHelper::success(
+                    __('transfer_completed_successfully')
+                );
 
                 header('Location: ' . URLROOT . '/inventorytransfers');
                 exit;
@@ -168,39 +168,38 @@ FlashHelper::success(
     }
 
     public function reverse($id)
-{
-    try {
+    {
+        try {
 
-        $service = new InventoryTransferService(
+            $service = new InventoryTransferService(
 
-            $this->model('InventoryLocationStock'),
+                $this->model('InventoryLocationStock'),
 
-            $this->model('InventoryMovement'),
+                $this->model('InventoryMovement'),
 
-            $this->model('InventoryTransfer')
+                $this->model('InventoryTransfer')
 
+            );
+
+            $result =
+                $service->reverse((int)$id);
+
+            FlashHelper::success(
+                $result['message']
+            );
+        } catch (Throwable $e) {
+
+            FlashHelper::error(
+                $e->getMessage()
+            );
+        }
+
+        header(
+            'Location: ' .
+                URLROOT .
+                '/inventorytransfers'
         );
 
-        $result =
-            $service->reverse((int)$id);
-
-        FlashHelper::success(
-            $result['message']
-        );
-
-    } catch (Throwable $e) {
-
-        FlashHelper::error(
-            $e->getMessage()
-        );
+        exit;
     }
-
-    header(
-        'Location: ' .
-        URLROOT .
-        '/inventorytransfers'
-    );
-
-    exit;
-}
 }

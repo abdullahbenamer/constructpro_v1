@@ -630,23 +630,41 @@
                 'submit',
                 function(e) {
 
-                    if (
-                        adjustmentType.value === 'DECREASE' &&
-                        (
-                            parseFloat(
-                                quantityInput.value || 0
-                            ) > currentAvailable
-                        )
-                    ) {
+                  if (
+    adjustmentType.value === 'DECREASE' &&
+    (
+        parseFloat(
+            quantityInput.value || 0
+        ) > currentAvailable
+    )
+) {
 
-                        e.preventDefault();
+    e.preventDefault();
 
-                        alert(
-                            '<?= __('adjustment_quantity_exceeds_available') ?>'
-                        );
+    const notification = document.getElementById('jsNotification');
 
-                        return;
-                    }
+    notification.innerHTML = `
+        <div class="alert alert-danger alert-dismissible fade show"
+             role="alert">
+
+            <?= __('adjustment_quantity_exceeds_available') ?>
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="<?= __('close') ?>">
+            </button>
+
+        </div>
+    `;
+
+    notification.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+    });
+
+    return;
+}
 
                 }
             );
@@ -661,7 +679,7 @@
 
         }
 
-updateReasonOptions();
+        updateReasonOptions();
 
 
     });
