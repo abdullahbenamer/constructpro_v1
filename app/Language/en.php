@@ -1314,11 +1314,6 @@ return [
 'project_cost_deleted_successfully' => 'Project cost deleted successfully.',
 'project_cost_not_found' => 'Project cost not found.',
 
-'project_cost_added_successfully' => 'تمت إضافة تكلفة المشروع بنجاح.',
-'project_cost_updated_successfully' => 'تم تحديث تكلفة المشروع بنجاح.',
-'project_cost_deleted_successfully' => 'تم حذف تكلفة المشروع بنجاح.',
-'project_cost_not_found' => 'تكلفة المشروع غير موجودة.',
-
 //PROJECT COST SERVICE — ERROR MESSAGES
 'cost_type_required' => 'Cost type is required.',
 'quantity_must_be_greater_than_zero' => 'Quantity must be greater than zero.',
@@ -1481,6 +1476,20 @@ return [
 'please_enter_resource_fulfillment_quantity' => 'Please enter at least one resource fulfillment quantity.',
 'please_enter_resource_quantity_greater_than_zero' => 'Please enter a fulfillment quantity greater than zero for at least one resource item.',
 
+'inventory_item_missing_for_requisition_item' =>
+    'Inventory item is missing for requisition item: %s',
+
+'inventory_item_not_available_in_selected_location' =>
+    'Inventory item is not available in the selected location.',
+
+'insufficient_stock_selected_location_for_item' =>
+    'Insufficient stock in selected location for: %s',
+
+'insufficient_global_inventory_stock_for_item' =>
+    'Insufficient global inventory stock for: %s',
+
+'failed_to_create_resource_fulfillment' =>
+    'Failed to create resource fulfillment.',
 
 
 

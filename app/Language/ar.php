@@ -1474,6 +1474,20 @@ return [
 'please_enter_resource_fulfillment_quantity' => 'يرجى إدخال كمية تنفيذ واحدة على الأقل لمورد.',
 'please_enter_resource_quantity_greater_than_zero' => 'يرجى إدخال كمية تنفيذ أكبر من صفر لبند مورد واحد على الأقل.',
 
+'inventory_item_missing_for_requisition_item' =>
+    'صنف المخزون مفقود لبند الطلب: %s',
+
+'inventory_item_not_available_in_selected_location' =>
+    'صنف المخزون غير متوفر في الموقع المحدد.',
+
+'insufficient_stock_selected_location_for_item' =>
+    'لا توجد كمية كافية في الموقع المحدد للبند: %s',
+
+'insufficient_global_inventory_stock_for_item' =>
+    'لا توجد كمية كافية من المخزون الإجمالي للبند: %s',
+
+'failed_to_create_resource_fulfillment' =>
+    'فشل إنشاء تنفيذ المورد.',
 
 
 

@@ -10,9 +10,9 @@ class ResourceModel extends Model
     /**
      * GET ALL RESOURCES
      */
-   public function getAll()
-{
-    return $this->db->query("
+    public function getAll()
+    {
+        return $this->db->query("
         SELECT
 
             r.*,
@@ -31,7 +31,7 @@ class ResourceModel extends Model
 
         ORDER BY r.resource_name
     ")->fetchAll();
-}
+    }
 
 
     /**
@@ -70,7 +70,6 @@ class ResourceModel extends Model
 
             "
         )->fetch();
-
     }
 
 
@@ -133,9 +132,6 @@ class ResourceModel extends Model
 
             "
         );
-
-        
-
     }
 
 
@@ -145,7 +141,7 @@ class ResourceModel extends Model
     /**
      * UPDATE RESOURCE
      */
-    public function update($id,$data)
+    public function update($id, $data)
     {
 
         return $this->db->query(
@@ -199,47 +195,45 @@ class ResourceModel extends Model
 
             "
         );
-
     }
 
-  /**
- * DELETE RESOURCE
- */
-public function delete($id)
-{
-    // Get the resource first
-    $resource = $this->getById($id);
+    /**
+     * DELETE RESOURCE
+     */
+    public function delete($id)
+    {
+        // Get the resource first
+        $resource = $this->getById($id);
 
-    if (!$resource) {
+        if (!$resource) {
 
-        return [
-            'success' => false,
-            'message' => 'Resource not found.'
-        ];
+            return [
+                'success' => false,
+                'message' => __('resource_not_found')
+            ];
+        }
 
-    }
 
-
-    /*
+        /*
      * Check if the resource is used in project costs
      */
-    $projectCostCount = $this->db->query(
-        "
+        $projectCostCount = $this->db->query(
+            "
         SELECT COUNT(*) AS total
 
         FROM project_costs
 
         WHERE resource_id = ?
         ",
-        [$id]
-    )->fetch()->total;
+            [$id]
+        )->fetch()->total;
 
 
-    /*
+        /*
      * Check if the resource is used in resource requisitions
      */
-    $requisitionCount = $this->db->query(
-        "
+        $requisitionCount = $this->db->query(
+            "
         SELECT COUNT(*) AS total
 
         FROM resource_requisition_items
@@ -248,48 +242,47 @@ public function delete($id)
 
           AND resource_source = 'RESOURCE'
         ",
-        [$id]
-    )->fetch()->total;
+            [$id]
+        )->fetch()->total;
 
 
-    /*
+        /*
      * Do not delete a resource that has
      * already been used anywhere.
      */
-    if ($projectCostCount > 0 || $requisitionCount > 0) {
+        if ($projectCostCount > 0 || $requisitionCount > 0) {
 
-        return [
-            'success' => false,
-            'message' =>
+            return [
+                'success' => false,
+                'message' =>
                 'This resource cannot be deleted because it is already in use.'
-        ];
+            ];
+        }
 
-    }
 
-
-    /*
+        /*
      * Safe to delete.
      */
-    $this->db->query(
-        "
+        $this->db->query(
+            "
         DELETE FROM resources
 
         WHERE id = ?
         ",
-        [$id]
-    );
+            [$id]
+        );
 
 
-    return [
-        'success' => true,
-        'message' => 'Resource deleted successfully.'
-    ];
-}
+        return [
+            'success' => true,
+            'message' => 'Resource deleted successfully.'
+        ];
+    }
 
-public function getNonMaterialResources()
-{
-    return $this->db->query(
-        "
+    public function getNonMaterialResources()
+    {
+        return $this->db->query(
+            "
         SELECT
 
             r.*,
@@ -311,7 +304,6 @@ public function getNonMaterialResources()
             r.resource_type,
             r.resource_name
         "
-    )->fetchAll();
-}
-
+        )->fetchAll();
+    }
 }

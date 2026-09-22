@@ -76,8 +76,8 @@ class ReservationFulfillmentService extends BaseService
         if (!$item) {
 
             throw new Exception(
-                'Inventory item not found.'
-            );
+    __('inventory_item_not_found')
+);
         }
 
 

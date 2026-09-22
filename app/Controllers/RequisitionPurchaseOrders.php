@@ -25,9 +25,9 @@ class RequisitionPurchaseOrders extends Controller
 
         if (!$requisition) {
 
-            FlashHelper::error(
-                'Resource Requisition not found.'
-            );
+            throw new Exception(
+    __('resource_requisition_not_found')
+);
 
             header(
                 'Location: ' .

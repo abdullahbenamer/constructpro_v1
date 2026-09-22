@@ -677,7 +677,7 @@ LEFT JOIN units iu
                 if (!$requisition) {
 
                     throw new Exception(
-                        'Resource requisition not found.'
+                        __('resource_requisition_not_found')
                     );
                 }
 
@@ -794,7 +794,7 @@ LEFT JOIN units iu
                     if (!$reqItem) {
 
                         throw new Exception(
-                            'Invalid requisition item.'
+                            __('invalid_requisition_item')
                         );
                     }
 
@@ -824,9 +824,10 @@ LEFT JOIN units iu
                     ) {
 
                         throw new Exception(
-                            'Fulfillment quantity exceeds the remaining quantity for: '
-                                .
+                            sprintf(
+                                __('fulfillment_quantity_exceeds_remaining'),
                                 $reqItem->description
+                            )
                         );
                     }
 
@@ -858,14 +859,14 @@ LEFT JOIN units iu
                                 : $reqItem->resource_id
                             );
 
-
                         if ($inventory_id <= 0) {
 
                             throw new Exception(
-                                'Inventory item is missing for requisition item: '
-                                    .
+                                sprintf(
+                                    __('inventory_item_missing_for_requisition_item'),
                                     $reqItem->description
-                            );
+                                )
+                            );;
                         }
 
 
@@ -878,9 +879,10 @@ LEFT JOIN units iu
                         if ($location_id <= 0) {
 
                             throw new Exception(
-                                'Please select an inventory location for: '
-                                    .
+                                sprintf(
+                                    __('please_select_inventory_location_for_item'),
                                     $reqItem->description
+                                )
                             );
                         }
 
@@ -911,7 +913,7 @@ LEFT JOIN units iu
                         if (!$locationStock) {
 
                             throw new Exception(
-                                'Inventory item is not available in the selected location.'
+                                __('inventory_item_not_available_in_selected_location')
                             );
                         }
 
@@ -931,9 +933,10 @@ LEFT JOIN units iu
                         ) {
 
                             throw new Exception(
-                                'Insufficient stock in selected location for: '
-                                    .
+                                sprintf(
+                                    __('insufficient_stock_selected_location_for_item'),
                                     $reqItem->description
+                                )
                             );
                         }
 
@@ -961,7 +964,7 @@ LEFT JOIN units iu
                         if (!$inventory) {
 
                             throw new Exception(
-                                'Inventory item not found.'
+                                __('inventory_item_not_found')
                             );
                         }
 
@@ -981,9 +984,10 @@ LEFT JOIN units iu
                         ) {
 
                             throw new Exception(
-                                'Insufficient global inventory stock for: '
-                                    .
+                                sprintf(
+                                    __('insufficient_global_inventory_stock_for_item'),
                                     $reqItem->description
+                                )
                             );
                         }
 
@@ -1302,7 +1306,7 @@ LEFT JOIN units iu
                         if (!$resource) {
 
                             throw new Exception(
-                                'Resource not found.'
+                                __('resource_not_found')
                             );
                         }
 
@@ -1488,9 +1492,9 @@ LEFT JOIN units iu
                 |--------------------------------------------------------------------------
                 */ else {
 
-                        throw new Exception(
-                            'Invalid resource source.'
-                        );
+                       throw new Exception(
+    __('invalid_resource_source')
+);
                     }
                 }
 
@@ -1621,7 +1625,7 @@ LEFT JOIN units iu
             if (!$requisition) {
 
                 throw new Exception(
-                    'Resource requisition not found.'
+                    __('resource_requisition_not_found')
                 );
             }
 
@@ -1664,8 +1668,8 @@ LEFT JOIN units iu
             if ($fulfillment_id <= 0) {
 
                 throw new Exception(
-                    'Failed to create resource fulfillment.'
-                );
+    __('failed_to_create_resource_fulfillment')
+);
             }
 
 
@@ -1749,7 +1753,7 @@ LEFT JOIN units iu
                 if (!$requisitionItem) {
 
                     throw new Exception(
-                        'Invalid requisition item.'
+                        __('invalid_requisition_item')
                     );
                 }
 
@@ -1766,9 +1770,9 @@ LEFT JOIN units iu
                     'RESOURCE'
                 ) {
 
-                    throw new Exception(
-                        'Invalid item. Only resource items can be processed here.'
-                    );
+                   throw new Exception(
+    __('invalid_resource_fulfillment_item')
+);
                 }
 
 
@@ -1828,9 +1832,10 @@ LEFT JOIN units iu
                 ) {
 
                     throw new Exception(
-                        'Fulfillment quantity exceeds the remaining quantity for: '
-                            .
+                        sprintf(
+                            __('fulfillment_quantity_exceeds_remaining'),
                             $requisitionItem->description
+                        )
                     );
                 }
 
@@ -1859,9 +1864,9 @@ LEFT JOIN units iu
             */
 
                 switch (strtoupper(
-                        $requisitionItem->resource_type
-                            ?? ''
-                    )) {
+                    $requisitionItem->resource_type
+                        ?? ''
+                )) {
 
                     case 'LABOR':
 
