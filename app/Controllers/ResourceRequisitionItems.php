@@ -63,207 +63,201 @@ class ResourceRequisitionItems extends Controller
     /**
      * STORE ITEM
      */
-public function store()
-{
-    AuthHelper::can('projects.view');
+    public function store()
+    {
+        AuthHelper::can('projects.view');
 
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitions'
-        );
-        exit;
-    }
-//   echo '<pre>';
-//     print_r($_POST);
-//     echo '</pre>';
-//     exit;
-    $requisitionId = (int)($_POST['requisition_id'] ?? 0);
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/ResourceRequisitions'
+            );
+            exit;
+        }
+        //   echo '<pre>';
+        //     print_r($_POST);
+        //     echo '</pre>';
+        //     exit;
+        $requisitionId = (int)($_POST['requisition_id'] ?? 0);
 
-    $this->validateDraftRequisition($requisitionId);
+        $this->validateDraftRequisition($requisitionId);
 
-    $resourceSource = $_POST['resource_source'] ?? '';
+        $resourceSource = $_POST['resource_source'] ?? '';
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | DETERMINE RESOURCE ID
     |--------------------------------------------------------------------------
     */
 
-    if ($resourceSource === 'INVENTORY') {
+        if ($resourceSource === 'INVENTORY') {
 
-        $resourceId =
-            (int)($_POST['inventory_id'] ?? 0);
+            $resourceId =
+                (int)($_POST['inventory_id'] ?? 0);
 
-        if ($resourceId <= 0) {
-            $_SESSION['error'] =
-                'Please select a material item.';
+            if ($resourceId <= 0) {
+                FlashHelper::error(__('please_select_material_item'));
+
+                header(
+                    'Location: ' .
+                        URLROOT .
+                        '/ResourceRequisitionItems/create/' .
+                        $requisitionId
+                );
+
+                exit;
+            }
+        } elseif ($resourceSource === 'RESOURCE') {
+
+            $resourceId =
+                (int)($_POST['non_inventory_resource'] ?? 0);
+
+            if ($resourceId <= 0) {
+                FlashHelper::error(__('please_select_resource'));
+
+                header(
+                    'Location: ' .
+                        URLROOT .
+                        '/ResourceRequisitionItems/create/' .
+                        $requisitionId
+                );
+
+                exit;
+            }
+        } else {
+
+            FlashHelper::error(__('invalid_resource_source'));
 
             header(
                 'Location: ' .
-                URLROOT .
-                '/ResourceRequisitionItems/create/' .
-                $requisitionId
+                    URLROOT .
+                    '/ResourceRequisitionItems/create/' .
+                    $requisitionId
             );
 
             exit;
         }
 
-    } elseif ($resourceSource === 'RESOURCE') {
-
-        $resourceId =
-            (int)($_POST['non_inventory_resource'] ?? 0);
-
-        if ($resourceId <= 0) {
-            $_SESSION['error'] =
-                'Please select a resource.';
-
-            header(
-                'Location: ' .
-                URLROOT .
-                '/ResourceRequisitionItems/create/' .
-                $requisitionId
-            );
-
-            exit;
-        }
-
-    } else {
-
-        $_SESSION['error'] =
-            'Invalid resource source.';
-
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitionItems/create/' .
-            $requisitionId
-        );
-
-        exit;
-    }
-
-    /*
+        /*
     |--------------------------------------------------------------------------
     | CREATE ITEM
     |--------------------------------------------------------------------------
     */
 
-    $data = [
+        $data = [
 
-        'requisition_id' =>
+            'requisition_id' =>
             $requisitionId,
 
-        'resource_source' =>
+            'resource_source' =>
             $resourceSource,
 
-        'resource_id' =>
+            'resource_id' =>
             $resourceId,
 
-        'description' =>
+            'description' =>
             trim($_POST['description'] ?? ''),
 
-        'quantity' =>
+            'quantity' =>
             (float)($_POST['quantity'] ?? 0),
 
-        'uom' =>
+            'uom' =>
             trim($_POST['uom'] ?? ''),
 
-        'remarks' =>
+            'remarks' =>
             trim($_POST['remarks'] ?? '')
-    ];
+        ];
 
-    $itemModel =
-        $this->model('ResourceRequisitionItem');
+        $itemModel =
+            $this->model('ResourceRequisitionItem');
 
-    if ($itemModel->create($data)) {
+        if ($itemModel->create($data)) {
+
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/ResourceRequisitions/details/' .
+                    $requisitionId
+            );
+
+            exit;
+        }
+
+        FlashHelper::error(__('unable_to_create_requisition_item'));
 
         header(
             'Location: ' .
-            URLROOT .
-            '/ResourceRequisitions/details/' .
-            $requisitionId
+                URLROOT .
+                '/ResourceRequisitionItems/create/' .
+                $requisitionId
         );
 
         exit;
     }
 
-    $_SESSION['error'] =
-        'Unable to create requisition item.';
+    public function edit($id)
+    {
+        AuthHelper::can('projects.view');
 
-    header(
-        'Location: ' .
-        URLROOT .
-        '/ResourceRequisitionItems/create/' .
-        $requisitionId
-    );
+        $item = $this->itemModel->getById($id);
 
-    exit;
-}
+        if (!$item) {
 
-public function edit($id)
-{
-    AuthHelper::can('projects.view');
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/ResourceRequisitions'
+            );
 
-    $item = $this->itemModel->getById($id);
+            exit;
+        }
 
-    if (!$item) {
-
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitions'
-        );
-
-        exit;
-    }
-
-    /*
+        /*
     |--------------------------------------------------------------------------
     | PARENT REQUISITION MUST STILL BE DRAFT
     |--------------------------------------------------------------------------
     */
 
-    $this->validateDraftRequisition(
-        $item->requisition_id
-    );
+        $this->validateDraftRequisition(
+            $item->requisition_id
+        );
 
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | LOAD BOTH RESOURCE TYPES
     |--------------------------------------------------------------------------
     */
 
-    $resourceModel = $this->model('Resource');
-    $inventoryModel = $this->model('Inventory');
+        $resourceModel = $this->model('Resource');
+        $inventoryModel = $this->model('Inventory');
 
 
-    $data = [
+        $data = [
 
-        'item' => $item,
+            'item' => $item,
 
-        /*
+            /*
         | Non-material resources
         */
-        'resources' =>
+            'resources' =>
             $resourceModel->getNonMaterialResources(),
 
-        /*
+            /*
         | Material inventory
         */
-        'inventory' =>
+            'inventory' =>
             $inventoryModel->getAll()
 
-    ];
+        ];
 
 
-    $this->view(
-        'resource-requisition-items/edit',
-        $data
-    );
-}
+        $this->view(
+            'resource-requisition-items/edit',
+            $data
+        );
+    }
 
     /**
      * Update Item

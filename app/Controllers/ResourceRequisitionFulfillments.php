@@ -115,9 +115,8 @@ class ResourceRequisitionFulfillments extends Controller
 
         if (!$requisition) {
 
-            $_SESSION['error'] =
-                'Resource requisition not found.';
-
+      FlashHelper::error
+                (__('resource_requisition_not_found'));
 
             header(
                 'Location: ' .
@@ -183,8 +182,7 @@ class ResourceRequisitionFulfillments extends Controller
 
     if (!$requisition) {
 
-        $_SESSION['error'] =
-            'Resource requisition not found.';
+   FlashHelper::error(__('resource_requisition_not_found'));
 
         header(
             'Location: ' .
@@ -208,9 +206,8 @@ class ResourceRequisitionFulfillments extends Controller
         $requisition->status !== 'PARTIAL'
     ) {
 
-        $_SESSION['error'] =
-            'Only approved or partially fulfilled requisitions can be fulfilled.';
-
+       FlashHelper::error(__('approved_or_partial_requisitions_only_fulfill'));
+    
         header(
             'Location: ' .
             URLROOT .
@@ -234,10 +231,6 @@ class ResourceRequisitionFulfillments extends Controller
         $requisition_id
     );
 
-// echo '<pre>';
-// print_r($items);
-// echo '</pre>';
-// exit;
     /*
     |--------------------------------------------------------------------------
     | CHECK IF THERE ARE REMAINING MATERIAL ITEMS
@@ -246,8 +239,8 @@ class ResourceRequisitionFulfillments extends Controller
 
     if (empty($items)) {
 
-        $_SESSION['error'] =
-            'There are no remaining material items to fulfill.';
+        FlashHelper::error(
+            __('no_remaining_resource_items'));
 
         header(
             'Location: ' .

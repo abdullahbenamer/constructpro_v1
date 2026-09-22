@@ -23,149 +23,149 @@ class ResourceRequisitions extends Controller
     | Create
     |-----------------------------------------
     */
-public function create()
-{
-    AuthHelper::can('projects.create');
+    public function create()
+    {
+        AuthHelper::can('projects.create');
 
-    $model = $this->model('ResourceRequisition');
-    $projectModel = $this->model('Project');
-    $locationModel = $this->model('InventoryLocation');
+        $model = $this->model('ResourceRequisition');
+        $projectModel = $this->model('Project');
+        $locationModel = $this->model('InventoryLocation');
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        $id = $model->create([
+            $id = $model->create([
 
-            'req_number'     => $model->nextNumber(),
-            'project_id'     => $_POST['project_id'],
-            'request_date'   => $_POST['request_date'],
-            'required_date'  => $_POST['required_date'],
-            'priority'       => $_POST['priority'],
-            'target_warehouse_id' => !empty($_POST['target_warehouse_id'])
-                ? $_POST['target_warehouse_id']
-                : null,
-            'delivery_method' => $_POST['delivery_method'] ?? 'WAREHOUSE',
-            'remarks'        => trim($_POST['remarks'])
+                'req_number'     => $model->nextNumber(),
+                'project_id'     => $_POST['project_id'],
+                'request_date'   => $_POST['request_date'],
+                'required_date'  => $_POST['required_date'],
+                'priority'       => $_POST['priority'],
+                'target_warehouse_id' => !empty($_POST['target_warehouse_id'])
+                    ? $_POST['target_warehouse_id']
+                    : null,
+                'delivery_method' => $_POST['delivery_method'] ?? 'WAREHOUSE',
+                'remarks'        => trim($_POST['remarks'])
 
-        ]);
+            ]);
 
-        header('Location: ' . URLROOT . '/resourcerequisitions/details/' . $id);
-        exit;
+            header('Location: ' . URLROOT . '/resourcerequisitions/details/' . $id);
+            exit;
+        }
+
+        $data['projects'] = $projectModel->getAll();
+
+        $data['locations'] = $locationModel->getAll();
+
+        $data['next_number'] = $model->nextNumber();
+
+        $this->view('resource-requisitions/create', $data);
     }
-
-    $data['projects'] = $projectModel->getAll();
-
-    $data['locations'] = $locationModel->getAll();
-
-    $data['next_number'] = $model->nextNumber();
-
-    $this->view('resource-requisitions/create', $data);
-}
 
     /*
     |------------------------------------------------------
     | Edit
     |--------------------------------------------------
     */
-  public function edit($id)
-{
-    AuthHelper::can('projects.create');
+    public function edit($id)
+    {
+        AuthHelper::can('projects.create');
 
-    $model = $this->model('ResourceRequisition');
-    $projectModel = $this->model('Project');
-    $locationModel = $this->model('InventoryLocation');
+        $model = $this->model('ResourceRequisition');
+        $projectModel = $this->model('Project');
+        $locationModel = $this->model('InventoryLocation');
 
-    $requisition = $model->getById($id);
+        $requisition = $model->getById($id);
 
-    if (!$requisition) {
+        if (!$requisition) {
 
-        header('Location: ' . URLROOT . '/resourcerequisitions');
-        exit;
+            header('Location: ' . URLROOT . '/resourcerequisitions');
+            exit;
+        }
+
+        // Only Draft can be edited
+        if ($requisition->status !== 'DRAFT') {
+
+            FlashHelper::error(__('only_draft_requisitions_editable'));
+
+            header('Location: ' . URLROOT . '/resourcerequisitions/details/' . $id);
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $model->update($id, [
+
+                'project_id'     => $_POST['project_id'],
+                'request_date'   => $_POST['request_date'],
+                'required_date'  => $_POST['required_date'],
+                'priority'       => $_POST['priority'],
+                'target_warehouse_id' => !empty($_POST['target_warehouse_id'])
+                    ? $_POST['target_warehouse_id']
+                    : null,
+                'delivery_method' => $_POST['delivery_method'] ?? 'WAREHOUSE',
+                'remarks'        => trim($_POST['remarks'])
+
+            ]);
+
+            header('Location: ' . URLROOT . '/resourcerequisitions/details/' . $id);
+            exit;
+        }
+
+        $data['requisition'] = $requisition;
+
+        $data['projects'] = $projectModel->getAll();
+
+        $data['locations'] = $locationModel->getAll();
+
+        $this->view('resource-requisitions/edit', $data);
     }
 
-    // Only Draft can be edited
-    if ($requisition->status !== 'DRAFT') {
 
-        $_SESSION['error'] = 'Only Draft requisitions can be edited.';
+    public function update($id)
+    {
+        AuthHelper::can('projects.create');
 
-        header('Location: ' . URLROOT . '/resourcerequisitions/details/' . $id);
-        exit;
-    }
+        $model = $this->model('ResourceRequisition');
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $requisition = $model->getById($id);
 
-        $model->update($id, [
+        if (!$requisition) {
 
-            'project_id'     => $_POST['project_id'],
-            'request_date'   => $_POST['request_date'],
-            'required_date'  => $_POST['required_date'],
-            'priority'       => $_POST['priority'],
-            'target_warehouse_id' => !empty($_POST['target_warehouse_id'])
-                ? $_POST['target_warehouse_id']
-                : null,
-            'delivery_method' => $_POST['delivery_method'] ?? 'WAREHOUSE',
-            'remarks'        => trim($_POST['remarks'])
+            header('Location: ' . URLROOT . '/ResourceRequisitions');
+            exit;
+        }
 
-        ]);
+        if ($requisition->status != 'DRAFT') {
 
-        header('Location: ' . URLROOT . '/resourcerequisitions/details/' . $id);
-        exit;
-    }
+            FlashHelper::error(__('only_draft_requisitions_editable'));
 
-    $data['requisition'] = $requisition;
+            header('Location: ' . URLROOT . '/ResourceRequisitions/details/' . $id);
+            exit;
+        }
 
-    $data['projects'] = $projectModel->getAll();
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $data['locations'] = $locationModel->getAll();
+            $model->update($id, [
 
-    $this->view('resource-requisitions/edit', $data);
-}
+                'project_id'    => $_POST['project_id'],
+                'request_date'  => $_POST['request_date'],
+                'required_date' => $_POST['required_date'],
+                'priority'      => $_POST['priority'],
 
+                'target_warehouse_id' => !empty($_POST['target_warehouse_id'])
+                    ? $_POST['target_warehouse_id']
+                    : null,
 
-public function update($id)
-{
-    AuthHelper::can('projects.create');
+                'delivery_method' => $_POST['delivery_method'] ?? 'WAREHOUSE',
 
-    $model = $this->model('ResourceRequisition');
+                'remarks'       => trim($_POST['remarks'])
 
-    $requisition = $model->getById($id);
-
-    if (!$requisition) {
-
-        header('Location: ' . URLROOT . '/ResourceRequisitions');
-        exit;
-    }
-
-    if ($requisition->status != 'DRAFT') {
-
-        $_SESSION['error'] = 'Only Draft requisitions can be edited.';
+            ]);
+        }
 
         header('Location: ' . URLROOT . '/ResourceRequisitions/details/' . $id);
         exit;
     }
-
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-        $model->update($id, [
-
-            'project_id'    => $_POST['project_id'],
-            'request_date'  => $_POST['request_date'],
-            'required_date' => $_POST['required_date'],
-            'priority'      => $_POST['priority'],
-
-            'target_warehouse_id' => !empty($_POST['target_warehouse_id'])
-                ? $_POST['target_warehouse_id']
-                : null,
-
-            'delivery_method' => $_POST['delivery_method'] ?? 'WAREHOUSE',
-
-            'remarks'       => trim($_POST['remarks'])
-
-        ]);
-    }
-
-    header('Location: ' . URLROOT . '/ResourceRequisitions/details/' . $id);
-    exit;
-}
 
     /*
     |-----------------------------------
@@ -335,8 +335,7 @@ public function update($id)
 
         if (count($items) == 0) {
 
-            $_SESSION['error'] =
-                'Please add at least one item before submitting.';
+            FlashHelper::error(__('please_add_item_before_submitting'));
 
             header(
                 'Location: ' .
@@ -353,8 +352,7 @@ public function update($id)
             $_SESSION['user_id']
         );
 
-        $_SESSION['success'] =
-            'Resource Requisition submitted successfully.';
+        FlashHelper::success(__('resource_requisition_submitted_successfully'));
 
         header(
             'Location: ' .
@@ -387,7 +385,7 @@ public function update($id)
         // Protect submitted documents
         if ($requisition->status !== 'DRAFT') {
 
-            $_SESSION['error'] = 'Only Draft requisitions can be deleted.';
+            FlashHelper::error(__('only_draft_requisitions_deletable'));
 
             header('Location: ' . URLROOT . '/resourcerequisitions/details/' . $id);
             exit;
@@ -418,8 +416,7 @@ public function update($id)
 
         if ($requisition->status !== 'SUBMITTED') {
 
-            $_SESSION['error'] =
-                'Only submitted requisitions can be approved or rejected.';
+            FlashHelper::error(__('only_submitted_requisitions_approve_reject'));
 
             header(
                 'Location: ' .
@@ -453,8 +450,7 @@ public function update($id)
         );
 
 
-        $_SESSION['success'] =
-            'Requisition rejected.';
+        FlashHelper::success(__('requisition_rejected'));
 
 
         header(
@@ -509,8 +505,7 @@ public function update($id)
 
         if ($requisition->status !== 'SUBMITTED') {
 
-            $_SESSION['error'] =
-                'Only submitted requisitions can be approved or rejected.';
+            FlashHelper::error(__('only_submitted_requisitions_approve_reject'));
 
             header(
                 'Location: ' .
@@ -532,8 +527,7 @@ public function update($id)
 
         if (!in_array($action, ['APPROVE', 'REJECT'])) {
 
-            $_SESSION['error'] =
-                'Invalid approval action.';
+            FlashHelper::error(__('invalid_approval_action'));
 
             header(
                 'Location: ' .
@@ -567,8 +561,7 @@ public function update($id)
                 $remarks
             );
 
-            $_SESSION['success'] =
-                'Resource requisition approved successfully.';
+            FlashHelper::success(__('resource_requisition_approved_successfully'));
         } else {
 
             $model->reject(
@@ -577,8 +570,7 @@ public function update($id)
                 $remarks
             );
 
-            $_SESSION['success'] =
-                'Resource requisition rejected.';
+            FlashHelper::success(__('resource_requisition_rejected'));
         }
 
         /*

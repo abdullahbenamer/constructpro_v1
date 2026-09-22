@@ -1441,5 +1441,38 @@ return [
 
 'invalid_email_or_password' => 'البريد الإلكتروني أو كلمة المرور غير صحيحة.',
 
+'please_select_resource' => 'يرجى اختيار مورد.',
+'invalid_resource_source' => 'مصدر المورد غير صالح.',
+'unable_to_create_requisition_item' => 'تعذر إنشاء بند الطلب.',
+
+'only_draft_requisitions_editable' => 'لا يمكن تعديل سوى الطلبات التي بحالة المسودة.',
+'please_add_item_before_submitting' => 'يرجى إضافة بند واحد على الأقل قبل الإرسال.',
+'resource_requisition_submitted_successfully' => 'تم إرسال طلب الموارد بنجاح.',
+'only_draft_requisitions_deletable' => 'لا يمكن حذف سوى الطلبات التي بحالة المسودة.',
+'only_submitted_requisitions_approve_reject' => 'لا يمكن اعتماد أو رفض سوى الطلبات المقدمة.',
+'requisition_rejected' => 'تم رفض الطلب.',
+'invalid_approval_action' => 'إجراء الاعتماد غير صالح.',
+'resource_requisition_approved_successfully' => 'تم اعتماد طلب الموارد بنجاح.',
+'resource_requisition_rejected' => 'تم رفض طلب الموارد.',
+
+'resource_requisition_not_found' => 'طلب الموارد غير موجود.',
+'approved_or_partial_requisitions_only_fulfill' => 'لا يمكن تنفيذ سوى الطلبات المعتمدة أو المنفذة جزئياً.',
+'no_remaining_resource_items' => 'لا توجد بنود موارد متبقية للتنفيذ.',
+'invalid_requisition' => 'الطلب غير صالح.',
+'requisition_not_available_for_fulfillment' => 'هذا الطلب غير متاح للتنفيذ.',
+'please_enter_fulfillment_quantity' => 'يرجى إدخال كمية تنفيذ واحدة على الأقل.',
+'invalid_requisition_item' => 'بند الطلب غير صالح.',
+'invalid_resource_fulfillment_item' => 'بند تنفيذ المورد غير صالح.',
+'fulfillment_quantity_exceeds_remaining' => 'لا يمكن أن تتجاوز كمية تنفيذ "%s" الكمية المتبقية البالغة %s.',
+'unit_cost_negative_for_item' => 'لا يمكن أن تكون تكلفة الوحدة سالبة للبند "%s".',
+'please_select_inventory_location_for_item' => 'يرجى اختيار موقع المخزون لمادة: %s',
+'please_enter_quantity_greater_than_zero' => 'يرجى إدخال كمية أكبر من صفر.',
+'fulfillment_created_no_id' => 'تم إنشاء التنفيذ ولكن لم يتم إرجاع رقم التنفيذ.',
+'resource_fulfillment_created_no_id' => 'تم إنشاء تنفيذ المورد ولكن لم يتم إرجاع رقم التنفيذ.',
+'resource_requisition_fulfilled_successfully' => 'تم تنفيذ طلب الموارد بنجاح.',
+'fulfillment_record_not_found' => 'سجل التنفيذ غير موجود.',
+'please_enter_resource_fulfillment_quantity' => 'يرجى إدخال كمية تنفيذ واحدة على الأقل لمورد.',
+'please_enter_resource_quantity_greater_than_zero' => 'يرجى إدخال كمية تنفيذ أكبر من صفر لبند مورد واحد على الأقل.',
+
 ];
 

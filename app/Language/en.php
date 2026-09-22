@@ -1448,5 +1448,38 @@ return [
 
 'invalid_email_or_password' => 'Invalid email or password.',
 
+'please_select_resource' => 'Please select a resource.',
+'invalid_resource_source' => 'Invalid resource source.',
+'unable_to_create_requisition_item' => 'Unable to create requisition item.',
+
+'only_draft_requisitions_editable' => 'Only Draft requisitions can be edited.',
+'please_add_item_before_submitting' => 'Please add at least one item before submitting.',
+'resource_requisition_submitted_successfully' => 'Resource Requisition submitted successfully.',
+'only_draft_requisitions_deletable' => 'Only Draft requisitions can be deleted.',
+'only_submitted_requisitions_approve_reject' => 'Only submitted requisitions can be approved or rejected.',
+'requisition_rejected' => 'Requisition rejected.',
+'invalid_approval_action' => 'Invalid approval action.',
+'resource_requisition_approved_successfully' => 'Resource requisition approved successfully.',
+'resource_requisition_rejected' => 'Resource requisition rejected.',
+
+'resource_requisition_not_found' => 'Resource requisition not found.',
+'approved_or_partial_requisitions_only_fulfill' => 'Only approved or partially fulfilled requisitions can be fulfilled.',
+'no_remaining_resource_items' => 'There are no remaining resource items to fulfill.',
+'invalid_requisition' => 'Invalid requisition.',
+'requisition_not_available_for_fulfillment' => 'This requisition is not available for fulfillment.',
+'please_enter_fulfillment_quantity' => 'Please enter at least one fulfillment quantity.',
+'invalid_requisition_item' => 'Invalid requisition item.',
+'invalid_resource_fulfillment_item' => 'Invalid resource fulfillment item.',
+'fulfillment_quantity_exceeds_remaining' => 'The fulfillment quantity for "%s" cannot exceed the remaining quantity of %s.',
+'unit_cost_negative_for_item' => 'Unit cost cannot be negative for "%s".',
+'please_select_inventory_location_for_item' => 'Please select an inventory location for material item: %s',
+'please_enter_quantity_greater_than_zero' => 'Please enter a quantity greater than zero.',
+'fulfillment_created_no_id' => 'Fulfillment was created but no fulfillment ID was returned.',
+'resource_fulfillment_created_no_id' => 'Resource fulfillment was created but no fulfillment ID was returned.',
+'resource_requisition_fulfilled_successfully' => 'Resource requisition fulfilled successfully.',
+'fulfillment_record_not_found' => 'Fulfillment record not found.',
+'please_enter_resource_fulfillment_quantity' => 'Please enter at least one resource fulfillment quantity.',
+'please_enter_resource_quantity_greater_than_zero' => 'Please enter a fulfillment quantity greater than zero for at least one resource item.',
+
 
 ];
