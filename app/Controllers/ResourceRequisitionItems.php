@@ -75,10 +75,7 @@ class ResourceRequisitionItems extends Controller
             );
             exit;
         }
-        //   echo '<pre>';
-        //     print_r($_POST);
-        //     echo '</pre>';
-        //     exit;
+    
         $requisitionId = (int)($_POST['requisition_id'] ?? 0);
 
         $this->validateDraftRequisition($requisitionId);
@@ -333,10 +330,7 @@ class ResourceRequisitionItems extends Controller
         exit;
     }
 
-    /**
-     * Delete Item
-     */
-    /**
+     /**
      * Delete Item
      */
     public function delete($id)

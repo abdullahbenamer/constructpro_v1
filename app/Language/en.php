@@ -1482,4 +1482,9 @@ return [
 'please_enter_resource_quantity_greater_than_zero' => 'Please enter a fulfillment quantity greater than zero for at least one resource item.',
 
 
+
+
+
+
+
 ];

@@ -1474,5 +1474,11 @@ return [
 'please_enter_resource_fulfillment_quantity' => 'يرجى إدخال كمية تنفيذ واحدة على الأقل لمورد.',
 'please_enter_resource_quantity_greater_than_zero' => 'يرجى إدخال كمية تنفيذ أكبر من صفر لبند مورد واحد على الأقل.',
 
+
+
+
+
+
+
 ];
 
