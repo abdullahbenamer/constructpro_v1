@@ -70,20 +70,27 @@ public function update($id, $name)
 
 public function delete($id)
 {
-    return $this->db->query(
+    $count = $this->db->query(
+        "SELECT COUNT(*) as total FROM users WHERE role_id = ?",
+        [$id]
+    )->fetch();
+
+    if ($count->total > 0) {
+        return [
+            'success' => false,
+            'message' => __('role_cannot_be_deleted_in_use')
+        ];
+    }
+
+    $this->db->query(
         "DELETE FROM roles WHERE id = ?",
         [$id]
     );
 
-        // ❌ Don’t delete role if used
-$count = $this->db->query(
-    "SELECT COUNT(*) as total FROM users WHERE role_id = ?",
-    [$id]
-)->fetch();
-
-if ($count->total > 0) {
-    die("❌ Cannot delete role in use");
+    return [
+        'success' => true
+    ];
 }
 
-        }
+        
 }

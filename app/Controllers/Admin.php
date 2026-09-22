@@ -198,7 +198,7 @@ class Admin extends Controller
                 $allowed = ['jpg', 'jpeg', 'png', 'webp'];
 
                 if (!in_array($extension, $allowed, true)) {
-                    die('Invalid photo format');
+                    throw new Exception(__('invalid_photo_format'));
                 }
 
                 $filename = uniqid('user_', true) . '.' . $extension;
@@ -207,7 +207,7 @@ class Admin extends Controller
                     $_FILES['photo']['tmp_name'],
                     $uploadDir . $filename
                 )) {
-                    die('Unable to upload photo');
+                    throw new Exception(__('unable_to_upload_photo'));
                 }
 
                 $updateData['photo'] = $uploadDir . $filename;

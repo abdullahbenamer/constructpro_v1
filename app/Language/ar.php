@@ -1489,6 +1489,9 @@ return [
 'failed_to_create_resource_fulfillment' =>
     'فشل إنشاء تنفيذ المورد.',
 
+    'role_cannot_be_deleted_in_use' =>
+    'لا يمكن حذف هذا الدور، لأنه مُسند إلى مستخدم واحد أو أكثر.',
+
 
 
 

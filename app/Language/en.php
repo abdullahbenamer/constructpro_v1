@@ -1492,7 +1492,10 @@ return [
     'Failed to create resource fulfillment.',
 
 
+'role_cannot_be_deleted_in_use' =>
+    'Cannot delete role because it is assigned to one or more users.',
 
+    
 
 
 
