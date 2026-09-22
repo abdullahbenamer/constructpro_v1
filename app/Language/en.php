@@ -1495,6 +1495,9 @@ return [
 'role_cannot_be_deleted_in_use' =>
     'Cannot delete role because it is assigned to one or more users.',
 
+    'role_deleted_successfully' => 'Role deleted successfully.',
+
+
     
 
 

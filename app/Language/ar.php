@@ -1492,6 +1492,8 @@ return [
     'role_cannot_be_deleted_in_use' =>
     'لا يمكن حذف هذا الدور، لأنه مُسند إلى مستخدم واحد أو أكثر.',
 
+'role_deleted_successfully' => 'تم حذف الدور بنجاح.',
+
 
 
 

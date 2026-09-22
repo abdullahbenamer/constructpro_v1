@@ -312,14 +312,30 @@ class Admin extends Controller
         $this->view('admin/roles/edit', $data);
     }
 
-    public function deleteRole($id)
-    {
-        $roleModel = $this->model('Role');
-        $roleModel->delete($id);
+  public function deleteRole($id)
+{
+    $roleModel = $this->model('Role');
 
-        header('Location: ' . URLROOT . '/admin/roles');
+    $result = $roleModel->delete($id);
+
+    if (!$result['success']) {
+        FlashHelper::error($result['message']);
+
+        header(
+            'Location: ' . URLROOT . '/admin/roles'
+        );
         exit;
     }
+
+    FlashHelper::success(
+        __('role_deleted_successfully')
+    );
+
+    header(
+        'Location: ' . URLROOT . '/admin/roles'
+    );
+    exit;
+}
 
     // company profile
     public function settings()
