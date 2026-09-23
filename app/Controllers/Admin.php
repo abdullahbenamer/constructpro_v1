@@ -30,27 +30,42 @@ class Admin extends Controller
         $this->view('admin/users/index', $data);
     }
 
-    // 👉 /admin/roles
+    // roles
     public function roles()
     {
         $roleModel = $this->model('Role');
 
-        // ✅ HANDLE CREATE ROLE
+        // HANDLE CREATE ROLE
         if ($_POST) {
+
             if (!empty($_POST['name'])) {
-                $roleModel->create($_POST['name']);
+
+                $result = $roleModel->create(
+                    trim($_POST['name'])
+                );
+
+                if ($result) {
+                    FlashHelper::success(
+                        __('role_created_successfully')
+                    );
+                } else {
+                    FlashHelper::error(
+                        __('role_creation_failed')
+                    );
+                }
+            } else {
+                FlashHelper::error(
+                    __('role_name_required')
+                );
             }
 
             header('Location: ' . URLROOT . '/admin/roles');
             exit;
         }
 
-        // ✅ FIRST: load roles
         $data['roles'] = $roleModel->getAll();
 
-        // 🔥 SECOND: attach permissions to each role
         foreach ($data['roles'] as &$role) {
-
             $perms = $roleModel->getPermissionsNames($role->id);
 
             $role->permissions = array_map(function ($p) {
@@ -58,28 +73,43 @@ class Admin extends Controller
             }, $perms);
         }
 
-        // ✅ finally send to view
         $this->view('admin/roles/index', $data);
     }
 
-    // 👉 /admin/permissions
+    // permissions
     public function permissions()
     {
-        AuthHelper::can('admin.access'); // or remove if not ready
+        AuthHelper::can('admin.access');
 
         $permModel = $this->model('Permission');
 
-        // ✅ HANDLE FORM SUBMIT
         if ($_POST) {
+
             if (!empty($_POST['name'])) {
-                $permModel->create($_POST['name']);
+
+                $result = $permModel->create(
+                    trim($_POST['name'])
+                );
+
+                if ($result) {
+                    FlashHelper::success(
+                        __('permission_created_successfully')
+                    );
+                } else {
+                    FlashHelper::error(
+                        __('permission_creation_failed')
+                    );
+                }
+            } else {
+                FlashHelper::error(
+                    __('permission_name_required')
+                );
             }
 
             header('Location: ' . URLROOT . '/admin/permissions');
             exit;
         }
 
-        // ✅ LOAD DATA
         $data['permissions'] = $permModel->getAll();
 
         $this->view('admin/permissions/index', $data);
@@ -129,7 +159,17 @@ class Admin extends Controller
 
             $_POST['photo'] = $photo;
 
-            $userModel->createUser($_POST);
+            $result = $userModel->createUser($_POST);
+
+            if ($result) {
+                FlashHelper::success(
+                    __('user_created_successfully')
+                );
+            } else {
+                FlashHelper::error(
+                    __('user_creation_failed')
+                );
+            }
 
             header('Location: ' . URLROOT . '/admin/users');
             exit;
@@ -213,11 +253,17 @@ class Admin extends Controller
                 $updateData['photo'] = $uploadDir . $filename;
             }
 
-            $userModel->update($id, $updateData);
+            $result = $userModel->update($id, $updateData);
 
-            FlashHelper::success(
-                __('user_updated_successfully')
-            );
+            if ($result) {
+                FlashHelper::success(
+                    __('user_updated_successfully')
+                );
+            } else {
+                FlashHelper::error(
+                    __('user_update_failed')
+                );
+            }
 
             header(
                 'Location: ' . URLROOT . '/admin/users'
@@ -239,17 +285,39 @@ class Admin extends Controller
         // SAVE permissions (POST)
         if ($_POST) {
 
-            $roleModel->clearPermissions($role_id);
+    $clearResult = $roleModel->clearPermissions($role_id);
 
-            if (!empty($_POST['permissions'])) {
-                foreach ($_POST['permissions'] as $perm_id) {
-                    $roleModel->assignPermission($role_id, $perm_id);
-                }
+    $success = (bool)$clearResult;
+
+    if (!empty($_POST['permissions'])) {
+
+        foreach ($_POST['permissions'] as $perm_id) {
+
+            $result = $roleModel->assignPermission(
+                $role_id,
+                $perm_id
+            );
+
+            if (!$result) {
+                $success = false;
+                break;
             }
-
-            header('Location: ' . URLROOT . '/admin/roles');
-            exit;
         }
+    }
+
+    if ($success) {
+        FlashHelper::success(
+            __('permissions_updated_successfully')
+        );
+    } else {
+        FlashHelper::error(
+            __('permissions_update_failed')
+        );
+    }
+
+    header('Location: ' . URLROOT . '/admin/roles');
+    exit;
+}
 
         // LOAD ROLE DETAILS
         $data['role'] = $roleModel->getById($role_id);
@@ -274,26 +342,51 @@ class Admin extends Controller
     {
         $permModel = $this->model('Permission');
 
-        if ($_POST) {
-            $permModel->update($id, $_POST['name']);
+     if ($_POST) {
 
-            header('Location: ' . URLROOT . '/admin/permissions');
-            exit;
-        }
+    $result = $permModel->update(
+        $id,
+        trim($_POST['name'])
+    );
+
+    if ($result) {
+        FlashHelper::success(
+            __('permission_updated_successfully')
+        );
+    } else {
+        FlashHelper::error(
+            __('permission_update_failed')
+        );
+    }
+
+    header('Location: ' . URLROOT . '/admin/permissions');
+    exit;
+}
 
         $data['permission'] = $permModel->getById($id);
 
         $this->view('admin/permissions/edit', $data);
     }
 
-    public function deletePermission($id)
-    {
-        $permModel = $this->model('Permission');
-        $permModel->delete($id);
+  public function deletePermission($id)
+{
+    $permModel = $this->model('Permission');
 
-        header('Location: ' . URLROOT . '/admin/permissions');
-        exit;
+    $result = $permModel->delete($id);
+
+    if ($result) {
+        FlashHelper::success(
+            __('permission_deleted_successfully')
+        );
+    } else {
+        FlashHelper::error(
+            __('permission_deletion_failed')
+        );
     }
+
+    header('Location: ' . URLROOT . '/admin/permissions');
+    exit;
+}
 
     // Edit Roles
     public function editRole($id)
@@ -301,41 +394,55 @@ class Admin extends Controller
         $roleModel = $this->model('Role');
 
         if ($_POST) {
-            $roleModel->update($id, $_POST['name']);
 
-            header('Location: ' . URLROOT . '/admin/roles');
-            exit;
-        }
+    $result = $roleModel->update(
+        $id,
+        trim($_POST['name'])
+    );
+
+    if ($result) {
+        FlashHelper::success(
+            __('role_updated_successfully')
+        );
+    } else {
+        FlashHelper::error(
+            __('role_update_failed')
+        );
+    }
+
+    header('Location: ' . URLROOT . '/admin/roles');
+    exit;
+}
 
         $data['role'] = $roleModel->getById($id);
 
         $this->view('admin/roles/edit', $data);
     }
 
-  public function deleteRole($id)
-{
-    $roleModel = $this->model('Role');
+    public function deleteRole($id)
+    {
+        $roleModel = $this->model('Role');
 
-    $result = $roleModel->delete($id);
+        $result = $roleModel->delete($id);
 
-    if (!$result['success']) {
-        FlashHelper::error($result['message']);
+        if (!$result['success']) {
+            FlashHelper::error($result['message']);
+
+            header(
+                'Location: ' . URLROOT . '/admin/roles'
+            );
+            exit;
+        }
+
+        FlashHelper::success(
+            __('role_deleted_successfully')
+        );
 
         header(
             'Location: ' . URLROOT . '/admin/roles'
         );
         exit;
     }
-
-    FlashHelper::success(
-        __('role_deleted_successfully')
-    );
-
-    header(
-        'Location: ' . URLROOT . '/admin/roles'
-    );
-    exit;
-}
 
     // company profile
     public function settings()
@@ -367,7 +474,7 @@ class Admin extends Controller
             'logo'         => $logoPath
         ]);
 
-   FlashHelper::success(__('settings_updated'));
+        FlashHelper::success(__('settings_updated'));
 
         header("Location: " . URLROOT . "/admin/settings");
         exit;

@@ -1592,5 +1592,26 @@ return [
 'create_role' => 'إنشاء دور',
 
 
+'role_created_successfully'       => 'تم إنشاء الدور بنجاح.',
+'role_creation_failed'            => 'فشل إنشاء الدور.',
+'role_name_required'              => 'اسم الدور مطلوب.',
+'role_updated_successfully'       => 'تم تحديث الدور بنجاح.',
+'role_update_failed'              => 'فشل تحديث الدور.',
+
+'permission_created_successfully' => 'تم إنشاء الصلاحية بنجاح.',
+'permission_creation_failed'      => 'فشل إنشاء الصلاحية.',
+'permission_name_required'        => 'اسم الصلاحية مطلوب.',
+'permission_updated_successfully' => 'تم تحديث الصلاحية بنجاح.',
+'permission_update_failed'        => 'فشل تحديث الصلاحية.',
+'permission_deleted_successfully' => 'تم حذف الصلاحية بنجاح.',
+'permission_deletion_failed'      => 'فشل حذف الصلاحية.',
+
+'permissions_updated_successfully' => 'تم تحديث الصلاحيات بنجاح.',
+'permissions_update_failed'       => 'فشل تحديث الصلاحيات.',
+
+'user_creation_failed'            => 'فشل إنشاء المستخدم.',
+'user_update_failed'              => 'فشل تحديث المستخدم.',
+
+
 ];
 

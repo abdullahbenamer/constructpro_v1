@@ -1592,4 +1592,27 @@ return [
     'role_name'   => 'Role Name',
 'create_role' => 'Create Role',
 
+
+'role_created_successfully'       => 'Role created successfully.',
+'role_creation_failed'            => 'Failed to create role.',
+'role_name_required'              => 'Role name is required.',
+'role_updated_successfully'       => 'Role updated successfully.',
+'role_update_failed'              => 'Failed to update role.',
+
+'permission_created_successfully' => 'Permission created successfully.',
+'permission_creation_failed'      => 'Failed to create permission.',
+'permission_name_required'        => 'Permission name is required.',
+'permission_updated_successfully' => 'Permission updated successfully.',
+'permission_update_failed'        => 'Failed to update permission.',
+'permission_deleted_successfully' => 'Permission deleted successfully.',
+'permission_deletion_failed'      => 'Failed to delete permission.',
+
+'permissions_updated_successfully' => 'Permissions updated successfully.',
+'permissions_update_failed'       => 'Failed to update permissions.',
+
+'user_creation_failed'            => 'Failed to create user.',
+'user_update_failed'              => 'Failed to update user.',
+
+
+
 ];
