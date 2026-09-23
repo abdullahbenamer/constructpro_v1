@@ -1,3 +1,47 @@
+<h2><?= __('roles_management') ?></h2>
+
+<div class="card mt-3 mb-4">
+    <div class="card-body">
+
+        <form method="POST" action="<?= URLROOT ?>/admin/roles">
+
+            <div class="row align-items-end">
+
+                <div class="col-md-8">
+
+                    <label for="name" class="form-label">
+                        <?= __('role_name') ?>
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        class="form-control"
+                        maxlength="50"
+                        required
+                    >
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        <?= __('create_role') ?>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
 <ul class="list-group mt-3">
 
 <?php foreach ($roles as $role): ?>

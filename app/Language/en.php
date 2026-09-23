@@ -1094,7 +1094,7 @@ return [
     'resource_not_found'         => 'Resource not found.',
 'resource_cannot_be_deleted_already_in_use' => 'This resource cannot be deleted because it is already in use.',
 
-'resource_deleted_successfully' => 'Resource deleted successfully.'
+'resource_deleted_successfully' => 'Resource deleted successfully.',
 
     // Permission Groups
     'permission'         => 'Permission',
@@ -1587,5 +1587,9 @@ return [
     'unable_to_create_project_inventory_location' =>
     'Unable to create project inventory location.',
 
+    'roles_management' => 'Roles Management',
+
+    'role_name'   => 'Role Name',
+'create_role' => 'Create Role',
 
 ];

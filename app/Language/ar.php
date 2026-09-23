@@ -1586,6 +1586,11 @@ return [
     'unable_to_create_project_inventory_location' =>
     'تعذر إنشاء موقع مخزن للمشروع.',
 
+ 'roles_management' => 'إدارة الادوار',
+
+ 'role_name'   => 'اسم الدور',
+'create_role' => 'إنشاء دور',
+
 
 ];
 
