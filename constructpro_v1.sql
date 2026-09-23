@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 22, 2026 at 06:32 AM
+-- Generation Time: Sep 23, 2026 at 03:18 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -1551,8 +1551,7 @@ INSERT INTO `roles` (`id`, `name`) VALUES
 (10, 'FORMAN'),
 (2, 'MANAGER'),
 (8, 'STOREKEEPER'),
-(4, 'TECHNICIAN'),
-(9, 'USER');
+(4, 'TECHNICIAN');
 
 -- --------------------------------------------------------
 
@@ -2776,7 +2775,7 @@ ALTER TABLE `resource_requisition_items`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `settings`

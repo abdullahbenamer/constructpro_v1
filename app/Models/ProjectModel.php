@@ -199,7 +199,7 @@ class ProjectModel extends Model
             $locationId = (int)$this->db->lastInsertId();
 
             if ($locationId <= 0) {
-               throw new Exception('Unable to create project inventory location.');
+               throw new Exception(__('unable_to_create_project_inventory_location'));
                 
             }
 

@@ -1432,7 +1432,7 @@ return [
 
 'purchase_order_already_cancelled' => 'أمر الشراء ملغى بالفعل.',
 'fully_received_po_cannot_be_cancelled' => 'لا يمكن إلغاء أمر شراء تم استلامه بالكامل.',
-'purchase_order_cannot_be_cancelled' => 'لا يمكن إلغاء أمر الشراء من حالته الحالية.',
+'purchase_order_cannot_be_cancelled' => 'لا يمكن إلغاء أمر الشراء في وضعه الحالي.',
 
 'company_name_required' => 'اسم الشركة مطلوب.',
 
