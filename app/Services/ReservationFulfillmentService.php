@@ -43,7 +43,7 @@ class ReservationFulfillmentService extends BaseService
         if (!$reservation) {
 
             throw new Exception(
-                'Reservation not found.'
+                __('reservation_not_found')
             );
         }
 
@@ -57,7 +57,7 @@ class ReservationFulfillmentService extends BaseService
         if ($reservation->status !== 'ACTIVE') {
 
             throw new Exception(
-                'Only ACTIVE reservations can be fulfilled.'
+                __('only_active_reservations_can_be_fulfilled')
             );
         }
 
@@ -90,7 +90,7 @@ class ReservationFulfillmentService extends BaseService
         if (empty($reservation->project_id)) {
 
             throw new Exception(
-                'Reservation must have a project before fulfillment.'
+                __('reservation_project_required_for_fulfillment')
             );
         }
 

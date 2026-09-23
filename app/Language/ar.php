@@ -1090,6 +1090,8 @@ return [
     'delete_resource_confirm'    => 'هل تريد حذف هذا المورد؟',
     'no_resources_found'         => 'لم يتم العثور على موارد.',
     'resource_not_found'         => 'المورد غير موجود.',
+    'resource_cannot_be_deleted_already_in_use' => 'المورد مستخدم لا يمكن حذفه',
+    'resource_deleted_successfully' => 'تم حذف المورد بنجاح',
 
     //Permession groups
     'permission'         => 'صلاحية',
@@ -1555,15 +1557,34 @@ return [
     'تم بالفعل إنشاء أمر شراء من عرض السعر هذا.',
 
 'quotation_contains_no_items' =>
-    'عرض السعر لا يحتوي على بنود.',
+    'عرض السعر لا يحتوي على اصناف.',
 
 'quotation_item_not_linked_to_inventory' =>
     'يحتوي عرض السعر على بند غير مرتبط بالمخزون بعد. يرجى إضافته إلى المخزون أولاً.',
 
 'purchase_order_created_from_quotation_successfully' =>
-    'تم إنشاء أمر الشراء بنجاح من عرض السعر.',
+    'تم إنشاء أمر الشراء بنجاح بناء على عرض السعر.',
 
+'reservation_not_found' =>
+    'حجز المواد غير موجود.',
 
+'only_active_reservations_can_be_fulfilled' =>
+    'لا يمكن تنفيذ سوى الحجوزات النشطة.',
+
+'reservation_project_required_for_fulfillment' =>
+    'يجب أن يكون لحجز المواد مشروع قبل تنفيذه.',
+
+    'original_project_cost_ledger_entry_not_found' =>
+    'قيد تكلفة المشروع الأصلي غير موجود.',
+
+'project_cost_already_reversed' =>
+    'تم عكس تكلفة المشروع هذه بالفعل.',
+
+'project_ledger_entry_for_cost_not_found' =>
+    'قيد دفتر المشروع الخاص بهذه التكلفة غير موجود.',
+
+    'unable_to_create_project_inventory_location' =>
+    'تعذر إنشاء موقع مخزن للمشروع.',
 
 
 ];

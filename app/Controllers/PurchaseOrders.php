@@ -14,7 +14,7 @@ class PurchaseOrders extends Controller
         $this->view('purchase-orders/index', $data);
     }
 
-        /*
+    /*
     |--------------------------------------------------------------------------
     | DETAILS
     |--------------------------------------------------------------------------
@@ -68,7 +68,7 @@ class PurchaseOrders extends Controller
                     : null;
 
                 if (!$project_id) {
-                   FlashHelper::error(__('project_required'));
+                    FlashHelper::error(__('project_required'));
                     $this->view('purchase-orders/create', $data);
                     return;
                 }
@@ -194,8 +194,9 @@ class PurchaseOrders extends Controller
 
         if (!$poModel->isEditable($po_id)) {
 
-            $_SESSION['error'] =
-                'Purchase Order is locked and cannot be modified.';
+            FlashHelper::error(
+                __('purchase_order_locked')
+            );
 
             header(
                 'Location: ' .
@@ -249,7 +250,7 @@ class PurchaseOrders extends Controller
 
         if (!$poModel->isEditable($po_id)) {
 
-      FlashHelper::error(__('purchase_order_locked'));
+            FlashHelper::error(__('purchase_order_locked'));
 
             header(
                 'Location: ' .
@@ -277,7 +278,9 @@ class PurchaseOrders extends Controller
 
         if (!$po) {
 
-         $_SESSION['error'] = __('purchase_order_not_found');
+            FlashHelper::error(
+                __('purchase_order_not_found')
+            );
 
             header(
                 'Location: ' .
@@ -296,8 +299,9 @@ class PurchaseOrders extends Controller
 
         if ($po->status !== 'draft') {
 
-         $_SESSION['error'] =
-    __('draft_purchase_orders_only_approve');
+            FlashHelper::error(
+                __('draft_purchase_orders_only_approve')
+            );
 
             header(
                 'Location: ' .
@@ -319,8 +323,9 @@ class PurchaseOrders extends Controller
 
         if (empty($items)) {
 
-         $_SESSION['error'] =
-    __('add_item_before_approving_po');
+            FlashHelper::error(
+                __('add_item_before_approving_po')
+            );
 
             header(
                 'Location: ' .
@@ -343,8 +348,9 @@ class PurchaseOrders extends Controller
             $_SESSION['user_id']
         );
 
-   $_SESSION['success'] =
-    __('purchase_order_approved_successfully');
+        FlashHelper::success(
+            __('purchase_order_approved_successfully')
+        );
 
         header(
             'Location: ' .
@@ -366,10 +372,9 @@ class PurchaseOrders extends Controller
 
             $service->cancel((int)$id);
 
-          FlashHelper::success(
-    __('purchase_order_cancelled_successfully')
-);
-
+            FlashHelper::success(
+                __('purchase_order_cancelled_successfully')
+            );
         } catch (Throwable $e) {
 
             FlashHelper::error(
@@ -425,8 +430,9 @@ class PurchaseOrders extends Controller
             )
         ) {
 
-        $_SESSION['error'] =
-    __('approved_purchase_orders_only_print');
+            FlashHelper::error(
+                __('approved_purchase_orders_only_print')
+            );
 
             header(
                 'Location: ' .

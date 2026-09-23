@@ -61,9 +61,8 @@ class PurchaseOrderService extends BaseService
 
             if (!$po) {
                 throw new Exception(
-                    __(
-                        'Purchase Order not found.'
-                    )
+                 __('purchase_order_not_found')
+                    
                 );
             }
 
@@ -75,13 +74,13 @@ class PurchaseOrderService extends BaseService
 
             if ($po->status === 'cancelled') {
                 throw new Exception(
-                __('Purchase Order is already cancelled.')
+               __('purchase_order_already_cancelled')
                 );
             }
 
             if ($po->status === 'received') {
                 throw new Exception(
-                     __('A fully received Purchase Order cannot be cancelled.')
+                    __('fully_received_po_cannot_be_cancelled')
                 );
             }
 
@@ -91,7 +90,7 @@ class PurchaseOrderService extends BaseService
                 true
             )) {
                 throw new Exception(
-                     __('Purchase Order cannot be cancelled from its current status.')
+                     __('purchase_order_cannot_be_cancelled')
                 );
             }
 

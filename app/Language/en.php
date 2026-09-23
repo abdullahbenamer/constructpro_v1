@@ -1092,7 +1092,9 @@ return [
     'delete_resource_confirm'    => 'Delete this resource?',
     'no_resources_found'         => 'No resources found.',
     'resource_not_found'         => 'Resource not found.',
+'resource_cannot_be_deleted_already_in_use' => 'This resource cannot be deleted because it is already in use.',
 
+'resource_deleted_successfully' => 'Resource deleted successfully.'
 
     // Permission Groups
     'permission'         => 'Permission',
@@ -1370,8 +1372,6 @@ return [
 //INVENTORY RESERVATION VIEWS messages
 'transfer_completed_successfully' => 'Transfer completed successfully.',
 
-
-
 'invalid_warehouse_location' => 'Invalid warehouse location.',
 
 'unit_cost_cannot_be_negative' => 'Unit cost cannot be negative.',
@@ -1566,7 +1566,26 @@ return [
 'purchase_order_created_from_quotation_successfully' =>
     'Purchase Order created successfully from quotation.',
     
+'reservation_not_found' =>
+    'Reservation not found.',
 
+'only_active_reservations_can_be_fulfilled' =>
+    'Only ACTIVE reservations can be fulfilled.',
+
+'reservation_project_required_for_fulfillment' =>
+    'Reservation must have a project before fulfillment.',
+
+    'original_project_cost_ledger_entry_not_found' =>
+    'Original project cost ledger entry not found.',
+
+'project_cost_already_reversed' =>
+    'This project cost has already been reversed.',
+
+'project_ledger_entry_for_cost_not_found' =>
+    'Project ledger entry for this cost was not found.',
+
+    'unable_to_create_project_inventory_location' =>
+    'Unable to create project inventory location.',
 
 
 ];

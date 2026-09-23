@@ -94,7 +94,7 @@ public function addEntry(array $data): bool
 
     if (!$entry) {
         throw new Exception(
-            'Original project cost ledger entry not found.'
+            __('original_project_cost_ledger_entry_not_found')
         );
     }
 
@@ -132,7 +132,7 @@ public function addEntry(array $data): bool
 
     if ($existing) {
         throw new Exception(
-            'This project cost has already been reversed.'
+            __('project_cost_already_reversed')
         );
     }
 
@@ -215,7 +215,7 @@ public function addEntry(array $data): bool
         if (!$entry) {
 
             throw new Exception(
-                'Project ledger entry for this cost was not found.'
+                __('project_ledger_entry_for_cost_not_found')
             );
         }
 

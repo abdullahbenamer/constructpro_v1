@@ -117,7 +117,7 @@ class ProjectModel extends Model
             $projectId = (int)$this->db->lastInsertId();
 
             if ($projectId <= 0) {
-                throw new Exception('Unable to create project.');
+                throw new Exception(__('unable_to_create_project'));
             }
             // Create Project Code
             $projectCode = 'PRJ-' . date('y') . '-' . str_pad(
@@ -199,9 +199,8 @@ class ProjectModel extends Model
             $locationId = (int)$this->db->lastInsertId();
 
             if ($locationId <= 0) {
-                throw new Exception(
-                    'Unable to create project inventory location.'
-                );
+               throw new Exception('Unable to create project inventory location.');
+                
             }
 
             /*

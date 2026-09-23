@@ -146,7 +146,7 @@ public function delete($id)
 
     if (!$result['success']) {
 
-        $_SESSION['error'] = $result['message'];
+      FlashHelper::error($result['message']);
 
         header('Location: ' . URLROOT . '/Units');
         exit;

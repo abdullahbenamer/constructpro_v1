@@ -254,8 +254,7 @@ class ResourceModel extends Model
 
             return [
                 'success' => false,
-                'message' =>
-                'This resource cannot be deleted because it is already in use.'
+                'message' => __('resource_cannot_be_deleted_already_in_use')
             ];
         }
 
@@ -275,7 +274,7 @@ class ResourceModel extends Model
 
         return [
             'success' => true,
-            'message' => 'Resource deleted successfully.'
+            'message' => __('resource_deleted_successfully')
         ];
     }
 
