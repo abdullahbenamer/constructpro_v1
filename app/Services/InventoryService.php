@@ -193,7 +193,7 @@ class InventoryService extends BaseService
         */
 
             if ($data['quantity'] <= 0) {
-                throw new Exception('invalid_quantity');
+                throw new Exception(__('invalid_quantity'));
             }
 
             if ($data['from_location_id'] == $data['to_location_id']) {

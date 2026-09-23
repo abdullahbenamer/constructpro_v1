@@ -100,7 +100,7 @@ class ProjectCostService extends BaseService
         if ($data['quantity'] <= 0) {
 
             throw new Exception(
-                'Quantity must be greater than zero.'
+                __('quantity_must_be_greater_than_zero')
             );
         }
 
@@ -122,8 +122,8 @@ class ProjectCostService extends BaseService
             if (!$item) {
 
                 throw new Exception(
-    __('inventory_item_not_found')
-);
+                    __('inventory_item_not_found')
+                );
             }
 
             $data['unit_price'] =
@@ -139,7 +139,7 @@ class ProjectCostService extends BaseService
             if ($data['unit_price'] <= 0) {
 
                 throw new Exception(
-                    'Unit price must be greater than zero.'
+                    __('unit_price_must_be_greater_than_zero')
                 );
             }
 
