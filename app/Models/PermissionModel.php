@@ -8,14 +8,13 @@ class PermissionModel extends Model {
             "SELECT * FROM permissions ORDER BY name")->fetchAll();
     }
 
-     public function create($name)
-    {
-        return $this->db->query(
-            "INSERT INTO permissions (name) VALUES (?)",
-            [$name]
-        );
-    }
-
+    public function create($name, $description = null)
+{
+    return $this->db->query(
+        "INSERT INTO permissions (name, description) VALUES (?, ?)",
+        [$name, $description]
+    );
+}
     public function getById($id)
 {
     return $this->db->query(
@@ -24,19 +23,49 @@ class PermissionModel extends Model {
     )->fetch();
 }
 
-public function update($id, $name)
+public function update($id, $name, $description = null)
 {
     return $this->db->query(
-        "UPDATE permissions SET name = ? WHERE id = ?",
-        [$name, $id]
+        "UPDATE permissions
+         SET name = ?, description = ?
+         WHERE id = ?",
+        [$name, $description, $id]
     );
 }
 
 public function delete($id)
 {
-    return $this->db->query(
+    $count = $this->db->query(
+        "
+        SELECT COUNT(*) AS total
+        FROM role_permissions
+        WHERE permission_id = ?
+        ",
+        [$id]
+    )->fetch();
+
+    if ((int)$count->total > 0) {
+        return [
+            'success' => false,
+            'message' => __('permission_cannot_be_deleted_in_use')
+        ];
+    }
+
+    $result = $this->db->query(
         "DELETE FROM permissions WHERE id = ?",
         [$id]
     );
+
+    if ($result->rowCount() === 0) {
+        return [
+            'success' => false,
+            'message' => __('permission_not_found')
+        ];
+    }
+
+    return [
+        'success' => true
+    ];
 }
+
 }

@@ -1,6 +1,7 @@
 <?php
 require_once '../app/Core/ServiceContainer.php';
 require_once '../config/constants.php';
+require_once '../app/Core/DBExceptionHelper.php';
 
 class Controller
 {
@@ -43,6 +44,11 @@ class Controller
     public function service(string $service)
     {
         return $this->services->make($service);
+    }
+
+        protected function exceptionMessage(Throwable $e): string
+    {
+        return DBExceptionHelper::message($e);
     }
 
     public function model($model)
@@ -91,4 +97,6 @@ class Controller
             require_once '../app/Views/errors/404.php';
         }
     }
-}
+
+
+    }

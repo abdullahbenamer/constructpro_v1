@@ -1599,6 +1599,7 @@ return [
 'role_updated_successfully'       => 'Role updated successfully.',
 'role_update_failed'              => 'Failed to update role.',
 
+
 'permission_created_successfully' => 'Permission created successfully.',
 'permission_creation_failed'      => 'Failed to create permission.',
 'permission_name_required'        => 'Permission name is required.',
@@ -1612,6 +1613,24 @@ return [
 
 'user_creation_failed'            => 'Failed to create user.',
 'user_update_failed'              => 'Failed to update user.',
+
+// DB Helper Messages
+'db_duplicate_entry'        => 'This record already exists.',
+'db_cannot_delete_in_use'   => 'This record cannot be deleted because it is currently in use.',
+'db_invalid_reference'      => 'The selected reference is invalid.',
+'db_data_too_long'          => 'One of the entered values is too long.',
+'db_required_field_missing' => 'A required field is missing.',
+'db_operation_failed'       => 'The database operation could not be completed.',
+'operation_failed'          => 'The operation could not be completed.',
+
+'permission_cannot_be_deleted_in_use' => 'This permission cannot be deleted because it is assigned to one or more roles.',
+'permission_not_found'                => 'Permission not found.',
+
+'role_cannot_be_deleted_has_permissions' => 'This role cannot be deleted because it has permissions assigned to it.',
+'role_not_found' => 'Role not found.',
+
+'permission_description' => 'Permission Description',
+
 
 
 

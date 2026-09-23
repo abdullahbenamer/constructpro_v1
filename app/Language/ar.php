@@ -1612,6 +1612,22 @@ return [
 'user_creation_failed'            => 'فشل إنشاء المستخدم.',
 'user_update_failed'              => 'فشل تحديث المستخدم.',
 
+// DB Helper Messages
+'db_duplicate_entry'        => 'هذا السجل موجود بالفعل.',
+'db_cannot_delete_in_use'   => 'لا يمكن حذف هذا السجل لأنه مستخدم حالياً.',
+'db_invalid_reference'      => 'المرجع المحدد غير صالح.',
+'db_data_too_long'          => 'إحدى القيم المدخلة أطول من الحد المسموح.',
+'db_required_field_missing' => 'هناك حقل مطلوب لم يتم إدخال قيمته.',
+'db_operation_failed'       => 'تعذر إتمام عملية قاعدة البيانات.',
+'operation_failed'          => 'تعذر إتمام العملية.',
+
+'permission_cannot_be_deleted_in_use' => 'لا يمكن حذف هذه الصلاحية لأنها مرتبطة بدور واحد أو أكثر.',
+'permission_not_found'                => 'الصلاحية غير موجودة.',
+
+'role_cannot_be_deleted_has_permissions' => 'لا يمكن حذف هذا الدور لأنه يحتوي على صلاحيات مرتبطة به.',
+'role_not_found' => 'الدور غير موجود.',
+
+'permission_description' => 'وصف الصلاحية',
 
 ];
 

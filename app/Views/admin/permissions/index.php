@@ -6,7 +6,14 @@
         type="text"
         name="name"
         placeholder="<?= __('permission_name') ?>"
-        class="form-control mb-2">
+        class="form-control mb-2"
+        required>
+
+    <textarea
+        name="description"
+        placeholder="<?= __('permission_description') ?>"
+        class="form-control mb-2"
+        rows="2"></textarea>
 
     <button class="btn btn-primary">
         <?= __('add_permission') ?>
@@ -21,7 +28,16 @@
 
     <li class="list-group-item d-flex justify-content-between align-items-center">
 
-        <?= $perm->name ?>
+        <div>
+            <strong><?= htmlspecialchars($perm->name) ?></strong>
+
+            <?php if (!empty($perm->description)): ?>
+                <br>
+                <small class="text-muted">
+                    <?= htmlspecialchars($perm->description) ?>
+                </small>
+            <?php endif; ?>
+        </div>
 
         <div>
 

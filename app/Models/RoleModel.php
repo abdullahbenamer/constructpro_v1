@@ -70,22 +70,61 @@ public function update($id, $name)
 
 public function delete($id)
 {
-    $count = $this->db->query(
-        "SELECT COUNT(*) as total FROM users WHERE role_id = ?",
+    /*
+     * Check whether the role is assigned to users.
+     */
+    $userCount = $this->db->query(
+        "
+        SELECT COUNT(*) AS total
+        FROM users
+        WHERE role_id = ?
+        ",
         [$id]
     )->fetch();
 
-    if ($count->total > 0) {
+    if ((int)$userCount->total > 0) {
         return [
             'success' => false,
             'message' => __('role_cannot_be_deleted_in_use')
         ];
     }
 
-    $this->db->query(
+    /*
+     * Check whether the role has permissions assigned.
+     */
+    $permissionCount = $this->db->query(
+        "
+        SELECT COUNT(*) AS total
+        FROM role_permissions
+        WHERE role_id = ?
+        ",
+        [$id]
+    )->fetch();
+
+    if ((int)$permissionCount->total > 0) {
+        return [
+            'success' => false,
+            'message' => __('role_cannot_be_deleted_has_permissions')
+        ];
+    }
+
+    /*
+     * Delete the role.
+     */
+    $result = $this->db->query(
         "DELETE FROM roles WHERE id = ?",
         [$id]
     );
+
+    /*
+     * Make sure a role was actually deleted.
+     */
+    if ($result->rowCount() === 0) {
+        return [
+            'success' => false,
+            'message' => __('role_not_found')
+        ];
+    }
 
     return [
         'success' => true
