@@ -521,7 +521,7 @@ return [
     'supplier_quotation_no'                  => 'رقم عرض سعر المورد',
     'procurement_reference_placeholder'     => 'مثال: PR-2026-001',
     'procurement_reference_help'             => 'استخدم نفس المرجع لعروض الأسعار التي تتم مقارنتها لنفس المتطلب.',
-    'quotation_date_required'                => 'تاريخ عرض السعر *',
+    'quotation_date_required'                => ' مطلوب تاريخ عرض السعر *',
     'required_delivery_date'                 => 'تاريخ التسليم المطلوب',
     'supplier_promised_delivery_date'       => 'تاريخ التسليم المتعهد به من المورد',
     'procurement_evaluation_notes'           => 'ملاحظات المشتريات / التقييم',
@@ -1494,7 +1494,74 @@ return [
 
 'role_deleted_successfully' => 'تم حذف الدور بنجاح.',
 
+'approved_or_partial_requisitions_only_create_po' =>
+    'لا يمكن إنشاء أمر شراء إلا للطلبات المعتمدة أو المنفذة جزئياً.',
 
+'no_remaining_inventory_materials_to_purchase' =>
+    'لا توجد مواد مخزنية متبقية للشراء.',
+
+'please_select_supplier' =>
+    'يرجى اختيار المورد.',
+
+'rr_quantity_exceeds_remaining' =>
+    'لا يمكن أن تتجاوز كمية "%s" الكمية المتبقية في طلب الموارد.',
+
+'actual_supplier_unit_cost_required' =>
+    'يرجى إدخال تكلفة الوحدة الفعلية للمورد للبند "%s".',
+
+'quantity_required_for_material' =>
+    'يرجى إدخال كمية لمادة واحدة على الأقل.',
+
+'purchase_order_created_from_requisition_successfully' =>
+    'تم إنشاء أمر الشراء بنجاح من طلب الموارد.',
+
+'quotation_locked' =>
+    'عرض السعر مقفل ولا يمكن تعديله.',
+
+'item_description_required' =>
+    'وصف البند مطلوب.',
+
+'unit_price_cannot_be_negative' =>
+    'لا يمكن أن يكون سعر الوحدة سالباً.',
+
+'invalid_quality_status' =>
+    'حالة الجودة غير صالحة.',
+
+'quotation_item_added_successfully' =>
+    'تمت إضافة بند عرض السعر بنجاح.',
+
+'quotation_not_found' =>
+    'عرض السعر غير موجود.',
+
+'only_draft_quotations_can_be_accepted' =>
+    'لا يمكن اعتماد سوى عروض الأسعار التي بحالة المسودة.',
+
+'add_item_before_accepting_quotation' =>
+    'يرجى إضافة بند واحد على الأقل قبل اعتماد عرض السعر.',
+
+'supplier_quotation_accepted_successfully' =>
+    'تم اعتماد عرض سعر المورد بنجاح.',
+
+'quotation_cancelled_successfully' =>
+    'تم إلغاء عرض السعر.',
+
+'no_quotations_found_for_procurement_reference' =>
+    'لم يتم العثور على عروض أسعار لمرجع الشراء هذا.',
+
+'only_accepted_quotations_can_create_po' =>
+    'لا يمكن تحويل سوى عروض الأسعار المعتمدة إلى أمر شراء.',
+
+'po_already_created_from_quotation' =>
+    'تم بالفعل إنشاء أمر شراء من عرض السعر هذا.',
+
+'quotation_contains_no_items' =>
+    'عرض السعر لا يحتوي على بنود.',
+
+'quotation_item_not_linked_to_inventory' =>
+    'يحتوي عرض السعر على بند غير مرتبط بالمخزون بعد. يرجى إضافته إلى المخزون أولاً.',
+
+'purchase_order_created_from_quotation_successfully' =>
+    'تم إنشاء أمر الشراء بنجاح من عرض السعر.',
 
 
 

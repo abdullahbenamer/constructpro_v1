@@ -45,13 +45,12 @@ class SupplierQuotations extends Controller
 
                 if ($supplierId <= 0) {
                     throw new Exception(
-                        'Please select a supplier.'
+                        __('please_select_supplier')
                     );
                 }
 
                 if (empty($_POST['quotation_date'])) {
-                    throw new Exception(
-                        'Quotation date is required.'
+                    throw new Exception(__('quotation_date_required')
                     );
                 }
 
@@ -216,8 +215,7 @@ class SupplierQuotations extends Controller
 
         if (!$model->isEditable($quotation_id)) {
 
-            FlashHelper::error(
-                'Quotation is locked and cannot be modified.'
+            FlashHelper::error(__('quotation_locked')
             );
 
             header(
@@ -251,13 +249,13 @@ class SupplierQuotations extends Controller
 
             if ($quantity <= 0) {
                 throw new Exception(
-                    'Quantity must be greater than zero.'
+                    __('quantity_must_be_greater_than_zero')
                 );
             }
 
             if ($unitPrice < 0) {
                 throw new Exception(
-                    'Unit price cannot be negative.'
+                    __('unit_price_cannot_be_negative')
                 );
             }
             $qualityStatus =
@@ -273,7 +271,7 @@ class SupplierQuotations extends Controller
                 )
             ) {
                 throw new Exception(
-                    'Invalid quality status.'
+                    __('invalid_quality_status')
                 );
             }
 
@@ -306,11 +304,6 @@ class SupplierQuotations extends Controller
                 'unit_price' =>
                 $unitPrice,
 
-                // 'quality_status' =>
-                // !empty($_POST['quality_status'])
-                //     ? $_POST['quality_status']
-                //     : null,
-
                 // use $qualityStatus rather than reading $_POST directly
                 'quality_status' =>
                 $qualityStatus ?: null,
@@ -327,7 +320,7 @@ class SupplierQuotations extends Controller
             ]);
 
             FlashHelper::success(
-                'Quotation item added successfully.'
+               __('quotation_item_added_successfully')
             );
         } catch (Throwable $e) {
 
@@ -381,7 +374,7 @@ class SupplierQuotations extends Controller
         ) {
 
             FlashHelper::error(
-                'Quotation is locked and cannot be modified.'
+                __('quotation_locked')
             );
 
             header(
@@ -426,7 +419,7 @@ class SupplierQuotations extends Controller
         if (!$quotation) {
 
             FlashHelper::error(
-                'Quotation not found.'
+                __('quotation_not_found')
             );
 
             header(
@@ -441,7 +434,7 @@ class SupplierQuotations extends Controller
         if ($quotation->status !== 'DRAFT') {
 
             FlashHelper::error(
-                'Only draft quotations can be accepted.'
+                __('only_draft_quotations_can_be_accepted')
             );
 
             header(
@@ -460,7 +453,7 @@ class SupplierQuotations extends Controller
         if (empty($items)) {
 
             FlashHelper::error(
-                'Please add at least one item before accepting the quotation.'
+                __('add_item_before_accepting_quotation')
             );
 
             header(
@@ -476,7 +469,7 @@ class SupplierQuotations extends Controller
         $model->accept($id);
 
         FlashHelper::success(
-            'Supplier quotation accepted successfully.'
+            __('supplier_quotation_accepted_successfully')
         );
 
         header(
@@ -509,7 +502,7 @@ class SupplierQuotations extends Controller
         if (!$quotation) {
 
             FlashHelper::error(
-                'Quotation not found.'
+                __('quotation_not_found')
             );
 
             header(
@@ -524,7 +517,7 @@ class SupplierQuotations extends Controller
         $model->cancel($id);
 
         FlashHelper::success(
-            'Quotation cancelled.'
+            __('quotation_cancelled_successfully')
         );
 
         header(
@@ -571,7 +564,7 @@ class SupplierQuotations extends Controller
         if (empty($quotations)) {
 
             FlashHelper::error(
-                'No quotations found for this procurement reference.'
+                __('no_quotations_found_for_procurement_reference')
             );
 
             header(
@@ -636,7 +629,7 @@ class SupplierQuotations extends Controller
         if (!$quotation) {
 
             FlashHelper::error(
-                'Quotation not found.'
+               __('quotation_not_found')
             );
 
             header(
@@ -657,7 +650,7 @@ class SupplierQuotations extends Controller
         if ($quotation->status !== 'ACCEPTED') {
 
             FlashHelper::error(
-                'Only accepted quotations can be converted to a Purchase Order.'
+                __('only_accepted_quotations_can_create_po')
             );
 
             header(
@@ -680,7 +673,7 @@ class SupplierQuotations extends Controller
         if (!empty($quotation->purchase_order_id)) {
 
             FlashHelper::error(
-                'A Purchase Order has already been created from this quotation.'
+                __('po_already_created_from_quotation')
             );
 
             header(
@@ -706,7 +699,7 @@ class SupplierQuotations extends Controller
         if (empty($items)) {
 
             FlashHelper::error(
-                'Quotation contains no items.'
+               __('quotation_contains_no_items')
             );
 
             header(
@@ -736,7 +729,7 @@ class SupplierQuotations extends Controller
             if (empty($item->inventory_id)) {
 
                 FlashHelper::error(
-                    'Quotation contains an item that is not yet linked to Inventory. Please add it to Inventory first.'
+                    __('quotation_item_not_linked_to_inventory')
                 );
 
                 header(
@@ -846,7 +839,7 @@ class SupplierQuotations extends Controller
 
 
             FlashHelper::success(
-                'Purchase Order created successfully from quotation.'
+                __('purchase_order_created_from_quotation_successfully')
             );
 
 

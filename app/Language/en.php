@@ -527,7 +527,7 @@ return [
     'supplier_quotation_no'                  => 'Supplier Quotation No.',
     'procurement_reference_placeholder'     => 'e.g. PR-2026-001',
     'procurement_reference_help'             => 'Use the same reference for quotations being compared for the same requirement.',
-    'quotation_date_required'                => 'Quotation Date *',
+    'quotation_date_required'                => 'Quotation Date Required *',
     'required_delivery_date'                 => 'Required Delivery Date',
     'supplier_promised_delivery_date'       => 'Supplier Promised Delivery Date',
     'procurement_evaluation_notes'           => 'Procurement / Evaluation Notes',
@@ -1497,7 +1497,74 @@ return [
 
     'role_deleted_successfully' => 'Role deleted successfully.',
 
+    'approved_or_partial_requisitions_only_create_po' =>
+    'Only approved or partially fulfilled requisitions can create a Purchase Order.',
 
+'no_remaining_inventory_materials_to_purchase' =>
+    'There are no remaining inventory materials to purchase.',
+
+'please_select_supplier' =>
+    'Please select a supplier.',
+
+'rr_quantity_exceeds_remaining' =>
+    'Quantity for "%s" cannot exceed the RR remaining quantity.',
+
+'actual_supplier_unit_cost_required' =>
+    'Please enter the actual supplier unit cost for "%s".',
+
+'quantity_required_for_material' =>
+    'Please enter a quantity for at least one material.',
+
+'purchase_order_created_from_requisition_successfully' =>
+    'Purchase Order created successfully from Resource Requisition.',
+
+'quotation_locked' =>
+    'Quotation is locked and cannot be modified.',
+
+'item_description_required' =>
+    'Item description is required.',
+
+'unit_price_cannot_be_negative' =>
+    'Unit price cannot be negative.',
+
+'invalid_quality_status' =>
+    'Invalid quality status.',
+
+'quotation_item_added_successfully' =>
+    'Quotation item added successfully.',
+
+'quotation_not_found' =>
+    'Quotation not found.',
+
+'only_draft_quotations_can_be_accepted' =>
+    'Only draft quotations can be accepted.',
+
+'add_item_before_accepting_quotation' =>
+    'Please add at least one item before accepting the quotation.',
+
+'supplier_quotation_accepted_successfully' =>
+    'Supplier quotation accepted successfully.',
+
+'quotation_cancelled_successfully' =>
+    'Quotation cancelled.',
+
+'no_quotations_found_for_procurement_reference' =>
+    'No quotations found for this procurement reference.',
+
+'only_accepted_quotations_can_create_po' =>
+    'Only accepted quotations can be converted to a Purchase Order.',
+
+'po_already_created_from_quotation' =>
+    'A Purchase Order has already been created from this quotation.',
+
+'quotation_contains_no_items' =>
+    'Quotation contains no items.',
+
+'quotation_item_not_linked_to_inventory' =>
+    'Quotation contains an item that is not yet linked to Inventory. Please add it to Inventory first.',
+
+'purchase_order_created_from_quotation_successfully' =>
+    'Purchase Order created successfully from quotation.',
     
 
 

@@ -51,7 +51,7 @@ class GoodsReceiptService extends BaseService
             }
 
             if ($supplierId <= 0) {
-                throw new Exception(__('Invalid_supplier.'));
+                throw new Exception(__('invalid_supplier'));
             }
 
             if ($inventoryId <= 0) {

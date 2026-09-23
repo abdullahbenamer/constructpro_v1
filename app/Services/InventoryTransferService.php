@@ -1,5 +1,5 @@
 <?php
- require_once '../app/Core/Model.php';
+require_once '../app/Core/Model.php';
 class InventoryTransferService extends Model
 {
     private InventoryLocationStockModel $stockModel;
@@ -18,137 +18,133 @@ class InventoryTransferService extends Model
         $this->transferModel = $transferModel;
     }
 
-       /**
+    /**
      * Transfer stock between warehouses.
      */
-  public function transfer(array $data): int
-{
-    $this->db->beginTransaction();
+    public function transfer(array $data): int
+    {
+        $this->db->beginTransaction();
 
-    try {
+        try {
 
-        /*
+            /*
         |--------------------------------------------------------------------------
         | 1. Validation
         |--------------------------------------------------------------------------
         */
 
-        if ($data['quantity'] <= 0) {
-            throw new Exception('Invalid quantity.');
-        }
+            if ($data['quantity'] <= 0) {
+               throw new Exception(__('invalid_quantity'));
+            }
 
-        if ($data['from_location_id'] == $data['to_location_id']) {
-            throw new Exception(
-                'Source and destination warehouses cannot be the same.'
-            );
-        }
+            if ($data['from_location_id'] == $data['to_location_id']) {
+             throw new Exception(__('source_destination_warehouses_same')
+                );
+            }
 
-        /*
+            /*
         |--------------------------------------------------------------------------
         | 2. Move Stock
         |--------------------------------------------------------------------------
         */
 
-        $ok = $this->stockModel->transferStock(
-            $data['inventory_id'],
-            $data['from_location_id'],
-            $data['to_location_id'],
-            $data['quantity']
-        );
-
-        if (!$ok) {
-            throw new Exception(
-                'Not enough stock in source warehouse.'
+            $ok = $this->stockModel->transferStock(
+                $data['inventory_id'],
+                $data['from_location_id'],
+                $data['to_location_id'],
+                $data['quantity']
             );
-        }
 
-        /*
+            if (!$ok) {
+                throw new Exception(__('not_enough_stock_source_warehouse'));
+            }
+
+            /*
         |--------------------------------------------------------------------------
         | 3. Save Transfer
         |--------------------------------------------------------------------------
         */
 
-        $transferId = $this->transferModel->create($data);
+            $transferId = $this->transferModel->create($data);
 
-        /*
+            /*
         |--------------------------------------------------------------------------
         | 4. OUT Movement
         |--------------------------------------------------------------------------
         */
 
-        $this->movementModel->addMovement([
-            'inventory_id' => $data['inventory_id'],
-            'location_id'  => $data['from_location_id'],
-            'type'         => 'OUT',
-            'quantity'     => $data['quantity'],
-            'reference'    => $data['reference'],
-            'notes'        => 'Warehouse Transfer #' . $transferId,
-            'created_by'   => $data['created_by']
-        ]);
+            $this->movementModel->addMovement([
+                'inventory_id' => $data['inventory_id'],
+                'location_id'  => $data['from_location_id'],
+                'type'         => 'OUT',
+                'quantity'     => $data['quantity'],
+                'reference'    => $data['reference'],
+                'notes'        => 'Warehouse Transfer #' . $transferId,
+                'created_by'   => $data['created_by']
+            ]);
 
-        /*
+            /*
         |--------------------------------------------------------------------------
         | 5. IN Movement
         |--------------------------------------------------------------------------
         */
 
-        $this->movementModel->addMovement([
-            'inventory_id' => $data['inventory_id'],
-            'location_id'  => $data['to_location_id'],
-            'type'         => 'IN',
-            'quantity'     => $data['quantity'],
-            'reference'    => $data['reference'],
-            'notes'        => 'Warehouse Transfer #' . $transferId,
-            'created_by'   => $data['created_by']
-        ]);
+            $this->movementModel->addMovement([
+                'inventory_id' => $data['inventory_id'],
+                'location_id'  => $data['to_location_id'],
+                'type'         => 'IN',
+                'quantity'     => $data['quantity'],
+                'reference'    => $data['reference'],
+                'notes'        => 'Warehouse Transfer #' . $transferId,
+                'created_by'   => $data['created_by']
+            ]);
 
-        $this->db->commit();
+            $this->db->commit();
 
-        return $transferId;
+            return $transferId;
+        } catch (Throwable $e) {
 
-    } catch (Throwable $e) {
+            $this->db->rollBack();
 
-        $this->db->rollBack();
-
-        throw $e;
+            throw $e;
+        }
     }
-}
 
-public function reverse(int $transferId): array
-{
-    $this->db->beginTransaction();
+    public function reverse(int $transferId): array
+    {
+        $this->db->beginTransaction();
 
-    try {
+        try {
 
-        /*
+            /*
         |------------------------------------------------------------------
         | 1. GET ORIGINAL TRANSFER
         |------------------------------------------------------------------
         */
 
-        $transfer = $this->transferModel->getById($transferId);
+            $transfer = $this->transferModel->getById($transferId);
 
-        if (!$transfer) {
-            throw new Exception(
-             __('transfer_not_found')
-            );
-        }
+            if (!$transfer) {
+                throw new Exception(
+                    __('transfer_not_found')
+                );
+            }
 
 
-        /*
+            /*
         |------------------------------------------------------------------
         | 2. VALIDATE STATUS
         |------------------------------------------------------------------
         */
 
-        if ($transfer->status !== 'COMPLETED') {
-            throw new Exception(
-               __('completed_transfers_only_reverse')
-            );
-        }
+            if ($transfer->status !== 'COMPLETED') {
+                throw new Exception(
+                    __('completed_transfers_only_reverse')
+                );
+            }
 
 
-        /*
+            /*
         |------------------------------------------------------------------
         | 3. REVERSE THE PHYSICAL STOCK
         |
@@ -160,54 +156,54 @@ public function reverse(int $transferId): array
         |------------------------------------------------------------------
         */
 
-        $ok = $this->stockModel->transferStock(
-            $transfer->inventory_id,
-            $transfer->to_location_id,
-            $transfer->from_location_id,
-            $transfer->quantity
-        );
+            $ok = $this->stockModel->transferStock(
+                $transfer->inventory_id,
+                $transfer->to_location_id,
+                $transfer->from_location_id,
+                $transfer->quantity
+            );
 
-        if (!$ok) {
-          throw new Exception(
-    __('unable_to_reverse_transfer')
-);
-        }
+            if (!$ok) {
+                throw new Exception(
+                    __('unable_to_reverse_transfer')
+                );
+            }
 
 
-        /*
+            /*
         |------------------------------------------------------------------
         | 4. CREATE REVERSAL TRANSFER RECORD
         |------------------------------------------------------------------
         */
 
-        $reversalId = $this->transferModel->create([
+            $reversalId = $this->transferModel->create([
 
-            'inventory_id' =>
+                'inventory_id' =>
                 $transfer->inventory_id,
 
-            'from_location_id' =>
+                'from_location_id' =>
                 $transfer->to_location_id,
 
-            'to_location_id' =>
+                'to_location_id' =>
                 $transfer->from_location_id,
 
-            'quantity' =>
+                'quantity' =>
                 $transfer->quantity,
 
-            'reference' =>
+                'reference' =>
                 $transfer->reference,
 
-            'notes' =>
+                'notes' =>
                 'Reversal of Transfer #'
-                . $transferId,
+                    . $transferId,
 
-            'created_by' =>
+                'created_by' =>
                 $_SESSION['user_id'] ?? null
 
-        ]);
+            ]);
 
 
-        /*
+            /*
         |------------------------------------------------------------------
         | 5. CREATE OUT MOVEMENT
         |
@@ -215,34 +211,34 @@ public function reverse(int $transferId): array
         |------------------------------------------------------------------
         */
 
-        $this->movementModel->addMovement([
+            $this->movementModel->addMovement([
 
-            'inventory_id' =>
+                'inventory_id' =>
                 $transfer->inventory_id,
 
-            'location_id' =>
+                'location_id' =>
                 $transfer->to_location_id,
 
-            'type' =>
+                'type' =>
                 'OUT',
 
-            'quantity' =>
+                'quantity' =>
                 $transfer->quantity,
 
-            'reference' =>
+                'reference' =>
                 $transfer->reference,
 
-            'notes' =>
+                'notes' =>
                 'Reversal of Transfer #'
-                . $transferId,
+                    . $transferId,
 
-            'created_by' =>
+                'created_by' =>
                 $_SESSION['user_id'] ?? null
 
-        ]);
+            ]);
 
 
-        /*
+            /*
         |------------------------------------------------------------------
         | 6. CREATE IN MOVEMENT
         |
@@ -250,41 +246,41 @@ public function reverse(int $transferId): array
         |------------------------------------------------------------------
         */
 
-        $this->movementModel->addMovement([
+            $this->movementModel->addMovement([
 
-            'inventory_id' =>
+                'inventory_id' =>
                 $transfer->inventory_id,
 
-            'location_id' =>
+                'location_id' =>
                 $transfer->from_location_id,
 
-            'type' =>
+                'type' =>
                 'IN',
 
-            'quantity' =>
+                'quantity' =>
                 $transfer->quantity,
 
-            'reference' =>
+                'reference' =>
                 $transfer->reference,
 
-            'notes' =>
+                'notes' =>
                 'Reversal of Transfer #'
-                . $transferId,
+                    . $transferId,
 
-            'created_by' =>
+                'created_by' =>
                 $_SESSION['user_id'] ?? null
 
-        ]);
+            ]);
 
 
-        /*
+            /*
         |------------------------------------------------------------------
         | 7. MARK ORIGINAL TRANSFER AS REVERSED
         |------------------------------------------------------------------
         */
 
-        $this->db->query(
-            "
+            $this->db->query(
+                "
             UPDATE inventory_transfers
 
             SET
@@ -296,41 +292,39 @@ public function reverse(int $transferId): array
             WHERE id = ?
             AND status = 'COMPLETED'
             ",
-            [
-                $_SESSION['user_id'] ?? null,
-                $reversalId,
-                $transferId
-            ]
-        );
+                [
+                    $_SESSION['user_id'] ?? null,
+                    $reversalId,
+                    $transferId
+                ]
+            );
 
 
-        /*
+            /*
         |------------------------------------------------------------------
         | 8. COMMIT
         |------------------------------------------------------------------
         */
 
-        $this->db->commit();
+            $this->db->commit();
 
 
-        return [
-            'success' => true,
-          'message' =>
-    __('transfer_reversed_successfully'),
-            'reversal_transfer_id' =>
+            return [
+                'success' => true,
+                'message' =>
+                __('transfer_reversed_successfully'),
+                'reversal_transfer_id' =>
                 $reversalId
-        ];
+            ];
+        } catch (Throwable $e) {
 
+            $this->db->rollBack();
 
-    } catch (Throwable $e) {
-
-        $this->db->rollBack();
-
-        throw $e;
+            throw $e;
+        }
     }
-}
 
-       /**
+    /**
      * Current available quantity.
      */
     public function available(

@@ -193,7 +193,7 @@ class InventoryService extends BaseService
         */
 
             if ($data['quantity'] <= 0) {
-                throw new Exception('Invalid quantity.');
+                throw new Exception('invalid_quantity');
             }
 
             if ($data['from_location_id'] == $data['to_location_id']) {
@@ -283,11 +283,11 @@ class InventoryService extends BaseService
             $delta       = (float)($data['delta'] ?? 0);
 
             if ($inventoryId <= 0) {
-                throw new Exception('Invalid inventory item.');
+                throw new Exception(__('invalid_inventory_item'));
             }
 
             if ($locationId <= 0) {
-                throw new Exception('Invalid warehouse location.');
+                throw new Exception(__('invalid_warehouse_location'));
             }
 
             if ($delta == 0) {
