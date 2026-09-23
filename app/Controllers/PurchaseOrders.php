@@ -5,7 +5,7 @@ class PurchaseOrders extends Controller
     // list all purchase orders
     public function index()
     {
-        AuthHelper::can('purchase-orders.view');
+     AuthHelper::can('purchase_orders.view');
 
         $model = $this->model('PurchaseOrder');
 
@@ -22,6 +22,8 @@ class PurchaseOrders extends Controller
 
     public function create()
     {
+        AuthHelper::can('purchase_orders.create');
+
         $supplierModel = $this->model('Supplier');
         $locationModel = $this->model('InventoryLocation');
         $projectModel  = $this->model('Project');
@@ -180,7 +182,7 @@ class PurchaseOrders extends Controller
 
     public function addItem($po_id)
     {
-        AuthHelper::can('purchase-orders.create');
+       AuthHelper::can('purchase_orders.create');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: ' . URLROOT . '/purchaseorders/itemsPage/' . $po_id);
