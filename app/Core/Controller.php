@@ -10,8 +10,19 @@ class Controller
     protected $settings;
 
     // GLOBAL AUTH CHECK
-   public function __construct()
+  public function __construct()
 {
+    /*
+    |---------------------------------------------
+    | Prevent Browser Caching of Authenticated Pages
+    |---------------------------------------------
+    */
+
+    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+    header('Cache-Control: post-check=0, pre-check=0', false);
+    header('Pragma: no-cache');
+    header('Expires: 0');
+
     /*
     |---------------------------------------------
     | Initialize Service Container
@@ -39,6 +50,7 @@ class Controller
             exit;
         }
     }
+  
 }
 
     public function service(string $service)
