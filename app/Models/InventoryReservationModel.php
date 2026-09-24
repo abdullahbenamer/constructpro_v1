@@ -21,8 +21,8 @@ if ($quantity <= 0) {
     );
 }
 
-}
-    }
+
+    
 
 
     /*
@@ -114,8 +114,8 @@ if ($quantity <= 0) {
             $_SESSION['user_id'] ?? null
         ]
     );
-}
 
+}
     public function getActiveReservedQty($inventory_id)
     {
         $result = $this->db->query(

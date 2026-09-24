@@ -2,8 +2,7 @@
 
 class InventoryLocations extends Controller
 {
-    public function index()
-    {
+
 public function index()
 {
     AuthHelper::can('inventory_locations.view');
@@ -166,6 +165,7 @@ public function index()
     public function delete($id)
     {
           AuthHelper::can('inventory_locations.delete');
+
         $model = $this->model('InventoryLocation');
 
         if ($model->hasStock($id)) {
