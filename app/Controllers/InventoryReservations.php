@@ -4,6 +4,7 @@ class InventoryReservations extends Controller
 {
     public function index()
     {
+        AuthHelper::can('inventory_reservations.view');
         $model = $this->model(
             'InventoryReservation'
         );
@@ -17,98 +18,149 @@ class InventoryReservations extends Controller
         );
     }
 
-  public function create()
-{
-    $inventoryModel =
-        $this->model('Inventory');
+    public function create()
+    {
+        AuthHelper::can('inventory_reservations.create');
+        $inventoryModel =
+            $this->model('Inventory');
 
-    $locationModel =
-        $this->model('InventoryLocation');
+        $locationModel =
+            $this->model('InventoryLocation');
 
-    $projectModel =
-        $this->model('Project');
+        $projectModel =
+            $this->model('Project');
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        /*
+            /*
         |--------------------------------------------------------------------------
         | SERVER-SIDE VALIDATION
         |--------------------------------------------------------------------------
         */
 
-        if (empty($_POST['inventory_id'])) {
+            if (empty($_POST['inventory_id'])) {
 
-        FlashHelper::error(
-    __('please_select_inventory_item')
-);
+                FlashHelper::error(
+                    __('please_select_inventory_item')
+                );
+
+                header(
+                    'Location: ' .
+                        URLROOT .
+                        '/inventoryreservations/create'
+                );
+
+                exit;
+            }
+
+            if (empty($_POST['location_id'])) {
+
+                FlashHelper::error(
+                    __('please_select_location')
+                );
+
+                header(
+                    'Location: ' .
+                        URLROOT .
+                        '/inventoryreservations/create'
+                );
+
+                exit;
+            }
+
+            if (empty($_POST['project_id'])) {
+
+                FlashHelper::error(
+                    __('please_select_project')
+                );
+
+                header(
+                    'Location: ' .
+                        URLROOT .
+                        '/inventoryreservations/create'
+                );
+
+                exit;
+            }
+
+            if (empty($_POST['required_by_date'])) {
+
+                FlashHelper::error(
+                    __('please_select_required_by_date')
+                );
+
+                header(
+                    'Location: ' .
+                        URLROOT .
+                        '/inventoryreservations/create'
+                );
+
+                exit;
+            }
+
+            if (
+                !isset($_POST['quantity']) ||
+                (float) $_POST['quantity'] <= 0
+            ) {
+
+                FlashHelper::error(
+                    __('reservation_quantity_must_be_greater_than_zero')
+                );
+
+                header(
+                    'Location: ' .
+                        URLROOT .
+                        '/inventoryreservations/create'
+                );
+
+                exit;
+            }
+
+
+            /*
+        |--------------------------------------------------------------------------
+        | CREATE RESERVATION
+        |--------------------------------------------------------------------------
+        */
+
+            $reservationModel =
+                $this->model('InventoryReservation');
+
+            $reservationModel->create([
+
+                'inventory_id' =>
+                (int) $_POST['inventory_id'],
+
+                'location_id' =>
+                (int) $_POST['location_id'],
+
+                'project_id' =>
+                (int) $_POST['project_id'],
+
+                'required_by_date' =>
+                $_POST['required_by_date'],
+
+                'quantity' =>
+                (float) $_POST['quantity'],
+
+                'reference' =>
+                trim($_POST['reference'] ?? ''),
+
+                'notes' =>
+                trim($_POST['notes'] ?? '')
+
+            ]);
+
+
+            FlashHelper::success(
+                __('reservation_created_successfully')
+            );
+
 
             header(
                 'Location: ' .
-                URLROOT .
-                '/inventoryreservations/create'
-            );
-
-            exit;
-        }
-
-        if (empty($_POST['location_id'])) {
-
-            FlashHelper::error(
-                __('please_select_location')
-            );
-
-            header(
-                'Location: ' .
-                URLROOT .
-                '/inventoryreservations/create'
-            );
-
-            exit;
-        }
-
-        if (empty($_POST['project_id'])) {
-
-       FlashHelper::error(
-    __('please_select_project')
-);
-
-            header(
-                'Location: ' .
-                URLROOT .
-                '/inventoryreservations/create'
-            );
-
-            exit;
-        }
-
-        if (empty($_POST['required_by_date'])) {
-
-         FlashHelper::error(
-    __('please_select_required_by_date')
-);
-
-            header(
-                'Location: ' .
-                URLROOT .
-                '/inventoryreservations/create'
-            );
-
-            exit;
-        }
-
-        if (
-            !isset($_POST['quantity']) ||
-            (float) $_POST['quantity'] <= 0
-        ) {
-
-      FlashHelper::error(
-    __('reservation_quantity_must_be_greater_than_zero')
-);
-
-            header(
-                'Location: ' .
-                URLROOT .
-                '/inventoryreservations/create'
+                    URLROOT .
+                    '/inventoryreservations'
             );
 
             exit;
@@ -116,120 +168,73 @@ class InventoryReservations extends Controller
 
 
         /*
-        |--------------------------------------------------------------------------
-        | CREATE RESERVATION
-        |--------------------------------------------------------------------------
-        */
-
-        $reservationModel =
-            $this->model('InventoryReservation');
-
-        $reservationModel->create([
-
-            'inventory_id' =>
-                (int) $_POST['inventory_id'],
-
-            'location_id' =>
-                (int) $_POST['location_id'],
-
-            'project_id' =>
-                (int) $_POST['project_id'],
-
-            'required_by_date' =>
-                $_POST['required_by_date'],
-
-            'quantity' =>
-                (float) $_POST['quantity'],
-
-            'reference' =>
-                trim($_POST['reference'] ?? ''),
-
-            'notes' =>
-                trim($_POST['notes'] ?? '')
-
-        ]);
-
-
-    FlashHelper::success(
-    __('reservation_created_successfully')
-);
-
-
-        header(
-            'Location: ' .
-            URLROOT .
-            '/inventoryreservations'
-        );
-
-        exit;
-    }
-
-
-    /*
     |--------------------------------------------------------------------------
     | LOAD FORM DATA
     |--------------------------------------------------------------------------
     */
 
-    $data['inventory'] =
-        $inventoryModel->getAll();
+        $data['inventory'] =
+            $inventoryModel->getAll();
 
-    $data['locations'] =
-        $locationModel->getAll();
+        $data['locations'] =
+            $locationModel->getAll();
 
-    $data['projects'] =
-        $projectModel->getAll();
+        $data['projects'] =
+            $projectModel->getAll();
 
 
-    $this->view(
-        'inventory-reservations/create',
-        $data
-    );
-}
-
- public function fulfill($id)
-{
-    try {
-
-        $service = new ReservationFulfillmentService(
-
-            $this->model('InventoryReservation'),
-
-            $this->model('Inventory'),
-
-            $this->model('InventoryLocationStock'),
-
-            $this->model('InventoryMovement'),
-
-            $this->service('ProjectCost')
-        );
-
-        $service->fulfill(
-            (int)$id
-        );
-
-        FlashHelper::success(
-    __('reservation_fulfilled_successfully')
-);
-
-    } catch (Throwable $e) {
-
-        FlashHelper::error(
-            $e->getMessage()
+        $this->view(
+            'inventory-reservations/create',
+            $data
         );
     }
 
-    header(
-        'Location: ' .
-        URLROOT .
-        '/inventoryreservations'
-    );
+    public function fulfill($id)
+    {
+        AuthHelper::can('inventory_reservations.fulfill');
 
-    exit;
-}
+        try {
+
+            $service = new ReservationFulfillmentService(
+
+                $this->model('InventoryReservation'),
+
+                $this->model('Inventory'),
+
+                $this->model('InventoryLocationStock'),
+
+                $this->model('InventoryMovement'),
+
+                $this->service('ProjectCost')
+            );
+
+            $service->fulfill(
+                (int)$id
+            );
+
+            FlashHelper::success(
+                __('reservation_fulfilled_successfully')
+            );
+        } catch (Throwable $e) {
+
+            FlashHelper::error(
+                $e->getMessage()
+            );
+        }
+
+        header(
+            'Location: ' .
+                URLROOT .
+                '/inventoryreservations'
+        );
+
+        exit;
+    }
 
     public function cancel($id)
     {
+        AuthHelper::can('inventory_reservations.fulfill');
+
         $model = $this->model(
             'InventoryReservation'
         );
@@ -245,6 +250,9 @@ class InventoryReservations extends Controller
 
     public function edit($id)
     {
+
+    AuthHelper::can('inventory_reservations.edit');
+
         $model = $this->model(
             'InventoryReservation'
         );
@@ -273,9 +281,9 @@ class InventoryReservations extends Controller
         // Only ACTIVE editable
         if ($reservation->status !== 'ACTIVE') {
 
-    FlashHelper::error(
-    __('active_reservations_only_editable')
-);
+            FlashHelper::error(
+                __('active_reservations_only_editable')
+            );
 
             header(
                 'Location: ' .
@@ -337,6 +345,9 @@ class InventoryReservations extends Controller
 
     public function delete($id)
     {
+
+    AuthHelper::can('inventory_reservations.delete');
+
         $model = $this->model(
             'InventoryReservation'
         );
@@ -358,9 +369,9 @@ class InventoryReservations extends Controller
         // Only ACTIVE deletable
         if ($reservation->status !== 'ACTIVE') {
 
-           FlashHelper::error(
-    __('active_reservations_only_deletable')
-);
+            FlashHelper::error(
+                __('active_reservations_only_deletable')
+            );
             header(
                 'Location: ' .
                     URLROOT .
@@ -379,88 +390,93 @@ class InventoryReservations extends Controller
         );
     }
 
-public function getItemLocations()
-{
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        exit;
+    public function getItemLocations()
+    {
+
+    AuthHelper::can('inventory_reservations.create');
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            exit;
+        }
+
+        header('Content-Type: application/json');
+
+        $inventory_id = (int)($_POST['inventory_id'] ?? 0);
+
+        $stockModel =
+            $this->model('InventoryLocationStock');
+
+        $locations =
+            $stockModel->getAvailableItemLocations(
+                $inventory_id
+            );
+
+        echo json_encode($locations ?: []);
     }
 
-    header('Content-Type: application/json');
 
-    $inventory_id = (int)($_POST['inventory_id'] ?? 0);
+    public function getLocationStock()
+    {
+         AuthHelper::can('inventory_reservations.create');
+         
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            exit;
+        }
 
-    $stockModel =
-        $this->model('InventoryLocationStock');
+        header('Content-Type: application/json');
 
-    $locations =
-        $stockModel->getAvailableItemLocations(
-            $inventory_id
+        $inventory_id = (int)(
+            $_POST['inventory_id'] ?? 0
         );
 
-    echo json_encode($locations ?: []);
-}
+        $location_id = (int)(
+            $_POST['location_id'] ?? 0
+        );
 
 
-public function getLocationStock()
-{
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        exit;
-    }
+        // PHYSICAL STOCK
 
-    header('Content-Type: application/json');
+        $stockModel =
+            $this->model('InventoryLocationStock');
 
-    $inventory_id = (int)(
-        $_POST['inventory_id'] ?? 0
-    );
-
-    $location_id = (int)(
-        $_POST['location_id'] ?? 0
-    );
-
-
-    // PHYSICAL STOCK
-
-    $stockModel =
-        $this->model('InventoryLocationStock');
-
-    $stock = $stockModel->getStock(
-        $inventory_id,
-        $location_id
-    );
-
-    $physicalQty =
-        (float)($stock->quantity ?? 0);
-
-
-    // ACTIVE RESERVED QUANTITY
-
-    $reservationModel =
-        $this->model('InventoryReservation');
-
-    $reservedQty =
-        $reservationModel->getReservedQuantity(
+        $stock = $stockModel->getStock(
             $inventory_id,
             $location_id
         );
 
-
-    // ACTUAL AVAILABLE QUANTITY
-
-    $availableQty =
-        $physicalQty - $reservedQty;
+        $physicalQty =
+            (float)($stock->quantity ?? 0);
 
 
-    echo json_encode([
+        // ACTIVE RESERVED QUANTITY
 
-        'physical_qty' =>
+        $reservationModel =
+            $this->model('InventoryReservation');
+
+        $reservedQty =
+            $reservationModel->getReservedQuantity(
+                $inventory_id,
+                $location_id
+            );
+
+
+        // ACTUAL AVAILABLE QUANTITY
+
+        $availableQty =
+            $physicalQty - $reservedQty;
+
+
+        echo json_encode([
+
+            'physical_qty' =>
             $physicalQty,
 
-        'reserved_qty' =>
+            'reserved_qty' =>
             $reservedQty,
 
-        'available_qty' =>
+            'available_qty' =>
             max(0, $availableQty)
 
-    ]);
-}
+        ]);
     }
+}

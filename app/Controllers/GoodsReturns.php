@@ -10,7 +10,7 @@ class GoodsReturns extends Controller
 
     public function index()
     {
-        AuthHelper::can('inventory.view');
+      AuthHelper::can('goods_returns.view');
 
         $model = $this->model('GoodsReturn');
 
@@ -24,7 +24,7 @@ class GoodsReturns extends Controller
 
     public function details($id)
 {
-    AuthHelper::can('inventory.view');
+  AuthHelper::can('goods_returns.view');
 
     $returnModel =
         $this->model('GoodsReturn');
@@ -68,7 +68,7 @@ class GoodsReturns extends Controller
 
     public function create()
     {
-        AuthHelper::can('inventory.edit');
+        AuthHelper::can('goods_returns.create');
 
         $receiptModel =
             $this->model('GoodsReceipt');
@@ -140,7 +140,7 @@ class GoodsReturns extends Controller
 
     public function items($grn_id)
     {
-        AuthHelper::can('inventory.view');
+       AuthHelper::can('goods_returns.view');
 
         $receiptItemModel =
             $this->model('GoodsReceiptItem');
@@ -191,7 +191,7 @@ class GoodsReturns extends Controller
 
     public function locations($inventory_id)
     {
-        AuthHelper::can('inventory.view');
+      AuthHelper::can('goods_returns.view');
 
         $stockModel =
             $this->model('InventoryLocationStock');

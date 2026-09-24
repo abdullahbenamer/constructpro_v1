@@ -4,6 +4,7 @@ class InventoryMovements extends Controller
 {
     public function index()
     {
+        AuthHelper::can('inventory_movements.view');
         $model = $this->model('InventoryMovement');
 
         $data['movements'] = $model->getAllMovements();
@@ -14,6 +15,7 @@ class InventoryMovements extends Controller
 
     public function add($inventory_id)
     {
+AuthHelper::can('inventory_movements.create');
 
         $model = $this->model('InventoryMovement');
         $locationModel = $this->model('InventoryLocation');
@@ -35,7 +37,7 @@ class InventoryMovements extends Controller
 
  public function receive()
 {
-    AuthHelper::can('inventory.edit');
+   AuthHelper::can('inventory_movements.create');
 
     $purchaseOrderModel = $this->model('PurchaseOrder');
     $inventoryModel     = $this->model('Inventory');

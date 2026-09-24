@@ -11,6 +11,8 @@ class InventoryTransfers extends Controller
 
     public function index()
     {
+            AuthHelper::can('stock_transfers.view');
+
         $transferModel = $this->model('InventoryTransfer');
 
         $data['transfers'] =
@@ -24,6 +26,9 @@ class InventoryTransfers extends Controller
 
     public function create()
     {
+
+      AuthHelper::can('stock_transfers.create');
+
         $inventoryModel = $this->model('Inventory');
         $locationModel  = $this->model('InventoryLocation');
 
@@ -102,6 +107,9 @@ class InventoryTransfers extends Controller
 
     public function getLocationStock()
     {
+
+    AuthHelper::can('stock_transfers.create');
+
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             exit;
         }
@@ -125,6 +133,8 @@ class InventoryTransfers extends Controller
 
     public function getBySku()
     {
+         AuthHelper::can('stock_transfers.create');
+
         header('Content-Type: application/json');
 
         try {
@@ -151,6 +161,9 @@ class InventoryTransfers extends Controller
 
     public function getItemLocations()
     {
+
+        AuthHelper::can('stock_transfers.create');
+
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             exit;
         }
@@ -169,6 +182,9 @@ class InventoryTransfers extends Controller
 
     public function reverse($id)
     {
+
+     AuthHelper::can('stock_transfers.reverse');
+     
         try {
 
             $service = new InventoryTransferService(

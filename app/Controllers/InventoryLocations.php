@@ -4,8 +4,11 @@ class InventoryLocations extends Controller
 {
     public function index()
     {
+public function index()
+{
+    AuthHelper::can('inventory_locations.view');
 
-        $model = $this->model('InventoryLocation');
+    $model = $this->model('InventoryLocation');
 
         $userId = $_SESSION['user_id'] ?? 0;
         $roleName = strtoupper($_SESSION['role_name'] ?? '');
@@ -24,7 +27,9 @@ class InventoryLocations extends Controller
 
     public function create()
     {
-        $model = $this->model('InventoryLocation');
+    AuthHelper::can('inventory_locations.create');
+
+    $model = $this->model('InventoryLocation');
 
         $storekeepers = $model->getStorekeepers();
 
@@ -67,7 +72,10 @@ class InventoryLocations extends Controller
 
     public function details($id)
     {
-        $locationModel = $this->model('InventoryLocation');
+          AuthHelper::can('inventory_locations.view');
+
+    $locationModel = $this->model('InventoryLocation');
+
         $stockModel = $this->model('InventoryLocationStock');
 
         $location = $locationModel->getById($id);
@@ -89,6 +97,8 @@ class InventoryLocations extends Controller
 
     public function edit($id)
     {
+         AuthHelper::can('inventory_locations.edit');
+
         $model = $this->model('InventoryLocation');
 
         $location = $model->getById($id);
@@ -155,6 +165,7 @@ class InventoryLocations extends Controller
 
     public function delete($id)
     {
+          AuthHelper::can('inventory_locations.delete');
         $model = $this->model('InventoryLocation');
 
         if ($model->hasStock($id)) {

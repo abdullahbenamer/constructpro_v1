@@ -4,7 +4,7 @@ class StockAdjustments extends Controller
 {
     public function create($inventoryId = null)
     {
-        AuthHelper::can('inventory.adjustment.create');
+        AuthHelper::can('inventory_adjustments.create');
 
         $inventoryModel = $this->model('Inventory');
         $locationModel  = $this->model('InventoryLocation');
@@ -260,7 +260,7 @@ class StockAdjustments extends Controller
 
     public function getLocationStock()
     {
-        AuthHelper::can('inventory.adjustment.create');
+        AuthHelper::can('inventory_adjustments.create');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             exit;

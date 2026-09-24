@@ -4,7 +4,7 @@ class GoodsReceipts extends Controller
 {
     public function create()
     {
-        AuthHelper::can('inventory.edit');
+        AuthHelper::can('goods_receipts.create');
 
         $purchaseOrderModel = $this->model('PurchaseOrder');
         $supplierModel      = $this->model('Supplier');
