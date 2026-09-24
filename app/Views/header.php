@@ -965,10 +965,10 @@ require_once '../app/Models/InventoryLocationModel.php';
 
                     <?php if (
                         AuthHelper::canView('inventory.view') ||
-                        AuthHelper::canView('inventory-movements.view') ||
-                        AuthHelper::canView('inventory-locations.view') ||
-                        AuthHelper::canView('stock-transfers.view') ||
-                        AuthHelper::canView('inventory-reservations.view')
+                        AuthHelper::canView('inventory_movements.view') ||
+                        AuthHelper::canView('inventory_locations.view') ||
+                        AuthHelper::canView('stock_transfers.view') ||
+                        AuthHelper::canView('inventory_reservations.view')
                     ) : ?>
 
                         <li class="nav-item dropdown dropend">
@@ -1004,7 +1004,7 @@ require_once '../app/Models/InventoryLocationModel.php';
                                 <?php endif; ?>
 
 
-                                <?php if (AuthHelper::canView('inventory-movements.view')) : ?>
+                                <?php if (AuthHelper::canView('inventory_movements.view')) : ?>
                                     <li>
                                         <a class="dropdown-item"
                                             href="<?= URLROOT ?>/inventorymovements">
@@ -1015,7 +1015,7 @@ require_once '../app/Models/InventoryLocationModel.php';
                                 <?php endif; ?>
 
 
-                                <?php if (AuthHelper::canView('stock-transfers.view')) : ?>
+                                <?php if (AuthHelper::canView('stock_transfers.view')) : ?>
                                     <li>
                                         <a class="dropdown-item"
                                             href="<?= URLROOT ?>/inventorytransfers">
@@ -1026,7 +1026,7 @@ require_once '../app/Models/InventoryLocationModel.php';
                                 <?php endif; ?>
 
 
-                                <?php if (AuthHelper::canView('inventory-reservations.view')) : ?>
+                                <?php if (AuthHelper::canView('inventory_reservations.view')) : ?>
                                     <li>
                                         <a class="dropdown-item"
                                             href="<?= URLROOT ?>/inventoryreservations">
@@ -1048,7 +1048,7 @@ require_once '../app/Models/InventoryLocationModel.php';
 
                     <?php if (
 
-                        AuthHelper::canView('purchase-orders.view') ||
+                        AuthHelper::canView('purchase_orders.view') ||
 
                         AuthHelper::canView('suppliers.view')
 
@@ -1093,7 +1093,7 @@ require_once '../app/Models/InventoryLocationModel.php';
                                 <?php endif; ?>
 
 
-                                <?php if (AuthHelper::canView('purchase-orders.view')) : ?>
+                                <?php if (AuthHelper::canView('purchase_orders.view')) : ?>
 
                                     <li>
 
@@ -1112,7 +1112,7 @@ require_once '../app/Models/InventoryLocationModel.php';
                                 <?php endif; ?>
 
 
-                                <?php if (AuthHelper::canView('inventory-movements.create')) : ?>
+                                <?php if (AuthHelper::canView('inventory_movements.create')) : ?>
 
                                     <li>
 
@@ -1131,7 +1131,7 @@ require_once '../app/Models/InventoryLocationModel.php';
                                 <?php endif; ?>
 
 
-                                <?php if (AuthHelper::canView('goods-returns.create')) : ?>
+                                <?php if (AuthHelper::canView('goods_returns.create')) : ?>
 
                                     <li>
 
@@ -1150,7 +1150,7 @@ require_once '../app/Models/InventoryLocationModel.php';
                                 <?php endif; ?>
 
 
-                                <?php if (AuthHelper::canView('goods-returns.view')) : ?>
+                                <?php if (AuthHelper::canView('goods_returns.view')) : ?>
 
                                     <li>
 

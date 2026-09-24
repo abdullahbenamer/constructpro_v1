@@ -68,7 +68,7 @@ class GoodsReturns extends Controller
 
     public function create()
     {
-        AuthHelper::can('goods_returns.create');
+       AuthHelper::can('goods_returns.create');
 
         $receiptModel =
             $this->model('GoodsReceipt');

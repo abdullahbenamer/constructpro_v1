@@ -5,6 +5,8 @@ class Projects extends Controller
 
     public function index()
     {
+           AuthHelper::can('projects.view');
+
         $model = $this->model('Project');
 
         $data['projects'] = $model->getAll();
@@ -17,6 +19,8 @@ class Projects extends Controller
 
     public function create() // crete a new Project
     {
+            AuthHelper::can('projects.create');
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $data = [
@@ -65,6 +69,9 @@ class Projects extends Controller
 
     public function edit($id)
     {
+
+    AuthHelper::can('projects.edit');
+
         $model = $this->model('Project');
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -104,9 +111,11 @@ class Projects extends Controller
         $this->view('projects/edit', $data);
     }
 
-    // DELETE if Cost is 0 
+    // DELETE only if Cost is 0 
     public function delete($id)
     {
+         AuthHelper::can('projects.delete');
+         
         $projectModel = $this->model('Project');
         $costModel = $this->model('ProjectCost');
 
@@ -138,6 +147,9 @@ exit;
 
     public function archive($id)
     {
+
+    AuthHelper::can('projects.archive');
+
         $projectModel = $this->model('Project');
 
         if ($projectModel->archive($id)) {
@@ -156,6 +168,9 @@ exit;
 
     public function restore($id)
     {
+
+    AuthHelper::can('projects.restore');
+
         $model = $this->model('Project');
 
         $model->restore($id);
@@ -227,6 +242,9 @@ exit;
     // Show archived projects
     public function archived()
     {
+
+    AuthHelper::can('projects.view');
+
         $model = $this->model('Project');
 
         $data['projects'] = $model->getArchivedProjects();
@@ -239,6 +257,9 @@ exit;
     // Project Documnets
     public function documents($project_id)
     {
+
+    AuthHelper::can('projects.view');
+
         $projectModel = $this->model('Project');
         $documentModel = $this->model('ProjectDocument');
 
@@ -267,6 +288,8 @@ exit;
 
     public function uploadDocument($project_id)
     {
+        AuthHelper::can('projects.documents.create');
+
         $projectModel = $this->model('Project');
 
         $project = $projectModel->getById($project_id);
@@ -350,6 +373,9 @@ exit;
 
     public function deleteDocument($id)
     {
+
+    AuthHelper::can('projects.documents.delete');
+    
         $documentModel = $this->model('ProjectDocumentModel');
 
         $doc = $documentModel->getById($id);

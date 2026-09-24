@@ -4,6 +4,9 @@ class ProjectCosts extends Controller
 {
     public function index($project_id = null)
     {
+
+    AuthHelper::can('project_costs.view');
+
         $costModel = $this->model('ProjectCost');
         $projectModel = $this->model('Project');
 
@@ -43,6 +46,9 @@ class ProjectCosts extends Controller
 
     public function create($project_id = null)
     {
+
+    AuthHelper::can('project_costs.create');
+
         if (!$project_id) {
             header('Location: ' . URLROOT . '/projects');
             exit;
@@ -136,6 +142,9 @@ class ProjectCosts extends Controller
     // EDIT Project Costs
     public function edit($id)
     {
+
+    AuthHelper::can('project_costs.edit');
+
         $costModel = $this->model('ProjectCost');
         $inventoryModel = $this->model('Inventory');
         $locationModel = $this->model('InventoryLocation');
@@ -220,6 +229,9 @@ class ProjectCosts extends Controller
 
     public function delete($id)
     {
+
+    AuthHelper::can('project_costs.delete');
+
         try {
 
             $cost = $this->model('ProjectCost')->getById($id);
@@ -277,6 +289,9 @@ class ProjectCosts extends Controller
 
     public function getInventoryLocations(int $inventory_id)
     {
+
+    AuthHelper::can('project_costs.create');
+
         header('Content-Type: application/json');
 
         $stockModel =
@@ -292,6 +307,9 @@ class ProjectCosts extends Controller
 
     public function ledger($project_id)
     {
+
+    AuthHelper::can('project_costs.view');
+
         $ledgerModel = $this->model('ProjectLedger');
         $projectModel = $this->model('Project');
 
@@ -365,7 +383,7 @@ class ProjectCosts extends Controller
 
     public function finance($project_id)
     {
-        AuthHelper::can('project.finance.view');
+        AuthHelper::can('project_finance.view');
 
         $projectModel = $this->model('Project');
         $ledgerModel = $this->model('ProjectLedger');
@@ -384,6 +402,9 @@ class ProjectCosts extends Controller
 
     public function ledgerReport($project_id)
     {
+
+    AuthHelper::can('project_costs.view');
+    
         $projectModel = $this->model('Project');
         $ledgerModel = $this->model('ProjectLedger');
 

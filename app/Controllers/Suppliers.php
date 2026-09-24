@@ -4,6 +4,8 @@ class Suppliers extends Controller
 {
     public function index()
     {
+
+     AuthHelper::can('suppliers.view');
         $model = $this->model('Supplier');
 
         $data['suppliers'] = $model->getAll();
@@ -13,7 +15,7 @@ class Suppliers extends Controller
 
     public function create()
     {
-        AuthHelper::can('suppliers.create');
+         AuthHelper::can('suppliers.create');
 
         $model = $this->model('Supplier');
 
@@ -61,7 +63,7 @@ class Suppliers extends Controller
 
     public function edit($id)
     {
-        AuthHelper::can('suppliers.create');
+          AuthHelper::can('suppliers.edit');
 
         $model = $this->model('Supplier');
 
@@ -103,7 +105,7 @@ class Suppliers extends Controller
 
     public function delete($id)
     {
-        AuthHelper::can('suppliers.create');
+        AuthHelper::can('suppliers.delete');
 
         $model = $this->model('Supplier');
 
@@ -214,7 +216,7 @@ class Suppliers extends Controller
 
     public function ledger($supplier_id)
     {
-        AuthHelper::can('suppliers.view');
+       AuthHelper::can('suppliers.ledger');
 
         $supplierModel = $this->model('Supplier');
         $ledgerModel   = $this->model('SupplierLedger');

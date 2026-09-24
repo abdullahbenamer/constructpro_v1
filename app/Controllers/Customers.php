@@ -4,7 +4,7 @@ class Customers extends Controller
 {
     public function index()
     {
-        AuthHelper::can('customers.view');
+           AuthHelper::can('customers.view');
 
         $model = $this->model('Customer');
         $data['customers'] = $model->getCustomers('active');
@@ -15,6 +15,8 @@ class Customers extends Controller
     // CREATE (inherited from CrudController but direct)
     public function create()
     {
+        AuthHelper::can('customers.create');
+
         if ($_POST) {
             $model = $this->model('Customer');
             if ($model->create($_POST)) {
@@ -29,6 +31,8 @@ class Customers extends Controller
     // EDIT
     public function edit($id)
     {
+          AuthHelper::can('customers.edit');
+
         $model = $this->model('Customer');
 
         if ($_POST) {
@@ -53,7 +57,7 @@ class Customers extends Controller
     //  delete a Customer
     public function delete($id)
     {
-        AuthHelper::can('customers.delete');
+       AuthHelper::can('customers.delete');
 
         $model = $this->model('Customer');
 
@@ -86,6 +90,7 @@ class Customers extends Controller
 
     public function info($id)
     {
+        AuthHelper::can('customers.view');
         $model = $this->model('Customer');
 
         $customer = $model->getById($id);
@@ -103,6 +108,7 @@ class Customers extends Controller
 
     public function details($id)
     {
+        AuthHelper::can('customers.view');
         $customerModel = $this->model('CustomerModel');
 
         $customer = $customerModel->getCustomerById($id);
