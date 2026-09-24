@@ -10,7 +10,7 @@ class SupplierQuotations extends Controller
 
     public function index()
     {
-        AuthHelper::can('purchase_orders.view');
+        AuthHelper::can('supplier_quotations.view');
 
         $model = $this->model('SupplierQuotation');
 
@@ -31,7 +31,7 @@ class SupplierQuotations extends Controller
 
     public function create()
     {
-        AuthHelper::can('purchase_orders.create');
+        AuthHelper::can('supplier_quotations.create');
 
         $supplierModel = $this->model('Supplier');
         $model = $this->model('SupplierQuotation');
@@ -144,7 +144,7 @@ class SupplierQuotations extends Controller
 
     public function details($id)
     {
-        AuthHelper::can('purchase_orders.view');
+       AuthHelper::can('supplier_quotations.view');
 
         $model =
             $this->model('SupplierQuotation');
@@ -196,7 +196,7 @@ class SupplierQuotations extends Controller
 
     public function addItem($quotation_id)
     {
-        AuthHelper::can('purchase_orders.create');
+       AuthHelper::can('supplier_quotations.edit');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
@@ -348,7 +348,7 @@ class SupplierQuotations extends Controller
 
     public function deleteItem($id)
     {
-        AuthHelper::can('purchase_orders.create');
+       AuthHelper::can('supplier_quotations.edit');
 
         $model =
             $this->model('SupplierQuotation');
@@ -408,7 +408,7 @@ class SupplierQuotations extends Controller
 
     public function accept($id)
     {
-        AuthHelper::can('purchase_orders.edit');
+       AuthHelper::can('supplier_quotations.accept');
 
         $model =
             $this->model('SupplierQuotation');
@@ -491,7 +491,7 @@ class SupplierQuotations extends Controller
 
     public function cancel($id)
     {
-        AuthHelper::can('purchase_orders.edit');
+        AuthHelper::can('supplier_quotations.cancel');
 
         $model =
             $this->model('SupplierQuotation');
@@ -537,7 +537,7 @@ class SupplierQuotations extends Controller
 
     public function compare($reference)
     {
-        AuthHelper::can('purchase_orders.view');
+       AuthHelper::can('supplier_quotations.view');
 
         $model =
             $this->model('SupplierQuotation');
@@ -612,7 +612,7 @@ class SupplierQuotations extends Controller
 
     public function createPO($id)
     {
-        AuthHelper::can('purchase_orders.create');
+        AuthHelper::can('supplier_quotations.create_po');
 
         $quotationModel =
             $this->model('SupplierQuotation');

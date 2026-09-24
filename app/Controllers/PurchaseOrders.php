@@ -144,7 +144,7 @@ class PurchaseOrders extends Controller
     public function items($po_id)
     {
 
-        AuthHelper::can('inventory.edit');
+      AuthHelper::can('purchase_orders.view');
 
         $purchaseOrderModel = $this->model('PurchaseOrder');
 
@@ -182,7 +182,7 @@ class PurchaseOrders extends Controller
 
     public function addItem($po_id)
     {
-       AuthHelper::can('purchase_orders.create');
+      AuthHelper::can('purchase_orders.edit');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: ' . URLROOT . '/purchaseorders/itemsPage/' . $po_id);
@@ -272,7 +272,7 @@ class PurchaseOrders extends Controller
 
     public function approve($id)
     {
-        AuthHelper::can('purchase_orders.edit');
+        AuthHelper::can('purchase_orders.approve');
 
         $model = $this->model('PurchaseOrder');
 
@@ -366,7 +366,7 @@ class PurchaseOrders extends Controller
 
     public function cancel($id)
     {
-        AuthHelper::can('purchase_orders.edit');
+        AuthHelper::can('purchase_orders.cancel');
 
         try {
 

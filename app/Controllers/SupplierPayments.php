@@ -4,7 +4,7 @@ class SupplierPayments extends Controller
 {
     public function create($supplier_id)
     {
-        AuthHelper::can('suppliers.pay');
+       AuthHelper::can('supplier_payments.create');
 
         $supplierModel = $this->model('Supplier');
         $paymentModel  = $this->model('SupplierPayment');
@@ -44,6 +44,9 @@ $paymentService->create([
 
     public function list($supplier_id)
     {
+
+    AuthHelper::can('supplier_payments.view');
+
         $paymentModel = $this->model('SupplierPayment');
 
         echo json_encode(
