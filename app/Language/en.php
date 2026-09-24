@@ -1631,7 +1631,17 @@ return [
 
 'permission_description' => 'Permission Description',
 
-
+// JS form fields validation messages
+'validation_required'   => 'Please fill out this field.',
+'validation_email'      => 'Please enter a valid email address.',
+'validation_url'        => 'Please enter a valid URL.',
+'validation_invalid'   => 'Please enter a valid value.',
+'validation_min'        => 'Value must be greater than or equal to :min.',
+'validation_max'        => 'Value must be less than or equal to :max.',
+'validation_minlength'  => 'Please enter at least :minlength characters.',
+'validation_maxlength'  => 'Please enter no more than :maxlength characters.',
+'validation_step'       => 'Please enter a valid value. The allowed increment is :step.',
+'validation_pattern'    => 'Please enter a value in the required format.',
 
 
 ];

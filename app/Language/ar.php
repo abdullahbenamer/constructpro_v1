@@ -1629,5 +1629,16 @@ return [
 
 'permission_description' => 'وصف الصلاحية',
 
+// JS form fields validation messages
+'validation_required'   => 'يرجى ملء هذا الحقل.',
+'validation_email'      => 'يرجى إدخال بريد إلكتروني صحيح.',
+'validation_url'        => 'يرجى إدخال رابط صحيح.',
+'validation_invalid'   => 'يرجى إدخال قيمة صحيحة.',
+'validation_min'        => 'يجب ألا تقل القيمة عن :min.',
+'validation_max'        => 'يجب ألا تتجاوز القيمة :max.',
+'validation_minlength'  => 'يجب أن يحتوي النص على :minlength أحرف على الأقل.',
+'validation_maxlength'  => 'يجب ألا يتجاوز النص :maxlength حرفًا.',
+'validation_step'       => 'يرجى إدخال قيمة صحيحة. مقدار الزيادة المسموح به هو :step.',
+'validation_pattern'    => 'يرجى إدخال القيمة بالصيغة المطلوبة.',
 ];
 

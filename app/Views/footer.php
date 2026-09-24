@@ -8,6 +8,24 @@
 <!-- Select2 -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+<!-- // JS form fields validation messages translated-->
+<script>
+    window.CONSTRUCTPRO_VALIDATION_MESSAGES = {
+        required: <?= json_encode(__('validation_required')) ?>,
+        email: <?= json_encode(__('validation_email')) ?>,
+        url: <?= json_encode(__('validation_url')) ?>,
+        invalid: <?= json_encode(__('validation_invalid')) ?>,
+        min: <?= json_encode(__('validation_min')) ?>,
+        max: <?= json_encode(__('validation_max')) ?>,
+        minlength: <?= json_encode(__('validation_minlength')) ?>,
+        maxlength: <?= json_encode(__('validation_maxlength')) ?>,
+        step: <?= json_encode(__('validation_step')) ?>,
+        pattern: <?= json_encode(__('validation_pattern')) ?>
+    };
+</script>
+<!-- Loading script -->
+<script src="<?= URLROOT ?>/assets/js/validation.js"></script>
+
 <!-- If you want to load scripts from Local files -->
 <!-- 
 <script src="/assets/js/jquery.min.js"></script>
