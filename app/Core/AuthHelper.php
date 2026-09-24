@@ -6,7 +6,7 @@ class AuthHelper
     {
         if (!isset($_SESSION['user_id'])) {
 
-            FlashHelper::error('Please login first');
+            FlashHelper::error(__('please_login_first'));
 
             header('Location: ' . URLROOT . '/auth/login');
             exit;

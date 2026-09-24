@@ -15,6 +15,7 @@ return [
     'finance'                => 'Finance',
     'admin_panel'            => 'Admin Panel',
     'logout'                 => 'Logout',
+    'please_login_first'  => 'Please login first',
 
     // RESOURCE REQUISITIONS
     'resource_requisitions'  => 'Resource Requisitions',

@@ -15,6 +15,7 @@ return [
     'finance'                => 'المالية',
     'admin_panel'            => 'لوحة ادارة المنظومة',
     'logout'                 => 'تسجيل الخروج',
+     'please_login_first'  => 'يرجى تسجيل الدخول ...',
 
     // RESOURCE REQUISITIONS
     'resource_requisitions'  => 'طلبات الموارد',

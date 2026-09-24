@@ -231,7 +231,7 @@ if ($user->id == $_SESSION['user_id']) {
         $this->view('users/details', $data);
     }
 
-    public function profile()
+ public function profile()
 {
     AuthHelper::check();
 

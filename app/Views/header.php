@@ -1341,10 +1341,16 @@ require_once '../app/Models/InventoryLocationModel.php';
 
                     </div>
 
-                    <li><a class="nav-link" href="<?= URLROOT ?>/users/profile">
-                            <i class="fas fa-user me-2"></i>
-                            <?= __('my_profile') ?>
-                        </a></li>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+
+                        <li>
+                            <a class="nav-link" href="<?= URLROOT ?>/users/profile">
+                                <i class="fas fa-user me-2"></i>
+                                <?= __('my_profile') ?>
+                            </a>
+                        </li>
+
+                    <?php endif; ?>
 
                     <!-- About -->
                     <?php
