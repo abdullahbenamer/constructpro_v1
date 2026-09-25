@@ -1,6 +1,9 @@
 <?php
 class Costs extends Controller {
-    public function index() {
+    public function index() 
+    {
+        AuthHelper::can('project_costs.view');
+        
         $costModel = $this->model('ProjectCost');
         
         // Use MODEL methods instead of $this->db
