@@ -40,7 +40,7 @@ class ResourceRequisitionItems extends Controller
      */
     public function create($requisition_id)
     {
-        AuthHelper::can('projects.view');
+       AuthHelper::can('resource_requisitions.edit');
 
         $this->validateDraftRequisition($requisition_id);
 
@@ -65,7 +65,7 @@ class ResourceRequisitionItems extends Controller
      */
     public function store()
     {
-        AuthHelper::can('projects.view');
+       AuthHelper::can('resource_requisitions.edit');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header(
@@ -195,7 +195,7 @@ class ResourceRequisitionItems extends Controller
 
     public function edit($id)
     {
-        AuthHelper::can('projects.view');
+       AuthHelper::can('resource_requisitions.edit');
 
         $item = $this->itemModel->getById($id);
 
@@ -262,7 +262,7 @@ class ResourceRequisitionItems extends Controller
     public function update($id)
     {
 
-        AuthHelper::can('projects.view');
+     AuthHelper::can('resource_requisitions.edit');
 
 
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
@@ -336,7 +336,7 @@ class ResourceRequisitionItems extends Controller
     public function delete($id)
     {
 
-        AuthHelper::can('projects.view');
+     AuthHelper::can('resource_requisitions.edit');
 
 
         $item = $this->itemModel->getById($id);

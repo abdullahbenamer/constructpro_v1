@@ -9,7 +9,7 @@ class ResourceRequisitions extends Controller
     */
     public function index()
     {
-        AuthHelper::can('projects.view');
+       AuthHelper::can('resource_requisitions.view');
 
         $model = $this->model('ResourceRequisition');
 
@@ -25,7 +25,7 @@ class ResourceRequisitions extends Controller
     */
     public function create()
     {
-        AuthHelper::can('projects.create');
+        AuthHelper::can('resource_requisitions.create');
 
         $model = $this->model('ResourceRequisition');
         $projectModel = $this->model('Project');
@@ -68,7 +68,7 @@ class ResourceRequisitions extends Controller
     */
     public function edit($id)
     {
-        AuthHelper::can('projects.create');
+       AuthHelper::can('resource_requisitions.edit');
 
         $model = $this->model('ResourceRequisition');
         $projectModel = $this->model('Project');
@@ -123,7 +123,7 @@ class ResourceRequisitions extends Controller
 
     public function update($id)
     {
-        AuthHelper::can('projects.create');
+        AuthHelper::can('resource_requisitions.edit');
 
         $model = $this->model('ResourceRequisition');
 
@@ -174,7 +174,7 @@ class ResourceRequisitions extends Controller
     */
     public function details($id)
     {
-        AuthHelper::can('projects.view');
+        AuthHelper::can('resource_requisitions.view');
 
 
         /*
@@ -303,7 +303,7 @@ class ResourceRequisitions extends Controller
     public function submit($id)
     {
 
-        AuthHelper::can('projects.view');
+        AuthHelper::can('resource_requisitions.submit');
 
         $model = $this->model('ResourceRequisition');
 
@@ -370,7 +370,7 @@ class ResourceRequisitions extends Controller
     */
     public function delete($id)
     {
-        AuthHelper::can('projects.delete');
+        AuthHelper::can('resource_requisitions.delete');
 
         $model = $this->model('ResourceRequisition');
 
@@ -440,7 +440,7 @@ class ResourceRequisitions extends Controller
 
     public function reject($id)
     {
-        AuthHelper::can('resource_requisitions.approve');
+     AuthHelper::can('resource_requisitions.reject');
 
         $model = $this->model('ResourceRequisition');
 
@@ -468,7 +468,7 @@ class ResourceRequisitions extends Controller
      */
     public function processApproval($id)
     {
-        AuthHelper::can('resource_requisitions.approve');
+   AuthHelper::can('resource_requisitions.approve');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 

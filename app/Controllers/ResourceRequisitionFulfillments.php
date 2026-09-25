@@ -20,6 +20,8 @@ class ResourceRequisitionFulfillments extends Controller
     */
     public function getStockAvailability()
     {
+        AuthHelper::can('resource_requisitions.fulfill');
+        
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
             header('Content-Type: application/json');
@@ -99,7 +101,7 @@ class ResourceRequisitionFulfillments extends Controller
 
     public function index($requisition_id)
     {
-        AuthHelper::can('projects.view');
+     AuthHelper::can('resource_requisitions.fulfill');
 
 
         /*
@@ -165,7 +167,7 @@ class ResourceRequisitionFulfillments extends Controller
 
     public function create($requisition_id)
     {
-        AuthHelper::can('projects.view');
+        AuthHelper::can('resource_requisitions.fulfill');
 
 
         /*
@@ -300,7 +302,7 @@ class ResourceRequisitionFulfillments extends Controller
 
     public function createResource($requisition_id)
     {
-        AuthHelper::can('projects.view');
+        AuthHelper::can('resource_requisitions.fulfill');
 
 
         /*
@@ -439,7 +441,7 @@ class ResourceRequisitionFulfillments extends Controller
 
     public function store()
     {
-        AuthHelper::can('projects.view');
+        AuthHelper::can('resource_requisitions.fulfill');
 
 
         /*
@@ -953,7 +955,7 @@ class ResourceRequisitionFulfillments extends Controller
 
     public function details($fulfillment_id)
     {
-        AuthHelper::can('projects.view');
+      AuthHelper::can('resource_requisitions.fulfill');
 
 
         /*
@@ -1017,7 +1019,7 @@ class ResourceRequisitionFulfillments extends Controller
 
     public function storeResource()
     {
-        AuthHelper::can('projects.view');
+        AuthHelper::can('resource_requisitions.fulfill');
 
         /*
     |------------------------------------------------
