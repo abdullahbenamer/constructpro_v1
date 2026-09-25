@@ -74,5 +74,25 @@ class ProjectAdvance extends Controller
         $this->view('project-costs/advance_list', $data);
     }
 
- 
+ public function runAutoSettlement($project_id)
+{
+    AuthHelper::can('project_advances.settle');
+
+    $advanceModel = $this->model('ProjectAdvance');
+
+    $advanceModel->runAutoSettlement($project_id);
+
+    FlashHelper::success(
+        __('advance_settlement_completed_successfully')
+    );
+
+    header(
+        "Location: " .
+        URLROOT .
+        "/projectadvance/list/$project_id"
+    );
+
+    exit;
+}
+
 }
