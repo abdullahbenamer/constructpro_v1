@@ -9,7 +9,7 @@ class Units extends Controller
     public function index()
     {
 
-        AuthHelper::can('admin.access');
+        AuthHelper::can('units.view');
 
         $model = $this->model('UnitModel');
 
@@ -31,7 +31,7 @@ class Units extends Controller
     public function create()
     {
 
-        AuthHelper::can('admin.access');
+    AuthHelper::can('units.create');
 
         $this->view('units/create');
 
@@ -45,7 +45,7 @@ class Units extends Controller
     public function store()
     {
 
-        AuthHelper::can('admin.access');
+        AuthHelper::can('units.create');
 
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
@@ -81,7 +81,7 @@ class Units extends Controller
     public function edit($id)
     {
 
-        AuthHelper::can('admin.access');
+        AuthHelper::can('units.edit');
 
         $model = $this->model('UnitModel');
 
@@ -103,7 +103,7 @@ class Units extends Controller
     public function update($id)
     {
 
-        AuthHelper::can('admin.access');
+       AuthHelper::can('units.edit');
 
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
@@ -138,7 +138,7 @@ class Units extends Controller
  */
 public function delete($id)
 {
-    AuthHelper::can('admin.access');
+   AuthHelper::can('units.delete');
 
     $model = $this->model('Unit');
 

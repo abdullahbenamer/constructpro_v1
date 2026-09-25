@@ -4,6 +4,9 @@ class Technicians extends Controller
 {
     public function index()
     {
+
+    AuthHelper::can('technicians.view');
+
         $model = $this->model('Technician');
 
         $data['technicians'] =
@@ -14,6 +17,9 @@ class Technicians extends Controller
 
     public function details($id)
     {
+
+    AuthHelper::can('technicians.view');
+    
         $model = $this->model('Technician');
 
         $technician =

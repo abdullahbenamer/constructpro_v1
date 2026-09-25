@@ -1,28 +1,17 @@
 <?php
-
 class ResourceCategories extends Controller
 {
-
-
     /**
      * LIST RESOURCE CATEGORIES
      */
     public function index()
     {
-
-        AuthHelper::can('admin.access');
-
+     AuthHelper::can('resource_categories.view');
 
         $model = $this->model('ResourceCategory');
-
-
         $data = [
-
             'categories' => $model->getAll()
-
         ];
-
-
         $this->view(
             'resource-categories/index',
             $data
@@ -30,37 +19,24 @@ class ResourceCategories extends Controller
 
     }
 
-
-
-
-
     /**
      * CREATE PAGE
      */
     public function create()
     {
-
-        AuthHelper::can('admin.access');
-
+     AuthHelper::can('resource_categories.create');
 
         $this->view(
             'resource-categories/create'
         );
-
     }
-
-
-
-
 
     /**
      * STORE CATEGORY
      */
     public function store()
     {
-
-        AuthHelper::can('admin.access');
-
+        AuthHelper::can('resource_categories.create');
 
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
@@ -72,11 +48,7 @@ class ResourceCategories extends Controller
 
         }
 
-
-
         $model = $this->model('ResourceCategory');
-
-
 
         $data = [
 
@@ -92,11 +64,7 @@ class ResourceCategories extends Controller
 
         ];
 
-
-
         $model->create($data);
-
-
 
         header(
             'Location: ' . URLROOT . '/ResourceCategories'
@@ -106,22 +74,15 @@ class ResourceCategories extends Controller
 
     }
 
-
-
-
-
     /**
      * EDIT PAGE
      */
     public function edit($id)
     {
 
-        AuthHelper::can('admin.access');
-
+    AuthHelper::can('resource_categories.edit');
 
         $model = $this->model('ResourceCategory');
-
-
 
         $data = [
 
@@ -129,18 +90,11 @@ class ResourceCategories extends Controller
 
         ];
 
-
-
         $this->view(
             'resource-categories/edit',
             $data
         );
-
     }
-
-
-
-
 
     /**
      * UPDATE CATEGORY
@@ -148,8 +102,7 @@ class ResourceCategories extends Controller
     public function update($id)
     {
 
-        AuthHelper::can('admin.access');
-
+   AuthHelper::can('resource_categories.edit');
 
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
@@ -161,11 +114,7 @@ class ResourceCategories extends Controller
 
         }
 
-
-
         $model = $this->model('ResourceCategory');
-
-
 
         $data = [
 
@@ -180,8 +129,6 @@ class ResourceCategories extends Controller
             'status'          => $_POST['status']
 
         ];
-
-
 
         $model->update($id,$data);
 
@@ -195,16 +142,12 @@ class ResourceCategories extends Controller
 
     }
 
-
-
-
-
     /**
  * DELETE CATEGORY
  */
 public function delete($id)
 {
-    AuthHelper::can('admin.access');
+  AuthHelper::can('resource_categories.delete');
 
     $model = $this->model('ResourceCategory');
 

@@ -4,7 +4,7 @@ class ProjectAdvance extends Controller
 {
    public function create($project_id)
 {
-    AuthHelper::can('project.advance.create');
+    AuthHelper::can('project_advances.create');
 
     $projectModel = $this->model('Project');
     $advanceModel = $this->model('ProjectAdvance');
@@ -62,7 +62,7 @@ class ProjectAdvance extends Controller
 
     public function list($project_id)
     {
-        AuthHelper::can('project.advance.view');
+        AuthHelper::can('project_advances.view');
 
         $advanceModel = $this->model('ProjectAdvance');
         $projectModel = $this->model('Project');
@@ -76,6 +76,9 @@ class ProjectAdvance extends Controller
 
     public function runAutoSettlement($project_id)
 {
+
+AuthHelper::can('project_advances.settle');
+
     $advances = $this->db->query(
         "SELECT * FROM project_advances WHERE project_id = ? ORDER BY advance_date ASC",
         [$project_id]
