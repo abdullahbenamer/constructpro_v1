@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 25, 2026 at 11:22 PM
+-- Generation Time: Sep 26, 2026 at 11:43 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -209,7 +209,8 @@ INSERT INTO `goods_receipts` (`id`, `grn_number`, `purchase_order_id`, `supplier
 (40, 'GRN-20260920144629', 63, 4, '2026-09-20', 322.50, 322.50, '', 1, '2026-09-20 12:46:29'),
 (41, 'GRN-20260920151231', 60, 4, '2026-09-20', 6000.00, 6000.00, 'هناك ارتفاع واضح في السعر بما يعادل 1/3 القيمة الاصلية', 1, '2026-09-20 13:12:31'),
 (42, 'GRN-20260924073313', 60, 4, '2026-09-24', 75.00, 75.00, '', 1, '2026-09-24 05:33:13'),
-(43, 'GRN-20260924123722', 60, 4, '2026-09-24', 15.00, 15.00, 'متبقي 80 قطعة لم تستلم', 1, '2026-09-24 10:37:22');
+(43, 'GRN-20260924123722', 60, 4, '2026-09-24', 15.00, 15.00, 'متبقي 80 قطعة لم تستلم', 1, '2026-09-24 10:37:22'),
+(44, 'GRN-20260926065123', 64, 1, '2026-09-26', 525.00, 525.00, '', 1, '2026-09-26 04:51:23');
 
 -- --------------------------------------------------------
 
@@ -239,7 +240,8 @@ INSERT INTO `goods_receipt_items` (`id`, `goods_receipt_id`, `purchase_order_ite
 (32, 40, 67, 172, 32, 30.00, 10.75, 322.50),
 (33, 41, 64, 117, 32, 50.00, 120.00, 6000.00),
 (34, 42, 63, 181, 32, 50.00, 1.50, 75.00),
-(35, 43, 63, 181, 32, 20.00, 0.75, 15.00);
+(35, 43, 63, 181, 32, 20.00, 0.75, 15.00),
+(36, 44, 68, 156, 32, 15.00, 35.00, 525.00);
 
 -- --------------------------------------------------------
 
@@ -365,7 +367,7 @@ INSERT INTO `inventory` (`id`, `name`, `category`, `sku`, `quantity`, `location_
 (153, 'PPR Pipe 25mm', 'PLUMBING & DRAINAGE', 'PPR-25-001', 400.00, NULL, 80, 4.80, 'M', 10, 1, NULL, 12),
 (154, 'PVC Elbow 90° 25mm', 'PLUMBING & DRAINAGE', 'ELB-25-90-001', 300.00, NULL, 50, 1.20, 'PCS', 1, 0, NULL, 12),
 (155, 'Brass Ball Valve 1\"', 'PLUMBING & DRAINAGE', 'VAL-BV-1-001', 90.00, NULL, 15, 24.00, 'PCS', 1, 0, NULL, 12),
-(156, 'Bearing 6204', 'OTHER', 'BRG-6204-001', 240.00, NULL, 10, 5.75, 'PCS', 1, 0, 6, 3),
+(156, 'Bearing 6204', 'OTHER', 'BRG-6204-001', 255.00, NULL, 10, 35.00, 'PCS', 1, 0, 6, 3),
 (157, 'Bearing 6205', 'OTHER', 'BRG-6205-001', 41.00, NULL, 10, 14.50, 'PCS', 1, 0, 6, 3),
 (158, 'V-Belt A-42', 'OTHER', 'VBT-A42-001', 25.00, NULL, 5, 9.50, 'PCS', 1, 0, NULL, 12),
 (159, 'Hydraulic Hose 1/2\"', 'OTHER', 'HYD-HS-12-001', 250.00, NULL, 50, 8.50, 'M', 10, 1, NULL, 12),
@@ -702,7 +704,8 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (494, 172, 32, 30.00),
 (495, 117, 32, 40.00),
 (496, 181, 32, 70.00),
-(497, 123, 32, 25.00);
+(497, 123, 32, 25.00),
+(498, 156, 32, 15.00);
 
 -- --------------------------------------------------------
 
@@ -759,7 +762,8 @@ INSERT INTO `inventory_movements` (`id`, `inventory_id`, `location_id`, `type`, 
 (342, 181, 32, 'IN', 50.00, NULL, 4, NULL, NULL, 50.00, 550.00, 'GRN-42 / PO-PO-260912085701', NULL, 1, '2026-09-24 05:33:14'),
 (343, 181, 32, 'IN', 20.00, NULL, 4, NULL, NULL, 70.00, 570.00, 'GRN-43 / PO-PO-260912085701', 'متبقي 80 قطعة لم تستلم', 1, '2026-09-24 10:37:22'),
 (344, 123, 1, 'OUT', 25.00, NULL, NULL, NULL, NULL, 300.00, 620.00, NULL, 'Warehouse Transfer #49', 12, '2026-09-25 20:16:35'),
-(345, 123, 32, 'IN', 25.00, NULL, NULL, NULL, NULL, 25.00, 620.00, NULL, 'Warehouse Transfer #49', 12, '2026-09-25 20:16:35');
+(345, 123, 32, 'IN', 25.00, NULL, NULL, NULL, NULL, 25.00, 620.00, NULL, 'Warehouse Transfer #49', 12, '2026-09-25 20:16:35'),
+(346, 156, 32, 'IN', 15.00, NULL, 1, NULL, NULL, 15.00, 255.00, 'GRN-44 / PO-PO-20260917174851', NULL, 1, '2026-09-26 04:51:23');
 
 -- --------------------------------------------------------
 
@@ -1174,6 +1178,22 @@ INSERT INTO `project_scopes` (`id`, `project_id`, `scope`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `project_settlements`
+--
+
+CREATE TABLE `project_settlements` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `advance_id` int(11) NOT NULL,
+  `cost_id` int(11) NOT NULL,
+  `amount` decimal(15,2) NOT NULL,
+  `settlement_type` enum('advance_to_cost') NOT NULL DEFAULT 'advance_to_cost',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `purchase_items`
 --
 
@@ -1230,7 +1250,7 @@ INSERT INTO `purchase_orders` (`id`, `po_number`, `supplier_id`, `project_id`, `
 (61, 'PO-260912223226', 4, NULL, NULL, NULL, 'WAREHOUSE', 'draft', '2026-09-12', '2026-09-17', 620.00, 0.00, 0.00, 620.00, '', 1, NULL, NULL, NULL, '2026-09-12 20:32:26', 'OPEN'),
 (62, 'PO-260914081516', 3, NULL, NULL, NULL, 'WAREHOUSE', 'draft', '2026-09-13', '2026-09-17', 0.00, 0.00, 0.00, 0.00, '', 1, NULL, NULL, NULL, '2026-09-14 06:15:16', 'OPEN'),
 (63, 'PO-20260914095038', 4, 55, NULL, NULL, 'DIRECT_TO_PROJECT_SITE', 'received', '2026-09-14', '2026-09-18', 8250.00, 0.00, 0.00, 8250.00, '', 1, 1, '2026-09-14 09:51:19', '2026-09-20 14:46:29', '2026-09-14 07:50:38', 'RECEIVED'),
-(64, 'PO-20260917174851', 1, NULL, NULL, 1, 'WAREHOUSE', 'approved', '2026-09-17', '2026-09-24', 700.00, 0.00, 0.00, 700.00, '', 1, 12, '2026-09-25 22:22:17', NULL, '2026-09-17 15:48:51', 'OPEN');
+(64, 'PO-20260917174851', 1, NULL, NULL, 1, 'WAREHOUSE', 'partial', '2026-09-17', '2026-09-24', 700.00, 0.00, 0.00, 700.00, '', 1, 12, '2026-09-25 22:22:17', NULL, '2026-09-17 15:48:51', 'PARTIAL');
 
 -- --------------------------------------------------------
 
@@ -1266,7 +1286,7 @@ INSERT INTO `purchase_order_items` (`id`, `purchase_order_id`, `inventory_id`, `
 (65, 61, 167, 100.00, 0.00, 1.20, 0.00, NULL, '2026-09-12 20:32:44'),
 (66, 61, 113, 20.00, 0.00, 25.00, 0.00, NULL, '2026-09-12 21:15:47'),
 (67, 63, 172, 30.00, 30.00, 275.00, 0.00, NULL, '2026-09-14 07:51:10'),
-(68, 64, 156, 20.00, 0.00, 35.00, 0.00, NULL, '2026-09-17 15:49:43');
+(68, 64, 156, 20.00, 15.00, 35.00, 0.00, NULL, '2026-09-17 15:49:43');
 
 -- --------------------------------------------------------
 
@@ -1974,7 +1994,9 @@ INSERT INTO `supplier_ledger` (`id`, `supplier_id`, `type`, `reference_type`, `r
 (40, 4, 'GRN', 'GoodsReceipt', 40, 322.50, 'DEBIT', '2026-09-20 12:46:29'),
 (41, 4, 'GRN', 'GoodsReceipt', 41, 6000.00, 'DEBIT', '2026-09-20 13:12:31'),
 (42, 4, 'GRN', 'GoodsReceipt', 42, 75.00, 'DEBIT', '2026-09-24 05:33:14'),
-(43, 4, 'GRN', 'GoodsReceipt', 43, 15.00, 'DEBIT', '2026-09-24 10:37:22');
+(43, 4, 'GRN', 'GoodsReceipt', 43, 15.00, 'DEBIT', '2026-09-24 10:37:22'),
+(44, 1, 'GRN', 'GoodsReceipt', 44, 525.00, 'DEBIT', '2026-09-26 04:51:23'),
+(45, 1, 'PAYMENT', 'SupplierPayment', 14, 200.00, 'CREDIT', '2026-09-26 04:54:01');
 
 -- --------------------------------------------------------
 
@@ -2000,7 +2022,8 @@ CREATE TABLE `supplier_payments` (
 
 INSERT INTO `supplier_payments` (`id`, `supplier_id`, `payment_date`, `amount`, `method`, `reference`, `notes`, `created_by`, `created_at`) VALUES
 (12, 3, '2026-09-06', 10000.00, 'Bank Transfer', 'against PO-12300765', 'partial payment', 1, '2026-09-06 19:04:01'),
-(13, 3, '2026-09-06', 1000.00, 'Cash', 'second payment PO-#', 'second payment PO-#', 1, '2026-09-06 19:45:19');
+(13, 3, '2026-09-06', 1000.00, 'Cash', 'second payment PO-#', 'second payment PO-#', 1, '2026-09-06 19:45:19'),
+(14, 1, '2026-09-26', 200.00, 'Cash', 'PO 20260917174851', 'دفعة من حساب امر الشراء PO 20260917174851', 1, '2026-09-26 04:54:01');
 
 -- --------------------------------------------------------
 
@@ -2411,6 +2434,16 @@ ALTER TABLE `project_scopes`
   ADD UNIQUE KEY `uq_project_scope` (`project_id`,`scope`);
 
 --
+-- Indexes for table `project_settlements`
+--
+ALTER TABLE `project_settlements`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uq_project_settlements_advance_cost_type` (`advance_id`,`cost_id`,`settlement_type`),
+  ADD KEY `idx_project_settlements_project` (`project_id`),
+  ADD KEY `idx_project_settlements_advance` (`advance_id`),
+  ADD KEY `idx_project_settlements_cost` (`cost_id`);
+
+--
 -- Indexes for table `purchase_items`
 --
 ALTER TABLE `purchase_items`
@@ -2647,13 +2680,13 @@ ALTER TABLE `employees`
 -- AUTO_INCREMENT for table `goods_receipts`
 --
 ALTER TABLE `goods_receipts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `goods_receipt_items`
 --
 ALTER TABLE `goods_receipt_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `goods_returns`
@@ -2683,13 +2716,13 @@ ALTER TABLE `inventory_locations`
 -- AUTO_INCREMENT for table `inventory_location_stock`
 --
 ALTER TABLE `inventory_location_stock`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=498;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=499;
 
 --
 -- AUTO_INCREMENT for table `inventory_movements`
 --
 ALTER TABLE `inventory_movements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=346;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=347;
 
 --
 -- AUTO_INCREMENT for table `inventory_reservations`
@@ -2744,6 +2777,12 @@ ALTER TABLE `project_ledger`
 --
 ALTER TABLE `project_scopes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+
+--
+-- AUTO_INCREMENT for table `project_settlements`
+--
+ALTER TABLE `project_settlements`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `purchase_items`
@@ -2839,13 +2878,13 @@ ALTER TABLE `suppliers`
 -- AUTO_INCREMENT for table `supplier_ledger`
 --
 ALTER TABLE `supplier_ledger`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `supplier_payments`
 --
 ALTER TABLE `supplier_payments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `supplier_payment_allocations`
@@ -3023,6 +3062,14 @@ ALTER TABLE `project_ledger`
 --
 ALTER TABLE `project_scopes`
   ADD CONSTRAINT `fk_project_scopes_project` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `project_settlements`
+--
+ALTER TABLE `project_settlements`
+  ADD CONSTRAINT `fk_project_settlements_advance` FOREIGN KEY (`advance_id`) REFERENCES `project_advances` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_project_settlements_cost` FOREIGN KEY (`cost_id`) REFERENCES `project_costs` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_project_settlements_project` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `purchase_items`
