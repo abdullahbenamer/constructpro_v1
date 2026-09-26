@@ -3,32 +3,39 @@ require_once '../app/Core/Model.php';
 
 class UserModel extends Model
 {
-    public function login($email, $password)
-    {
-        $user = $this->db->query(
-            "SELECT * FROM users WHERE email = ?",
-            [$email]
-        )->fetch();
+public function login($login, $password)
+{
+    $user = $this->db->query(
+        "SELECT *
+         FROM users
+         WHERE user_name = ?
+            OR email = ?
+         LIMIT 1",
+        [$login, $login]
+    )->fetch();
 
-        if (!$user || !password_verify($password, $user->password)) {
-            return false;
-        }
-
-        $_SESSION['user_id']   = $user->id;
-        $_SESSION['user_name'] = $user->user_name;
-        $_SESSION['full_name'] = $user->full_name;
-        $_SESSION['role_id']   = $user->role_id;
-        $_SESSION['user_photo'] = $user->photo;
-
-        $role = $this->db->query(
-            "SELECT name FROM roles WHERE id = ?",
-            [$user->role_id]
-        )->fetch();
-
-        $_SESSION['role_name'] = $role->name ?? '';
-
-        return true;
+    if (!$user || !password_verify($password, $user->password)) {
+        return false;
     }
+
+    $_SESSION['user_id']    = $user->id;
+    $_SESSION['user_name']  = $user->user_name;
+    $_SESSION['full_name']  = $user->full_name;
+    $_SESSION['role_id']    = $user->role_id;
+    $_SESSION['user_photo'] = $user->photo;
+
+    $role = $this->db->query(
+        "SELECT name
+         FROM roles
+         WHERE id = ?",
+        [$user->role_id]
+    )->fetch();
+
+    $_SESSION['role']      = strtolower($role->name ?? '');
+    $_SESSION['role_name'] = $role->name ?? '';
+
+    return true;
+}
 
     public function logout()
     {

@@ -33,7 +33,7 @@
 
             <tr>
 
-                <td colspan="7"
+                <td colspan="8"
                     class="text-center py-5">
 
                     <i class="fas fa-warehouse fa-3x text-secondary mb-3"></i>

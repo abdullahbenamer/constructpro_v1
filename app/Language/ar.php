@@ -1189,10 +1189,10 @@ return [
 'permission_projects_documents_delete' => 'حذف مستندات المشاريع',
 'permission_projects_restore' => 'استعادة المشاريع',
 
-'permission_group_project_advances' => 'سلف المشاريع',
-'permission_project_advances_create' => 'إنشاء سلف المشاريع',
-'permission_project_advances_settle' => 'تسوية سلف المشاريع',
-'permission_project_advances_view' => 'عرض سلف المشاريع',
+'permission_group_project_advances' => 'مدفوعات المشاريع',
+'permission_project_advances_create' => 'إنشاء مدفوعات المشاريع',
+'permission_project_advances_settle' => 'تسوية مدفوعات المشاريع',
+'permission_project_advances_view' => 'عرض  مدفوعات المشاريع',
 
 'permission_group_project_costs' => 'تكاليف المشاريع',
 'permission_project_costs_create' => 'إنشاء تكاليف المشاريع',
@@ -1442,7 +1442,7 @@ return [
 'user_not_found' => 'المستخدم غير موجود.',
 'settings_updated' => 'تم تحديث الإعدادات بنجاح.',
 
-'invalid_email_or_password' => 'البريد الإلكتروني أو كلمة المرور غير صحيحة.',
+'invalid_username_or_email_or_password' => 'اسم المستخدم/البريد الإلكتروني أو كلمة المرور غير صحيحة.',
 
 'please_select_resource' => 'يرجى اختيار مورد.',
 'invalid_resource_source' => 'مصدر المورد غير صالح.',
@@ -1632,7 +1632,7 @@ return [
 
 // JS form fields validation messages
 'validation_required'   => 'يرجى ملء هذا الحقل.',
-'validation_email'      => 'يرجى إدخال بريد إلكتروني صحيح.',
+'validation_email'      => 'يرجى إدخال إسم مستخدم أوبريد إلكتروني صحيح.',
 'validation_url'        => 'يرجى إدخال رابط صحيح.',
 'validation_invalid'   => 'يرجى إدخال قيمة صحيحة.',
 'validation_min'        => 'يجب ألا تقل القيمة عن :min.',

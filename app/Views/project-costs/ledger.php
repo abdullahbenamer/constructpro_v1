@@ -1,6 +1,8 @@
 <h3>
     <?= __('project') ?>:
-    <?= $project->title ?>
+    <a href="<?= URLROOT ?>/project-costs/<?= $project->id ?>">
+        <?= $project->title ?>
+    </a>
 </h3>
 
 <br>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 23, 2026 at 03:18 PM
+-- Generation Time: Sep 25, 2026 at 11:22 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -137,7 +137,8 @@ CREATE TABLE `customers` (
 
 INSERT INTO `customers` (`id`, `name`, `company`, `email`, `phone`, `address`, `status`, `created_at`, `account_manager_id`) VALUES
 (2, 'Sayed Saleem', 'Libya Power Instrumentation Ltd', 'info@lpp.com', '0923456789', '', 'active', '2026-04-07 20:11:12', 6),
-(5, 'Khaled Sadoun', 'Switchgear Electric Co.', 'info@khaled.ly', '0944567899', 'Misrata Industrial Area', 'active', '2026-04-07 20:34:24', 8);
+(5, 'Khaled Sadoun', 'Switchgear Electric Co.', 'info@khaled.ly', '0944567899', 'Misrata Industrial Area', 'active', '2026-04-07 20:34:24', 8),
+(14, 'عبدالحميد العبدالله', 'الموارد الذاتية المساهمة الليبية', 'mawared@ems.com', '0960258765', 'جنة العريف طرابلس ليبيا', 'active', '2026-09-24 10:32:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -206,7 +207,9 @@ INSERT INTO `goods_receipts` (`id`, `grn_number`, `purchase_order_id`, `supplier
 (38, 'GRN-20260906210253', 56, 3, '2026-09-06', 10320.00, 10320.00, '', 1, '2026-09-06 19:02:53'),
 (39, 'GRN-20260910114958', 57, 4, '2026-09-10', 600.00, 600.00, '', 1, '2026-09-10 09:49:58'),
 (40, 'GRN-20260920144629', 63, 4, '2026-09-20', 322.50, 322.50, '', 1, '2026-09-20 12:46:29'),
-(41, 'GRN-20260920151231', 60, 4, '2026-09-20', 6000.00, 6000.00, 'هناك ارتفاع واضح في السعر بما يعادل 1/3 القيمة الاصلية', 1, '2026-09-20 13:12:31');
+(41, 'GRN-20260920151231', 60, 4, '2026-09-20', 6000.00, 6000.00, 'هناك ارتفاع واضح في السعر بما يعادل 1/3 القيمة الاصلية', 1, '2026-09-20 13:12:31'),
+(42, 'GRN-20260924073313', 60, 4, '2026-09-24', 75.00, 75.00, '', 1, '2026-09-24 05:33:13'),
+(43, 'GRN-20260924123722', 60, 4, '2026-09-24', 15.00, 15.00, 'متبقي 80 قطعة لم تستلم', 1, '2026-09-24 10:37:22');
 
 -- --------------------------------------------------------
 
@@ -234,7 +237,9 @@ INSERT INTO `goods_receipt_items` (`id`, `goods_receipt_id`, `purchase_order_ite
 (30, 38, 58, 122, 1, 400.00, 25.80, 10320.00),
 (31, 39, 59, 155, 1, 25.00, 24.00, 600.00),
 (32, 40, 67, 172, 32, 30.00, 10.75, 322.50),
-(33, 41, 64, 117, 32, 50.00, 120.00, 6000.00);
+(33, 41, 64, 117, 32, 50.00, 120.00, 6000.00),
+(34, 42, 63, 181, 32, 50.00, 1.50, 75.00),
+(35, 43, 63, 181, 32, 20.00, 0.75, 15.00);
 
 -- --------------------------------------------------------
 
@@ -385,7 +390,7 @@ INSERT INTO `inventory` (`id`, `name`, `category`, `sku`, `quantity`, `location_
 (178, 'Cut Resistant Gloves', 'SAFETY & PPE', 'PPE-CUT-001', 100.00, NULL, 20, 4.50, 'PAIR', 6, 0, 4, 4),
 (179, 'Safety Harness', 'SAFETY & PPE', 'PPE-HARNESS-001', 25.00, NULL, 5, 65.00, 'SET', 5, 0, 4, 4),
 (180, 'Ear Protection Plugs', 'SAFETY & PPE', 'PPE-EAR-001', 300.00, NULL, 50, 0.45, 'PAIR', 6, 0, 4, 4),
-(181, 'Dust Mask FFP2', 'SAFETY & PPE', 'PPE-MASK-001', 500.00, NULL, 100, 0.55, 'PCS', 1, 0, 4, 4),
+(181, 'Dust Mask FFP2', 'SAFETY & PPE', 'PPE-MASK-001', 570.00, NULL, 100, 0.75, 'PCS', 1, 0, 4, 4),
 (182, 'Cutting Disc 115mm', 'OTHER', 'DISC-115-001', 200.00, NULL, 30, 1.20, 'PCS', 1, 0, 8, 9),
 (183, 'Grinding Disc 115mm', 'OTHER', 'GRD-115-001', 150.00, NULL, 30, 1.50, 'PCS', 1, 0, 8, 9),
 (184, 'Welding Electrode 3.2mm', 'CONSUMABLES', 'WELD-32-001', 100.00, NULL, 20, 4.80, 'KG', 7, 1, NULL, 12),
@@ -434,7 +439,9 @@ INSERT INTO `inventory_locations` (`id`, `code`, `name`, `notes`, `address`, `st
 (29, 'PRJ-2026-0053', 'PROJECT - PRJ-2026-0053 # any test project', 'Project inventory location', 'Ajuy Tipacla LOT 4', NULL, NULL, '2026-09-07 19:42:16'),
 (30, 'PRJ-2026-0054', 'PROJECT - PRJ-2026-0054 # بناء مدرسة ثانوية', 'Project inventory location', 'عين زارة طرابلس', NULL, NULL, '2026-09-08 19:56:38'),
 (31, 'PRJ-2026-0055', 'PROJECT - PRJ-2026-0055 # بناء مركز صحي بمنطقة المراونة، تاجوراء', 'Project inventory location', 'منطقة المراونة، تاجوراء، 12 الشارع الرابع.', NULL, NULL, '2026-09-12 13:50:51'),
-(32, 'N-TAJ', 'مخزن النشيع تاجوراء', 'مواعيد العمل من 9 صباحا الى 5 مساء', 'النشيع - تاجوراء - شارع اللطعي بقرب ملعب الجولف', 15, '+21898635442', '2026-09-18 07:11:34');
+(32, 'N-TAJ', 'مخزن النشيع تاجوراء', 'مواعيد العمل من 9 صباحا الى 5 مساء', 'النشيع - تاجوراء - شارع اللطعي بقرب ملعب الجولف', 15, '+21898635442', '2026-09-18 07:11:34'),
+(33, 'TJ-911', 'تاجوراء الوسط', '', 'تاجوراء الطريق المزدوجة رقم 10', 15, '0986549873', '2026-09-24 10:47:04'),
+(34, 'ABC-26', 'STORE ABC', '', 'النوفليين شارع موسى عبدالعاطي رقم 7', 12, '0987653456', '2026-09-25 19:38:41');
 
 -- --------------------------------------------------------
 
@@ -490,7 +497,7 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (289, 122, 1, 300.00),
 (290, 122, 2, 240.00),
 (291, 122, 3, 160.00),
-(292, 123, 1, 325.00),
+(292, 123, 1, 300.00),
 (293, 123, 2, 195.00),
 (294, 123, 3, 100.00),
 (295, 124, 1, 60.00),
@@ -693,7 +700,9 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (492, 115, 29, 1000.00),
 (493, 114, 32, 500.00),
 (494, 172, 32, 30.00),
-(495, 117, 32, 40.00);
+(495, 117, 32, 40.00),
+(496, 181, 32, 70.00),
+(497, 123, 32, 25.00);
 
 -- --------------------------------------------------------
 
@@ -746,7 +755,11 @@ INSERT INTO `inventory_movements` (`id`, `inventory_id`, `location_id`, `type`, 
 (338, 114, 32, 'IN', 500.00, NULL, NULL, NULL, NULL, 500.00, 3275.00, 'for next project', 'Warehouse Transfer #48', 1, '2026-09-18 13:27:30'),
 (339, 172, 32, 'IN', 30.00, NULL, 4, NULL, NULL, 30.00, 113.00, 'GRN-40 / PO-PO-20260914095038', NULL, 1, '2026-09-20 12:46:29'),
 (340, 117, 32, 'IN', 50.00, NULL, 4, NULL, NULL, 50.00, 110.00, 'GRN-41 / PO-PO-260912085701', 'هناك ارتفاع واضح في السعر بما يعادل 1/3 القيمة الاصلية', 1, '2026-09-20 13:12:31'),
-(341, 117, 32, 'OUT', 10.00, NULL, NULL, NULL, NULL, 40.00, 100.00, 'PROJECT #45', 'Coarse Aggregate 20mm', 1, '2026-09-20 13:29:42');
+(341, 117, 32, 'OUT', 10.00, NULL, NULL, NULL, NULL, 40.00, 100.00, 'PROJECT #45', 'Coarse Aggregate 20mm', 1, '2026-09-20 13:29:42'),
+(342, 181, 32, 'IN', 50.00, NULL, 4, NULL, NULL, 50.00, 550.00, 'GRN-42 / PO-PO-260912085701', NULL, 1, '2026-09-24 05:33:14'),
+(343, 181, 32, 'IN', 20.00, NULL, 4, NULL, NULL, 70.00, 570.00, 'GRN-43 / PO-PO-260912085701', 'متبقي 80 قطعة لم تستلم', 1, '2026-09-24 10:37:22'),
+(344, 123, 1, 'OUT', 25.00, NULL, NULL, NULL, NULL, 300.00, 620.00, NULL, 'Warehouse Transfer #49', 12, '2026-09-25 20:16:35'),
+(345, 123, 32, 'IN', 25.00, NULL, NULL, NULL, NULL, 25.00, 620.00, NULL, 'Warehouse Transfer #49', 12, '2026-09-25 20:16:35');
 
 -- --------------------------------------------------------
 
@@ -807,7 +820,8 @@ CREATE TABLE `inventory_transfers` (
 INSERT INTO `inventory_transfers` (`id`, `inventory_id`, `from_location_id`, `to_location_id`, `quantity`, `reference`, `notes`, `created_by`, `created_at`, `reversed_at`, `reversed_by`, `reversal_transfer_id`, `status`) VALUES
 (46, 187, 1, 2, 5.00, 'updating Tajora WH', 'for daily work', 1, '2026-09-11 14:42:53', NULL, NULL, NULL, 'COMPLETED'),
 (47, 111, 1, 31, 100.00, 'طلب تاسيسات لمبني العمال', 'يتم نقل المادة المحولة فورا', 1, '2026-09-12 13:55:16', NULL, NULL, NULL, 'COMPLETED'),
-(48, 114, 1, 32, 500.00, 'for next project', 'we keep it in WH N-TAJ before prices go up.', 1, '2026-09-18 13:27:30', NULL, NULL, NULL, 'COMPLETED');
+(48, 114, 1, 32, 500.00, 'for next project', 'we keep it in WH N-TAJ before prices go up.', 1, '2026-09-18 13:27:30', NULL, NULL, NULL, 'COMPLETED'),
+(49, 123, 1, 32, 25.00, '', '', 12, '2026-09-25 20:16:35', NULL, NULL, NULL, 'COMPLETED');
 
 -- --------------------------------------------------------
 
@@ -833,7 +847,6 @@ INSERT INTO `permissions` (`id`, `name`, `description`) VALUES
 (5, 'projects.view', 'View projects'),
 (6, 'inventory.view', 'View inventory'),
 (7, 'project_costs.view', 'View project costs'),
-(8, 'admin.access', 'Access admin panel'),
 (10, 'projects.create', 'Create projects'),
 (11, 'projects.edit', 'Edit projects'),
 (12, 'inventory.edit', 'Edit inventory items'),
@@ -915,7 +928,8 @@ INSERT INTO `permissions` (`id`, `name`, `description`) VALUES
 (97, 'units.edit', 'Edit units'),
 (98, 'units.delete', 'Delete units'),
 (99, 'technicians.view', 'View technicians'),
-(100, 'purchases.view', 'View purchases');
+(100, 'purchases.view', 'View purchases'),
+(104, 'admin.access', 'Full access for Admin.');
 
 -- --------------------------------------------------------
 
@@ -991,7 +1005,8 @@ INSERT INTO `project_advances` (`id`, `project_id`, `amount`, `payment_method`, 
 (21, 54, 10000.00, 'Bank Transfer', 'لطلب بعض المواد الاولية', 'يجب تقديم تفاصيل الصرف في غضون اسبوع', 1, '2026-09-07', '2026-09-11 09:24:33', 'received', NULL),
 (22, 51, 35000.00, 'Bank Transfer', 'الدفعة الاولى ايصال رقم 2026-238', 'يتم تقديم تفاصيل بالخصوص في غضون شهر من تاريخ الاستلام.', 1, '2026-09-19', '2026-09-21 08:37:57', 'received', NULL),
 (23, 51, 1000.00, 'Cash', 'دفعة ثانية', 'يتم تسويتها مع العميل في غضون اسبوع', 1, '2026-09-21', '2026-09-21 08:40:53', 'received', NULL),
-(24, 49, 5000.00, 'Cheque', 'شيك رقم 03046652', 'يتم تسويتها في غضون اسبوع', 1, '2026-09-21', '2026-09-21 08:46:32', 'received', NULL);
+(24, 49, 5000.00, 'Cheque', 'شيك رقم 03046652', 'يتم تسويتها في غضون اسبوع', 1, '2026-09-21', '2026-09-21 08:46:32', 'received', NULL),
+(25, 55, 100000.00, 'Cash', 'اول دفعة مقدمة', 'يجب تسويتها في خلال اسبوع', 12, '2026-09-25', '2026-09-25 21:16:39', 'received', NULL);
 
 -- --------------------------------------------------------
 
@@ -1108,7 +1123,8 @@ INSERT INTO `project_ledger` (`id`, `project_id`, `entry_type`, `ref_table`, `re
 (110, 45, 'cost', 'project_costs', 218, 'Coarse Aggregate 20mm', 1200.00, 0.00, -1200.00, '2026-09-20 13:29:42'),
 (111, 51, 'advance', 'project_advances', 22, 'الدفعة الاولى ايصال رقم 2026-238', 0.00, 35000.00, 222100.00, '2026-09-21 08:37:57'),
 (112, 51, 'advance', 'project_advances', 23, 'دفعة ثانية', 0.00, 1000.00, 223100.00, '2026-09-21 08:40:54'),
-(113, 49, 'advance', 'project_advances', 24, 'شيك رقم 03046652', 0.00, 5000.00, 1968.00, '2026-09-21 08:46:32');
+(113, 49, 'advance', 'project_advances', 24, 'شيك رقم 03046652', 0.00, 5000.00, 1968.00, '2026-09-21 08:46:32'),
+(114, 55, 'advance', 'project_advances', 25, 'اول دفعة مقدمة', 0.00, 100000.00, 99510.00, '2026-09-25 21:16:39');
 
 -- --------------------------------------------------------
 
@@ -1214,7 +1230,7 @@ INSERT INTO `purchase_orders` (`id`, `po_number`, `supplier_id`, `project_id`, `
 (61, 'PO-260912223226', 4, NULL, NULL, NULL, 'WAREHOUSE', 'draft', '2026-09-12', '2026-09-17', 620.00, 0.00, 0.00, 620.00, '', 1, NULL, NULL, NULL, '2026-09-12 20:32:26', 'OPEN'),
 (62, 'PO-260914081516', 3, NULL, NULL, NULL, 'WAREHOUSE', 'draft', '2026-09-13', '2026-09-17', 0.00, 0.00, 0.00, 0.00, '', 1, NULL, NULL, NULL, '2026-09-14 06:15:16', 'OPEN'),
 (63, 'PO-20260914095038', 4, 55, NULL, NULL, 'DIRECT_TO_PROJECT_SITE', 'received', '2026-09-14', '2026-09-18', 8250.00, 0.00, 0.00, 8250.00, '', 1, 1, '2026-09-14 09:51:19', '2026-09-20 14:46:29', '2026-09-14 07:50:38', 'RECEIVED'),
-(64, 'PO-20260917174851', 1, NULL, NULL, 1, 'WAREHOUSE', 'draft', '2026-09-17', '2026-09-24', 700.00, 0.00, 0.00, 700.00, '', 1, NULL, NULL, NULL, '2026-09-17 15:48:51', 'OPEN');
+(64, 'PO-20260917174851', 1, NULL, NULL, 1, 'WAREHOUSE', 'approved', '2026-09-17', '2026-09-24', 700.00, 0.00, 0.00, 700.00, '', 1, 12, '2026-09-25 22:22:17', NULL, '2026-09-17 15:48:51', 'OPEN');
 
 -- --------------------------------------------------------
 
@@ -1245,7 +1261,7 @@ INSERT INTO `purchase_order_items` (`id`, `purchase_order_id`, `inventory_id`, `
 (60, 58, 187, 30.00, 0.00, 35.00, 0.00, NULL, '2026-09-11 18:49:38'),
 (61, 59, 114, 1000.00, 0.00, 2.45, 0.00, NULL, '2026-09-11 20:27:55'),
 (62, 59, 134, 40.00, 0.00, 5.00, 0.00, NULL, '2026-09-12 05:29:11'),
-(63, 60, 181, 150.00, 0.00, 0.75, 0.00, NULL, '2026-09-12 06:57:01'),
+(63, 60, 181, 150.00, 70.00, 0.75, 0.00, NULL, '2026-09-12 06:57:01'),
 (64, 60, 117, 50.00, 50.00, 120.00, 0.00, NULL, '2026-09-12 06:59:49'),
 (65, 61, 167, 100.00, 0.00, 1.20, 0.00, NULL, '2026-09-12 20:32:44'),
 (66, 61, 113, 20.00, 0.00, 25.00, 0.00, NULL, '2026-09-12 21:15:47'),
@@ -1569,9 +1585,17 @@ CREATE TABLE `role_permissions` (
 --
 
 INSERT INTO `role_permissions` (`role_id`, `permission_id`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 5),
 (1, 6),
-(1, 8),
+(1, 7),
+(1, 10),
+(1, 11),
 (1, 12),
+(1, 13),
 (1, 16),
 (1, 17),
 (1, 18),
@@ -1579,6 +1603,7 @@ INSERT INTO `role_permissions` (`role_id`, `permission_id`) VALUES
 (1, 20),
 (1, 21),
 (1, 22),
+(1, 23),
 (1, 29),
 (1, 30),
 (1, 31),
@@ -1591,88 +1616,96 @@ INSERT INTO `role_permissions` (`role_id`, `permission_id`) VALUES
 (1, 38),
 (1, 39),
 (1, 40),
+(1, 43),
+(1, 44),
+(1, 45),
+(1, 46),
+(1, 47),
+(1, 48),
+(1, 49),
+(1, 50),
+(1, 51),
+(1, 52),
+(1, 53),
+(1, 54),
+(1, 55),
+(1, 56),
+(1, 57),
+(1, 58),
+(1, 59),
+(1, 60),
+(1, 61),
+(1, 62),
+(1, 63),
+(1, 64),
+(1, 65),
+(1, 66),
+(1, 67),
+(1, 68),
+(1, 69),
+(1, 70),
+(1, 71),
+(1, 72),
+(1, 73),
+(1, 74),
+(1, 75),
+(1, 76),
+(1, 77),
+(1, 78),
+(1, 79),
+(1, 80),
+(1, 81),
+(1, 82),
+(1, 83),
+(1, 84),
+(1, 85),
+(1, 86),
+(1, 87),
+(1, 88),
+(1, 89),
+(1, 90),
+(1, 91),
+(1, 92),
+(1, 93),
+(1, 94),
+(1, 95),
+(1, 96),
+(1, 97),
+(1, 98),
+(1, 99),
+(1, 100),
+(1, 104),
 (2, 5),
 (2, 6),
-(2, 7),
-(2, 10),
-(2, 11),
 (2, 12),
-(2, 13),
-(2, 16),
 (2, 17),
-(2, 18),
-(2, 19),
-(2, 20),
 (2, 21),
 (2, 22),
-(2, 23),
 (2, 29),
 (2, 30),
 (2, 31),
 (2, 32),
-(2, 33),
-(2, 34),
 (2, 35),
 (2, 36),
-(2, 37),
-(2, 38),
-(2, 39),
-(2, 40),
 (2, 43),
 (2, 44),
 (2, 45),
-(2, 46),
-(2, 47),
-(2, 48),
 (2, 49),
 (2, 50),
-(2, 51),
-(2, 52),
-(2, 53),
-(2, 54),
-(2, 55),
-(2, 56),
-(2, 57),
-(2, 58),
-(2, 59),
-(2, 60),
 (2, 61),
 (2, 62),
 (2, 63),
 (2, 64),
 (2, 65),
 (2, 66),
-(2, 67),
 (2, 68),
 (2, 69),
-(2, 70),
-(2, 71),
-(2, 72),
-(2, 73),
-(2, 74),
-(2, 75),
-(2, 76),
-(2, 77),
-(2, 78),
-(2, 79),
-(2, 80),
 (2, 81),
 (2, 82),
 (2, 83),
 (2, 84),
 (2, 85),
 (2, 86),
-(2, 87),
-(2, 88),
-(2, 89),
-(2, 90),
-(2, 91),
-(2, 92),
-(2, 93),
-(2, 94),
-(2, 95),
-(2, 99),
-(2, 100),
 (3, 5),
 (3, 6),
 (3, 7),
@@ -1682,34 +1715,43 @@ INSERT INTO `role_permissions` (`role_id`, `permission_id`) VALUES
 (3, 13),
 (3, 16),
 (3, 17),
-(3, 18),
-(3, 19),
-(3, 20),
+(3, 21),
 (3, 29),
 (3, 31),
+(3, 32),
 (3, 33),
 (3, 34),
 (3, 35),
 (3, 36),
 (3, 37),
+(3, 38),
 (3, 39),
-(3, 44),
 (3, 45),
+(3, 46),
 (3, 47),
 (3, 48),
+(3, 49),
+(3, 51),
+(3, 52),
 (3, 53),
-(3, 54),
 (3, 55),
 (3, 56),
+(3, 57),
 (3, 58),
 (3, 59),
-(3, 68),
+(3, 61),
+(3, 63),
+(3, 65),
+(3, 66),
 (3, 69),
+(3, 70),
+(3, 71),
 (3, 81),
 (3, 82),
 (3, 83),
 (3, 85),
 (3, 87),
+(3, 91),
 (3, 99),
 (3, 100),
 (4, 5),
@@ -1738,6 +1780,7 @@ INSERT INTO `role_permissions` (`role_id`, `permission_id`) VALUES
 (5, 5),
 (5, 6),
 (5, 7),
+(5, 10),
 (5, 13),
 (5, 16),
 (5, 17),
@@ -1789,29 +1832,26 @@ INSERT INTO `role_permissions` (`role_id`, `permission_id`) VALUES
 (8, 12),
 (8, 17),
 (8, 21),
+(8, 22),
 (8, 29),
 (8, 30),
 (8, 31),
+(8, 32),
 (8, 33),
 (8, 34),
 (8, 35),
-(8, 36),
 (8, 37),
 (8, 39),
-(8, 40),
-(8, 44),
-(8, 45),
 (8, 49),
 (8, 50),
-(8, 63),
-(8, 64),
-(8, 65),
-(8, 66),
+(8, 56),
+(8, 61),
+(8, 62),
 (8, 67),
-(8, 68),
 (8, 69),
 (8, 81),
-(8, 87),
+(8, 95),
+(8, 100),
 (9, 5),
 (9, 6),
 (9, 16),
@@ -1932,7 +1972,9 @@ INSERT INTO `supplier_ledger` (`id`, `supplier_id`, `type`, `reference_type`, `r
 (38, 4, 'GRN', 'GoodsReceipt', 39, 600.00, 'DEBIT', '2026-09-10 09:49:59'),
 (39, 4, '', 'GoodsReturn', 7, 360.00, 'CREDIT', '2026-09-10 10:20:40'),
 (40, 4, 'GRN', 'GoodsReceipt', 40, 322.50, 'DEBIT', '2026-09-20 12:46:29'),
-(41, 4, 'GRN', 'GoodsReceipt', 41, 6000.00, 'DEBIT', '2026-09-20 13:12:31');
+(41, 4, 'GRN', 'GoodsReceipt', 41, 6000.00, 'DEBIT', '2026-09-20 13:12:31'),
+(42, 4, 'GRN', 'GoodsReceipt', 42, 75.00, 'DEBIT', '2026-09-24 05:33:14'),
+(43, 4, 'GRN', 'GoodsReceipt', 43, 15.00, 'DEBIT', '2026-09-24 10:37:22');
 
 -- --------------------------------------------------------
 
@@ -2138,7 +2180,7 @@ INSERT INTO `users` (`id`, `full_name`, `user_name`, `email`, `mobile`, `photo`,
 (7, 'Omar Khalid', 'Omar', 'eng@ems.com', '+218912345298', NULL, '$2y$10$uNBYvJRdBnd5xdlc8ADmb.oCxl4EIVLmd3kuftCWcW7Epbj7CiQrK', '2026-04-07 20:34:24', 3),
 (8, 'Ali Salem', 'Ali', 'tech@ems.com', '+218918762345', NULL, '$2y$10$uNBYvJRdBnd5xdlc8ADmb.oCxl4EIVLmd3kuftCWcW7Epbj7CiQrK', '2026-04-07 20:34:24', 4),
 (11, 'Abdullah Ben Amer', 'Amer', 'benamer@gmail.com', '+218972987645', NULL, '$2y$10$YSYPAjp4O/R.pe40wv4Equfr18/r70omV36YJkE5VU94iTeDCF2P6', '2026-04-20 20:29:44', 8),
-(12, 'Sumaya Abdullah', 'Sumaya', 'sumaya@ems.com', '+2189123457687', NULL, '$2y$10$Y.8EQGCefp30HlCMXKLS2OMuMbWAxnaTRHR88HX8AzTRbHRPoYxgG', '2026-04-22 11:59:21', 8),
+(12, 'Sumaya Abdullah', 'Sumaya', 'sumaya@ems.com', '+2189123457687', NULL, '$2y$10$Y.8EQGCefp30HlCMXKLS2OMuMbWAxnaTRHR88HX8AzTRbHRPoYxgG', '2026-04-22 11:59:21', 5),
 (13, 'Mustafa Saqer', 'Mustafa', 'cash@ems.com', '+2189123457687', NULL, '$2y$10$XeB5nEBG9iuu87/pCrjMU.tVgMAxOpvl7j5uYhQ9b/TbTXrCg/fM.', '2026-04-24 20:14:40', 7),
 (14, 'Taha Hussain', 'Taha', 'th@ems.com', '+2189123457687', 'uploads/users/user_6aaf6c9f7141e6.68874237.jpg', '$2y$10$fLhJosWCRxuPtL0C/s5dTup98BZ11Xa0n72HW4qLCBGdEGM0byvEW', '2026-06-12 15:52:02', 2),
 (15, 'khalil salem', 'salem', 'ks@ems.com', '+2189123457687', NULL, '$2y$10$1QScFHLSeyeWP2bcjk4fnujmDhz0hFGFYGLl8H1W09fIa9ymw2mMm', '2026-06-19 16:29:37', 8),
@@ -2170,10 +2212,14 @@ INSERT INTO `user_locations` (`user_id`, `location_id`) VALUES
 (1, 22),
 (6, 21),
 (6, 22),
+(6, 33),
 (8, 21),
+(13, 34),
 (16, 32),
 (17, 3),
 (17, 22),
+(17, 33),
+(18, 33),
 (20, 3),
 (23, 3);
 
@@ -2589,7 +2635,7 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `employees`
@@ -2601,13 +2647,13 @@ ALTER TABLE `employees`
 -- AUTO_INCREMENT for table `goods_receipts`
 --
 ALTER TABLE `goods_receipts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `goods_receipt_items`
 --
 ALTER TABLE `goods_receipt_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `goods_returns`
@@ -2631,19 +2677,19 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `inventory_locations`
 --
 ALTER TABLE `inventory_locations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `inventory_location_stock`
 --
 ALTER TABLE `inventory_location_stock`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=496;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=498;
 
 --
 -- AUTO_INCREMENT for table `inventory_movements`
 --
 ALTER TABLE `inventory_movements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=342;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=346;
 
 --
 -- AUTO_INCREMENT for table `inventory_reservations`
@@ -2655,13 +2701,13 @@ ALTER TABLE `inventory_reservations`
 -- AUTO_INCREMENT for table `inventory_transfers`
 --
 ALTER TABLE `inventory_transfers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- AUTO_INCREMENT for table `projects`
@@ -2673,7 +2719,7 @@ ALTER TABLE `projects`
 -- AUTO_INCREMENT for table `project_advances`
 --
 ALTER TABLE `project_advances`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `project_costs`
@@ -2691,7 +2737,7 @@ ALTER TABLE `project_documents`
 -- AUTO_INCREMENT for table `project_ledger`
 --
 ALTER TABLE `project_ledger`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- AUTO_INCREMENT for table `project_scopes`
@@ -2775,7 +2821,7 @@ ALTER TABLE `resource_requisition_items`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -2793,7 +2839,7 @@ ALTER TABLE `suppliers`
 -- AUTO_INCREMENT for table `supplier_ledger`
 --
 ALTER TABLE `supplier_ledger`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `supplier_payments`

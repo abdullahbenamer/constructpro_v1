@@ -10,12 +10,13 @@
 
     <form method="POST">
 
-        <input
-            type="email"
-            name="email"
-            placeholder="<?= __('email') ?>"
-            class="form-control mb-2"
-            required>
+       <input
+    type="text"
+    name="login"
+    class="form-control"
+    placeholder="<?= __('username_or_email') ?>"
+    required
+>
 
         <input
             type="password"

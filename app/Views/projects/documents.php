@@ -1,8 +1,7 @@
-<h4>
-    <?= __('project') ?>:
-    <strong><?= strtoupper(htmlspecialchars($project->title)) ?></strong>
+<h4> 
+    <?= __('project') ?>: 
+  <a href="<?= URLROOT ?>/project-costs/<?= $project->id ?>"><?= $project->title ?></a>
 </h4>
-
 <br>
 
 <h4>

@@ -1193,7 +1193,7 @@ return [
 'permission_projects_documents_delete' => 'Delete Project Documents',
 'permission_projects_restore' => 'Restore Projects',
 
-'permission_group_project_advances' => 'Project Advances',
+'permission_group_project_advances' => 'PROJECT ADVANCES',
 'permission_project_advances_create' => 'Create Project Advances',
 'permission_project_advances_settle' => 'Settle Project Advances',
 'permission_project_advances_view' => 'View Project Advances',
@@ -1278,7 +1278,7 @@ return [
 // User controller messages
 'full_name_required' => 'Full Name is required.',
 'user_name_required' => 'User Name is required.',
-'email_required' => 'Email is required.',
+'email_required' => 'Email or User Name is required.',
 'password_required' => 'Password is required.',
 'invalid_photo_format' => 'Invalid photo format. Please upload a JPG, JPEG, PNG, or WEBP image.',
 'unable_to_upload_photo' => 'Unable to upload the photo.',
@@ -1442,7 +1442,7 @@ return [
 'user_not_found' => 'User not found.',
 'settings_updated' => 'Settings updated successfully.',
 
-'invalid_email_or_password' => 'Invalid email or password.',
+'invalid_username_or_email_or_password' => 'Invalid username/email or password.',
 
 'please_select_resource' => 'Please select a resource.',
 'invalid_resource_source' => 'Invalid resource source.',
@@ -1634,7 +1634,7 @@ return [
 
 // JS form fields validation messages
 'validation_required'   => 'Please fill out this field.',
-'validation_email'      => 'Please enter a valid email address.',
+'validation_email'      => 'Please enter a valid User Name or email address.',
 'validation_url'        => 'Please enter a valid URL.',
 'validation_invalid'   => 'Please enter a valid value.',
 'validation_min'        => 'Value must be greater than or equal to :min.',

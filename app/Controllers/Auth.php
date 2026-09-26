@@ -14,99 +14,80 @@ class Auth extends Controller
 
             $userModel = $this->model('User');
 
-            $result = $userModel->login($_POST['email'], $_POST['password']);
+            $result = $userModel->login(
+                trim($_POST['login'] ?? ''),
+                $_POST['password']
+            );
 
             if ($result) {
 
-                // redirect based on role
-                switch ($_SESSION['role']) {
-
-                    case 'admin':
-                        header('Location: ' . URLROOT . '/admin/dashboard');
-                        break;
-
-                    case 'manager':
-                        header('Location: ' . URLROOT . '/manager/dashboard');
-                        break;
-
-                    case 'engineer':
-                        header('Location: ' . URLROOT . '/engineer/dashboard');
-                        break;
-
-                    case 'technician':
-                        header('Location: ' . URLROOT . '/technician/dashboard');
-                        break;
-
-                    default:
-                        header('Location: ' . URLROOT . '/dashboard');
-                }
-
+                header('Location: ' . URLROOT . '/dashboard');
                 exit;
             } else {
-               $data['error'] = __('invalid_email_or_password');
+                $data['error'] = __('invalid_username_or_email_or_password');
             }
         }
 
         $this->view('auth/login', $data ?? []);
     }
 
-   public function logout()
-{
-    /*
+    public function logout()
+    {
+        /*
     |---------------------------------------------
     | Clear all session data
     |---------------------------------------------
     */
 
-    $_SESSION = [];
+        $_SESSION = [];
 
-    /*
+        /*
     |---------------------------------------------
     | Remove the session cookie
     |---------------------------------------------
     */
 
-    if (ini_get('session.use_cookies')) {
+        if (ini_get('session.use_cookies')) {
 
-        $params = session_get_cookie_params();
+            $params = session_get_cookie_params();
 
-        setcookie(
-            session_name(),
-            '',
-            time() - 42000,
-            $params['path'],
-            $params['domain'],
-            $params['secure'],
-            $params['httponly']
-        );
-    }
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params['path'],
+                $params['domain'],
+                $params['secure'],
+                $params['httponly']
+            );
+        }
 
-    /*
+        /*
     |---------------------------------------------
     | Destroy the session
     |---------------------------------------------
     */
 
-    session_destroy();
+        session_destroy();
 
-    /*
+        /*
     |---------------------------------------------
     | Prevent browser from caching authenticated pages
     |---------------------------------------------
     */
 
-    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
-    header('Cache-Control: post-check=0, pre-check=0', false);
-    header('Pragma: no-cache');
-    header('Expires: 0');
+        header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+        header('Cache-Control: post-check=0, pre-check=0', false);
+        header('Pragma: no-cache');
+        header('Expires: 0');
 
-    /*
+        /*
     |---------------------------------------------
     | Redirect to login
     |---------------------------------------------
     */
 
-    header('Location: ' . URLROOT . '/auth/login');
-    exit;
-}
+        header('Location: ' . URLROOT . '/auth/login');
+        exit;
+    }
 }

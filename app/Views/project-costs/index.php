@@ -17,7 +17,7 @@
                 <h3 class="mb-1 text-uppercase">
                     <?= htmlspecialchars($project->title) ?>
                 </h3>
-
+<br>
             <div class="d-flex flex-wrap align-items-center gap-2">
 
     <!-- PROJECT CODE -->
