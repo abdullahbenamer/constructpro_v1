@@ -17,7 +17,7 @@
     placeholder="<?= __('username_or_email') ?>"
     required
 >
-
+<br>
         <input
             type="password"
             name="password"
