@@ -10,36 +10,37 @@ class GoodsReceipts extends Controller
         $supplierModel      = $this->model('Supplier');
         $locationModel      = $this->model('InventoryLocation');
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-                  $service = $this->service('GoodsReceipt');
+    try {
 
-            try {
+        $service = $this->service('GoodsReceipt');
 
-                $service->receive($_POST);
+        $service->receive($_POST);
 
-                FlashHelper::success(
-                    __('goods_receipt_created_successfully')
-                );
+        FlashHelper::success(
+            __('goods_receipt_created_successfully')
+        );
 
-                header(
-                    'Location: ' . URLROOT . '/goodsreceipts'
-                );
+        header(
+            'Location: ' . URLROOT . '/goodsreceipts'
+        );
 
-                exit;
-            } catch (Throwable $e) {
+        exit;
 
-                FlashHelper::error(
-                    $e->getMessage()
-                );
+    } catch (Throwable $e) {
 
-                header(
-                    'Location: ' . URLROOT . '/goodsreceipts/create'
-                );
+        FlashHelper::error(
+            $e->getMessage()
+        );
 
-                exit;
-            }
-        }
+        header(
+            'Location: ' . URLROOT . '/goodsreceipts/create'
+        );
+
+        exit;
+    }
+}
 
         $data['purchaseOrders'] = $purchaseOrderModel->getOpenPurchaseOrders();
         $data['locations']       = $locationModel->getAll();

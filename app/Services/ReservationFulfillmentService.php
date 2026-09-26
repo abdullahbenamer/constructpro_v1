@@ -30,13 +30,15 @@ class ReservationFulfillmentService extends BaseService
     $this->projectCostService = $projectCostService;
 }
 
-    public function fulfill(int $reservationId): void
-    {
+   public function fulfill(int $reservationId): void
+{
+    $this->transaction(function () use ($reservationId) {
+
         /*
-    |--------------------------------------------------------------
-    | 1. GET RESERVATION
-    |--------------------------------------------------------------
-    */
+        |--------------------------------------------------------------------------
+        | 1. GET RESERVATION
+        |--------------------------------------------------------------------------
+        */
 
         $reservation =
             $this->reservationModel->getById(
@@ -44,32 +46,28 @@ class ReservationFulfillmentService extends BaseService
             );
 
         if (!$reservation) {
-
             throw new Exception(
                 __('reservation_not_found')
             );
         }
 
-
         /*
-    |--------------------------------------------------------------
-    | 2. VALIDATE STATUS
-    |--------------------------------------------------------------
-    */
+        |--------------------------------------------------------------------------
+        | 2. VALIDATE STATUS
+        |--------------------------------------------------------------------------
+        */
 
         if ($reservation->status !== 'ACTIVE') {
-
             throw new Exception(
                 __('only_active_reservations_can_be_fulfilled')
             );
         }
 
-
         /*
-    |--------------------------------------------------------------
-    | 3. GET INVENTORY ITEM
-    |--------------------------------------------------------------
-    */
+        |--------------------------------------------------------------------------
+        | 3. GET INVENTORY ITEM
+        |--------------------------------------------------------------------------
+        */
 
         $item =
             $this->inventoryModel->getById(
@@ -77,68 +75,52 @@ class ReservationFulfillmentService extends BaseService
             );
 
         if (!$item) {
-
             throw new Exception(
-    __('inventory_item_not_found')
-);
-        }
-
-
-        /*
-    |--------------------------------------------------------------
-    | 4. VALIDATE PROJECT
-    |--------------------------------------------------------------
-    */
-
-        if (empty($reservation->project_id)) {
-
-            throw new Exception(
-                __('reservation_project_required_for_fulfillment')
+                __('inventory_item_not_found')
             );
         }
 
-
         /*
-    |--------------------------------------------------------------
-    | 5. CREATE PROJECT COST
-    |--------------------------------------------------------------
-    */
+        |--------------------------------------------------------------------------
+        | 4. CREATE PROJECT COST
+        |--------------------------------------------------------------------------
+        */
 
         $this->projectCostService->create([
 
             'project_id' =>
-            (int)$reservation->project_id,
+                (int)$reservation->project_id,
 
             'cost_type' =>
-            'materials',
+                'materials',
 
             'description' =>
-            'Reservation Fulfillment: '
+                'Reservation Fulfillment: '
                 . $item->name,
 
             'quantity' =>
-            (float)$reservation->quantity,
+                (float)$reservation->quantity,
 
             'unit_price' =>
-            (float)$item->cost_price,
+                (float)$item->cost_price,
 
             'inventory_id' =>
-            (int)$reservation->inventory_id,
+                (int)$reservation->inventory_id,
 
             'location_id' =>
-            (int)$reservation->location_id
-
+                (int)$reservation->location_id
         ]);
 
-
         /*
-    |--------------------------------------------------------------
-    | 6. MARK RESERVATION FULFILLED
-    |--------------------------------------------------------------
-    */
+        |--------------------------------------------------------------------------
+        | 5. MARK RESERVATION FULFILLED
+        |--------------------------------------------------------------------------
+        */
 
         $this->reservationModel->markFulfilled(
             $reservationId
         );
-    }
+    });
+}
+
 }

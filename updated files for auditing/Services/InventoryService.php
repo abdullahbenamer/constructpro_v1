@@ -8,11 +8,12 @@ class InventoryService extends BaseService
     private InventoryTransferModel $transferModel;
 
     public function __construct(
-        InventoryLocationStockModel $stockModel,
-        InventoryMovementModel $movementModel,
-        InventoryTransferModel $transferModel
-    ) {
-        parent::__construct();
+    Database $db,
+    InventoryLocationStockModel $stockModel,
+    InventoryMovementModel $movementModel,
+    InventoryTransferModel $transferModel
+) {
+    parent::__construct($db);
 
         $this->stockModel = $stockModel;
         $this->movementModel = $movementModel;

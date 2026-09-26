@@ -10,22 +10,25 @@ class ReservationFulfillmentService extends BaseService
 
 
     public function __construct(
-        InventoryReservationModel $reservationModel,
-        InventoryModel $inventoryModel,
-        InventoryLocationStockModel $locationStockModel,
-        InventoryMovementModel $movementModel,
-        ProjectCostService $projectCostService
-    ) {
-        $this->reservationModel = $reservationModel;
+    Database $db,
+    InventoryReservationModel $reservationModel,
+    InventoryModel $inventoryModel,
+    InventoryLocationStockModel $locationStockModel,
+    InventoryMovementModel $movementModel,
+    ProjectCostService $projectCostService
+) {
+    parent::__construct($db);
 
-        $this->inventoryModel = $inventoryModel;
+    $this->reservationModel = $reservationModel;
 
-        $this->locationStockModel = $locationStockModel;
+    $this->inventoryModel = $inventoryModel;
 
-        $this->movementModel = $movementModel;
+    $this->locationStockModel = $locationStockModel;
 
-        $this->projectCostService = $projectCostService;
-    }
+    $this->movementModel = $movementModel;
+
+    $this->projectCostService = $projectCostService;
+}
 
     public function fulfill(int $reservationId): void
     {

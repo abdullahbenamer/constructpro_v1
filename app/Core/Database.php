@@ -95,26 +95,133 @@ class Database
 
 // ------- Transaction Section -------
 
-   public function beginTransaction()
+private int $transactionLevel = 0;
+
+
+/**
+ * Begin a transaction or nested transaction using a SAVEPOINT.
+ */
+public function beginTransaction()
 {
-    return $this->dbh->beginTransaction();
+    if (!$this->dbh->inTransaction()) {
+
+        $result = $this->dbh->beginTransaction();
+
+        $this->transactionLevel = 1;
+
+        return $result;
+    }
+
+    /*
+     * Already inside a transaction.
+     * Create a savepoint for the nested transaction.
+     */
+    $this->transactionLevel++;
+
+    $savepoint = $this->getSavepointName(
+        $this->transactionLevel
+    );
+
+    $this->dbh->exec(
+        'SAVEPOINT ' . $savepoint
+    );
+
+    return true;
 }
 
+
+/**
+ * Commit the current transaction level.
+ *
+ * Nested transactions release their SAVEPOINT.
+ * The outermost transaction performs the real COMMIT.
+ */
 public function commit()
 {
-    return $this->dbh->commit();
+    if (!$this->dbh->inTransaction()) {
+        throw new Exception(
+            'No active transaction.'
+        );
+    }
+
+    if ($this->transactionLevel <= 1) {
+
+        $result = $this->dbh->commit();
+
+        $this->transactionLevel = 0;
+
+        return $result;
+    }
+
+    $savepoint = $this->getSavepointName(
+        $this->transactionLevel
+    );
+
+    $result = $this->dbh->exec(
+        'RELEASE SAVEPOINT ' . $savepoint
+    );
+
+    $this->transactionLevel--;
+
+    return $result;
 }
 
+
+/**
+ * Roll back the current transaction level.
+ *
+ * Nested transactions roll back to their SAVEPOINT.
+ * The outermost transaction performs the real ROLLBACK.
+ */
 public function rollBack()
 {
-    return $this->dbh->rollBack();
+    if (!$this->dbh->inTransaction()) {
+        throw new Exception(
+            'No active transaction.'
+        );
+    }
+
+    if ($this->transactionLevel <= 1) {
+
+        $result = $this->dbh->rollBack();
+
+        $this->transactionLevel = 0;
+
+        return $result;
+    }
+
+    $savepoint = $this->getSavepointName(
+        $this->transactionLevel
+    );
+
+    $this->dbh->exec(
+        'ROLLBACK TO SAVEPOINT ' . $savepoint
+    );
+
+    $result = $this->dbh->exec(
+        'RELEASE SAVEPOINT ' . $savepoint
+    );
+
+    $this->transactionLevel--;
+
+    return $result;
 }
 
+
+/**
+ * Check whether a database transaction is active.
+ */
 public function inTransaction()
 {
     return $this->dbh->inTransaction();
 }
 
+
+/**
+ * Execute a callback inside a transaction.
+ *
+ * Supports nested transactions through SAVEPOINT.
+ */
 public function transaction(callable $callback)
 {
     $this->beginTransaction();
@@ -137,8 +244,17 @@ public function transaction(callable $callback)
     }
 }
 
-// ------ Transaction Section End -------
 
+/**
+ * Generate a safe SAVEPOINT name.
+ */
+private function getSavepointName(int $level): string
+{
+    return 'cp_sp_' . $level;
+}
+
+
+// ------ Transaction Section End -------
 
     
     public function bind($param, $value, $type = null)

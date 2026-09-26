@@ -11,13 +11,14 @@ class GoodsReturnService extends BaseService
     private InventoryService $inventoryService;
 
     public function __construct(
+        Database $db,
         GoodsReceiptItemModel $receiptItemModel,
         GoodsReturnModel $returnModel,
         GoodsReturnItemModel $returnItemModel,
         SupplierLedgerModel $ledgerModel,
         InventoryService $inventoryService
     ) {
-        parent::__construct();
+        parent::__construct($db);
 
         $this->receiptItemModel = $receiptItemModel;
         $this->returnModel      = $returnModel;
@@ -172,12 +173,12 @@ class GoodsReturnService extends BaseService
                 );
 
             if ($quantity > $available) {
-               throw new Exception(
-    sprintf(
-        __('not_enough_stock_selected_warehouse_available'),
-        number_format($available, 2)
-    )
-);
+                throw new Exception(
+                    sprintf(
+                        __('not_enough_stock_selected_warehouse_available'),
+                        number_format($available, 2)
+                    )
+                );
             }
 
             /*

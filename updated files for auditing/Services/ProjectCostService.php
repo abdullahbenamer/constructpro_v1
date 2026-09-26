@@ -10,14 +10,15 @@ class ProjectCostService extends BaseService
     private ProjectLedgerModel $ledgerService;
     private InventoryModel $inventoryModel;
 
-    public function __construct(
-        ProjectCostModel $costModel,
-        InventoryLocationStockModel $stockModel,
-        InventoryMovementModel $movementModel,
-        ProjectLedgerModel $ledgerService,
-        InventoryModel $inventoryModel
-    ) {
-        parent::__construct();
+   public function __construct(
+    Database $db,
+    ProjectCostModel $costModel,
+    InventoryLocationStockModel $stockModel,
+    InventoryMovementModel $movementModel,
+    ProjectLedgerModel $ledgerService,
+    InventoryModel $inventoryModel
+) {
+    parent::__construct($db);
 
         $this->costModel      = $costModel;
         $this->stockModel     = $stockModel;

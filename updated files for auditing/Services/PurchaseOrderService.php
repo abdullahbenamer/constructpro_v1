@@ -7,9 +7,10 @@ class PurchaseOrderService extends BaseService
     private PurchaseOrderModel $poModel;
 
     public function __construct(
-        PurchaseOrderModel $poModel
-    ) {
-        parent::__construct();
+    Database $db,
+    PurchaseOrderModel $poModel
+) {
+    parent::__construct($db);
 
         $this->poModel = $poModel;
     }
