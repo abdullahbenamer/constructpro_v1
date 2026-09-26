@@ -20,12 +20,12 @@ class ServiceContainer
      */
     private array $definitions = [
 
-    'PurchaseOrder' => [
-    'class' => PurchaseOrderService::class,
-    'dependencies' => [
-        PurchaseOrderModel::class
-    ]
-],
+        'PurchaseOrder' => [
+            'class' => PurchaseOrderService::class,
+            'dependencies' => [
+                PurchaseOrderModel::class
+            ]
+        ],
 
         'InventoryTransfer' => [
             'class' => InventoryTransferService::class,
@@ -48,19 +48,19 @@ class ServiceContainer
         ],
 
         'ReservationFulfillment' => [
-    'class' => ReservationFulfillmentService::class,
+            'class' => ReservationFulfillmentService::class,
 
-    'dependencies' => [
-        InventoryReservationModel::class,
-        InventoryModel::class,
-        InventoryLocationStockModel::class,
-        InventoryMovementModel::class
-    ],
+            'dependencies' => [
+                InventoryReservationModel::class,
+                InventoryModel::class,
+                InventoryLocationStockModel::class,
+                InventoryMovementModel::class
+            ],
 
-    'services' => [
-        'ProjectCost'
-    ]
-],
+            'services' => [
+                'ProjectCost'
+            ]
+        ],
 
         'GoodsReceipt' => [
             'class' => GoodsReceiptService::class,
@@ -104,20 +104,20 @@ class ServiceContainer
             ]
         ],
 
-     'GoodsReturn' => [
-    'class' => GoodsReturnService::class,
+        'GoodsReturn' => [
+            'class' => GoodsReturnService::class,
 
-    'dependencies' => [
-        GoodsReceiptItemModel::class,
-        GoodsReturnModel::class,
-        GoodsReturnItemModel::class,
-        SupplierLedgerModel::class
-    ],
+            'dependencies' => [
+                GoodsReceiptItemModel::class,
+                GoodsReturnModel::class,
+                GoodsReturnItemModel::class,
+                SupplierLedgerModel::class
+            ],
 
-    'services' => [
-        'Inventory'
-    ]
-],
+            'services' => [
+                'Inventory'
+            ]
+        ],
 
     ];
 
@@ -205,7 +205,7 @@ class ServiceContainer
         }
 
         $this->instances[$service] =
-            new $serviceClass(...$dependencies);
+            new $serviceClass($this->db, ...$dependencies);
 
         return $this->instances[$service];
     }
