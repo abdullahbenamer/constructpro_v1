@@ -5,11 +5,12 @@ class SupplierPaymentService extends Model
     private SupplierPaymentModel $paymentModel;
     private SupplierLedgerModel $ledgerModel;
 
-    public function __construct(
-        SupplierPaymentModel $paymentModel,
-        SupplierLedgerModel $ledgerModel
-    ) {
-        parent::__construct();
+ public function __construct(
+    Database $db,
+    SupplierPaymentModel $paymentModel,
+    SupplierLedgerModel $ledgerModel
+) {
+    parent::__construct($db);
 
         $this->paymentModel = $paymentModel;
         $this->ledgerModel  = $ledgerModel;

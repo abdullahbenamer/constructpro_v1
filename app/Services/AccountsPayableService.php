@@ -5,12 +5,15 @@ class AccountsPayableService
     private $ledgerModel;
 
     public function __construct(
-        $poModel,
-        $ledgerModel
-    ){
-        $this->poModel=$poModel;
-        $this->ledgerModel=$ledgerModel;
-    }
+    Database $db,
+    $poModel,
+    $ledgerModel
+){
+    parent::__construct($db);
+
+    $this->poModel=$poModel;
+    $this->ledgerModel=$ledgerModel;
+}
 
     public function getSupplierSummary($supplierId)
     {

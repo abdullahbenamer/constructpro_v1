@@ -18,12 +18,7 @@ class SupplierPayments extends Controller
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    require_once '../app/Services/SupplierPaymentService.php';
-
-$paymentService = new SupplierPaymentService(
-    $this->model('SupplierPayment'),
-    $this->model('SupplierLedger')
-);
+$paymentService = $this->service('SupplierPayment');
 
 $paymentService->create([
     'supplier_id'  => $supplier_id,

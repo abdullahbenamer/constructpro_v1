@@ -46,13 +46,7 @@ class InventoryTransfers extends Controller
 
             $notes = trim($_POST['notes'] ?? '');
 
-            $service = new InventoryService(
-
-                $this->model('InventoryLocationStock'),
-                $this->model('InventoryMovement'),
-                $this->model('InventoryTransfer')
-
-            );
+          $service = $this->service('Inventory');
 
             try {
 
@@ -187,15 +181,7 @@ class InventoryTransfers extends Controller
      
         try {
 
-            $service = new InventoryTransferService(
-
-                $this->model('InventoryLocationStock'),
-
-                $this->model('InventoryMovement'),
-
-                $this->model('InventoryTransfer')
-
-            );
+          $service = $this->service('InventoryTransfer');
 
             $result =
                 $service->reverse((int)$id);

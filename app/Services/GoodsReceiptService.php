@@ -11,13 +11,14 @@ class GoodsReceiptService extends BaseService
     private SupplierLedgerModel $ledgerModel;
 
     public function __construct(
+        Database $db,
         PurchaseOrderModel $poModel,
         GoodsReceiptModel $grnModel,
         GoodsReceiptItemModel $grnItemModel,
         SupplierLedgerModel $ledgerModel,
         InventoryService $inventoryService
     ) {
-        parent::__construct();
+        parent::__construct($db);
 
         $this->poModel           = $poModel;
         $this->grnModel          = $grnModel;
