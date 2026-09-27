@@ -1641,5 +1641,16 @@ return [
 'validation_maxlength'  => 'يجب ألا يتجاوز النص :maxlength حرفًا.',
 'validation_step'       => 'يرجى إدخال قيمة صحيحة. مقدار الزيادة المسموح به هو :step.',
 'validation_pattern'    => 'يرجى إدخال القيمة بالصيغة المطلوبة.',
+
+'supplier_not_found' => 'المورد غير موجود.',
+'supplier_deleted_successfully' => 'تم حذف المورد بنجاح.',
+'supplier_cannot_be_deleted' => 'لا يمكن حذف هذا المورد لأنه مرتبط بمعاملات موجودة في النظام.',
+'unable_to_delete_supplier' => 'تعذر حذف المورد.',
+
+'resource_category_deleted_successfully' => 'تم حذف مسمى فئة الموارد بنجاح'
+
+
+
+
 ];
 

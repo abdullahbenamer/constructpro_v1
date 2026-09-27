@@ -159,7 +159,7 @@ public function delete($id)
 
     return [
         'success' => true,
-        'message' => 'Resource category deleted successfully.'
+        'message' => __('resource_category_deleted_successfully')
     ];
 }
 

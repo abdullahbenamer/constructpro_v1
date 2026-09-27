@@ -103,17 +103,45 @@ class Suppliers extends Controller
         $this->view('suppliers/edit', $data);
     }
 
-    public function delete($id)
-    {
-        AuthHelper::can('suppliers.delete');
+    
 
-        $model = $this->model('Supplier');
+  public function delete($id)
+{
+    AuthHelper::can('suppliers.delete');
 
-        $model->delete($id);
+    $model = $this->model('Supplier');
 
-        header('Location: ' . URLROOT . '/suppliers');
-        exit;
+    try {
+
+        $result = $model->delete($id);
+
+        if (!$result) {
+            FlashHelper::error(__('supplier_not_found'));
+            header('Location: ' . URLROOT . '/suppliers');
+            exit;
+        }
+
+        FlashHelper::success(__('supplier_deleted_successfully'));
+
+    } catch (PDOException $e) {
+
+        if ($e->getCode() === '23000') {
+
+            FlashHelper::error(
+                __('supplier_cannot_be_deleted')
+            );
+
+        } else {
+
+            FlashHelper::error(
+                __('unable_to_delete_supplier')
+            );
+        }
     }
+
+    header('Location: ' . URLROOT . '/suppliers');
+    exit;
+}
     public function details($id)
     {
         AuthHelper::can('suppliers.view');

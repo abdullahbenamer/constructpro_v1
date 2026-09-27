@@ -1644,5 +1644,13 @@ return [
 'validation_step'       => 'Please enter a valid value. The allowed increment is :step.',
 'validation_pattern'    => 'Please enter a value in the required format.',
 
+'supplier_not_found' => 'Supplier not found.',
+'supplier_deleted_successfully' => 'Supplier deleted successfully.',
+'supplier_cannot_be_deleted' => 'This supplier cannot be deleted because it is currently used by existing transactions.',
+'unable_to_delete_supplier' => 'Unable to delete supplier.',
+
+
+
+'resource_category_deleted_successfully' => 'Resource category deleted successfully.'
 
 ];
