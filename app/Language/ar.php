@@ -1647,10 +1647,22 @@ return [
 'supplier_cannot_be_deleted' => 'لا يمكن حذف هذا المورد لأنه مرتبط بمعاملات موجودة في النظام.',
 'unable_to_delete_supplier' => 'تعذر حذف المورد.',
 
-'resource_category_deleted_successfully' => 'تم حذف مسمى فئة الموارد بنجاح'
+'resource_category_created_successfully' => 'تم إنشاء فئة الموارد بنجاح.',
+'resource_category_create_failed' => 'تعذر إنشاء فئة الموارد.',
+'resource_category_updated_successfully' => 'تم تحديث فئة الموارد بنجاح.',
+'resource_category_update_failed' => 'تعذر تحديث فئة الموارد.',
+'resource_category_deleted_successfully' => 'تم حذف فئة الموارد بنجاح.',
+'resource_category_not_found' => 'فئة الموارد غير موجودة.',
+'can_not_delete_resource_category_in_use' => 'لا يمكن حذف فئة الموارد لأنها قيد الاستخدام.',
+'Resource_category_not_found.' => 'لم نتمكن من ايجاد مسمى فئة الموارد هذه',
 
-
-
+'unit_not_found' => 'الوحدة غير موجودة.',
+'unit_created_successfully' => 'تم إنشاء الوحدة بنجاح.',
+'unit_create_failed' => 'تعذر إنشاء الوحدة.',
+'unit_updated_successfully' => 'تم تحديث الوحدة بنجاح.',
+'unit_update_failed' => 'تعذر تحديث الوحدة.',
+'unit_deleted_successfully' => 'تم حذف الوحدة بنجاح.',
+'unit_cannot_be_deleted' => 'لا يمكن حذف هذه الوحدة لأنها مستخدمة حالياً في النظام.',
 
 ];
 

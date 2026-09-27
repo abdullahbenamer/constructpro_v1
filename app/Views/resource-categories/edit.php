@@ -121,71 +121,33 @@
 
 
                 </div>
-
-
                 <!-- DESCRIPTION -->
-
-
                 <div class="mb-3">
-
-
                     <label class="form-label">
-
                         <?= __('description') ?>
-
                     </label>
-
-
                     <textarea name="description"
                               class="form-control"
                               rows="4"><?= $data['category']->description ?></textarea>
-
-
                 </div>
-
-
                 <!-- STATUS -->
-
-
                 <div class="col-md-3 mb-3">
-
-
                     <label class="form-label">
-
                         <?= __('status') ?>
-
                     </label>
-
-
                     <select name="status"
                             class="form-select">
-
-
                         <option value="ACTIVE"
                             <?= $data['category']->status == 'ACTIVE' ? 'selected' : '' ?>>
-
                             <?= __('active') ?>
-
                         </option>
-
-
                         <option value="INACTIVE"
                             <?= $data['category']->status == 'INACTIVE' ? 'selected' : '' ?>>
-
                             <?= __('inactive') ?>
-
                         </option>
-
-
                     </select>
-
-
                 </div>
-
-
                 <hr>
-
-
                 <button type="submit"
                         class="btn btn-primary">
 

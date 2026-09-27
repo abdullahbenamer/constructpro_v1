@@ -31,48 +31,56 @@ class ResourceCategories extends Controller
         );
     }
 
-    /**
-     * STORE CATEGORY
-     */
-    public function store()
-    {
-        AuthHelper::can('resource_categories.create');
+  /**
+ * STORE CATEGORY
+ */
+public function store()
+{
+    AuthHelper::can('resource_categories.create');
 
-        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-
-            header(
-                'Location: ' . URLROOT . '/ResourceCategories'
-            );
-
-            exit;
-
-        }
-
-        $model = $this->model('ResourceCategory');
-
-        $data = [
-
-            'category_code'   => trim($_POST['category_code']),
-
-            'category_name'   => trim($_POST['category_name']),
-
-            'category_name_a' => trim($_POST['category_name_a']),
-
-            'description'     => trim($_POST['description']),
-
-            'status'          => $_POST['status']
-
-        ];
-
-        $model->create($data);
+    if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
         header(
             'Location: ' . URLROOT . '/ResourceCategories'
         );
 
         exit;
+    }
+
+    $model = $this->model('ResourceCategory');
+
+    $data = [
+
+        'category_code'   => trim($_POST['category_code']),
+
+        'category_name'   => trim($_POST['category_name']),
+
+        'category_name_a' => trim($_POST['category_name_a']),
+
+        'description'     => trim($_POST['description']),
+
+        'status'          => $_POST['status']
+
+    ];
+
+    $result = $model->create($data);
+
+    if (!$result['success']) {
+
+        FlashHelper::error($result['message']);
+
+    } else {
+
+        FlashHelper::success($result['message']);
 
     }
+
+    header(
+        'Location: ' . URLROOT . '/ResourceCategories'
+    );
+
+    exit;
+}
 
     /**
      * EDIT PAGE
@@ -96,51 +104,56 @@ class ResourceCategories extends Controller
         );
     }
 
-    /**
-     * UPDATE CATEGORY
-     */
-    public function update($id)
-    {
+   /**
+ * UPDATE CATEGORY
+ */
+public function update($id)
+{
+    AuthHelper::can('resource_categories.edit');
 
-   AuthHelper::can('resource_categories.edit');
-
-        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-
-            header(
-                'Location: ' . URLROOT . '/ResourceCategories'
-            );
-
-            exit;
-
-        }
-
-        $model = $this->model('ResourceCategory');
-
-        $data = [
-
-            'category_code'   => trim($_POST['category_code']),
-
-            'category_name'   => trim($_POST['category_name']),
-
-            'category_name_a' => trim($_POST['category_name_a']),
-
-            'description'     => trim($_POST['description']),
-
-            'status'          => $_POST['status']
-
-        ];
-
-        $model->update($id,$data);
-
-
+    if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
         header(
             'Location: ' . URLROOT . '/ResourceCategories'
         );
 
         exit;
+    }
+
+    $model = $this->model('ResourceCategory');
+
+    $data = [
+
+        'category_code'   => trim($_POST['category_code']),
+
+        'category_name'   => trim($_POST['category_name']),
+
+        'category_name_a' => trim($_POST['category_name_a']),
+
+        'description'     => trim($_POST['description']),
+
+        'status'          => $_POST['status']
+
+    ];
+
+    $result = $model->update($id, $data);
+
+    if (!$result['success']) {
+
+        FlashHelper::error($result['message']);
+
+    } else {
+
+        FlashHelper::success($result['message']);
 
     }
+
+    header(
+        'Location: ' . URLROOT . '/ResourceCategories'
+    );
+
+    exit;
+}
 
     /**
  * DELETE CATEGORY

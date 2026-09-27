@@ -1649,8 +1649,23 @@ return [
 'supplier_cannot_be_deleted' => 'This supplier cannot be deleted because it is currently used by existing transactions.',
 'unable_to_delete_supplier' => 'Unable to delete supplier.',
 
+'resource_category_created_successfully' => 'Resource category created successfully.',
+'resource_category_create_failed' => 'Failed to create resource category.',
+'resource_category_updated_successfully' => 'Resource category updated successfully.',
+'resource_category_update_failed' => 'Failed to update resource category.',
+'resource_category_deleted_successfully' => 'Resource category deleted successfully.',
+'resource_category_not_found' => 'Resource category not found.',
+'can_not_delete_resource_category_in_use' => 'Cannot delete resource category because it is currently in use.',
 
 
-'resource_category_deleted_successfully' => 'Resource category deleted successfully.'
+'unit_not_found' => 'Unit not found.',
+'unit_created_successfully' => 'Unit created successfully.',
+'unit_create_failed' => 'Unable to create unit.',
+'unit_updated_successfully' => 'Unit updated successfully.',
+'unit_update_failed' => 'Unable to update unit.',
+'unit_deleted_successfully' => 'Unit deleted successfully.',
+'unit_cannot_be_deleted' => 'This unit cannot be deleted because it is currently in use.',
+
+
 
 ];
