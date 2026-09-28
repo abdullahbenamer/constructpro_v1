@@ -5,7 +5,7 @@ class Suppliers extends Controller
     public function index()
     {
 
-     AuthHelper::can('suppliers.view');
+        AuthHelper::can('suppliers.view');
         $model = $this->model('Supplier');
 
         $data['suppliers'] = $model->getAll();
@@ -15,7 +15,7 @@ class Suppliers extends Controller
 
     public function create()
     {
-         AuthHelper::can('suppliers.create');
+        AuthHelper::can('suppliers.create');
 
         $model = $this->model('Supplier');
 
@@ -63,7 +63,7 @@ class Suppliers extends Controller
 
     public function edit($id)
     {
-          AuthHelper::can('suppliers.edit');
+        AuthHelper::can('suppliers.edit');
 
         $model = $this->model('Supplier');
 
@@ -103,71 +103,83 @@ class Suppliers extends Controller
         $this->view('suppliers/edit', $data);
     }
 
-    
 
-  public function delete($id)
-{
-    AuthHelper::can('suppliers.delete');
 
-    $model = $this->model('Supplier');
-
-    try {
-
-        $result = $model->delete($id);
-
-        if (!$result) {
-            FlashHelper::error(__('supplier_not_found'));
-            header('Location: ' . URLROOT . '/suppliers');
-            exit;
-        }
-
-        FlashHelper::success(__('supplier_deleted_successfully'));
-
-    } catch (PDOException $e) {
-
-        if ($e->getCode() === '23000') {
-
-            FlashHelper::error(
-                __('supplier_cannot_be_deleted')
-            );
-
-        } else {
-
-            FlashHelper::error(
-                __('unable_to_delete_supplier')
-            );
-        }
-    }
-
-    header('Location: ' . URLROOT . '/suppliers');
-    exit;
-}
-    public function details($id)
+    public function delete($id)
     {
-        AuthHelper::can('suppliers.view');
+        AuthHelper::can('suppliers.delete');
 
         $model = $this->model('Supplier');
 
-        $supplier = $model->getById($id);
+        try {
 
-        if (!$supplier) {
+            $result = $model->delete($id);
 
-            header('Location: ' . URLROOT . '/suppliers');
-            exit;
+            if (!$result) {
+                FlashHelper::error(__('supplier_not_found'));
+                header('Location: ' . URLROOT . '/suppliers');
+                exit;
+            }
+
+            FlashHelper::success(__('supplier_deleted_successfully'));
+        } catch (PDOException $e) {
+
+            if ($e->getCode() === '23000') {
+
+                FlashHelper::error(
+                    __('supplier_cannot_be_deleted')
+                );
+            } else {
+
+                FlashHelper::error(
+                    __('unable_to_delete_supplier')
+                );
+            }
         }
 
-        $purchase_orders =
-            $model->getPurchaseOrders($id);
-
-        $total_purchases = $this->model('PurchaseOrder')
-            ->sumBySupplier($supplier_id);
-
-        $data['supplier'] = $supplier;
-        $data['purchase_orders'] = $purchase_orders;
-        $data['total_purchases'] = $total_purchases;
-
-        $this->view('suppliers/details', $data);
+        header('Location: ' . URLROOT . '/suppliers');
+        exit;
     }
+
+public function details($id)
+{
+    AuthHelper::can('suppliers.view');
+
+    $model = $this->model('Supplier');
+
+    $supplier = $model->getById($id);
+
+    if (!$supplier) {
+        header('Location: ' . URLROOT . '/suppliers');
+        exit;
+    }
+
+    $purchase_orders = $model->getPurchaseOrders($id);
+
+    $total_purchases = $this->model('PurchaseOrder')
+        ->sumBySupplier($id);
+
+    $ledgerModel = $this->model('SupplierLedger');
+    $ledger = $ledgerModel->getStatement($id);
+
+    $total_goods_received = 0;
+
+    foreach ($ledger as $row) {
+        if ($row->type === 'GRN') {
+            $total_goods_received += (float)$row->debit;
+        }
+    }
+
+    $total_paid = $model->getTotalPaid($id);
+
+    $data['supplier'] = $supplier;
+    $data['purchase_orders'] = $purchase_orders;
+    $data['total_purchases'] = $total_purchases;
+    $data['total_goods_received'] = $total_goods_received;
+    $data['total_paid'] = $total_paid;
+
+    $this->view('suppliers/details', $data);
+}
 
     public function info($supplier_id)
     {
@@ -244,7 +256,7 @@ class Suppliers extends Controller
 
     public function ledger($supplier_id)
     {
-       AuthHelper::can('suppliers.ledger');
+        AuthHelper::can('suppliers.ledger');
 
         $supplierModel = $this->model('Supplier');
         $ledgerModel   = $this->model('SupplierLedger');

@@ -4,7 +4,7 @@
 </h2>
 
 <a href="<?= URLROOT ?>/suppliers/create"
-   class="btn btn-primary mb-3">
+    class="btn btn-primary mb-3">
 
     <i class="fas fa-plus"></i>
     <?= __('add_supplier') ?>
@@ -21,6 +21,8 @@
             <th><?= __('contact') ?></th>
             <th><?= __('phone') ?></th>
             <th><?= __('email') ?></th>
+            <th><?= __('financial_profile') ?></th>
+              <th><?= __('profile') ?></th>
             <th width="220"><?= __('actions') ?></th>
         </tr>
 
@@ -28,104 +30,118 @@
 
     <tbody>
 
-<?php if (!empty($suppliers)): ?>
+        <?php if (!empty($suppliers)): ?>
 
-    <?php foreach ($suppliers as $supplier): ?>
+            <?php foreach ($suppliers as $supplier): ?>
 
-        <tr>
+                <tr>
 
-            <td><?= $supplier->id ?></td>
+                    <td><?= $supplier->id ?></td>
 
-            <td>
+                    <td>
 
-                <a href="<?= URLROOT ?>/suppliers/info/<?= $supplier->id ?>"
-                   class="fw-bold text-decoration-none">
+                        <a href="<?= URLROOT ?>/suppliers/details/<?= $supplier->id ?>"
+                            class="fw-bold text-decoration-none">
 
-                    <i class="fas fa-truck"></i>
+                            <i class="fas fa-truck"></i>
 
-                    <?= htmlspecialchars($supplier->company_name) ?>
+                            <?= htmlspecialchars($supplier->company_name) ?>
 
-                </a>
+                        </a>
 
-            </td>
+                    </td>
 
-            <td>
-                <?= htmlspecialchars($supplier->contact_person ?? '-') ?>
-            </td>
+                    <td>
+                        <?= htmlspecialchars($supplier->contact_person ?? '-') ?>
+                    </td>
 
-            <td>
-                <?= htmlspecialchars($supplier->phone ?? '-') ?>
-            </td>
+                    <td>
+                        <?= htmlspecialchars($supplier->phone ?? '-') ?>
+                    </td>
 
-            <td>
-                <?= htmlspecialchars($supplier->email ?? '-') ?>
-            </td>
+                    <td>
+                        <?= htmlspecialchars($supplier->email ?? '-') ?>
+                    </td>
 
-            <td>
+                    <td>
+                        <a href="<?= URLROOT ?>/suppliers/info/<?= $supplier->id ?>"
+                            class="btn btn-sm btn-success">
 
-                <a href="<?= URLROOT ?>/suppliers/info/<?= $supplier->id ?>"
-                   class="btn btn-sm btn-info">
+                            
+                       <?= __('view_profile') ?>
+                            
 
-                    <?= __('view_profile') ?>
+                        </a>
+                    </td>
 
-                </a>
+                    <td>
 
-                <a href="<?= URLROOT ?>/suppliers/edit/<?= $supplier->id ?>"
-                   class="btn btn-sm btn-warning">
 
-                    <?= __('edit') ?>
 
-                </a>
+                        <a href="<?= URLROOT ?>/suppliers/details/<?= $supplier->id ?>"
+                            class="btn btn-sm btn-info">
 
-                <a href="<?= URLROOT ?>/suppliers/delete/<?= $supplier->id ?>"
-                   class="btn btn-sm btn-danger"
-                   onclick="return confirm(<?= json_encode(__('delete_supplier_confirm')) ?>)">
+                            <?= __('view_profile') ?>
 
-                    <?= __('delete') ?>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="<?= URLROOT ?>/suppliers/edit/<?= $supplier->id ?>"
+                            class="btn btn-sm btn-warning">
 
-                </a>
+                            <?= __('edit') ?>
 
-            </td>
+                        </a>
 
-        </tr>
+                        <a href="<?= URLROOT ?>/suppliers/delete/<?= $supplier->id ?>"
+                            class="btn btn-sm btn-danger"
+                            onclick="return confirm(<?= json_encode(__('delete_supplier_confirm')) ?>)">
 
-    <?php endforeach; ?>
+                            <?= __('delete') ?>
 
-<?php else: ?>
+                        </a>
 
-    <tr>
+                    </td>
 
-        <td colspan="6" class="text-center py-5">
+                </tr>
 
-            <i class="fas fa-truck-loading fa-3x text-secondary mb-3"></i>
+            <?php endforeach; ?>
 
-            <h5 class="mt-3">
+        <?php else: ?>
 
-                <?= __('no_suppliers_added_yet') ?>
+            <tr>
 
-            </h5>
+                <td colspan="6" class="text-center py-5">
 
-            <p class="text-muted mb-3">
+                    <i class="fas fa-truck-loading fa-3x text-secondary mb-3"></i>
 
-                <?= __('create_first_supplier_description') ?>
+                    <h5 class="mt-3">
 
-            </p>
+                        <?= __('no_suppliers_added_yet') ?>
 
-            <a href="<?= URLROOT ?>/suppliers/create"
-               class="btn btn-primary">
+                    </h5>
 
-                <i class="fas fa-plus"></i>
+                    <p class="text-muted mb-3">
 
-                <?= __('add_first_supplier') ?>
+                        <?= __('create_first_supplier_description') ?>
 
-            </a>
+                    </p>
 
-        </td>
+                    <a href="<?= URLROOT ?>/suppliers/create"
+                        class="btn btn-primary">
 
-    </tr>
+                        <i class="fas fa-plus"></i>
 
-<?php endif; ?>
+                        <?= __('add_first_supplier') ?>
 
-</tbody>
+                    </a>
+
+                </td>
+
+            </tr>
+
+        <?php endif; ?>
+
+    </tbody>
 
 </table>

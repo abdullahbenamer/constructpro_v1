@@ -682,7 +682,6 @@ return [
     'reserved'                          => 'Reserved',
     'pricing'                           => 'Pricing',
     'sale'                              => 'Sale',
-    'out'                               => 'Out',
     'ok'                                => 'OK',
     'view_global_stock_details'         => 'View Global Stock Details',
     'stock_details'                     => 'Stock Details',
@@ -691,7 +690,6 @@ return [
     'add_stock_movement'                => 'Add Stock Movement',
     'stock_in'                          => 'Stock In',
     'stock_out'                         => 'Stock Out',
-    'adjustment'                        => 'Adjustment',
     'select_stock_location'              => '-- Select Stock Location --',
     'save'                              => 'Save',
 
@@ -718,7 +716,6 @@ return [
     'total_value'                       => 'Total Value',
     'stock_movements'                   => 'Stock Movements',
     'project_usage'                     => 'Project Usage',
-    'in'                                => 'IN',
 
     'stock_adjustment'                       => 'Stock Adjustment',
     'select_inventory_item'                  => 'Select Inventory Item',
@@ -1666,6 +1663,23 @@ return [
 'unit_deleted_successfully' => 'Unit deleted successfully.',
 'unit_cannot_be_deleted' => 'This unit cannot be deleted because it is currently in use.',
 
+'resource_created_successfully' => 'Resource created successfully.',
+'resource_create_failed' => 'Unable to create resource.',
+'resource_updated_successfully' => 'Resource updated successfully.',
+'resource_update_failed' => 'Unable to update resource.',
+
+'wh' => 'The WH',
+'global' => 'All Total',
+'balance_after' => 'Balance After',
 
 
+'in' => 'IN',
+'out' => 'OUT',
+'adjustment' => 'Adjustment',
+
+'financial_profile' => 'Financial Profile',
+'total_paid' => 'Total Paid',
+
+'total_purchase_orders' => 'Total Purcahse Orders',
+'total_goods_received' => 'Total Goods Received'
 ];

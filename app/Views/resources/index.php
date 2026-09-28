@@ -7,7 +7,7 @@
         </h2>
 
         <a href="<?= URLROOT ?>/Resources/create"
-           class="btn btn-primary">
+            class="btn btn-primary">
 
             <i class="fas fa-plus"></i>
 
@@ -25,8 +25,8 @@
             <?= htmlspecialchars($_SESSION['success']) ?>
 
             <button type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"></button>
+                class="btn-close"
+                data-bs-dismiss="alert"></button>
 
         </div>
 
@@ -42,8 +42,8 @@
             <?= htmlspecialchars($_SESSION['error']) ?>
 
             <button type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"></button>
+                class="btn-close"
+                data-bs-dismiss="alert"></button>
 
         </div>
 
@@ -74,6 +74,8 @@
 
                             <th><?= __('unit') ?></th>
 
+                            <th><?= __('description') ?></th>
+
                             <th><?= __('status') ?></th>
 
                             <th><?= __('actions') ?></th>
@@ -84,122 +86,126 @@
 
                     <tbody>
 
-                    <?php if (!empty($resources)): ?>
+                        <?php if (!empty($resources)): ?>
 
-                        <?php foreach ($resources as $resource): ?>
+                            <?php foreach ($resources as $resource): ?>
 
-                            <?php
+                                <?php
 
-                            $typeLabels = [
+                                $typeLabels = [
 
-                                'HUMAN_RESOURCES'       => __('human_resources'),
-                                'SERVICE'              => __('service'),
-                                'TRANSPORT'            => __('transport'),
-                                'EQUIPMENT'            => __('equipment'),
-                                'PROFESSIONAL_SERVICES' => __('professional_services'),
-                                'MISCELLANEOUS'        => __('miscellaneous')
-                            ];
+                                    'HUMAN_RESOURCES'       => __('human_resources'),
+                                    'SERVICE'              => __('service'),
+                                    'TRANSPORT'            => __('transport'),
+                                    'EQUIPMENT'            => __('equipment'),
+                                    'PROFESSIONAL_SERVICES' => __('professional_services'),
+                                    'MISCELLANEOUS'        => __('miscellaneous')
+                                ];
 
-                            $statusLabel =
-                                $resource->status === 'ACTIVE'
+                                $statusLabel =
+                                    $resource->status === 'ACTIVE'
                                     ? __('active')
                                     : __('inactive');
 
-                            ?>
+                                ?>
+
+                                <tr>
+
+                                    <td>
+                                        <?= htmlspecialchars($resource->resource_code) ?>
+                                    </td>
+
+                                    <td>
+
+                                        <strong>
+                                            <?= htmlspecialchars($resource->resource_name) ?>
+                                        </strong>
+
+                                        <?php if (!empty($resource->resource_name_a)): ?>
+
+                                            <br>
+
+                                            <small class="text-muted">
+                                                <?= htmlspecialchars($resource->resource_name_a) ?>
+                                            </small>
+
+                                        <?php endif; ?>
+
+                                    </td>
+
+                                    <td>
+                                        <?= htmlspecialchars($resource->category_name ?? 'N/A') ?>
+                                    </td>
+
+                                    <td>
+                                        <?= htmlspecialchars(
+                                            $typeLabels[$resource->resource_type]
+                                                ?? $resource->resource_type
+                                        ) ?>
+                                    </td>
+
+                                    <td>
+                                        <?= htmlspecialchars($resource->unit_name ?? 'N/A') ?>
+                                    </td>
+
+                                    <td>
+                                        <?= htmlspecialchars($resource->description ?? 'N/A') ?>
+                                    </td>
+
+                                    <td>
+
+                                        <span class="badge <?= $resource->status === 'ACTIVE'
+                                                                ? 'bg-success'
+                                                                : 'bg-secondary' ?>">
+
+                                            <?= $statusLabel ?>
+
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <a href="<?= URLROOT ?>/Resources/edit/<?= $resource->id ?>"
+                                            class="btn btn-sm btn-warning">
+
+                                            <i class="fas fa-edit"></i>
+
+                                            <?= __('edit') ?>
+
+                                        </a>
+
+
+                                        <a href="<?= URLROOT ?>/Resources/delete/<?= $resource->id ?>"
+                                            class="btn btn-sm btn-danger"
+                                            onclick="return confirm('<?= __('delete_resource_confirm') ?>')">
+
+                                            <i class="fas fa-trash"></i>
+
+                                            <?= __('delete') ?>
+
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+
+                            <?php endforeach; ?>
+
+                        <?php else: ?>
 
                             <tr>
 
-                                <td>
-                                    <?= htmlspecialchars($resource->resource_code) ?>
-                                </td>
+                                <td colspan="7"
+                                    class="text-center text-muted py-4">
 
-                                <td>
-
-                                    <strong>
-                                        <?= htmlspecialchars($resource->resource_name) ?>
-                                    </strong>
-
-                                    <?php if (!empty($resource->resource_name_a)): ?>
-
-                                        <br>
-
-                                        <small class="text-muted">
-                                            <?= htmlspecialchars($resource->resource_name_a) ?>
-                                        </small>
-
-                                    <?php endif; ?>
-
-                                </td>
-
-                                <td>
-                                    <?= htmlspecialchars($resource->category_name ?? 'N/A') ?>
-                                </td>
-
-                                <td>
-                                    <?= htmlspecialchars(
-                                        $typeLabels[$resource->resource_type]
-                                        ?? $resource->resource_type
-                                    ) ?>
-                                </td>
-
-                                <td>
-                                    <?= htmlspecialchars($resource->unit_name ?? 'N/A') ?>
-                                </td>
-
-                                <td>
-
-                                    <span class="badge <?= $resource->status === 'ACTIVE'
-                                        ? 'bg-success'
-                                        : 'bg-secondary' ?>">
-
-                                        <?= $statusLabel ?>
-
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <a href="<?= URLROOT ?>/Resources/edit/<?= $resource->id ?>"
-                                       class="btn btn-sm btn-warning">
-
-                                        <i class="fas fa-edit"></i>
-
-                                        <?= __('edit') ?>
-
-                                    </a>
-
-
-                                    <a href="<?= URLROOT ?>/Resources/delete/<?= $resource->id ?>"
-                                       class="btn btn-sm btn-danger"
-                                       onclick="return confirm('<?= __('delete_resource_confirm') ?>')">
-
-                                        <i class="fas fa-trash"></i>
-
-                                        <?= __('delete') ?>
-
-                                    </a>
+                                    <?= __('no_resources_found') ?>
 
                                 </td>
 
                             </tr>
 
-                        <?php endforeach; ?>
-
-                    <?php else: ?>
-
-                        <tr>
-
-                            <td colspan="7"
-                                class="text-center text-muted py-4">
-
-                                <?= __('no_resources_found') ?>
-
-                            </td>
-
-                        </tr>
-
-                    <?php endif; ?>
+                        <?php endif; ?>
 
                     </tbody>
 

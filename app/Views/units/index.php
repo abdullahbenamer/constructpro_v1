@@ -24,7 +24,7 @@
 
 
         <a href="<?= URLROOT ?>/Units/create"
-           class="btn btn-primary">
+            class="btn btn-primary">
 
             <i class="fas fa-plus"></i>
 
@@ -57,6 +57,10 @@
 
                             <th>
                                 <?= __('arabic_name') ?>
+                            </th>
+
+                            <th>
+                                <?= __('description') ?>
                             </th>
 
                             <th width="120">
@@ -104,6 +108,11 @@
 
                                     </td>
 
+                                    <td>
+
+                                        <?= $unit->description ?: '-' ?>
+
+                                    </td>
 
                                     <td>
 
@@ -131,7 +140,7 @@
                                     <td>
 
                                         <a href="<?= URLROOT ?>/Units/edit/<?= $unit->id ?>"
-                                           class="btn btn-sm btn-warning">
+                                            class="btn btn-sm btn-warning">
 
                                             <i class="fas fa-edit"></i>
 
@@ -139,9 +148,9 @@
 
 
                                         <a href="<?= URLROOT ?>/Units/delete/<?= $unit->id ?>"
-                                           class="btn btn-sm btn-danger"
+                                            class="btn btn-sm btn-danger"
 
-                                           onclick="return confirm(<?= json_encode(__('delete_unit_confirm')) ?>);">
+                                            onclick="return confirm(<?= json_encode(__('delete_unit_confirm')) ?>);">
 
                                             <i class="fas fa-trash"></i>
 

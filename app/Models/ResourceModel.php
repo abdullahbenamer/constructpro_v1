@@ -72,130 +72,109 @@ class ResourceModel extends Model
         )->fetch();
     }
 
+/**
+ * CREATE RESOURCE
+ */
+public function create($data)
+{
+    $result = $this->db->query(
+        "
+        INSERT INTO resources
+        (
+            resource_code,
+            resource_name,
+            resource_name_a,
+            category_id,
+            resource_type,
+            unit_id,
+            description,
+            status
+        )
+        VALUES
+        (
+            ?,
+            ?,
+            ?,
+            ?,
+            ?,
+            ?,
+            ?,
+            ?
+        )
+        ",
+        [
+            $data['resource_code'],
+            $data['resource_name'],
+            $data['resource_name_a'],
+            $data['category_id'],
+            $data['resource_type'],
+            $data['unit_id'],
+            $data['description'],
+            $data['status']
+        ]
+    );
 
+    if (!$result) {
 
+        return [
+            'success' => false,
+            'message' => __('resource_create_failed')
+        ];
 
-
-    /**
-     * CREATE RESOURCE
-     */
-    public function create($data)
-    {
-
-        return $this->db->query(
-            "
-            INSERT INTO resources
-
-            (
-
-                resource_code,
-
-                resource_name,
-
-                resource_name_a,
-
-                category_id,
-
-                resource_type,
-
-                unit_id,
-
-                description,
-
-                status
-
-            )
-
-
-            VALUES
-
-
-            (
-
-                '{$data['resource_code']}',
-
-                '{$data['resource_name']}',
-
-                '{$data['resource_name_a']}',
-
-                '{$data['category_id']}',
-
-                '{$data['resource_type']}',
-
-                '{$data['unit_id']}',
-
-                '{$data['description']}',
-
-                '{$data['status']}'
-
-            )
-
-            "
-        );
     }
 
+    return [
+        'success' => true,
+        'message' => __('resource_created_successfully')
+    ];
+}
 
+/**
+ * UPDATE RESOURCE
+ */
+public function update($id, $data)
+{
+    $result = $this->db->query(
+        "
+        UPDATE resources
+        SET
+            resource_code = ?,
+            resource_name = ?,
+            resource_name_a = ?,
+            category_id = ?,
+            resource_type = ?,
+            unit_id = ?,
+            description = ?,
+            status = ?
+        WHERE id = ?
+        ",
+        [
+            $data['resource_code'],
+            $data['resource_name'],
+            $data['resource_name_a'],
+            $data['category_id'],
+            $data['resource_type'],
+            $data['unit_id'],
+            $data['description'],
+            $data['status'],
+            $id
+        ]
+    );
 
+    if (!$result) {
 
+        return [
+            'success' => false,
+            'message' => __('resource_update_failed')
+        ];
 
-    /**
-     * UPDATE RESOURCE
-     */
-    public function update($id, $data)
-    {
-
-        return $this->db->query(
-            "
-            UPDATE resources
-
-            SET
-
-
-                resource_code =
-                '{$data['resource_code']}',
-
-
-
-                resource_name =
-                '{$data['resource_name']}',
-
-
-
-                resource_name_a =
-                '{$data['resource_name_a']}',
-
-
-
-                category_id =
-                '{$data['category_id']}',
-
-
-
-                resource_type =
-                '{$data['resource_type']}',
-
-
-
-                unit_id =
-                '{$data['unit_id']}',
-
-
-
-                description =
-                '{$data['description']}',
-
-
-
-                status =
-                '{$data['status']}'
-
-
-
-            WHERE id='$id'
-
-            "
-        );
     }
+
+    return [
+        'success' => true,
+        'message' => __('resource_updated_successfully')
+    ];
+}
 
     /**
      * DELETE RESOURCE

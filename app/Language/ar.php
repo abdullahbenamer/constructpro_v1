@@ -12,7 +12,7 @@ return [
     'inventory'              => 'المخزون',
     'procurement'            => 'المشتريات',
     'suppliers'              => 'الموردون',
-    'finance'                => 'المالية',
+    'finance'                => 'المالي',
     'admin_panel'            => 'لوحة ادارة المنظومة',
     'logout'                 => 'تسجيل الخروج',
      'please_login_first'  => 'يرجى تسجيل الدخول ...',
@@ -678,8 +678,7 @@ return [
     'reserved'                          => 'محجوز',
     'pricing'                           => 'الأسعار',
     'sale'                              => 'البيع',
-    'out'                               => 'نفد',
-    'ok'                                => 'جيد',
+    // 'ok'                                => 'جيد',
     'view_global_stock_details'         => 'عرض تفاصيل المخزون الإجمالي',
     'stock_details'                     => 'تفاصيل المخزون',
     'adjust_quantity'                   => 'تعديل الكمية',
@@ -687,7 +686,6 @@ return [
     'add_stock_movement'                => 'إضافة حركة مخزون',
     'stock_in'                          => 'إدخال مخزون',
     'stock_out'                         => 'إخراج مخزون',
-    'adjustment'                        => 'تسوية',
     'select_stock_location'              => '-- اختر موقع المخزون --',
     'save'                              => 'حفظ',
 
@@ -714,8 +712,7 @@ return [
     'total_value'                       => 'القيمة الإجمالية',
     'stock_movements'                   => 'حركات المخزون',
     'project_usage'                     => 'استخدام المشروع',
-    'in'                                => 'إدخال',
-
+   
     'stock_adjustment'                       => 'تسوية المخزون',
     'select_inventory_item'                  => 'اختر صنف المخزون',
     'physical_stock'                         => 'المخزون الفعلي',
@@ -1663,6 +1660,25 @@ return [
 'unit_update_failed' => 'تعذر تحديث الوحدة.',
 'unit_deleted_successfully' => 'تم حذف الوحدة بنجاح.',
 'unit_cannot_be_deleted' => 'لا يمكن حذف هذه الوحدة لأنها مستخدمة حالياً في النظام.',
+
+'resource_created_successfully' => 'تم إنشاء المورد بنجاح.',
+'resource_create_failed' => 'تعذر إنشاء المورد.',
+'resource_updated_successfully' => 'تم تحديث المورد بنجاح.',
+'resource_update_failed' => 'تعذر تحديث المورد.',
+
+'wh' => 'مخزن الموقع',
+'global' => 'اجمالي المخازن',
+'balance_after' => 'بعد الحركة',
+
+'in' => 'وارد',
+'out' => 'صادر',
+'adjustment' => 'تسوية',
+
+'financial_profile' => 'الملف المالي',
+'total_paid' => 'إجمالي المسدد',
+
+'total_purchase_orders' => 'إجمالي طلبات الشراء',
+'total_goods_received' => 'إجمالي البضاعة المستلمة'
 
 ];
 

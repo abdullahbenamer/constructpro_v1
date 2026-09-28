@@ -120,4 +120,21 @@
 
         return (float)$result->total;
     }
+
+
+public function getTotalPaid($supplier_id)
+{
+    $result = $this->db->query(
+        "
+        SELECT COALESCE(SUM(amount), 0) AS total
+        FROM supplier_payments
+        WHERE supplier_id = ?
+        ",
+        [$supplier_id]
+    )->fetch();
+
+    return (float)$result->total;
+}
+
+
     }

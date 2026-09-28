@@ -27,10 +27,22 @@
         </p>
 
         <p>
-            <strong><?= __('total_purchases') ?>:</strong>
+    <strong><?= __('total_purchase_orders') ?>:</strong>
 
-            <?= number_format($total_purchases ?? 0, 2) ?>
-        </p>
+    <?= number_format($total_purchases ?? 0, 2) ?>
+</p>
+
+<p>
+    <strong><?= __('total_goods_received') ?>:</strong>
+
+    <?= number_format($total_goods_received ?? 0, 2) ?>
+</p>
+
+<p>
+    <strong><?= __('total_paid') ?>:</strong>
+
+    <?= number_format($total_paid ?? 0, 2) ?>
+</p>
 
     </div>
 
