@@ -1678,7 +1678,9 @@ return [
 'total_paid' => 'إجمالي المسدد',
 
 'total_purchase_orders' => 'إجمالي طلبات الشراء',
-'total_goods_received' => 'إجمالي البضاعة المستلمة'
+'total_goods_received' => 'إجمالي البضاعة المستلمة',
+
+'supplier_information' => 'حساب المورد'
 
 ];
 

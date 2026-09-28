@@ -1681,5 +1681,7 @@ return [
 'total_paid' => 'Total Paid',
 
 'total_purchase_orders' => 'Total Purcahse Orders',
-'total_goods_received' => 'Total Goods Received'
+'total_goods_received' => 'Total Goods Received',
+
+'supplier_information' => 'Supplier Information'
 ];

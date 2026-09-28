@@ -21,8 +21,11 @@
             <th><?= __('contact') ?></th>
             <th><?= __('phone') ?></th>
             <th><?= __('email') ?></th>
-            <th><?= __('financial_profile') ?></th>
-              <th><?= __('profile') ?></th>
+            <th>
+                <i class="fas fa-coins"></i>
+                <?= __('financial_profile') ?>
+            </th>
+            <th><?= __('profile') ?></th>
             <th width="220"><?= __('actions') ?></th>
         </tr>
 
@@ -67,9 +70,8 @@
                         <a href="<?= URLROOT ?>/suppliers/info/<?= $supplier->id ?>"
                             class="btn btn-sm btn-success">
 
-                            
-                       <?= __('view_profile') ?>
-                            
+            <i class="fas fa-coins"></i> <?= __('view_profile') ?>
+
 
                         </a>
                     </td>
@@ -81,7 +83,7 @@
                         <a href="<?= URLROOT ?>/suppliers/details/<?= $supplier->id ?>"
                             class="btn btn-sm btn-info">
 
-                            <?= __('view_profile') ?>
+                            <?= __('view') ?>
 
                         </a>
                     </td>
