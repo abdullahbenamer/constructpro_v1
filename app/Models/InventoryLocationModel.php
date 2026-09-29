@@ -140,17 +140,18 @@ public function update($id, $data)
     ];
 }
 
-// check if location has stock/history before allowing deletion
+// Check if location currently has any positive stock
 public function hasStock($location_id)
 {
     $row = $this->db->query(
-        "SELECT COUNT(*)
-FROM inventory_location_stock
-WHERE location_id = ?",
+        "SELECT COUNT(*) AS total
+         FROM inventory_location_stock
+         WHERE location_id = ?
+         AND quantity > 0",
         [$location_id]
     )->fetch();
 
-    return ($row->qty ?? 0) > 0;
+    return (int)$row->total > 0;
 }
 
 public function delete($id)

@@ -162,30 +162,18 @@ public function index()
         );
     }
 
-    public function delete($id)
-    {
-          AuthHelper::can('inventory_locations.delete');
+    
+public function delete($id)
+{
+    AuthHelper::can('inventory_locations.delete');
 
-        $model = $this->model('InventoryLocation');
+    $model = $this->model('InventoryLocation');
 
-        if ($model->hasStock($id)) {
+    if ($model->hasStock($id)) {
 
-    FlashHelper::error(
-    __('cannot_delete_location_contains_stock')
-);
-
-            header(
-                'Location: ' . URLROOT . '/inventorylocations'
-            );
-
-            exit;
-        }
-
-        $model->delete($id);
-
-      FlashHelper::success(
-    __('location_deleted_successfully')
-);
+        FlashHelper::error(
+            __('cannot_delete_location_contains_stock')
+        );
 
         header(
             'Location: ' . URLROOT . '/inventorylocations'
@@ -193,4 +181,36 @@ public function index()
 
         exit;
     }
+
+    try {
+
+        $model->delete($id);
+
+        FlashHelper::success(
+            __('location_deleted_successfully')
+        );
+
+    } catch (PDOException $e) {
+
+        if ($e->getCode() === '23000') {
+
+            FlashHelper::error(
+                __('cannot_delete_user_assigned_location_or_in_use')
+            );
+
+        } else {
+
+            FlashHelper::error(
+                __('unable_to_delete_location')
+            );
+        }
+    }
+
+    header(
+        'Location: ' . URLROOT . '/inventorylocations'
+    );
+
+    exit;
+}
+
 }

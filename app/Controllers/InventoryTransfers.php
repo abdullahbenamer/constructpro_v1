@@ -4,10 +4,12 @@ class InventoryTransfers extends Controller
 {
     private $inventoryModel;
 
-    public function __construct()
-    {
-        $this->inventoryModel = new InventoryModel();
-    }
+     public function __construct()
+{
+    parent::__construct();
+
+    $this->inventoryModel = new InventoryModel();
+}
 
     public function index()
     {

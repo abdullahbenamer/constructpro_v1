@@ -758,6 +758,8 @@ return [
     'edit_update_inventory_location'     => 'Edit/Update Inventory Location',
     'warehouse_team'                      => 'Warehouse Team',
     'hold_ctrl_authorized_users'          => 'Hold Ctrl to select multiple users who are authorized to access this warehouse.',
+
+     'hold_ctrl_unauthorize_users'          => 'To remove a user from the list, hold CTRL and select the user.',
     'update_location'                     => 'Update Location',
 
     'inventory_locations'                 => 'Inventory Locations',
@@ -1683,5 +1685,10 @@ return [
 'total_purchase_orders' => 'Total Purcahse Orders',
 'total_goods_received' => 'Total Goods Received',
 
-'supplier_information' => 'Supplier Information'
+'supplier_information' => 'Supplier Information',
+
+'cannot_delete_user_assigned_location_or_in_use' =>  'This location cannot be deleted because it is assigned to users or is referenced by existing transactions or historical records.',
+
+'unable_to_delete_location' => 'Unable to delete location.',
+
 ];

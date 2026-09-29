@@ -133,6 +133,8 @@
         <small class="text-muted">
 
             <?= __('hold_ctrl_authorized_users') ?>
+            <br>
+          <p class="text-danger"><?= __('hold_ctrl_unauthorize_users') ?></p> 
 
         </small>
 

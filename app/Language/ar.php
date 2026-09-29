@@ -755,6 +755,8 @@ return [
     'edit_update_inventory_location'     => 'تعديل / تحديث موقع المخزون',
     'warehouse_team'                      => 'فريق المستودع',
     'hold_ctrl_authorized_users'          => 'اضغط باستمرار على Ctrl لاختيار عدة مستخدمين مصرح لهم بالوصول إلى هذا المستودع.',
+
+    'hold_ctrl_unauthorize_users'          => 'لإلغاء مستخدم من القائمة اضغط باستمرار على CTRL مع النقر على المستخدم',
     'update_location'                     => 'تحديث الموقع',
 
     'inventory_locations'                 => 'مواقع المخزون',
@@ -1680,7 +1682,13 @@ return [
 'total_purchase_orders' => 'إجمالي طلبات الشراء',
 'total_goods_received' => 'إجمالي البضاعة المستلمة',
 
-'supplier_information' => 'حساب المورد'
+'supplier_information' => 'حساب المورد',
+
+'cannot_delete_user_assigned_location_or_in_use'  => 'لا يمكن حذف هذا الموقع لأنه مرتبط بمستخدمين أو بمعاملات أو بسجلات تاريخية موجودة على المنظومة.',
+
+
+'unable_to_delete_location' =>
+    'تعذر حذف الموقع.',
 
 ];
 
