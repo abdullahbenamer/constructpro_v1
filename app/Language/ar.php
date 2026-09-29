@@ -532,7 +532,7 @@ return [
     // INVENTORY MOVEMENTS
     'inventory_movements'        => 'حركات المخزون',
     'user'                       => 'المستخدم',
-    'source_location'            => 'الموقع المصدر',
+    'source_location'            => 'الوجهة/المصدر',
     'warehouse_balance_after'    => 'رصيد المستودع بعد الحركة',
     'global_balance_after'       => 'الرصيد الإجمالي بعد الحركة',
 

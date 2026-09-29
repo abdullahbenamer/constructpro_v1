@@ -192,4 +192,19 @@ public function delete($id)
     ];
 }
 
+/**
+ * GET ACTIVE UNITS
+ */
+public function getActive()
+{
+    return $this->db->query(
+        "
+        SELECT *
+        FROM units
+        WHERE status = 'ACTIVE'
+        ORDER BY unit_name
+        "
+    )->fetchAll();
+}
+
 }

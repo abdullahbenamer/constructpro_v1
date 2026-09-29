@@ -538,7 +538,7 @@ return [
     // INVENTORY MOVEMENTS
     'inventory_movements'        => 'Inventory Movements',
     'user'                       => 'User',
-    'source_location'            => 'Source Location',
+    'source_location'            => 'Destination / Source',
     'warehouse_balance_after'    => 'WH Balance After',
     'global_balance_after'       => 'Global Balance After',
 
