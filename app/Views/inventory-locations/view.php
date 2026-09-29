@@ -10,6 +10,18 @@
     <?= htmlspecialchars($location->name) ?>
 </p>
 
+<!-- storekeeper here -->
+   <p>
+    <span class="text-muted small"><?= __('storekeeper') ?>:</span>
+    <?php if (!empty($location->storekeeper_id)): ?>
+        <a href="<?= URLROOT ?>/users/details/<?= (int)$location->storekeeper_id ?>">
+     <strong><?= htmlspecialchars($location->storekeeper) ?></strong>
+        </a>
+    <?php else: ?>
+        -
+    <?php endif; ?>
+</p>
+
 <!-- SORT AND FILTER -->
 
 <div class="row mb-3">

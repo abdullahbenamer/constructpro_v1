@@ -30,13 +30,29 @@ public function getAll()
     ")->fetchAll();
 }
 
+    // public function getById($id)
+    // {
+    //     return $this->db->query(
+    //         "SELECT * FROM inventory_locations WHERE id = ?",
+    //         [$id]
+    //     )->fetch();
+    // }
+
     public function getById($id)
-    {
-        return $this->db->query(
-            "SELECT * FROM inventory_locations WHERE id = ?",
-            [$id]
-        )->fetch();
-    }
+{
+    return $this->db->query(
+        "
+        SELECT
+            l.*,
+            u.full_name AS storekeeper
+        FROM inventory_locations l
+        LEFT JOIN users u
+            ON u.id = l.storekeeper_id
+        WHERE l.id = ?
+        ",
+        [$id]
+    )->fetch();
+}
 
 public function create($data)
 {
