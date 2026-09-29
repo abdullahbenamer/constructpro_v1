@@ -355,4 +355,82 @@ class Inventory extends Controller
             $data
         );
     }
+
+/*
+|--------------------------------------------------------------------------
+| PRINT GLOBAL INVENTORY STOCK DETAILS
+|--------------------------------------------------------------------------
+*/
+
+public function printStockDetails($id)
+{
+    AuthHelper::can('inventory.view');
+
+    $inventoryModel = $this->model('Inventory');
+    $reservationModel = $this->model('InventoryReservation');
+
+    $item = $inventoryModel->getById((int)$id);
+
+    if (!$item) {
+
+        FlashHelper::error(
+            __('inventory_item_not_found')
+        );
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/inventory'
+        );
+
+        exit;
+    }
+
+    $locations =
+        $inventoryModel->getLocationBreakdown(
+            (int)$id
+        );
+
+    $reservedQty =
+        $reservationModel->getActiveReservedQty(
+            (int)$id
+        );
+
+    $locationTotal = 0;
+
+    foreach ($locations as $location) {
+
+        $locationTotal +=
+            (float)$location->physical_qty;
+    }
+
+    $data = [
+
+        'item' => $item,
+
+        'locations' => $locations,
+
+        'system_qty' =>
+            (float)$item->quantity,
+
+        'location_total' =>
+            $locationTotal,
+
+        'reserved_qty' =>
+            (float)$reservedQty,
+
+        'available_qty' =>
+            max(
+                0,
+                $locationTotal - $reservedQty
+            )
+    ];
+
+    $this->view(
+        'inventory/stock_details_print',
+        $data,
+        false
+    );
 }
+
+    }

@@ -6,6 +6,44 @@
 
 </h2>
 
+<div>
+    <!-- ACTIONS -->
+
+<div class="mt-4">
+
+    <a href="<?= URLROOT ?>/inventory/printStockDetails/<?= $item->id ?>"
+       class="btn btn-dark"
+       target="_blank">
+
+        <i class="fas fa-print"></i>
+
+        <?= __('print') ?>
+
+    </a>
+
+
+    <a href="<?= URLROOT ?>/inventory"
+       class="btn btn-secondary">
+
+        <i class="fas fa-arrow-left"></i>
+
+        <?= __('back_to_inventory') ?>
+
+    </a>
+
+
+    <a href="<?= URLROOT ?>/inventory/details/<?= $item->id ?>"
+       class="btn btn-outline-primary">
+
+        <i class="fas fa-history"></i>
+
+        <?= __('item_details_history') ?>
+
+    </a>
+
+</div>
+</div>
+
 <!-- ITEM INFORMATION -->
 
 <div class="card mb-4">
