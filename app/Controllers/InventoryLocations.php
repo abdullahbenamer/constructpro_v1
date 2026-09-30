@@ -213,4 +213,50 @@ public function delete($id)
     exit;
 }
 
+/*
+|--------------------------------------------------------------------------
+| PRINT LOCATION INVENTORY
+|--------------------------------------------------------------------------
+*/
+
+public function print($id)
+{
+    AuthHelper::can('inventory_locations.view');
+
+    $locationModel = $this->model('InventoryLocation');
+
+    $stockModel = $this->model('InventoryLocationStock');
+
+    $location = $locationModel->getById((int)$id);
+
+    if (!$location) {
+
+        FlashHelper::error(__('location_not_found'));
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/inventorylocations'
+        );
+
+        exit;
+    }
+
+    $items = $stockModel->getLocationInventory(
+        (int)$id
+    );
+
+    // ADD THIS HERE
+    $data = [
+        'location' => $location,
+        'items'    => $items
+    ];
+
+    $this->view(
+        'inventory-locations/print',
+        $data,
+        false
+    );
+}
+
 }

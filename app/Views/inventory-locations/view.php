@@ -10,7 +10,18 @@
     <?= htmlspecialchars($location->name) ?>
 </p>
 
-<!-- storekeeper here -->
+<div>
+    <a
+    href="<?= URLROOT ?>/inventorylocations/print/<?= (int)$location->id ?>"
+    class="btn btn-dark"
+    target="_blank"
+>
+    <i class="fas fa-print"></i>
+    <?= __('print') ?>
+</a>
+</div>
+<br>
+<!-- storekeeper  -->
    <p>
     <span class="text-muted small"><?= __('storekeeper') ?>:</span>
     <?php if (!empty($location->storekeeper_id)): ?>

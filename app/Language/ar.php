@@ -53,8 +53,8 @@ return [
     'view_requisition'                  => 'عرض طلب الموارد',
     'actual_unit_cost'                  => 'تكلفة الوحدة الفعلية',
     'process_resource_fulfillment'      => 'تنفيذ الموارد',
-    'fulfilled_materials'               => 'المواد المنفذة',
-    'resource_requisition_fulfillment'  => 'تنفيذ طلب الموارد',
+    'fulfilled_materials'               => 'مواد تم تنفيذها',
+        'resource_requisition_fulfillment'  => 'تنفيذ طلب الموارد',
     'fulfillment_information'           => 'معلومات التنفيذ',
     'fulfillment_id'                    => 'معرف التنفيذ',
     'requisition'                       => 'طلب الموارد',
@@ -234,7 +234,7 @@ return [
     'project_warehouse' => 'مستودع المشروع',
     'add_cost_to_project' => 'إضافة تكلفة إلى المشروع',
     'labor'         => 'العمالة',
-    'inventory_item' => 'صنف المخزون',
+    'inventory_item' => 'المخزون صنف',
     'select_item' => 'اختر الصنف',
     'available' => 'متوفر/متاح',
     'physical'  => 'الفعلي',
@@ -583,7 +583,7 @@ return [
     'resource'                              => 'المورد',
     'requested'                             => 'المطلوب',
     'unit'                                  => 'الوحدة',
-    'out_of_stock'                          => 'نفد المخزون',
+    'out_of_stock'                          => 'مخزون نافذ',
     'locked'                                => 'مقفل',
     'no_requisition_items_added'            => 'لم تتم إضافة أي بنود إلى طلب الموارد.',
     'approval_history'                      => 'سجل الاعتماد',
@@ -1689,6 +1689,17 @@ return [
 
 'unable_to_delete_location' =>
     'تعذر حذف الموقع.',
+
+'print' => 'طباعة الصغحة',
+
+
+'physical_quantity' => 'الكمية الموجودة',
+'reserved_quantity' => 'الكمية المحجوزة',
+'available_quantity' => 'الكمية المتاحة',
+
+'inventory_item_deleted_successfully' => 'تم حذف عنصر المخزون بنجاح.',
+'inventory_item_cannot_be_deleted' => 'لا يمكن حذف عنصر المخزون لأنه مستخدم بالفعل في معاملات موجودة.',
+'unable_to_delete_inventory_item' => 'تعذر حذف عنصر المخزون.',
 
 ];
 

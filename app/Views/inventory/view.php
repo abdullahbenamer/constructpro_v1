@@ -6,9 +6,7 @@
 
 </h2>
 
-<a href="<?= URLROOT ?>/inventory"
-   class="btn btn-secondary mb-3">
-
+<a href="<?= URLROOT ?>/inventory/stockDetails/<?= $item->id ?>" class="btn btn-secondary mb-3">
     <?= __('back') ?>
 
 </a>

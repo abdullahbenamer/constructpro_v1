@@ -1691,4 +1691,16 @@ return [
 
 'unable_to_delete_location' => 'Unable to delete location.',
 
+'print' => 'Print Page',
+
+'physical_quantity' => 'Total Physical Quantity',
+'reserved_quantity' => 'Reserved Quantity',
+'available_quantity' => 'Available Quantity',
+
+'inventory_item_deleted_successfully' => 'Inventory item deleted successfully.',
+'inventory_item_cannot_be_deleted' => 'This inventory item cannot be deleted because it is already used in existing transactions.',
+'unable_to_delete_inventory_item' => 'Unable to delete inventory item.',
+
+
+
 ];

@@ -2,7 +2,19 @@
     <i class="fas fa-warehouse"></i>
     <?= __('inventory_management') ?>
 </h2>
+<div>
+    <!-- Print Inventory List -->
+    <a href="<?= URLROOT ?>/inventory/print"
+   class="btn btn-dark"
+   target="_blank">
 
+    <i class="fas fa-print"></i>
+
+    <?= __('print') ?>
+
+</a>
+</div>
+<br>
 <?php if (count($low_stock ?? []) > 0) : ?>
 
     <div class="alert alert-warning">

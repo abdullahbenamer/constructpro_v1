@@ -38,14 +38,15 @@ class InventoryModel extends Model
     public function getStock($category = null)
     {
         $sql = "
-        SELECT
-            inventory.*,
+       SELECT
+    inventory.*,
 
-           b.brand_name AS brand_name,
+    u.unit_name AS uom,
 
-c.country_name AS country_name,
+    b.brand_name AS brand_name,
 
-c.country_code AS country_code,
+    c.country_name AS country_name,
+    c.country_code AS country_code,
 
             /*
             |----------------------------------------------------------
@@ -158,10 +159,13 @@ c.country_code AS country_code,
 
         FROM inventory
 
-        LEFT JOIN brands b
-            ON b.id = inventory.brand_id
+LEFT JOIN units u
+    ON u.id = inventory.unit_id
 
-       LEFT JOIN countries c
+LEFT JOIN brands b
+    ON b.id = inventory.brand_id
+
+LEFT JOIN countries c
     ON c.id = inventory.country_id
 
         WHERE inventory.id > 0

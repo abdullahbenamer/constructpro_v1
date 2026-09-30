@@ -11,16 +11,16 @@
 
 <div class="mt-4">
 
-    <a href="<?= URLROOT ?>/inventory/printStockDetails/<?= $item->id ?>"
-       class="btn btn-dark"
-       target="_blank">
+    <!-- Print Inventory List -->
+    <!-- <a href="<?//= URLROOT ?>/inventory/item_print"
+   class="btn btn-dark"
+   target="_blank">
 
-        <i class="fas fa-print"></i>
+    <i class="fas fa-print"></i>
 
-        <?= __('print') ?>
+    <?//= __('print') ?>
 
-    </a>
-
+</a> -->
 
     <a href="<?= URLROOT ?>/inventory"
        class="btn btn-secondary">

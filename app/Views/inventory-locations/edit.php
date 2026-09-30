@@ -141,18 +141,18 @@
     </div>
 
     <!-- Mobile -->
-    <div class="mb-3">
+<div class="mb-3">
 
-        <label>
-            <?= __('mobile_number') ?>
-        </label>
+    <label>
+        <?= __('mobile_number') ?>
+    </label>
 
-        <input type="text"
-               name="mobile"
-               class="form-control"
-               value="<?= htmlspecialchars($_POST['mobile'] ?? $location->mobile) ?>">
+    <input type="text"
+           name="mobile"
+           class="form-control"
+           value="<?= htmlspecialchars($_POST['mobile'] ?? ($location->mobile ?? '')) ?>">
 
-    </div>
+</div>
 
     <!-- Notes -->
     <div class="mb-3">
