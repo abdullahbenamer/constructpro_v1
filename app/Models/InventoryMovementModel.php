@@ -179,26 +179,51 @@ class InventoryMovementModel extends Model
     ")->fetchAll();
     }
 
-    public function getMovementsDetailed($inventory_id)
-    {
-        return $this->db->query(
-            "
+public function getMovementsDetailed($inventory_id)
+{
+    return $this->db->query(
+        "
         SELECT
             im.*,
-            s.company_name AS supplier_name
+
+            s.company_name AS supplier_name,
+
+            t.from_location_id,
+            t.to_location_id,
+
+            fl.name AS from_location_name,
+            tl.name AS to_location_name,
+
+            ml.name AS movement_location_name
 
         FROM inventory_movements im
 
         LEFT JOIN suppliers s
             ON s.id = im.supplier_id
 
+        LEFT JOIN inventory_transfers t
+            ON t.id = CAST(
+                REPLACE(im.notes, 'Warehouse Transfer #', '')
+                AS UNSIGNED
+            )
+            AND t.inventory_id = im.inventory_id
+
+        LEFT JOIN inventory_locations fl
+            ON fl.id = t.from_location_id
+
+        LEFT JOIN inventory_locations tl
+            ON tl.id = t.to_location_id
+
+        LEFT JOIN inventory_locations ml
+            ON ml.id = im.location_id
+
         WHERE im.inventory_id = ?
 
         ORDER BY im.created_at DESC
         ",
-            [$inventory_id]
-        )->fetchAll();
-    }
+        [$inventory_id]
+    )->fetchAll();
+}
 
     public function getOpenPurchaseOrders()
     {

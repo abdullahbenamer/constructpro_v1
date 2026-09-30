@@ -96,7 +96,7 @@
                     <th><?= __('type') ?></th>
                     <th><?= __('qty') ?></th>
                     <th><?= __('balance') ?></th>
-                    <th><?= __('supplier') ?></th>
+                   <th><?= __('supplier_source_destination') ?></th>
                     <th><?= __('reference') ?></th>
                     <th><?= __('notes') ?></th>
 
@@ -146,11 +146,38 @@
                             <?= $m->balance_after ?>
                         </td>
 
-                        <td>
-                            <?= htmlspecialchars(
-                                $m->supplier_name ?? '-'
-                            ) ?>
-                        </td>
+<td>
+
+    <?php if ($m->type === 'IN' && !empty($m->to_location_name)) : ?>
+
+        <strong><?= __('destination') ?>:</strong>
+        <?= htmlspecialchars($m->to_location_name) ?>
+
+    <?php elseif ($m->type === 'OUT' && !empty($m->from_location_name)) : ?>
+
+        <strong><?= __('source') ?>:</strong>
+        <?= htmlspecialchars($m->from_location_name) ?>
+
+    <?php elseif ($m->type === 'OUT' && !empty($m->movement_location_name)) : ?>
+
+        <strong><?= __('source') ?>:</strong>
+        <?= htmlspecialchars($m->movement_location_name) ?>
+
+    <?php elseif ($m->type === 'ADJUSTMENT') : ?>
+
+        <?= __('adjustment') ?>
+
+    <?php elseif (!empty($m->supplier_name)) : ?>
+
+        <?= htmlspecialchars($m->supplier_name) ?>
+
+    <?php else : ?>
+
+        -
+
+    <?php endif; ?>
+
+</td>
 
                         <td>
                             <?= htmlspecialchars(

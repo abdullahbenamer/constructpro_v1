@@ -1701,5 +1701,9 @@ return [
 'inventory_item_cannot_be_deleted' => 'لا يمكن حذف عنصر المخزون لأنه مستخدم بالفعل في معاملات موجودة.',
 'unable_to_delete_inventory_item' => 'تعذر حذف عنصر المخزون.',
 
+'supplier_source_destination' => 'المورد / المصدر / الوجهة',
+'source' => 'المصدر',
+
+
 ];
 

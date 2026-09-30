@@ -1701,6 +1701,7 @@ return [
 'inventory_item_cannot_be_deleted' => 'This inventory item cannot be deleted because it is already used in existing transactions.',
 'unable_to_delete_inventory_item' => 'Unable to delete inventory item.',
 
-
+'supplier_source_destination' => 'Supplier / Source / Destination',
+'source' => 'Source',
 
 ];
