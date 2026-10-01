@@ -69,43 +69,7 @@ public function getProjectCosts($project_id)
         FROM project_costs
     ")->fetch()->total;
 }
-    
-// public function create($data)
-// {
-//     $this->db->query(
-//         "INSERT INTO project_costs
-//         (
-//             project_id,
-//             requisition_id,
-//             fulfillment_id,
-//             inventory_id,
-//             location_id,
-//             cost_type,
-//             description,
-//             quantity,
-//             unit_price
-//         )
-//         VALUES
-//         (
-//             ?, ?, ?, ?, ?, ?, ?, ?, ?
-//         )",
-//         [
-//             $data['project_id'],
-//             $data['requisition_id'] ?? null,
-//             $data['fulfillment_id'] ?? null,
-//             $data['inventory_id'] ?? null,
-//             $data['location_id'] ?? null,
-//             $data['cost_type'],
-//             $data['description'],
-//             $data['quantity'],
-//             $data['unit_price']
-//         ]
-//     );
-
-//     return $this->db->lastInsertId();
-// }
-
-
+ 
 public function create($data)
 {
     $this->db->query(
