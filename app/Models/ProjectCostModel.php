@@ -70,37 +70,72 @@ public function getProjectCosts($project_id)
     ")->fetch()->total;
 }
     
-  public function create($data)
+// public function create($data)
+// {
+//     $this->db->query(
+//         "INSERT INTO project_costs
+//         (
+//             project_id,
+//             requisition_id,
+//             fulfillment_id,
+//             inventory_id,
+//             location_id,
+//             cost_type,
+//             description,
+//             quantity,
+//             unit_price
+//         )
+//         VALUES
+//         (
+//             ?, ?, ?, ?, ?, ?, ?, ?, ?
+//         )",
+//         [
+//             $data['project_id'],
+//             $data['requisition_id'] ?? null,
+//             $data['fulfillment_id'] ?? null,
+//             $data['inventory_id'] ?? null,
+//             $data['location_id'] ?? null,
+//             $data['cost_type'],
+//             $data['description'],
+//             $data['quantity'],
+//             $data['unit_price']
+//         ]
+//     );
+
+//     return $this->db->lastInsertId();
+// }
+
+
+public function create($data)
 {
     $this->db->query(
         "INSERT INTO project_costs
-(
-    project_id,
-    requisition_id,
-    fulfillment_id,
-    inventory_id,
-    location_id,
-    cost_type,
-    description,
-    quantity,
-    unit_price
-)
-VALUES
-(
-    ?, ?, ?, ?, ?, ?, ?, ?, ?
-)",
+        (
+            project_id,
+            requisition_id,
+            fulfillment_id,
+            inventory_id,
+            location_id,
+            cost_type,
+            description,
+            quantity,
+            unit_price
+        )
+        VALUES
+        (
+            ?, ?, ?, ?, ?, ?, ?, ?, ?
+        )",
         [
-    $data['requisition->project_id'],
-    $data['requisition->id'],
-    $data['fulfillment_id'],
-    $data['inventory_id'],
-    $data['location_id'],
-    $data['cost_type'],
-    $data['reqItem->description'],
-    $data['quantity'],
-    $data['unit_cost'] ?? null
-]
-
+            $data['project_id'],
+            $data['requisition_id'] ?? null,
+            $data['fulfillment_id'] ?? null,
+            $data['inventory_id'] ?? null,
+            $data['location_id'] ?? null,
+            $data['cost_type'],
+            $data['description'],
+            $data['quantity'],
+            $data['unit_price']
+        ]
     );
 
     return $this->db->lastInsertId();

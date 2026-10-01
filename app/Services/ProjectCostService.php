@@ -31,33 +31,27 @@ class ProjectCostService extends BaseService
 {
     $data = $this->validate($data);
 
-//    die(
-//             '<pre>' .
-//             "BEFORE DATABASE OPERATIONS\n\n" .
-//             print_r($data, true) .
-//             "\n\nproject_id = " .
-//             var_export($data['project_id'] ?? null, true) .
-//             '</pre>'
-//         );
-
     return $this->transaction(function () use ($data) {
 
-        // $this->deductInventory($data);
+  
+         $this->deductInventory($data);
 
         $costId = $this->costModel->create($data);
 
-        // $this->recordInventoryMovement(
-        //     $data,
-        //     'OUT'
-        // );
-        // $this->recordLedger(
-        //     $costId,
-        //     $data
-        // );
+        $this->recordInventoryMovement(
+            $data,
+            'OUT'
+        );
+
+        $this->recordLedger(
+            $costId,
+            $data
+        );
 
         return $costId;
     });
 }
+
 
     public function update(int $id, array $data): bool
     {
