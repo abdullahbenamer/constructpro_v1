@@ -653,14 +653,14 @@ return [
     'kg'                               => 'Kg',
     'liter'                            => 'Liter',
     'allow_fraction'                   => 'Allow Fraction?',
-      'allow_fraction_tick'            => 'Allow',
+    'allow_fraction_tick'            => 'Allow',
     'example_fraction'                 => 'e.g. 2.5 meters',
-   // 'sale_unit'                        => 'Sale Unit',
-   // 'sale_unit_placeholder'            => 'Roll / Box',
-   // 'units_per_sale'                   => 'Units per Sale',
-   // 'selling_prices'                   => 'Selling Prices',
-   // 'price_per_base_unit'              => 'Price per Base Unit',
-   // 'price_per_sale_unit'              => 'Price per Sale Unit',
+    // 'sale_unit'                        => 'Sale Unit',
+    // 'sale_unit_placeholder'            => 'Roll / Box',
+    // 'units_per_sale'                   => 'Units per Sale',
+    // 'selling_prices'                   => 'Selling Prices',
+    // 'price_per_base_unit'              => 'Price per Base Unit',
+    // 'price_per_sale_unit'              => 'Price per Sale Unit',
     'you_selected'                     => 'You selected',
     'confirm'                           => 'Confirm',
     'change'                            => 'Change',
@@ -725,6 +725,8 @@ return [
     'select_adjustment_type'                 => 'Select Adjustment Type',
     'increase_stock'                         => 'Increase Stock',
     'decrease_stock'                         => 'Decrease Stock',
+    'increase'                               => 'Increase',
+    'decrease'                               => 'Decrease',
     'new_physical_balance'                   => 'New Physical Balance',
     'select_reason'                          => 'Select Reason',
     'damaged'                                => 'Damaged',
@@ -732,6 +734,11 @@ return [
     'lost'                                   => 'Lost',
     'found'                                  => 'Found',
     'physical_count_correction'              => 'Physical Count Correction',
+
+    'reservation_fulfillment'                => 'Reservation Fulfillment',
+    'return_to_supplier'                     => 'Return to Supplier',
+    'warehouse_transfer'                     => 'Warehouse Transfer',
+
     'expired'                                => 'Expired',
     'additional_explanation'                => 'Additional explanation...',
     'post_adjustment'                        => 'Post Adjustment',
@@ -759,7 +766,7 @@ return [
     'warehouse_team'                      => 'Warehouse Team',
     'hold_ctrl_authorized_users'          => 'Hold Ctrl to select multiple users who are authorized to access this warehouse.',
 
-     'hold_ctrl_unauthorize_users'          => 'To remove a user from the list, hold CTRL and select the user.',
+    'hold_ctrl_unauthorize_users'          => 'To remove a user from the list, hold CTRL and select the user.',
     'update_location'                     => 'Update Location',
 
     'inventory_locations'                 => 'Inventory Locations',
@@ -1092,9 +1099,9 @@ return [
     'delete_resource_confirm'    => 'Delete this resource?',
     'no_resources_found'         => 'No resources found.',
     'resource_not_found'         => 'Resource not found.',
-'resource_cannot_be_deleted_already_in_use' => 'This resource cannot be deleted because it is already in use.',
+    'resource_cannot_be_deleted_already_in_use' => 'This resource cannot be deleted because it is already in use.',
 
-'resource_deleted_successfully' => 'Resource deleted successfully.',
+    'resource_deleted_successfully' => 'Resource deleted successfully.',
 
     // Permission Groups
     'permission'         => 'Permission',
@@ -1171,328 +1178,328 @@ return [
 
 
     'about_system_english' => 'About ConstructPro ERP',
-'about_system_arabic'  => 'About ConstructPro ERP (Arabic)',
-'permission_goods_receipts_create' => 'Create Goods Receipts',
-'permission_goods_returns_view' => 'View Goods Returns',
+    'about_system_arabic'  => 'About ConstructPro ERP (Arabic)',
+    'permission_goods_receipts_create' => 'Create Goods Receipts',
+    'permission_goods_returns_view' => 'View Goods Returns',
 
-'permission_group_inventory_adjustments' => 'Inventory Adjustments',
-'permission_inventory_adjustments_create' => 'Create Inventory Adjustments',
-'permission_inventory_adjustments_view' => 'View Inventory Adjustments',
+    'permission_group_inventory_adjustments' => 'Inventory Adjustments',
+    'permission_inventory_adjustments_create' => 'Create Inventory Adjustments',
+    'permission_inventory_adjustments_view' => 'View Inventory Adjustments',
 
-'permission_inventory_locations_delete' => 'Delete Inventory Locations',
-'permission_inventory_locations_edit' => 'Edit Inventory Locations',
+    'permission_inventory_locations_delete' => 'Delete Inventory Locations',
+    'permission_inventory_locations_edit' => 'Edit Inventory Locations',
 
-'permission_inventory_reservations_cancel' => 'Cancel Inventory Reservations',
-'permission_inventory_reservations_delete' => 'Delete Inventory Reservations',
-'permission_inventory_reservations_edit' => 'Edit Inventory Reservations',
-'permission_inventory_reservations_fulfill' => 'Fulfill Inventory Reservations',
+    'permission_inventory_reservations_cancel' => 'Cancel Inventory Reservations',
+    'permission_inventory_reservations_delete' => 'Delete Inventory Reservations',
+    'permission_inventory_reservations_edit' => 'Edit Inventory Reservations',
+    'permission_inventory_reservations_fulfill' => 'Fulfill Inventory Reservations',
 
-'permission_projects_archive' => 'Archive Projects',
-'permission_projects_documents_create' => 'Upload Project Documents',
-'permission_projects_documents_delete' => 'Delete Project Documents',
-'permission_projects_restore' => 'Restore Projects',
+    'permission_projects_archive' => 'Archive Projects',
+    'permission_projects_documents_create' => 'Upload Project Documents',
+    'permission_projects_documents_delete' => 'Delete Project Documents',
+    'permission_projects_restore' => 'Restore Projects',
 
-'permission_group_project_advances' => 'PROJECT ADVANCES',
-'permission_project_advances_create' => 'Create Project Advances',
-'permission_project_advances_settle' => 'Settle Project Advances',
-'permission_project_advances_view' => 'View Project Advances',
+    'permission_group_project_advances' => 'PROJECT ADVANCES',
+    'permission_project_advances_create' => 'Create Project Advances',
+    'permission_project_advances_settle' => 'Settle Project Advances',
+    'permission_project_advances_view' => 'View Project Advances',
 
-'permission_group_project_costs' => 'Project Costs',
-'permission_project_costs_create' => 'Create Project Costs',
-'permission_project_costs_delete' => 'Delete Project Costs',
-'permission_project_costs_edit' => 'Edit Project Costs',
-'permission_project_costs_view' => 'View Project Costs',
+    'permission_group_project_costs' => 'Project Costs',
+    'permission_project_costs_create' => 'Create Project Costs',
+    'permission_project_costs_delete' => 'Delete Project Costs',
+    'permission_project_costs_edit' => 'Edit Project Costs',
+    'permission_project_costs_view' => 'View Project Costs',
 
-'permission_group_project_finance' => 'Project Finance',
-'permission_project_finance_view' => 'View Project Finance',
+    'permission_group_project_finance' => 'Project Finance',
+    'permission_project_finance_view' => 'View Project Finance',
 
-'permission_group_purchases' => 'Purchases',
-'permission_purchases_view' => 'View Purchases',
+    'permission_group_purchases' => 'Purchases',
+    'permission_purchases_view' => 'View Purchases',
 
-'permission_purchase_orders_cancel' => 'Cancel Purchase Orders',
-'permission_purchase_orders_edit' => 'Edit Purchase Orders',
+    'permission_purchase_orders_cancel' => 'Cancel Purchase Orders',
+    'permission_purchase_orders_edit' => 'Edit Purchase Orders',
 
-'permission_group_resources' => 'Resources',
-'permission_resources_create' => 'Create Resources',
-'permission_resources_delete' => 'Delete Resources',
-'permission_resources_edit' => 'Edit Resources',
-'permission_resources_view' => 'View Resources',
+    'permission_group_resources' => 'Resources',
+    'permission_resources_create' => 'Create Resources',
+    'permission_resources_delete' => 'Delete Resources',
+    'permission_resources_edit' => 'Edit Resources',
+    'permission_resources_view' => 'View Resources',
 
-'permission_group_resource_categories' => 'Resource Categories',
-'permission_resource_categories_create' => 'Create Resource Categories',
-'permission_resource_categories_delete' => 'Delete Resource Categories',
-'permission_resource_categories_edit' => 'Edit Resource Categories',
-'permission_resource_categories_view' => 'View Resource Categories',
+    'permission_group_resource_categories' => 'Resource Categories',
+    'permission_resource_categories_create' => 'Create Resource Categories',
+    'permission_resource_categories_delete' => 'Delete Resource Categories',
+    'permission_resource_categories_edit' => 'Edit Resource Categories',
+    'permission_resource_categories_view' => 'View Resource Categories',
 
-'permission_resource_requisitions_create' => 'Create Resource Requisitions',
-'permission_resource_requisitions_delete' => 'Delete Resource Requisitions',
-'permission_resource_requisitions_edit' => 'Edit Resource Requisitions',
-'permission_resource_requisitions_fulfill' => 'Fulfill Resource Requisitions',
-'permission_resource_requisitions_reject' => 'Reject Resource Requisitions',
-'permission_resource_requisitions_submit' => 'Submit Resource Requisitions',
-'permission_resource_requisitions_view' => 'View Resource Requisitions',
+    'permission_resource_requisitions_create' => 'Create Resource Requisitions',
+    'permission_resource_requisitions_delete' => 'Delete Resource Requisitions',
+    'permission_resource_requisitions_edit' => 'Edit Resource Requisitions',
+    'permission_resource_requisitions_fulfill' => 'Fulfill Resource Requisitions',
+    'permission_resource_requisitions_reject' => 'Reject Resource Requisitions',
+    'permission_resource_requisitions_submit' => 'Submit Resource Requisitions',
+    'permission_resource_requisitions_view' => 'View Resource Requisitions',
 
-'permission_stock_transfers_reverse' => 'Reverse Stock Transfers',
+    'permission_stock_transfers_reverse' => 'Reverse Stock Transfers',
 
-'permission_suppliers_delete' => 'Delete Suppliers',
-'permission_suppliers_edit' => 'Edit Suppliers',
-'permission_suppliers_ledger' => 'View Supplier Ledger',
+    'permission_suppliers_delete' => 'Delete Suppliers',
+    'permission_suppliers_edit' => 'Edit Suppliers',
+    'permission_suppliers_ledger' => 'View Supplier Ledger',
 
-'permission_group_supplier_payments' => 'Supplier Payments',
-'permission_supplier_payments_create' => 'Create Supplier Payments',
-'permission_supplier_payments_view' => 'View Supplier Payments',
+    'permission_group_supplier_payments' => 'Supplier Payments',
+    'permission_supplier_payments_create' => 'Create Supplier Payments',
+    'permission_supplier_payments_view' => 'View Supplier Payments',
 
-'permission_group_supplier_quotations' => 'Supplier Quotations',
-'permission_supplier_quotations_accept' => 'Accept Supplier Quotations',
-'permission_supplier_quotations_cancel' => 'Cancel Supplier Quotations',
-'permission_supplier_quotations_create' => 'Create Supplier Quotations',
-'permission_supplier_quotations_create_po' => 'Create Purchase Order from Quotation',
-'permission_supplier_quotations_edit' => 'Edit Supplier Quotations',
-'permission_supplier_quotations_view' => 'View Supplier Quotations',
+    'permission_group_supplier_quotations' => 'Supplier Quotations',
+    'permission_supplier_quotations_accept' => 'Accept Supplier Quotations',
+    'permission_supplier_quotations_cancel' => 'Cancel Supplier Quotations',
+    'permission_supplier_quotations_create' => 'Create Supplier Quotations',
+    'permission_supplier_quotations_create_po' => 'Create Purchase Order from Quotation',
+    'permission_supplier_quotations_edit' => 'Edit Supplier Quotations',
+    'permission_supplier_quotations_view' => 'View Supplier Quotations',
 
-'permission_group_technicians' => 'Technicians',
-'permission_technicians_view' => 'View Technicians',
+    'permission_group_technicians' => 'Technicians',
+    'permission_technicians_view' => 'View Technicians',
 
-'permission_group_units' => 'Units',
-'permission_units_create' => 'Create Units',
-'permission_units_delete' => 'Delete Units',
-'permission_units_edit' => 'Edit Units',
-'permission_units_view' => 'View Units',
-'permission_group_goods_receipts' => 'Goods Receipts',
+    'permission_group_units' => 'Units',
+    'permission_units_create' => 'Create Units',
+    'permission_units_delete' => 'Delete Units',
+    'permission_units_edit' => 'Edit Units',
+    'permission_units_view' => 'View Units',
+    'permission_group_goods_receipts' => 'Goods Receipts',
 
-'my_profile' => 'My Profile',
-'edit_profile' => 'Edit Profile',
-'update_profile' => 'Update Profile',
-'change_password' => 'Change Password',
-'current_password' => 'Current Password',
-'new_password' => 'New Password',
-'confirm_password' => 'Confirm Password',
-'profile_updated_successfully' => 'Profile updated successfully.',
-'password_changed_successfully' => 'Password changed successfully.',
-'current_password_incorrect' => 'Current password is incorrect.',
-'passwords_do_not_match' => 'Passwords do not match.',
-'new_password_required' => 'New password is required.',
-'phase' => 'Phase',
+    'my_profile' => 'My Profile',
+    'edit_profile' => 'Edit Profile',
+    'update_profile' => 'Update Profile',
+    'change_password' => 'Change Password',
+    'current_password' => 'Current Password',
+    'new_password' => 'New Password',
+    'confirm_password' => 'Confirm Password',
+    'profile_updated_successfully' => 'Profile updated successfully.',
+    'password_changed_successfully' => 'Password changed successfully.',
+    'current_password_incorrect' => 'Current password is incorrect.',
+    'passwords_do_not_match' => 'Passwords do not match.',
+    'new_password_required' => 'New password is required.',
+    'phase' => 'Phase',
 
-// User controller messages
-'full_name_required' => 'Full Name is required.',
-'user_name_required' => 'User Name is required.',
-'email_required' => 'Email or User Name is required.',
-'password_required' => 'Password is required.',
-'invalid_photo_format' => 'Invalid photo format. Please upload a JPG, JPEG, PNG, or WEBP image.',
-'unable_to_upload_photo' => 'Unable to upload the photo.',
-'user_created_successfully' => 'User created successfully.',
-'user_updated_successfully' => 'User updated successfully.',
-'user_deleted_successfully' => 'User deleted successfully.',
-'cannot_delete_own_account' => 'You cannot delete your own account.',
-'cannot_delete_last_admin' => 'The last administrator account cannot be deleted.',
+    // User controller messages
+    'full_name_required' => 'Full Name is required.',
+    'user_name_required' => 'User Name is required.',
+    'email_required' => 'Email or User Name is required.',
+    'password_required' => 'Password is required.',
+    'invalid_photo_format' => 'Invalid photo format. Please upload a JPG, JPEG, PNG, or WEBP image.',
+    'unable_to_upload_photo' => 'Unable to upload the photo.',
+    'user_created_successfully' => 'User created successfully.',
+    'user_updated_successfully' => 'User updated successfully.',
+    'user_deleted_successfully' => 'User deleted successfully.',
+    'cannot_delete_own_account' => 'You cannot delete your own account.',
+    'cannot_delete_last_admin' => 'The last administrator account cannot be deleted.',
 
-// customers messages
-'customer_created_successfully' => 'Customer created successfully.',
-'customer_updated_successfully' => 'Customer updated successfully.',
-'customer_deleted_successfully' => 'Customer deleted successfully.',
-'customer_cannot_be_deleted' => 'This customer cannot be deleted because it is linked to existing projects.',
-
-
-// projects messages
-'project_created_successfully' => 'Project created successfully.',
-'project_updated_successfully' => 'Project updated successfully.',
-'project_deleted_successfully' => 'Project deleted successfully.',
-'project_archived_successfully' => 'Project archived successfully.',
-'project_restored_successfully' => 'Project restored successfully.',
-'unable_to_create_project' => 'Unable to create project.',
-'unable_to_update_project' => 'Unable to update project.',
-'project_not_found' => 'Project not found.',
-'cannot_delete_project_costs' => 'Cannot delete project. Remove all project costs first.',
-'archive_failed' => 'Archive failed.',
-'uploaded_files_successfully' => 'Uploaded %s file(s) successfully.',
-'document_not_found' => 'Document not found.',
-'document_deleted_successfully' => 'Document deleted successfully.',
-
-// project costs module messages
-
-'project_cost_added_successfully' => 'Project cost added successfully.',
-'project_cost_updated_successfully' => 'Project cost updated successfully.',
-'project_cost_deleted_successfully' => 'Project cost deleted successfully.',
-'project_cost_not_found' => 'Project cost not found.',
-
-//PROJECT COST SERVICE — ERROR MESSAGES
-'cost_type_required' => 'Cost type is required.',
-'quantity_must_be_greater_than_zero' => 'Quantity must be greater than zero.',
-'unit_price_must_be_greater_than_zero' => 'Unit price must be greater than zero.',
-'please_select_material' => 'Please select a material.',
-'please_select_warehouse' => 'Please select a warehouse.',
-'inventory_item_not_found' => 'Inventory item not found.',
-'not_enough_stock_selected_warehouse' => 'Not enough stock in selected warehouse.',
-'not_enough_stock_in_selected_warehouse' => 'Not enough stock in the selected warehouse.',
-'unable_to_deduct_inventory' => 'Unable to deduct inventory.',
-
-// project advance messages
-'invalid_amount' => 'Invalid amount.',
-'advance_recorded_successfully' => 'Advance recorded successfully.',
-
-//INVENTORY MODULE messages
-'inventory_name_sku_required' => 'Name and SKU are required.',
-'inventory_insert_failed' => 'Insert failed.',
+    // customers messages
+    'customer_created_successfully' => 'Customer created successfully.',
+    'customer_updated_successfully' => 'Customer updated successfully.',
+    'customer_deleted_successfully' => 'Customer deleted successfully.',
+    'customer_cannot_be_deleted' => 'This customer cannot be deleted because it is linked to existing projects.',
 
 
-//INVENTORY LOCATIONS messages
-'unable_to_save_location' => 'Unable to save location.',
-'location_not_found' => 'Location not found.',
-'location_updated_successfully' => 'Location updated successfully.',
-'cannot_delete_location_contains_stock' => 'Cannot delete location because it contains stock.',
-'location_deleted_successfully' => 'Location deleted successfully.',
-'location_code_already_exists' => 'Code already exists.',
+    // projects messages
+    'project_created_successfully' => 'Project created successfully.',
+    'project_updated_successfully' => 'Project updated successfully.',
+    'project_deleted_successfully' => 'Project deleted successfully.',
+    'project_archived_successfully' => 'Project archived successfully.',
+    'project_restored_successfully' => 'Project restored successfully.',
+    'unable_to_create_project' => 'Unable to create project.',
+    'unable_to_update_project' => 'Unable to update project.',
+    'project_not_found' => 'Project not found.',
+    'cannot_delete_project_costs' => 'Cannot delete project. Remove all project costs first.',
+    'archive_failed' => 'Archive failed.',
+    'uploaded_files_successfully' => 'Uploaded %s file(s) successfully.',
+    'document_not_found' => 'Document not found.',
+    'document_deleted_successfully' => 'Document deleted successfully.',
 
-'goods_received_successfully' => 'Goods received successfully.',
+    // project costs module messages
 
+    'project_cost_added_successfully' => 'Project cost added successfully.',
+    'project_cost_updated_successfully' => 'Project cost updated successfully.',
+    'project_cost_deleted_successfully' => 'Project cost deleted successfully.',
+    'project_cost_not_found' => 'Project cost not found.',
 
-// INVENTORY MOVEMENT MODEL messages
-'invalid_inventory_item' => 'Invalid inventory item.',
-'invalid_location' => 'Invalid location.',
-'invalid_adjustment_quantity' => 'Invalid adjustment quantity.',
-'invalid_quantity' => 'Invalid quantity.',
-'invalid_movement_type' => 'Invalid movement type.',
+    //PROJECT COST SERVICE — ERROR MESSAGES
+    'cost_type_required' => 'Cost type is required.',
+    'quantity_must_be_greater_than_zero' => 'Quantity must be greater than zero.',
+    'unit_price_must_be_greater_than_zero' => 'Unit price must be greater than zero.',
+    'please_select_material' => 'Please select a material.',
+    'please_select_warehouse' => 'Please select a warehouse.',
+    'inventory_item_not_found' => 'Inventory item not found.',
+    'not_enough_stock_selected_warehouse' => 'Not enough stock in selected warehouse.',
+    'not_enough_stock_in_selected_warehouse' => 'Not enough stock in the selected warehouse.',
+    'unable_to_deduct_inventory' => 'Unable to deduct inventory.',
 
+    // project advance messages
+    'invalid_amount' => 'Invalid amount.',
+    'advance_recorded_successfully' => 'Advance recorded successfully.',
 
-//INVENTORY RESERVATION MODEL messages
-'reservation_quantity_must_be_greater_than_zero' => 'Reservation quantity must be greater than zero.',
-'insufficient_available_stock' => 'Insufficient available stock. Available to reserve: %s',
-
-//INVENTORY RESERVATIONS CONTROLLER messages
-'please_select_inventory_item' => 'Please select an inventory item.',
-'please_select_location' => 'Please select a location.',
-'please_select_project' => 'Please select a project.',
-'please_select_required_by_date' => 'Please select the required by date.',
-'reservation_created_successfully' => 'Material reservation created successfully.',
-'reservation_fulfilled_successfully' => 'Reservation fulfilled successfully.',
-'active_reservations_only_editable' => 'Only ACTIVE reservations can be edited.',
-'active_reservations_only_deletable' => 'Only ACTIVE reservations can be deleted.',
-
-//INVENTORY RESERVATION VIEWS messages
-'transfer_completed_successfully' => 'Transfer completed successfully.',
-
-'invalid_warehouse_location' => 'Invalid warehouse location.',
-
-'unit_cost_cannot_be_negative' => 'Unit cost cannot be negative.',
-'unable_to_add_stock' => 'Unable to add stock to the warehouse.',
-
-'source_destination_warehouses_same' => 'Source and destination warehouses cannot be the same.',
-'not_enough_stock_source_warehouse' => 'Not enough stock in source warehouse.',
-'adjustment_quantity_cannot_be_zero' => 'Adjustment quantity cannot be zero.',
-'adjustment_exceeds_available_stock' => 'Adjustment would exceed available stock. Available after reservations: %s',
-'adjustment_insufficient_stock' => 'Adjustment would result in insufficient stock.',
-'unable_to_adjust_inventory_stock' => 'Unable to adjust inventory stock.',
-'transfer_not_found' => 'Transfer not found.',
-'completed_transfers_only_reverse' => 'Only COMPLETED transfers can be reversed.',
-'unable_to_reverse_transfer' => 'Unable to reverse transfer. Insufficient stock at destination location.',
-'transfer_reversed_successfully' => 'Transfer reversed successfully.',
-
-'invalid_adjustment_type' => 'Invalid adjustment type.',
-'adjustment_quantity_must_be_greater_than_zero' => 'Adjustment quantity must be greater than zero.',
-'valid_adjustment_reason_required' => 'Please select a valid adjustment reason.',
-'notes_required_for_other_reason' => 'Please provide notes when the reason is OTHER.',
-'stock_adjustment_posted_successfully' => 'Stock adjustment posted successfully. Reference: %s',
-
-'goods_receipt_created_successfully' => 'Goods receipt created successfully.',
+    //INVENTORY MODULE messages
+    'inventory_name_sku_required' => 'Name and SKU are required.',
+    'inventory_insert_failed' => 'Insert failed.',
 
 
-'received_quantity_must_be_greater_than_zero' => 'Received quantity must be greater than zero.',
-'purchase_order_not_found' => 'Purchase Order not found.',
-'purchase_order_not_available_for_receiving' => 'This Purchase Order is not available for receiving.',
-'supplier_does_not_match_purchase_order' => 'The selected supplier does not match the Purchase Order supplier.',
-'inventory_item_not_in_purchase_order' => 'The selected inventory item does not belong to this Purchase Order.',
-'po_item_already_fully_received' => 'This PO item has already been fully received.',
-'cannot_receive_remaining_quantity' => 'Cannot receive %s units. Only %s units remain on the purchase order.',
+    //INVENTORY LOCATIONS messages
+    'unable_to_save_location' => 'Unable to save location.',
+    'location_not_found' => 'Location not found.',
+    'location_updated_successfully' => 'Location updated successfully.',
+    'cannot_delete_location_contains_stock' => 'Cannot delete location because it contains stock.',
+    'location_deleted_successfully' => 'Location deleted successfully.',
+    'location_code_already_exists' => 'Code already exists.',
 
-'invalid_purchase_order' => 'Invalid purchase order.',
-'invalid_supplier' => 'Invalid supplier.',
+    'goods_received_successfully' => 'Goods received successfully.',
 
-'goods_returned_successfully' => 'Goods return procedure to supplier successfully completed.',
 
-'invalid_goods_receipt_item' => 'Invalid goods receipt item.',
-'return_quantity_must_be_greater_than_zero' => 'Return quantity must be greater than zero.',
-'goods_receipt_item_not_found' => 'Goods receipt item not found.',
-'goods_receipt_no_receiving_location' => 'The original goods receipt does not have a receiving location.',
-'return_location_does_not_match_receiving_location' => 'The selected warehouse does not match the warehouse where this goods receipt was received.',
-'goods_receipt_item_already_fully_returned' => 'This goods receipt item has already been fully returned.',
-'cannot_return_remaining_quantity' => 'Cannot return %s units. Only %s units remain returnable.',
-'not_enough_stock_selected_warehouse_available' => 'Not enough stock in the selected warehouse. Available quantity: %s.',
+    // INVENTORY MOVEMENT MODEL messages
+    'invalid_inventory_item' => 'Invalid inventory item.',
+    'invalid_location' => 'Invalid location.',
+    'invalid_adjustment_quantity' => 'Invalid adjustment quantity.',
+    'invalid_quantity' => 'Invalid quantity.',
+    'invalid_movement_type' => 'Invalid movement type.',
 
-'delivery_warehouse_required' => 'Delivery warehouse is required.',
-'project_required' => 'Project is required.',
-'purchase_order_created_successfully' => 'Purchase order created successfully.',
-'purchase_order_locked' => 'Purchase Order is locked and cannot be modified.',
 
-'draft_purchase_orders_only_approve' => 'Only draft purchase orders can be approved.',
-'add_item_before_approving_po' => 'Please add at least one item before approving this Purchase Order.',
-'purchase_order_approved_successfully' => 'Purchase Order approved successfully.',
-'purchase_order_cancelled_successfully' => 'Purchase Order cancelled successfully.',
-'approved_purchase_orders_only_print' => 'Only approved Purchase Orders can be printed.',
+    //INVENTORY RESERVATION MODEL messages
+    'reservation_quantity_must_be_greater_than_zero' => 'Reservation quantity must be greater than zero.',
+    'insufficient_available_stock' => 'Insufficient available stock. Available to reserve: %s',
 
-'purchase_order_already_cancelled' => 'Purchase Order is already cancelled.',
-'fully_received_po_cannot_be_cancelled' => 'A fully received Purchase Order cannot be cancelled.',
-'purchase_order_cannot_be_cancelled' => 'Purchase Order cannot be cancelled from its current status.',
+    //INVENTORY RESERVATIONS CONTROLLER messages
+    'please_select_inventory_item' => 'Please select an inventory item.',
+    'please_select_location' => 'Please select a location.',
+    'please_select_project' => 'Please select a project.',
+    'please_select_required_by_date' => 'Please select the required by date.',
+    'reservation_created_successfully' => 'Material reservation created successfully.',
+    'reservation_fulfilled_successfully' => 'Reservation fulfilled successfully.',
+    'active_reservations_only_editable' => 'Only ACTIVE reservations can be edited.',
+    'active_reservations_only_deletable' => 'Only ACTIVE reservations can be deleted.',
 
-'company_name_required' => 'Company name is required.',
+    //INVENTORY RESERVATION VIEWS messages
+    'transfer_completed_successfully' => 'Transfer completed successfully.',
 
-'unable_to_delete_customer' => 'Unable to delete customer.',
+    'invalid_warehouse_location' => 'Invalid warehouse location.',
 
-'user_not_found' => 'User not found.',
-'settings_updated' => 'Settings updated successfully.',
+    'unit_cost_cannot_be_negative' => 'Unit cost cannot be negative.',
+    'unable_to_add_stock' => 'Unable to add stock to the warehouse.',
 
-'invalid_username_or_email_or_password' => 'Invalid username/email or password.',
+    'source_destination_warehouses_same' => 'Source and destination warehouses cannot be the same.',
+    'not_enough_stock_source_warehouse' => 'Not enough stock in source warehouse.',
+    'adjustment_quantity_cannot_be_zero' => 'Adjustment quantity cannot be zero.',
+    'adjustment_exceeds_available_stock' => 'Adjustment would exceed available stock. Available after reservations: %s',
+    'adjustment_insufficient_stock' => 'Adjustment would result in insufficient stock.',
+    'unable_to_adjust_inventory_stock' => 'Unable to adjust inventory stock.',
+    'transfer_not_found' => 'Transfer not found.',
+    'completed_transfers_only_reverse' => 'Only COMPLETED transfers can be reversed.',
+    'unable_to_reverse_transfer' => 'Unable to reverse transfer. Insufficient stock at destination location.',
+    'transfer_reversed_successfully' => 'Transfer reversed successfully.',
 
-'please_select_resource' => 'Please select a resource.',
-'invalid_resource_source' => 'Invalid resource source.',
-'unable_to_create_requisition_item' => 'Unable to create requisition item.',
+    'invalid_adjustment_type' => 'Invalid adjustment type.',
+    'adjustment_quantity_must_be_greater_than_zero' => 'Adjustment quantity must be greater than zero.',
+    'valid_adjustment_reason_required' => 'Please select a valid adjustment reason.',
+    'notes_required_for_other_reason' => 'Please provide notes when the reason is OTHER.',
+    'stock_adjustment_posted_successfully' => 'Stock adjustment posted successfully. Reference: %s',
 
-'only_draft_requisitions_editable' => 'Only Draft requisitions can be edited.',
-'please_add_item_before_submitting' => 'Please add at least one item before submitting.',
-'resource_requisition_submitted_successfully' => 'Resource Requisition submitted successfully.',
-'only_draft_requisitions_deletable' => 'Only Draft requisitions can be deleted.',
-'only_submitted_requisitions_approve_reject' => 'Only submitted requisitions can be approved or rejected.',
-'requisition_rejected' => 'Requisition rejected.',
-'invalid_approval_action' => 'Invalid approval action.',
-'resource_requisition_approved_successfully' => 'Resource requisition approved successfully.',
-'resource_requisition_rejected' => 'Resource requisition rejected.',
+    'goods_receipt_created_successfully' => 'Goods receipt created successfully.',
 
-'resource_requisition_not_found' => 'Resource requisition not found.',
-'approved_or_partial_requisitions_only_fulfill' => 'Only approved or partially fulfilled requisitions can be fulfilled.',
-'no_remaining_resource_items' => 'There are no remaining resource items to fulfill.',
-'invalid_requisition' => 'Invalid requisition.',
-'requisition_not_available_for_fulfillment' => 'This requisition is not available for fulfillment.',
-'please_enter_fulfillment_quantity' => 'Please enter at least one fulfillment quantity.',
-'invalid_requisition_item' => 'Invalid requisition item.',
-'invalid_resource_fulfillment_item' => 'Invalid resource fulfillment item.',
-'fulfillment_quantity_exceeds_remaining' => 'The fulfillment quantity for "%s" cannot exceed the remaining quantity of %s.',
-'unit_cost_negative_for_item' => 'Unit cost cannot be negative for "%s".',
-'please_select_inventory_location_for_item' => 'Please select an inventory location for material item: %s',
-'please_enter_quantity_greater_than_zero' => 'Please enter a quantity greater than zero.',
-'fulfillment_created_no_id' => 'Fulfillment was created but no fulfillment ID was returned.',
-'resource_fulfillment_created_no_id' => 'Resource fulfillment was created but no fulfillment ID was returned.',
-'resource_requisition_fulfilled_successfully' => 'Resource requisition fulfilled successfully.',
-'fulfillment_record_not_found' => 'Fulfillment record not found.',
-'please_enter_resource_fulfillment_quantity' => 'Please enter at least one resource fulfillment quantity.',
-'please_enter_resource_quantity_greater_than_zero' => 'Please enter a fulfillment quantity greater than zero for at least one resource item.',
 
-'inventory_item_missing_for_requisition_item' =>
+    'received_quantity_must_be_greater_than_zero' => 'Received quantity must be greater than zero.',
+    'purchase_order_not_found' => 'Purchase Order not found.',
+    'purchase_order_not_available_for_receiving' => 'This Purchase Order is not available for receiving.',
+    'supplier_does_not_match_purchase_order' => 'The selected supplier does not match the Purchase Order supplier.',
+    'inventory_item_not_in_purchase_order' => 'The selected inventory item does not belong to this Purchase Order.',
+    'po_item_already_fully_received' => 'This PO item has already been fully received.',
+    'cannot_receive_remaining_quantity' => 'Cannot receive %s units. Only %s units remain on the purchase order.',
+
+    'invalid_purchase_order' => 'Invalid purchase order.',
+    'invalid_supplier' => 'Invalid supplier.',
+
+    'goods_returned_successfully' => 'Goods return procedure to supplier successfully completed.',
+
+    'invalid_goods_receipt_item' => 'Invalid goods receipt item.',
+    'return_quantity_must_be_greater_than_zero' => 'Return quantity must be greater than zero.',
+    'goods_receipt_item_not_found' => 'Goods receipt item not found.',
+    'goods_receipt_no_receiving_location' => 'The original goods receipt does not have a receiving location.',
+    'return_location_does_not_match_receiving_location' => 'The selected warehouse does not match the warehouse where this goods receipt was received.',
+    'goods_receipt_item_already_fully_returned' => 'This goods receipt item has already been fully returned.',
+    'cannot_return_remaining_quantity' => 'Cannot return %s units. Only %s units remain returnable.',
+    'not_enough_stock_selected_warehouse_available' => 'Not enough stock in the selected warehouse. Available quantity: %s.',
+
+    'delivery_warehouse_required' => 'Delivery warehouse is required.',
+    'project_required' => 'Project is required.',
+    'purchase_order_created_successfully' => 'Purchase order created successfully.',
+    'purchase_order_locked' => 'Purchase Order is locked and cannot be modified.',
+
+    'draft_purchase_orders_only_approve' => 'Only draft purchase orders can be approved.',
+    'add_item_before_approving_po' => 'Please add at least one item before approving this Purchase Order.',
+    'purchase_order_approved_successfully' => 'Purchase Order approved successfully.',
+    'purchase_order_cancelled_successfully' => 'Purchase Order cancelled successfully.',
+    'approved_purchase_orders_only_print' => 'Only approved Purchase Orders can be printed.',
+
+    'purchase_order_already_cancelled' => 'Purchase Order is already cancelled.',
+    'fully_received_po_cannot_be_cancelled' => 'A fully received Purchase Order cannot be cancelled.',
+    'purchase_order_cannot_be_cancelled' => 'Purchase Order cannot be cancelled from its current status.',
+
+    'company_name_required' => 'Company name is required.',
+
+    'unable_to_delete_customer' => 'Unable to delete customer.',
+
+    'user_not_found' => 'User not found.',
+    'settings_updated' => 'Settings updated successfully.',
+
+    'invalid_username_or_email_or_password' => 'Invalid username/email or password.',
+
+    'please_select_resource' => 'Please select a resource.',
+    'invalid_resource_source' => 'Invalid resource source.',
+    'unable_to_create_requisition_item' => 'Unable to create requisition item.',
+
+    'only_draft_requisitions_editable' => 'Only Draft requisitions can be edited.',
+    'please_add_item_before_submitting' => 'Please add at least one item before submitting.',
+    'resource_requisition_submitted_successfully' => 'Resource Requisition submitted successfully.',
+    'only_draft_requisitions_deletable' => 'Only Draft requisitions can be deleted.',
+    'only_submitted_requisitions_approve_reject' => 'Only submitted requisitions can be approved or rejected.',
+    'requisition_rejected' => 'Requisition rejected.',
+    'invalid_approval_action' => 'Invalid approval action.',
+    'resource_requisition_approved_successfully' => 'Resource requisition approved successfully.',
+    'resource_requisition_rejected' => 'Resource requisition rejected.',
+
+    'resource_requisition_not_found' => 'Resource requisition not found.',
+    'approved_or_partial_requisitions_only_fulfill' => 'Only approved or partially fulfilled requisitions can be fulfilled.',
+    'no_remaining_resource_items' => 'There are no remaining resource items to fulfill.',
+    'invalid_requisition' => 'Invalid requisition.',
+    'requisition_not_available_for_fulfillment' => 'This requisition is not available for fulfillment.',
+    'please_enter_fulfillment_quantity' => 'Please enter at least one fulfillment quantity.',
+    'invalid_requisition_item' => 'Invalid requisition item.',
+    'invalid_resource_fulfillment_item' => 'Invalid resource fulfillment item.',
+    'fulfillment_quantity_exceeds_remaining' => 'The fulfillment quantity for "%s" cannot exceed the remaining quantity of %s.',
+    'unit_cost_negative_for_item' => 'Unit cost cannot be negative for "%s".',
+    'please_select_inventory_location_for_item' => 'Please select an inventory location for material item: %s',
+    'please_enter_quantity_greater_than_zero' => 'Please enter a quantity greater than zero.',
+    'fulfillment_created_no_id' => 'Fulfillment was created but no fulfillment ID was returned.',
+    'resource_fulfillment_created_no_id' => 'Resource fulfillment was created but no fulfillment ID was returned.',
+    'resource_requisition_fulfilled_successfully' => 'Resource requisition fulfilled successfully.',
+    'fulfillment_record_not_found' => 'Fulfillment record not found.',
+    'please_enter_resource_fulfillment_quantity' => 'Please enter at least one resource fulfillment quantity.',
+    'please_enter_resource_quantity_greater_than_zero' => 'Please enter a fulfillment quantity greater than zero for at least one resource item.',
+
+    'inventory_item_missing_for_requisition_item' =>
     'Inventory item is missing for requisition item: %s',
 
-'inventory_item_not_available_in_selected_location' =>
+    'inventory_item_not_available_in_selected_location' =>
     'Inventory item is not available in the selected location.',
 
-'insufficient_stock_selected_location_for_item' =>
+    'insufficient_stock_selected_location_for_item' =>
     'Insufficient stock in selected location for: %s',
 
-'insufficient_global_inventory_stock_for_item' =>
+    'insufficient_global_inventory_stock_for_item' =>
     'Insufficient global inventory stock for: %s',
 
-'failed_to_create_resource_fulfillment' =>
+    'failed_to_create_resource_fulfillment' =>
     'Failed to create resource fulfillment.',
 
 
-'role_cannot_be_deleted_in_use' =>
+    'role_cannot_be_deleted_in_use' =>
     'Cannot delete role because it is assigned to one or more users.',
 
     'role_deleted_successfully' => 'Role deleted successfully.',
@@ -1500,88 +1507,88 @@ return [
     'approved_or_partial_requisitions_only_create_po' =>
     'Only approved or partially fulfilled requisitions can create a Purchase Order.',
 
-'no_remaining_inventory_materials_to_purchase' =>
+    'no_remaining_inventory_materials_to_purchase' =>
     'There are no remaining inventory materials to purchase.',
 
-'please_select_supplier' =>
+    'please_select_supplier' =>
     'Please select a supplier.',
 
-'rr_quantity_exceeds_remaining' =>
+    'rr_quantity_exceeds_remaining' =>
     'Quantity for "%s" cannot exceed the RR remaining quantity.',
 
-'actual_supplier_unit_cost_required' =>
+    'actual_supplier_unit_cost_required' =>
     'Please enter the actual supplier unit cost for "%s".',
 
-'quantity_required_for_material' =>
+    'quantity_required_for_material' =>
     'Please enter a quantity for at least one material.',
 
-'purchase_order_created_from_requisition_successfully' =>
+    'purchase_order_created_from_requisition_successfully' =>
     'Purchase Order created successfully from Resource Requisition.',
 
-'quotation_locked' =>
+    'quotation_locked' =>
     'Quotation is locked and cannot be modified.',
 
-'item_description_required' =>
+    'item_description_required' =>
     'Item description is required.',
 
-'unit_price_cannot_be_negative' =>
+    'unit_price_cannot_be_negative' =>
     'Unit price cannot be negative.',
 
-'invalid_quality_status' =>
+    'invalid_quality_status' =>
     'Invalid quality status.',
 
-'quotation_item_added_successfully' =>
+    'quotation_item_added_successfully' =>
     'Quotation item added successfully.',
 
-'quotation_not_found' =>
+    'quotation_not_found' =>
     'Quotation not found.',
 
-'only_draft_quotations_can_be_accepted' =>
+    'only_draft_quotations_can_be_accepted' =>
     'Only draft quotations can be accepted.',
 
-'add_item_before_accepting_quotation' =>
+    'add_item_before_accepting_quotation' =>
     'Please add at least one item before accepting the quotation.',
 
-'supplier_quotation_accepted_successfully' =>
+    'supplier_quotation_accepted_successfully' =>
     'Supplier quotation accepted successfully.',
 
-'quotation_cancelled_successfully' =>
+    'quotation_cancelled_successfully' =>
     'Quotation cancelled.',
 
-'no_quotations_found_for_procurement_reference' =>
+    'no_quotations_found_for_procurement_reference' =>
     'No quotations found for this procurement reference.',
 
-'only_accepted_quotations_can_create_po' =>
+    'only_accepted_quotations_can_create_po' =>
     'Only accepted quotations can be converted to a Purchase Order.',
 
-'po_already_created_from_quotation' =>
+    'po_already_created_from_quotation' =>
     'A Purchase Order has already been created from this quotation.',
 
-'quotation_contains_no_items' =>
+    'quotation_contains_no_items' =>
     'Quotation contains no items.',
 
-'quotation_item_not_linked_to_inventory' =>
+    'quotation_item_not_linked_to_inventory' =>
     'Quotation contains an item that is not yet linked to Inventory. Please add it to Inventory first.',
 
-'purchase_order_created_from_quotation_successfully' =>
+    'purchase_order_created_from_quotation_successfully' =>
     'Purchase Order created successfully from quotation.',
-    
-'reservation_not_found' =>
+
+    'reservation_not_found' =>
     'Reservation not found.',
 
-'only_active_reservations_can_be_fulfilled' =>
+    'only_active_reservations_can_be_fulfilled' =>
     'Only ACTIVE reservations can be fulfilled.',
 
-'reservation_project_required_for_fulfillment' =>
+    'reservation_project_required_for_fulfillment' =>
     'Reservation must have a project before fulfillment.',
 
     'original_project_cost_ledger_entry_not_found' =>
     'Original project cost ledger entry not found.',
 
-'project_cost_already_reversed' =>
+    'project_cost_already_reversed' =>
     'This project cost has already been reversed.',
 
-'project_ledger_entry_for_cost_not_found' =>
+    'project_ledger_entry_for_cost_not_found' =>
     'Project ledger entry for this cost was not found.',
 
     'unable_to_create_project_inventory_location' =>
@@ -1590,118 +1597,119 @@ return [
     'roles_management' => 'Roles Management',
 
     'role_name'   => 'Role Name',
-'create_role' => 'Create Role',
+    'create_role' => 'Create Role',
 
 
-'role_created_successfully'       => 'Role created successfully.',
-'role_creation_failed'            => 'Failed to create role.',
-'role_name_required'              => 'Role name is required.',
-'role_updated_successfully'       => 'Role updated successfully.',
-'role_update_failed'              => 'Failed to update role.',
+    'role_created_successfully'       => 'Role created successfully.',
+    'role_creation_failed'            => 'Failed to create role.',
+    'role_name_required'              => 'Role name is required.',
+    'role_updated_successfully'       => 'Role updated successfully.',
+    'role_update_failed'              => 'Failed to update role.',
 
 
-'permission_created_successfully' => 'Permission created successfully.',
-'permission_creation_failed'      => 'Failed to create permission.',
-'permission_name_required'        => 'Permission name is required.',
-'permission_updated_successfully' => 'Permission updated successfully.',
-'permission_update_failed'        => 'Failed to update permission.',
-'permission_deleted_successfully' => 'Permission deleted successfully.',
-'permission_deletion_failed'      => 'Failed to delete permission.',
+    'permission_created_successfully' => 'Permission created successfully.',
+    'permission_creation_failed'      => 'Failed to create permission.',
+    'permission_name_required'        => 'Permission name is required.',
+    'permission_updated_successfully' => 'Permission updated successfully.',
+    'permission_update_failed'        => 'Failed to update permission.',
+    'permission_deleted_successfully' => 'Permission deleted successfully.',
+    'permission_deletion_failed'      => 'Failed to delete permission.',
 
-'permissions_updated_successfully' => 'Permissions updated successfully.',
-'permissions_update_failed'       => 'Failed to update permissions.',
+    'permissions_updated_successfully' => 'Permissions updated successfully.',
+    'permissions_update_failed'       => 'Failed to update permissions.',
 
-'user_creation_failed'            => 'Failed to create user.',
-'user_update_failed'              => 'Failed to update user.',
+    'user_creation_failed'            => 'Failed to create user.',
+    'user_update_failed'              => 'Failed to update user.',
 
-// DB Helper Messages
-'db_duplicate_entry'        => 'This record already exists.',
-'db_cannot_delete_in_use'   => 'This record cannot be deleted because it is currently in use.',
-'db_invalid_reference'      => 'The selected reference is invalid.',
-'db_data_too_long'          => 'One of the entered values is too long.',
-'db_required_field_missing' => 'A required field is missing.',
-'db_operation_failed'       => 'The database operation could not be completed.',
-'operation_failed'          => 'The operation could not be completed.',
+    // DB Helper Messages
+    'db_duplicate_entry'        => 'This record already exists.',
+    'db_cannot_delete_in_use'   => 'This record cannot be deleted because it is currently in use.',
+    'db_invalid_reference'      => 'The selected reference is invalid.',
+    'db_data_too_long'          => 'One of the entered values is too long.',
+    'db_required_field_missing' => 'A required field is missing.',
+    'db_operation_failed'       => 'The database operation could not be completed.',
+    'operation_failed'          => 'The operation could not be completed.',
 
-'permission_cannot_be_deleted_in_use' => 'This permission cannot be deleted because it is assigned to one or more roles.',
-'permission_not_found'                => 'Permission not found.',
+    'permission_cannot_be_deleted_in_use' => 'This permission cannot be deleted because it is assigned to one or more roles.',
+    'permission_not_found'                => 'Permission not found.',
 
-'role_cannot_be_deleted_has_permissions' => 'This role cannot be deleted because it has permissions assigned to it.',
-'role_not_found' => 'Role not found.',
+    'role_cannot_be_deleted_has_permissions' => 'This role cannot be deleted because it has permissions assigned to it.',
+    'role_not_found' => 'Role not found.',
 
-'permission_description' => 'Permission Description',
+    'permission_description' => 'Permission Description',
 
-// JS form fields validation messages
-'validation_required'   => 'Please fill out this field.',
-'validation_email'      => 'Please enter a valid User Name or email address.',
-'validation_url'        => 'Please enter a valid URL.',
-'validation_invalid'   => 'Please enter a valid value.',
-'validation_min'        => 'Value must be greater than or equal to :min.',
-'validation_max'        => 'Value must be less than or equal to :max.',
-'validation_minlength'  => 'Please enter at least :minlength characters.',
-'validation_maxlength'  => 'Please enter no more than :maxlength characters.',
-'validation_step'       => 'Please enter a valid value. The allowed increment is :step.',
-'validation_pattern'    => 'Please enter a value in the required format.',
+    // JS form fields validation messages
+    'validation_required'   => 'Please fill out this field.',
+    'validation_email'      => 'Please enter a valid User Name or email address.',
+    'validation_url'        => 'Please enter a valid URL.',
+    'validation_invalid'   => 'Please enter a valid value.',
+    'validation_min'        => 'Value must be greater than or equal to :min.',
+    'validation_max'        => 'Value must be less than or equal to :max.',
+    'validation_minlength'  => 'Please enter at least :minlength characters.',
+    'validation_maxlength'  => 'Please enter no more than :maxlength characters.',
+    'validation_step'       => 'Please enter a valid value. The allowed increment is :step.',
+    'validation_pattern'    => 'Please enter a value in the required format.',
 
-'supplier_not_found' => 'Supplier not found.',
-'supplier_deleted_successfully' => 'Supplier deleted successfully.',
-'supplier_cannot_be_deleted' => 'This supplier cannot be deleted because it is currently used by existing transactions.',
-'unable_to_delete_supplier' => 'Unable to delete supplier.',
+    'supplier_not_found' => 'Supplier not found.',
+    'supplier_deleted_successfully' => 'Supplier deleted successfully.',
+    'supplier_cannot_be_deleted' => 'This supplier cannot be deleted because it is currently used by existing transactions.',
+    'unable_to_delete_supplier' => 'Unable to delete supplier.',
 
-'resource_category_created_successfully' => 'Resource category created successfully.',
-'resource_category_create_failed' => 'Failed to create resource category.',
-'resource_category_updated_successfully' => 'Resource category updated successfully.',
-'resource_category_update_failed' => 'Failed to update resource category.',
-'resource_category_deleted_successfully' => 'Resource category deleted successfully.',
-'resource_category_not_found' => 'Resource category not found.',
-'can_not_delete_resource_category_in_use' => 'Cannot delete resource category because it is currently in use.',
-
-
-'unit_not_found' => 'Unit not found.',
-'unit_created_successfully' => 'Unit created successfully.',
-'unit_create_failed' => 'Unable to create unit.',
-'unit_updated_successfully' => 'Unit updated successfully.',
-'unit_update_failed' => 'Unable to update unit.',
-'unit_deleted_successfully' => 'Unit deleted successfully.',
-'unit_cannot_be_deleted' => 'This unit cannot be deleted because it is currently in use.',
-
-'resource_created_successfully' => 'Resource created successfully.',
-'resource_create_failed' => 'Unable to create resource.',
-'resource_updated_successfully' => 'Resource updated successfully.',
-'resource_update_failed' => 'Unable to update resource.',
-
-'wh' => 'The WH',
-'global' => 'All Total',
-'balance_after' => 'Balance After',
+    'resource_category_created_successfully' => 'Resource category created successfully.',
+    'resource_category_create_failed' => 'Failed to create resource category.',
+    'resource_category_updated_successfully' => 'Resource category updated successfully.',
+    'resource_category_update_failed' => 'Failed to update resource category.',
+    'resource_category_deleted_successfully' => 'Resource category deleted successfully.',
+    'resource_category_not_found' => 'Resource category not found.',
+    'can_not_delete_resource_category_in_use' => 'Cannot delete resource category because it is currently in use.',
 
 
-'in' => 'IN',
-'out' => 'OUT',
-'adjustment' => 'Adjustment',
+    'unit_not_found' => 'Unit not found.',
+    'unit_created_successfully' => 'Unit created successfully.',
+    'unit_create_failed' => 'Unable to create unit.',
+    'unit_updated_successfully' => 'Unit updated successfully.',
+    'unit_update_failed' => 'Unable to update unit.',
+    'unit_deleted_successfully' => 'Unit deleted successfully.',
+    'unit_cannot_be_deleted' => 'This unit cannot be deleted because it is currently in use.',
 
-'financial_profile' => 'Financial Profile',
-'total_paid' => 'Total Paid',
+    'resource_created_successfully' => 'Resource created successfully.',
+    'resource_create_failed' => 'Unable to create resource.',
+    'resource_updated_successfully' => 'Resource updated successfully.',
+    'resource_update_failed' => 'Unable to update resource.',
 
-'total_purchase_orders' => 'Total Purcahse Orders',
-'total_goods_received' => 'Total Goods Received',
+    'wh' => 'The WH',
+    'global' => 'All Total',
+    'balance_after' => 'Balance After',
 
-'supplier_information' => 'Supplier Information',
 
-'cannot_delete_user_assigned_location_or_in_use' =>  'This location cannot be deleted because it is assigned to users or is referenced by existing transactions or historical records.',
+    'in' => 'IN',
+    'out' => 'OUT',
+    'adjustment' => 'Adjustment',
 
-'unable_to_delete_location' => 'Unable to delete location.',
+    'financial_profile' => 'Financial Profile',
+    'total_paid' => 'Total Paid',
 
-'print' => 'Print Page',
+    'total_purchase_orders' => 'Total Purcahse Orders',
+    'total_goods_received' => 'Total Goods Received',
 
-'physical_quantity' => 'Total Physical Quantity',
-'reserved_quantity' => 'Reserved Quantity',
-'available_quantity' => 'Available Quantity',
+    'supplier_information' => 'Supplier Information',
 
-'inventory_item_deleted_successfully' => 'Inventory item deleted successfully.',
-'inventory_item_cannot_be_deleted' => 'This inventory item cannot be deleted because it is already used in existing transactions.',
-'unable_to_delete_inventory_item' => 'Unable to delete inventory item.',
+    'cannot_delete_user_assigned_location_or_in_use' =>  'This location cannot be deleted because it is assigned to users or is referenced by existing transactions or historical records.',
 
-'supplier_source_destination' => 'Supplier / Source / Destination',
-'source' => 'Source',
+    'unable_to_delete_location' => 'Unable to delete location.',
+
+    'print' => 'Print Page',
+
+    'physical_quantity' => 'Total Physical Quantity',
+    'reserved_quantity' => 'Reserved Quantity',
+    'available_quantity' => 'Available Quantity',
+
+    'inventory_item_deleted_successfully' => 'Inventory item deleted successfully.',
+    'inventory_item_cannot_be_deleted' => 'This inventory item cannot be deleted because it is already used in existing transactions.',
+    'unable_to_delete_inventory_item' => 'Unable to delete inventory item.',
+
+    'supplier_source_destination' => 'Supplier / Source / Destination',
+    'source' => 'Source',
+
 
 ];

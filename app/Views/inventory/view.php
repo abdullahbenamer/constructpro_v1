@@ -186,10 +186,36 @@
                         </td>
 
                         <td>
-                            <?= htmlspecialchars(
-                                $m->notes ?? '-'
-                            ) ?>
-                        </td>
+
+    <?php if ($m->type === 'ADJUSTMENT' && !empty($m->notes)) : ?>
+
+        <?php
+        $reason = $m->notes;
+
+        $reasonKey = [
+            'DAMAGED' => 'damaged',
+            'BROKEN' => 'broken',
+            'LOST' => 'lost',
+            'FOUND' => 'found',
+            'PHYSICAL_COUNT_CORRECTION' => 'physical_count_correction',
+            'EXPIRED' => 'expired',
+            'OTHER' => 'other'
+        ];
+
+        $translatedReason = $reasonKey[$reason] ?? $reason;
+        ?>
+
+        <?= htmlspecialchars(__($translatedReason)) ?>
+
+    <?php else : ?>
+
+        <?= htmlspecialchars(
+            $m->notes ?? '-'
+        ) ?>
+
+    <?php endif; ?>
+
+</td>
 
                     </tr>
 

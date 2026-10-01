@@ -145,6 +145,19 @@
 </td>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <!-- QUANTITY -->
                     <td>
                         <?= number_format($move->quantity, 2) ?>
@@ -198,11 +211,49 @@
                         <?= htmlspecialchars($move->reference ?? '-') ?>
                     </td>
 
+<!-- NOTES -->
+<td>
 
-                    <!-- NOTES -->
-                    <td>
-                        <?= htmlspecialchars($move->notes ?? '-') ?>
-                    </td>
+    <?php
+    $notes = trim($move->notes ?? '');
+
+    $noteTranslations = [
+        'DAMAGED' => 'damaged',
+        'BROKEN' => 'broken',
+        'LOST' => 'lost',
+        'FOUND' => 'found',
+        'PHYSICAL_COUNT_CORRECTION' => 'physical_count_correction',
+        'EXPIRED' => 'expired',
+        'OTHER' => 'other',
+
+        'Warehouse Transfer' => 'warehouse_transfer',
+        'Reservation Fulfillment' => 'reservation_fulfillment',
+        'Resource requisition fulfillment' => 'resource_requisition_fulfillment',
+        'Return to supplier' => 'return_to_supplier'
+    ];
+
+    $displayNotes = $notes;
+
+    foreach ($noteTranslations as $text => $translationKey) {
+
+        if (stripos($notes, $text) === 0) {
+
+            $remaining = trim(substr($notes, strlen($text)));
+
+            $displayNotes = __($translationKey);
+
+            if ($remaining !== '') {
+                $displayNotes .= ' ' . $remaining;
+            }
+
+            break;
+        }
+    }
+    ?>
+
+    <?= htmlspecialchars($displayNotes ?: '-') ?>
+
+</td>
 
                 </tr>
 

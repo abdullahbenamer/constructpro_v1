@@ -179,8 +179,6 @@
                     </strong>
                 </div>
 
-
-                <!-- PROJECT MANAGER -->
              <!-- PROJECT MANAGER -->
 <div class="col-md-3">
     <div class="text-muted small">
@@ -198,7 +196,6 @@
         <?php endif; ?>
     </strong>
 </div>
-
 
              <!-- PRIORITY -->
 <div class="col-md-3">
@@ -460,9 +457,22 @@
                             <?= htmlspecialchars($cost->cost_type ?? 'N/A') ?>
                         </td>
 
+                        <!-- <td>
+                            <?//= htmlspecialchars($cost->description ?? '') ?>
+                        </td> -->
+
                         <td>
-                            <?= htmlspecialchars($cost->description ?? '') ?>
-                        </td>
+    <?php if (!empty($cost->fulfillment_id) && !empty($cost->fulfillment_no)): ?>
+
+        <?= __('resource_requisition_fulfillment') ?>
+        — <?= htmlspecialchars($cost->fulfillment_no) ?>
+
+    <?php else: ?>
+
+        <?= htmlspecialchars($cost->description ?? '') ?>
+
+    <?php endif; ?>
+</td>
 
                         <td class="text-end">
                             <?= number_format((float)($cost->quantity ?? 0), 2) ?>

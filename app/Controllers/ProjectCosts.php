@@ -47,7 +47,7 @@ class ProjectCosts extends Controller
     public function create($project_id = null)
     {
 
-    AuthHelper::can('project_costs.create');
+        AuthHelper::can('project_costs.create');
 
         if (!$project_id) {
             header('Location: ' . URLROOT . '/projects');

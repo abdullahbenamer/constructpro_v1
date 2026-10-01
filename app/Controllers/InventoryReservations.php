@@ -189,47 +189,38 @@ class InventoryReservations extends Controller
         );
     }
 
-    public function fulfill($id)
-    {
-        AuthHelper::can('inventory_reservations.fulfill');
+  public function fulfill($id)
+{
+    AuthHelper::can('inventory_reservations.fulfill');
 
-        try {
+    try {
 
-            $service = new ReservationFulfillmentService(
+      
+   $service = $this->service('ReservationFulfillment');;
 
-                $this->model('InventoryReservation'),
-
-                $this->model('Inventory'),
-
-                $this->model('InventoryLocationStock'),
-
-                $this->model('InventoryMovement'),
-
-                $this->service('ProjectCost')
-            );
-
-            $service->fulfill(
-                (int)$id
-            );
-
-            FlashHelper::success(
-                __('reservation_fulfilled_successfully')
-            );
-        } catch (Throwable $e) {
-
-            FlashHelper::error(
-                $e->getMessage()
-            );
-        }
-
-        header(
-            'Location: ' .
-                URLROOT .
-                '/inventoryreservations'
+        $service->fulfill(
+            (int)$id
         );
 
-        exit;
+        FlashHelper::success(
+            __('reservation_fulfilled_successfully')
+        );
+
+    } catch (Throwable $e) {
+
+        FlashHelper::error(
+            $e->getMessage()
+        );
     }
+
+    header(
+        'Location: ' .
+            URLROOT .
+            '/inventoryreservations'
+    );
+
+    exit;
+}
 
     public function cancel($id)
     {

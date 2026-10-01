@@ -1,7 +1,9 @@
 <?php
 require_once '../app/Core/Model.php';
 
-class ProjectCostModel extends Model {
+class ProjectCostModel extends Model 
+{
+
     public function getTotalCost($project_id) {
         $result = $this->db->query(
             "SELECT COALESCE(SUM(quantity * unit_price), 0) as total FROM project_costs WHERE project_id = ?", 
@@ -9,17 +11,23 @@ class ProjectCostModel extends Model {
         )->fetch();
         return (float)($result->total ?? 0);
     }
-
 public function getProjectCosts($project_id)
 {
     return $this->db->query(
         "
         SELECT 
             pc.*,
+
             i.name AS item_name,
             i.sku,
+
             l.code AS location_code,
-            l.name AS location_name
+            l.name AS location_name,
+
+            r.req_number,
+
+            rrf.fulfillment_no,
+            rrf.fulfillment_date
 
         FROM project_costs pc
 
@@ -28,6 +36,12 @@ public function getProjectCosts($project_id)
 
         LEFT JOIN inventory_locations l 
             ON l.id = pc.location_id
+
+        LEFT JOIN resource_requisitions r
+            ON r.id = pc.requisition_id
+
+        LEFT JOIN resource_requisition_fulfillments rrf
+            ON rrf.id = pc.fulfillment_id
 
         WHERE pc.project_id = ?
 
@@ -59,18 +73,34 @@ public function getProjectCosts($project_id)
   public function create($data)
 {
     $this->db->query(
-        "INSERT INTO project_costs 
-        (project_id, cost_type, description, quantity, unit_price, inventory_id, location_id)
-        VALUES (?, ?, ?, ?, ?, ?, ?)",
+        "INSERT INTO project_costs
+(
+    project_id,
+    requisition_id,
+    fulfillment_id,
+    inventory_id,
+    location_id,
+    cost_type,
+    description,
+    quantity,
+    unit_price
+)
+VALUES
+(
+    ?, ?, ?, ?, ?, ?, ?, ?, ?
+)",
         [
-            $data['project_id'],
-            $data['cost_type'],
-            $data['description'],
-            $data['quantity'],
-            $data['unit_price'],
-            $data['inventory_id'],
-            $data['location_id'] ?? null
-        ]
+    $data['requisition->project_id'],
+    $data['requisition->id'],
+    $data['fulfillment_id'],
+    $data['inventory_id'],
+    $data['location_id'],
+    $data['cost_type'],
+    $data['reqItem->description'],
+    $data['quantity'],
+    $data['unit_cost'] ?? null
+]
+
     );
 
     return $this->db->lastInsertId();
