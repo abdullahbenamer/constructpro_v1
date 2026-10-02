@@ -67,9 +67,53 @@ public function create(array $data): int
  * - creates the project cost
  * - creates the project ledger entry
  */
+
+private function validateFulfillmentCost(array $data): array
+{
+    if (empty($data['project_id'])) {
+        throw new Exception(__('project_required'));
+    }
+
+    if (empty($data['cost_type'])) {
+        throw new Exception(__('cost_type_required'));
+    }
+
+    if ($data['quantity'] <= 0) {
+        throw new Exception(
+            __('quantity_must_be_greater_than_zero')
+        );
+    }
+
+    if (
+        $data['cost_type'] !== 'materials'
+        && $data['unit_price'] <= 0
+    ) {
+        throw new Exception(
+            __('unit_price_must_be_greater_than_zero')
+        );
+    }
+
+    if ($data['cost_type'] === 'materials') {
+
+        if (empty($data['inventory_id'])) {
+            throw new Exception(
+                __('please_select_material')
+            );
+        }
+
+        if (empty($data['location_id'])) {
+            throw new Exception(
+                __('please_select_warehouse')
+            );
+        }
+    }
+
+    return $data;
+}
+
 public function createFromFulfillment(array $data): int
 {
-    $data = $this->validate($data);
+  $data = $this->validateFulfillmentCost($data);
 
     $data['description'] =
         $this->buildSourceDescription($data);
