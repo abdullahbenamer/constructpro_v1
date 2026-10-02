@@ -5,7 +5,7 @@ class ProjectCosts extends Controller
     public function index($project_id = null)
     {
 
-    AuthHelper::can('project_costs.view');
+        AuthHelper::can('project_costs.view');
 
         $costModel = $this->model('ProjectCost');
         $projectModel = $this->model('Project');
@@ -61,27 +61,27 @@ class ProjectCosts extends Controller
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             try {
-
                 $this->service('ProjectCost')->create([
+                    'project_id'      => $project_id,
 
-                    'project_id'   => $project_id,
+                    'requisition_id'  => null,
+                    'fulfillment_id'  => null,
 
-                    'cost_type'    => $_POST['cost_type'] ?? null,
+                    'cost_type'       => $_POST['cost_type'] ?? null,
 
-                    'description'  => trim($_POST['description'] ?? ''),
+                    'description'     => trim($_POST['description'] ?? ''),
 
-                    'quantity'     => (float)($_POST['quantity'] ?? 0),
+                    'quantity'        => (float)($_POST['quantity'] ?? 0),
 
-                    'unit_price'   => (float)($_POST['unit_price'] ?? 0),
+                    'unit_price'      => (float)($_POST['unit_price'] ?? 0),
 
-                    'inventory_id' => !empty($_POST['inventory_id'])
+                    'inventory_id'    => !empty($_POST['inventory_id'])
                         ? (int)$_POST['inventory_id']
                         : null,
 
-                    'location_id'  => !empty($_POST['location_id'])
+                    'location_id'     => !empty($_POST['location_id'])
                         ? (int)$_POST['location_id']
                         : null
-
                 ]);
 
                 FlashHelper::success(
@@ -143,7 +143,7 @@ class ProjectCosts extends Controller
     public function edit($id)
     {
 
-    AuthHelper::can('project_costs.edit');
+        AuthHelper::can('project_costs.edit');
 
         $costModel = $this->model('ProjectCost');
         $inventoryModel = $this->model('Inventory');
@@ -188,7 +188,6 @@ class ProjectCosts extends Controller
                 FlashHelper::success(
                     __('project_cost_updated_successfully')
                 );
-
             } catch (Throwable $e) {
 
                 FlashHelper::error(
@@ -230,15 +229,15 @@ class ProjectCosts extends Controller
     public function delete($id)
     {
 
-    AuthHelper::can('project_costs.delete');
+        AuthHelper::can('project_costs.delete');
 
         try {
 
             $cost = $this->model('ProjectCost')->getById($id);
 
             if (!$cost) {
-                
-            FlashHelper::error(__('project_cost_not_found')); 
+
+                FlashHelper::error(__('project_cost_not_found'));
 
                 header(
                     'Location: ' .
@@ -259,9 +258,9 @@ class ProjectCosts extends Controller
 
             $this->service('ProjectCost')->delete((int)$id);
 
-         FlashHelper::success(
-    __('project_cost_deleted_successfully')
-);
+            FlashHelper::success(
+                __('project_cost_deleted_successfully')
+            );
 
             header(
                 'Location: ' .
@@ -290,7 +289,7 @@ class ProjectCosts extends Controller
     public function getInventoryLocations(int $inventory_id)
     {
 
-    AuthHelper::can('project_costs.create');
+        AuthHelper::can('project_costs.create');
 
         header('Content-Type: application/json');
 
@@ -308,7 +307,7 @@ class ProjectCosts extends Controller
     public function ledger($project_id)
     {
 
-    AuthHelper::can('project_costs.view');
+        AuthHelper::can('project_costs.view');
 
         $ledgerModel = $this->model('ProjectLedger');
         $projectModel = $this->model('Project');
@@ -330,8 +329,8 @@ class ProjectCosts extends Controller
         $project = $projectModel->getById($project_id);
 
         if (!$project) {
-           
-        FlashHelper::error(__('project_not_found'));
+
+            FlashHelper::error(__('project_not_found'));
 
             header('Location: ' . URLROOT . '/projects');
             exit;
@@ -403,8 +402,8 @@ class ProjectCosts extends Controller
     public function ledgerReport($project_id)
     {
 
-    AuthHelper::can('project_costs.view');
-    
+        AuthHelper::can('project_costs.view');
+
         $projectModel = $this->model('Project');
         $ledgerModel = $this->model('ProjectLedger');
 

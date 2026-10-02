@@ -343,19 +343,19 @@ class ProjectCostService extends BaseService
     }
 
     private function normalize(object $cost): array
-    {
-        return [
-
-            'project_id'   => $cost->project_id,
-            'cost_type'    => $cost->cost_type,
-            'description'  => $cost->description,
-            'quantity'     => $cost->quantity,
-            'unit_price'   => $cost->unit_price,
-            'inventory_id' => $cost->inventory_id,
-            'location_id'  => $cost->location_id
-
-        ];
-    }
+{
+    return [
+        'project_id'      => $cost->project_id,
+        'requisition_id'  => $cost->requisition_id ?? null,
+        'fulfillment_id'  => $cost->fulfillment_id ?? null,
+        'cost_type'       => $cost->cost_type,
+        'description'     => $cost->description,
+        'quantity'        => $cost->quantity,
+        'unit_price'      => $cost->unit_price,
+        'inventory_id'    => $cost->inventory_id,
+        'location_id'     => $cost->location_id
+    ];
+}
 
     private function validate(array $data): array
     {
@@ -473,6 +473,25 @@ class ProjectCostService extends BaseService
 
         );
     }
+
+private function buildSourceDescription(array $data): string
+{
+    $description = trim($data['description'] ?? '');
+
+    if (!empty($data['fulfillment_no'])) {
+        $description .=
+            ' — FUL: ' .
+            $data['fulfillment_no'];
+    }
+
+    if (!empty($data['req_number'])) {
+        $description .=
+            ' — RR: ' .
+            $data['req_number'];
+    }
+
+    return $description;
+}
 
     private function recordInventoryMovement(
         array $data,
