@@ -461,17 +461,25 @@
                             <?//= htmlspecialchars($cost->description ?? '') ?>
                         </td> -->
 
-                        <td>
-    <?php if (!empty($cost->fulfillment_id) && !empty($cost->fulfillment_no)): ?>
+                       <td>
+    <?php
+    $description = $cost->description ?? '';
 
-        <?= __('resource_requisition_fulfillment') ?>
-        — <?= htmlspecialchars($cost->fulfillment_no) ?>
+    if (
+        !empty($cost->req_number) &&
+        !empty($cost->fulfillment_no)
+    ) {
+        $description .=
+            ' — ' .
+            __('rr_fulfillment') .
+            ': ' .
+            $cost->req_number .
+            ' / ' .
+            $cost->fulfillment_no;
+    }
+    ?>
 
-    <?php else: ?>
-
-        <?= htmlspecialchars($cost->description ?? '') ?>
-
-    <?php endif; ?>
+    <?= htmlspecialchars($description) ?>
 </td>
 
                         <td class="text-end">

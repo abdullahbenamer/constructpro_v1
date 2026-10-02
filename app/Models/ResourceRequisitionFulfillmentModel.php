@@ -1876,38 +1876,37 @@ LEFT JOIN units iu
             */
 
                 switch (strtoupper(
-                    $requisitionItem->resource_type
-                        ?? ''
+                    $requisitionItem->resource_type ?? ''
                 )) {
 
-                    case 'LABOR':
-
+                    case 'HUMAN_RESOURCES':
                         $cost_type = 'labor';
-
                         break;
-
 
                     case 'SERVICE':
-
                         $cost_type = 'subcontract';
-
                         break;
 
+                    case 'TRANSPORT':
+                        $cost_type = 'transport';
+                        break;
 
                     case 'EQUIPMENT':
-
                         $cost_type = 'misc';
-
                         break;
 
+                    case 'PROFESSIONAL_SERVICES':
+                        $cost_type = 'subcontract';
+                        break;
+
+                    case 'MISCELLANEOUS':
+                        $cost_type = 'misc';
+                        break;
 
                     default:
-
                         $cost_type = 'misc';
-
                         break;
                 }
-
 
                 /*
             |--------------------------------------------------------------------------

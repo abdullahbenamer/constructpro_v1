@@ -11,7 +11,8 @@ class ProjectCostModel extends Model
         )->fetch();
         return (float)($result->total ?? 0);
     }
-public function getProjectCosts($project_id)
+
+    public function getProjectCosts($project_id)
 {
     return $this->db->query(
         "
