@@ -1711,5 +1711,9 @@ return [
     'supplier_source_destination' => 'Supplier / Source / Destination',
     'source' => 'Source',
 
+    'rr_fulfillment' => 'Resource Request Fulfillment',
+
+
+
 
 ];

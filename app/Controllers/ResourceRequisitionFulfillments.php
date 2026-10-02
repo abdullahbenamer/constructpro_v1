@@ -851,7 +851,7 @@ class ResourceRequisitionFulfillments extends Controller
 
         $fulfillment_no =
             'RR-FUL-' .
-            date('YmdHis') .
+            date('ymdHis') .
             '-' .
             random_int(100, 999);
 

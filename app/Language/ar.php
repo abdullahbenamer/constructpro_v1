@@ -1711,5 +1711,5 @@ return [
     'supplier_source_destination' => 'المورد / المصدر / الوجهة',
     'source' => 'المصدر',
 
-
+    'rr_fulfillment' => 'تنفيذ طلب الموارد',
 ];
