@@ -27,14 +27,16 @@ class ProjectCostService extends BaseService
         $this->inventoryModel = $inventoryModel;
     }
 
-  public function create(array $data): int
+public function create(array $data): int
 {
     $data = $this->validate($data);
 
+    $data['description'] =
+        $this->buildSourceDescription($data);
+
     return $this->transaction(function () use ($data) {
 
-  
-         $this->deductInventory($data);
+        $this->deductInventory($data);
 
         $costId = $this->costModel->create($data);
 
@@ -42,6 +44,51 @@ class ProjectCostService extends BaseService
             $data,
             'OUT'
         );
+
+        $this->recordLedger(
+            $costId,
+            $data
+        );
+
+        return $costId;
+    });
+}
+
+
+/**
+ * Create a project cost from an existing fulfillment transaction.
+ *
+ * Inventory has already been deducted and the inventory movement
+ * has already been recorded by the fulfillment workflow.
+ *
+ * Therefore this method ONLY:
+ * - validates the cost data
+ * - builds the source-aware description
+ * - creates the project cost
+ * - creates the project ledger entry
+ */
+public function createFromFulfillment(array $data): int
+{
+    $data = $this->validate($data);
+
+    $data['description'] =
+        $this->buildSourceDescription($data);
+
+    return $this->transaction(function () use ($data) {
+
+        /*
+        |--------------------------------------------------------------------------
+        | CREATE PROJECT COST
+        |--------------------------------------------------------------------------
+        */
+
+        $costId = $this->costModel->create($data);
+
+        /*
+        |--------------------------------------------------------------------------
+        | CREATE PROJECT LEDGER ENTRY
+        |--------------------------------------------------------------------------
+        */
 
         $this->recordLedger(
             $costId,
@@ -345,15 +392,15 @@ class ProjectCostService extends BaseService
     private function normalize(object $cost): array
 {
     return [
-        'project_id'      => $cost->project_id,
-        'requisition_id'  => $cost->requisition_id ?? null,
-        'fulfillment_id'  => $cost->fulfillment_id ?? null,
-        'cost_type'       => $cost->cost_type,
-        'description'     => $cost->description,
-        'quantity'        => $cost->quantity,
-        'unit_price'      => $cost->unit_price,
-        'inventory_id'    => $cost->inventory_id,
-        'location_id'     => $cost->location_id
+        'project_id'     => $cost->project_id,
+        'requisition_id' => $cost->requisition_id ?? null,
+        'fulfillment_id' => $cost->fulfillment_id ?? null,
+        'cost_type'      => $cost->cost_type,
+        'description'    => $cost->description,
+        'quantity'       => $cost->quantity,
+        'unit_price'     => $cost->unit_price,
+        'inventory_id'   => $cost->inventory_id,
+        'location_id'    => $cost->location_id
     ];
 }
 
@@ -478,16 +525,12 @@ private function buildSourceDescription(array $data): string
 {
     $description = trim($data['description'] ?? '');
 
-    if (!empty($data['fulfillment_no'])) {
-        $description .=
-            ' — FUL: ' .
-            $data['fulfillment_no'];
+    if (!empty($data['req_number'])) {
+        $description .= ' — RR: ' . $data['req_number'];
     }
 
-    if (!empty($data['req_number'])) {
-        $description .=
-            ' — RR: ' .
-            $data['req_number'];
+    if (!empty($data['fulfillment_no'])) {
+        $description .= ' — FUL: ' . $data['fulfillment_no'];
     }
 
     return $description;
