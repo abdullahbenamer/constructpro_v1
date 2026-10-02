@@ -461,7 +461,7 @@
                             <?//= htmlspecialchars($cost->description ?? '') ?>
                         </td> -->
 
-                       <td>
+<td>
     <?php
     $description = $cost->description ?? '';
 
