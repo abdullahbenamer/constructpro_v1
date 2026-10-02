@@ -31,10 +31,7 @@ public function create(array $data): int
 {
     $data = $this->validate($data);
 
-    $data['description'] =
-        $this->buildSourceDescription($data);
-
-    return $this->transaction(function () use ($data) {
+     return $this->transaction(function () use ($data) {
 
         $this->deductInventory($data);
 
@@ -565,20 +562,20 @@ public function createFromFulfillment(array $data): int
         );
     }
 
-private function buildSourceDescription(array $data): string
-{
-    $description = trim($data['description'] ?? '');
+// private function buildSourceDescription(array $data): string
+// {
+//     $description = trim($data['description'] ?? '');
 
-    if (!empty($data['req_number'])) {
-        $description .= ' — RR: ' . $data['req_number'];
-    }
+//     if (!empty($data['req_number'])) {
+//         $description .= ' — RR: ' . $data['req_number'];
+//     }
 
-    if (!empty($data['fulfillment_no'])) {
-        $description .= ' — FUL: ' . $data['fulfillment_no'];
-    }
+//     if (!empty($data['fulfillment_no'])) {
+//         $description .= ' — FUL: ' . $data['fulfillment_no'];
+//     }
 
-    return $description;
-}
+//     return $description;
+// }
 
     private function recordInventoryMovement(
         array $data,

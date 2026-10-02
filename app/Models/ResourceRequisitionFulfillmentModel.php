@@ -1147,7 +1147,13 @@ LEFT JOIN units iu
                                 $requisition->project_id,
                                 $inventory_id,
                                 $location_id,
-                                $reqItem->description,
+                                $reqItem->description
+                                    . ' — '
+                                    . __('rr_fulfillment')
+                                    . ': '
+                                    . $requisition->req_number
+                                    . ' / '
+                                    . $data['fulfillment_no'],
                                 $quantity,
                                 $unit_cost
                             ]
@@ -1176,7 +1182,7 @@ LEFT JOIN units iu
                             'ref_id'      => $project_cost_id,
 
                             'description' =>
-                            'RR Fulfillment: ' .
+                            __('rr_fulfillment') . ': ' .
                                 $reqItem->description,
 
                             'debit'       =>
@@ -1374,7 +1380,13 @@ LEFT JOIN units iu
                             [
                                 $requisition->project_id,
                                 $cost_type,
-                                $reqItem->description,
+                                $reqItem->description
+                                    . ' — '
+                                    . __('rr_fulfillment')
+                                    . ': '
+                                    . $requisition->req_number
+                                    . ' / '
+                                    . $data['fulfillment_no'],
                                 $quantity,
                                 $unit_cost
                             ]
@@ -1403,7 +1415,7 @@ LEFT JOIN units iu
                             'ref_id'      => $project_cost_id,
 
                             'description' =>
-                            'RR Fulfillment: ' .
+                            __('rr_fulfillment') . ': ' .
                                 $reqItem->description,
 
                             'debit'       =>
@@ -1492,9 +1504,9 @@ LEFT JOIN units iu
                 |--------------------------------------------------------------------------
                 */ else {
 
-                       throw new Exception(
-    __('invalid_resource_source')
-);
+                        throw new Exception(
+                            __('invalid_resource_source')
+                        );
                     }
                 }
 
@@ -1668,8 +1680,8 @@ LEFT JOIN units iu
             if ($fulfillment_id <= 0) {
 
                 throw new Exception(
-    __('failed_to_create_resource_fulfillment')
-);
+                    __('failed_to_create_resource_fulfillment')
+                );
             }
 
 
@@ -1770,9 +1782,9 @@ LEFT JOIN units iu
                     'RESOURCE'
                 ) {
 
-                   throw new Exception(
-    __('invalid_resource_fulfillment_item')
-);
+                    throw new Exception(
+                        __('invalid_resource_fulfillment_item')
+                    );
                 }
 
 
@@ -1903,33 +1915,37 @@ LEFT JOIN units iu
             |--------------------------------------------------------------------------
             */
 
-                $dbProjectCost =
-                    $this->db->query(
-                        "
-                    INSERT INTO project_costs
-                    (
-                        project_id,
-                        inventory_id,
-                        location_id,
-                        cost_type,
-                        description,
-                        quantity,
-                        unit_price
-                    )
-                    VALUES
-                    (
-                        ?, NULL, NULL, ?, ?, ?, ?
-                    )
-                    ",
-                        [
-                            $requisition->project_id,
-                            $cost_type,
-                            $requisitionItem->description,
-                            $fulfill_quantity,
-                            $unit_cost
-                        ]
-                    );
-
+                $this->db->query(
+                    "
+    INSERT INTO project_costs
+    (
+        project_id,
+        inventory_id,
+        location_id,
+        cost_type,
+        description,
+        quantity,
+        unit_price
+    )
+    VALUES
+    (
+        ?, NULL, NULL, ?, ?, ?, ?
+    )
+    ",
+                    [
+                        $requisition->project_id,
+                        $cost_type,
+                        $requisitionItem->description
+                            . ' — '
+                            . __('rr_fulfillment')
+                            . ': '
+                            . $requisition->req_number
+                            . ' / '
+                            . $data['fulfillment_no'],
+                        $fulfill_quantity,
+                        $unit_cost
+                    ]
+                );
 
                 $project_cost_id =
                     (int) $this->db->lastInsertId();
@@ -1953,8 +1969,8 @@ LEFT JOIN units iu
                     'ref_id'      => $project_cost_id,
 
                     'description' =>
-                    'RR Fulfillment: ' .
-                        $requisitionItem->description,
+                    __('rr_fulfillment') . ': ' .
+                        $reqItem->description,
 
                     'debit' =>
                     $fulfill_quantity * $unit_cost,
