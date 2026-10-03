@@ -5,7 +5,6 @@ class ResourceRequisitionItemModel
 
     private $db;
 
-
     public function __construct()
     {
         $this->db = new Database;
@@ -86,6 +85,7 @@ class ResourceRequisitionItemModel
         (
             requisition_id,
             resource_source,
+            'cost_type',
             inventory_id,
             resource_id,
             description,
@@ -93,13 +93,13 @@ class ResourceRequisitionItemModel
             uom,
             remarks
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ",
             [
                 $data['requisition_id'],
 
                 $data['resource_source'],
-
+$data['cost_type'],
                 $data['inventory_id'] ?? null,
 
                 $data['resource_id'] ?? null,
@@ -259,7 +259,8 @@ class ResourceRequisitionItemModel
         SET
             description = '{$data['description']}',
             quantity = '{$data['quantity']}',
-            remarks = '{$data['remarks']}'
+            remarks = '{$data['remarks']}',
+            cost_type = {$data['cost_type']}
 
         WHERE id = '$id'
         "

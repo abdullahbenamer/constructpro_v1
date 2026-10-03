@@ -1320,37 +1320,7 @@ LEFT JOIN units iu
                     |--------------------------------------------------------------------------
                     */
 
-                    switch (strtoupper($resource->resource_type ?? '')) {
-
-    case 'HUMAN_RESOURCES':
-        $cost_type = 'HUMAN_RESOURCES';
-        break;
-
-    case 'SERVICE':
-        $cost_type = 'SUBCONTRACT';
-        break;
-
-    case 'TRANSPORT':
-        $cost_type = 'TRANSPORT';
-        break;
-
-    case 'EQUIPMENT':
-        $cost_type = 'EQUIPMENT';
-        break;
-
-    case 'PROFESSIONAL_SERVICES':
-        $cost_type = 'PROFESSIONAL_SERVICES';
-        break;
-
-    case 'MISCELLANEOUS':
-        $cost_type = 'MISCELLANEOUS';
-        break;
-
-    default:
-        $cost_type = 'MISCELLANEOUS';
-        break;
-}
-
+                                   $cost_type = $reqItem->cost_type;
                         /*
                     |--------------------------------------------------------------------------
                     | CREATE PROJECT COST
@@ -1826,9 +1796,9 @@ LEFT JOIN units iu
 
 
                 /*
-            |--------------------------------------------------------------------------
+            |---------------------------------------------
             | VALIDATE QUANTITY
-            |--------------------------------------------------------------------------
+            |---------------------------------------------
             */
 
                 if (
@@ -1847,9 +1817,9 @@ LEFT JOIN units iu
 
 
                 /*
-            |--------------------------------------------------------------------------
+            |-------------------------------------------------
             | DETERMINE UNIT COST
-            |--------------------------------------------------------------------------
+            |-------------------------------------------------
             */
 
                 $unit_cost =
@@ -1864,9 +1834,9 @@ LEFT JOIN units iu
 
 
                 /*
-            |--------------------------------------------------------------------------
+            |--------------------------------------------
             | DETERMINE PROJECT COST TYPE
-            |--------------------------------------------------------------------------
+            |--------------------------------------------
             */
 
                 switch (strtoupper(
