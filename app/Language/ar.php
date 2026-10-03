@@ -1712,4 +1712,6 @@ return [
     'source' => 'المصدر',
 
     'rr_fulfillment' => 'تنفيذ طلب الموارد',
+
+    'PERMITS_FEES' => 'مصاريف تصاريح',
 ];

@@ -1126,42 +1126,39 @@ LEFT JOIN units iu
                     |--------------------------------------------------------------------------
                     */
 
-                        $db->query(
+                        $this->db->query(
                             "
-                        INSERT INTO project_costs
-                        (
-                            project_id,
-                            inventory_id,
-                            location_id,
-                            cost_type,
-                            description,
-                            quantity,
-                            unit_price
-                        )
-                        VALUES
-                        (
-                            ?, ?, ?, 'materials', ?, ?, ?
-                        )
-                        ",
+    INSERT INTO project_costs
+    (
+        project_id,
+        requisition_id,
+        fulfillment_id,
+        inventory_id,
+        location_id,
+        cost_type,
+        description,
+        quantity,
+        unit_price
+    )
+    VALUES
+    (
+        ?, ?, ?, ?, ?, 'materials', ?, ?, ?
+    )
+    ",
                             [
                                 $requisition->project_id,
+                                $requisition->id,
+                                $fulfillment_id,
                                 $inventory_id,
                                 $location_id,
-                                $reqItem->description
-                                    . ' — '
-                                    . __('rr_fulfillment')
-                                    . ': '
-                                    . $requisition->req_number
-                                    . ' / '
-                                    . $data['fulfillment_no'],
+                                $reqItem->description,
                                 $quantity,
                                 $unit_cost
                             ]
                         );
 
-
                         $project_cost_id =
-                            (int) $db->lastInsertId();
+                            (int) $this->db->lastInsertId();
 
                         /*
 |--------------------------------------------------------------------------
@@ -1323,36 +1320,36 @@ LEFT JOIN units iu
                     |--------------------------------------------------------------------------
                     */
 
-                        switch ($resource->resource_type) {
+                        switch (strtoupper($resource->resource_type ?? '')) {
 
-                            case 'LABOR':
-
+                            case 'HUMAN_RESOURCES':
                                 $cost_type = 'labor';
-
                                 break;
-
 
                             case 'SERVICE':
-
                                 $cost_type = 'subcontract';
-
                                 break;
 
+                            case 'TRANSPORT':
+                                $cost_type = 'transport';
+                                break;
 
                             case 'EQUIPMENT':
-
                                 $cost_type = 'misc';
-
                                 break;
 
+                            case 'PROFESSIONAL_SERVICES':
+                                $cost_type = 'subcontract';
+                                break;
+
+                            case 'MISCELLANEOUS':
+                                $cost_type = 'misc';
+                                break;
 
                             default:
-
                                 $cost_type = 'misc';
-
                                 break;
                         }
-
 
                         /*
                     |--------------------------------------------------------------------------
@@ -1919,6 +1916,8 @@ LEFT JOIN units iu
     INSERT INTO project_costs
     (
         project_id,
+        requisition_id,
+        fulfillment_id,
         inventory_id,
         location_id,
         cost_type,
@@ -1928,11 +1927,13 @@ LEFT JOIN units iu
     )
     VALUES
     (
-        ?, NULL, NULL, ?, ?, ?, ?
+        ?, ?, ?, NULL, NULL, ?, ?, ?, ?
     )
     ",
                     [
                         $requisition->project_id,
+                        $requisition->id,
+                        $fulfillment_id,
                         $cost_type,
                         $requisitionItem->description
                             . ' — '
@@ -1942,12 +1943,14 @@ LEFT JOIN units iu
                             . ' / '
                             . $data['fulfillment_no'],
                         $fulfill_quantity,
+
                         $unit_cost
                     ]
                 );
 
                 $project_cost_id =
                     (int) $this->db->lastInsertId();
+
 
                 /*
 |--------------------------------------------------------------------------
@@ -2213,7 +2216,6 @@ LEFT JOIN units iu
 
             $status = 'FULFILLED';
         }
-
 
         return $this->db->query(
             "

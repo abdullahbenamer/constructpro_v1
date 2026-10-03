@@ -463,23 +463,24 @@
 
 <td>
     <?php
-    $description = $cost->description ?? '';
+$description = $cost->description ?? '';
 
-    if (
-        !empty($cost->req_number) &&
-        !empty($cost->fulfillment_no)
-    ) {
-        $description .=
-            ' — ' .
-            __('rr_fulfillment') .
-            ': ' .
-            $cost->req_number .
-            ' / ' .
-            $cost->fulfillment_no;
-    }
-    ?>
+if (
+    !empty($cost->req_number) &&
+    !empty($cost->fulfillment_no)
+) {
+    $description .=
+        ' — ' .
+        __('rr_fulfillment') .
+        ': ' .
+        $cost->req_number .
+        ' / ' .
+        $cost->fulfillment_no;
+}
+?>
 
-    <?= htmlspecialchars($description) ?>
+<?= htmlspecialchars($description) ?>
+  
 </td>
 
                         <td class="text-end">

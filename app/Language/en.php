@@ -1713,6 +1713,6 @@ return [
 
     'rr_fulfillment' => 'Resource Request Fulfillment',
 
-
+'PERMITS_FEES' => 'Fees of Permit'
 
 ];
