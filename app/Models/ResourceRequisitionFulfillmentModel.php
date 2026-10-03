@@ -1359,36 +1359,33 @@ LEFT JOIN units iu
 
                         $db->query(
                             "
-                        INSERT INTO project_costs
-                        (
-                            project_id,
-                            inventory_id,
-                            location_id,
-                            cost_type,
-                            description,
-                            quantity,
-                            unit_price
-                        )
-                        VALUES
-                        (
-                            ?, NULL, NULL, ?, ?, ?, ?
-                        )
-                        ",
+    INSERT INTO project_costs
+    (
+        project_id,
+        requisition_id,
+        fulfillment_id,
+        inventory_id,
+        location_id,
+        cost_type,
+        description,
+        quantity,
+        unit_price
+    )
+    VALUES
+    (
+        ?, ?, ?, NULL, NULL, ?, ?, ?, ?
+    )
+    ",
                             [
                                 $requisition->project_id,
+                                $requisition->id,
+                                $fulfillment_id,
                                 $cost_type,
-                                $reqItem->description
-                                    . ' — '
-                                    . __('rr_fulfillment')
-                                    . ': '
-                                    . $requisition->req_number
-                                    . ' / '
-                                    . $data['fulfillment_no'],
+                                $reqItem->description,
                                 $quantity,
                                 $unit_cost
                             ]
                         );
-
 
                         $project_cost_id =
                             (int) $db->lastInsertId();
@@ -1911,8 +1908,8 @@ LEFT JOIN units iu
             |--------------------------------------------------------------------------
             */
 
-                $this->db->query(
-                    "
+               $this->db->query(
+    "
     INSERT INTO project_costs
     (
         project_id,
@@ -1930,26 +1927,19 @@ LEFT JOIN units iu
         ?, ?, ?, NULL, NULL, ?, ?, ?, ?
     )
     ",
-                    [
-                        $requisition->project_id,
-                        $requisition->id,
-                        $fulfillment_id,
-                        $cost_type,
-                        $requisitionItem->description
-                            . ' — '
-                            . __('rr_fulfillment')
-                            . ': '
-                            . $requisition->req_number
-                            . ' / '
-                            . $data['fulfillment_no'],
-                        $fulfill_quantity,
+    [
+        $requisition->project_id,
+        $requisition->id,
+        $fulfillment_id,
+        $cost_type,
+        $requisitionItem->description,
+        $fulfill_quantity,
+        $unit_cost
+    ]
+);
 
-                        $unit_cost
-                    ]
-                );
-
-                $project_cost_id =
-                    (int) $this->db->lastInsertId();
+$project_cost_id =
+    (int) $this->db->lastInsertId();
 
 
                 /*
@@ -1972,7 +1962,7 @@ LEFT JOIN units iu
 
                     'description' =>
                     __('rr_fulfillment') . ': ' .
-                        $reqItem->description,
+                        $requisitionItem->description,
 
                     'debit' =>
                     $fulfill_quantity * $unit_cost,

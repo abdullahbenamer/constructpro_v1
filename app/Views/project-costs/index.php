@@ -462,7 +462,7 @@
                         </td> -->
 
 <td>
-    <?php
+  <?php
 $description = $cost->description ?? '';
 
 if (
@@ -478,7 +478,6 @@ if (
         $cost->fulfillment_no;
 }
 ?>
-
 <?= htmlspecialchars($description) ?>
   
 </td>
