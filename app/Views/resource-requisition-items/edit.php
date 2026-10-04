@@ -182,6 +182,107 @@
 
                     </div>
 
+    <?php if ($data['item']->resource_source === 'INVENTORY'): ?>
+
+    <!-- MATERIAL COST TYPE — READ ONLY -->
+    <div class="col-md-4 mb-3">
+
+        <label class="form-label">
+            <?= __('cost_type') ?>
+        </label>
+
+        <input
+            type="text"
+            class="form-control"
+            value="<?= __('materials') ?>"
+            readonly>
+
+        <input
+            type="hidden"
+            name="cost_type"
+            value="MATERIALS">
+
+    </div>
+
+<?php else: ?>
+
+    <!-- NON-MATERIAL COST TYPE — SELECTABLE -->
+    <div class="col-md-4 mb-3">
+
+        <label class="form-label">
+            <?= __('cost_type') ?>
+        </label>
+
+        <select
+            name="cost_type"
+            class="form-select"
+            required>
+
+            <option value="">
+                <?= __('select_cost_type') ?>
+            </option>
+
+            <option value="HUMAN_RESOURCES"
+                <?= ($data['item']->cost_type ?? '') === 'HUMAN_RESOURCES' ? 'selected' : '' ?>>
+                <?= __('human_resources') ?>
+            </option>
+
+            <option value="TRANSPORT"
+                <?= ($data['item']->cost_type ?? '') === 'TRANSPORT' ? 'selected' : '' ?>>
+                <?= __('transport') ?>
+            </option>
+
+            <option value="EQUIPMENT"
+                <?= ($data['item']->cost_type ?? '') === 'EQUIPMENT' ? 'selected' : '' ?>>
+                <?= __('equipment') ?>
+            </option>
+
+            <option value="SUBCONTRACT"
+                <?= ($data['item']->cost_type ?? '') === 'SUBCONTRACT' ? 'selected' : '' ?>>
+                <?= __('subcontract') ?>
+            </option>
+
+            <option value="SITE_EXPENSES"
+                <?= ($data['item']->cost_type ?? '') === 'SITE_EXPENSES' ? 'selected' : '' ?>>
+                <?= __('site_expenses') ?>
+            </option>
+
+            <option value="PROFESSIONAL_SERVICES"
+                <?= ($data['item']->cost_type ?? '') === 'PROFESSIONAL_SERVICES' ? 'selected' : '' ?>>
+                <?= __('professional_services') ?>
+            </option>
+
+            <option value="PERMITS_FEES"
+                <?= ($data['item']->cost_type ?? '') === 'PERMITS_FEES' ? 'selected' : '' ?>>
+                <?= __('permits_fees') ?>
+            </option>
+
+            <option value="INSURANCE"
+                <?= ($data['item']->cost_type ?? '') === 'INSURANCE' ? 'selected' : '' ?>>
+                <?= __('insurance') ?>
+            </option>
+
+            <option value="BANK_CHARGES"
+                <?= ($data['item']->cost_type ?? '') === 'BANK_CHARGES' ? 'selected' : '' ?>>
+                <?= __('bank_charges') ?>
+            </option>
+
+            <option value="TAXES"
+                <?= ($data['item']->cost_type ?? '') === 'TAXES' ? 'selected' : '' ?>>
+                <?= __('taxes') ?>
+            </option>
+
+            <option value="MISCELLANEOUS"
+                <?= ($data['item']->cost_type ?? '') === 'MISCELLANEOUS' ? 'selected' : '' ?>>
+                <?= __('miscellaneous') ?>
+            </option>
+
+        </select>
+
+    </div>
+
+<?php endif; ?>
+
                 </div>
 
 

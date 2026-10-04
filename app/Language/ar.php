@@ -234,7 +234,7 @@ return [
     'project_warehouse' => 'مستودع المشروع',
     'add_cost_to_project' => 'إضافة تكلفة إلى المشروع',
     'labor'         => 'العمالة',
-    'inventory_item' => 'المخزون صنف',
+    'inventory_item' => 'صنف المادة',
     'select_item' => 'اختر الصنف',
     'available' => 'متوفر/متاح',
     'physical'  => 'الفعلي',
@@ -1714,4 +1714,6 @@ return [
     'rr_fulfillment' => 'تنفيذ طلب الموارد',
 
     'PERMITS_FEES' => 'مصاريف تصاريح',
+
+    'select_cost_type' => '--- اختر نوع التكلفة  ---',
 ];

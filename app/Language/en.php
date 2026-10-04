@@ -1713,6 +1713,8 @@ return [
 
     'rr_fulfillment' => 'Resource Request Fulfillment',
 
-    'PERMITS_FEES' => 'Fees of Permit'
+    'PERMITS_FEES' => 'Fees of Permit',
+
+    'select_cost_type' => '--- Select Cost Type ---',
 
 ];

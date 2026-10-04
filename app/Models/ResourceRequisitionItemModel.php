@@ -85,7 +85,7 @@ class ResourceRequisitionItemModel
         (
             requisition_id,
             resource_source,
-            'cost_type',
+            cost_type,
             inventory_id,
             resource_id,
             description,
@@ -250,22 +250,29 @@ $data['cost_type'],
     /**
      * UPDATE ITEM
      */
-    public function update($id, $data)
-    {
-        return $this->db->query(
-            "
+public function update($id, $data)
+{
+    return $this->db->query(
+        "
         UPDATE resource_requisition_items
 
         SET
-            description = '{$data['description']}',
-            quantity = '{$data['quantity']}',
-            remarks = '{$data['remarks']}',
-            cost_type = {$data['cost_type']}
+            description = ?,
+            quantity = ?,
+            remarks = ?,
+            cost_type = ?
 
-        WHERE id = '$id'
-        "
-        );
-    }
+        WHERE id = ?
+        ",
+        [
+            $data['description'],
+            $data['quantity'],
+            $data['remarks'],
+            $data['cost_type'],
+            $id
+        ]
+    );
+}
 
     /**
      * DELETE ITEM

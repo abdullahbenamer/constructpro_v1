@@ -103,10 +103,11 @@
                                     <option
                                         value="<?= (int)$item->id ?>"
                                         data-source="INVENTORY"
-                                    data-unit="<?= htmlspecialchars($item->unit_name) ?>"
+                                        data-unit="<?= htmlspecialchars($item->unit_name) ?>"
                                         data-description="<?= htmlspecialchars($item->name) ?>">
 
-                                        <!-- <?//= htmlspecialchars($item->sku) ?> - -->
+                                        <!-- <? //= htmlspecialchars($item->sku) 
+                                                ?> - -->
                                         <?= htmlspecialchars($item->name) ?>
 
                                         (<?= __('available') ?>:
@@ -146,10 +147,11 @@
                                     <option
                                         value="<?= (int)$resource->id ?>"
                                         data-source="RESOURCE"
-                                       data-unit="<?= htmlspecialchars($resource->unit_name ?? '') ?>"
+                                        data-unit="<?= htmlspecialchars($resource->unit_name ?? '') ?>"
                                         data-description="<?= htmlspecialchars($resource->resource_name) ?>">
 
-                                        <!-- <?//= htmlspecialchars($resource->resource_code) ?>
+                                        <!-- <? //= htmlspecialchars($resource->resource_code) 
+                                                ?>
                                         - -->
                                         <?= htmlspecialchars($resource->resource_name) ?>
 
@@ -186,11 +188,10 @@
 
                 </div>
 
-
                 <div class="row">
 
                     <!-- QUANTITY -->
-                    <div class="col-md-2 mb-3">
+                    <div class="col-md-3 mb-3">
 
                         <label class="form-label">
                             <?= __('requested_quantity') ?>
@@ -209,7 +210,7 @@
 
 
                     <!-- UOM -->
-                    <div class="col-md-2 mb-3">
+                    <div class="col-md-3 mb-3">
 
                         <label class="form-label">
                             <?= __('uom') ?>
@@ -221,6 +222,96 @@
                             id="uom"
                             class="form-control"
                             readonly>
+
+                    </div>
+
+
+                                      <!-- COST TYPE -->
+                        <div class="col-md-4 mb-3">
+
+                            <label class="form-label">
+                                <?= __('cost_type') ?>
+                            </label>
+
+                            <!-- MATERIAL COST TYPE -->
+                            <div id="materialCostType">
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    value="<?= __('materials') ?>"
+                                    readonly>
+
+                                <input
+                                    type="hidden"
+                                    name="cost_type"
+                                    id="materialCostTypeValue"
+                                    value="MATERIALS">
+
+                            </div>
+
+
+                            <!-- NON-MATERIAL COST TYPE -->
+                            <div id="nonMaterialCostType">
+
+                                <select
+                                    name="cost_type"
+                                    id="nonMaterialCostTypeSelect"
+                                    class="form-select">
+
+                                    <option value="">
+                                        <?= __('select_cost_type') ?>
+                                    </option>
+
+                                    <option value="HUMAN_RESOURCES">
+                                        <?= __('human_resources') ?>
+                                    </option>
+
+                                    <option value="TRANSPORT">
+                                        <?= __('transport') ?>
+                                    </option>
+
+                                    <option value="EQUIPMENT">
+                                        <?= __('equipment') ?>
+                                    </option>
+
+                                    <option value="SUBCONTRACT">
+                                        <?= __('subcontract') ?>
+                                    </option>
+
+                                    <option value="SITE_EXPENSES">
+                                        <?= __('site_expenses') ?>
+                                    </option>
+
+                                    <option value="PROFESSIONAL_SERVICES">
+                                        <?= __('professional_services') ?>
+                                    </option>
+
+                                    <option value="PERMITS_FEES">
+                                        <?= __('permits_fees') ?>
+                                    </option>
+
+                                    <option value="INSURANCE">
+                                        <?= __('insurance') ?>
+                                    </option>
+
+                                    <option value="BANK_CHARGES">
+                                        <?= __('bank_charges') ?>
+                                    </option>
+
+                                    <option value="TAXES">
+                                        <?= __('taxes') ?>
+                                    </option>
+
+                                    <option value="MISCELLANEOUS">
+                                        <?= __('miscellaneous') ?>
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
@@ -334,6 +425,18 @@
 
         const uom =
             document.getElementById('uom');
+
+        const materialCostType =
+            document.getElementById('materialCostType');
+
+        const nonMaterialCostType =
+            document.getElementById('nonMaterialCostType');
+
+        const materialCostTypeValue =
+            document.getElementById('materialCostTypeValue');
+
+        const nonMaterialCostTypeSelect =
+            document.getElementById('nonMaterialCostTypeSelect');
 
 
         /*
@@ -610,6 +713,39 @@
         }
 
 
+        // function Show / hide cost type based on resource type
+        function updateCostType() {
+
+    if (type.value === 'INVENTORY') {
+
+        // MATERIAL
+        materialCostType.hidden = false;
+        nonMaterialCostType.hidden = true;
+
+        // MATERIAL is always MATERIALS
+        materialCostTypeValue.disabled = false;
+
+        // Disable non-material field so it is NOT submitted
+        nonMaterialCostTypeSelect.disabled = true;
+
+        // Make sure the material value is correct
+        materialCostTypeValue.value = 'MATERIALS';
+
+    } else {
+
+        // NON-MATERIAL
+        materialCostType.hidden = true;
+        nonMaterialCostType.hidden = false;
+
+        // Disable material field so it is NOT submitted
+        materialCostTypeValue.disabled = true;
+
+        // Enable non-material selection
+        nonMaterialCostTypeSelect.disabled = false;
+
+    }
+}
+
         /*
         |--------------------------------------------------------------------------
         | SHOW NON-MATERIAL
@@ -638,24 +774,24 @@
         |--------------------------------------------------------------------------
         */
 
-        type.addEventListener(
-            'change',
-            function() {
+   type.addEventListener(
+    'change',
+    function() {
 
-                if (
-                    type.value === 'INVENTORY'
-                ) {
+        if (type.value === 'INVENTORY') {
 
-                    showMaterial();
+            showMaterial();
 
-                } else {
+        } else {
 
-                    showResource();
+            showResource();
 
-                }
+        }
 
-            }
-        );
+        updateCostType();
+
+    }
+);
 
 
         /*
@@ -833,11 +969,22 @@
         |--------------------------------------------------------------------------
         */
 
-        if (type.value === 'INVENTORY') {
-            showMaterial();
-        } else {
-            showResource();
-        }
+        
+
+     if (type.value === 'INVENTORY') {
+
+    showMaterial();
+
+} else {
+
+    showResource();
+
+}
+
+updateCostType();
 
     });
+
+
+
 </script>

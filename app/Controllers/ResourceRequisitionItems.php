@@ -40,7 +40,7 @@ class ResourceRequisitionItems extends Controller
      */
     public function create($requisition_id)
     {
-       AuthHelper::can('resource_requisitions.edit');
+        AuthHelper::can('resource_requisitions.edit');
 
         $this->validateDraftRequisition($requisition_id);
 
@@ -65,7 +65,7 @@ class ResourceRequisitionItems extends Controller
      */
     public function store()
     {
-       AuthHelper::can('resource_requisitions.edit');
+        AuthHelper::can('resource_requisitions.edit');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header(
@@ -75,7 +75,7 @@ class ResourceRequisitionItems extends Controller
             );
             exit;
         }
-    
+
         $requisitionId = (int)($_POST['requisition_id'] ?? 0);
 
         $this->validateDraftRequisition($requisitionId);
@@ -142,29 +142,33 @@ class ResourceRequisitionItems extends Controller
     |--------------------------------------------------------------------------
     */
 
-        $data = [
+    $data = [
 
-            'requisition_id' =>
-            $requisitionId,
+    'requisition_id' =>
+    $requisitionId,
 
-            'resource_source' =>
-            $resourceSource,
+    'resource_source' =>
+    $resourceSource,
 
-            'resource_id' =>
-            $resourceId,
+    'resource_id' =>
+    $resourceId,
 
-            'description' =>
-            trim($_POST['description'] ?? ''),
+    'description' =>
+    trim($_POST['description'] ?? ''),
 
-            'quantity' =>
-            (float)($_POST['quantity'] ?? 0),
+    'quantity' =>
+    (float)($_POST['quantity'] ?? 0),
 
-            'uom' =>
-            trim($_POST['uom'] ?? ''),
+    'uom' =>
+    trim($_POST['uom'] ?? ''),
 
-            'remarks' =>
-            trim($_POST['remarks'] ?? '')
-        ];
+    'remarks' =>
+    trim($_POST['remarks'] ?? ''),
+
+    'cost_type' =>
+    $_POST['cost_type'] ?? null
+];
+
 
         $itemModel =
             $this->model('ResourceRequisitionItem');
@@ -195,7 +199,7 @@ class ResourceRequisitionItems extends Controller
 
     public function edit($id)
     {
-       AuthHelper::can('resource_requisitions.edit');
+        AuthHelper::can('resource_requisitions.edit');
 
         $item = $this->itemModel->getById($id);
 
@@ -262,7 +266,7 @@ class ResourceRequisitionItems extends Controller
     public function update($id)
     {
 
-     AuthHelper::can('resource_requisitions.edit');
+        AuthHelper::can('resource_requisitions.edit');
 
 
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
@@ -330,13 +334,13 @@ class ResourceRequisitionItems extends Controller
         exit;
     }
 
-     /**
+    /**
      * Delete Item
      */
     public function delete($id)
     {
 
-     AuthHelper::can('resource_requisitions.edit');
+        AuthHelper::can('resource_requisitions.edit');
 
 
         $item = $this->itemModel->getById($id);
