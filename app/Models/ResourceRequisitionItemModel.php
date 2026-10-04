@@ -247,9 +247,9 @@ $data['cost_type'],
         )->fetch();
     }
 
-    /**
-     * UPDATE ITEM
-     */
+/**
+ * UPDATE ITEM
+ */
 public function update($id, $data)
 {
     return $this->db->query(

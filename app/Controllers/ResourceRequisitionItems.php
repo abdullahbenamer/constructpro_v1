@@ -305,15 +305,34 @@ class ResourceRequisitionItems extends Controller
 
 
 
-        $data = [
+       /*
+|--------------------------------------------------------------------------
+| COST TYPE
+|--------------------------------------------------------------------------
+*/
 
-            'description' => $_POST['description'],
+$costType = $_POST['cost_type'] ?? null;
 
-            'quantity' => $_POST['quantity'],
+/*
+|--------------------------------------------------------------------------
+| MATERIAL ITEMS ARE ALWAYS MATERIALS
+|--------------------------------------------------------------------------
+*/
+if ($item->resource_source === 'INVENTORY') {
 
-            'remarks' => $_POST['remarks']
+    $costType = 'MATERIALS';
+}
 
-        ];
+$data = [
+    'description' => $_POST['description'],
+
+    'quantity' => $_POST['quantity'],
+
+    'remarks' => $_POST['remarks'],
+
+    'cost_type' => $costType
+
+];
 
 
 
