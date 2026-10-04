@@ -17,83 +17,83 @@
                 <h3 class="mb-1 text-uppercase">
                     <?= htmlspecialchars($project->title) ?>
                 </h3>
-<br>
-            <div class="d-flex flex-wrap align-items-center gap-2">
+                <br>
+                <div class="d-flex flex-wrap align-items-center gap-2">
 
-    <!-- PROJECT CODE -->
-     <span class="d-inline-flex align-items-center gap-1">
-        <span class="text-muted small fw-semibold">
-            <?= __('code') ?>:
-        </span>
-    <span class="badge bg-primary fs-6">
-             
-        <?= htmlspecialchars($project->project_code ?? 'N/A') ?>
-    </span>
+                    <!-- PROJECT CODE -->
+                    <span class="d-inline-flex align-items-center gap-1">
+                        <span class="text-muted small fw-semibold">
+                            <?= __('code') ?>:
+                        </span>
+                        <span class="badge bg-primary fs-6">
 
-    <!-- PROJECT TYPE -->
-    <span class="d-inline-flex align-items-center gap-1">
-        <span class="text-muted small fw-semibold">
-            <?= __('type') ?>:
-        </span>
+                            <?= htmlspecialchars($project->project_code ?? 'N/A') ?>
+                        </span>
 
-        <span class="badge bg-secondary fs-6">
-            <?= htmlspecialchars(
-                [
-                    'Construction' => __('construction'),
-                    'Maintenance'  => __('maintenance'),
-                    'Inspection'   => __('inspection'),
-                    'Consultancy'  => __('consultancy'),
-                    'Other'        => __('other')
-                ][$project->project_type ?? '']
-                ?? ($project->project_type ?? 'N/A')
-            ) ?>
-        </span>
-    </span>
+                        <!-- PROJECT TYPE -->
+                        <span class="d-inline-flex align-items-center gap-1">
+                            <span class="text-muted small fw-semibold">
+                                <?= __('type') ?>:
+                            </span>
 
-    <!-- PROJECT PHASE / STATUS -->
-    <?php
-    $statusColors = [
-        'planning'    => 'secondary',
-        'in_progress' => 'warning',
-        'testing'     => 'info',
-        'completed'   => 'success',
-        'cancelled'   => 'danger'
-    ];
+                            <span class="badge bg-secondary fs-6">
+                                <?= htmlspecialchars(
+                                    [
+                                        'Construction' => __('construction'),
+                                        'Maintenance'  => __('maintenance'),
+                                        'Inspection'   => __('inspection'),
+                                        'Consultancy'  => __('consultancy'),
+                                        'Other'        => __('other')
+                                    ][$project->project_type ?? '']
+                                        ?? ($project->project_type ?? 'N/A')
+                                ) ?>
+                            </span>
+                        </span>
 
-    $statusColor =
-        $statusColors[$project->status ?? '']
-        ?? 'secondary';
-    ?>
+                        <!-- PROJECT PHASE / STATUS -->
+                        <?php
+                        $statusColors = [
+                            'planning'    => 'secondary',
+                            'in_progress' => 'warning',
+                            'testing'     => 'info',
+                            'completed'   => 'success',
+                            'cancelled'   => 'danger'
+                        ];
 
-    <span class="d-inline-flex align-items-center gap-1">
-        <span class="text-muted small fw-semibold">
-            <?= __('phase') ?>:
-        </span>
+                        $statusColor =
+                            $statusColors[$project->status ?? '']
+                            ?? 'secondary';
+                        ?>
 
-        <span class="badge bg-<?= $statusColor ?> fs-6">
-            <?= htmlspecialchars(
-                [
-                    'planning'    => __('planning'),
-                    'in_progress' => __('in_progress'),
-                    'testing'     => __('testing'),
-                    'completed'   => __('completed_status'),
-                    'cancelled'   => __('cancelled')
-                ][$project->status ?? '']
-                ?? ($project->status ?? 'N/A')
-            ) ?>
-        </span>
-    </span>
+                        <span class="d-inline-flex align-items-center gap-1">
+                            <span class="text-muted small fw-semibold">
+                                <?= __('phase') ?>:
+                            </span>
 
-</div>
+                            <span class="badge bg-<?= $statusColor ?> fs-6">
+                                <?= htmlspecialchars(
+                                    [
+                                        'planning'    => __('planning'),
+                                        'in_progress' => __('in_progress'),
+                                        'testing'     => __('testing'),
+                                        'completed'   => __('completed_status'),
+                                        'cancelled'   => __('cancelled')
+                                    ][$project->status ?? '']
+                                        ?? ($project->status ?? 'N/A')
+                                ) ?>
+                            </span>
+                        </span>
+
+                </div>
             </div>
 
             <div class="mt-2 mt-md-0">
 
-                    <a href="<?= URLROOT ?>/project-costs/create/<?= $project->id ?>"
-                        class="btn btn-primary">
-                        <i class="fas fa-plus"></i>
-                        <?= __('add_cost') ?>
-                    </a>             
+                <a href="<?= URLROOT ?>/project-costs/create/<?= $project->id ?>"
+                    class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                    <?= __('add_cost') ?>
+                </a>
 
                 <a href="<?= URLROOT ?>/projects/edit/<?= $project->id ?>"
                     class="btn btn-warning">
@@ -149,23 +149,23 @@
                     </strong>
                 </div>
 
-              <!-- CUSTOMER -->
-<div class="col-md-3">
-    <div class="text-muted small">
-        <?= __('customer_label') ?>
-    </div>
+                <!-- CUSTOMER -->
+                <div class="col-md-3">
+                    <div class="text-muted small">
+                        <?= __('customer_label') ?>
+                    </div>
 
-    <strong>
-        <?php if (!empty($project->customer_id) && !empty($project->customer_name)): ?>
-            <a href="<?= URLROOT ?>/customers/details/<?= (int)$project->customer_id ?>"
-               class="text-decoration-none">
-                <?= htmlspecialchars($project->customer_name) ?>
-            </a>
-        <?php else: ?>
-            N/A
-        <?php endif; ?>
-    </strong>
-</div>
+                    <strong>
+                        <?php if (!empty($project->customer_id) && !empty($project->customer_name)): ?>
+                            <a href="<?= URLROOT ?>/customers/details/<?= (int)$project->customer_id ?>"
+                                class="text-decoration-none">
+                                <?= htmlspecialchars($project->customer_name) ?>
+                            </a>
+                        <?php else: ?>
+                            N/A
+                        <?php endif; ?>
+                    </strong>
+                </div>
 
 
                 <!-- CONTRACT NUMBER -->
@@ -179,52 +179,52 @@
                     </strong>
                 </div>
 
-             <!-- PROJECT MANAGER -->
-<div class="col-md-3">
-    <div class="text-muted small">
-        <?= __('project_manager') ?>
-    </div>
+                <!-- PROJECT MANAGER -->
+                <div class="col-md-3">
+                    <div class="text-muted small">
+                        <?= __('project_manager') ?>
+                    </div>
 
-    <strong>
-        <?php if (!empty($project->project_manager_id) && !empty($project->project_manager_name)): ?>
-            <a href="<?= URLROOT ?>/users/details/<?= (int)$project->project_manager_id ?>"
-               class="text-decoration-none">
-                <?= htmlspecialchars($project->project_manager_name) ?>
-            </a>
-        <?php else: ?>
-            N/A
-        <?php endif; ?>
-    </strong>
-</div>
+                    <strong>
+                        <?php if (!empty($project->project_manager_id) && !empty($project->project_manager_name)): ?>
+                            <a href="<?= URLROOT ?>/users/details/<?= (int)$project->project_manager_id ?>"
+                                class="text-decoration-none">
+                                <?= htmlspecialchars($project->project_manager_name) ?>
+                            </a>
+                        <?php else: ?>
+                            N/A
+                        <?php endif; ?>
+                    </strong>
+                </div>
 
-             <!-- PRIORITY -->
-<div class="col-md-3">
-    <div class="text-muted small">
-        <?= __('priority') ?>
-    </div>
+                <!-- PRIORITY -->
+                <div class="col-md-3">
+                    <div class="text-muted small">
+                        <?= __('priority') ?>
+                    </div>
 
-    <?php
-    $priority = strtolower($project->priority ?? '');
+                    <?php
+                    $priority = strtolower($project->priority ?? '');
 
-    $priorityLabels = [
-        'low'      => __('low'),
-        'medium'   => __('medium'),
-        'high'     => __('high'),
-        'critical' => __('critical'),
-    ];
+                    $priorityLabels = [
+                        'low'      => __('low'),
+                        'medium'   => __('medium'),
+                        'high'     => __('high'),
+                        'critical' => __('critical'),
+                    ];
 
-    $priorityClasses = [
-        'low'      => 'bg-secondary',
-        'medium'   => 'bg-info',
-        'high'     => 'bg-warning text-dark',
-        'critical' => 'bg-danger',
-    ];
-    ?>
+                    $priorityClasses = [
+                        'low'      => 'bg-secondary',
+                        'medium'   => 'bg-info',
+                        'high'     => 'bg-warning text-dark',
+                        'critical' => 'bg-danger',
+                    ];
+                    ?>
 
-   <span class="badge fs-6 <?= $priorityClasses[$priority] ?? 'bg-secondary' ?>">
-    <?= htmlspecialchars($priorityLabels[$priority] ?? 'N/A') ?>
-</span>
-</div>
+                    <span class="badge fs-6 <?= $priorityClasses[$priority] ?? 'bg-secondary' ?>">
+                        <?= htmlspecialchars($priorityLabels[$priority] ?? 'N/A') ?>
+                    </span>
+                </div>
 
 
                 <!-- START DATE -->
@@ -453,34 +453,60 @@
                                 : 'N/A' ?>
                         </td>
 
-                        <td>
-                            <?= htmlspecialchars($cost->cost_type ?? 'N/A') ?>
-                        </td>
+                       <td>
+    <?php
+    $costTypeLabels = [
+        'MATERIALS'              => __('materials'),
+        'HUMAN_RESOURCES'        => __('human_resources'),
+        'TRANSPORT'              => __('transport'),
+        'EQUIPMENT'              => __('equipment'),
+        'SUBCONTRACT'            => __('subcontract'),
+        'SITE_EXPENSES'          => __('site_expenses'),
+        'PROFESSIONAL_SERVICES'  => __('professional_services'),
+        'PERMITS_FEES'           => __('permits_fees'),
+        'INSURANCE'              => __('insurance'),
+        'BANK_CHARGES'           => __('bank_charges'),
+        'TAXES'                  => __('taxes'),
+        'MISCELLANEOUS'          => __('miscellaneous'),
+    ];
 
-                        <!-- <td>
-                            <?//= htmlspecialchars($cost->description ?? '') ?>
-                        </td> -->
+    $costType = $cost->cost_type ?? '';
+    ?>
 
-<td>
-  <?php
-$description = $cost->description ?? '';
-
-if (
-    !empty($cost->req_number) &&
-    !empty($cost->fulfillment_no)
-) {
-    $description .=
-        ' — ' .
-        __('rr_fulfillment') .
-        ': ' .
-        $cost->req_number .
-        ' / ' .
-        $cost->fulfillment_no;
-}
-?>
-<?= htmlspecialchars($description) ?>
-  
+    <?= htmlspecialchars(
+        $costTypeLabels[$costType] ?? ($costType ?: 'N/A')
+    ) ?>
 </td>
+
+                        <td>
+                            <?php if (
+                                !empty($cost->req_number) &&
+                                !empty($cost->fulfillment_no)
+                            ): ?>
+
+                                <div>
+                                    <strong>
+                                        <?= htmlspecialchars($cost->description ?? '') ?>
+                                    </strong>
+                                </div>
+
+                                <div class="text-muted small mt-1">
+                                    <?= htmlspecialchars(__('rr_fulfillment')) ?>:
+                                    <?= htmlspecialchars($cost->req_number) ?>
+                                </div>
+
+                                <div class="text-muted small">
+                                    <?= htmlspecialchars($cost->fulfillment_no) ?>
+                                </div>
+
+                            <?php else: ?>
+
+                                <?= nl2br(
+                                    htmlspecialchars($cost->description ?? '')
+                                ) ?>
+
+                            <?php endif; ?>
+                        </td>
 
                         <td class="text-end">
                             <?= number_format((float)($cost->quantity ?? 0), 2) ?>
@@ -497,19 +523,29 @@ if (
                         </td>
 
                         <td>
-                            <a href="<?= URLROOT ?>/project-costs/edit/<?= $cost->id ?>/<?= $project_id ?>"
-                                class="btn btn-sm btn-warning">
-                                <i class="fas fa-edit"></i>
-                                <?= __('edit') ?>
-                            </a>
+    <div class="d-flex flex-nowrap gap-1">
 
-                            <a href="<?= URLROOT ?>/project-costs/delete/<?= $cost->id ?>"
-                                class="btn btn-sm btn-danger"
-                                onclick="return confirm('<?= __('delete_this_cost') ?>')">
-                                <i class="fas fa-trash"></i>
-                                <?= __('delete') ?>
-                            </a>
-                        </td>
+        <a
+            href="<?= URLROOT ?>/project-costs/edit/<?= $cost->id ?>/<?= $project_id ?>"
+            class="btn btn-sm btn-warning">
+
+            <i class="fas fa-edit"></i>
+            <?= __('edit') ?>
+
+        </a>
+
+        <a
+            href="<?= URLROOT ?>/project-costs/delete/<?= $cost->id ?>"
+            class="btn btn-sm btn-danger"
+            onclick="return confirm('<?= __('delete_this_cost') ?>')">
+
+            <i class="fas fa-trash"></i>
+            <?= __('delete') ?>
+
+        </a>
+
+    </div>
+</td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

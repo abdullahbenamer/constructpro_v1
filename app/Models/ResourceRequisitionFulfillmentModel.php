@@ -1140,10 +1140,11 @@ LEFT JOIN units iu
         quantity,
         unit_price
     )
-    VALUES
-    (
-        ?, ?, ?, ?, ?, 'materials', ?, ?, ?
-    )
+   VALUES
+(
+   /*Note: materials changed to MATERIALS*/
+    ?, ?, ?, ?, ?, 'MATERIALS', ?, ?, ?
+)
     ",
                             [
                                 $requisition->project_id,
@@ -1320,7 +1321,7 @@ LEFT JOIN units iu
                     |--------------------------------------------------------------------------
                     */
 
-                                   $cost_type = $reqItem->cost_type;
+                        $cost_type = $reqItem->cost_type;
                         /*
                     |--------------------------------------------------------------------------
                     | CREATE PROJECT COST
@@ -1834,43 +1835,20 @@ LEFT JOIN units iu
 
 
                 /*
-            |--------------------------------------------
-            | DETERMINE PROJECT COST TYPE
-            |--------------------------------------------
-            */
+|--------------------------------------------------------------------------
+| DETERMINE PROJECT COST TYPE
+|--------------------------------------------------------------------------
+|
+| Cost Type is explicitly defined on the
+| Resource Requisition Item.
+|
+| Do NOT derive it from resource_type.
+|
+*/
 
-                switch (strtoupper(
-                    $requisitionItem->resource_type ?? ''
-                )) {
+                $cost_type = $requisitionItem->cost_type;
 
-                    case 'HUMAN_RESOURCES':
-                        $cost_type = 'labor';
-                        break;
 
-                    case 'SERVICE':
-                        $cost_type = 'subcontract';
-                        break;
-
-                    case 'TRANSPORT':
-                        $cost_type = 'transport';
-                        break;
-
-                    case 'EQUIPMENT':
-                        $cost_type = 'misc';
-                        break;
-
-                    case 'PROFESSIONAL_SERVICES':
-                        $cost_type = 'subcontract';
-                        break;
-
-                    case 'MISCELLANEOUS':
-                        $cost_type = 'misc';
-                        break;
-
-                    default:
-                        $cost_type = 'misc';
-                        break;
-                }
 
                 /*
             |--------------------------------------------------------------------------
@@ -1878,8 +1856,8 @@ LEFT JOIN units iu
             |--------------------------------------------------------------------------
             */
 
-               $this->db->query(
-    "
+                $this->db->query(
+                    "
     INSERT INTO project_costs
     (
         project_id,
@@ -1897,19 +1875,19 @@ LEFT JOIN units iu
         ?, ?, ?, NULL, NULL, ?, ?, ?, ?
     )
     ",
-    [
-        $requisition->project_id,
-        $requisition->id,
-        $fulfillment_id,
-        $cost_type,
-        $requisitionItem->description,
-        $fulfill_quantity,
-        $unit_cost
-    ]
-);
+                    [
+                        $requisition->project_id,
+                        $requisition->id,
+                        $fulfillment_id,
+                        $cost_type,
+                        $requisitionItem->description,
+                        $fulfill_quantity,
+                        $unit_cost
+                    ]
+                );
 
-$project_cost_id =
-    (int) $this->db->lastInsertId();
+                $project_cost_id =
+                    (int) $this->db->lastInsertId();
 
 
                 /*
