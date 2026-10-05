@@ -1645,7 +1645,7 @@ return [
     'validation_max'        => 'يجب ألا تتجاوز القيمة :max.',
     'validation_minlength'  => 'يجب أن يحتوي النص على :minlength أحرف على الأقل.',
     'validation_maxlength'  => 'يجب ألا يتجاوز النص :maxlength حرفًا.',
-    'validation_step'       => 'يرجى إدخال قيمة صحيحة. مقدار الزيادة المسموح به هو :step.',
+    'validation_step'       => 'يرجى إدخال قيمة صحيحة',
     'validation_pattern'    => 'يرجى إدخال القيمة بالصيغة المطلوبة.',
 
     'supplier_not_found' => 'المورد غير موجود.',

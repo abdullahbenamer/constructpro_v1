@@ -8,7 +8,6 @@
 <h3><?= __('project_advance_payments') ?></h3>
 
 <br>
-
 <div class="text-muted">
 
     <?= __('customer') ?>
@@ -65,7 +64,10 @@
         <?= __('total_in') ?>:
     </strong>
 
-    <?= $balance->total_in ?? 0 ?>
+    <?= number_format(
+        (float)($balance->total_advances ?? 0),
+        2
+    ) ?>
 
     <br>
 
@@ -73,7 +75,10 @@
         <?= __('total_out') ?>:
     </strong>
 
-    <?= $balance->total_out ?? 0 ?>
+    <?= number_format(
+        (float)($balance->total_costs ?? 0),
+        2
+    ) ?>
 
     <br>
 
@@ -81,7 +86,10 @@
         <?= __('balance') ?>:
     </strong>
 
-    <?= $balance->balance ?? 0 ?>
+    <?= number_format(
+        (float)($balance->balance ?? 0),
+        2
+    ) ?>
 
 </div>
 

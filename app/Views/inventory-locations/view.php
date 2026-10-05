@@ -80,7 +80,7 @@
     <thead>
 
         <tr>
-
+ <th><?= __('id') ?></th>
             <th><?= __('item') ?></th>
 
             <th><?= __('sku') ?></th>
@@ -131,7 +131,9 @@
         >
 
             <!-- ITEM -->
-
+<td>
+                <?= htmlspecialchars($item->id) ?>
+            </td>
             <td>
                 <?= htmlspecialchars($item->name) ?>
             </td>

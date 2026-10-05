@@ -104,7 +104,8 @@
                                         value="<?= (int)$item->id ?>"
                                         data-source="INVENTORY"
                                         data-unit="<?= htmlspecialchars($item->unit_name) ?>"
-                                        data-description="<?= htmlspecialchars($item->name) ?>">
+                                        data-description="<?= htmlspecialchars($item->name) ?>"
+                                        data-allow-fraction="<?= (int)$item->allow_fraction ?>">
 
                                         <!-- <? //= htmlspecialchars($item->sku) 
                                                 ?> - -->
@@ -201,8 +202,9 @@
                             type="number"
                             class="form-control"
                             name="quantity"
-                            step="0.01"
-                            min="0.01"
+                            id="quantity"
+                            step="1"
+                            min="1"
                             value="1"
                             required>
 
@@ -226,90 +228,88 @@
                     </div>
 
 
-                                      <!-- COST TYPE -->
-                        <div class="col-md-4 mb-3">
+                    <!-- COST TYPE -->
+                    <div class="col-md-4 mb-3">
 
-                            <label class="form-label">
-                                <?= __('cost_type') ?>
-                            </label>
+                        <label class="form-label">
+                            <?= __('cost_type') ?>
+                        </label>
 
-                            <!-- MATERIAL COST TYPE -->
-                            <div id="materialCostType">
+                        <!-- MATERIAL COST TYPE -->
+                        <div id="materialCostType">
 
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    value="<?= __('materials') ?>"
-                                    readonly>
+                            <input
+                                type="text"
+                                class="form-control"
+                                value="<?= __('materials') ?>"
+                                readonly>
 
-                                <input
-                                    type="hidden"
-                                    name="cost_type"
-                                    id="materialCostTypeValue"
-                                    value="MATERIALS">
+                            <input
+                                type="hidden"
+                                name="cost_type"
+                                id="materialCostTypeValue"
+                                value="MATERIALS">
 
-                            </div>
+                        </div>
 
 
-                            <!-- NON-MATERIAL COST TYPE -->
-                            <div id="nonMaterialCostType">
+                        <!-- NON-MATERIAL COST TYPE -->
+                        <div id="nonMaterialCostType">
 
-                                <select
-                                    name="cost_type"
-                                    id="nonMaterialCostTypeSelect"
-                                    class="form-select">
+                            <select
+                                name="cost_type"
+                                id="nonMaterialCostTypeSelect"
+                                class="form-select">
 
-                                    <option value="">
-                                        <?= __('select_cost_type') ?>
-                                    </option>
+                                <option value="">
+                                    <?= __('select_cost_type') ?>
+                                </option>
 
-                                    <option value="HUMAN_RESOURCES">
-                                        <?= __('human_resources') ?>
-                                    </option>
+                                <option value="HUMAN_RESOURCES">
+                                    <?= __('human_resources') ?>
+                                </option>
 
-                                    <option value="TRANSPORT">
-                                        <?= __('transport') ?>
-                                    </option>
+                                <option value="TRANSPORT">
+                                    <?= __('transport') ?>
+                                </option>
 
-                                    <option value="EQUIPMENT">
-                                        <?= __('equipment') ?>
-                                    </option>
+                                <option value="EQUIPMENT">
+                                    <?= __('equipment') ?>
+                                </option>
 
-                                    <option value="SUBCONTRACT">
-                                        <?= __('subcontract') ?>
-                                    </option>
+                                <option value="SUBCONTRACT">
+                                    <?= __('subcontract') ?>
+                                </option>
 
-                                    <option value="SITE_EXPENSES">
-                                        <?= __('site_expenses') ?>
-                                    </option>
+                                <option value="SITE_EXPENSES">
+                                    <?= __('site_expenses') ?>
+                                </option>
 
-                                    <option value="PROFESSIONAL_SERVICES">
-                                        <?= __('professional_services') ?>
-                                    </option>
+                                <option value="PROFESSIONAL_SERVICES">
+                                    <?= __('professional_services') ?>
+                                </option>
 
-                                    <option value="PERMITS_FEES">
-                                        <?= __('permits_fees') ?>
-                                    </option>
+                                <option value="PERMITS_FEES">
+                                    <?= __('permits_fees') ?>
+                                </option>
 
-                                    <option value="INSURANCE">
-                                        <?= __('insurance') ?>
-                                    </option>
+                                <option value="INSURANCE">
+                                    <?= __('insurance') ?>
+                                </option>
 
-                                    <option value="BANK_CHARGES">
-                                        <?= __('bank_charges') ?>
-                                    </option>
+                                <option value="BANK_CHARGES">
+                                    <?= __('bank_charges') ?>
+                                </option>
 
-                                    <option value="TAXES">
-                                        <?= __('taxes') ?>
-                                    </option>
+                                <option value="TAXES">
+                                    <?= __('taxes') ?>
+                                </option>
 
-                                    <option value="MISCELLANEOUS">
-                                        <?= __('miscellaneous') ?>
-                                    </option>
+                                <option value="MISCELLANEOUS">
+                                    <?= __('miscellaneous') ?>
+                                </option>
 
-                                </select>
-
-                            </div>
+                            </select>
 
                         </div>
 
@@ -317,49 +317,51 @@
 
                 </div>
 
-
-                <!-- REMARKS -->
-                <div class="mb-3">
-
-                    <label class="form-label">
-                        <?= __('remarks') ?>
-                    </label>
-
-                    <textarea
-                        name="remarks"
-                        class="form-control"
-                        rows="4"></textarea>
-
-                </div>
+        </div>
 
 
-                <div class="text-end">
+        <!-- REMARKS -->
+        <div class="mb-3">
 
-                    <button
-                        type="submit"
-                        class="btn btn-primary">
+            <label class="form-label">
+                <?= __('remarks') ?>
+            </label>
 
-                        <i class="fas fa-save"></i>
-                        <?= __('save_item') ?>
-
-                    </button>
-
-
-                    <a
-                        href="<?= URLROOT ?>/ResourceRequisitions/details/<?= $data['requisition_id']; ?>"
-                        class="btn btn-secondary">
-
-                        <?= __('cancel') ?>
-
-                    </a>
-
-                </div>
-
-            </form>
+            <textarea
+                name="remarks"
+                class="form-control"
+                rows="4"></textarea>
 
         </div>
 
+
+        <div class="text-end">
+
+            <button
+                type="submit"
+                class="btn btn-primary">
+
+                <i class="fas fa-save"></i>
+                <?= __('save_item') ?>
+
+            </button>
+
+
+            <a
+                href="<?= URLROOT ?>/ResourceRequisitions/details/<?= $data['requisition_id']; ?>"
+                class="btn btn-secondary">
+
+                <?= __('cancel') ?>
+
+            </a>
+
+        </div>
+
+        </form>
+
     </div>
+
+</div>
 
 </div>
 
@@ -426,6 +428,9 @@
         const uom =
             document.getElementById('uom');
 
+        const quantity =
+            document.getElementById('quantity');
+
         const materialCostType =
             document.getElementById('materialCostType');
 
@@ -437,7 +442,6 @@
 
         const nonMaterialCostTypeSelect =
             document.getElementById('nonMaterialCostTypeSelect');
-
 
         /*
         |--------------------------------------------------------------------------
@@ -461,6 +465,79 @@
         }
 
 
+        /*
+            |--------------------------------------------------------------------------
+            | QUANTITY RULES
+            |--------------------------------------------------------------------------
+            */
+
+        function updateQuantityRules() {
+
+            /*
+            |----------------------------------------------------------------------
+            | NON-MATERIAL
+            |----------------------------------------------------------------------
+            | Non-material resources NEVER allow fractions.
+            */
+
+            if (type.value === 'RESOURCE') {
+
+                quantity.step = '1';
+                quantity.min = '1';
+
+                return;
+            }
+
+
+            /*
+            |----------------------------------------------------------------------
+            | MATERIAL
+            |----------------------------------------------------------------------
+            | Check inventory.allow_fraction.
+            */
+
+            const selectedId =
+                inventorySelect.value;
+
+            if (!selectedId) {
+
+                quantity.step = '1';
+                quantity.min = '1';
+
+                return;
+            }
+
+
+            const option =
+                inventorySelect.options[
+                    inventorySelect.selectedIndex
+                ];
+
+            if (!option) {
+
+                quantity.step = '1';
+                quantity.min = '1';
+
+                return;
+            }
+
+
+            const allowFraction =
+                option.getAttribute('data-allow-fraction') === '1';
+
+
+            if (allowFraction) {
+
+                quantity.step = '0.01';
+                quantity.min = '0.01';
+
+            } else {
+
+                quantity.step = '1';
+                quantity.min = '1';
+
+            }
+        }
         /*
         |--------------------------------------------------------------------------
         | INITIALIZE SELECT2 IF AVAILABLE
@@ -593,13 +670,15 @@
 
             nonInventoryResource.value = '';
 
-            if (!selectedId) {
+         if (!selectedId) {
 
-                description.value = '';
-                uom.value = '';
+    description.value = '';
+    uom.value = '';
 
-                return;
-            }
+    updateQuantityRules();
+
+    return;
+}
 
             const option =
                 inventorySelect.options[
@@ -615,10 +694,12 @@
 
             uom.value =
                 option.getAttribute('data-unit') || '';
-        }
+     
+        updateQuantityRules();
 
+            }
 
-        /*
+             /*
         |--------------------------------------------------------------------------
         | UPDATE NON-MATERIAL RESOURCE
         |--------------------------------------------------------------------------
@@ -636,14 +717,15 @@
 
             inventoryId.value = '';
 
-            if (!selectedId) {
+           if (!selectedId) {
 
-                description.value = '';
-                uom.value = '';
+    description.value = '';
+    uom.value = '';
 
-                return;
-            }
+    updateQuantityRules();
 
+    return;
+}
             const option =
                 resourceSelect.options[
                     resourceSelect.selectedIndex
@@ -658,6 +740,8 @@
 
             uom.value =
                 option.getAttribute('data-unit') || '';
+
+                updateQuantityRules();
         }
 
 
@@ -716,35 +800,35 @@
         // function Show / hide cost type based on resource type
         function updateCostType() {
 
-    if (type.value === 'INVENTORY') {
+            if (type.value === 'INVENTORY') {
 
-        // MATERIAL
-        materialCostType.hidden = false;
-        nonMaterialCostType.hidden = true;
+                // MATERIAL
+                materialCostType.hidden = false;
+                nonMaterialCostType.hidden = true;
 
-        // MATERIAL is always MATERIALS
-        materialCostTypeValue.disabled = false;
+                // MATERIAL is always MATERIALS
+                materialCostTypeValue.disabled = false;
 
-        // Disable non-material field so it is NOT submitted
-        nonMaterialCostTypeSelect.disabled = true;
+                // Disable non-material field so it is NOT submitted
+                nonMaterialCostTypeSelect.disabled = true;
 
-        // Make sure the material value is correct
-        materialCostTypeValue.value = 'MATERIALS';
+                // Make sure the material value is correct
+                materialCostTypeValue.value = 'MATERIALS';
 
-    } else {
+            } else {
 
-        // NON-MATERIAL
-        materialCostType.hidden = true;
-        nonMaterialCostType.hidden = false;
+                // NON-MATERIAL
+                materialCostType.hidden = true;
+                nonMaterialCostType.hidden = false;
 
-        // Disable material field so it is NOT submitted
-        materialCostTypeValue.disabled = true;
+                // Disable material field so it is NOT submitted
+                materialCostTypeValue.disabled = true;
 
-        // Enable non-material selection
-        nonMaterialCostTypeSelect.disabled = false;
+                // Enable non-material selection
+                nonMaterialCostTypeSelect.disabled = false;
 
-    }
-}
+            }
+        }
 
         /*
         |--------------------------------------------------------------------------
@@ -765,6 +849,8 @@
 
             updateResource();
 
+            updateQuantityRules();
+
         }
 
 
@@ -774,24 +860,24 @@
         |--------------------------------------------------------------------------
         */
 
-   type.addEventListener(
-    'change',
-    function() {
+        type.addEventListener(
+            'change',
+            function() {
 
-        if (type.value === 'INVENTORY') {
+                if (type.value === 'INVENTORY') {
 
-            showMaterial();
+                    showMaterial();
 
-        } else {
+                } else {
 
-            showResource();
+                    showResource();
 
-        }
+                }
 
-        updateCostType();
+                updateCostType();
 
-    }
-);
+            }
+        );
 
 
         /*
@@ -834,6 +920,38 @@
         |--------------------------------------------------------------------------
         */
 
+const quantityValue =
+    parseFloat(quantity.value);
+
+if (
+    !Number.isFinite(quantityValue) ||
+    quantityValue <= 0
+) {
+
+    event.preventDefault();
+
+    quantity.focus();
+
+    return;
+}
+
+
+if (
+    quantity.step === '1' &&
+    !Number.isInteger(quantityValue)
+) {
+
+    event.preventDefault();
+
+    alert(
+        'Quantity must be a whole number.'
+    );
+
+    quantity.focus();
+
+    return;
+}
+        
         const form =
             inventorySelect.closest('form');
 
@@ -969,22 +1087,19 @@
         |--------------------------------------------------------------------------
         */
 
-        
 
-     if (type.value === 'INVENTORY') {
 
-    showMaterial();
+        if (type.value === 'INVENTORY') {
 
-} else {
+            showMaterial();
 
-    showResource();
+        } else {
 
-}
+            showResource();
 
-updateCostType();
+        }
+
+        updateCostType();
 
     });
-
-
-
 </script>

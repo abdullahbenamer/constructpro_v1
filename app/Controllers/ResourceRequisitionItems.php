@@ -82,10 +82,10 @@ class ResourceRequisitionItems extends Controller
 
         $resourceSource = $_POST['resource_source'] ?? '';
 
-        /*
-    |--------------------------------------------------------------------------
+    /*
+    |-----------------------------------------------------------
     | DETERMINE RESOURCE ID
-    |--------------------------------------------------------------------------
+    |-----------------------------------------------------------
     */
 
         if ($resourceSource === 'INVENTORY') {
@@ -136,39 +136,139 @@ class ResourceRequisitionItems extends Controller
             exit;
         }
 
+
         /*
-    |--------------------------------------------------------------------------
-    | CREATE ITEM
-    |--------------------------------------------------------------------------
+|--------------------------------------------------------------------------
+| VALIDATE QUANTITY
+|--------------------------------------------------------------------------
+*/
+
+$quantity = (float)($_POST['quantity'] ?? 0);
+
+if ($quantity <= 0) {
+
+    $_SESSION['error'] =
+        'Quantity must be greater than zero.';
+
+    header(
+        'Location: ' .
+        URLROOT .
+        '/ResourceRequisitionItems/create/' .
+        $requisitionId
+    );
+
+    exit;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| FRACTION RULE
+|--------------------------------------------------------------------------
+*/
+
+if ($resourceSource === 'RESOURCE') {
+
+    /*
+    | Non-material resources NEVER allow fractions.
     */
 
-    $data = [
+    if (floor($quantity) != $quantity) {
+
+        $_SESSION['error'] =
+            'Quantity for non-material resources must be a whole number.';
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/ResourceRequisitionItems/create/' .
+            $requisitionId
+        );
+
+        exit;
+    }
+
+} elseif ($resourceSource === 'INVENTORY') {
+
+    /*
+    | Material:
+    | Check inventory.allow_fraction.
+    */
+
+    $inventoryModel =
+        $this->model('Inventory');
+
+    $inventory =
+        $inventoryModel->getById($resourceId);
+
+
+    if (!$inventory) {
+
+        $_SESSION['error'] =
+            'Selected material was not found.';
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/ResourceRequisitionItems/create/' .
+            $requisitionId
+        );
+
+        exit;
+    }
+
+
+    /*
+    | Material does NOT allow fractions.
+    */
+
+    if (
+        (int)$inventory->allow_fraction !== 1 &&
+        floor($quantity) != $quantity
+    ) {
+
+        $_SESSION['error'] =
+            'This material only allows whole-number quantities.';
+
+        header(
+            'Location: ' .
+            URLROOT .
+            '/ResourceRequisitionItems/create/' .
+            $requisitionId
+        );
+
+        exit;
+    }
+}
+        /*
+    |-----------------------------------------------------------
+    | CREATE ITEM
+    |-----------------------------------------------------------
+    */
+
+$data = [
 
     'requisition_id' =>
-    $requisitionId,
+        $requisitionId,
 
     'resource_source' =>
-    $resourceSource,
+        $resourceSource,
 
     'resource_id' =>
-    $resourceId,
+        $resourceId,
 
     'description' =>
-    trim($_POST['description'] ?? ''),
+        trim($_POST['description'] ?? ''),
 
     'quantity' =>
-    (float)($_POST['quantity'] ?? 0),
+        $quantity,
 
     'uom' =>
-    trim($_POST['uom'] ?? ''),
+        trim($_POST['uom'] ?? ''),
 
     'remarks' =>
-    trim($_POST['remarks'] ?? ''),
-
-    'cost_type' =>
-    $_POST['cost_type'] ?? null
+        trim($_POST['remarks'] ?? '')
 ];
-
 
         $itemModel =
             $this->model('ResourceRequisitionItem');

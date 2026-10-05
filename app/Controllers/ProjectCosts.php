@@ -399,6 +399,7 @@ class ProjectCosts extends Controller
         $this->view('project-costs/advance_list', $data);
     }
 
+
     public function ledgerReport($project_id)
     {
 
