@@ -1716,4 +1716,15 @@ return [
     'PERMITS_FEES' => 'مصاريف تصاريح',
 
     'select_cost_type' => '--- اختر نوع التكلفة  ---',
+
+    'quantity_must_be_whole_number' =>
+    'يجب أن تكون الكمية رقماً صحيحاً.',
+
+    'fractional_quantity_not_allowed' =>
+    'هذه المادة لا تسمح باستخدام كميات فيها كسور.',
+
+    'quantity_rule' => 'قاعدة الكمية',
+    'fractional_quantities_allowed' => 'يسمح بالكميات الكسرية',
+    'whole_quantities_only' => 'يسمح بالكميات الصحيحة فقط',
+
 ];

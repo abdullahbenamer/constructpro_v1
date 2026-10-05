@@ -192,6 +192,7 @@
                 <div class="row">
 
                     <!-- QUANTITY -->
+
                     <div class="col-md-3 mb-3">
 
                         <label class="form-label">
@@ -208,8 +209,35 @@
                             value="1"
                             required>
 
-                    </div>
+                        <!-- QUANTITY RULE -->
 
+                        <div
+                            id="quantityRule"
+                            class="mt-2">
+
+                            <small
+                                id="quantityRuleFraction"
+                                class="text-success d-none">
+
+                                <i class="bi bi-check-circle-fill me-1"></i>
+
+                                <?= __('fractional_quantities_allowed') ?>
+
+                            </small>
+
+                            <small
+                                id="quantityRuleWhole"
+                                class="text-muted">
+
+                                <i class="bi bi-info-circle-fill me-1"></i>
+
+                                <?= __('whole_quantities_only') ?>
+
+                            </small>
+
+                        </div>
+
+                    </div>
 
                     <!-- UOM -->
                     <div class="col-md-3 mb-3">
@@ -443,6 +471,11 @@
         const nonMaterialCostTypeSelect =
             document.getElementById('nonMaterialCostTypeSelect');
 
+        const quantityRuleFraction =
+            document.getElementById('quantityRuleFraction');
+
+        const quantityRuleWhole =
+            document.getElementById('quantityRuleWhole');
         /*
         |--------------------------------------------------------------------------
         | SAFETY CHECK
@@ -471,73 +504,126 @@
             |--------------------------------------------------------------------------
             */
 
-        function updateQuantityRules() {
+/*
+|--------------------------------------------------------------------------
+| QUANTITY RULES
+|--------------------------------------------------------------------------
+*/
 
-            /*
-            |----------------------------------------------------------------------
-            | NON-MATERIAL
-            |----------------------------------------------------------------------
-            | Non-material resources NEVER allow fractions.
-            */
+function updateQuantityRules() {
 
-            if (type.value === 'RESOURCE') {
+    /*
+    |--------------------------------------------------------------------------
+    | NON-MATERIAL
+    |--------------------------------------------------------------------------
+    |
+    | Non-material resources NEVER allow fractions.
+    |
+    */
 
-                quantity.step = '1';
-                quantity.min = '1';
+    if (type.value === 'RESOURCE') {
 
-                return;
-            }
+        quantity.step = '1';
+        quantity.min = '1';
 
+        quantityRuleFraction.classList.add('d-none');
+        quantityRuleWhole.classList.remove('d-none');
 
-            /*
-            |----------------------------------------------------------------------
-            | MATERIAL
-            |----------------------------------------------------------------------
-            | Check inventory.allow_fraction.
-            */
-
-            const selectedId =
-                inventorySelect.value;
-
-            if (!selectedId) {
-
-                quantity.step = '1';
-                quantity.min = '1';
-
-                return;
-            }
+        return;
+    }
 
 
-            const option =
-                inventorySelect.options[
-                    inventorySelect.selectedIndex
-                ];
+    /*
+    |--------------------------------------------------------------------------
+    | MATERIAL
+    |--------------------------------------------------------------------------
+    |
+    | Check inventory.allow_fraction.
+    |
+    */
 
-            if (!option) {
-
-                quantity.step = '1';
-                quantity.min = '1';
-
-                return;
-            }
-
-
-            const allowFraction =
-                option.getAttribute('data-allow-fraction') === '1';
+    const selectedId =
+        inventorySelect.value;
 
 
-            if (allowFraction) {
+    /*
+    |--------------------------------------------------------------------------
+    | NO MATERIAL SELECTED
+    |--------------------------------------------------------------------------
+    */
 
-                quantity.step = '0.01';
-                quantity.min = '0.01';
+    if (!selectedId) {
 
-            } else {
+        quantity.step = '1';
+        quantity.min = '1';
 
-                quantity.step = '1';
-                quantity.min = '1';
+        quantityRuleFraction.classList.add('d-none');
+        quantityRuleWhole.classList.remove('d-none');
 
-            }
-        }
+        return;
+    }
+
+
+    const option =
+        inventorySelect.options[
+            inventorySelect.selectedIndex
+        ];
+
+
+    if (!option) {
+
+        quantity.step = '1';
+        quantity.min = '1';
+
+        quantityRuleFraction.classList.add('d-none');
+        quantityRuleWhole.classList.remove('d-none');
+
+        return;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | CHECK ALLOW FRACTION
+    |--------------------------------------------------------------------------
+    */
+
+    const allowFraction =
+        option.getAttribute('data-allow-fraction') === '1';
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | FRACTIONS ALLOWED
+    |--------------------------------------------------------------------------
+    */
+
+    if (allowFraction) {
+
+        quantity.step = '0.01';
+        quantity.min = '0.01';
+
+        quantityRuleFraction.classList.remove('d-none');
+        quantityRuleWhole.classList.add('d-none');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | WHOLE NUMBERS ONLY
+    |--------------------------------------------------------------------------
+    */
+
+    } else {
+
+        quantity.step = '1';
+        quantity.min = '1';
+
+        quantityRuleFraction.classList.add('d-none');
+        quantityRuleWhole.classList.remove('d-none');
+
+    }
+}
+
         /*
         |--------------------------------------------------------------------------
         | INITIALIZE SELECT2 IF AVAILABLE
@@ -670,15 +756,15 @@
 
             nonInventoryResource.value = '';
 
-         if (!selectedId) {
+            if (!selectedId) {
 
-    description.value = '';
-    uom.value = '';
+                description.value = '';
+                uom.value = '';
 
-    updateQuantityRules();
+                updateQuantityRules();
 
-    return;
-}
+                return;
+            }
 
             const option =
                 inventorySelect.options[
@@ -694,12 +780,12 @@
 
             uom.value =
                 option.getAttribute('data-unit') || '';
-     
-        updateQuantityRules();
 
-            }
+            updateQuantityRules();
 
-             /*
+        }
+
+        /*
         |--------------------------------------------------------------------------
         | UPDATE NON-MATERIAL RESOURCE
         |--------------------------------------------------------------------------
@@ -717,15 +803,15 @@
 
             inventoryId.value = '';
 
-           if (!selectedId) {
+            if (!selectedId) {
 
-    description.value = '';
-    uom.value = '';
+                description.value = '';
+                uom.value = '';
 
-    updateQuantityRules();
+                updateQuantityRules();
 
-    return;
-}
+                return;
+            }
             const option =
                 resourceSelect.options[
                     resourceSelect.selectedIndex
@@ -741,7 +827,7 @@
             uom.value =
                 option.getAttribute('data-unit') || '';
 
-                updateQuantityRules();
+            updateQuantityRules();
         }
 
 
@@ -920,38 +1006,38 @@
         |--------------------------------------------------------------------------
         */
 
-const quantityValue =
-    parseFloat(quantity.value);
+        const quantityValue =
+            parseFloat(quantity.value);
 
-if (
-    !Number.isFinite(quantityValue) ||
-    quantityValue <= 0
-) {
+        if (
+            !Number.isFinite(quantityValue) ||
+            quantityValue <= 0
+        ) {
 
-    event.preventDefault();
+            event.preventDefault();
 
-    quantity.focus();
+            quantity.focus();
 
-    return;
-}
+            return;
+        }
 
 
-if (
-    quantity.step === '1' &&
-    !Number.isInteger(quantityValue)
-) {
+        if (
+            quantity.step === '1' &&
+            !Number.isInteger(quantityValue)
+        ) {
 
-    event.preventDefault();
+            event.preventDefault();
 
-    alert(
-        'Quantity must be a whole number.'
-    );
+            alert(
+                'Quantity must be a whole number.'
+            );
 
-    quantity.focus();
+            quantity.focus();
 
-    return;
-}
-        
+            return;
+        }
+
         const form =
             inventorySelect.closest('form');
 

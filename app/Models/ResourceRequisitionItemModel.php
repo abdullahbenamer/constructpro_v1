@@ -11,9 +11,9 @@ class ResourceRequisitionItemModel
     }
 
     public function getByRequisition($requisition_id)
-{
-    return $this->db->query(
-        "
+    {
+        return $this->db->query(
+            "
         SELECT
 
             ri.*,
@@ -67,11 +67,11 @@ class ResourceRequisitionItemModel
 
         ORDER BY ri.id ASC
         ",
-        [
-            $requisition_id
-        ]
-    )->fetchAll();
-}
+            [
+                $requisition_id
+            ]
+        )->fetchAll();
+    }
 
     /**
      * Add requisition item
@@ -99,7 +99,7 @@ class ResourceRequisitionItemModel
                 $data['requisition_id'],
 
                 $data['resource_source'],
-$data['cost_type'],
+                $data['cost_type'],
                 $data['inventory_id'] ?? null,
 
                 $data['resource_id'] ?? null,
@@ -126,10 +126,30 @@ $data['cost_type'],
 
             ri.*,
 
+    /*
+    |--------------------------------------------------------------------------
+    | MATERIAL FRACTION RULE
+    |--------------------------------------------------------------------------
+    */
+
+    i.allow_fraction AS allow_fraction,
+
+    /*
+    |--------------------------------------------------
+    | RESOURCE / INVENTORY CODE
+    |--------------------------------------------------
+    */
+
+    CASE
+        WHEN ri.resource_source = 'INVENTORY'
+        THEN i.sku
+        ELSE r.resource_code
+    END AS resource_code,
+
             /*
-            |--------------------------------------------------------------------------
+            |----------------------------------------------
             | RESOURCE / INVENTORY CODE
-            |--------------------------------------------------------------------------
+            |---------------------------------------------------
             */
 
             CASE
@@ -247,13 +267,13 @@ $data['cost_type'],
         )->fetch();
     }
 
-/**
- * UPDATE ITEM
- */
-public function update($id, $data)
-{
-    return $this->db->query(
-        "
+    /**
+     * UPDATE ITEM
+     */
+    public function update($id, $data)
+    {
+        return $this->db->query(
+            "
         UPDATE resource_requisition_items
 
         SET
@@ -264,15 +284,15 @@ public function update($id, $data)
 
         WHERE id = ?
         ",
-        [
-            $data['description'],
-            $data['quantity'],
-            $data['remarks'],
-            $data['cost_type'],
-            $id
-        ]
-    );
-}
+            [
+                $data['description'],
+                $data['quantity'],
+                $data['remarks'],
+                $data['cost_type'],
+                $id
+            ]
+        );
+    }
 
     /**
      * DELETE ITEM

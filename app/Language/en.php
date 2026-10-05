@@ -1647,7 +1647,7 @@ return [
     'validation_max'        => 'Value must be less than or equal to :max.',
     'validation_minlength'  => 'Please enter at least :minlength characters.',
     'validation_maxlength'  => 'Please enter no more than :maxlength characters.',
-    'validation_step'       => 'Please enter a valid value. The allowed increment is :step.',
+    'validation_step'       => 'Please enter a valid value',
     'validation_pattern'    => 'Please enter a value in the required format.',
 
     'supplier_not_found' => 'Supplier not found.',
@@ -1716,5 +1716,17 @@ return [
     'PERMITS_FEES' => 'Fees of Permit',
 
     'select_cost_type' => '--- Select Cost Type ---',
+
+    'quantity_must_be_whole_number' =>
+    'Quantity must be a whole number.',
+
+    'fractional_quantity_not_allowed' =>
+    'This material does not allow fractional quantities.',
+
+    'quantity_rule' => 'Quantity Rule',
+    'fractional_quantities_allowed' => 'Fractional quantities allowed',
+    'whole_quantities_only' => 'Whole quantities only',
+
+  
 
 ];

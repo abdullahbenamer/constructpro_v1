@@ -147,8 +147,8 @@ $quantity = (float)($_POST['quantity'] ?? 0);
 
 if ($quantity <= 0) {
 
-    $_SESSION['error'] =
-        'Quantity must be greater than zero.';
+   $_SESSION['error'] =
+    __('quantity_must_be_greater_than_zero');
 
     header(
         'Location: ' .
@@ -404,19 +404,92 @@ $data = [
         );
 
 
+        /*
+|--------------------------------------------------------------------------
+| QUANTITY
+|--------------------------------------------------------------------------
+*/
+
+$quantity = (float)($_POST['quantity'] ?? 0);
+
+if ($quantity <= 0) {
+
+    $_SESSION['error'] =
+        'Quantity must be greater than zero.';
+
+    header(
+        'Location: ' .
+            URLROOT .
+            '/ResourceRequisitionItems/edit/' .
+            $id
+    );
+
+    exit;
+}
+
+/*
+|--------------------------------------------------------------------------
+| RESOURCE / NON-MATERIAL
+| Fractions are never allowed
+|--------------------------------------------------------------------------
+*/
+
+if (
+    $item->resource_source === 'RESOURCE' &&
+    floor($quantity) != $quantity
+) {
+
+   $_SESSION['error'] =
+    __('quantity_must_be_whole_number');
+
+    header(
+        'Location: ' .
+            URLROOT .
+            '/ResourceRequisitionItems/edit/' .
+            $id
+    );
+
+    exit;
+}
+
+/*
+|--------------------------------------------------------------------------
+| INVENTORY / MATERIAL
+| Fractions allowed only when allow_fraction = 1
+|--------------------------------------------------------------------------
+*/
+
+if (
+    $item->resource_source === 'INVENTORY' &&
+    (int)($item->allow_fraction ?? 0) !== 1 &&
+    floor($quantity) != $quantity
+) {
+
+   $_SESSION['error'] =
+    __('fractional_quantity_not_allowed');
+
+    header(
+        'Location: ' .
+            URLROOT .
+            '/ResourceRequisitionItems/edit/' .
+            $id
+    );
+
+    exit;
+}
 
        /*
-|--------------------------------------------------------------------------
+|-----------------------------------------------
 | COST TYPE
-|--------------------------------------------------------------------------
+|-----------------------------------------------
 */
 
 $costType = $_POST['cost_type'] ?? null;
 
 /*
-|--------------------------------------------------------------------------
+|-----------------------------------------------
 | MATERIAL ITEMS ARE ALWAYS MATERIALS
-|--------------------------------------------------------------------------
+|-----------------------------------------------
 */
 if ($item->resource_source === 'INVENTORY') {
 
@@ -426,15 +499,13 @@ if ($item->resource_source === 'INVENTORY') {
 $data = [
     'description' => $_POST['description'],
 
-    'quantity' => $_POST['quantity'],
+   'quantity' => $quantity,
 
     'remarks' => $_POST['remarks'],
 
     'cost_type' => $costType
 
 ];
-
-
 
         $this->itemModel->update(
             $id,
@@ -498,3 +569,104 @@ $data = [
         exit;
     }
 }
+?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const quantity = document.getElementById('quantity');
+
+    if (!quantity) {
+        return;
+    }
+
+    const resourceSource =
+        <?= json_encode($data['item']->resource_source) ?>;
+
+    const allowFraction =
+        <?= $data['item']->resource_source === 'INVENTORY'
+            ? (int)($data['item']->allow_fraction ?? 0)
+            : 0 ?>;
+
+    /*
+    |--------------------------------------------------------------------------
+    | QUANTITY RULE
+    |--------------------------------------------------------------------------
+    */
+
+    if (
+        resourceSource === 'INVENTORY' &&
+        allowFraction === 1
+    ) {
+
+        quantity.step = '0.01';
+        quantity.min = '0.01';
+
+    } else {
+
+        quantity.step = '1';
+        quantity.min = '1';
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | CLIENT-SIDE VALIDATION
+    |--------------------------------------------------------------------------
+    */
+
+    const form = quantity.closest('form');
+
+    if (!form) {
+        return;
+    }
+
+    form.addEventListener('submit', function (event) {
+
+        const value = parseFloat(quantity.value);
+
+        /*
+        | Quantity must be greater than zero
+        */
+
+        if (
+            !Number.isFinite(value) ||
+            value <= 0
+        ) {
+
+            event.preventDefault();
+
+            alert(
+                <?= json_encode(__('quantity_must_be_greater_than_zero')) ?>
+            );
+
+            quantity.focus();
+
+            return;
+        }
+
+
+        /*
+        | Whole number required
+        */
+
+        if (
+            quantity.step === '1' &&
+            !Number.isInteger(value)
+        ) {
+
+            event.preventDefault();
+
+            alert(
+                <?= json_encode(__('quantity_must_be_whole_number')) ?>
+            );
+
+            quantity.focus();
+
+            return;
+        }
+
+    });
+
+});
+</script>
