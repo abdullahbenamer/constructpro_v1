@@ -7,13 +7,15 @@ class InventoryService extends BaseService
     private InventoryMovementModel $movementModel;
     private InventoryTransferModel $transferModel;
     private InventoryReservationModel $reservationModel;
+    private InventoryModel $inventoryModel;
 
     public function __construct(
         Database $db,
         InventoryLocationStockModel $stockModel,
         InventoryMovementModel $movementModel,
         InventoryTransferModel $transferModel,
-        InventoryReservationModel $reservationModel
+        InventoryReservationModel $reservationModel,
+        InventoryModel $inventoryModel
     ) {
         parent::__construct($db);
 
@@ -21,6 +23,7 @@ class InventoryService extends BaseService
         $this->movementModel = $movementModel;
         $this->transferModel = $transferModel;
         $this->reservationModel = $reservationModel;
+           $this->inventoryModel = $inventoryModel;
     }
 
     /**
@@ -203,6 +206,35 @@ class InventoryService extends BaseService
             if ($data['from_location_id'] == $data['to_location_id']) {
                 throw new Exception(__('source_destination_warehouses_same'));
             }
+
+            /*
+|--------------------------------------------------------------------------
+| 1a. Validate Fractional Quantity
+|--------------------------------------------------------------------------
+*/
+
+$inventory =
+    $this->inventoryModel->getById(
+        $data['inventory_id']
+    );
+
+if (!$inventory) {
+    throw new Exception(
+        __('inventory_not_found')
+    );
+}
+
+$allowFraction =
+    (int)$inventory->allow_fraction === 1;
+
+if (
+    !$allowFraction &&
+    floor($data['quantity']) != $data['quantity']
+) {
+    throw new Exception(
+        __('quantity_must_be_whole_number')
+    );
+}
 
             /*
 |--------------------------------------------------------------------------

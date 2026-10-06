@@ -89,15 +89,16 @@ class ServiceContainer
             ]
         ],
 
-        'Inventory' => [
-            'class' => InventoryService::class,
-            'dependencies' => [
-                InventoryLocationStockModel::class,
-                InventoryMovementModel::class,
-                InventoryTransferModel::class,
-                InventoryReservationModel::class
-            ]
-        ],
+       'Inventory' => [
+    'class' => InventoryService::class,
+    'dependencies' => [
+        InventoryLocationStockModel::class,
+        InventoryMovementModel::class,
+        InventoryTransferModel::class,
+        InventoryReservationModel::class,
+        InventoryModel::class
+    ]
+],
 
         'GoodsReturn' => [
             'class' => GoodsReturnService::class,
