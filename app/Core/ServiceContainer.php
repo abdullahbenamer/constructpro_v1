@@ -1,25 +1,19 @@
 <?php
-
 require_once '../app/Core/Database.php';
-
 class ServiceContainer
 {
-
     /**
      * Shared Database connection
      */
     private Database $db;
-
     /**
      * Service instances (Singleton per request)
      */
     private array $instances = [];
-
     /**
      * Service definitions
      */
     private array $definitions = [
-
         'PurchaseOrder' => [
             'class' => PurchaseOrderService::class,
             'dependencies' => [
@@ -100,7 +94,8 @@ class ServiceContainer
             'dependencies' => [
                 InventoryLocationStockModel::class,
                 InventoryMovementModel::class,
-                InventoryTransferModel::class
+                InventoryTransferModel::class,
+                InventoryReservationModel::class
             ]
         ],
 

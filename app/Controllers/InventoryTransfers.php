@@ -4,16 +4,16 @@ class InventoryTransfers extends Controller
 {
     private $inventoryModel;
 
-     public function __construct()
-{
-    parent::__construct();
+    public function __construct()
+    {
+        parent::__construct();
 
-    $this->inventoryModel = new InventoryModel();
-}
+        $this->inventoryModel = new InventoryModel();
+    }
 
     public function index()
     {
-            AuthHelper::can('stock_transfers.view');
+        AuthHelper::can('stock_transfers.view');
 
         $transferModel = $this->model('InventoryTransfer');
 
@@ -28,46 +28,28 @@ class InventoryTransfers extends Controller
 
     public function create()
     {
-
-      AuthHelper::can('stock_transfers.create');
-
+        AuthHelper::can('stock_transfers.create');
         $inventoryModel = $this->model('Inventory');
         $locationModel  = $this->model('InventoryLocation');
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
             $inventory_id = (int)$_POST['inventory_id'];
-
             $from_location_id = (int)$_POST['from_location_id'];
-
             $to_location_id = (int)$_POST['to_location_id'];
-
             $quantity = (float)$_POST['quantity'];
-
             $reference = trim($_POST['reference'] ?? '');
-
             $notes = trim($_POST['notes'] ?? '');
-
-          $service = $this->service('Inventory');
+            $service = $this->service('Inventory');
 
             try {
-
                 $service->transfer([
-
                     'inventory_id'      => $inventory_id,
-
                     'from_location_id'  => $from_location_id,
-
                     'to_location_id'    => $to_location_id,
-
                     'quantity'          => $quantity,
-
                     'reference'         => $reference,
-
                     'notes'             => $notes,
-
                     'created_by'        => $_SESSION['user_id']
-
                 ]);
 
                 FlashHelper::success(
@@ -86,15 +68,11 @@ class InventoryTransfers extends Controller
                 exit;
             }
         }
-
         // GET request
-
         $data['inventory'] =
             $inventoryModel->getAll();
-
         $data['locations'] =
             $locationModel->getAll();
-
         $this->view(
             'inventory-transfers/create',
             $data
@@ -103,33 +81,69 @@ class InventoryTransfers extends Controller
 
     public function getLocationStock()
     {
-
-    AuthHelper::can('stock_transfers.create');
+        AuthHelper::can('stock_transfers.create');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             exit;
         }
 
-        $inventory_id = $_POST['inventory_id'] ?? 0;
-        $location_id  = $_POST['location_id'] ?? 0;
+        header('Content-Type: application/json');
 
-        $stockModel = $this->model('InventoryLocationStock');
+        $inventory_id =
+            (int)($_POST['inventory_id'] ?? 0);
 
-        $stock = $stockModel->getStock(
-            $inventory_id,
-            $location_id
-        );
+        $location_id =
+            (int)($_POST['location_id'] ?? 0);
 
-        $qty = $stock->quantity ?? 0;
+        $stockModel =
+            $this->model('InventoryLocationStock');
+
+        $stock =
+            $stockModel->getStock(
+                $inventory_id,
+                $location_id
+            );
+
+        // PHYSICAL STOCK
+
+        $physicalQty =
+            (float)($stock->quantity ?? 0);
+
+        // ACTIVE RESERVED QUANTITY
+
+        $reservationModel =
+            $this->model('InventoryReservation');
+
+        $reservedQty =
+            $reservationModel->getReservedQuantity(
+                $inventory_id,
+                $location_id
+            );
+
+        // AVAILABLE FOR TRANSFER
+
+        $availableQty =
+            $physicalQty - $reservedQty;
 
         echo json_encode([
-            'quantity' => $qty
+
+            'physical_qty' =>
+            $physicalQty,
+
+            'reserved_qty' =>
+            $reservedQty,
+
+            'available_qty' =>
+            max(0, $availableQty)
+
         ]);
+
+        exit;
     }
 
     public function getBySku()
     {
-         AuthHelper::can('stock_transfers.create');
+        AuthHelper::can('stock_transfers.create');
 
         header('Content-Type: application/json');
 
@@ -179,11 +193,11 @@ class InventoryTransfers extends Controller
     public function reverse($id)
     {
 
-     AuthHelper::can('stock_transfers.reverse');
-     
+        AuthHelper::can('stock_transfers.reverse');
+
         try {
 
-          $service = $this->service('InventoryTransfer');
+            $service = $this->service('InventoryTransfer');
 
             $result =
                 $service->reverse((int)$id);

@@ -20,11 +20,6 @@ if ($quantity <= 0) {
         __('reservation_quantity_must_be_greater_than_zero')
     );
 }
-
-
-    
-
-
     /*
     |--------------------------------------------------------------------------
     | GET PHYSICAL STOCK
@@ -41,8 +36,6 @@ if ($quantity <= 0) {
 
     $physicalQty =
         (float)($stock->quantity ?? 0);
-
-
     /*
     |--------------------------------------------------------------------------
     | GET ALREADY RESERVED QUANTITY
@@ -55,7 +48,6 @@ if ($quantity <= 0) {
             $location_id
         );
 
-
     /*
     |--------------------------------------------------------------------------
     | CALCULATE AVAILABLE QUANTITY
@@ -64,7 +56,6 @@ if ($quantity <= 0) {
 
     $availableQty =
         $physicalQty - $reservedQty;
-
 
     /*
     |--------------------------------------------------------------------------

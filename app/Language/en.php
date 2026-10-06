@@ -1365,6 +1365,7 @@ return [
     //INVENTORY RESERVATION MODEL messages
     'reservation_quantity_must_be_greater_than_zero' => 'Reservation quantity must be greater than zero.',
     'insufficient_available_stock' => 'Insufficient available stock. Available to reserve: %s',
+    'insufficient_available_transfer_stock' => 'Insufficient available stock. Available to Transfer: %s',
 
     //INVENTORY RESERVATIONS CONTROLLER messages
     'please_select_inventory_item' => 'Please select an inventory item.',
@@ -1726,6 +1727,8 @@ return [
     'quantity_rule' => 'Quantity Rule',
     'fractional_quantities_allowed' => 'Fractional quantities allowed',
     'whole_quantities_only' => 'Whole quantities only',
+
+    'available_for_transfer' => 'Available for Transfer',
 
   
 

@@ -6,18 +6,21 @@ class InventoryService extends BaseService
     private InventoryLocationStockModel $stockModel;
     private InventoryMovementModel $movementModel;
     private InventoryTransferModel $transferModel;
+    private InventoryReservationModel $reservationModel;
 
     public function __construct(
-    Database $db,
-    InventoryLocationStockModel $stockModel,
-    InventoryMovementModel $movementModel,
-    InventoryTransferModel $transferModel
-) {
-    parent::__construct($db);
+        Database $db,
+        InventoryLocationStockModel $stockModel,
+        InventoryMovementModel $movementModel,
+        InventoryTransferModel $transferModel,
+        InventoryReservationModel $reservationModel
+    ) {
+        parent::__construct($db);
 
         $this->stockModel = $stockModel;
         $this->movementModel = $movementModel;
         $this->transferModel = $transferModel;
+        $this->reservationModel = $reservationModel;
     }
 
     /**
@@ -199,6 +202,40 @@ class InventoryService extends BaseService
 
             if ($data['from_location_id'] == $data['to_location_id']) {
                 throw new Exception(__('source_destination_warehouses_same'));
+            }
+
+            /*
+|--------------------------------------------------------------------------
+| 1b. Check Available Stock
+|--------------------------------------------------------------------------
+*/
+
+            $stock =
+                $this->stockModel->getStock(
+                    $data['inventory_id'],
+                    $data['from_location_id']
+                );
+
+            $physicalQty =
+                (float)($stock->quantity ?? 0);
+
+            $reservedQty =
+                $this->reservationModel->getReservedQuantity(
+                    $data['inventory_id'],
+                    $data['from_location_id']
+                );
+
+            $availableQty =
+                max(0, $physicalQty - $reservedQty);
+
+            if ($data['quantity'] > $availableQty) {
+
+                throw new Exception(
+                    sprintf(
+                        __('insufficient_available_transfer_stock'),
+                        number_format($availableQty, 2)
+                    )
+                );
             }
 
             /*

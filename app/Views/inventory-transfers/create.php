@@ -104,17 +104,30 @@
                 id="stockInfo">
 
                 <div>
-                    <strong><?= __('physical_stock') ?>:</strong>
-                    <span id="physicalQty">0.00</span>
+                    <strong>
+                        <?= __('physical_stock') ?>:
+                    </strong>
+
+                    <span id="physicalQty">
+                        0.00
+                    </span>
                 </div>
 
                 <div>
-                    <strong><?= __('reserved_stock') ?>:</strong>
-                    <span id="reservedQty">0.00</span>
+                    <strong>
+                        <?= __('reserved_stock') ?>:
+                    </strong>
+
+                    <span id="reservedQty">
+                        0.00
+                    </span>
                 </div>
 
                 <div>
-                    <strong><?= __('available_for_transfer') ?>:</strong>
+                    <strong>
+                        <?= __('available_for_transfer') ?>:
+                    </strong>
+
                     <span
                         id="availableQty"
                         class="fw-bold">
@@ -259,15 +272,6 @@
         const stockInfo =
             document.getElementById('stockInfo');
 
-        const availableQty =
-            document.getElementById('availableQty');
-
-        const physicalQty =
-            document.getElementById('physicalQty');
-
-        const reservedQty =
-            document.getElementById('reservedQty');
-
         const quantity =
             document.getElementById('quantity');
 
@@ -277,7 +281,14 @@
         const quantityRuleWhole =
             document.getElementById('quantityRuleWhole');
 
+        const physicalQty =
+            document.getElementById('physicalQty');
 
+        const reservedQty =
+            document.getElementById('reservedQty');
+
+        const availableQty =
+            document.getElementById('availableQty');
 
         /*
         |--------------------------------------------------------------------------
@@ -359,30 +370,41 @@
         // -----------------------------
         // STOCK BY LOCATION
         // -----------------------------
+function loadStock() {
 
-        function loadStock() {
+    const inventory_id =
+        inventorySelect.value;
 
-            const inventory_id =
-                inventorySelect.value;
+    const location_id =
+        fromLocation.value;
 
-            const location_id =
-                fromLocation.value;
 
-            if (!inventory_id || !location_id) {
 
-                stockInfo.classList.add('d-none');
-                
-                physicalQty.textContent =
-                    '0.00';
+console.log(
+    'TRANSFER STOCK CHECK:',
+    'inventory_id =',
+    inventory_id,
+    'location_id =',
+    location_id
+);
 
-                reservedQty.textContent =
-                    '0.00';
 
-                availableQty.textContent =
-                    '0.00';
 
-                return;
-            }
+    if (!inventory_id || !location_id) {
+
+        stockInfo.classList.add('d-none');
+
+        physicalQty.textContent =
+            '0.00';
+
+        reservedQty.textContent =
+            '0.00';
+
+        availableQty.textContent =
+            '0.00';
+
+        return;
+    }
 
             fetch(
                     '<?= URLROOT ?>/inventorytransfers/getLocationStock', {
@@ -396,8 +418,16 @@
                             inventory_id +
                             '&location_id=' +
                             location_id
-                    }
+                    
+                    
+                    
+                    
+                        }
+
+                    
                 )
+
+            
 
                 .then(res => res.json())
 

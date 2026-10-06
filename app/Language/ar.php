@@ -24,7 +24,7 @@ return [
     'inventory_list'         => 'قائمة المخزون',
     'locations_warehouse'    => 'المواقع (المستودعات)',
     'material_reservations'  => 'حجوزات المواد',
-    'stock_transfers'        => 'تحويلات المخزون',
+    'stock_transfers'        => 'تحويلات (نقل) المخزون',
     'stock_movements_report' => 'حركات المخزون (تقرير)',
 
     // Inventory Categories
@@ -1364,6 +1364,7 @@ return [
     //INVENTORY RESERVATION MODEL messages
     'reservation_quantity_must_be_greater_than_zero' => 'يجب أن تكون كمية الحجز أكبر من صفر.',
     'insufficient_available_stock' => 'الكمية المتاحة غير كافية للحجز. الكمية المتاحة للحجز: %s',
+    'insufficient_available_transfer_stock' => 'الكمية المتاحة غير كافية. الكمية المتاحة للنقل: %s',
 
 
     //INVENTORY RESERVATIONS CONTROLLER messages
@@ -1726,5 +1727,7 @@ return [
     'quantity_rule' => 'قاعدة الكمية',
     'fractional_quantities_allowed' => 'يسمح بالكميات الكسرية',
     'whole_quantities_only' => 'يسمح بالكميات الصحيحة فقط',
+
+'available_for_transfer' => 'متاح للنقل',
 
 ];
