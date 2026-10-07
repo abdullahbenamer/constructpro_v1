@@ -23,43 +23,98 @@ class ResourceRequisitions extends Controller
     | Create
     |-----------------------------------------
     */
+    // public function create()
+    // {
+    //     AuthHelper::can('resource_requisitions.create');
+
+    //     $model = $this->model('ResourceRequisition');
+    //     $projectModel = $this->model('Project');
+    //     $locationModel = $this->model('InventoryLocation');
+
+    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    //         $id = $model->create([
+
+    //             'req_number'     => $model->nextNumber(),
+    //             'project_id'     => $_POST['project_id'],
+    //             'request_date'   => $_POST['request_date'],
+    //             'required_date'  => $_POST['required_date'],
+    //             'priority'       => $_POST['priority'],
+    //             'target_warehouse_id' => !empty($_POST['target_warehouse_id'])
+    //                 ? $_POST['target_warehouse_id']
+    //                 : null,
+    //             'delivery_method' => $_POST['delivery_method'] ?? 'WAREHOUSE',
+    //             'remarks'        => trim($_POST['remarks'])
+
+    //         ]);
+
+    //         header('Location: ' . URLROOT . '/resourcerequisitions/details/' . $id);
+    //         exit;
+    //     }
+
+    //     $data['projects'] = $projectModel->getAll();
+
+    //     $data['locations'] = $locationModel->getAll();
+
+    //     $data['next_number'] = $model->nextNumber();
+
+    //     $this->view('resource-requisitions/create', $data);
+    // }
+
+
     public function create()
-    {
-        AuthHelper::can('resource_requisitions.create');
+{
+    AuthHelper::can('resource_requisitions.create');
 
-        $model = $this->model('ResourceRequisition');
-        $projectModel = $this->model('Project');
-        $locationModel = $this->model('InventoryLocation');
+    $model = $this->model('ResourceRequisition');
+    $projectModel = $this->model('Project');
+    $locationModel = $this->model('InventoryLocation');
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $id = $model->create([
+        $id = $model->create([
 
-                'req_number'     => $model->nextNumber(),
-                'project_id'     => $_POST['project_id'],
-                'request_date'   => $_POST['request_date'],
-                'required_date'  => $_POST['required_date'],
-                'priority'       => $_POST['priority'],
-                'target_warehouse_id' => !empty($_POST['target_warehouse_id'])
+            'req_number' => $model->nextNumber(),
+
+            'project_id' => $_POST['project_id'],
+
+            'request_date' => $_POST['request_date'],
+
+            'required_date' => $_POST['required_date'],
+
+            'priority' => $_POST['priority'],
+
+            'target_warehouse_id' =>
+                !empty($_POST['target_warehouse_id'])
                     ? $_POST['target_warehouse_id']
                     : null,
-                'delivery_method' => $_POST['delivery_method'] ?? 'WAREHOUSE',
-                'remarks'        => trim($_POST['remarks'])
 
-            ]);
+            'delivery_method' =>
+                $_POST['delivery_method'] ?? 'WAREHOUSE',
 
-            header('Location: ' . URLROOT . '/resourcerequisitions/details/' . $id);
-            exit;
-        }
+            'remarks' => trim($_POST['remarks'])
 
-        $data['projects'] = $projectModel->getAll();
+        ]);
 
-        $data['locations'] = $locationModel->getAll();
+        header(
+            'Location: ' .
+            URLROOT .
+            '/resourcerequisitions/details/' .
+            $id
+        );
 
-        $data['next_number'] = $model->nextNumber();
-
-        $this->view('resource-requisitions/create', $data);
+        exit;
     }
+
+    $data['projects'] = $projectModel->getAll();
+
+    $data['locations'] = $locationModel->getAll();
+
+    $this->view(
+        'resource-requisitions/create',
+        $data
+    );
+}
 
     /*
     |------------------------------------------------------

@@ -18,19 +18,19 @@
             <div class="row">
 
                 <!-- Requisition Number -->
-                <div class="col-md-4 mb-3">
+                <!-- <div class="col-md-4 mb-3">
 
                     <label class="form-label">
-                        <?= __('requisition_no') ?>
+                        <?//= __('requisition_no') ?>
                     </label>
 
                     <input
                         type="text"
                         class="form-control"
-                        value="<?= htmlspecialchars($next_number) ?>"
+                        value="<?//= htmlspecialchars($next_number) ?>"
                         readonly>
 
-                </div>
+                </div> -->
 
                 <!-- Request Date -->
                 <div class="col-md-4 mb-3">
