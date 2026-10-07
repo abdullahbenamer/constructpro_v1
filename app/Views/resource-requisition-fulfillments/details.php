@@ -507,7 +507,7 @@
                                     class="text-end fw-bold"
                                 >
 
-                                    <?= __('total_material_cost') ?>
+                                    <?= __('total_resources_cost') ?>
 
                                 </td>
 

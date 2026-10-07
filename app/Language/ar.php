@@ -297,7 +297,7 @@ return [
     'edit_cost_item'        => 'تعديل بند التكلفة',
     'note'                  => 'ملاحظة',
     'cost_edit_restriction' => 'تغيير الصنف أو المستودع أو نوع التكلفة يتطلب حذف التكلفة الحالية وإنشاء تكلفة جديدة.',
-    'unit_cost_dollar'      => 'تكلفة الوحدة ($)',
+    'unit_cost_dollar'      => 'تكلفة الوحدة',
     'warehouse_location'    => 'موقع المستودع',
     'update_cost'           => 'تحديث التكلفة',
 
@@ -1730,4 +1730,11 @@ return [
 
 'available_for_transfer' => 'متاح للنقل',
 
+'total_cost' => 'إجمالي التكلفة',
+
+'total_material_cost' => 'إجمالي تكلفة المواد',
+
+'total_resources_cost' => 'إجمالي تكلفة الموارد',
+
+'unit_of_measure' => 'وحدة القياس',
 ];

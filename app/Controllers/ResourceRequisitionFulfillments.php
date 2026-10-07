@@ -1318,11 +1318,11 @@ class ResourceRequisitionFulfillments extends Controller
                 $requisition_item_id,
 
                 /*
-            |----------------------------------------------------------
+            |----------------------------------------------------
             | IMPORTANT
             |
             | Use the database value, not the posted value.
-            |----------------------------------------------------------
+            |----------------------------------------------------
             */
 
                 'resource_id' =>

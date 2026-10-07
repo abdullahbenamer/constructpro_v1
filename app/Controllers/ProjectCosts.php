@@ -148,6 +148,7 @@ class ProjectCosts extends Controller
         $costModel = $this->model('ProjectCost');
         $inventoryModel = $this->model('Inventory');
         $locationModel = $this->model('InventoryLocation');
+        $projectModel = $this->model('Project');
 
         // ==================================================
         // LOAD EXISTING COST
@@ -159,7 +160,8 @@ class ProjectCosts extends Controller
             header('Location: ' . URLROOT . '/project-costs');
             exit;
         }
-
+        // -----------------------------------
+        $project = $projectModel->getById($cost->project_id);
         // ==================================================
         // HANDLE POST
         // ==================================================
@@ -210,15 +212,10 @@ class ProjectCosts extends Controller
         // ==================================================
 
         $data['cost'] = $cost;
-
-        $data['project_id'] =
-            $cost->project_id;
-
-        $data['inventory'] =
-            $inventoryModel->getAll();
-
-        $data['locations'] =
-            $locationModel->getAll();
+        $data['project'] = $project;
+        $data['project_id'] = $cost->project_id;
+        $data['inventory'] = $inventoryModel->getAll();
+        $data['locations'] = $locationModel->getAll();
 
         $this->view(
             'project-costs/edit',

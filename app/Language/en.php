@@ -1730,6 +1730,14 @@ return [
 
     'available_for_transfer' => 'Available for Transfer',
 
-  
+    'total_cost' => 'Total Cost',
+
+'total_material_cost' => 'Total Material Cost',
+
+'total_resources_cost' => 'Total Resources Cost',
+
+'select_inventory_item_first' => 'Please select an inventory item first.',
+
+'unit_of_measure' => 'Unit of Measure',
 
 ];

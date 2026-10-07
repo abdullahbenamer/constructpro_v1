@@ -27,9 +27,9 @@
         </label>
 
         <select name="inventory_id"
-                id="inventory_id"
-                class="form-select"
-                required>
+            id="inventory_id"
+            class="form-select"
+            required>
 
             <option value="">
                 <?= __('select_inventory_item') ?>
@@ -37,11 +37,13 @@
 
             <?php foreach ($inventory as $item): ?>
 
-                <option value="<?= $item->id ?>">
+                <option
+    value="<?= $item->id ?>"
+    data-uom="<?= htmlspecialchars(__($item->unit_name)) ?>">
 
-                    <?= htmlspecialchars($item->name) ?>
+    <?= htmlspecialchars($item->name) ?>
 
-                </option>
+</option>
 
             <?php endforeach; ?>
 
@@ -49,6 +51,22 @@
 
     </div>
 
+    <!-- UOM - read only -->
+    <div class="mb-3"
+        style="max-width: 400px;">
+
+        <label>
+            <?= __('unit_of_measure') ?>
+        </label>
+
+        <input
+            type="text"
+            id="uom"
+            class="form-control"
+            readonly
+            value="">
+
+    </div>
 
     <div class="mb-3">
 
@@ -112,7 +130,7 @@
 
 
     <div class="mb-3"
-         style="max-width: 400px;">
+        style="max-width: 400px;">
 
         <label>
             <?= __('quantity_to_reserve') ?>
@@ -141,8 +159,8 @@
         </label>
 
         <select name="project_id"
-                class="form-select"
-                required>
+            class="form-select"
+            required>
 
             <option value="">
                 <?= __('select_project') ?>
@@ -174,10 +192,10 @@
         </label>
 
         <input type="date"
-               name="required_by_date"
-               class="form-control"
-               min="<?= date('Y-m-d') ?>"
-               required>
+            name="required_by_date"
+            class="form-control"
+            min="<?= date('Y-m-d') ?>"
+            required>
 
     </div>
 
@@ -189,8 +207,8 @@
         </label>
 
         <input type="text"
-               name="reference"
-               class="form-control">
+            name="reference"
+            class="form-control">
 
     </div>
 
@@ -202,7 +220,7 @@
         </label>
 
         <textarea name="notes"
-                  class="form-control"></textarea>
+            class="form-control"></textarea>
 
     </div>
 
@@ -217,193 +235,201 @@
 
 
 <script>
+    const inventorySelect =
+        document.getElementById('inventory_id');
 
-const inventorySelect =
-    document.getElementById('inventory_id');
+    const locationSelect =
+        document.getElementById('location_id');
 
-const locationSelect =
-    document.getElementById('location_id');
-
-
-inventorySelect.addEventListener(
-    'change',
-    function() {
-
-        const inventoryId = this.value;
-
-        // Reset location dropdown
-        locationSelect.innerHTML =
-            '<option value=""><?= __('loading_locations') ?></option>';
-
-        if (!inventoryId) {
-
-            locationSelect.innerHTML =
-                '<option value=""><?= __('select_inventory_item_first') ?></option>';
-
-            return;
-        }
+    const uomInput =
+        document.getElementById('uom');
 
 
-        fetch(
-            '<?= URLROOT ?>/inventoryreservations/getItemLocations',
-            {
-                method: 'POST',
+    inventorySelect.addEventListener(
+        'change',
+        function() {
 
-                headers: {
-                    'Content-Type':
-                        'application/x-www-form-urlencoded'
-                },
+            const inventoryId = this.value;
 
-                body:
-                    'inventory_id=' +
-                    encodeURIComponent(inventoryId)
+            const selectedOption =
+                this.options[this.selectedIndex];
+
+            uomInput.value =
+                selectedOption.dataset.uom || '';
+
+            // ---------------
+            if (!inventoryId) {
+
+                uomInput.value = '';
+
+                locationSelect.innerHTML =
+                    '<option value=""><?= __('select_inventory_item_first') ?></option>';
+
+                return;
             }
-        )
-
-        .then(response => response.json())
-
-        .then(locations => {
-
+            // Reset location dropdown
             locationSelect.innerHTML =
-                '<option value=""><?= __('select_location') ?></option>';
+                '<option value=""><?= __('loading_locations') ?></option>';
 
-            locations.forEach(location => {
+            if (!inventoryId) {
 
-                const option =
-                    document.createElement('option');
+                locationSelect.innerHTML =
+                    '<option value=""><?= __('select_inventory_item_first') ?></option>';
 
-                option.value =
-                    location.location_id;
+                return;
+            }
 
-                option.textContent =
-                    location.code +
-                    ' - ' +
-                    location.name;
 
-                locationSelect.appendChild(option);
+            fetch(
+                    '<?= URLROOT ?>/inventoryreservations/getItemLocations', {
+                        method: 'POST',
 
-            });
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
 
-        })
+                        body: 'inventory_id=' +
+                            encodeURIComponent(inventoryId)
+                    }
+                )
 
-        .catch(error => {
+                .then(response => response.json())
 
-            console.error(
-                '<?= __('error_loading_locations') ?>:',
-                error
-            );
+                .then(locations => {
 
-            locationSelect.innerHTML =
-                '<option value=""><?= __('unable_to_load_locations') ?></option>';
+                    locationSelect.innerHTML =
+                        '<option value=""><?= __('select_location') ?></option>';
 
-        });
+                    locations.forEach(location => {
 
-    }
-);
+                        const option =
+                            document.createElement('option');
 
+                        option.value =
+                            location.location_id;
+
+                        option.textContent =
+                            location.code +
+                            ' - ' +
+                            location.name;
+
+                        locationSelect.appendChild(option);
+
+                    });
+
+                })
+
+                .catch(error => {
+
+                    console.error(
+                        '<?= __('error_loading_locations') ?>:',
+                        error
+                    );
+
+                    locationSelect.innerHTML =
+                        '<option value=""><?= __('unable_to_load_locations') ?></option>';
+
+                });
+
+        }
+    );
 </script>
 
 
 <script>
+    const quantityInput =
+        document.getElementById('quantity');
 
-const quantityInput =
-    document.getElementById('quantity');
+    const stockInfo =
+        document.getElementById('stockInfo');
 
-const stockInfo =
-    document.getElementById('stockInfo');
+    const availableQty =
+        document.getElementById('availableQty');
 
-const availableQty =
-    document.getElementById('availableQty');
+    locationSelect.addEventListener(
+        'change',
+        function() {
 
+            const inventoryId =
+                inventorySelect.value;
 
-locationSelect.addEventListener(
-    'change',
-    function() {
+            const locationId =
+                this.value;
 
-        const inventoryId =
-            inventorySelect.value;
+            // Hide previous stock information
+            stockInfo.classList.add('d-none');
 
-        const locationId =
-            this.value;
+            // Remove previous max value
+            quantityInput.removeAttribute('max');
 
-        // Hide previous stock information
-        stockInfo.classList.add('d-none');
-
-        // Remove previous max value
-        quantityInput.removeAttribute('max');
-
-        if (!inventoryId || !locationId) {
-            return;
-        }
-
-
-        fetch(
-            '<?= URLROOT ?>/inventoryreservations/getLocationStock',
-            {
-                method: 'POST',
-
-                headers: {
-                    'Content-Type':
-                        'application/x-www-form-urlencoded'
-                },
-
-                body:
-                    'inventory_id=' +
-                    encodeURIComponent(inventoryId) +
-                    '&location_id=' +
-                    encodeURIComponent(locationId)
+            if (!inventoryId || !locationId) {
+                return;
             }
-        )
-
-        .then(response => response.json())
-
-        .then(data => {
-
-            const physicalQty =
-                parseFloat(data.physical_qty || 0);
-
-            const reservedQty =
-                parseFloat(data.reserved_qty || 0);
-
-            const availableQtyValue =
-                parseFloat(data.available_qty || 0);
 
 
-            // DISPLAY QUANTITIES
+            fetch(
+                    '<?= URLROOT ?>/inventoryreservations/getLocationStock', {
+                        method: 'POST',
 
-            document.getElementById(
-                'physicalQty'
-            ).textContent =
-                physicalQty.toFixed(2);
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
 
-            document.getElementById(
-                'reservedQty'
-            ).textContent =
-                reservedQty.toFixed(2);
+                        body: 'inventory_id=' +
+                            encodeURIComponent(inventoryId) +
+                            '&location_id=' +
+                            encodeURIComponent(locationId)
+                    }
+                )
 
-            availableQty.textContent =
-                availableQtyValue.toFixed(2);
+                .then(response => response.json())
+
+                .then(data => {
+
+                    const physicalQty =
+                        parseFloat(data.physical_qty || 0);
+
+                    const reservedQty =
+                        parseFloat(data.reserved_qty || 0);
+
+                    const availableQtyValue =
+                        parseFloat(data.available_qty || 0);
 
 
-            // LIMIT RESERVATION QUANTITY
+                    // DISPLAY QUANTITIES
 
-            quantityInput.max =
-                availableQtyValue;
+                    document.getElementById(
+                            'physicalQty'
+                        ).textContent =
+                        physicalQty.toFixed(2);
 
-            stockInfo.classList.remove('d-none');
+                    document.getElementById(
+                            'reservedQty'
+                        ).textContent =
+                        reservedQty.toFixed(2);
 
-        })
+                    availableQty.textContent =
+                        availableQtyValue.toFixed(2);
 
-        .catch(error => {
 
-            console.error(
-                '<?= __('error_loading_stock') ?>:',
-                error
-            );
+                    // LIMIT RESERVATION QUANTITY
 
-        });
+                    quantityInput.max =
+                        availableQtyValue;
 
-    }
-);
+                    stockInfo.classList.remove('d-none');
 
+                })
+
+                .catch(error => {
+
+                    console.error(
+                        '<?= __('error_loading_stock') ?>:',
+                        error
+                    );
+
+                });
+
+        }
+    );
 </script>

@@ -82,7 +82,7 @@ private function validateFulfillmentCost(array $data): array
     }
 
     if (
-        $data['cost_type'] !== 'materials'
+       $data['cost_type'] !== 'MATERIALS'
         && $data['unit_price'] <= 0
     ) {
         throw new Exception(
@@ -90,7 +90,7 @@ private function validateFulfillmentCost(array $data): array
         );
     }
 
-    if ($data['cost_type'] === 'materials') {
+    if ($data['cost_type'] === 'MATERIALS') {
 
         if (empty($data['inventory_id'])) {
             throw new Exception(
@@ -196,6 +196,15 @@ public function createFromFulfillment(array $data): int
             );
         }
 
+        if (
+    !$this->isMaterial($old) &&
+    floor($data['quantity']) != $data['quantity']
+) {
+    throw new Exception(
+        __('quantity_must_be_whole_number')
+    );
+}
+
         /*
     |--------------------------------------------------------------------------
     | MATERIAL COST
@@ -217,6 +226,21 @@ public function createFromFulfillment(array $data): int
                     __('inventory_item_not_found')
                 );
             }
+
+
+$allowFraction =
+    (int)$item->allow_fraction === 1;
+
+if (
+    !$allowFraction &&
+    floor($data['quantity']) != $data['quantity']
+) {
+    throw new Exception(
+        __('quantity_must_be_whole_number')
+    );
+}
+
+
 
             $data['unit_price'] =
                 (float)$item->cost_price;
@@ -456,7 +480,7 @@ public function createFromFulfillment(array $data): int
         }
 
         if (
-            $data['cost_type'] !== 'materials'
+             $data['cost_type'] !== 'MATERIALS'
             && $data['unit_price'] <= 0
         ) {
 
@@ -465,9 +489,18 @@ public function createFromFulfillment(array $data): int
             );
         }
 
-        if ($data['cost_type'] !== 'materials') {
-            return $data;
-        }
+      if ($data['cost_type'] !== 'MATERIALS') {
+
+    if (
+        floor($data['quantity']) != $data['quantity']
+    ) {
+        throw new Exception(
+            __('quantity_must_be_whole_number')
+        );
+    }
+
+    return $data;
+}
 
         if (empty($data['inventory_id'])) {
             throw new Exception(
@@ -490,6 +523,18 @@ public function createFromFulfillment(array $data): int
                 __('inventory_item_not_found')
             );
         }
+
+        $allowFraction =
+    (int)$item->allow_fraction === 1;
+
+if (
+    !$allowFraction &&
+    floor($data['quantity']) != $data['quantity']
+) {
+    throw new Exception(
+        __('quantity_must_be_whole_number')
+    );
+}
 
         $stock = $this->stockModel->getStock(
             $data['inventory_id'],
@@ -517,7 +562,7 @@ public function createFromFulfillment(array $data): int
 
     private function isMaterial(array $data): bool
     {
-        return strtolower($data['cost_type']) === 'materials';
+        return strtoupper($data['cost_type']) === 'MATERIALS';
     }
 
 
@@ -561,21 +606,6 @@ public function createFromFulfillment(array $data): int
 
         );
     }
-
-// private function buildSourceDescription(array $data): string
-// {
-//     $description = trim($data['description'] ?? '');
-
-//     if (!empty($data['req_number'])) {
-//         $description .= ' — RR: ' . $data['req_number'];
-//     }
-
-//     if (!empty($data['fulfillment_no'])) {
-//         $description .= ' — FUL: ' . $data['fulfillment_no'];
-//     }
-
-//     return $description;
-// }
 
     private function recordInventoryMovement(
         array $data,

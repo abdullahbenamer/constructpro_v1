@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 05, 2026 at 07:24 AM
+-- Generation Time: Oct 06, 2026 at 12:43 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -332,7 +332,7 @@ INSERT INTO `inventory` (`id`, `name`, `category`, `sku`, `quantity`, `location_
 (118, 'Construction Gravel', 'BUILDING & FINISHING', 'GRV-001', 43.00, NULL, 10, 80.00, 'M3', 15, 1, NULL, 12),
 (119, 'Red Brick', 'BUILDING & FINISHING', 'BRK-RED-001', 5000.00, NULL, 1000, 0.65, 'PCS', 1, 0, NULL, 12),
 (120, 'Plastering Cement', 'BUILDING & FINISHING', 'PLS-CEM-001', 500.00, NULL, 50, 11.50, 'BAG', 3, 0, 36, 12),
-(122, 'Ceramic Floor Tile 60x60', 'BUILDING & FINISHING', 'TIL-6060-001', 941.00, NULL, 100, 25.80, 'M2', 14, 1, NULL, 12),
+(122, 'Ceramic Floor Tile 60x60', 'BUILDING & FINISHING', 'TIL-6060-001', 941.00, NULL, 100, 25.80, 'M2', 14, 0, NULL, 12),
 (123, 'Ceramic Wall Tile 30x60', 'BUILDING & FINISHING', 'TIL-3060-001', 620.00, NULL, 100, 6.00, 'M2', 14, 1, NULL, 12),
 (124, 'Waterproofing Membrane 4mm', 'BUILDING & FINISHING', 'WPM-4-001', 120.00, NULL, 20, 42.00, 'ROLL', 4, 0, NULL, 12),
 (125, 'PVC Water Tank 1000L', 'PLUMBING & DRAINAGE', 'TANK-1000-001', 20.00, NULL, 5, 450.00, 'PCS', 1, 0, NULL, 12),
@@ -343,7 +343,7 @@ INSERT INTO `inventory` (`id`, `name`, `category`, `sku`, `quantity`, `location_
 (130, 'Rebar 20mm', 'BUILDING & FINISHING', 'REB-20-001', 1200.00, NULL, 250, 18.20, 'M', 10, 1, 34, 12),
 (131, 'Steel Angle 50x50x5mm', 'BUILDING & FINISHING', 'ANG-50505-001', 400.00, NULL, 50, 28.00, 'M', 10, 1, 34, 12),
 (132, 'Steel Channel 100mm', 'BUILDING & FINISHING', 'CHN-100-001', 250.00, NULL, 50, 42.00, 'M', 10, 1, 34, 12),
-(134, 'Binding Wire', 'BUILDING & FINISHING', 'BW-001', 94.00, NULL, 15, 4.50, 'KG', 7, 1, NULL, 12),
+(134, 'Binding Wire', 'BUILDING & FINISHING', 'BW-001', 94.00, NULL, 15, 4.50, 'KG', 7, 0, NULL, 12),
 (135, 'Electrical Cable 1.5mm² Single Core', 'ELECTRICAL', 'CAB-1.5-001', 2500.00, NULL, 500, 1.15, 'M', 10, 1, 3, 3),
 (136, 'Electrical Cable 2.5mm² Single Core', 'ELECTRICAL ', 'CAB-2.5-001', 3000.00, NULL, 500, 1.75, 'M', 10, 1, 3, 3),
 (137, 'Electrical Cable 4mm² Single Core', 'ELECTRICAL ', 'CAB-4-001', 1800.00, NULL, 400, 2.80, 'M', 10, 1, 3, 3),
@@ -366,18 +366,18 @@ INSERT INTO `inventory` (`id`, `name`, `category`, `sku`, `quantity`, `location_
 (154, 'PVC Elbow 90° 25mm', 'PLUMBING & DRAINAGE', 'ELB-25-90-001', 300.00, NULL, 50, 1.20, 'PCS', 1, 0, NULL, 12),
 (155, 'Brass Ball Valve 1\"', 'PLUMBING & DRAINAGE', 'VAL-BV-1-001', 90.00, NULL, 15, 24.00, 'PCS', 1, 0, NULL, 12),
 (156, 'Bearing 6204', 'OTHER', 'BRG-6204-001', 254.00, NULL, 10, 35.00, 'PCS', 1, 0, 6, 3),
-(157, 'Bearing 6205', 'OTHER', 'BRG-6205-001', 41.00, NULL, 10, 14.50, 'PCS', 1, 0, 6, 3),
+(157, 'Bearing 6205', 'OTHER', 'BRG-6205-001', 39.50, NULL, 10, 14.50, 'PCS', 1, 0, 6, 3),
 (158, 'V-Belt A-42', 'OTHER', 'VBT-A42-001', 25.00, NULL, 5, 9.50, 'PCS', 1, 0, NULL, 12),
 (159, 'Hydraulic Hose 1/2\"', 'OTHER', 'HYD-HS-12-001', 250.00, NULL, 50, 8.50, 'M', 10, 1, NULL, 12),
 (160, 'Hydraulic Oil ISO 46', 'CONSUMABLES', 'OIL-ISO46-001', 200.00, NULL, 50, 4.80, 'LTR', 16, 1, 7, 12),
-(161, 'Engine Oil 15W40', 'CONSUMABLES', 'OIL-15W40-001', 145.00, NULL, 30, 5.50, 'LTR', 16, 1, 34, 12),
-(162, 'Grease EP2', 'CONSUMABLES', 'GRS-EP2-001', 80.00, NULL, 20, 7.25, 'KG', 7, 1, 34, 12),
+(161, 'Engine Oil 15W40', 'CONSUMABLES', 'OIL-15W40-001', 145.00, NULL, 30, 5.50, 'LTR', 16, 0, 34, 12),
+(162, 'Grease EP2', 'CONSUMABLES', 'GRS-EP2-001', 80.00, NULL, 20, 7.25, 'KG', 7, 0, 34, 12),
 (163, 'Hex Bolt M8x40', 'OTHER', 'BLT-M8-40-001', 1000.00, NULL, 200, 0.18, 'PCS', 1, 0, 14, 6),
 (164, 'Hex Bolt M10x50', 'OTHER', 'BLT-M10-50-001', 1000.00, NULL, 200, 0.28, 'PCS', 1, 0, NULL, 12),
 (165, 'Hex Nut M10', 'OTHER', 'NUT-M10-001', 1200.00, NULL, 200, 0.12, 'PCS', 1, 0, NULL, 12),
 (166, 'Washer M10', 'OTHER', 'WSR-M10-001', 1500.00, NULL, 300, 0.06, 'PCS', 1, 0, NULL, 12),
 (167, 'Anchor Bolt M16', 'OTHER', 'ANC-M16-001', 289.00, NULL, 50, 3.00, 'PCS', 1, 0, NULL, 12),
-(168, 'Acrylic Wall Paint White', 'BUILDING & FINISHING', 'PNT-WHT-001', 234.00, NULL, 50, 18.00, 'LTR', 16, 1, NULL, 12),
+(168, 'Acrylic Wall Paint White', 'BUILDING & FINISHING', 'PNT-WHT-001', 234.00, NULL, 50, 18.00, 'LTR', 16, 0, NULL, 12),
 (169, 'Exterior Paint White', 'BUILDING & FINISHING', 'PNT-EXT-WHT-001', 180.00, NULL, 30, 21.00, 'LTR', 16, 1, NULL, 12),
 (170, 'Epoxy Primer', 'CONSUMABLES', 'EPX-PRM-001', 99.00, NULL, 20, 24.00, 'LTR', 5, 0, NULL, 12),
 (171, 'Silicone Sealant', 'CONSUMABLES', 'SIL-001', 126.00, NULL, 20, 3.80, 'PCS', 1, 0, NULL, 12),
@@ -392,7 +392,7 @@ INSERT INTO `inventory` (`id`, `name`, `category`, `sku`, `quantity`, `location_
 (180, 'Ear Protection Plugs', 'SAFETY & PPE', 'PPE-EAR-001', 300.00, NULL, 50, 0.45, 'PAIR', 6, 0, 4, 4),
 (181, 'Dust Mask FFP2', 'SAFETY & PPE', 'PPE-MASK-001', 570.00, NULL, 100, 0.75, 'PCS', 1, 0, 4, 4),
 (182, 'Cutting Disc 115mm', 'OTHER', 'DISC-115-001', 200.00, NULL, 30, 1.20, 'PCS', 1, 0, 8, 9),
-(183, 'Grinding Disc 115mm', 'OTHER', 'GRD-115-001', 149.00, NULL, 30, 1.50, 'PCS', 1, 0, 8, 9),
+(183, 'Grinding Disc 115mm', 'CONSUMABLES', 'GRD-115-001', 149.00, NULL, 30, 1.50, 'PCS', 1, 0, 8, 9),
 (184, 'Welding Electrode 3.2mm', 'CONSUMABLES', 'WELD-32-001', 100.00, NULL, 20, 4.80, 'KG', 7, 1, NULL, 12),
 (185, 'Silica Sandpaper 120 Grit', 'CONSUMABLES', 'SAND-120-001', 200.00, NULL, 40, 0.85, 'PCS', 1, 0, NULL, 12),
 (186, 'PVC Electrical Tape', 'CONSUMABLES', 'TAPE-PVC-001', 150.00, NULL, 30, 1.20, 'ROLL', 4, 0, NULL, 12),
@@ -471,7 +471,7 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (263, 113, 2, 7.50),
 (264, 113, 3, 5.00),
 (265, 114, 1, 200.00),
-(266, 114, 2, 890.00),
+(266, 114, 2, 790.00),
 (267, 114, 3, 495.00),
 (268, 115, 1, 1250.00),
 (269, 115, 2, 685.00),
@@ -482,7 +482,7 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (274, 117, 1, 30.00),
 (275, 117, 2, 18.00),
 (276, 117, 3, 12.00),
-(277, 118, 1, 21.00),
+(277, 118, 1, 20.00),
 (278, 118, 2, 8.00),
 (279, 118, 3, 10.00),
 (280, 119, 1, 2500.00),
@@ -494,10 +494,10 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (286, 121, 1, 200.00),
 (287, 121, 2, 120.00),
 (288, 121, 3, 80.00),
-(289, 122, 1, 410.00),
+(289, 122, 1, 408.00),
 (290, 122, 2, 240.00),
 (291, 122, 3, 175.00),
-(292, 123, 1, 300.00),
+(292, 123, 1, 200.00),
 (293, 123, 2, 195.00),
 (294, 123, 3, 100.00),
 (295, 124, 1, 60.00),
@@ -530,19 +530,19 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (322, 133, 1, 60.00),
 (323, 133, 2, 36.00),
 (324, 133, 3, 24.00),
-(325, 134, 1, 35.00),
+(325, 134, 1, 0.00),
 (326, 134, 2, 23.00),
 (327, 134, 3, 16.00),
-(328, 135, 1, 1250.00),
+(328, 135, 1, 1246.56),
 (329, 135, 2, 750.00),
 (330, 135, 3, 500.00),
-(331, 136, 1, 1500.00),
+(331, 136, 1, 1497.10),
 (332, 136, 2, 900.00),
-(333, 136, 3, 600.00),
-(334, 137, 1, 900.00),
-(335, 137, 2, 540.00),
-(336, 137, 3, 360.00),
-(337, 138, 1, 700.00),
+(333, 136, 3, 601.00),
+(334, 137, 1, 397.30),
+(335, 137, 2, 518.05),
+(336, 137, 3, 460.00),
+(337, 138, 1, 697.54),
 (338, 138, 2, 420.00),
 (339, 138, 3, 280.00),
 (340, 139, 1, 300.00),
@@ -572,7 +572,7 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (364, 147, 1, 12.50),
 (365, 147, 2, 7.50),
 (366, 147, 3, 5.00),
-(367, 148, 1, 11.00),
+(367, 148, 1, 10.00),
 (368, 148, 2, 10.00),
 (369, 148, 3, 8.00),
 (370, 149, 1, 250.00),
@@ -593,13 +593,13 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (385, 154, 1, 150.00),
 (386, 154, 2, 90.00),
 (387, 154, 3, 60.00),
-(388, 155, 1, 50.00),
+(388, 155, 1, 49.00),
 (389, 155, 2, 24.00),
 (390, 155, 3, 16.00),
 (391, 156, 1, 220.00),
 (392, 156, 2, 12.00),
-(393, 156, 3, 7.00),
-(394, 157, 1, 21.00),
+(393, 156, 3, 6.00),
+(394, 157, 1, 2.00),
 (395, 157, 2, 12.00),
 (396, 157, 3, 8.00),
 (397, 158, 1, 12.50),
@@ -617,7 +617,7 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (409, 162, 1, 40.00),
 (410, 162, 2, 24.00),
 (411, 162, 3, 16.00),
-(412, 163, 1, 500.00),
+(412, 163, 1, 400.00),
 (413, 163, 2, 300.00),
 (414, 163, 3, 200.00),
 (415, 164, 1, 500.00),
@@ -645,8 +645,8 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (437, 171, 2, 42.00),
 (438, 171, 3, 24.00),
 (439, 172, 1, 28.00),
-(440, 172, 2, 30.00),
-(441, 172, 3, 20.00),
+(440, 172, 2, 32.00),
+(441, 172, 3, 32.00),
 (442, 173, 1, 20.00),
 (443, 173, 2, 12.00),
 (444, 173, 3, 8.00),
@@ -698,22 +698,33 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (490, 111, 31, 100.00),
 (491, 134, 21, 20.00),
 (492, 115, 29, 1000.00),
-(493, 114, 32, 500.00),
-(494, 172, 32, 35.00),
+(493, 114, 32, 600.00),
+(494, 172, 32, 21.00),
 (495, 117, 32, 40.00),
 (496, 181, 32, 70.00),
-(497, 123, 32, 25.00),
-(498, 156, 32, 15.00),
-(499, 122, 32, 111.00),
+(497, 123, 32, 125.00),
+(498, 156, 32, 16.00),
+(499, 122, 32, 113.00),
 (500, 122, 36, 5.00),
 (501, 193, 32, 1000.00),
 (502, 194, 32, 15.00),
 (503, 193, 3, 500.00),
 (504, 168, 32, 10.00),
-(505, 148, 32, 4.00),
+(505, 148, 32, 5.00),
 (506, 115, 32, 2000.00),
 (507, 120, 32, 200.00),
-(508, 190, 32, 975.00);
+(508, 190, 32, 975.00),
+(509, 137, 32, 424.65),
+(510, 155, 32, 1.00),
+(511, 163, 32, 100.00),
+(512, 138, 32, 2.46),
+(513, 135, 32, 3.44),
+(514, 136, 32, 1.90),
+(515, 134, 32, 35.00),
+(516, 157, 32, 17.50),
+(517, 118, 32, 0.50),
+(518, 118, 36, 0.00),
+(519, 118, 28, 0.50);
 
 -- --------------------------------------------------------
 
@@ -824,7 +835,72 @@ INSERT INTO `inventory_movements` (`id`, `inventory_id`, `location_id`, `type`, 
 (398, 190, 32, 'OUT', 25.00, 0.00, NULL, NULL, 1, 975.00, 975.00, 'RR-FUL-261003080449-534', 'Resource requisition fulfillment: REQ-260917114231', 1, '2026-10-03 06:04:49'),
 (399, 167, 3, 'OUT', 1.00, 3.00, NULL, NULL, 1, 39.00, 289.00, 'RR-FUL-261003084531-149', 'Resource requisition fulfillment: REQ-261003084449', 1, '2026-10-03 06:45:31'),
 (400, 183, 3, 'OUT', 1.00, 1.50, NULL, NULL, 1, 29.00, 149.00, 'RR-FUL-261003114143-684', 'Resource requisition fulfillment: REQ-261003114055', 1, '2026-10-03 09:41:43'),
-(401, 118, 2, 'OUT', 7.00, NULL, NULL, NULL, NULL, 8.00, 43.00, 'PROJECT #49', 'Reservation Fulfillment: Construction Gravel', 1, '2026-10-04 15:41:26');
+(401, 118, 2, 'OUT', 7.00, NULL, NULL, NULL, NULL, 8.00, 43.00, 'PROJECT #49', 'Reservation Fulfillment: Construction Gravel', 1, '2026-10-04 15:41:26'),
+(402, 181, 1, 'OUT', 1.67, NULL, NULL, NULL, NULL, 248.33, 570.00, NULL, 'Warehouse Transfer #57', 1, '2026-10-05 12:07:02'),
+(403, 181, 32, 'IN', 1.67, NULL, NULL, NULL, NULL, 71.67, 570.00, NULL, 'Warehouse Transfer #57', 1, '2026-10-05 12:07:02'),
+(404, 181, 32, 'OUT', 1.67, NULL, NULL, NULL, NULL, 70.00, 570.00, NULL, 'Reversal of Transfer #57', 1, '2026-10-05 12:10:15'),
+(405, 181, 1, 'IN', 1.67, NULL, NULL, NULL, NULL, 250.00, 570.00, NULL, 'Reversal of Transfer #57', 1, '2026-10-05 12:10:15'),
+(406, 148, 1, 'OUT', 1.00, NULL, NULL, NULL, NULL, 10.00, 33.00, NULL, 'Warehouse Transfer #59', 1, '2026-10-05 15:02:55'),
+(407, 148, 32, 'IN', 1.00, NULL, NULL, NULL, NULL, 5.00, 33.00, NULL, 'Warehouse Transfer #59', 1, '2026-10-05 15:02:55'),
+(408, 137, 1, 'OUT', 1.00, NULL, NULL, NULL, NULL, 899.00, 1800.00, NULL, 'Warehouse Transfer #60', 1, '2026-10-05 15:05:40'),
+(409, 137, 32, 'IN', 1.00, NULL, NULL, NULL, NULL, 1.00, 1800.00, NULL, 'Warehouse Transfer #60', 1, '2026-10-05 15:05:40'),
+(410, 156, 1, 'OUT', 1.00, NULL, NULL, NULL, NULL, 219.00, 254.00, NULL, 'Warehouse Transfer #61', 1, '2026-10-05 15:17:46'),
+(411, 156, 32, 'IN', 1.00, NULL, NULL, NULL, NULL, 16.00, 254.00, NULL, 'Warehouse Transfer #61', 1, '2026-10-05 15:17:46'),
+(412, 155, 1, 'OUT', 1.00, NULL, NULL, NULL, NULL, 49.00, 90.00, NULL, 'Warehouse Transfer #62', 1, '2026-10-05 15:26:16'),
+(413, 155, 32, 'IN', 1.00, NULL, NULL, NULL, NULL, 1.00, 90.00, NULL, 'Warehouse Transfer #62', 1, '2026-10-05 15:26:16'),
+(414, 156, 3, 'OUT', 1.00, NULL, NULL, NULL, NULL, 6.00, 254.00, NULL, 'Warehouse Transfer #63', 1, '2026-10-05 15:43:08'),
+(415, 156, 1, 'IN', 1.00, NULL, NULL, NULL, NULL, 220.00, 254.00, NULL, 'Warehouse Transfer #63', 1, '2026-10-05 15:43:08'),
+(416, 137, 1, 'OUT', 1.70, NULL, NULL, NULL, NULL, 897.30, 1800.00, NULL, 'Warehouse Transfer #64', 1, '2026-10-05 15:43:31'),
+(417, 137, 32, 'IN', 1.70, NULL, NULL, NULL, NULL, 2.70, 1800.00, NULL, 'Warehouse Transfer #64', 1, '2026-10-05 15:43:31'),
+(418, 163, 1, 'OUT', 100.00, NULL, NULL, NULL, NULL, 400.00, 1000.00, NULL, 'Warehouse Transfer #65', 1, '2026-10-05 15:48:30'),
+(419, 163, 32, 'IN', 100.00, NULL, NULL, NULL, NULL, 100.00, 1000.00, NULL, 'Warehouse Transfer #65', 1, '2026-10-05 15:48:30'),
+(420, 137, 1, 'OUT', 500.00, NULL, NULL, NULL, NULL, 397.30, 1800.00, NULL, 'Warehouse Transfer #66', 1, '2026-10-05 15:51:56'),
+(421, 137, 32, 'IN', 500.00, NULL, NULL, NULL, NULL, 502.70, 1800.00, NULL, 'Warehouse Transfer #66', 1, '2026-10-05 15:51:56'),
+(422, 122, 1, 'OUT', 1.90, NULL, NULL, NULL, NULL, 408.10, 941.00, NULL, 'Warehouse Transfer #67', 1, '2026-10-05 16:25:27'),
+(423, 122, 32, 'IN', 1.90, NULL, NULL, NULL, NULL, 112.90, 941.00, NULL, 'Warehouse Transfer #67', 1, '2026-10-05 16:25:27'),
+(424, 122, 1, 'ADJUSTMENT', -0.10, NULL, NULL, NULL, NULL, 408.00, 940.90, 'ADJ-261005182840', 'PHYSICAL_COUNT_CORRECTION', 1, '2026-10-05 16:28:40'),
+(425, 122, 32, 'ADJUSTMENT', 0.10, NULL, NULL, NULL, NULL, 113.00, 941.00, 'ADJ-261005182935', 'PHYSICAL_COUNT_CORRECTION', 1, '2026-10-05 16:29:35'),
+(426, 138, 1, 'OUT', 1.17, NULL, NULL, NULL, NULL, 698.83, 1400.00, NULL, 'Warehouse Transfer #68', 1, '2026-10-06 05:16:31'),
+(427, 138, 32, 'IN', 1.17, NULL, NULL, NULL, NULL, 1.17, 1400.00, NULL, 'Warehouse Transfer #68', 1, '2026-10-06 05:16:31'),
+(428, 123, 1, 'OUT', 100.00, NULL, NULL, NULL, NULL, 200.00, 620.00, NULL, 'Warehouse Transfer #69', 1, '2026-10-06 06:50:41'),
+(429, 123, 32, 'IN', 100.00, NULL, NULL, NULL, NULL, 125.00, 620.00, NULL, 'Warehouse Transfer #69', 1, '2026-10-06 06:50:41'),
+(430, 172, 32, 'OUT', 12.00, NULL, NULL, NULL, NULL, 23.00, 113.00, NULL, 'Warehouse Transfer #70', 1, '2026-10-06 06:52:27'),
+(431, 172, 3, 'IN', 12.00, NULL, NULL, NULL, NULL, 32.00, 113.00, NULL, 'Warehouse Transfer #70', 1, '2026-10-06 06:52:27'),
+(432, 172, 32, 'OUT', 2.00, NULL, NULL, NULL, NULL, 21.00, 113.00, NULL, 'Warehouse Transfer #71', 1, '2026-10-06 07:28:12'),
+(433, 172, 2, 'IN', 2.00, NULL, NULL, NULL, NULL, 32.00, 113.00, NULL, 'Warehouse Transfer #71', 1, '2026-10-06 07:28:12'),
+(434, 136, 1, 'OUT', 1.00, NULL, NULL, NULL, NULL, 1499.00, 3000.00, NULL, 'Warehouse Transfer #72', 1, '2026-10-06 07:32:17'),
+(435, 136, 3, 'IN', 1.00, NULL, NULL, NULL, NULL, 601.00, 3000.00, NULL, 'Warehouse Transfer #72', 1, '2026-10-06 07:32:17'),
+(436, 137, 2, 'OUT', 1.75, NULL, NULL, NULL, NULL, 538.25, 1800.00, NULL, 'Warehouse Transfer #73', 1, '2026-10-06 07:33:14'),
+(437, 137, 32, 'IN', 1.75, NULL, NULL, NULL, NULL, 504.45, 1800.00, NULL, 'Warehouse Transfer #73', 1, '2026-10-06 07:33:14'),
+(438, 114, 2, 'OUT', 100.00, NULL, NULL, NULL, NULL, 790.00, 2360.00, NULL, 'Warehouse Transfer #74', 1, '2026-10-06 07:33:52'),
+(439, 114, 32, 'IN', 100.00, NULL, NULL, NULL, NULL, 600.00, 2360.00, NULL, 'Warehouse Transfer #74', 1, '2026-10-06 07:33:52'),
+(440, 137, 2, 'OUT', 15.50, NULL, NULL, NULL, NULL, 522.75, 1800.00, NULL, 'Warehouse Transfer #75', 1, '2026-10-06 07:34:45'),
+(441, 137, 32, 'IN', 15.50, NULL, NULL, NULL, NULL, 519.95, 1800.00, NULL, 'Warehouse Transfer #75', 1, '2026-10-06 07:34:45'),
+(442, 135, 1, 'OUT', 1.70, NULL, NULL, NULL, NULL, 1248.30, 2500.00, NULL, 'Warehouse Transfer #76', 1, '2026-10-06 07:37:50'),
+(443, 135, 32, 'IN', 1.70, NULL, NULL, NULL, NULL, 1.70, 2500.00, NULL, 'Warehouse Transfer #76', 1, '2026-10-06 07:37:50'),
+(444, 138, 1, 'OUT', 1.29, NULL, NULL, NULL, NULL, 697.54, 1400.00, NULL, 'Warehouse Transfer #77', 1, '2026-10-06 07:38:22'),
+(445, 138, 32, 'IN', 1.29, NULL, NULL, NULL, NULL, 2.46, 1400.00, NULL, 'Warehouse Transfer #77', 1, '2026-10-06 07:38:22'),
+(446, 137, 2, 'OUT', 4.70, NULL, NULL, NULL, NULL, 518.05, 1800.00, NULL, 'Warehouse Transfer #78', 1, '2026-10-06 07:39:14'),
+(447, 137, 32, 'IN', 4.70, NULL, NULL, NULL, NULL, 524.65, 1800.00, NULL, 'Warehouse Transfer #78', 1, '2026-10-06 07:39:14'),
+(448, 136, 1, 'OUT', 1.90, NULL, NULL, NULL, NULL, 1497.10, 3000.00, NULL, 'Warehouse Transfer #79', 1, '2026-10-06 07:40:18'),
+(449, 136, 32, 'IN', 1.90, NULL, NULL, NULL, NULL, 1.90, 3000.00, NULL, 'Warehouse Transfer #79', 1, '2026-10-06 07:40:18'),
+(450, 137, 32, 'OUT', 100.00, NULL, NULL, NULL, NULL, 424.65, 1800.00, NULL, 'Warehouse Transfer #80', 1, '2026-10-06 07:41:32'),
+(451, 137, 3, 'IN', 100.00, NULL, NULL, NULL, NULL, 460.00, 1800.00, NULL, 'Warehouse Transfer #80', 1, '2026-10-06 07:41:32'),
+(452, 135, 1, 'OUT', 1.74, NULL, NULL, NULL, NULL, 1246.56, 2500.00, NULL, 'Warehouse Transfer #81', 1, '2026-10-06 09:40:37'),
+(453, 135, 32, 'IN', 1.74, NULL, NULL, NULL, NULL, 3.44, 2500.00, NULL, 'Warehouse Transfer #81', 1, '2026-10-06 09:40:37'),
+(454, 134, 1, 'OUT', 35.00, NULL, NULL, NULL, NULL, 0.00, 94.00, NULL, 'Warehouse Transfer #82', 1, '2026-10-06 09:58:12'),
+(455, 134, 32, 'IN', 35.00, NULL, NULL, NULL, NULL, 35.00, 94.00, NULL, 'Warehouse Transfer #82', 1, '2026-10-06 09:58:12'),
+(456, 157, 1, 'OUT', 1.00, NULL, NULL, NULL, NULL, 20.00, 41.00, NULL, 'Warehouse Transfer #83', 1, '2026-10-06 10:00:33'),
+(457, 157, 32, 'IN', 1.00, NULL, NULL, NULL, NULL, 1.00, 41.00, NULL, 'Warehouse Transfer #83', 1, '2026-10-06 10:00:33'),
+(458, 157, 1, 'OUT', 18.00, NULL, NULL, NULL, NULL, 2.00, 41.00, NULL, 'Warehouse Transfer #84', 1, '2026-10-06 10:01:33'),
+(459, 157, 32, 'IN', 18.00, NULL, NULL, NULL, NULL, 19.00, 41.00, NULL, 'Warehouse Transfer #84', 1, '2026-10-06 10:01:33'),
+(460, 118, 1, 'OUT', 1.00, NULL, NULL, NULL, NULL, 20.00, 43.00, NULL, 'Warehouse Transfer #85', 1, '2026-10-06 10:04:24'),
+(461, 118, 32, 'IN', 1.00, NULL, NULL, NULL, NULL, 1.00, 43.00, NULL, 'Warehouse Transfer #85', 1, '2026-10-06 10:04:24'),
+(462, 118, 32, 'OUT', 0.50, NULL, NULL, NULL, NULL, 0.50, 43.00, NULL, 'Warehouse Transfer #86', 1, '2026-10-06 10:05:09'),
+(463, 118, 36, 'IN', 0.50, NULL, NULL, NULL, NULL, 0.50, 43.00, NULL, 'Warehouse Transfer #86', 1, '2026-10-06 10:05:09'),
+(464, 118, 36, 'OUT', 0.50, NULL, NULL, NULL, NULL, 0.00, 43.00, NULL, 'Warehouse Transfer #87', 1, '2026-10-06 10:06:07'),
+(465, 118, 28, 'IN', 0.50, NULL, NULL, NULL, NULL, 0.50, 43.00, NULL, 'Warehouse Transfer #87', 1, '2026-10-06 10:06:07'),
+(466, 157, 32, 'OUT', 1.50, NULL, NULL, NULL, NULL, 17.50, 39.50, 'PROJECT #57', 'Bearing 6205', 1, '2026-10-06 10:18:39');
 
 -- --------------------------------------------------------
 
@@ -899,7 +975,38 @@ INSERT INTO `inventory_transfers` (`id`, `inventory_id`, `from_location_id`, `to
 (53, 122, 1, 32, 20.00, '', '', 1, '2026-09-30 16:15:06', NULL, NULL, NULL, 'COMPLETED'),
 (54, 122, 1, 3, 15.00, '', '', 1, '2026-09-30 16:20:27', NULL, NULL, NULL, 'COMPLETED'),
 (55, 168, 1, 32, 10.00, 'من الرئيسي الى التشيع', 'نقل من الرئيسي الى التشيع', 1, '2026-09-30 16:29:33', NULL, NULL, NULL, 'COMPLETED'),
-(56, 148, 1, 32, 4.00, 'توفير الكمية للمهمة القادمة', 'توفير الكمية للمهمة القادمة التي سيقوم بها الكهربائي', 1, '2026-10-01 05:41:18', NULL, NULL, NULL, 'COMPLETED');
+(56, 148, 1, 32, 4.00, 'توفير الكمية للمهمة القادمة', 'توفير الكمية للمهمة القادمة التي سيقوم بها الكهربائي', 1, '2026-10-01 05:41:18', NULL, NULL, NULL, 'COMPLETED'),
+(57, 181, 1, 32, 1.67, '', '', 1, '2026-10-05 12:07:02', '2026-10-05 14:10:15', 1, 58, 'REVERSED'),
+(58, 181, 32, 1, 1.67, '', 'Reversal of Transfer #57', 1, '2026-10-05 12:10:15', NULL, NULL, NULL, 'COMPLETED'),
+(59, 148, 1, 32, 1.00, '', '', 1, '2026-10-05 15:02:55', NULL, NULL, NULL, 'COMPLETED'),
+(60, 137, 1, 32, 1.00, '', '', 1, '2026-10-05 15:05:40', NULL, NULL, NULL, 'COMPLETED'),
+(61, 156, 1, 32, 1.00, '', '', 1, '2026-10-05 15:17:46', NULL, NULL, NULL, 'COMPLETED'),
+(62, 155, 1, 32, 1.00, '', '', 1, '2026-10-05 15:26:16', NULL, NULL, NULL, 'COMPLETED'),
+(63, 156, 3, 1, 1.00, '', '', 1, '2026-10-05 15:43:08', NULL, NULL, NULL, 'COMPLETED'),
+(64, 137, 1, 32, 1.70, '', '', 1, '2026-10-05 15:43:31', NULL, NULL, NULL, 'COMPLETED'),
+(65, 163, 1, 32, 100.00, '', '', 1, '2026-10-05 15:48:30', NULL, NULL, NULL, 'COMPLETED'),
+(66, 137, 1, 32, 500.00, '', '', 1, '2026-10-05 15:51:56', NULL, NULL, NULL, 'COMPLETED'),
+(67, 122, 1, 32, 1.90, '', '', 1, '2026-10-05 16:25:27', NULL, NULL, NULL, 'COMPLETED'),
+(68, 138, 1, 32, 1.17, '', '', 1, '2026-10-06 05:16:31', NULL, NULL, NULL, 'COMPLETED'),
+(69, 123, 1, 32, 100.00, '', '', 1, '2026-10-06 06:50:41', NULL, NULL, NULL, 'COMPLETED'),
+(70, 172, 32, 3, 12.00, '', '', 1, '2026-10-06 06:52:27', NULL, NULL, NULL, 'COMPLETED'),
+(71, 172, 32, 2, 2.00, '', '', 1, '2026-10-06 07:28:12', NULL, NULL, NULL, 'COMPLETED'),
+(72, 136, 1, 3, 1.00, '', '', 1, '2026-10-06 07:32:17', NULL, NULL, NULL, 'COMPLETED'),
+(73, 137, 2, 32, 1.75, '', '', 1, '2026-10-06 07:33:14', NULL, NULL, NULL, 'COMPLETED'),
+(74, 114, 2, 32, 100.00, '', '', 1, '2026-10-06 07:33:52', NULL, NULL, NULL, 'COMPLETED'),
+(75, 137, 2, 32, 15.50, '', '', 1, '2026-10-06 07:34:45', NULL, NULL, NULL, 'COMPLETED'),
+(76, 135, 1, 32, 1.70, '', '', 1, '2026-10-06 07:37:50', NULL, NULL, NULL, 'COMPLETED'),
+(77, 138, 1, 32, 1.29, '', '', 1, '2026-10-06 07:38:22', NULL, NULL, NULL, 'COMPLETED'),
+(78, 137, 2, 32, 4.70, '', '', 1, '2026-10-06 07:39:14', NULL, NULL, NULL, 'COMPLETED'),
+(79, 136, 1, 32, 1.90, '', '', 1, '2026-10-06 07:40:18', NULL, NULL, NULL, 'COMPLETED'),
+(80, 137, 32, 3, 100.00, '', '', 1, '2026-10-06 07:41:32', NULL, NULL, NULL, 'COMPLETED'),
+(81, 135, 1, 32, 1.74, '', '', 1, '2026-10-06 09:40:37', NULL, NULL, NULL, 'COMPLETED'),
+(82, 134, 1, 32, 35.00, '', '', 1, '2026-10-06 09:58:12', NULL, NULL, NULL, 'COMPLETED'),
+(83, 157, 1, 32, 1.00, '', '', 1, '2026-10-06 10:00:33', NULL, NULL, NULL, 'COMPLETED'),
+(84, 157, 1, 32, 18.00, '', '', 1, '2026-10-06 10:01:33', NULL, NULL, NULL, 'COMPLETED'),
+(85, 118, 1, 32, 1.00, '', '', 1, '2026-10-06 10:04:24', NULL, NULL, NULL, 'COMPLETED'),
+(86, 118, 32, 36, 0.50, '', '', 1, '2026-10-06 10:05:09', NULL, NULL, NULL, 'COMPLETED'),
+(87, 118, 36, 28, 0.50, '', '', 1, '2026-10-06 10:06:07', NULL, NULL, NULL, 'COMPLETED');
 
 -- --------------------------------------------------------
 
@@ -1157,7 +1264,8 @@ INSERT INTO `project_costs` (`id`, `project_id`, `requisition_id`, `fulfillment_
 (256, 51, 45, 61, NULL, NULL, NULL, 'PROFESSIONAL_SERVICES', 'Plumber', 1.00, 4000.00, '2026-10-04 07:41:32'),
 (257, 51, 67, 62, NULL, NULL, NULL, 'EQUIPMENT', 'Excavator', 1.00, 1500.00, '2026-10-04 08:18:20'),
 (258, 51, NULL, NULL, NULL, NULL, NULL, 'SITE_EXPENSES', 'ترخيص احضار الالات ثقيلة', 1.00, 95.00, '2026-10-04 08:37:46'),
-(259, 49, NULL, NULL, 118, NULL, 2, 'MATERIALS', 'Reservation Fulfillment: Construction Gravel', 7.00, 80.00, '2026-10-04 15:41:26');
+(259, 49, NULL, NULL, 118, NULL, 2, 'MATERIALS', 'Reservation Fulfillment: Construction Gravel', 7.00, 80.00, '2026-10-04 15:41:26'),
+(260, 57, NULL, NULL, 157, NULL, 32, 'MATERIALS', 'Bearing 6205', 1.50, 14.50, '2026-10-06 10:18:39');
 
 -- --------------------------------------------------------
 
@@ -1287,7 +1395,8 @@ INSERT INTO `project_ledger` (`id`, `project_id`, `entry_type`, `ref_table`, `re
 (160, 51, 'cost', 'project_costs', 258, 'ترخيص احضار الالات ثقيلة', 95.00, 0.00, 212505.00, '2026-10-04 08:37:46'),
 (161, 56, 'advance', 'project_advances', 27, 'First installment', 0.00, 15000.00, 5330.00, '2026-10-04 09:06:17'),
 (162, 56, 'advance', 'project_advances', 28, 'second installment', 0.00, 10000.00, 15330.00, '2026-10-04 09:27:05'),
-(163, 49, 'cost', 'project_costs', 259, 'Reservation Fulfillment: Construction Gravel', 560.00, 0.00, -1715.90, '2026-10-04 15:41:26');
+(163, 49, 'cost', 'project_costs', 259, 'Reservation Fulfillment: Construction Gravel', 560.00, 0.00, -1715.90, '2026-10-04 15:41:26'),
+(164, 57, 'cost', 'project_costs', 260, 'Bearing 6205', 21.75, 0.00, 496248.75, '2026-10-06 10:18:39');
 
 -- --------------------------------------------------------
 
@@ -1842,11 +1951,9 @@ INSERT INTO `resource_requisition_items` (`id`, `requisition_id`, `resource_sour
 (71, 45, 'RESOURCE', 'EQUIPMENT', NULL, 14, 'Excavator', 'Day', 1.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-10-04 05:37:11'),
 (72, 45, 'RESOURCE', 'PROFESSIONAL_SERVICES', NULL, 23, 'Plumber', 'Lump Sum', 1.00, 1.00, 0.00, 0.00, '', 'FULFILLED', '2026-10-04 05:38:42'),
 (73, 67, 'RESOURCE', 'EQUIPMENT', NULL, 14, 'Excavator', 'Day', 1.00, 1.00, 0.00, 0.00, '', 'FULFILLED', '2026-10-04 08:17:37'),
-(74, 68, 'INVENTORY', NULL, NULL, 135, 'Electrical Cable 1.5mm² Single Core', 'Meter', 3.50, 0.00, 0.00, 0.00, '', 'OPEN', '2026-10-04 21:46:34'),
-(75, 68, 'INVENTORY', NULL, NULL, 167, 'Anchor Bolt M16', 'Pieces', 1.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-10-04 21:47:00'),
-(77, 68, 'INVENTORY', NULL, NULL, 138, 'Electrical Cable 6mm² Single Core', 'Meter', 5.75, 0.00, 0.00, 0.00, '', 'OPEN', '2026-10-04 21:49:36'),
-(79, 68, 'INVENTORY', NULL, NULL, 137, 'Electrical Cable 4mm² Single Core', 'Meter', 1.50, 0.00, 0.00, 0.00, '', 'OPEN', '2026-10-05 05:12:52'),
-(80, 68, 'RESOURCE', NULL, NULL, 19, 'Mason', 'Square Meter', 12.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-10-05 05:15:25');
+(75, 68, 'INVENTORY', 'MATERIALS', NULL, 167, 'Anchor Bolt M16', 'Pieces', 8.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-10-04 21:47:00'),
+(77, 68, 'INVENTORY', 'MATERIALS', NULL, 138, 'Electrical Cable 6mm² Single Core', 'Meter', 5.75, 0.00, 0.00, 0.00, '', 'OPEN', '2026-10-04 21:49:36'),
+(82, 68, 'INVENTORY', 'MATERIALS', NULL, 157, 'Bearing 6205', 'Pieces', 25.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-10-05 06:42:06');
 
 -- --------------------------------------------------------
 
@@ -2984,13 +3091,13 @@ ALTER TABLE `inventory_locations`
 -- AUTO_INCREMENT for table `inventory_location_stock`
 --
 ALTER TABLE `inventory_location_stock`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=509;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=520;
 
 --
 -- AUTO_INCREMENT for table `inventory_movements`
 --
 ALTER TABLE `inventory_movements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=402;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=467;
 
 --
 -- AUTO_INCREMENT for table `inventory_reservations`
@@ -3002,7 +3109,7 @@ ALTER TABLE `inventory_reservations`
 -- AUTO_INCREMENT for table `inventory_transfers`
 --
 ALTER TABLE `inventory_transfers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -3026,7 +3133,7 @@ ALTER TABLE `project_advances`
 -- AUTO_INCREMENT for table `project_costs`
 --
 ALTER TABLE `project_costs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=260;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=261;
 
 --
 -- AUTO_INCREMENT for table `project_documents`
@@ -3038,7 +3145,7 @@ ALTER TABLE `project_documents`
 -- AUTO_INCREMENT for table `project_ledger`
 --
 ALTER TABLE `project_ledger`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
 
 --
 -- AUTO_INCREMENT for table `project_scopes`
@@ -3122,7 +3229,7 @@ ALTER TABLE `resource_requisition_fulfillment_items`
 -- AUTO_INCREMENT for table `resource_requisition_items`
 --
 ALTER TABLE `resource_requisition_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `roles`

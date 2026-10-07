@@ -2,6 +2,31 @@
     <i class="fas fa-edit"></i>
     <?= __('edit_cost_item') ?> #<?= $cost->id ?>
 </h2>
+<?= __('project') ?>
+<div class="text-muted mb-3">
+    <i class="fas fa-project-diagram"></i>
+    <strong><?= htmlspecialchars($project->project_code) ?>
+    -
+    <?= htmlspecialchars(strtoupper($project->title)) ?></strong>
+</div>
+<?php
+
+$selectedInventory = null;
+
+if (
+    $cost->cost_type === 'MATERIALS' &&
+    !empty($cost->inventory_id)
+) {
+    foreach ($inventory as $item) {
+
+        if ((int)$item->id === (int)$cost->inventory_id) {
+            $selectedInventory = $item;
+            break;
+        }
+    }
+}
+
+?>
 
 <div class="alert alert-danger my-3">
 
@@ -90,14 +115,31 @@
                 <?= __('quantity') ?>
             </label>
 
-            <input
-                type="number"
-                name="quantity"
-                value="<?= $cost->quantity ?>"
-                class="form-control"
-                min="0"
-                step="0.01"
-                required>
+   <input
+    type="number"
+    name="quantity"
+    id="quantity"
+    value="<?= $cost->quantity ?>"
+    class="form-control"
+    min="1"
+    step="1"
+    required>
+
+<small
+    id="qtyRuleFraction"
+    class="text-success d-none">
+
+    <?= __('fractional_quantities_allowed') ?>
+
+</small>
+
+<small
+    id="qtyRuleWhole"
+    class="text-muted">
+
+    <?= __('whole_quantities_only') ?>
+
+</small>
 
         </div>
 
@@ -108,7 +150,7 @@
                 <?= __('unit_cost_dollar') ?>
             </label>
 
-            <?php if ($cost->cost_type === 'materials'): ?>
+            <?php if ($cost->cost_type === 'MATERIALS'): ?>
 
                 <input
                     type="number"
@@ -139,7 +181,7 @@
     </div>
 
     <!-- INVENTORY ITEM read-only -->
-    <?php if ($cost->cost_type == 'materials'): ?>
+    <?php if ($cost->cost_type == 'MATERIALS'): ?>
 
         <div class="col-md-6 mt-2">
 
@@ -222,10 +264,39 @@
 
 <!-- JS scripts -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+ document.addEventListener('DOMContentLoaded', function() {
 
-        const unitPrice = document.getElementById('unitPrice');
-        const priceLabel = document.getElementById('priceLabel');
+    const quantity =
+        document.getElementById('quantity');
 
-    });
+    const qtyRuleFraction =
+        document.getElementById('qtyRuleFraction');
+
+    const qtyRuleWhole =
+        document.getElementById('qtyRuleWhole');
+
+    const allowFraction =
+        <?= (
+            $selectedInventory &&
+            (int)$selectedInventory->allow_fraction === 1
+        ) ? 'true' : 'false' ?>;
+
+    if (allowFraction) {
+
+        quantity.step = '0.01';
+        quantity.min = '0.01';
+
+        qtyRuleFraction.classList.remove('d-none');
+        qtyRuleWhole.classList.add('d-none');
+
+    } else {
+
+        quantity.step = '1';
+        quantity.min = '1';
+
+        qtyRuleFraction.classList.add('d-none');
+        qtyRuleWhole.classList.remove('d-none');
+    }
+
+});
 </script>

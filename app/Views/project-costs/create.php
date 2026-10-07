@@ -59,8 +59,10 @@ $locations = $locations ?? [];
                 <option value="">-- <?= __('select_item') ?> --</option>
 
                 <?php foreach ($inventory as $item) : ?>
-                    <option value="<?= $item->id ?>"
-                        data-cost="<?= $item->cost_price ?>">
+                    <option
+                        value="<?= $item->id ?>"
+                        data-cost="<?= $item->cost_price ?>"
+                        data-allow-fraction="<?= (int)$item->allow_fraction ?>">
                         <?= $item->name ?>
                         (
                         <?= __('available') ?>:
@@ -104,8 +106,31 @@ $locations = $locations ?? [];
 
         <div class="col-md-2">
             <label class="form-label"><?= __('quantity') ?></label>
-            <input type="number" name="quantity" class="form-control" value="" min="0" step="0.01" required>
-            <small id="qtyWarning" class="text-danger">
+            <input
+                type="number"
+                name="quantity"
+                id="quantity"
+                class="form-control"
+                value=""
+                min="1"
+                step="1"
+                required>
+
+            <small
+                id="qtyRuleFraction"
+                class="text-success d-none">
+                <?= __('fractional_quantities_allowed') ?>
+            </small>
+
+            <small
+                id="qtyRuleWhole"
+                class="text-muted">
+                <?= __('whole_quantities_only') ?>
+            </small>
+
+            <small
+                id="qtyWarning"
+                class="text-danger">
                 (<?= __('quantity_warning') ?>)
             </small>
         </div>
@@ -145,6 +170,9 @@ $locations = $locations ?? [];
 
         const descriptionInput = document.querySelector('[name="description"]');
         const quantityInput = document.querySelector('[name="quantity"]');
+        const qtyRuleFraction = document.getElementById('qtyRuleFraction');
+
+        const qtyRuleWhole = document.getElementById('qtyRuleWhole');
         const unitPriceInput = document.querySelector('[name="unit_price"]');
 
         const qtyWarning = document.getElementById('qtyWarning');
@@ -183,8 +211,69 @@ $locations = $locations ?? [];
 
             }
 
+            updateQuantityRules();
+
         }
 
+        function updateQuantityRules() {
+
+    /*
+     * NON-MATERIAL
+     * Always whole numbers.
+     */
+    if (costType.value !== 'MATERIALS') {
+
+        quantityInput.step = '1';
+        quantityInput.min = '1';
+
+        qtyRuleFraction.classList.add('d-none');
+        qtyRuleWhole.classList.remove('d-none');
+
+        return;
+    }
+
+    /*
+     * MATERIAL
+     */
+
+    const option =
+        inventorySelect.options[
+            inventorySelect.selectedIndex
+        ];
+
+    if (!option || !inventorySelect.value) {
+
+        quantityInput.step = '1';
+        quantityInput.min = '1';
+
+        qtyRuleFraction.classList.add('d-none');
+        qtyRuleWhole.classList.remove('d-none');
+
+        return;
+    }
+
+    const allowFraction =
+        option.getAttribute(
+            'data-allow-fraction'
+        ) === '1';
+
+    if (allowFraction) {
+
+        quantityInput.step = '0.01';
+        quantityInput.min = '0.01';
+
+        qtyRuleFraction.classList.remove('d-none');
+        qtyRuleWhole.classList.add('d-none');
+
+    } else {
+
+        quantityInput.step = '1';
+        quantityInput.min = '1';
+
+        qtyRuleFraction.classList.add('d-none');
+        qtyRuleWhole.classList.remove('d-none');
+    }
+}
 
         // ==================================================
         // AUTO FILL MATERIAL INFO
@@ -267,13 +356,15 @@ $locations = $locations ?? [];
 
         costType.addEventListener('change', updateMode);
 
-        inventorySelect.addEventListener('change', function() {
+     inventorySelect.addEventListener('change', function() {
 
-            autoFillMaterial();
+    autoFillMaterial();
 
-            loadLocations();
+    loadLocations();
 
-        });
+    updateQuantityRules();
+
+});
 
 
         // ==================================================
