@@ -63,22 +63,15 @@ class ProjectCosts extends Controller
             try {
                 $this->service('ProjectCost')->create([
                     'project_id'      => $project_id,
-
                     'requisition_id'  => null,
                     'fulfillment_id'  => null,
-
                     'cost_type'       => $_POST['cost_type'] ?? null,
-
                     'description'     => trim($_POST['description'] ?? ''),
-
                     'quantity'        => (float)($_POST['quantity'] ?? 0),
-
                     'unit_price'      => (float)($_POST['unit_price'] ?? 0),
-
                     'inventory_id'    => !empty($_POST['inventory_id'])
                         ? (int)$_POST['inventory_id']
                         : null,
-
                     'location_id'     => !empty($_POST['location_id'])
                         ? (int)$_POST['location_id']
                         : null
@@ -111,28 +104,21 @@ class ProjectCosts extends Controller
                 exit;
             }
         }
-
         // ============================================
         // DISPLAY FORM (GET)
         // ============================================
-
         $projectModel = $this->model('Project');
-
         $project = $projectModel->getById($project_id);
-
         if (!$project) {
             header('Location: ' . URLROOT . '/projects');
             exit;
         }
-
         $inventoryModel = $this->model('Inventory');
         $locationModel  = $this->model('InventoryLocation');
-
         $data['project']    = $project;
         $data['project_id'] = $project_id;
         $data['inventory']  = $inventoryModel->getAll();
         $data['locations']  = $locationModel->getAll();
-
         $this->view(
             'project-costs/create',
             $data
@@ -142,9 +128,7 @@ class ProjectCosts extends Controller
     // EDIT Project Costs
     public function edit($id)
     {
-
         AuthHelper::can('project_costs.edit');
-
         $costModel = $this->model('ProjectCost');
         $inventoryModel = $this->model('Inventory');
         $locationModel = $this->model('InventoryLocation');

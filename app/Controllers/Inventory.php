@@ -37,23 +37,19 @@ class Inventory extends Controller
 
             $input = [
                 'name' => trim($_POST['name'] ?? ''),
+                'description' => trim($_POST['description'] ?? ''),
                 'sku' => trim($_POST['sku'] ?? ''),
                 'category' => $_POST['category'] ?? null,
-
                 'brand_id' => !empty($_POST['brand_id'])
                     ? (int)$_POST['brand_id']
                     : null,
-
                 'country_id' => !empty($_POST['country_id'])
                     ? (int)$_POST['country_id']
                     : null,
-
                 'unit_id' => !empty($_POST['unit_id'])
                     ? (int)$_POST['unit_id']
                     : null,
-
                 'min_stock' => (int)($_POST['min_stock'] ?? 10),
-
                 'allow_fraction' =>
                 !empty($_POST['allow_fraction']) ? 1 : 0
             ];
@@ -113,6 +109,7 @@ class Inventory extends Controller
         $brandModel     = $this->model('Brand');
         $countryModel   = $this->model('Country');
         $unitModel = $this->model('Unit');
+        
 
         $inventory = $inventoryModel->getById($id);
 
@@ -123,29 +120,21 @@ class Inventory extends Controller
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
             $input = [
-
                 'name' => trim($_POST['name'] ?? ''),
-
+                'description' => trim($_POST['description'] ?? ''),
                 'sku' => trim($_POST['sku'] ?? ''),
-
                 'category' => $_POST['category'] ?? null,
-
                 'brand_id' => !empty($_POST['brand_id'])
                     ? (int)$_POST['brand_id']
                     : null,
-
                 'country_id' => !empty($_POST['country_id'])
                     ? (int)$_POST['country_id']
                     : null,
-
                 'unit_id' => !empty($_POST['unit_id'])
                     ? (int)$_POST['unit_id']
                     : null,
-
                 'min_stock' => (int)($_POST['min_stock'] ?? 10),
-
                 'allow_fraction' =>
                 !empty($_POST['allow_fraction']) ? 1 : 0
             ];
@@ -196,33 +185,32 @@ class Inventory extends Controller
     }
 
     public function delete($id)
-{
-    AuthHelper::can('inventory.delete');
+    {
+        AuthHelper::can('inventory.delete');
 
-    $inventoryModel = $this->model('Inventory');
+        $inventoryModel = $this->model('Inventory');
 
-    try {
+        try {
 
-        $result = $inventoryModel->delete($id);
+            $result = $inventoryModel->delete($id);
 
-        if (!$result) {
-            FlashHelper::error(__('inventory_item_not_found'));
-        } else {
-            FlashHelper::success(__('inventory_item_deleted_successfully'));
+            if (!$result) {
+                FlashHelper::error(__('inventory_item_not_found'));
+            } else {
+                FlashHelper::success(__('inventory_item_deleted_successfully'));
+            }
+        } catch (PDOException $e) {
+
+            if ($e->getCode() === '23000') {
+                FlashHelper::error(__('inventory_item_cannot_be_deleted'));
+            } else {
+                FlashHelper::error(__('unable_to_delete_inventory_item'));
+            }
         }
 
-    } catch (PDOException $e) {
-
-        if ($e->getCode() === '23000') {
-            FlashHelper::error(__('inventory_item_cannot_be_deleted'));
-        } else {
-            FlashHelper::error(__('unable_to_delete_inventory_item'));
-        }
+        header('Location: ' . URLROOT . '/inventory');
+        exit;
     }
-
-    header('Location: ' . URLROOT . '/inventory');
-    exit;
-}
 
     public function details($id)
     {
@@ -278,9 +266,9 @@ class Inventory extends Controller
 
         if (!$item) {
 
-       FlashHelper::error(
-    __('inventory_item_not_found')
-);
+            FlashHelper::error(
+                __('inventory_item_not_found')
+            );
 
             header(
                 'Location: ' .
@@ -373,25 +361,25 @@ class Inventory extends Controller
         );
     }
 
-/*
+    /*
 |--------------------------------------------------------------------------
 | PRINT GLOBAL INVENTORY
 |--------------------------------------------------------------------------
 */
 
-public function print()
-{
-    AuthHelper::can('inventory.view');
+    public function print()
+    {
+        AuthHelper::can('inventory.view');
 
-    $inventoryModel = $this->model('Inventory');
+        $inventoryModel = $this->model('Inventory');
 
-    $data['stock'] =
-        $inventoryModel->getStock();
+        $data['stock'] =
+            $inventoryModel->getStock();
 
-    $this->view(
-        'inventory/print',
-        $data,
-        false
-    );
-}
+        $this->view(
+            'inventory/print',
+            $data,
+            false
+        );
     }
+}

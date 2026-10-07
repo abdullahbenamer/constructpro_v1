@@ -10,25 +10,41 @@
             <?= __('inventory_item') ?>
         </label>
 
-        <select name="inventory_id"
-                class="form-select"
-                required>
+        <select name="inventory_id" 
+        id="inventory_id" 
+        class="form-select"
+            required>
 
             <?php foreach ($inventory as $item) : ?>
 
-                <option value="<?= $item->id ?>"
+                <option
+                    value="<?= $item->id ?>"
+                    data-uom-en="<?= htmlspecialchars($item->unit_name ?? '') ?>"
+                    data-uom-ar="<?= htmlspecialchars($item->unit_name_a ?? '') ?>"
                     <?= $reservation->inventory_id == $item->id ? 'selected' : '' ?>>
 
                     <?= htmlspecialchars($item->name) ?>
 
                 </option>
-
             <?php endforeach; ?>
 
         </select>
 
     </div>
 
+    <div class="mb-3">
+
+        <label>
+            <?= __('unit_of_measure') ?>
+        </label>
+
+        <input
+            type="text"
+            id="uom"
+            class="form-control"
+            readonly>
+
+    </div>
 
     <div class="mb-3">
 
@@ -37,7 +53,8 @@
         </label>
 
         <select name="location_id"
-                class="form-select">
+            id="location_id"
+            class="form-select">
 
             <option value="">
                 <?= __('any_location') ?>
@@ -68,7 +85,7 @@
         </label>
 
         <select name="project_id"
-                class="form-select">
+            class="form-select">
 
             <option value="">
                 <?= __('no_project') ?>
@@ -99,12 +116,12 @@
         </label>
 
         <input type="number"
-               step="0.01"
-               min="0.01"
-               name="quantity"
-               value="<?= $reservation->quantity ?>"
-               class="form-control"
-               required>
+            step="0.01"
+            min="0.01"
+            name="quantity"
+            value="<?= $reservation->quantity ?>"
+            class="form-control"
+            required>
 
     </div>
 
@@ -116,9 +133,9 @@
         </label>
 
         <input type="text"
-               name="reference"
-               value="<?= htmlspecialchars($reservation->reference) ?>"
-               class="form-control">
+            name="reference"
+            value="<?= htmlspecialchars($reservation->reference) ?>"
+            class="form-control">
 
     </div>
 
@@ -130,7 +147,7 @@
         </label>
 
         <textarea name="notes"
-                  class="form-control"><?= htmlspecialchars($reservation->notes) ?></textarea>
+            class="form-control"><?= htmlspecialchars($reservation->notes) ?></textarea>
 
     </div>
 
@@ -142,3 +159,48 @@
     </button>
 
 </form>
+
+<script>
+    const inventorySelect =
+        document.getElementById('inventory_id');
+
+    const uomInput =
+        document.getElementById('uom');
+
+    function updateUOM() {
+
+        const option =
+            inventorySelect.options[
+                inventorySelect.selectedIndex
+            ];
+
+        if (!option || !inventorySelect.value) {
+
+            uomInput.value = '';
+
+            return;
+        }
+
+        const currentLanguage =
+            document.documentElement.lang.toLowerCase();
+
+        if (currentLanguage === 'ar') {
+
+            uomInput.value =
+                option.dataset.uomAr || '';
+
+        } else {
+
+            uomInput.value =
+                option.dataset.uomEn || '';
+        }
+    }
+
+    inventorySelect.addEventListener(
+        'change',
+        updateUOM
+    );
+
+    // Display UOM for the initially selected item
+    updateUOM();
+</script>

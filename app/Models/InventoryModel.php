@@ -238,6 +238,7 @@ LEFT JOIN countries c
             i.*,
 
             u.unit_name,
+            u.unit_name_a,
 
            c.country_name,
            
@@ -319,6 +320,7 @@ LEFT JOIN countries c
             "INSERT INTO inventory
         (
             name,
+                description,
             category,
             sku,
             brand_id,
@@ -330,12 +332,13 @@ LEFT JOIN countries c
         )
         VALUES
         (
-            ?, ?, ?, ?, ?,
+            ?, ?, ?, ?, ?, ?,
             0,
             ?, ?, ?
         )",
             [
                 $data['name'],
+                $data['description'],
                 $data['category'],
                 $data['sku'],
                 $data['brand_id'],
@@ -423,6 +426,7 @@ c.country_code AS country_code,
         UPDATE inventory
         SET
             name = ?,
+            description = ?,
             sku = ?,
             category = ?,
             brand_id = ?,
@@ -434,6 +438,7 @@ c.country_code AS country_code,
         ",
             [
                 $data['name'],
+                $data['description'],
                 $data['sku'],
                 $data['category'],
                 $data['brand_id'],

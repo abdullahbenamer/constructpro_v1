@@ -62,25 +62,46 @@ $locations = $locations ?? [];
                     <option
                         value="<?= $item->id ?>"
                         data-cost="<?= $item->cost_price ?>"
-                        data-allow-fraction="<?= (int)$item->allow_fraction ?>">
+                        data-allow-fraction="<?= (int)$item->allow_fraction ?>"
+                        data-uom-en="<?= htmlspecialchars($item->unit_name ?? '') ?>"
+                        data-uom-ar="<?= htmlspecialchars($item->unit_name_a ?? '') ?>"
+                        data-description="<?= htmlspecialchars($item->description ?? '') ?>">
+
                         <?= $item->name ?>
+
                         (
                         <?= __('available') ?>:
                         <?= $item->available_qty ?>
+
                         /
+
                         <?= __('physical') ?>:
                         <?= $item->quantity ?>
                         )
+
                     </option>
                 <?php endforeach; ?>
 
             </select>
         </div>
 
-        <!-- Cost/Item Description -->
+        <!-- UOM read only -->
+        <div class="col-md-2" id="uomBlock">
+
+            <label class="form-label">
+                <?= __('unit_of_measure') ?>
+            </label>
+            <input
+                type="text"
+                id="uom"
+                class="form-control"
+                readonly>
+        </div>
+
+        <!-- Item Description -->
         <div class="col-md-5">
             <label class="form-label"><?= __('description') ?></label>
-            <input type="text" name="description" class="form-control" required placeholder="<?= __('resource_description_placeholder') ?>">
+            <input type="text" name="description" class="form-control" required placeholder="<?= __('resource_description_missing') ?>">
         </div>
 
         <!-- Location -->
@@ -104,6 +125,7 @@ $locations = $locations ?? [];
 
         </div>
 
+        <!-- Quantity -->
         <div class="col-md-2">
             <label class="form-label"><?= __('quantity') ?></label>
             <input
@@ -135,6 +157,7 @@ $locations = $locations ?? [];
             </small>
         </div>
 
+        <!-- Unit Price -->
         <div class="col-md-2">
             <label class="form-label" id="priceLabel">
                 <?= __('unit_cost') ?> (LYD)
@@ -167,6 +190,7 @@ $locations = $locations ?? [];
 
         const inventorySelect = document.getElementById('inventorySelect');
         const locationSelect = document.getElementById('locationSelect');
+        const uomInput = document.getElementById('uom');
 
         const descriptionInput = document.querySelector('[name="description"]');
         const quantityInput = document.querySelector('[name="quantity"]');
@@ -204,6 +228,7 @@ $locations = $locations ?? [];
 
                 descriptionInput.value = '';
                 unitPriceInput.value = '';
+                uomInput.value = '';
 
             } else {
 
@@ -217,68 +242,67 @@ $locations = $locations ?? [];
 
         function updateQuantityRules() {
 
-    /*
-     * NON-MATERIAL
-     * Always whole numbers.
-     */
-    if (costType.value !== 'MATERIALS') {
+            /*
+             * NON-MATERIAL
+             * Always whole numbers.
+             */
+            if (costType.value !== 'MATERIALS') {
 
-        quantityInput.step = '1';
-        quantityInput.min = '1';
+                quantityInput.step = '1';
+                quantityInput.min = '1';
 
-        qtyRuleFraction.classList.add('d-none');
-        qtyRuleWhole.classList.remove('d-none');
+                qtyRuleFraction.classList.add('d-none');
+                qtyRuleWhole.classList.remove('d-none');
 
-        return;
-    }
+                return;
+            }
 
-    /*
-     * MATERIAL
-     */
+            /*
+             * MATERIAL
+             */
 
-    const option =
-        inventorySelect.options[
-            inventorySelect.selectedIndex
-        ];
+            const option =
+                inventorySelect.options[
+                    inventorySelect.selectedIndex
+                ];
 
-    if (!option || !inventorySelect.value) {
+            if (!option || !inventorySelect.value) {
 
-        quantityInput.step = '1';
-        quantityInput.min = '1';
+                quantityInput.step = '1';
+                quantityInput.min = '1';
 
-        qtyRuleFraction.classList.add('d-none');
-        qtyRuleWhole.classList.remove('d-none');
+                qtyRuleFraction.classList.add('d-none');
+                qtyRuleWhole.classList.remove('d-none');
 
-        return;
-    }
+                return;
+            }
 
-    const allowFraction =
-        option.getAttribute(
-            'data-allow-fraction'
-        ) === '1';
+            const allowFraction =
+                option.getAttribute(
+                    'data-allow-fraction'
+                ) === '1';
 
-    if (allowFraction) {
+            if (allowFraction) {
 
-        quantityInput.step = '0.01';
-        quantityInput.min = '0.01';
+                quantityInput.step = '0.01';
+                quantityInput.min = '0.01';
 
-        qtyRuleFraction.classList.remove('d-none');
-        qtyRuleWhole.classList.add('d-none');
+                qtyRuleFraction.classList.remove('d-none');
+                qtyRuleWhole.classList.add('d-none');
 
-    } else {
+            } else {
 
-        quantityInput.step = '1';
-        quantityInput.min = '1';
+                quantityInput.step = '1';
+                quantityInput.min = '1';
 
-        qtyRuleFraction.classList.add('d-none');
-        qtyRuleWhole.classList.remove('d-none');
-    }
-}
+                qtyRuleFraction.classList.add('d-none');
+                qtyRuleWhole.classList.remove('d-none');
+            }
+        }
 
         // ==================================================
         // AUTO FILL MATERIAL INFO
         // ==================================================
-
         function autoFillMaterial() {
 
             const option =
@@ -288,21 +312,33 @@ $locations = $locations ?? [];
 
                 descriptionInput.value = '';
                 unitPriceInput.value = '';
+                uomInput.value = '';
 
                 return;
+            }
 
+            const currentLanguage =
+                document.documentElement.lang.toLowerCase();
+
+            if (currentLanguage === 'ar') {
+
+                uomInput.value =
+                    option.dataset.uomAr || '';
+
+            } else {
+
+                uomInput.value =
+                    option.dataset.uomEn || '';
             }
 
             descriptionInput.value =
-                option.text.split('(')[0].trim();
+                option.dataset.description || '';
 
             unitPriceInput.value =
                 parseFloat(
                     option.dataset.cost || 0
                 ).toFixed(2);
-
         }
-
 
         // ==================================================
         // LOAD LOCATIONS
@@ -356,15 +392,15 @@ $locations = $locations ?? [];
 
         costType.addEventListener('change', updateMode);
 
-     inventorySelect.addEventListener('change', function() {
+        inventorySelect.addEventListener('change', function() {
 
-    autoFillMaterial();
+            autoFillMaterial();
 
-    loadLocations();
+            loadLocations();
 
-    updateQuantityRules();
+            updateQuantityRules();
 
-});
+        });
 
 
         // ==================================================

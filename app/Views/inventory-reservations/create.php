@@ -37,9 +37,10 @@
 
             <?php foreach ($inventory as $item): ?>
 
-                <option
+ <option
     value="<?= $item->id ?>"
-    data-uom="<?= htmlspecialchars(__($item->unit_name)) ?>">
+    data-uom-en="<?= htmlspecialchars($item->unit_name ?? '') ?>"
+    data-uom-ar="<?= htmlspecialchars($item->unit_name_a ?? '') ?>">
 
     <?= htmlspecialchars($item->name) ?>
 
@@ -51,22 +52,19 @@
 
     </div>
 
-    <!-- UOM - read only -->
-    <div class="mb-3"
-        style="max-width: 400px;">
+   <div class="mb-3" style="max-width: 400px;">
 
-        <label>
-            <?= __('unit_of_measure') ?>
-        </label>
+    <label>
+        <?= __('unit_of_measure') ?>
+    </label>
 
-        <input
-            type="text"
-            id="uom"
-            class="form-control"
-            readonly
-            value="">
+    <input
+        type="text"
+        id="uom"
+        class="form-control"
+        readonly>
 
-    </div>
+</div>
 
     <div class="mb-3">
 
@@ -244,29 +242,38 @@
     const uomInput =
         document.getElementById('uom');
 
-
     inventorySelect.addEventListener(
         'change',
         function() {
 
             const inventoryId = this.value;
 
-            const selectedOption =
-                this.options[this.selectedIndex];
+           const selectedOption =
+    this.options[this.selectedIndex];
 
-            uomInput.value =
-                selectedOption.dataset.uom || '';
+const currentLanguage =
+    document.documentElement.lang.toLowerCase();
 
+if (currentLanguage === 'ar') {
+
+    uomInput.value =
+        selectedOption.dataset.uomAr || '';
+
+} else {
+
+    uomInput.value =
+        selectedOption.dataset.uomEn || '';
+}
             // ---------------
-            if (!inventoryId) {
+          if (!inventoryId) {
 
-                uomInput.value = '';
+    uomInput.value = '';
 
-                locationSelect.innerHTML =
-                    '<option value=""><?= __('select_inventory_item_first') ?></option>';
+    locationSelect.innerHTML =
+        '<option value=""><?= __('select_inventory_item_first') ?></option>';
 
-                return;
-            }
+    return;
+}
             // Reset location dropdown
             locationSelect.innerHTML =
                 '<option value=""><?= __('loading_locations') ?></option>';

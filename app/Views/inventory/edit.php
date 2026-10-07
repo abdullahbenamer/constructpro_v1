@@ -70,6 +70,31 @@
     </div>
 
 
+    <!-- DESCRIPTION -->
+
+<div class="row mt-2">
+
+    <div class="col-md-12">
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                <?= __('description') ?>
+            </label>
+
+            <input
+                type="text"
+                name="description"
+                class="form-control"
+                maxlength="255"
+                value="<?= htmlspecialchars($inventory->description ?? '') ?>"
+            >
+
+        </div>
+
+    </div>
+
+</div>
     <!-- BRAND + COUNTRY -->
 
     <div class="row">

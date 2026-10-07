@@ -386,7 +386,8 @@ foreach ($stock as $inventory) {
                         <?php if ($inventory->available_qty <= 0) : ?>
 
                             <span class="badge bg-danger">
-                                <?= __('out') ?>
+                                
+                                 <?= __('out_of_stock') ?>
                             </span>
 
                         <?php else : ?>
@@ -414,19 +415,7 @@ foreach ($stock as $inventory) {
                             </strong>
 
                         </small>
-
-                        <!-- <small class="d-block">
-
-                        <? //= __('sale') 
-                        ?>:
-
-                <strong class="text-success">
-                <? //= number_format($inventory->price_per_base,  2) 
-                ?>
-                </strong>
-
-                    </small> -->
-
+                      
                     </td>
 
                     <!-- STATUS -->
@@ -435,7 +424,7 @@ foreach ($stock as $inventory) {
                         <?php if ($inventory->quantity <= 0) : ?>
 
                             <span class="badge bg-danger">
-                                <?= __('out') ?>
+                                 <?= __('no_stock') ?>
                             </span>
 
                         <?php elseif ($inventory->quantity < $inventory->min_stock) : ?>
