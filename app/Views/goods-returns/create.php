@@ -18,8 +18,7 @@
             name="goods_receipt_id"
             id="grnSelect"
             class="form-select"
-            required
-        >
+            required>
 
             <option value="">
                 <?= __('select_goods_receipt') ?>
@@ -32,8 +31,7 @@
                     data-supplier-id="<?= $grn->supplier_id ?>"
                     data-supplier-name="<?= htmlspecialchars($grn->company_name) ?>"
                     data-po-id="<?= $grn->purchase_order_id ?>"
-                    data-po-number="<?= htmlspecialchars($grn->po_number) ?>"
-                >
+                    data-po-number="<?= htmlspecialchars($grn->po_number) ?>">
 
                     <?= htmlspecialchars($grn->grn_number) ?>
                     -
@@ -50,8 +48,7 @@
     <!-- GRN INFORMATION -->
     <div
         id="grnInfo"
-        class="alert alert-info d-none"
-    >
+        class="alert alert-info d-none">
 
         <strong>GRN:</strong>
         <span id="grnNumber"></span>
@@ -79,8 +76,7 @@
             id="grnItemSelect"
             class="form-select"
             required
-            disabled
-        >
+            disabled>
 
             <option value="">
                 <?= __('select_grn_item') ?>
@@ -94,8 +90,7 @@
     <!-- ITEM INFORMATION -->
     <div
         id="itemInfo"
-        class="alert alert-secondary d-none"
-    >
+        class="alert alert-secondary d-none">
 
         <strong><?= __('item') ?></strong>
         <span id="itemName"></span>
@@ -126,25 +121,27 @@
     <div class="row">
 
         <!-- RETURN LOCATION -->
+
         <div class="col-md-6 mb-3">
 
             <label class="form-label">
                 <?= __('return_from_warehouse_required') ?>
             </label>
 
-            <select
+            <!-- Read-only information for the user -->
+
+            <input
+                type="text"
+                id="returnWarehouseDisplay"
+                class="form-control"
+                readonly>
+
+            <!-- Actual location ID submitted to the server -->
+
+            <input
+                type="hidden"
                 name="location_id"
-                id="locationSelect"
-                class="form-select"
-                required
-                disabled
-            >
-
-                <option value="">
-                    <?= __('select_warehouse') ?>
-                </option>
-
-            </select>
+                id="locationSelect">
 
         </div>
 
@@ -164,8 +161,7 @@
                 min="1"
                 step="1"
                 required
-                disabled
-            >
+                disabled>
 
             <div class="form-text">
                 <?= __('maximum_returnable_quantity') ?>
@@ -188,8 +184,7 @@
                 id="unitCost"
                 class="form-control"
                 step="0.01"
-                readonly
-            >
+                readonly>
 
         </div>
 
@@ -209,14 +204,12 @@
                 type="text"
                 id="supplierDisplay"
                 class="form-control"
-                readonly
-            >
+                readonly>
 
             <input
                 type="hidden"
                 name="supplier_id"
-                id="supplierId"
-            >
+                id="supplierId">
 
         </div>
 
@@ -233,8 +226,7 @@
                 name="return_date"
                 class="form-control"
                 value="<?= date('Y-m-d') ?>"
-                required
-            >
+                required>
 
         </div>
 
@@ -253,8 +245,7 @@
             name="reason"
             class="form-control"
             maxlength="255"
-            placeholder="<?= __('reason_for_returning_goods') ?>"
-        >
+            placeholder="<?= __('reason_for_returning_goods') ?>">
 
     </div>
 
@@ -269,8 +260,7 @@
         <textarea
             name="notes"
             class="form-control"
-            rows="3"
-        ></textarea>
+            rows="3"></textarea>
 
     </div>
 
@@ -280,8 +270,7 @@
         type="submit"
         id="returnButton"
         class="btn btn-danger"
-        disabled
-    >
+        disabled>
 
         <i class="fas fa-undo-alt"></i>
         <?= __('return_goods') ?>
@@ -290,8 +279,7 @@
 
     <a
         href="<?= URLROOT ?>/goodsreturns"
-        class="btn btn-secondary"
-    >
+        class="btn btn-secondary">
         <?= __('cancel') ?>
     </a>
 
@@ -308,6 +296,9 @@ const grnItemSelect =
 
 const locationSelect =
     document.getElementById('locationSelect');
+
+const returnWarehouseDisplay =
+    document.getElementById('returnWarehouseDisplay');
 
 const quantityInput =
     document.getElementById('quantity');
@@ -331,8 +322,11 @@ let currentItem = null;
 
 let currentLocations = [];
 
-function showNotification(message)
-{
+let effectiveReturnable = 0;
+
+
+function showNotification(message) {
+
     const notification =
         document.getElementById('jsNotification');
 
@@ -356,11 +350,13 @@ function showNotification(message)
         block: 'center'
     });
 }
+
+
 // ======================================================
 // SELECT GRN
 // ======================================================
 
-grnSelect.addEventListener('change', function () {
+grnSelect.addEventListener('change', function() {
 
     const option =
         this.options[this.selectedIndex];
@@ -368,21 +364,25 @@ grnSelect.addEventListener('change', function () {
     currentItems = [];
     currentItem = null;
     currentLocations = [];
+    effectiveReturnable = 0;
 
     grnItemSelect.innerHTML =
         '<option value=""><?= htmlspecialchars(__('select_grn_item'), ENT_QUOTES) ?></option>';
 
     grnItemSelect.disabled = true;
 
-    locationSelect.innerHTML =
-        '<option value=""><?= htmlspecialchars(__('select_warehouse'), ENT_QUOTES) ?></option>';
-
-    locationSelect.disabled = true;
+    // No warehouse dropdown to populate.
+    locationSelect.value = '';
+    returnWarehouseDisplay.value = '';
 
     quantityInput.value = '';
     quantityInput.disabled = true;
+    quantityInput.removeAttribute('max');
 
     unitCostInput.value = '';
+
+    document.getElementById('returnableQty').textContent = 0;
+    document.getElementById('quantityHelp').textContent = 0;
 
     returnButton.disabled = true;
 
@@ -474,7 +474,7 @@ grnSelect.addEventListener('change', function () {
 
             option.textContent =
                 item.name +
-                ' - <?= htmlspecialchars(__('returnable_label'), ENT_QUOTES) ?> ' +
+                ' - <?= htmlspecialchars(__('grn_remaining'), ENT_QUOTES) ?>: ' +
                 returnable;
 
             grnItemSelect.appendChild(option);
@@ -486,9 +486,9 @@ grnSelect.addEventListener('change', function () {
     })
     .catch(error => {
 
-    showNotification(error.message);
+        showNotification(error.message);
 
-});
+    });
 
 });
 
@@ -497,7 +497,7 @@ grnSelect.addEventListener('change', function () {
 // SELECT GRN ITEM
 // ======================================================
 
-grnItemSelect.addEventListener('change', function () {
+grnItemSelect.addEventListener('change', function() {
 
     const item =
         currentItems.find(
@@ -519,7 +519,7 @@ grnItemSelect.addEventListener('change', function () {
     const returned =
         parseFloat(item.returned_quantity || 0);
 
-    const returnable =
+    const grnRemaining =
         received - returned;
 
 
@@ -533,7 +533,6 @@ grnItemSelect.addEventListener('change', function () {
     document.getElementById('itemSku').textContent =
         item.sku || 'N/A';
 
-
     document.getElementById('originalLocation').textContent =
         item.location_code
         ? item.location_code +
@@ -541,18 +540,15 @@ grnItemSelect.addEventListener('change', function () {
           item.location_name
         : <?= json_encode(__('not_recorded')) ?>;
 
-
     document.getElementById('receivedQty').textContent =
         received;
-
 
     document.getElementById('returnedQty').textContent =
         returned;
 
-
-    document.getElementById('returnableQty').textContent =
-        returnable;
-
+    // Stock at the original location is still loading.
+    document.getElementById('returnableQty')
+        .textContent = '...';
 
     document
         .getElementById('itemInfo')
@@ -572,20 +568,22 @@ grnItemSelect.addEventListener('change', function () {
     // QUANTITY
     // ----------------------------------------------
 
-    quantityInput.disabled = false;
+    effectiveReturnable = 0;
+
+    quantityInput.disabled = true;
 
     quantityInput.min = 1;
 
-    quantityInput.max = returnable;
+    quantityInput.value = '';
 
-    quantityInput.value = returnable;
+    quantityInput.removeAttribute('max');
 
     document.getElementById('quantityHelp')
-        .textContent = returnable;
+        .textContent = 0;
 
 
     // ----------------------------------------------
-    // LOAD CURRENT WAREHOUSE STOCK
+    // LOAD CURRENT STOCK AT ORIGINAL GRN LOCATION
     // ----------------------------------------------
 
     loadLocations(item.inventory_id);
@@ -594,16 +592,14 @@ grnItemSelect.addEventListener('change', function () {
 
 
 // ======================================================
-// LOAD AVAILABLE LOCATIONS
+// LOAD CURRENT STOCK / ORIGINAL GRN LOCATION
 // ======================================================
 
 function loadLocations(inventoryId)
 {
 
-    locationSelect.innerHTML =
-        '<option value=""><?= htmlspecialchars(__('loading_warehouses'), ENT_QUOTES) ?></option>';
-
-    locationSelect.disabled = true;
+    locationSelect.value = '';
+    returnWarehouseDisplay.value = '';
 
     fetch(
         '<?= URLROOT ?>/goodsreturns/locations/' +
@@ -624,88 +620,140 @@ function loadLocations(inventoryId)
 
         currentLocations = data;
 
-        locationSelect.innerHTML =
-            '<option value=""><?= htmlspecialchars(__('select_warehouse'), ENT_QUOTES) ?></option>';
+        /*
+        The return location is always the original GRN
+        receiving location. The user does not select it.
+        */
 
+        const original = data.find(
+            x =>
+                parseInt(x.location_id) ===
+                parseInt(currentItem.location_id)
+        );
 
-        data.forEach(location => {
+        const warehouseAvailable =
+            original
+                ? parseFloat(original.quantity || 0)
+                : 0;
 
-            const qty =
-                parseFloat(location.quantity || 0);
+        /*
+        Store the original GRN location ID in the hidden
+        location_id field submitted to the server.
+        */
 
+        locationSelect.value =
+            currentItem.location_id || '';
 
-            /*
-            Only locations containing stock
-            are returned by the endpoint.
-            */
+        /*
+        Display the original warehouse and its current
+        physical stock.
+        */
 
-            if (qty <= 0) {
-                return;
-            }
+        if (original) {
 
-
-            const option =
-                document.createElement('option');
-
-            option.value =
-                location.location_id;
-
-
-            option.textContent =
-                location.code +
+            returnWarehouseDisplay.value =
+                original.code +
                 ' - ' +
-                location.name +
+                original.name +
                 ' — <?= htmlspecialchars(__('available'), ENT_QUOTES) ?> ' +
-                qty;
+                warehouseAvailable;
 
+        } else {
 
-            locationSelect.appendChild(option);
-
-        });
-
-
-        locationSelect.disabled = false;
+            returnWarehouseDisplay.value =
+                (
+                    currentItem.location_code
+                    ? currentItem.location_code +
+                      ' - ' +
+                      currentItem.location_name
+                    : <?= json_encode(__('not_recorded')) ?>
+                ) +
+                ' — <?= htmlspecialchars(__('available'), ENT_QUOTES) ?> 0';
+        }
 
 
         /*
-        Automatically select the original GRN
-        location if it still has stock.
+        GRN remaining quantity.
         */
 
-        if (currentItem.location_id) {
+        const received =
+            parseFloat(currentItem.quantity || 0);
 
-            const original =
-                data.find(
-                    x =>
-                        parseInt(x.location_id) ===
-                        parseInt(currentItem.location_id)
-                );
+        const returned =
+            parseFloat(currentItem.returned_quantity || 0);
+
+        const grnRemaining =
+            received - returned;
 
 
-            if (
-                original &&
-                parseFloat(original.quantity) > 0
-            ) {
+        /*
+        Effective returnable quantity:
 
-                locationSelect.value =
-                    original.location_id;
+        MIN(
+            GRN remaining quantity,
+            current physical stock at original GRN location
+        )
+        */
 
-            }
+        effectiveReturnable =
+            Math.min(
+                grnRemaining,
+                warehouseAvailable
+            );
 
-        }
 
+        // ----------------------------------------------
+        // UPDATE RETURNABLE DISPLAY
+        // ----------------------------------------------
+
+        document.getElementById('returnableQty')
+            .textContent = effectiveReturnable;
+
+
+        // ----------------------------------------------
+        // UPDATE QUANTITY FIELD
+        // ----------------------------------------------
+
+        quantityInput.max = effectiveReturnable;
+
+        quantityInput.value =
+            effectiveReturnable > 0
+                ? effectiveReturnable
+                : '';
+
+        quantityInput.disabled =
+            effectiveReturnable <= 0;
+
+        document.getElementById('quantityHelp')
+            .textContent = effectiveReturnable;
+
+
+        // ----------------------------------------------
+        // REVALIDATE FORM
+        // ----------------------------------------------
 
         validateForm();
 
     })
     .catch(error => {
 
-    locationSelect.innerHTML =
-        '<option value=""><?= htmlspecialchars(__('unable_to_load_warehouses'), ENT_QUOTES) ?></option>';
+        locationSelect.value = '';
+        returnWarehouseDisplay.value = '';
+        effectiveReturnable = 0;
 
-    showNotification(error.message);
+        document.getElementById('returnableQty')
+            .textContent = 0;
 
-});
+        document.getElementById('quantityHelp')
+            .textContent = 0;
+
+        quantityInput.value = '';
+        quantityInput.disabled = true;
+        quantityInput.removeAttribute('max');
+
+        showNotification(error.message);
+
+    });
 }
 
 
@@ -715,11 +763,6 @@ function loadLocations(inventoryId)
 
 quantityInput.addEventListener(
     'input',
-    validateForm
-);
-
-locationSelect.addEventListener(
-    'change',
     validateForm
 );
 
@@ -734,49 +777,24 @@ function validateForm()
         return;
     }
 
-
     const quantity =
         parseFloat(quantityInput.value || 0);
 
-    const returnable =
-        parseFloat(
-            currentItem.quantity || 0
-        )
-        -
-        parseFloat(
-            currentItem.returned_quantity || 0
-        );
-
-
-    const selectedLocation =
-        currentLocations.find(
-            x =>
-                parseInt(x.location_id) ===
-                parseInt(locationSelect.value)
-        );
-
-
-    const available =
-        selectedLocation
-            ? parseFloat(selectedLocation.quantity || 0)
-            : 0;
-
-
     /*
-    Quantity cannot exceed either:
-
-    1. Remaining returnable quantity
-    2. Physical stock in selected warehouse
+    The frontend maximum is the effective returnable quantity:
+    MIN(
+        GRN remaining quantity,
+        current stock at original GRN location
+    )
     */
 
     const valid =
         quantity > 0 &&
-        quantity <= returnable &&
-        quantity <= available;
-
+        effectiveReturnable > 0 &&
+        quantity <= effectiveReturnable &&
+        locationSelect.value !== '';
 
     returnButton.disabled = !valid;
 
 }
-
 </script>

@@ -483,7 +483,7 @@ return [
     'select_goods_receipt'           => '-- اختر إذن استلام البضائع --',
     'item_required'                  => 'الصنف *',
     'select_grn_item'                => '-- اختر صنف إذن الاستلام --',
-    'original_grn_location'          => 'موقع إذن الاستلام الأصلي:',
+    'original_grn_location'          => 'مخزن الاستلام الأصلي:',
     'already_returned'               => 'تم إرجاعه بالفعل:',
     'returnable'                     => 'القابل للإرجاع:',
     'return_from_warehouse_required' => 'الإرجاع من المستودع *',
@@ -1739,4 +1739,6 @@ return [
 'total_resources_cost' => 'إجمالي تكلفة الموارد',
 
 'unit_of_measure' => 'وحدة القياس',
+
+'grn_remaining' => 'المتبقي من اذن الاستلام',
 ];

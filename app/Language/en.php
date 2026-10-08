@@ -1738,8 +1738,8 @@ return [
 
 'total_resources_cost' => 'Total Resources Cost',
 
-'select_inventory_item_first' => 'Please select an inventory item first.',
-
 'unit_of_measure' => 'Unit of Measure',
+
+'grn_remaining' => 'GRNRemaining',
 
 ];

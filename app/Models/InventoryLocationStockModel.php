@@ -316,89 +316,215 @@ public function getAllGlobalStock()
         "
     )->fetchAll();
 }
-// The Universal Method
-// This method is the only one that directly changes warehouse stock.
-    public function adjustStock($inventory_id, $location_id, $delta)
+// // The Universal Method
+// // This method is the only one that directly changes warehouse stock.
+//     public function adjustStock($inventory_id, $location_id, $delta)
+// {
+//     // Positive delta = add stock
+//     // Negative delta = remove stock
+
+//     if ($delta < 0) {
+
+//         // Ensure sufficient stock
+//         $available = $this->db->query(
+//             "
+//             SELECT quantity
+//             FROM inventory_location_stock
+//             WHERE inventory_id = ?
+//               AND location_id = ?
+//             ",
+//             [$inventory_id, $location_id]
+//         )->fetch();
+
+//         if (!$available || $available->quantity < abs($delta)) {
+//             return false;
+//         }
+//     }
+
+//     // Row exists?
+//     $exists = $this->db->query(
+//         "
+//         SELECT id
+//         FROM inventory_location_stock
+//         WHERE inventory_id = ?
+//           AND location_id = ?
+//         ",
+//         [$inventory_id, $location_id]
+//     )->fetch();
+
+//     if ($exists) {
+
+//         $this->db->query(
+//             "
+//             UPDATE inventory_location_stock
+//             SET quantity = quantity + ?
+//             WHERE inventory_id = ?
+//               AND location_id = ?
+//             ",
+//             [
+//                 $delta,
+//                 $inventory_id,
+//                 $location_id
+//             ]
+//         );
+
+//     } else {
+
+//         // Cannot create a new row with negative quantity
+//         if ($delta < 0) {
+//             return false;
+//         }
+
+//         $this->db->query(
+//             "
+//             INSERT INTO inventory_location_stock
+//             (
+//                 inventory_id,
+//                 location_id,
+//                 quantity
+//             )
+//             VALUES (?, ?, ?)
+//             ",
+//             [
+//                 $inventory_id,
+//                 $location_id,
+//                 $delta
+//             ]
+//         );
+//     }
+// /*
+// |--------------------------------------------------------------------------
+// | Synchronize Global Inventory Quantity
+// |--------------------------------------------------------------------------
+// */
+
+// $this->syncInventoryQuantity($inventory_id);
+//     return true;
+// }
+
+
+/**
+ * The Universal Method
+ * This method is the only one that directly changes warehouse stock.
+ */
+public function adjustStock($inventory_id, $location_id, $delta)
 {
     // Positive delta = add stock
     // Negative delta = remove stock
 
     if ($delta < 0) {
 
-        // Ensure sufficient stock
-        $available = $this->db->query(
+        /*
+        |--------------------------------------------------------------------------
+        | ATOMIC STOCK DEDUCTION
+        |--------------------------------------------------------------------------
+        |
+        | The stock check and deduction happen in ONE SQL statement.
+        |
+        | This prevents concurrent requests from both passing a separate
+        | stock check and removing more stock than actually exists.
+        |
+        */
+
+        $quantity = abs($delta);
+
+        $stmt = $this->db->query(
             "
-            SELECT quantity
+            UPDATE inventory_location_stock
+            SET quantity = quantity - ?
+            WHERE inventory_id = ?
+              AND location_id = ?
+              AND quantity >= ?
+            ",
+            [
+                $quantity,
+                $inventory_id,
+                $location_id,
+                $quantity
+            ]
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Verify the atomic deduction
+        |--------------------------------------------------------------------------
+        */
+
+        if ($stmt->rowCount() !== 1) {
+            return false;
+        }
+
+    } else {
+
+        /*
+        |--------------------------------------------------------------------------
+        | ADD STOCK
+        |--------------------------------------------------------------------------
+        */
+
+        $exists = $this->db->query(
+            "
+            SELECT id
             FROM inventory_location_stock
             WHERE inventory_id = ?
               AND location_id = ?
             ",
-            [$inventory_id, $location_id]
-        )->fetch();
-
-        if (!$available || $available->quantity < abs($delta)) {
-            return false;
-        }
-    }
-
-    // Row exists?
-    $exists = $this->db->query(
-        "
-        SELECT id
-        FROM inventory_location_stock
-        WHERE inventory_id = ?
-          AND location_id = ?
-        ",
-        [$inventory_id, $location_id]
-    )->fetch();
-
-    if ($exists) {
-
-        $this->db->query(
-            "
-            UPDATE inventory_location_stock
-            SET quantity = quantity + ?
-            WHERE inventory_id = ?
-              AND location_id = ?
-            ",
             [
-                $delta,
                 $inventory_id,
                 $location_id
             ]
-        );
+        )->fetch();
 
-    } else {
+        if ($exists) {
 
-        // Cannot create a new row with negative quantity
-        if ($delta < 0) {
-            return false;
+            $this->db->query(
+                "
+                UPDATE inventory_location_stock
+                SET quantity = quantity + ?
+                WHERE inventory_id = ?
+                  AND location_id = ?
+                ",
+                [
+                    $delta,
+                    $inventory_id,
+                    $location_id
+                ]
+            );
+
+        } else {
+
+            // Cannot create a new row with negative quantity
+            if ($delta < 0) {
+                return false;
+            }
+
+            $this->db->query(
+                "
+                INSERT INTO inventory_location_stock
+                (
+                    inventory_id,
+                    location_id,
+                    quantity
+                )
+                VALUES (?, ?, ?)
+                ",
+                [
+                    $inventory_id,
+                    $location_id,
+                    $delta
+                ]
+            );
         }
-
-        $this->db->query(
-            "
-            INSERT INTO inventory_location_stock
-            (
-                inventory_id,
-                location_id,
-                quantity
-            )
-            VALUES (?, ?, ?)
-            ",
-            [
-                $inventory_id,
-                $location_id,
-                $delta
-            ]
-        );
     }
-/*
-|--------------------------------------------------------------------------
-| Synchronize Global Inventory Quantity
-|--------------------------------------------------------------------------
-*/
 
-$this->syncInventoryQuantity($inventory_id);
+    /*
+    |--------------------------------------------------------------------------
+    | Synchronize Global Inventory Quantity
+    |--------------------------------------------------------------------------
+    */
+
+    $this->syncInventoryQuantity($inventory_id);
+
     return true;
 }
 
