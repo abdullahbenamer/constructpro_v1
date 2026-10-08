@@ -1741,4 +1741,18 @@ return [
 'unit_of_measure' => 'وحدة القياس',
 
 'grn_remaining' => 'المتبقي من اذن الاستلام',
+
+
+// GOODS RETURNS
+'goods_return_note'                       => 'إشعار إرجاع البضائع',
+'grn_number'                              => 'رقم إذن استلام البضائع',
+'return_from_warehouse'                   => 'الإرجاع من المستودع',
+'quantity_returned'                       => 'الكمية المُرجعة',
+'supplier_acknowledgement'                => 'إقرار المورد بالاستلام',
+'supplier_receipt_acknowledgement_text'   => 'أقرّ أنا الموقع أدناه باستلام البضائع المُرجعة الموضحة أعلاه.',
+'received_by'                             => 'المستلم',
+'position'                                => 'الصفة الوظيفية',
+'signature'                               => 'التوقيع',
+'supplier_stamp'                          => 'ختم المورد',
+
 ];

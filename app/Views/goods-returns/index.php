@@ -94,11 +94,19 @@
 
                     <td>
 
-                        <a href="<?= URLROOT ?>/goodsreturns/details/<?= $return->id ?>"
+                    <a href="<?= URLROOT ?>/goodsreturns/details/<?= $return->id ?>"
                            class="btn btn-sm btn-info">
 
                             <i class="fas fa-eye"></i>
                             <?= __('view') ?>
+
+                        </a>
+
+                        <a href="<?= URLROOT ?>/goodsreturns/print/<?= $return->id ?>"
+                           class="btn btn-sm btn-secondary">
+
+                            <i class="fas fa-print"></i>
+                            <?= __('print') ?>
 
                         </a>
 

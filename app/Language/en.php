@@ -1742,4 +1742,16 @@ return [
 
 'grn_remaining' => 'GRNRemaining',
 
+// GOODS RETURNS
+'goods_return_note'                       => 'Goods Return Note',
+'grn_number'                              => 'GRN Number',
+'return_from_warehouse'                   => 'Return From Warehouse',
+'quantity_returned'                       => 'Quantity Returned',
+'supplier_acknowledgement'                => 'Supplier Acknowledgement',
+'supplier_receipt_acknowledgement_text'   => 'I hereby acknowledge receipt of the returned goods described above.',
+'received_by'                             => 'Received By',
+'position'                                => 'Position',
+'signature'                               => 'Signature',
+'supplier_stamp'                          => 'Supplier Stamp',
+
 ];

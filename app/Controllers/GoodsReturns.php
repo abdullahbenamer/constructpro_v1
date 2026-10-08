@@ -10,7 +10,7 @@ class GoodsReturns extends Controller
 
     public function index()
     {
-      AuthHelper::can('goods_returns.view');
+        AuthHelper::can('goods_returns.view');
 
         $model = $this->model('GoodsReturn');
 
@@ -23,8 +23,52 @@ class GoodsReturns extends Controller
     }
 
     public function details($id)
+    {
+        AuthHelper::can('goods_returns.view');
+
+        $returnModel =
+            $this->model('GoodsReturn');
+
+        $returnItemModel =
+            $this->model('GoodsReturnItem');
+
+        $return =
+            $returnModel->getById((int)$id);
+
+        if (!$return) {
+
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/goodsreturns'
+            );
+
+            exit;
+        }
+
+        $data['return'] =
+            $return;
+
+        $data['items'] =
+            $returnItemModel->getByReturn(
+                (int)$id
+            );
+
+        $this->view(
+            'goods-returns/details',
+            $data
+        );
+    }
+
+
+    /**
+     * --------------------------------------------------------------------------
+     * PRINT GOODS RETURN
+     * --------------------------------------------------------------------------
+     */
+   public function print($id)
 {
-  AuthHelper::can('goods_returns.view');
+    AuthHelper::can('goods_returns.view');
 
     $returnModel =
         $this->model('GoodsReturn');
@@ -55,8 +99,9 @@ class GoodsReturns extends Controller
         );
 
     $this->view(
-        'goods-returns/details',
-        $data
+        'goods-returns/print',
+        $data,
+        false
     );
 }
 
@@ -68,7 +113,7 @@ class GoodsReturns extends Controller
 
     public function create()
     {
-       AuthHelper::can('goods_returns.create');
+        AuthHelper::can('goods_returns.create');
 
         $receiptModel =
             $this->model('GoodsReceipt');
@@ -88,18 +133,17 @@ class GoodsReturns extends Controller
 
                 $service->returnGoods($_POST);
 
-             FlashHelper::success(
-    __('goods_returned_successfully')
-);
+                FlashHelper::success(
+                    __('goods_returned_successfully')
+                );
 
                 header(
                     'Location: ' .
-                    URLROOT .
-                    '/goodsreturns'
+                        URLROOT .
+                        '/goodsreturns'
                 );
 
                 exit;
-
             } catch (Throwable $e) {
 
                 FlashHelper::error(
@@ -140,7 +184,7 @@ class GoodsReturns extends Controller
 
     public function items($grn_id)
     {
-       AuthHelper::can('goods_returns.view');
+        AuthHelper::can('goods_returns.view');
 
         $receiptItemModel =
             $this->model('GoodsReceiptItem');
@@ -191,7 +235,7 @@ class GoodsReturns extends Controller
 
     public function locations($inventory_id)
     {
-      AuthHelper::can('goods_returns.view');
+        AuthHelper::can('goods_returns.view');
 
         $stockModel =
             $this->model('InventoryLocationStock');
