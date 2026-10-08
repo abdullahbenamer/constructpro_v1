@@ -1753,5 +1753,12 @@ return [
 'position'                                => 'Position',
 'signature'                               => 'Signature',
 'supplier_stamp'                          => 'Supplier Stamp',
-
+'goods_receipt_note' => 'Goods Receipt Note',
+'receipt_date' => 'Receipt Date',
+'received_quantity' => 'Received Quantity',
+'delivery_acknowledgement' => 'Delivery Acknowledgement',
+'receiving_acknowledgement' => 'Receiving Acknowledgement',
+'goods_receipt_acknowledgement_text' => 'I hereby acknowledge receipt of the goods described above.',
+'delivered_by' => 'Delivered By',
+'stamp' => 'Stamp',
 ];

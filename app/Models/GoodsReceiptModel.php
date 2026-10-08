@@ -52,7 +52,12 @@ public function create($data)
             SELECT
                 gr.*,
                 po.po_number,
-                s.company_name
+                s.company_name,
+                 s.contact_person,
+            s.phone,
+            s.email,
+            s.address,
+            s.notes AS supplier_notes
 
             FROM goods_receipts gr
 

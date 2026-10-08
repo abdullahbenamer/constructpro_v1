@@ -1149,6 +1149,24 @@ require_once '../app/Models/InventoryLocationModel.php';
 
                                 <?php endif; ?>
 
+                                <?php if (AuthHelper::canView('goods_receipts.view')) : ?>
+
+                                    <li>
+
+                                        <a
+                                            class="dropdown-item"
+                                            href="<?= URLROOT ?>/goods-receipts">
+
+                                            <i class="fas fa-file-invoice"></i>
+
+                                            <?= __('goods_receipts') ?>
+
+                                        </a>
+
+                                    </li>
+
+                                <?php endif; ?>
+
 
                                 <?php if (AuthHelper::canView('goods_returns.view')) : ?>
 

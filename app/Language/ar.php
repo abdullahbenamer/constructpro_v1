@@ -1754,5 +1754,12 @@ return [
 'position'                                => 'الصفة الوظيفية',
 'signature'                               => 'التوقيع',
 'supplier_stamp'                          => 'ختم المورد',
-
+'goods_receipt_note' => 'إشعار استلام البضائع',
+'receipt_date' => 'تاريخ الاستلام',
+'received_quantity' => 'الكمية المستلمة',
+'delivery_acknowledgement' => 'إقرار التسليم',
+'receiving_acknowledgement' => 'إقرار الاستلام',
+'goods_receipt_acknowledgement_text' => 'أقرّ أنا الموقع أدناه باستلام البضائع الموضحة أعلاه.',
+'stamp' => 'الختم',
+'delivered_by' => 'قام بالتسليم'
 ];
