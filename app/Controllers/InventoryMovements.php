@@ -89,4 +89,43 @@ FlashHelper::success(
         $data
     );
 }
+
+public function print($id)
+{
+    AuthHelper::can('inventory.view');
+
+    $goodsReceiptModel =
+        $this->model('GoodsReceipt');
+
+    $goodsReceiptItemModel =
+        $this->model('GoodsReceiptItem');
+
+    $grn =
+        $goodsReceiptModel->getById((int)$id);
+
+    if (!$grn) {
+        header(
+            'Location: ' .
+            URLROOT .
+            '/inventorymovements'
+        );
+
+        exit;
+    }
+
+    $data['grn'] =
+        $grn;
+
+    $data['items'] =
+        $goodsReceiptItemModel->getItems(
+            (int)$id
+        );
+
+    $this->view(
+        'inventory/receive_print',
+        $data,
+        false
+    );
+}
+
 }
