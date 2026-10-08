@@ -1609,7 +1609,7 @@ return [
     'role_update_failed'              => 'فشل تحديث الدور.',
 
     'permission_created_successfully' => 'تم إنشاء الصلاحية بنجاح.',
-    'permission_creation_failed'      => 'فشل إنشاء الصلاحية.',
+ 'permission_creation_failed' => 'تعذر إنشاء الصلاحية. قد يكون اسم الصلاحية موجودًا بالفعل.',
     'permission_name_required'        => 'اسم الصلاحية مطلوب.',
     'permission_updated_successfully' => 'تم تحديث الصلاحية بنجاح.',
     'permission_update_failed'        => 'فشل تحديث الصلاحية.',

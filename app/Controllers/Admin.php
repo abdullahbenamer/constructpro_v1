@@ -124,7 +124,6 @@ public function permissions()
     $this->view('admin/permissions/index', $data);
 }
 
-
     public function createUser()
     {
         AuthHelper::can('users.create');

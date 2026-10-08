@@ -1611,7 +1611,7 @@ return [
 
 
     'permission_created_successfully' => 'Permission created successfully.',
-    'permission_creation_failed'      => 'Failed to create permission.',
+    'permission_creation_failed' => 'Unable to create permission. The permission name may already exist.',
     'permission_name_required'        => 'Permission name is required.',
     'permission_updated_successfully' => 'Permission updated successfully.',
     'permission_update_failed'        => 'Failed to update permission.',
@@ -1763,4 +1763,6 @@ return [
 'stamp' => 'Stamp',
 'goods_receipts_report' => 'Goods Receipts (GRN Report)',
 'received_amount' => 'Received Goods Amount',
+
+
 ];

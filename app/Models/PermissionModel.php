@@ -8,13 +8,22 @@ class PermissionModel extends Model {
             "SELECT * FROM permissions ORDER BY name")->fetchAll();
     }
 
-    public function create($name, $description = null)
+public function create($name, $description = null)
 {
-    return $this->db->query(
-        "INSERT INTO permissions (name, description) VALUES (?, ?)",
-        [$name, $description]
-    );
+    try {
+
+        return $this->db->query(
+            "INSERT INTO permissions (name, description)
+             VALUES (?, ?)",
+            [$name, $description]
+        );
+
+    } catch (Throwable $e) {
+
+        return false;
+    }
 }
+
     public function getById($id)
 {
     return $this->db->query(
