@@ -1761,5 +1761,8 @@ return [
 'receiving_acknowledgement' => 'إقرار الاستلام',
 'goods_receipt_acknowledgement_text' => 'أقرّ أنا الموقع أدناه باستلام البضائع الموضحة أعلاه.',
 'stamp' => 'الختم',
-'delivered_by' => 'قام بالتسليم'
+'delivered_by' => 'قام بالتسليم',
+'goods_receipts_report' => 'قائمة إشعارات استلام البضائع',
+
+'received_amount' => 'قيمة البضاعة المستلمة',
 ];

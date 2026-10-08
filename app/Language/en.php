@@ -1761,4 +1761,6 @@ return [
 'goods_receipt_acknowledgement_text' => 'I hereby acknowledge receipt of the goods described above.',
 'delivered_by' => 'Delivered By',
 'stamp' => 'Stamp',
+'goods_receipts_report' => 'Goods Receipts (GRN Report)',
+'received_amount' => 'Received Goods Amount',
 ];

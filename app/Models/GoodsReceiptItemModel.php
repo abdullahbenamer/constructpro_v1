@@ -51,7 +51,10 @@ class GoodsReceiptItemModel extends Model
 
                 i.name,
                 i.sku,
+                i.base_unit,
+                
                 u.unit_name,
+                u.unit_name_a,
 
                 l.code AS location_code,
                 l.name AS location_name

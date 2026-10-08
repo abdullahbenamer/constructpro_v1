@@ -70,7 +70,7 @@
                                 </th>
 
                                 <th class="text-end">
-                                    <?= __('total_amount') ?>
+                                    <?= __('received_amount') ?>
                                 </th>
 
                                 <th class="text-center">
@@ -119,7 +119,7 @@
                                     <!-- Supplier -->
                                     <td>
                                         <?= htmlspecialchars(
-                                            $grn->supplier_name ?? '-'
+                                            $grn->company_name ?? '-'
                                         ) ?>
                                     </td>
 
@@ -139,7 +139,7 @@
                                     <td class="text-center">
 
                                         <a
-                                            href="<?= URLROOT ?>/goodsreceipts/print/<?= (int)$grn->id ?>"
+                                           href="<?= URLROOT ?>/goods-receipts/print/<?= (int)$grn->id ?>"
                                             target="_blank"
                                             class="btn btn-sm btn-primary"
                                             title="<?= __('print') ?>">

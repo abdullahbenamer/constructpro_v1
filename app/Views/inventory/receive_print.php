@@ -702,8 +702,12 @@ $supplierNotes = trim((string)($grn->supplier_notes ?? ''));
                             </td>
 
                             <td class="number">
-                                <?= htmlspecialchars($item->base_unit ?? '-') ?>
-                            </td>
+    <?= htmlspecialchars(
+        $language === 'ar'
+            ? ($item->unit_name_a ?? $item->unit_name ?? '-')
+            : ($item->unit_name ?? $item->unit_name_a ?? '-')
+    ) ?>
+</td>
 
                             <td class="number">
                                 <?= number_format(

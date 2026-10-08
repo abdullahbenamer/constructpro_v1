@@ -1157,9 +1157,9 @@ require_once '../app/Models/InventoryLocationModel.php';
                                             class="dropdown-item"
                                             href="<?= URLROOT ?>/goods-receipts">
 
-                                            <i class="fas fa-file-invoice"></i>
+                                            <i class="fas fa-truck-loading"></i>
 
-                                            <?= __('goods_receipts') ?>
+                                            <?= __('goods_receipts_report') ?>
 
                                         </a>
 
@@ -1176,7 +1176,7 @@ require_once '../app/Models/InventoryLocationModel.php';
                                             class="dropdown-item"
                                             href="<?= URLROOT ?>/goods-returns/index">
 
-                                            <i class="fas fa-recycle"></i>
+                                            <i class="fas fa-undo-alt"></i>
 
                                             <?= __('goods_returns_report') ?>
 
