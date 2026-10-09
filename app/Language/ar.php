@@ -1781,4 +1781,43 @@ return [
 
 'select_unit_of_measure' => '-- اختر وحدة قياس --',
 
+'requisition_created_successfully'
+    => 'تم إنشاء طلب الموارد بنجاح.',
+
+'requisition_creation_failed'
+    => 'تعذر إنشاء طلب الموارد.',
+
+'requisition_updated_successfully'
+    => 'تم تحديث طلب الموارد بنجاح.',
+
+'requisition_update_failed'
+    => 'تعذر تحديث طلب الموارد.',
+
+'requisition_deleted_successfully'
+    => 'تم حذف طلب الموارد بنجاح.',
+
+'requisition_deletion_failed'
+    => 'تعذر حذف طلب الموارد.',
+
+'requisition_item_added_successfully'
+    => 'تمت إضافة بند طلب الموارد بنجاح.',
+
+'requisition_item_addition_failed'
+    => 'تعذر إضافة بند طلب الموارد.',
+
+'requisition_item_updated_successfully'
+    => 'تم تحديث بند طلب الموارد بنجاح.',
+
+'requisition_item_update_failed'
+    => 'تعذر تحديث بند طلب الموارد.',
+
+'requisition_item_deleted_successfully'
+    => 'تم حذف بند طلب الموارد بنجاح.',
+
+'requisition_item_deletion_failed'
+    => 'تعذر حذف بند طلب الموارد.',
+
+'resource_requisition_fulfillment_failed'
+    => 'تعذر تنفيذ طلب الموارد.',
+
 ];

@@ -1777,5 +1777,44 @@ return [
 'please_select_unit_of_measure' => 'Please select a unit of measure.',
 'inventory_unit_not_found'      => 'The selected inventory item has no unit of measure assigned.',
 
-'select_unit_of_measure' => '--- Select Measure Unit---',
+'select_unit_of_measure' => '-- Select Measure Unit --',
+
+'requisition_created_successfully'
+    => 'Resource requisition created successfully.',
+
+'requisition_creation_failed'
+    => 'Unable to create the resource requisition.',
+
+'requisition_updated_successfully'
+    => 'Resource requisition updated successfully.',
+
+'requisition_update_failed'
+    => 'Unable to update the resource requisition.',
+
+'requisition_deleted_successfully'
+    => 'Resource requisition deleted successfully.',
+
+'requisition_deletion_failed'
+    => 'Unable to delete the resource requisition.',
+
+'requisition_item_added_successfully'
+    => 'Requisition item added successfully.',
+
+'requisition_item_addition_failed'
+    => 'Unable to add the requisition item.',
+
+'requisition_item_updated_successfully'
+    => 'Requisition item updated successfully.',
+
+'requisition_item_update_failed'
+    => 'Unable to update the requisition item.',
+
+'requisition_item_deleted_successfully'
+    => 'Requisition item deleted successfully.',
+
+'requisition_item_deletion_failed'
+    => 'Unable to delete the requisition item.',
+
+'resource_requisition_fulfillment_failed'
+    => 'Unable to fulfill the resource requisition.',
 ];
