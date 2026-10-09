@@ -7,10 +7,9 @@
 
     <meta charset="UTF-8">
 
-    <title>
-        <?= __('purchase_order') ?> -
-        <?= htmlspecialchars($po->po_number) ?>
-    </title>
+ 
+
+     <title><?= __('purchase_order') ?>-<?= htmlspecialchars($po->po_number ?? 'PO') ?></title>
 
     <meta
         name="viewport"

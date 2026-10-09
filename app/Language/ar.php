@@ -1765,4 +1765,15 @@ return [
 'goods_receipts_report' => 'قائمة إشعارات استلام البضائع',
 
 'received_amount' => 'قيمة البضاعة المستلمة',
+
+'cancel_reservation_confirm'       => 'هل أنت متأكد من رغبتك في إلغاء هذا الحجز؟',
+'reservation_cancelled_successfully' => 'تم إلغاء الحجز بنجاح.',
+'reservation_cancellation_failed'   => 'تعذر إلغاء الحجز.',
+
+'reservation_updated_successfully' => 'تم تحديث الحجز بنجاح.',
+'reservation_update_failed'        => 'تعذر تحديث الحجز.',
+'reservation_deleted_successfully' => 'تم حذف الحجز بنجاح.',
+'reservation_deletion_failed'      => 'تعذر حذف الحجز.',
+'print_goods_return'              => 'طباعة إشعار إرجاع البضائع',
+
 ];

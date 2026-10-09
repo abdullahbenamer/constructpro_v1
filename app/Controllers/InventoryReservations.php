@@ -223,21 +223,36 @@ class InventoryReservations extends Controller
 }
 
     public function cancel($id)
-    {
-        AuthHelper::can('inventory_reservations.fulfill');
+{
+    AuthHelper::can('inventory_reservations.cancel');
 
-        $model = $this->model(
-            'InventoryReservation'
+    $model = $this->model(
+        'InventoryReservation'
+    );
+
+    $result = $model->cancel($id);
+
+    if ($result) {
+
+        FlashHelper::success(
+            __('reservation_cancelled_successfully')
         );
 
-        $model->cancel($id);
+    } else {
 
-        header(
-            'Location: ' .
-                URLROOT .
-                '/inventoryreservations'
+        FlashHelper::error(
+            __('reservation_cancellation_failed')
         );
     }
+
+    header(
+        'Location: ' .
+            URLROOT .
+            '/inventoryreservations'
+    );
+
+    exit;
+}
 
     public function edit($id)
     {
@@ -285,37 +300,50 @@ class InventoryReservations extends Controller
             exit;
         }
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $model->update($id, [
+    $result = $model->update($id, [
 
-                'inventory_id' =>
-                $_POST['inventory_id'],
+        'inventory_id' =>
+        $_POST['inventory_id'],
 
-                'location_id' =>
-                $_POST['location_id'] ?: null,
+        'location_id' =>
+        $_POST['location_id'] ?: null,
 
-                'project_id' =>
-                $_POST['project_id'] ?: null,
+        'project_id' =>
+        $_POST['project_id'] ?: null,
 
-                'quantity' =>
-                $_POST['quantity'],
+        'quantity' =>
+        $_POST['quantity'],
 
-                'reference' =>
-                $_POST['reference'],
+        'reference' =>
+        $_POST['reference'],
 
-                'notes' =>
-                $_POST['notes']
-            ]);
+        'notes' =>
+        $_POST['notes']
+    ]);
 
-            header(
-                'Location: ' .
-                    URLROOT .
-                    '/inventoryreservations'
-            );
+    if ($result) {
 
-            exit;
-        }
+        FlashHelper::success(
+            __('reservation_updated_successfully')
+        );
+
+    } else {
+
+        FlashHelper::error(
+            __('reservation_update_failed')
+        );
+    }
+
+    header(
+        'Location: ' .
+            URLROOT .
+            '/inventoryreservations'
+    );
+
+    exit;
+}
 
         $data['reservation'] = $reservation;
 
@@ -372,13 +400,28 @@ class InventoryReservations extends Controller
             exit;
         }
 
-        $model->delete($id);
+       $result = $model->delete($id);
 
-        header(
-            'Location: ' .
-                URLROOT .
-                '/inventoryreservations'
-        );
+if ($result) {
+
+    FlashHelper::success(
+        __('reservation_deleted_successfully')
+    );
+
+} else {
+
+    FlashHelper::error(
+        __('reservation_deletion_failed')
+    );
+}
+
+header(
+    'Location: ' .
+        URLROOT .
+        '/inventoryreservations'
+);
+
+exit;
     }
 
     public function getItemLocations()

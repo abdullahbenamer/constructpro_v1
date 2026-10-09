@@ -158,8 +158,15 @@
         <a href="<?= URLROOT ?>/inventoryreservations/fulfill/<?= $r->id ?>"
            class="btn btn-success btn-sm"> <?= __('fulfill') ?> </a>
 
-        <a href="<?= URLROOT ?>/inventoryreservations/cancel/<?= $r->id ?>"
-           class="btn btn-warning btn-sm"> <?= __('cancel') ?> </a>
+   <a
+    href="<?= URLROOT ?>/inventoryreservations/cancel/<?= $r->id ?>"
+    class="btn btn-warning btn-sm"
+    onclick="return confirm(<?= json_encode(
+        __('cancel_reservation_confirm')
+    ) ?>)"
+>
+    <?= __('cancel') ?>
+</a>
 
         <a href="<?= URLROOT ?>/inventoryreservations/delete/<?= $r->id ?>"
            class="btn btn-outline-danger btn-sm"

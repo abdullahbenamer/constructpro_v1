@@ -35,37 +35,43 @@ class InventoryTransferModel extends Model
     return (int)$this->db->lastInsertId();
 }
 
-    public function getAll()
-    {
-        return $this->db->query(
-            "
-            SELECT
-                t.*,
+   public function getAll()
+{
+    return $this->db->query(
+        "
+        SELECT
+            t.*,
 
-                i.name AS item_name,
-                i.sku AS item_sku,
+            i.name AS item_name,
+            i.sku AS item_sku,
 
-                fl.code AS from_code,
-                fl.name AS from_name,
+            u.unit_name,
+            u.unit_name_a,
 
-                tl.code AS to_code,
-                tl.name AS to_name
+            fl.code AS from_code,
+            fl.name AS from_name,
 
-            FROM inventory_transfers t
+            tl.code AS to_code,
+            tl.name AS to_name
 
-            JOIN inventory i
-                ON i.id = t.inventory_id
+        FROM inventory_transfers t
 
-            JOIN inventory_locations fl
-                ON fl.id = t.from_location_id
+        JOIN inventory i
+            ON i.id = t.inventory_id
 
-            JOIN inventory_locations tl
-                ON tl.id = t.to_location_id
+        LEFT JOIN units u
+            ON u.id = i.unit_id
 
-            ORDER BY t.created_at DESC
-            "
-        )->fetchAll();
-    }
+        JOIN inventory_locations fl
+            ON fl.id = t.from_location_id
+
+        JOIN inventory_locations tl
+            ON tl.id = t.to_location_id
+
+        ORDER BY t.created_at DESC
+        "
+    )->fetchAll();
+}
 
    public function findBySku($value)
 {

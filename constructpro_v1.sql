@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 08, 2026 at 08:11 AM
+-- Generation Time: Oct 09, 2026 at 08:24 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -360,7 +360,7 @@ INSERT INTO `inventory` (`id`, `name`, `description`, `category`, `sku`, `quanti
 (145, 'MCB 1P 16A', 'MCB, 1P, 16A', 'ELECTRICAL', 'MCB-1P16-001', 150.00, NULL, 30, 8.50, 'PCS', 1, 0, 5, 9),
 (146, 'MCB 3P 32A', 'MCB, 3P, 32A', 'ELECTRICAL', 'MCB-3P32-001', 80.00, NULL, 15, 24.00, 'PCS', 1, 0, 5, 9),
 (147, 'Distribution Board 12-Way', 'Distribution board, 12-way', 'ELECTRICAL', 'DB-12W-001', 25.00, NULL, 5, 95.00, 'PCS', 1, 0, 5, 9),
-(148, 'Contactor 25A', 'Contactor, 25A', 'ELECTRICAL', 'CNT-25A-001', 33.00, NULL, 10, 32.00, 'PCS', 1, 0, 1, 1),
+(148, 'Contactor 25A', 'Contactor, 25A', 'ELECTRICAL', 'CNT-25A-001', 31.00, NULL, 10, 32.00, 'PCS', 1, 0, 1, 1),
 (149, 'Terminal Block 6mm²', 'Terminal block, 6 mm²', 'ELECTRICAL', 'TB-6-001', 500.00, NULL, 100, 0.75, 'PCS', 1, 0, 21, 1),
 (150, 'PVC Pipe 20mm', 'PVC pipe, 20 mm', 'PLUMBING & DRAINAGE', 'PVC-20-001', 800.00, NULL, 100, 2.40, 'MTR', 10, 1, NULL, 12),
 (151, 'PVC Pipe 32mm', 'PVC pipe, 32 mm', 'PLUMBING & DRAINAGE', 'PVC-32-001', 600.00, NULL, 100, 3.80, 'MTR', 10, 1, NULL, 12),
@@ -577,7 +577,7 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (365, 147, 2, 7.50),
 (366, 147, 3, 5.00),
 (367, 148, 1, 10.00),
-(368, 148, 2, 10.00),
+(368, 148, 2, 8.00),
 (369, 148, 3, 8.00),
 (370, 149, 1, 250.00),
 (371, 149, 2, 150.00),
@@ -923,7 +923,8 @@ INSERT INTO `inventory_movements` (`id`, `inventory_id`, `location_id`, `type`, 
 (481, 156, 36, 'IN', 6.00, NULL, NULL, NULL, NULL, 6.00, 254.00, '6 of 16 , received 15 from GRN', 'Warehouse Transfer #88', 1, '2026-10-07 12:28:35'),
 (482, 168, 32, 'ADJUSTMENT', 100.00, NULL, NULL, NULL, NULL, 110.00, 334.00, 'ADJ-261007195913', 'PHYSICAL_COUNT_CORRECTION', 1, '2026-10-07 17:59:13'),
 (483, 156, 1, 'ADJUSTMENT', -30.00, NULL, NULL, NULL, NULL, 190.00, 224.00, 'ADJ-261007200320', 'LOST', 1, '2026-10-07 18:03:20'),
-(484, 156, 32, 'OUT', 10.00, NULL, 1, NULL, NULL, 0.00, 214.00, 'RTS-261007221111', 'Return to supplier', 1, '2026-10-07 20:11:11');
+(484, 156, 32, 'OUT', 10.00, NULL, 1, NULL, NULL, 0.00, 214.00, 'RTS-261007221111', 'Return to supplier', 1, '2026-10-07 20:11:11'),
+(485, 148, 2, 'OUT', 2.00, NULL, NULL, NULL, NULL, 8.00, 31.00, 'PROJECT #46', 'Reservation Fulfillment: Contactor 25A', 1, '2026-10-08 20:12:39');
 
 -- --------------------------------------------------------
 
@@ -953,13 +954,15 @@ INSERT INTO `inventory_reservations` (`id`, `inventory_id`, `location_id`, `proj
 (30, 123, 1, 47, 150.00, 'CANCELLED', 'الاحتفاظ بهذه الكمية من الصنف لنقصها من السوق', 'الاحتفاظ بهذه الكمية من الصنف لنقصها من السوق ويتم تسليمها للمشروع قبل التاريخ المذكور', 1, '2026-09-10 12:44:21', '2026-09-16'),
 (31, 112, 1, 55, 20.00, 'FULFILLED', 'نقص في توريدات الاسمنت', 'يجب التسليم الى مخزن المشروع', 1, '2026-09-12 14:05:54', '2026-09-14'),
 (32, 123, 3, 55, 30.00, 'FULFILLED', 'اختبار', 'اختبار', 1, '2026-09-16 05:42:47', '2026-09-23'),
-(33, 172, 32, 54, 10.00, 'ACTIVE', 'طلب من مهندس الموقع عبداللطيف موسى', 'التسليم صباحا', 1, '2026-09-20 12:50:38', '2026-09-23'),
+(33, 172, 32, 54, 10.00, 'CANCELLED', 'طلب من مهندس الموقع عبداللطيف موسى', 'التسليم صباحا', 1, '2026-09-20 12:50:38', '2026-09-23'),
 (34, 168, 1, 57, 15.00, 'FULFILLED', 'بناء على طلب مهندس الموقع', 'تم الحجز بناء على طلب مهندس الموقع', 1, '2026-10-01 08:36:24', '2026-10-15'),
 (35, 168, 1, 57, 16.00, 'FULFILLED', 'كمية اضافية', 'كمية 16 اضافية', 1, '2026-10-01 08:57:53', '2026-10-08'),
 (36, 148, 2, 57, 2.00, 'FULFILLED', '', '', 1, '2026-10-01 20:36:21', '2026-10-08'),
 (37, 134, 1, 57, 5.00, 'FULFILLED', '', '', 1, '2026-10-02 17:35:46', '2026-10-02'),
 (38, 118, 2, 49, 7.00, 'FULFILLED', 'reservation of construction Gravel : 5 M3', 'reservation of construction Gravel : 5 M3 for Our tiny house in Sara Project', 1, '2026-10-04 15:37:59', '2026-10-06'),
-(39, 118, 2, 49, 3.00, 'CANCELLED', 'for cancelation test', '3 M3 for Cancel test', 1, '2026-10-04 15:49:15', '2026-10-06');
+(39, 118, 2, 49, 3.00, 'CANCELLED', 'for cancelation test', '3 M3 for Cancel test', 1, '2026-10-04 15:49:15', '2026-10-06'),
+(40, 148, 2, 50, 2.00, 'CANCELLED', '', '', 1, '2026-10-08 20:10:05', '2026-10-15'),
+(41, 148, 2, 46, 2.00, 'FULFILLED', '', '', 1, '2026-10-08 20:12:13', '2026-10-15');
 
 -- --------------------------------------------------------
 
@@ -1138,7 +1141,10 @@ INSERT INTO `permissions` (`id`, `name`, `description`) VALUES
 (98, 'units.delete', 'Delete units'),
 (99, 'technicians.view', 'View technicians'),
 (100, 'purchases.view', 'View purchases'),
-(104, 'admin.access', 'Full access for Admin.');
+(104, 'admin.access', 'Full access for Admin.'),
+(110, 'goods_receipts.view', ''),
+(113, 'goods_returns.print', ''),
+(114, 'goods_receipts.print', '');
 
 -- --------------------------------------------------------
 
@@ -1303,7 +1309,8 @@ INSERT INTO `project_costs` (`id`, `project_id`, `requisition_id`, `fulfillment_
 (272, 53, NULL, NULL, NULL, NULL, NULL, 'SITE_EXPENSES', 'مصروفات تمهيد التربة', 6.00, 400.00, '2026-10-06 12:46:28'),
 (273, 53, NULL, NULL, 136, NULL, 3, 'MATERIALS', 'Electrical Cable 2.5mm² Single Core', 12.50, 1.75, '2026-10-06 13:03:46'),
 (274, 53, NULL, NULL, NULL, NULL, NULL, 'TAXES', 'tax', 6.00, 300.00, '2026-10-06 13:06:18'),
-(275, 49, 68, 63, 167, NULL, 3, 'MATERIALS', 'Anchor Bolt M16', 8.00, 3.00, '2026-10-07 05:03:58');
+(275, 49, 68, 63, 167, NULL, 3, 'MATERIALS', 'Anchor Bolt M16', 8.00, 3.00, '2026-10-07 05:03:58'),
+(276, 46, NULL, NULL, 148, NULL, 2, 'MATERIALS', 'Reservation Fulfillment: Contactor 25A', 2.00, 32.00, '2026-10-08 20:12:39');
 
 -- --------------------------------------------------------
 
@@ -1450,7 +1457,8 @@ INSERT INTO `project_ledger` (`id`, `project_id`, `entry_type`, `ref_table`, `re
 (177, 53, 'cost', 'project_costs', 272, 'مصروفات تمهيد التربة', 2400.00, 0.00, -6734.98, '2026-10-06 12:46:28'),
 (178, 53, 'cost', 'project_costs', 273, 'Electrical Cable 2.5mm² Single Core', 21.88, 0.00, -6756.86, '2026-10-06 13:03:46'),
 (179, 53, 'cost', 'project_costs', 274, 'tax', 1800.00, 0.00, -8556.86, '2026-10-06 13:06:18'),
-(180, 49, 'cost', 'project_costs', 275, 'تنفيذ طلب الموارد: Anchor Bolt M16', 24.00, 0.00, -1739.90, '2026-10-07 05:03:58');
+(180, 49, 'cost', 'project_costs', 275, 'تنفيذ طلب الموارد: Anchor Bolt M16', 24.00, 0.00, -1739.90, '2026-10-07 05:03:58'),
+(181, 46, 'cost', 'project_costs', 276, 'Reservation Fulfillment: Contactor 25A', 64.00, 0.00, -64.00, '2026-10-08 20:12:39');
 
 -- --------------------------------------------------------
 
@@ -2146,6 +2154,7 @@ INSERT INTO `role_permissions` (`role_id`, `permission_id`) VALUES
 (1, 99),
 (1, 100),
 (1, 104),
+(1, 110),
 (2, 5),
 (2, 6),
 (2, 12),
@@ -2603,28 +2612,35 @@ CREATE TABLE `units` (
 --
 
 INSERT INTO `units` (`id`, `unit_code`, `unit_name`, `unit_name_a`, `description`, `status`, `created_at`) VALUES
-(1, 'PCS', 'Pieces', 'قطعة', NULL, 'ACTIVE', '2026-07-12 05:15:58'),
-(2, 'BOX', 'Box', 'صندوق', NULL, 'ACTIVE', '2026-07-12 05:15:58'),
-(3, 'BAG', 'Bag', 'كيس', NULL, 'ACTIVE', '2026-07-12 05:15:58'),
-(4, 'ROLL', 'Roll', 'لفة', NULL, 'ACTIVE', '2026-07-12 05:15:58'),
-(5, 'SET', 'Set', 'طقم', NULL, 'ACTIVE', '2026-07-12 05:15:58'),
-(6, 'PAIR', 'Pair', 'زوج', NULL, 'ACTIVE', '2026-07-12 05:15:58'),
-(7, 'KG', 'Kilogram', 'كيلوجرام', NULL, 'ACTIVE', '2026-07-12 05:15:58'),
-(8, 'GRM', 'Gram', 'جرام', '', 'ACTIVE', '2026-07-12 05:15:58'),
-(9, 'TON', 'Ton', 'طن', NULL, 'ACTIVE', '2026-07-12 05:15:58'),
-(10, 'MTR', 'Meter', 'متر', NULL, 'ACTIVE', '2026-07-12 05:15:58'),
+(1, 'PCS', 'Pieces', 'قطعة', 'Used for individual pieces or units.', 'ACTIVE', '2026-07-12 05:15:58'),
+(2, 'BOX', 'Box', 'صندوق', 'Used for goods supplied or measured by box.', 'ACTIVE', '2026-07-12 05:15:58'),
+(3, 'BAG', 'Bag', 'كيس', 'Used for goods supplied or measured by bag.', 'ACTIVE', '2026-07-12 05:15:58'),
+(4, 'ROL', 'Roll', 'لفة', 'Used for goods supplied or measured by roll.', 'ACTIVE', '2026-07-12 05:15:58'),
+(5, 'SET', 'Set', 'طقم', 'Used for goods supplied or measured as a set.', 'ACTIVE', '2026-07-12 05:15:58'),
+(6, 'PAR', 'Pair', 'زوج', 'Used for goods supplied or measured as a pair.', 'ACTIVE', '2026-07-12 05:15:58'),
+(7, 'KG', 'Kilogram', 'كيلوجرام', 'Unit of mass equal to one thousand grams.', 'ACTIVE', '2026-07-12 05:15:58'),
+(8, 'GRM', 'Gram', 'جرام', 'Unit of mass equal to one thousandth of a kilogram.', 'ACTIVE', '2026-07-12 05:15:58'),
+(9, 'TON', 'Ton', 'طن', 'Unit of mass used for large quantities of materials.', 'ACTIVE', '2026-07-12 05:15:58'),
+(10, 'MTR', 'Meter', 'متر', 'Unit of length equal to one meter.', 'ACTIVE', '2026-07-12 05:15:58'),
 (11, 'CM', 'Centimeter', 'سنتمتر', 'سنتيميتر طولي', 'ACTIVE', '2026-07-12 05:15:58'),
-(12, 'MM', 'Millimeter', 'مليمتر', NULL, 'ACTIVE', '2026-07-12 05:15:58'),
-(13, 'KM', 'Kilometer', 'كيلومتر', NULL, 'ACTIVE', '2026-07-12 05:15:58'),
-(14, 'M2', 'Square Meter', 'متر مربع', NULL, 'ACTIVE', '2026-07-12 05:15:58'),
-(15, 'M3', 'Cubic Meter', 'متر مكعب', NULL, 'ACTIVE', '2026-07-12 05:15:58'),
-(16, 'LTR', 'Liter', 'لتر', NULL, 'ACTIVE', '2026-07-12 05:15:58'),
-(17, 'DAY', 'Day', 'اجر يومي', 'أجرة عامل يومية', 'ACTIVE', '2026-07-12 05:15:58'),
-(18, 'HR', 'Hour', 'ساعة', NULL, 'ACTIVE', '2026-07-12 05:15:58'),
+(12, 'MM', 'Millimeter', 'مليمتر', 'Unit of length equal to one thousandth of a meter.', 'ACTIVE', '2026-07-12 05:15:58'),
+(13, 'KM', 'Kilometer', 'كيلومتر', 'Unit of length equal to one thousand meters.', 'ACTIVE', '2026-07-12 05:15:58'),
+(14, 'M2', 'Square Meter', 'متر مربع', 'Unit of area equal to one square meter.', 'ACTIVE', '2026-07-12 05:15:58'),
+(15, 'M3', 'Cubic Meter', 'متر مكعب', 'Unit of volume equal to one cubic meter.', 'ACTIVE', '2026-07-12 05:15:58'),
+(16, 'LTR', 'Liter', 'لتر', 'Unit of volume equal to one liter.', 'ACTIVE', '2026-07-12 05:15:58'),
+(17, 'DAY', 'Day', 'اجر يومي', 'Used for daily labor, equipment, or service costs.', 'ACTIVE', '2026-07-12 05:15:58'),
+(18, 'HR', 'Hour', 'ساعة', 'Used for hourly labor, equipment, or service costs.', 'ACTIVE', '2026-07-12 05:15:58'),
 (19, 'WK', 'Week', 'اسبوعي', 'أجرة او مرتب اسبوعي ثابت', 'ACTIVE', '2026-07-12 05:15:58'),
-(20, 'MONTH', 'Month', 'شهري', 'مرتب شهري', 'ACTIVE', '2026-07-12 05:15:58'),
-(21, 'LS', 'Lump Sum', 'مبلغ مقطوع', 'التعاقد على مبلغ مقطوع من المال.', 'ACTIVE', '2026-09-11 18:16:23'),
-(22, 'PNT', 'Point', 'نقطة', 'Electrical Distribution Point or any similar professional work.', 'ACTIVE', '2026-09-13 06:09:05');
+(20, 'MTH', 'Month', 'شهري', 'مرتب شهري', 'ACTIVE', '2026-07-12 05:15:58'),
+(21, 'LPS', 'Lump Sum', 'مبلغ مقطوع', 'التعاقد على مبلغ مقطوع من المال.', 'ACTIVE', '2026-09-11 18:16:23'),
+(22, 'PNT', 'Point', 'نقطة', 'Electrical Distribution Point or any similar professional work.', 'ACTIVE', '2026-09-13 06:09:05'),
+(25, 'TRIP', 'Trip', 'رحلة', 'Unit used for transportation trips.', 'ACTIVE', '2026-10-09 06:06:40'),
+(26, 'JOB', 'Job', 'مهمة', 'Unit used for a completed job or work package.', 'ACTIVE', '2026-10-09 06:06:40'),
+(27, 'SRVC', 'Service', 'خدمة', 'Unit used for professional or service-based costs.', 'ACTIVE', '2026-10-09 06:06:40'),
+(28, 'ITM', 'Item', 'بند', 'Unit used for miscellaneous individual items.', 'ACTIVE', '2026-10-09 06:06:40'),
+(29, 'FEE', 'Fee', 'رسوم', 'Unit used for fees and charges.', 'ACTIVE', '2026-10-09 06:06:40'),
+(30, 'PLC', 'Policy', 'وثيقة', 'Unit used for insurance policies.', 'ACTIVE', '2026-10-09 06:06:40'),
+(31, 'TRANSACTION', 'Transaction', 'معاملة', 'Unit used for transaction-based costs.', 'ACTIVE', '2026-10-09 06:06:40');
 
 -- --------------------------------------------------------
 
@@ -3158,13 +3174,13 @@ ALTER TABLE `inventory_location_stock`
 -- AUTO_INCREMENT for table `inventory_movements`
 --
 ALTER TABLE `inventory_movements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=485;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=486;
 
 --
 -- AUTO_INCREMENT for table `inventory_reservations`
 --
 ALTER TABLE `inventory_reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `inventory_transfers`
@@ -3176,7 +3192,7 @@ ALTER TABLE `inventory_transfers`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 
 --
 -- AUTO_INCREMENT for table `projects`
@@ -3194,7 +3210,7 @@ ALTER TABLE `project_advances`
 -- AUTO_INCREMENT for table `project_costs`
 --
 ALTER TABLE `project_costs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=276;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=277;
 
 --
 -- AUTO_INCREMENT for table `project_documents`
@@ -3206,7 +3222,7 @@ ALTER TABLE `project_documents`
 -- AUTO_INCREMENT for table `project_ledger`
 --
 ALTER TABLE `project_ledger`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=181;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=182;
 
 --
 -- AUTO_INCREMENT for table `project_scopes`
@@ -3344,7 +3360,7 @@ ALTER TABLE `technicians`
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `users`

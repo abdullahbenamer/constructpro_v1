@@ -8,10 +8,11 @@
 
     <meta charset="UTF-8">
 
-    <title>
-        <?= __('goods_return_note') ?> -
-        <?= htmlspecialchars($return->return_number) ?>
-    </title>
+        <title>
+            <?= __('goods_return_note') ?>
+            -
+            <?= htmlspecialchars($return->return_number ?? 'GR') ?>
+        </title>
 
     <meta
         name="viewport"

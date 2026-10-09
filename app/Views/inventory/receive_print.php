@@ -38,27 +38,22 @@ $supplierNotes = trim((string)($grn->supplier_notes ?? ''));
 <!DOCTYPE html>
 <html
     lang="<?= htmlspecialchars($language) ?>"
-    dir="<?= htmlspecialchars($direction) ?>"
->
+    dir="<?= htmlspecialchars($direction) ?>">
+
 <head>
     <meta charset="UTF-8">
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1"
-    >
-
-    <title>
-        <?= __('goods_receipt_note') ?>
-        -
-        <?= htmlspecialchars($grnNumber) ?>
-    </title>
+        content="width=device-width, initial-scale=1">
 
     <link
         href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap"
-        rel="stylesheet"
-    >
+        rel="stylesheet">
 
+
+         <title><?= htmlspecialchars($grn->grn_number ?? 'GRN') ?></title>
+         
     <style>
         * {
             box-sizing: border-box;
@@ -405,6 +400,7 @@ $supplierNotes = trim((string)($grn->supplier_notes ?? ''));
             }
         }
     </style>
+   
 </head>
 
 <body>
@@ -414,16 +410,14 @@ $supplierNotes = trim((string)($grn->supplier_notes ?? ''));
         <button
             type="button"
             class="btn-print"
-            onclick="window.print()"
-        >
+            onclick="window.print()">
             <?= __('print') ?>
         </button>
 
         <button
             type="button"
             class="btn-close"
-            onclick="closePrintView()"
-        >
+            onclick="closePrintView()">
             <?= __('close') ?>
         </button>
 
@@ -446,8 +440,7 @@ $supplierNotes = trim((string)($grn->supplier_notes ?? ''));
 
                         <img
                             src="<?= URLROOT ?>/<?= htmlspecialchars(ltrim($companyLogo, '/')) ?>"
-                            alt="<?= htmlspecialchars($companyName) ?>"
-                        >
+                            alt="<?= htmlspecialchars($companyName) ?>">
 
                     </div>
 
@@ -696,18 +689,17 @@ $supplierNotes = trim((string)($grn->supplier_notes ?? ''));
 
                             <td
                                 class="number"
-                                dir="ltr"
-                            >
+                                dir="ltr">
                                 <?= htmlspecialchars($item->sku ?? '-') ?>
                             </td>
 
                             <td class="number">
-    <?= htmlspecialchars(
-        $language === 'ar'
-            ? ($item->unit_name_a ?? $item->unit_name ?? '-')
-            : ($item->unit_name ?? $item->unit_name_a ?? '-')
-    ) ?>
-</td>
+                                <?= htmlspecialchars(
+                                    $language === 'ar'
+                                        ? ($item->unit_name_a ?? $item->unit_name ?? '-')
+                                        : ($item->unit_name ?? $item->unit_name_a ?? '-')
+                                ) ?>
+                            </td>
 
                             <td class="number">
                                 <?= number_format(
@@ -718,8 +710,7 @@ $supplierNotes = trim((string)($grn->supplier_notes ?? ''));
 
                             <td
                                 class="amount"
-                                dir="ltr"
-                            >
+                                dir="ltr">
                                 <?= number_format(
                                     (float)$item->unit_cost,
                                     2
@@ -728,8 +719,7 @@ $supplierNotes = trim((string)($grn->supplier_notes ?? ''));
 
                             <td
                                 class="amount"
-                                dir="ltr"
-                            >
+                                dir="ltr">
                                 <?= number_format(
                                     (float)$item->total_cost,
                                     2
@@ -746,8 +736,7 @@ $supplierNotes = trim((string)($grn->supplier_notes ?? ''));
 
                         <td
                             colspan="7"
-                            class="number"
-                        >
+                            class="number">
                             -
                         </td>
 
@@ -764,15 +753,13 @@ $supplierNotes = trim((string)($grn->supplier_notes ?? ''));
 
                     <td
                         colspan="6"
-                        class="amount"
-                    >
+                        class="amount">
                         <?= __('total_amount') ?>
                     </td>
 
                     <td
                         class="amount"
-                        dir="ltr"
-                    >
+                        dir="ltr">
                         <?= number_format($totalAmount, 2) ?>
                     </td>
 
@@ -891,8 +878,7 @@ $supplierNotes = trim((string)($grn->supplier_notes ?? ''));
 
 
     <script>
-        function closePrintView()
-        {
+        function closePrintView() {
             if (
                 window.opener &&
                 !window.opener.closed
@@ -914,4 +900,5 @@ $supplierNotes = trim((string)($grn->supplier_notes ?? ''));
     </script>
 
 </body>
+
 </html>

@@ -1764,5 +1764,15 @@ return [
 'goods_receipts_report' => 'Goods Receipts (GRN Report)',
 'received_amount' => 'Received Goods Amount',
 
+'cancel_reservation_confirm'       => 'Are you sure you want to cancel this reservation?',
+'reservation_cancelled_successfully' => 'Reservation cancelled successfully.',
+'reservation_cancellation_failed'   => 'Unable to cancel the reservation.',
+
+'reservation_updated_successfully' => 'Reservation updated successfully.',
+'reservation_update_failed'        => 'Unable to update the reservation.',
+'reservation_deleted_successfully' => 'Reservation deleted successfully.',
+'reservation_deletion_failed'      => 'Unable to delete the reservation.',
+'print_goods_return'              => 'Print Goods Return',
+
 
 ];

@@ -18,8 +18,9 @@
 
             <th><?= __('date') ?></th>
             <th><?= __('item') ?></th>
-            <th><?= __('sku') ?></th>
-            <th><?= __('from') ?></th>
+           <th><?= __('sku') ?></th>
+<th><?= __('unit_of_measure') ?></th>
+<th><?= __('from') ?></th>
             <th><?= __('to') ?></th>
             <th><?= __('qty') ?></th>
             <th><?= __('reference') ?></th>
@@ -112,7 +113,17 @@
                 ) ?>
             </td>
 
+<!-- UNIT OF MEASURE -->
 
+<td>
+
+    <?= htmlspecialchars(
+        Language::get() === 'ar'
+            ? ($t->unit_name_a ?? $t->unit_name ?? '-')
+            : ($t->unit_name ?? $t->unit_name_a ?? '-')
+    ) ?>
+
+</td>
             <!-- FROM -->
 
             <td>
@@ -274,7 +285,7 @@
 
     <tr>
 
-        <td colspan="9"
+        <td colspan="10"
             class="text-center py-5">
 
             <i class="fas fa-exchange-alt fa-3x text-muted mb-3"></i>
