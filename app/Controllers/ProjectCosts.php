@@ -69,6 +69,9 @@ class ProjectCosts extends Controller
                     'description'     => trim($_POST['description'] ?? ''),
                     'quantity'        => (float)($_POST['quantity'] ?? 0),
                     'unit_price'      => (float)($_POST['unit_price'] ?? 0),
+                    'unit_id' => !empty($_POST['unit_id'])
+                        ? (int)$_POST['unit_id']
+                        : null,
                     'inventory_id'    => !empty($_POST['inventory_id'])
                         ? (int)$_POST['inventory_id']
                         : null,
@@ -113,12 +116,16 @@ class ProjectCosts extends Controller
             header('Location: ' . URLROOT . '/projects');
             exit;
         }
-        $inventoryModel = $this->model('Inventory');
-        $locationModel  = $this->model('InventoryLocation');
-        $data['project']    = $project;
-        $data['project_id'] = $project_id;
-        $data['inventory']  = $inventoryModel->getAll();
-        $data['locations']  = $locationModel->getAll();
+$inventoryModel = $this->model('Inventory');
+$locationModel  = $this->model('InventoryLocation');
+$unitModel      = $this->model('Unit');
+
+$data['project']    = $project;
+$data['project_id'] = $project_id;
+$data['inventory']  = $inventoryModel->getAll();
+$data['locations']  = $locationModel->getAll();
+$data['units']      = $unitModel->getAll();
+
         $this->view(
             'project-costs/create',
             $data

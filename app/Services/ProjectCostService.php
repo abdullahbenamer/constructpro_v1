@@ -469,29 +469,109 @@ if (
     ];
 }
 
-    private function validate(array $data): array
-    {
-        if (empty($data['cost_type'])) {
-            throw new Exception(__('cost_type_required'));
-        }
+ private function validate(array $data): array
+{
+    if (empty($data['cost_type'])) {
+        throw new Exception(__('cost_type_required'));
+    }
 
-        if ($data['quantity'] <= 0) {
-            throw new Exception(__('quantity_must_be_greater_than_zero'));
-        }
+    if ($data['quantity'] <= 0) {
+        throw new Exception(
+            __('quantity_must_be_greater_than_zero')
+        );
+    }
 
-        if (
-             $data['cost_type'] !== 'MATERIALS'
-            && $data['unit_price'] <= 0
-        ) {
+    if (
+        $data['cost_type'] !== 'MATERIALS'
+        && $data['unit_price'] <= 0
+    ) {
+        throw new Exception(
+            __('unit_price_must_be_greater_than_zero')
+        );
+    }
 
+    /*
+    |--------------------------------------------------------------------------
+    | NON-MATERIAL COSTS
+    |--------------------------------------------------------------------------
+    */
+
+    if ($data['cost_type'] !== 'MATERIALS') {
+
+        if (empty($data['unit_id'])) {
             throw new Exception(
-                __('unit_price_must_be_greater_than_zero')
+                __('please_select_unit_of_measure')
             );
         }
 
-      if ($data['cost_type'] !== 'MATERIALS') {
+        if (
+            floor($data['quantity']) != $data['quantity']
+        ) {
+            throw new Exception(
+                __('quantity_must_be_whole_number')
+            );
+        }
+
+        return $data;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | MATERIALS
+    |--------------------------------------------------------------------------
+    */
+
+    if (empty($data['inventory_id'])) {
+        throw new Exception(
+            __('please_select_material')
+        );
+    }
+
+    if (empty($data['location_id'])) {
+        throw new Exception(
+            __('please_select_warehouse')
+        );
+    }
+
+    $item = $this->inventoryModel->getById(
+        $data['inventory_id']
+    );
+
+    if (!$item) {
+        throw new Exception(
+            __('inventory_item_not_found')
+        );
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | UOM
+    |--------------------------------------------------------------------------
+    |
+    | Materials always use the UOM assigned to the inventory item.
+    |
+    */
+
+    if (empty($item->unit_id)) {
+        throw new Exception(
+            __('inventory_unit_not_found')
+        );
+    }
+
+    $data['unit_id'] =
+        (int)$item->unit_id;
+
+    /*
+    |--------------------------------------------------------------------------
+    | FRACTION RULE
+    |--------------------------------------------------------------------------
+    */
+
+    $allowFraction =
+        (int)$item->allow_fraction === 1;
 
     if (
+        !$allowFraction &&
         floor($data['quantity']) != $data['quantity']
     ) {
         throw new Exception(
@@ -499,66 +579,37 @@ if (
         );
     }
 
-    return $data;
-}
-
-        if (empty($data['inventory_id'])) {
-            throw new Exception(
-                __('please_select_material')
-            );
-        }
-
-        if (empty($data['location_id'])) {
-            throw new Exception(
-                __('please_select_warehouse')
-            );
-        }
-
-        $item = $this->inventoryModel->getById(
-            $data['inventory_id']
-        );
-
-        if (!$item) {
-            throw new Exception(
-                __('inventory_item_not_found')
-            );
-        }
-
-        $allowFraction =
-    (int)$item->allow_fraction === 1;
-
-if (
-    !$allowFraction &&
-    floor($data['quantity']) != $data['quantity']
-) {
-    throw new Exception(
-        __('quantity_must_be_whole_number')
-    );
-}
-
-        $stock = $this->stockModel->getStock(
-            $data['inventory_id'],
-            $data['location_id']
-        );
-
-        $available = $stock->quantity ?? 0;
-
-        if ($available < $data['quantity']) {
-            throw new Exception(
-                __('not_enough_stock_selected_warehouse')
-            );
-        }
-
-        /*
+    /*
     |--------------------------------------------------------------------------
-    | Always use inventory cost price
+    | STOCK
     |--------------------------------------------------------------------------
     */
 
-        $data['unit_price'] = (float)$item->cost_price;
+    $stock = $this->stockModel->getStock(
+        $data['inventory_id'],
+        $data['location_id']
+    );
 
-        return $data;
+    $available =
+        $stock->quantity ?? 0;
+
+    if ($available < $data['quantity']) {
+        throw new Exception(
+            __('not_enough_stock_selected_warehouse')
+        );
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | ALWAYS USE INVENTORY COST PRICE
+    |--------------------------------------------------------------------------
+    */
+
+    $data['unit_price'] =
+        (float)$item->cost_price;
+
+    return $data;
+}
 
     private function isMaterial(array $data): bool
     {

@@ -3,6 +3,7 @@ $project = $project ?? null;
 $project_id = $project_id ?? null;
 $inventory = $inventory ?? [];
 $locations = $locations ?? [];
+$units = $units ?? [];
 ?>
 
 <div class="card mb-3">
@@ -85,18 +86,64 @@ $locations = $locations ?? [];
             </select>
         </div>
 
-        <!-- UOM read only -->
-        <div class="col-md-2" id="uomBlock">
+        <!-- UOM -->
 
-            <label class="form-label">
-                <?= __('unit_of_measure') ?>
-            </label>
-            <input
-                type="text"
-                id="uom"
-                class="form-control"
-                readonly>
-        </div>
+<div class="col-md-2" id="uomBlock">
+
+    <label class="form-label">
+        <?= __('unit_of_measure') ?>
+    </label>
+
+    <!-- MATERIALS: Read-only UOM -->
+
+    <input
+        type="text"
+        id="uom"
+        class="form-control"
+        readonly
+    >
+
+    <!-- NON-MATERIALS: Select UOM -->
+
+    <select
+        name="unit_id"
+        id="unitSelect"
+        class="form-select"
+        style="display: none;"
+    >
+
+        <option value="">
+            -- <?= __('select_unit_of_measure') ?> --
+        </option>
+
+        <?php foreach ($units as $unit): ?>
+
+            <?php if (($unit->status ?? '') === 'ACTIVE'): ?>
+
+                <option
+                    value="<?= (int)$unit->id ?>"
+                    data-unit-en="<?= htmlspecialchars($unit->unit_name ?? '') ?>"
+                    data-unit-ar="<?= htmlspecialchars($unit->unit_name_a ?? '') ?>"
+                    data-description="<?= htmlspecialchars($unit->description ?? '') ?>"
+                >
+                    <?= htmlspecialchars($unit->unit_name ?? '') ?>
+                </option>
+
+            <?php endif; ?>
+
+        <?php endforeach; ?>
+
+    </select>
+
+    <!-- UOM MASTER DESCRIPTION -->
+
+    <small
+        id="unitDescription"
+        class="form-text text-muted"
+        style="display: none;"
+    ></small>
+
+</div>
 
         <!-- Item Description -->
         <div class="col-md-5">
@@ -191,6 +238,8 @@ $locations = $locations ?? [];
         const inventorySelect = document.getElementById('inventorySelect');
         const locationSelect = document.getElementById('locationSelect');
         const uomInput = document.getElementById('uom');
+        const unitSelect = document.getElementById('unitSelect');
+        const unitDescription = document.getElementById('unitDescription');
 
         const descriptionInput = document.querySelector('[name="description"]');
         const quantityInput = document.querySelector('[name="quantity"]');
@@ -201,6 +250,211 @@ $locations = $locations ?? [];
 
         const qtyWarning = document.getElementById('qtyWarning');
 
+        // UOM DESCRIPTION DISPLAY
+        unitSelect.addEventListener(
+            'change',
+            function() {
+                const option =
+                    unitSelect.options[
+                        unitSelect.selectedIndex
+                    ];
+
+                if (
+                    !option ||
+                    !unitSelect.value
+                ) {
+                    unitDescription.textContent = '';
+                    unitDescription.style.display = 'none';
+                    return;
+                }
+
+                const description =
+                    option.dataset.description || '';
+
+                unitDescription.textContent =
+                    description;
+
+                unitDescription.style.display =
+                    description ? '' : 'none';
+            }
+        );
+
+// ==================================================
+// NON-MATERIAL UOM FILTER
+// ==================================================
+
+const allUnits =
+    Array.from(unitSelect.options)
+        .slice(1)
+        .map(function(option) {
+
+            return {
+                id: option.value,
+
+                en: option.dataset.unitEn || '',
+
+                ar: option.dataset.unitAr || '',
+
+                description:
+                    option.dataset.description || ''
+            };
+
+        });
+
+
+function filterNonMaterialUnits()
+{
+    const allowedUnits = {
+
+        HUMAN_RESOURCES: [
+            'DAY',
+            'HOUR',
+            'MONTH',
+            'SERVICE'
+        ],
+
+        TRANSPORT: [
+            'TRIP',
+            'KILOMETER',
+            'DAY',
+            'MONTH'
+        ],
+
+        EQUIPMENT: [
+            'DAY',
+            'HOUR',
+            'MONTH'
+        ],
+
+        SUBCONTRACT: [
+            'DAY',
+            'WEEK',
+            'MONTH',
+            'JOB',
+            'SERVICE'
+        ],
+
+        SITE_EXPENSES: [
+            'DAY',
+            'ITEM'
+        ],
+
+        PROFESSIONAL_SERVICES: [
+            'HOUR',
+            'DAY',
+            'MONTH',
+            'SERVICE'
+        ],
+
+        PERMITS_FEES: [
+            'FEE'
+        ],
+
+        INSURANCE: [
+            'POLICY',
+            'FEE'
+        ],
+
+        BANK_CHARGES: [
+            'TRANSACTION',
+            'FEE'
+        ],
+
+        TAXES: [
+            'FEE'
+        ],
+
+        MISCELLANEOUS: [
+            'ITEM',
+            'SERVICE'
+        ]
+
+    };
+
+
+    const allowed =
+        allowedUnits[costType.value] || [];
+
+
+    const currentLanguage =
+        document.documentElement.lang.toLowerCase();
+
+
+    // Clear current options
+
+    unitSelect.innerHTML = '';
+
+
+    // Add placeholder
+
+    const placeholder =
+        document.createElement('option');
+
+    placeholder.value = '';
+
+    placeholder.textContent =
+        '-- <?= __('select_unit_of_measure') ?> --';
+
+    unitSelect.appendChild(placeholder);
+
+
+    // Add ONLY allowed units
+
+    allUnits.forEach(function(unit)
+    {
+        const unitName =
+            (unit.en || '')
+                .trim()
+                .toUpperCase();
+
+
+        if (!allowed.includes(unitName)) {
+            return;
+        }
+
+
+        const option =
+            document.createElement('option');
+
+
+        option.value =
+            unit.id;
+
+
+        option.dataset.unitEn =
+            unit.en;
+
+
+        option.dataset.unitAr =
+            unit.ar;
+
+
+        option.dataset.description =
+            unit.description;
+
+
+        option.textContent =
+            currentLanguage === 'ar'
+                ? (unit.ar || unit.en)
+                : (unit.en || unit.ar);
+
+
+        unitSelect.appendChild(option);
+
+    });
+
+
+    // Reset selection
+
+    unitSelect.value = '';
+
+
+    // Clear description
+
+    unitDescription.textContent = '';
+
+    unitDescription.style.display = 'none';
+}
 
         // ==================================================
         // MATERIAL / NON-MATERIAL MODE
@@ -223,19 +477,39 @@ $locations = $locations ?? [];
             if (!material) {
 
                 inventorySelect.value = '';
+
                 locationSelect.innerHTML =
                     '<option value="">-- <?= __('select_location') ?> --</option>';
 
                 descriptionInput.value = '';
+
                 unitPriceInput.value = '';
+
                 uomInput.value = '';
 
+                uomInput.style.display = 'none';
+
+                unitSelect.style.display = '';
+
+                unitSelect.required = true;
+
+                // call the function to filter units based on the selected cost type
+                filterNonMaterialUnits();
+                
+
             } else {
+
+                uomInput.style.display = '';
+
+                unitSelect.style.display = 'none';
+
+                unitSelect.value = '';
+
+                unitSelect.required = false;
 
                 autoFillMaterial();
 
             }
-
             updateQuantityRules();
 
         }

@@ -83,12 +83,13 @@ public function create($data)
             location_id,
             cost_type,
             description,
+            unit_id,
             quantity,
             unit_price
         )
         VALUES
         (
-            ?, ?, ?, ?, ?, ?, ?, ?, ?
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
         )",
         [
             $data['project_id'],
@@ -98,6 +99,7 @@ public function create($data)
             $data['location_id'] ?? null,
             $data['cost_type'],
             $data['description'],
+            $data['unit_id'] ?? null,
             $data['quantity'],
             $data['unit_price']
         ]

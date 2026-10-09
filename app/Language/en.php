@@ -1774,5 +1774,8 @@ return [
 'reservation_deletion_failed'      => 'Unable to delete the reservation.',
 'print_goods_return'              => 'Print Goods Return',
 
+'please_select_unit_of_measure' => 'Please select a unit of measure.',
+'inventory_unit_not_found'      => 'The selected inventory item has no unit of measure assigned.',
 
+'select_unit_of_measure' => '--- Select Measure Unit---',
 ];

@@ -1776,4 +1776,9 @@ return [
 'reservation_deletion_failed'      => 'تعذر حذف الحجز.',
 'print_goods_return'              => 'طباعة إشعار إرجاع البضائع',
 
+'please_select_unit_of_measure' => 'يرجى اختيار وحدة قياس.',
+'inventory_unit_not_found'      => 'الصنف المحدد لا توجد له وحدة قياس محددة.',
+
+'select_unit_of_measure' => '-- اختر وحدة قياس --',
+
 ];
