@@ -18,51 +18,7 @@ class ResourceRequisitions extends Controller
         $this->view('resource-requisitions/index', $data);
     }
 
-    /*
-    |----------------------------------------------
-    | Create
-    |-----------------------------------------
-    */
-    // public function create()
-    // {
-    //     AuthHelper::can('resource_requisitions.create');
-
-    //     $model = $this->model('ResourceRequisition');
-    //     $projectModel = $this->model('Project');
-    //     $locationModel = $this->model('InventoryLocation');
-
-    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    //         $id = $model->create([
-
-    //             'req_number'     => $model->nextNumber(),
-    //             'project_id'     => $_POST['project_id'],
-    //             'request_date'   => $_POST['request_date'],
-    //             'required_date'  => $_POST['required_date'],
-    //             'priority'       => $_POST['priority'],
-    //             'target_warehouse_id' => !empty($_POST['target_warehouse_id'])
-    //                 ? $_POST['target_warehouse_id']
-    //                 : null,
-    //             'delivery_method' => $_POST['delivery_method'] ?? 'WAREHOUSE',
-    //             'remarks'        => trim($_POST['remarks'])
-
-    //         ]);
-
-    //         header('Location: ' . URLROOT . '/resourcerequisitions/details/' . $id);
-    //         exit;
-    //     }
-
-    //     $data['projects'] = $projectModel->getAll();
-
-    //     $data['locations'] = $locationModel->getAll();
-
-    //     $data['next_number'] = $model->nextNumber();
-
-    //     $this->view('resource-requisitions/create', $data);
-    // }
-
-
-    public function create()
+        public function create()
 {
     AuthHelper::can('resource_requisitions.create');
 
