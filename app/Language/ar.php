@@ -12,7 +12,7 @@ return [
     'inventory'              => 'المخزون',
     'procurement'            => 'المشتريات',
     'suppliers'              => 'الموردون',
-    'finance'                => 'المالي',
+    'finance'                => 'مالي',
     'admin_panel'            => 'لوحة ادارة المنظومة',
     'logout'                 => 'تسجيل الخروج',
     'please_login_first'  => 'يرجى تسجيل الدخول ...',
@@ -1819,5 +1819,35 @@ return [
 
 'resource_requisition_fulfillment_failed'
     => 'تعذر تنفيذ طلب الموارد.',
+
+    'resource_requisition_item_added_successfully'
+    => 'تمت إضافة بند طلب الموارد بنجاح.',
+
+'resource_requisition_item_updated_successfully'
+    => 'تم تحديث بند طلب الموارد بنجاح.',
+
+'unable_to_update_resource_requisition_item'
+    => 'تعذر تحديث بند طلب الموارد.',
+
+'resource_requisition_item_deleted_successfully'
+    => 'تم حذف بند طلب الموارد بنجاح.',
+
+'unable_to_delete_resource_requisition_item'
+    => 'تعذر حذف بند طلب الموارد.',
+
+    'please_select_cost_type' => 'يرجى اختيار نوع التكلفة المالية.',
+
+'resource_requisition_updated_successfully'
+    => 'تم تحديث طلب الموارد بنجاح.',
+
+'resource_requisition_deleted_successfully'
+    => 'تم حذف طلب الموارد بنجاح.',
+
+    'confirm_delete_resource_requisition'
+    => 'هل أنت متأكد من رغبتك في حذف طلب الموارد هذا؟',
+
+    'financial_cost_type_required' => 'نوع التكلفة المالية مطلوب.',
+
+    'financial_cost_type' => 'نوع التكلفة المالية .',
 
 ];

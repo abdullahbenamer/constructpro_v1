@@ -132,7 +132,7 @@ class ResourceRequisitions extends Controller
     }
 
 
-    public function update($id)
+ public function update($id)
     {
         AuthHelper::can('resource_requisitions.edit');
 
@@ -156,26 +156,36 @@ class ResourceRequisitions extends Controller
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $model->update($id, [
+          $model->update($id, [
 
-                'project_id'    => $_POST['project_id'],
-                'request_date'  => $_POST['request_date'],
-                'required_date' => $_POST['required_date'],
-                'priority'      => $_POST['priority'],
+    'project_id'    => $_POST['project_id'],
+    'request_date'  => $_POST['request_date'],
+    'required_date' => $_POST['required_date'],
+    'priority'      => $_POST['priority'],
 
-                'target_warehouse_id' => !empty($_POST['target_warehouse_id'])
-                    ? $_POST['target_warehouse_id']
-                    : null,
+    'target_warehouse_id' => !empty($_POST['target_warehouse_id'])
+        ? $_POST['target_warehouse_id']
+        : null,
 
-                'delivery_method' => $_POST['delivery_method'] ?? 'WAREHOUSE',
+    'delivery_method' => $_POST['delivery_method'] ?? 'WAREHOUSE',
 
-                'remarks'       => trim($_POST['remarks'])
+    'remarks' => trim($_POST['remarks'])
 
-            ]);
+]);
+
+FlashHelper::success(
+    __('resource_requisition_updated_successfully')
+);
+
+header(
+    'Location: ' .
+    URLROOT .
+    '/ResourceRequisitions/details/' .
+    $id
+);
+
+exit;
         }
-
-        header('Location: ' . URLROOT . '/ResourceRequisitions/details/' . $id);
-        exit;
     }
 
     /*
@@ -403,6 +413,10 @@ class ResourceRequisitions extends Controller
         }
 
         $model->delete($id);
+
+        FlashHelper::success(
+    __('resource_requisition_deleted_successfully')
+);
 
         header('Location: ' . URLROOT . '/resourcerequisitions');
         exit;

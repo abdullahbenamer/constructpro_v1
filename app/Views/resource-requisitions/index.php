@@ -288,9 +288,9 @@
 
                                         </a>
 
-                                        <a href="<?= URLROOT ?>/resourcerequisitions/delete/<?= $req->id ?>"
+<a href="<?= URLROOT ?>/resourcerequisitions/delete/<?= $req->id ?>"
                                             class="btn btn-sm btn-danger"
-                                            onclick="return confirm(<?= json_encode(__('delete_requisition_confirm')) ?>);">
+ onclick="return confirm('<?= htmlspecialchars(__('confirm_delete_resource_requisition'), ENT_QUOTES, 'UTF-8') ?>');">
 
                                             <!-- <i class="fas fa-trash"></i> -->
                                             <?= __('delete') ?>

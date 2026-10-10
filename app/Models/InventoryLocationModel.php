@@ -30,15 +30,7 @@ public function getAll()
     ")->fetchAll();
 }
 
-    // public function getById($id)
-    // {
-    //     return $this->db->query(
-    //         "SELECT * FROM inventory_locations WHERE id = ?",
-    //         [$id]
-    //     )->fetch();
-    // }
-
-    public function getById($id)
+     public function getById($id)
 {
     return $this->db->query(
         "

@@ -1817,4 +1817,33 @@ return [
 
 'resource_requisition_fulfillment_failed'
     => 'Unable to fulfill the resource requisition.',
-];
+
+    'resource_requisition_item_added_successfully'
+    => 'Requisition item added successfully.',
+
+'resource_requisition_item_updated_successfully'
+    => 'Requisition item updated successfully.',
+
+'unable_to_update_resource_requisition_item'
+    => 'Unable to update the requisition item.',
+
+'resource_requisition_item_deleted_successfully'
+    => 'Requisition item deleted successfully.',
+
+'unable_to_delete_resource_requisition_item'
+    => 'Unable to delete the requisition item.',
+
+'please_select_cost_type' => 'Please select (Financial) Cost Type.',
+
+'resource_requisition_updated_successfully'
+    => 'Resource Requisition updated successfully.',
+
+'resource_requisition_deleted_successfully'
+    => 'Resource Requisition deleted successfully.',
+
+'confirm_delete_resource_requisition'
+    => 'Are you sure you want to delete this Resource Requisition?',
+
+'financial_cost_type' => 'Financial Cost Type',
+
+    ];

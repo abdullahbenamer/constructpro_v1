@@ -104,7 +104,7 @@
                                         value="<?= (int)$item->id ?>"
                                         data-source="INVENTORY"
                                         data-unit="<?= htmlspecialchars($item->unit_name) ?>"
-                                        data-description="<?= htmlspecialchars($item->name) ?>"
+                                    data-description="<?= htmlspecialchars($item->description ?? '') ?>"
                                         data-allow-fraction="<?= (int)$item->allow_fraction ?>">
 
                                         <!-- <? //= htmlspecialchars($item->sku) 
@@ -260,7 +260,7 @@
                     <div class="col-md-4 mb-3">
 
                         <label class="form-label">
-                            <?= __('cost_type') ?>
+                            <?= __('financial_cost_type') ?>
                         </label>
 
                         <!-- MATERIAL COST TYPE -->

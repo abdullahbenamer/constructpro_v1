@@ -1,30 +1,18 @@
 <?php
 
 /**
-
  * LOCATION INVENTORY PRINT
-
  *
-
  * Standalone print view.
-
  * Follows the same ConstructPro print format used by:
-
  * - purchase-orders/print.php
-
  * - project-costs/ledger_report.php
-
  * - suppliers/ledger_report.php
-
  */
-
-
 
 $language  = $_SESSION['language'] ?? 'en';
 
 $direction = ($language === 'ar') ? 'rtl' : 'ltr';
-
-
 
 $companyName    = $settings->company_name ?? '';
 
@@ -36,15 +24,9 @@ $companyEmail   = $settings->company_email ?? '';
 
 $companyLogo    = $settings->company_logo ?? '';
 
-
-
 $printedDate = date('Y-m-d H:i');
 
-
-
 ?>
-
-
 
 <!DOCTYPE html>
 
@@ -56,15 +38,9 @@ $printedDate = date('Y-m-d H:i');
 
 >
 
-
-
 <head>
 
-
-
     <meta charset="UTF-8">
-
-
 
     <title>
 
@@ -75,9 +51,6 @@ $printedDate = date('Y-m-d H:i');
         <?= htmlspecialchars($location->name ?? '') ?>
 
     </title>
-
-
-
     <meta
 
         name="viewport"
@@ -85,9 +58,6 @@ $printedDate = date('Y-m-d H:i');
         content="width=device-width, initial-scale=1"
 
     >
-
-
-
     <link
 
         href="https://fonts.googleapis.com/css2?family=Cairo:wght\@400;600;700&family=Tajawal:wght\@400;500;700&display=swap"
@@ -95,21 +65,12 @@ $printedDate = date('Y-m-d H:i');
         rel="stylesheet"
 
     >
-
-
-
     <style>
-
-
-
         * {
 
             box-sizing: border-box;
 
         }
-
-
-
         body {
 
             margin: 0;
@@ -125,9 +86,6 @@ $printedDate = date('Y-m-d H:i');
             font-size: 13px;
 
         }
-
-
-
         .print-container {
 
             width: 100%;
@@ -139,17 +97,11 @@ $printedDate = date('Y-m-d H:i');
             padding: 25px;
 
         }
-
-
-
         /* --------------------------------------------------
 
            COMPANY HEADER
 
         -------------------------------------------------- */
-
-
-
         .company-header {
 
             display: flex;
@@ -165,9 +117,6 @@ $printedDate = date('Y-m-d H:i');
             margin-bottom: 20px;
 
         }
-
-
-
         .company-logo {
 
             max-height: 70px;
@@ -177,9 +126,6 @@ $printedDate = date('Y-m-d H:i');
             object-fit: contain;
 
         }
-
-
-
         .company-info {
 
             text-align: center;
@@ -189,9 +135,6 @@ $printedDate = date('Y-m-d H:i');
             margin: 0 20px;
 
         }
-
-
-
         .company-name {
 
             font-size: 22px;
@@ -201,9 +144,6 @@ $printedDate = date('Y-m-d H:i');
             margin-bottom: 5px;
 
         }
-
-
-
         .company-details {
 
             font-size: 11px;
@@ -211,25 +151,16 @@ $printedDate = date('Y-m-d H:i');
             line-height: 1.6;
 
         }
-
-
-
         .company-header-spacer {
 
             width: 180px;
 
         }
-
-
-
         /* --------------------------------------------------
 
            DOCUMENT HEADER
 
         -------------------------------------------------- */
-
-
-
         .document-header {
 
             text-align: center;
@@ -237,9 +168,6 @@ $printedDate = date('Y-m-d H:i');
             margin-bottom: 20px;
 
         }
-
-
-
         .document-title {
 
             font-size: 22px;
@@ -251,9 +179,6 @@ $printedDate = date('Y-m-d H:i');
             text-transform: uppercase;
 
         }
-
-
-
         .document-meta {
 
             font-size: 11px;
@@ -261,17 +186,11 @@ $printedDate = date('Y-m-d H:i');
             color: #555;
 
         }
-
-
-
         /* --------------------------------------------------
 
            LOCATION INFORMATION
 
         -------------------------------------------------- */
-
-
-
         .location-info {
 
             border: 1px solid #999;
@@ -281,9 +200,6 @@ $printedDate = date('Y-m-d H:i');
             margin-bottom: 15px;
 
         }
-
-
-
         .location-info-grid {
 
             display: flex;
@@ -293,17 +209,11 @@ $printedDate = date('Y-m-d H:i');
             gap: 20px;
 
         }
-
-
-
         .location-info-item {
 
             flex: 1;
 
         }
-
-
-
         .location-info-label {
 
             display: block;
@@ -315,9 +225,6 @@ $printedDate = date('Y-m-d H:i');
             margin-bottom: 3px;
 
         }
-
-
-
         .location-info-value {
 
             display: block;
@@ -327,17 +234,11 @@ $printedDate = date('Y-m-d H:i');
             font-weight: 700;
 
         }
-
-
-
         /* --------------------------------------------------
 
            SUMMARY
 
         -------------------------------------------------- */
-
-
-
         .summary {
 
             display: flex;
@@ -351,9 +252,6 @@ $printedDate = date('Y-m-d H:i');
             padding: 10px 15px;
 
         }
-
-
-
         .summary-item {
 
             text-align: center;
@@ -361,9 +259,6 @@ $printedDate = date('Y-m-d H:i');
             flex: 1;
 
         }
-
-
-
         .summary-label {
 
             display: block;
@@ -375,9 +270,6 @@ $printedDate = date('Y-m-d H:i');
             margin-bottom: 3px;
 
         }
-
-
-
         .summary-value {
 
             display: block;
@@ -387,17 +279,11 @@ $printedDate = date('Y-m-d H:i');
             font-weight: 700;
 
         }
-
-
-
         /* --------------------------------------------------
 
            TABLE
 
         -------------------------------------------------- */
-
-
-
         .inventory-table {
 
             width: 100%;
@@ -407,9 +293,6 @@ $printedDate = date('Y-m-d H:i');
             margin-top: 10px;
 
         }
-
-
-
         .inventory-table th,
 
         .inventory-table td {
@@ -421,9 +304,6 @@ $printedDate = date('Y-m-d H:i');
             vertical-align: middle;
 
         }
-
-
-
         .inventory-table th {
 
             background: #f2f2f2;
@@ -435,57 +315,36 @@ $printedDate = date('Y-m-d H:i');
             white-space: nowrap;
 
         }
-
-
-
         .inventory-table td {
 
             font-size: 11px;
 
         }
-
-
-
         .text-center {
 
             text-align: center;
 
         }
-
-
-
         .text-right {
 
             text-align: right;
 
         }
-
-
-
         .text-left {
 
             text-align: left;
 
         }
-
-
-
         .status {
 
             font-weight: 600;
 
         }
-
-
-
         /* --------------------------------------------------
 
            PRINT ACTIONS
 
         -------------------------------------------------- */
-
-
-
         .actions {
 
             text-align: center;
@@ -493,9 +352,6 @@ $printedDate = date('Y-m-d H:i');
             margin: 25px 0;
 
         }
-
-
-
         .actions button {
 
             border: none;
@@ -513,9 +369,6 @@ $printedDate = date('Y-m-d H:i');
             border-radius: 4px;
 
         }
-
-
-
         .btn-print {
 
             background: #212529;
@@ -523,9 +376,6 @@ $printedDate = date('Y-m-d H:i');
             color: #fff;
 
         }
-
-
-
         .btn-close {
 
             background: #6c757d;
@@ -533,17 +383,11 @@ $printedDate = date('Y-m-d H:i');
             color: #fff;
 
         }
-
-
-
         /* --------------------------------------------------
 
            FOOTER
 
         -------------------------------------------------- */
-
-
-
         .report-footer {
 
             margin-top: 20px;
@@ -561,21 +405,12 @@ $printedDate = date('Y-m-d H:i');
             justify-content: space-between;
 
         }
-
-
-
         /* --------------------------------------------------
 
            PRINT
 
         -------------------------------------------------- */
-
-
-
         @media print {
-
-
-
             @page {
 
                 size: A4 landscape;
@@ -583,9 +418,6 @@ $printedDate = date('Y-m-d H:i');
                 margin: 10mm;
 
             }
-
-
-
             body {
 
                 background: #fff;
@@ -593,9 +425,6 @@ $printedDate = date('Y-m-d H:i');
                 font-size: 10px;
 
             }
-
-
-
             .print-container {
 
                 max-width: none;
@@ -603,25 +432,16 @@ $printedDate = date('Y-m-d H:i');
                 padding: 0;
 
             }
-
-
-
             .actions {
 
                 display: none !important;
 
             }
-
-
-
             .inventory-table {
 
                 page-break-inside: auto;
 
             }
-
-
-
             .inventory-table tr {
 
                 page-break-inside: avoid;
@@ -629,25 +449,16 @@ $printedDate = date('Y-m-d H:i');
                 page-break-after: auto;
 
             }
-
-
-
             .inventory-table thead {
 
                 display: table-header-group;
 
             }
-
-
-
             .inventory-table tfoot {
 
                 display: table-footer-group;
 
             }
-
-
-
             .company-header,
 
             .document-header,
@@ -659,9 +470,6 @@ $printedDate = date('Y-m-d H:i');
                 break-inside: avoid;
 
             }
-
-
-
             a {
 
                 color: inherit;
@@ -671,45 +479,18 @@ $printedDate = date('Y-m-d H:i');
             }
 
         }
-
-
-
     </style>
-
-
-
 </head>
-
-
-
 <body>
-
-
-
 <div class="print-container">
-
-
-
     <!-- ==================================================
 
          COMPANY HEADER
 
     ================================================== -->
-
-
-
     <div class="company-header">
-
-
-
         <div>
-
-
-
             <?php if (!empty($companyLogo)): ?>
-
-
-
                 <img
 
                     src="<?= URLROOT . '/' . ltrim($companyLogo, '/') ?>"
@@ -719,285 +500,108 @@ $printedDate = date('Y-m-d H:i');
                     class="company-logo"
 
                 >
-
-
-
             <?php endif; ?>
-
-
-
         </div>
-
-
-
         <div class="company-info">
-
-
-
             <div class="company-name">
 
                 <?= htmlspecialchars($companyName) ?>
 
             </div>
-
-
-
             <div class="company-details">
-
-
-
                 <?php if (!empty($companyAddress)): ?>
-
-
-
                     <?= htmlspecialchars($companyAddress) ?>
-
-
-
                 <?php endif; ?>
-
-
-
                 <?php if (!empty($companyPhone)): ?>
-
-
-
                     <br>
 
                     <?= htmlspecialchars($companyPhone) ?>
-
-
-
                 <?php endif; ?>
-
-
-
                 <?php if (!empty($companyEmail)): ?>
-
-
-
                     <br>
 
                     <?= htmlspecialchars($companyEmail) ?>
-
-
-
                 <?php endif; ?>
-
-
-
             </div>
-
-
-
         </div>
-
-
-
         <div class="company-header-spacer"></div>
-
-
-
-    </div>
-
-
-
-
-
-    <!-- ==================================================
+    </div>    <!-- ==================================================
 
          DOCUMENT HEADER
 
     ================================================== -->
-
-
-
     <div class="document-header">
-
-
-
         <div class="document-title">
 
             <?= __('inventory') ?>
 
         </div>
-
-
-
         <div class="document-meta">
-
-
-
             <?= __('printed') ?>:
 
             <?= htmlspecialchars($printedDate) ?>
-
-
-
         </div>
-
-
-
-    </div>
-
-
-
-
-
-    <!-- ==================================================
+    </div>    <!-- ==================================================
 
          LOCATION INFORMATION
 
     ================================================== -->
-
-
-
     <div class="location-info">
-
-
-
         <div class="location-info-grid">
-
-
-
             <div class="location-info-item">
-
-
-
                 <span class="location-info-label">
 
                     <?= __('location') ?>
 
                 </span>
-
-
-
                 <span class="location-info-value">
-
-
-
                     <?= htmlspecialchars(
 
                         $location->name ?? ''
 
                     ) ?>
-
-
-
                 </span>
-
-
-
-            </div>
-
-
-
-
-
-            <div class="location-info-item">
-
-
-
+            </div>            <div class="location-info-item">
                 <span class="location-info-label">
 
                     <?= __('code') ?>
 
                 </span>
-
-
-
                 <span class="location-info-value">
-
-
-
                     <?= htmlspecialchars(
 
                         $location->code ?? ''
 
                     ) ?>
-
-
-
                 </span>
-
-
-
-            </div>
-
-
-
-
-
-            <div class="location-info-item">
-
-
-
+            </div>            <div class="location-info-item">
                 <span class="location-info-label">
 
                     <?= __('storekeeper') ?>
 
                 </span>
-
-
-
                 <span class="location-info-value">
-
-
-
                     <?= htmlspecialchars(
 
                         $location->storekeeper ?? '-'
 
                     ) ?>
-
-
-
                 </span>
-
-
-
             </div>
-
-
-
         </div>
-
-
-
-    </div>
-
-
-
-
-
-    <!-- ==================================================
+    </div>    <!-- ==================================================
 
          CALCULATE SUMMARY
 
     ================================================== -->
-
-
-
     <?php
-
-
-
     $totalItems = is_array($items) ? count($items) : 0;
 
-    ?>
-
-
-
-
-
-    <!-- ==================================================
+    ?>    <!-- ==================================================
 
          SUMMARY
 
     ================================================== -->
-
-
-
     <div class="summary">
 
         <div class="summary-item">
@@ -1012,117 +616,56 @@ $printedDate = date('Y-m-d H:i');
 
         </div>
 
-    </div>
-
-
-<!-- ==================================================
+    </div><!-- ==================================================
 
          LOCATION INVENTORY TABLE
 
     ================================================== -->
-
-
-
     <table class="inventory-table">
-
-
-
         <thead>
-
-
-
         <tr>
-
-
-
             <th>
 
                 #
 
             </th>
-
-
-
-            <th>
-
-                <?= __('item') ?>
-
-            </th>
-
-
-
+            <th>                <?= __('item') ?>            </th>
             <th>
 
                 <?= __('sku') ?>
 
             </th>
-
-
-
             <th>
 
                 <?= __('physical_qty') ?>
 
             </th>
-
-
-
             <th>
 
                 <?= __('uom') ?>
 
             </th>
-
-
-
             <th>
 
                 <?= __('reserved_qty') ?>
 
             </th>
-
-
-
             <th>
 
                 <?= __('available_qty') ?>
 
             </th>
-
-
-
             <th>
 
                 <?= __('status') ?>
 
             </th>
-
-
-
         </tr>
-
-
-
         </thead>
-
-
-
         <tbody>
-
-
-
         <?php if (!empty($items)): ?>
-
-
-
             <?php foreach ($items as $index => $item): ?>
-
-
-
                 <?php
-
-
-
                 $physical = (float)(
 
                     $item->physical_qty
@@ -1131,52 +674,23 @@ $printedDate = date('Y-m-d H:i');
 
                     ?? 0
 
-                );
-
-
-
-                $reserved = (float)(
-
-                    $item->reserved_qty
-
+                );                $reserved = (float)(
+                    $item->reserved_quantity
                     ?? 0
-
                 );
-
-
 
                 $available = (float)(
-
-                    $item->available_qty
-
+                    $item->available_quantity
                     ?? ($physical - $reserved)
-
                 );
 
-
-
                 ?>
-
-
-
                 <tr>
-
-
-
                     <td class="text-center">
 
                         <?= $index + 1 ?>
 
-                    </td>
-
-
-
-
-
-                    <td>
-
-
-
+                    </td>                    <td>
                         <?= htmlspecialchars(
 
                             $item->item_name
@@ -1186,19 +700,7 @@ $printedDate = date('Y-m-d H:i');
                             ?? ''
 
                         ) ?>
-
-
-
-                    </td>
-
-
-
-
-
-                    <td class="text-center">
-
-
-
+                    </td>                    <td class="text-center">
                         <?= htmlspecialchars(
 
                             $item->sku
@@ -1206,19 +708,7 @@ $printedDate = date('Y-m-d H:i');
                             ?? ''
 
                         ) ?>
-
-
-
-                    </td>
-
-
-
-
-
-                    <td class="text-right">
-
-
-
+                    </td>                    <td class="text-right">
                         <?= number_format(
 
                             $physical,
@@ -1226,19 +716,7 @@ $printedDate = date('Y-m-d H:i');
                             2
 
                         ) ?>
-
-
-
-                    </td>
-
-
-
-
-
-                    <td class="text-center">
-
-
-
+                    </td>                    <td class="text-center">
                         <?= htmlspecialchars(
 
                             $item->uom
@@ -1250,19 +728,7 @@ $printedDate = date('Y-m-d H:i');
                             ?? ''
 
                         ) ?>
-
-
-
-                    </td>
-
-
-
-
-
-                    <td class="text-right">
-
-
-
+                    </td>                    <td class="text-right">
                         <?= number_format(
 
                             $reserved,
@@ -1270,19 +736,7 @@ $printedDate = date('Y-m-d H:i');
                             2
 
                         ) ?>
-
-
-
-                    </td>
-
-
-
-
-
-                    <td class="text-right">
-
-
-
+                    </td>                    <td class="text-right">
                         <?= number_format(
 
                             $available,
@@ -1290,19 +744,7 @@ $printedDate = date('Y-m-d H:i');
                             2
 
                         ) ?>
-
-
-
-                    </td>
-
-
-
-
-
-                    <td class="text-center status">
-
-
-
+                    </td>                    <td class="text-center status">
                         <?= htmlspecialchars(
 
                             $item->status
@@ -1310,29 +752,11 @@ $printedDate = date('Y-m-d H:i');
                             ?? ''
 
                         ) ?>
-
-
-
                     </td>
-
-
-
                 </tr>
-
-
-
             <?php endforeach; ?>
-
-
-
         <?php else: ?>
-
-
-
             <tr>
-
-
-
                 <td
 
                     colspan="8"
@@ -1344,59 +768,23 @@ $printedDate = date('Y-m-d H:i');
                     <?= __('no_inventory_items_found') ?>
 
                 </td>
-
-
-
             </tr>
-
-
-
         <?php endif; ?>
-
-
-
         </tbody>
-
-
-
-    </table>
-
-
-
-
-
-    <!-- ==================================================
+    </table>    <!-- ==================================================
 
          FOOTER
 
     ================================================== -->
-
-
-
     <div class="report-footer">
-
-
-
         <div>
-
-
-
             <?= htmlspecialchars(
 
                 $companyName
 
             ) ?>
-
-
-
         </div>
-
-
-
         <div>
-
-
-
             <?= __('printed') ?>:
 
             <?= htmlspecialchars(
@@ -1404,31 +792,13 @@ $printedDate = date('Y-m-d H:i');
                 $printedDate
 
             ) ?>
-
-
-
         </div>
-
-
-
-    </div>
-
-
-
-
-
-    <!-- ==================================================
+    </div>    <!-- ==================================================
 
          ACTION BUTTONS
 
     ================================================== -->
-
-
-
     <div class="actions">
-
-
-
         <button
 
             type="button"
@@ -1441,13 +811,7 @@ $printedDate = date('Y-m-d H:i');
 
             <?= __('print') ?>
 
-        </button>
-
-
-
-
-
-        <button
+        </button>        <button
 
             type="button"
 
@@ -1460,19 +824,7 @@ $printedDate = date('Y-m-d H:i');
             <?= __('close') ?>
 
         </button>
-
-
-
     </div>
-
-
-
 </div>
-
-
-
 </body>
-
-
-
 </html>

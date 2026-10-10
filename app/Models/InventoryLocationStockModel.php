@@ -165,29 +165,105 @@ public function removeStock($inventory_id, $location_id, $qty)
         return $total;
     }
 
+// public function getLocationInventory($location_id)
+// {
+//     return $this->db->query(
+//         "
+//         SELECT
+//             ils.quantity,
+
+//             i.id,
+//             i.name,
+//             i.sku,
+//             i.min_stock,
+//             u.unit_name,
+
+//             COALESCE(
+//                 reservations.reserved_quantity,
+//                 0
+//             ) AS reserved_quantity,
+
+//             (
+//                 ils.quantity
+//                 -
+//                 COALESCE(
+//                     reservations.reserved_quantity,
+//                     0
+//                 )
+//             ) AS available_quantity
+
+//         FROM inventory_location_stock ils
+
+//         JOIN inventory i
+//             ON i.id = ils.inventory_id
+
+//         LEFT JOIN units u
+//     ON u.id = i.unit_id
+
+//         LEFT JOIN
+//         (
+//             SELECT
+//                 inventory_id,
+//                 location_id,
+
+//                 SUM(quantity) AS reserved_quantity
+
+//             FROM inventory_reservations
+
+//             WHERE status = 'ACTIVE'
+
+//             GROUP BY
+//                 inventory_id,
+//                 location_id
+
+//         ) reservations
+
+//             ON reservations.inventory_id = ils.inventory_id
+
+//             AND reservations.location_id = ils.location_id
+
+//         WHERE ils.location_id = ?
+
+//         ORDER BY i.name
+//         ",
+//         [$location_id]
+//     )->fetchAll();
+// }
+
 public function getLocationInventory($location_id)
 {
     return $this->db->query(
         "
         SELECT
+
             ils.quantity,
 
             i.id,
             i.name,
             i.sku,
-            i.min_stock,
-            u.unit_name,
+            i.base_unit,
 
             COALESCE(
-                reservations.reserved_quantity,
+                (
+                    SELECT SUM(r.quantity)
+                    FROM inventory_reservations r
+                    WHERE r.inventory_id = ils.inventory_id
+                    AND r.location_id = ils.location_id
+                    AND r.status = 'ACTIVE'
+                ),
                 0
             ) AS reserved_quantity,
 
             (
-                ils.quantity
-                -
+                ils.quantity -
                 COALESCE(
-                    reservations.reserved_quantity,
+                    (
+                        SELECT SUM(r.quantity)
+                        FROM inventory_reservations r
+                        WHERE r.inventory_id = ils.inventory_id
+                        AND r.location_id = ils.location_id
+                        AND r.status = 'ACTIVE'
+                    ),
                     0
                 )
             ) AS available_quantity
@@ -196,31 +272,6 @@ public function getLocationInventory($location_id)
 
         JOIN inventory i
             ON i.id = ils.inventory_id
-
-        LEFT JOIN units u
-    ON u.id = i.unit_id
-
-        LEFT JOIN
-        (
-            SELECT
-                inventory_id,
-                location_id,
-
-                SUM(quantity) AS reserved_quantity
-
-            FROM inventory_reservations
-
-            WHERE status = 'ACTIVE'
-
-            GROUP BY
-                inventory_id,
-                location_id
-
-        ) reservations
-
-            ON reservations.inventory_id = ils.inventory_id
-
-            AND reservations.location_id = ils.location_id
 
         WHERE ils.location_id = ?
 

@@ -82,7 +82,7 @@ class ResourceRequisitionItems extends Controller
 
         $resourceSource = $_POST['resource_source'] ?? '';
 
-    /*
+        /*
     |-----------------------------------------------------------
     | DETERMINE RESOURCE ID
     |-----------------------------------------------------------
@@ -142,138 +142,238 @@ class ResourceRequisitionItems extends Controller
 | VALIDATE QUANTITY
 |--------------------------------------------------------------------------
 */
+        $quantity = (float)($_POST['quantity'] ?? 0);
 
-$quantity = (float)($_POST['quantity'] ?? 0);
+        if ($quantity <= 0) {
 
-if ($quantity <= 0) {
+            FlashHelper::error(
+                __('quantity_must_be_greater_than_zero')
+            );
 
-   $_SESSION['error'] =
-    __('quantity_must_be_greater_than_zero');
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/ResourceRequisitionItems/create/' .
+                    $requisitionId
+            );
 
-    header(
-        'Location: ' .
-        URLROOT .
-        '/ResourceRequisitionItems/create/' .
-        $requisitionId
-    );
-
-    exit;
-}
+            exit;
+        }
 
 
-/*
+        /*
 |--------------------------------------------------------------------------
 | FRACTION RULE
 |--------------------------------------------------------------------------
 */
 
-if ($resourceSource === 'RESOURCE') {
+        if ($resourceSource === 'RESOURCE') {
 
-    /*
+            /*
     | Non-material resources NEVER allow fractions.
     */
 
-    if (floor($quantity) != $quantity) {
+            if (floor($quantity) != $quantity) {
 
-        $_SESSION['error'] =
-            'Quantity for non-material resources must be a whole number.';
+                FlashHelper::error(
+                    __('quantity_must_be_whole_number')
+                );
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitionItems/create/' .
-            $requisitionId
-        );
+                header(
+                    'Location: ' .
+                        URLROOT .
+                        '/ResourceRequisitionItems/create/' .
+                        $requisitionId
+                );
 
-        exit;
-    }
+                exit;
+            }
+        } elseif ($resourceSource === 'INVENTORY') {
 
-} elseif ($resourceSource === 'INVENTORY') {
-
-    /*
+            /*
     | Material:
     | Check inventory.allow_fraction.
     */
 
-    $inventoryModel =
-        $this->model('Inventory');
+            $inventoryModel =
+                $this->model('Inventory');
 
-    $inventory =
-        $inventoryModel->getById($resourceId);
-
-
-    if (!$inventory) {
-
-        $_SESSION['error'] =
-            'Selected material was not found.';
-
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitionItems/create/' .
-            $requisitionId
-        );
-
-        exit;
-    }
+            $inventory =
+                $inventoryModel->getById($resourceId);
 
 
-    /*
+            if (!$inventory) {
+
+                FlashHelper::error(
+                    __('inventory_item_not_found')
+                );
+
+                header(
+                    'Location: ' .
+                        URLROOT .
+                        '/ResourceRequisitionItems/create/' .
+                        $requisitionId
+                );
+
+                exit;
+            }
+
+
+            /*
     | Material does NOT allow fractions.
     */
 
-    if (
-        (int)$inventory->allow_fraction !== 1 &&
-        floor($quantity) != $quantity
-    ) {
+            if (
+                (int)$inventory->allow_fraction !== 1 &&
+                floor($quantity) != $quantity
+            ) {
 
-        $_SESSION['error'] =
-            'This material only allows whole-number quantities.';
+                FlashHelper::error(
+                    __('fractional_quantity_not_allowed')
+                );
 
-        header(
-            'Location: ' .
-            URLROOT .
-            '/ResourceRequisitionItems/create/' .
-            $requisitionId
-        );
+                header(
+                    'Location: ' .
+                        URLROOT .
+                        '/ResourceRequisitionItems/create/' .
+                        $requisitionId
+                );
 
-        exit;
-    }
-}
+                exit;
+            }
+        }
+
+
+        /*
+|--------------------------------------------------------------------------
+| COST TYPE validation 
+|--------------------------------------------------------------------------
+*/
+
+        $costType = $_POST['cost_type'] ?? null;
+
+        /*
+|--------------------------------------------------------------------------
+| MATERIAL ITEMS ARE ALWAYS MATERIALS
+|--------------------------------------------------------------------------
+*/
+
+        if ($resourceSource === 'INVENTORY') {
+
+            $costType = 'MATERIALS';
+        }
+
+        /*
+|--------------------------------------------------------------------------
+| NON-MATERIAL ITEMS REQUIRE COST TYPE
+|--------------------------------------------------------------------------
+*/
+
+        if (
+            $resourceSource === 'RESOURCE' &&
+            empty($costType)
+        ) {
+
+            FlashHelper::error(
+                __('please_select_cost_type')
+            );
+
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/ResourceRequisitionItems/create/' .
+                    $requisitionId
+            );
+
+            exit;
+        }
+
         /*
     |-----------------------------------------------------------
     | CREATE ITEM
     |-----------------------------------------------------------
     */
 
-$data = [
+        /*
+|--------------------------------------------------------------------------
+| VALIDATE COST TYPE
+|--------------------------------------------------------------------------
+*/
 
-    'requisition_id' =>
-        $requisitionId,
+        $costType = $_POST['cost_type'] ?? null;
 
-    'resource_source' =>
-        $resourceSource,
+        /*
+|--------------------------------------------------------------------------
+| MATERIAL ITEMS ARE ALWAYS MATERIALS
+|--------------------------------------------------------------------------
+*/
 
-    'resource_id' =>
-        $resourceId,
+        if ($resourceSource === 'INVENTORY') {
 
-    'description' =>
-        trim($_POST['description'] ?? ''),
+            $costType = 'MATERIALS';
+        }
 
-    'quantity' =>
-        $quantity,
+        /*
+|--------------------------------------------------------------------------
+| NON-MATERIAL ITEMS REQUIRE COST TYPE
+|--------------------------------------------------------------------------
+*/
 
-    'uom' =>
-        trim($_POST['uom'] ?? ''),
+        if (
+            $resourceSource === 'RESOURCE' &&
+            empty($costType)
+        ) {
 
-    'remarks' =>
-        trim($_POST['remarks'] ?? '')
-];
+            FlashHelper::error(
+                __('please_select_cost_type')
+            );
+
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/ResourceRequisitionItems/create/' .
+                    $requisitionId
+            );
+
+            exit;
+        }
+
+        $data = [
+
+            'requisition_id' =>
+            $requisitionId,
+
+            'resource_source' =>
+            $resourceSource,
+
+            'resource_id' =>
+            $resourceId,
+
+            'description' =>
+            trim($_POST['description'] ?? ''),
+
+            'quantity' =>
+            $quantity,
+
+            'uom' =>
+            trim($_POST['uom'] ?? ''),
+
+            'remarks' =>
+            trim($_POST['remarks'] ?? ''),
+
+            'cost_type' =>
+            $costType
+
+        ];
 
         $itemModel =
             $this->model('ResourceRequisitionItem');
 
         if ($itemModel->create($data)) {
+
+            FlashHelper::success(
+                __('resource_requisition_item_added_successfully')
+            );
 
             header(
                 'Location: ' .
@@ -284,7 +384,6 @@ $data = [
 
             exit;
         }
-
         FlashHelper::error(__('unable_to_create_requisition_item'));
 
         header(
@@ -410,109 +509,121 @@ $data = [
 |--------------------------------------------------------------------------
 */
 
-$quantity = (float)($_POST['quantity'] ?? 0);
+        $quantity = (float)($_POST['quantity'] ?? 0);
 
-if ($quantity <= 0) {
+        if ($quantity <= 0) {
 
-    $_SESSION['error'] =
-        'Quantity must be greater than zero.';
+            FlashHelper::error(
+                __('quantity_must_be_greater_than_zero')
+            );
 
-    header(
-        'Location: ' .
-            URLROOT .
-            '/ResourceRequisitionItems/edit/' .
-            $id
-    );
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/ResourceRequisitionItems/edit/' .
+                    $id
+            );
 
-    exit;
-}
+            exit;
+        }
 
-/*
+        /*
 |--------------------------------------------------------------------------
 | RESOURCE / NON-MATERIAL
 | Fractions are never allowed
 |--------------------------------------------------------------------------
 */
 
-if (
-    $item->resource_source === 'RESOURCE' &&
-    floor($quantity) != $quantity
-) {
+        if (
+            $item->resource_source === 'RESOURCE' &&
+            floor($quantity) != $quantity
+        ) {
 
-   $_SESSION['error'] =
-    __('quantity_must_be_whole_number');
+            FlashHelper::error(
+                __('quantity_must_be_whole_number')
+            );
 
-    header(
-        'Location: ' .
-            URLROOT .
-            '/ResourceRequisitionItems/edit/' .
-            $id
-    );
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/ResourceRequisitionItems/edit/' .
+                    $id
+            );
 
-    exit;
-}
+            exit;
+        }
 
-/*
+        /*
 |--------------------------------------------------------------------------
 | INVENTORY / MATERIAL
 | Fractions allowed only when allow_fraction = 1
 |--------------------------------------------------------------------------
 */
 
-if (
-    $item->resource_source === 'INVENTORY' &&
-    (int)($item->allow_fraction ?? 0) !== 1 &&
-    floor($quantity) != $quantity
-) {
+        if (
+            $item->resource_source === 'INVENTORY' &&
+            (int)($item->allow_fraction ?? 0) !== 1 &&
+            floor($quantity) != $quantity
+        ) {
 
-   $_SESSION['error'] =
-    __('fractional_quantity_not_allowed');
+            FlashHelper::error(
+                __('fractional_quantity_not_allowed')
+            );
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/ResourceRequisitionItems/edit/' .
+                    $id
+            );
 
-    header(
-        'Location: ' .
-            URLROOT .
-            '/ResourceRequisitionItems/edit/' .
-            $id
-    );
+            exit;
+        }
 
-    exit;
-}
-
-       /*
+        /*
 |-----------------------------------------------
 | COST TYPE
 |-----------------------------------------------
 */
 
-$costType = $_POST['cost_type'] ?? null;
+        $costType = $_POST['cost_type'] ?? null;
 
-/*
+        /*
 |-----------------------------------------------
 | MATERIAL ITEMS ARE ALWAYS MATERIALS
 |-----------------------------------------------
 */
-if ($item->resource_source === 'INVENTORY') {
+        if ($item->resource_source === 'INVENTORY') {
 
-    $costType = 'MATERIALS';
-}
+            $costType = 'MATERIALS';
+        }
 
-$data = [
-    'description' => $_POST['description'],
+        $data = [
+            'description' => $_POST['description'],
 
-   'quantity' => $quantity,
+            'quantity' => $quantity,
 
-    'remarks' => $_POST['remarks'],
+            'remarks' => $_POST['remarks'],
 
-    'cost_type' => $costType
+            'cost_type' => $costType
 
-];
+        ];
 
-        $this->itemModel->update(
+        $result = $this->itemModel->update(
             $id,
             $data
         );
 
+        if ($result) {
 
+            FlashHelper::success(
+                __('resource_requisition_item_updated_successfully')
+            );
+        } else {
+
+            FlashHelper::error(
+                __('unable_to_update_resource_requisition_item')
+            );
+        }
 
         header(
             'Location: ' .
@@ -553,11 +664,19 @@ $data = [
             $item->requisition_id
         );
 
+        $result = $this->itemModel->delete($id);
 
+        if ($result) {
 
-        $this->itemModel->delete($id);
+            FlashHelper::success(
+                __('resource_requisition_item_deleted_successfully')
+            );
+        } else {
 
-
+            FlashHelper::error(
+                __('unable_to_delete_resource_requisition_item')
+            );
+        }
 
         header(
             'Location: ' .
@@ -569,104 +688,105 @@ $data = [
         exit;
     }
 }
+
 ?>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
 
-    const quantity = document.getElementById('quantity');
+        const quantity = document.getElementById('quantity');
 
-    if (!quantity) {
-        return;
-    }
+        if (!quantity) {
+            return;
+        }
 
-    const resourceSource =
-        <?= json_encode($data['item']->resource_source) ?>;
+        const resourceSource =
+            <?= json_encode($data['item']->resource_source) ?>;
 
-    const allowFraction =
-        <?= $data['item']->resource_source === 'INVENTORY'
-            ? (int)($data['item']->allow_fraction ?? 0)
-            : 0 ?>;
-
-    /*
-    |--------------------------------------------------------------------------
-    | QUANTITY RULE
-    |--------------------------------------------------------------------------
-    */
-
-    if (
-        resourceSource === 'INVENTORY' &&
-        allowFraction === 1
-    ) {
-
-        quantity.step = '0.01';
-        quantity.min = '0.01';
-
-    } else {
-
-        quantity.step = '1';
-        quantity.min = '1';
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | CLIENT-SIDE VALIDATION
-    |--------------------------------------------------------------------------
-    */
-
-    const form = quantity.closest('form');
-
-    if (!form) {
-        return;
-    }
-
-    form.addEventListener('submit', function (event) {
-
-        const value = parseFloat(quantity.value);
+        const allowFraction =
+            <?= $data['item']->resource_source === 'INVENTORY'
+                ? (int)($data['item']->allow_fraction ?? 0)
+                : 0 ?>;
 
         /*
-        | Quantity must be greater than zero
+        |--------------------------------------------------------------------------
+        | QUANTITY RULE
+        |--------------------------------------------------------------------------
         */
 
         if (
-            !Number.isFinite(value) ||
-            value <= 0
+            resourceSource === 'INVENTORY' &&
+            allowFraction === 1
         ) {
 
-            event.preventDefault();
+            quantity.step = '0.01';
+            quantity.min = '0.01';
 
-            alert(
-                <?= json_encode(__('quantity_must_be_greater_than_zero')) ?>
-            );
+        } else {
 
-            quantity.focus();
-
-            return;
+            quantity.step = '1';
+            quantity.min = '1';
         }
 
 
         /*
-        | Whole number required
+        |--------------------------------------------------------------------------
+        | CLIENT-SIDE VALIDATION
+        |--------------------------------------------------------------------------
         */
 
-        if (
-            quantity.step === '1' &&
-            !Number.isInteger(value)
-        ) {
+        const form = quantity.closest('form');
 
-            event.preventDefault();
-
-            alert(
-                <?= json_encode(__('quantity_must_be_whole_number')) ?>
-            );
-
-            quantity.focus();
-
+        if (!form) {
             return;
         }
+
+        form.addEventListener('submit', function(event) {
+
+            const value = parseFloat(quantity.value);
+
+            /*
+            | Quantity must be greater than zero
+            */
+
+            if (
+                !Number.isFinite(value) ||
+                value <= 0
+            ) {
+
+                event.preventDefault();
+
+                alert(
+                    <?= json_encode(__('quantity_must_be_greater_than_zero')) ?>
+                );
+
+                quantity.focus();
+
+                return;
+            }
+
+
+            /*
+            | Whole number required
+            */
+
+            if (
+                quantity.step === '1' &&
+                !Number.isInteger(value)
+            ) {
+
+                event.preventDefault();
+
+                alert(
+                    <?= json_encode(__('quantity_must_be_whole_number')) ?>
+                );
+
+                quantity.focus();
+
+                return;
+            }
+
+        });
 
     });
-
-});
 </script>
