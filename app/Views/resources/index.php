@@ -134,22 +134,40 @@
                                     </td>
 
                                     <td>
-                                        <?= htmlspecialchars($resource->category_name ?? 'N/A') ?>
+                                    
+    <?php
+    $isArabic = ($_SESSION['lang'] ?? 'en') === 'ar';
+
+    $categoryName = $isArabic
+        ? ($resource->category_name_a ?? $resource->category_name ?? null)
+        : ($resource->category_name ?? null);
+    ?>
+
+    <?= htmlspecialchars($categoryName ?? __('not_available')) ?>
+
                                     </td>
 
                                     <td>
                                         <?= htmlspecialchars(
                                             $typeLabels[$resource->resource_type]
-                                                ?? $resource->resource_type
+                                                ?? __('not_available')
                                         ) ?>
                                     </td>
 
                                     <td>
-                                        <?= htmlspecialchars($resource->unit_name ?? 'N/A') ?>
+                                        <?php
+                                        $isArabic = ($_SESSION['lang'] ?? 'en') === 'ar';
+
+                                        $unitName = $isArabic
+                                            ? ($resource->unit_name_a ?? $resource->unit_name ?? null)
+                                            : ($resource->unit_name ?? null);
+                                        ?>
+
+                                        <?= htmlspecialchars($unitName ?? __('not_available')) ?>
                                     </td>
 
                                     <td>
-                                        <?= htmlspecialchars($resource->description ?? 'N/A') ?>
+                                        <?= htmlspecialchars($resource->description ?? __('not_available')) ?>
                                     </td>
 
                                     <td>

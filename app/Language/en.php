@@ -1846,4 +1846,6 @@ return [
 
 'financial_cost_type' => 'Financial Cost Type',
 
+'not_available' => 'Not Available',
+
     ];

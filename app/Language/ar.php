@@ -1850,5 +1850,7 @@ return [
 
     'financial_cost_type' => 'نوع التكلفة المالية .',
 
+    'not_available' => 'غير متوفر',
+
 
 ];

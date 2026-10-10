@@ -6,33 +6,26 @@ require_once '../app/Core/Model.php';
 class ResourceModel extends Model
 {
 
-
     /**
      * GET ALL RESOURCES
      */
-    public function getAll()
-    {
-        return $this->db->query("
+  public function getAll()
+{
+    return $this->db->query("
         SELECT
-
             r.*,
-
             rc.category_name,
-
-            u.unit_name
-
+            rc.category_name_a,
+            u.unit_name,
+            u.unit_name_a
         FROM resources r
-
         LEFT JOIN resource_categories rc
             ON rc.id = r.category_id
-
         LEFT JOIN units u
             ON u.id = r.unit_id
-
         ORDER BY r.resource_name
     ")->fetchAll();
-    }
-
+}
 
     /**
      * GET RESOURCE BY ID
@@ -48,23 +41,18 @@ class ResourceModel extends Model
 
                 rc.category_name,
 
-                u.unit_name
-
+                u.unit_name,
+                u.unit_name_a
 
             FROM resources r
-
 
             LEFT JOIN resource_categories rc
 
                 ON rc.id = r.category_id
 
-
-
             LEFT JOIN units u
 
                 ON u.id = r.unit_id
-
-
 
             WHERE r.id = '$id'
 
@@ -72,13 +60,13 @@ class ResourceModel extends Model
         )->fetch();
     }
 
-/**
- * CREATE RESOURCE
- */
-public function create($data)
-{
-    $result = $this->db->query(
-        "
+    /**
+     * CREATE RESOURCE
+     */
+    public function create($data)
+    {
+        $result = $this->db->query(
+            "
         INSERT INTO resources
         (
             resource_code,
@@ -102,40 +90,39 @@ public function create($data)
             ?
         )
         ",
-        [
-            $data['resource_code'],
-            $data['resource_name'],
-            $data['resource_name_a'],
-            $data['category_id'],
-            $data['resource_type'],
-            $data['unit_id'],
-            $data['description'],
-            $data['status']
-        ]
-    );
+            [
+                $data['resource_code'],
+                $data['resource_name'],
+                $data['resource_name_a'],
+                $data['category_id'],
+                $data['resource_type'],
+                $data['unit_id'],
+                $data['description'],
+                $data['status']
+            ]
+        );
 
-    if (!$result) {
+        if (!$result) {
+
+            return [
+                'success' => false,
+                'message' => __('resource_create_failed')
+            ];
+        }
 
         return [
-            'success' => false,
-            'message' => __('resource_create_failed')
+            'success' => true,
+            'message' => __('resource_created_successfully')
         ];
-
     }
 
-    return [
-        'success' => true,
-        'message' => __('resource_created_successfully')
-    ];
-}
-
-/**
- * UPDATE RESOURCE
- */
-public function update($id, $data)
-{
-    $result = $this->db->query(
-        "
+    /**
+     * UPDATE RESOURCE
+     */
+    public function update($id, $data)
+    {
+        $result = $this->db->query(
+            "
         UPDATE resources
         SET
             resource_code = ?,
@@ -148,33 +135,32 @@ public function update($id, $data)
             status = ?
         WHERE id = ?
         ",
-        [
-            $data['resource_code'],
-            $data['resource_name'],
-            $data['resource_name_a'],
-            $data['category_id'],
-            $data['resource_type'],
-            $data['unit_id'],
-            $data['description'],
-            $data['status'],
-            $id
-        ]
-    );
+            [
+                $data['resource_code'],
+                $data['resource_name'],
+                $data['resource_name_a'],
+                $data['category_id'],
+                $data['resource_type'],
+                $data['unit_id'],
+                $data['description'],
+                $data['status'],
+                $id
+            ]
+        );
 
-    if (!$result) {
+        if (!$result) {
+
+            return [
+                'success' => false,
+                'message' => __('resource_update_failed')
+            ];
+        }
 
         return [
-            'success' => false,
-            'message' => __('resource_update_failed')
+            'success' => true,
+            'message' => __('resource_updated_successfully')
         ];
-
     }
-
-    return [
-        'success' => true,
-        'message' => __('resource_updated_successfully')
-    ];
-}
 
     /**
      * DELETE RESOURCE
