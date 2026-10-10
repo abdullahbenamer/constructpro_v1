@@ -70,7 +70,7 @@
 
                             <th><?= __('category') ?></th>
 
-                            <th><?= __('type') ?></th>
+                            <th><?= __('financial_cost_type') ?></th>
 
                             <th><?= __('unit') ?></th>
 
@@ -133,18 +133,17 @@
 
                                     </td>
 
+
+                                    <?php
+                                    $language = $_SESSION['language'] ?? 'en';
+
+                                    $categoryName = $language === 'ar'
+                                        ? ($resource->category_name_a ?? $resource->category_name ?? null)
+                                        : ($resource->category_name ?? null);
+                                    ?>
+
                                     <td>
-                                    
-    <?php
-    $isArabic = ($_SESSION['lang'] ?? 'en') === 'ar';
-
-    $categoryName = $isArabic
-        ? ($resource->category_name_a ?? $resource->category_name ?? null)
-        : ($resource->category_name ?? null);
-    ?>
-
-    <?= htmlspecialchars($categoryName ?? __('not_available')) ?>
-
+                                        <?= htmlspecialchars($categoryName ?? __('not_available')) ?>
                                     </td>
 
                                     <td>
@@ -155,15 +154,13 @@
                                     </td>
 
                                     <td>
-                                        <?php
-                                        $isArabic = ($_SESSION['lang'] ?? 'en') === 'ar';
+    <?php
+    $unitName = $language === 'ar'
+        ? ($resource->unit_name_a ?? $resource->unit_name ?? null)
+        : ($resource->unit_name ?? null);
+    ?>
 
-                                        $unitName = $isArabic
-                                            ? ($resource->unit_name_a ?? $resource->unit_name ?? null)
-                                            : ($resource->unit_name ?? null);
-                                        ?>
-
-                                        <?= htmlspecialchars($unitName ?? __('not_available')) ?>
+    <?= htmlspecialchars($unitName ?? __('not_available')) ?>
                                     </td>
 
                                     <td>

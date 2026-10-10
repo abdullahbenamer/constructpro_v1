@@ -1848,7 +1848,7 @@ return [
 
     'financial_cost_type_required' => 'نوع التكلفة المالية مطلوب.',
 
-    'financial_cost_type' => 'نوع التكلفة المالية .',
+    'financial_cost_type' => 'نوع التكلفة المالية',
 
     'not_available' => 'غير متوفر',
 
