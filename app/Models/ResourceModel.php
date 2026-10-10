@@ -265,7 +265,8 @@ public function update($id, $data)
 
             r.*,
             rc.category_name,
-            u.unit_name
+            u.unit_name,
+            u.unit_name_a
 
         FROM resources r
 

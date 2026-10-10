@@ -103,8 +103,9 @@
                                     <option
                                         value="<?= (int)$item->id ?>"
                                         data-source="INVENTORY"
-                                        data-unit="<?= htmlspecialchars($item->unit_name) ?>"
-                                    data-description="<?= htmlspecialchars($item->description ?? '') ?>"
+                                        data-unit-en="<?= htmlspecialchars($item->unit_name ?? '') ?>"
+                                        data-unit-ar="<?= htmlspecialchars($item->unit_name_a ?? '') ?>"
+                                        data-description="<?= htmlspecialchars($item->description ?? '') ?>"
                                         data-allow-fraction="<?= (int)$item->allow_fraction ?>">
 
                                         <!-- <? //= htmlspecialchars($item->sku) 
@@ -148,7 +149,8 @@
                                     <option
                                         value="<?= (int)$resource->id ?>"
                                         data-source="RESOURCE"
-                                        data-unit="<?= htmlspecialchars($resource->unit_name ?? '') ?>"
+                                        data-unit-en="<?= htmlspecialchars($resource->unit_name ?? '') ?>"
+                                        data-unit-ar="<?= htmlspecialchars($resource->unit_name_a ?? '') ?>"
                                         data-description="<?= htmlspecialchars($resource->resource_name) ?>">
 
                                         <!-- <? //= htmlspecialchars($resource->resource_code) 
@@ -504,125 +506,125 @@
             |--------------------------------------------------------------------------
             */
 
-/*
-|--------------------------------------------------------------------------
-| QUANTITY RULES
-|--------------------------------------------------------------------------
-*/
+        /*
+        |--------------------------------------------------------------------------
+        | QUANTITY RULES
+        |--------------------------------------------------------------------------
+        */
 
-function updateQuantityRules() {
+        function updateQuantityRules() {
 
-    /*
-    |--------------------------------------------------------------------------
-    | NON-MATERIAL
-    |--------------------------------------------------------------------------
-    |
-    | Non-material resources NEVER allow fractions.
-    |
-    */
+            /*
+            |--------------------------------------------------------------------------
+            | NON-MATERIAL
+            |--------------------------------------------------------------------------
+            |
+            | Non-material resources NEVER allow fractions.
+            |
+            */
 
-    if (type.value === 'RESOURCE') {
+            if (type.value === 'RESOURCE') {
 
-        quantity.step = '1';
-        quantity.min = '1';
+                quantity.step = '1';
+                quantity.min = '1';
 
-        quantityRuleFraction.classList.add('d-none');
-        quantityRuleWhole.classList.remove('d-none');
+                quantityRuleFraction.classList.add('d-none');
+                quantityRuleWhole.classList.remove('d-none');
 
-        return;
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | MATERIAL
-    |--------------------------------------------------------------------------
-    |
-    | Check inventory.allow_fraction.
-    |
-    */
-
-    const selectedId =
-        inventorySelect.value;
+                return;
+            }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | NO MATERIAL SELECTED
-    |--------------------------------------------------------------------------
-    */
+            /*
+            |--------------------------------------------------------------------------
+            | MATERIAL
+            |--------------------------------------------------------------------------
+            |
+            | Check inventory.allow_fraction.
+            |
+            */
 
-    if (!selectedId) {
-
-        quantity.step = '1';
-        quantity.min = '1';
-
-        quantityRuleFraction.classList.add('d-none');
-        quantityRuleWhole.classList.remove('d-none');
-
-        return;
-    }
+            const selectedId =
+                inventorySelect.value;
 
 
-    const option =
-        inventorySelect.options[
-            inventorySelect.selectedIndex
-        ];
+            /*
+            |--------------------------------------------------------------------------
+            | NO MATERIAL SELECTED
+            |--------------------------------------------------------------------------
+            */
+
+            if (!selectedId) {
+
+                quantity.step = '1';
+                quantity.min = '1';
+
+                quantityRuleFraction.classList.add('d-none');
+                quantityRuleWhole.classList.remove('d-none');
+
+                return;
+            }
 
 
-    if (!option) {
-
-        quantity.step = '1';
-        quantity.min = '1';
-
-        quantityRuleFraction.classList.add('d-none');
-        quantityRuleWhole.classList.remove('d-none');
-
-        return;
-    }
+            const option =
+                inventorySelect.options[
+                    inventorySelect.selectedIndex
+                ];
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | CHECK ALLOW FRACTION
-    |--------------------------------------------------------------------------
-    */
+            if (!option) {
 
-    const allowFraction =
-        option.getAttribute('data-allow-fraction') === '1';
+                quantity.step = '1';
+                quantity.min = '1';
 
+                quantityRuleFraction.classList.add('d-none');
+                quantityRuleWhole.classList.remove('d-none');
 
-    /*
-    |--------------------------------------------------------------------------
-    | FRACTIONS ALLOWED
-    |--------------------------------------------------------------------------
-    */
-
-    if (allowFraction) {
-
-        quantity.step = '0.01';
-        quantity.min = '0.01';
-
-        quantityRuleFraction.classList.remove('d-none');
-        quantityRuleWhole.classList.add('d-none');
+                return;
+            }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | WHOLE NUMBERS ONLY
-    |--------------------------------------------------------------------------
-    */
+            /*
+            |--------------------------------------------------------------------------
+            | CHECK ALLOW FRACTION
+            |--------------------------------------------------------------------------
+            */
 
-    } else {
+            const allowFraction =
+                option.getAttribute('data-allow-fraction') === '1';
 
-        quantity.step = '1';
-        quantity.min = '1';
 
-        quantityRuleFraction.classList.add('d-none');
-        quantityRuleWhole.classList.remove('d-none');
+            /*
+            |--------------------------------------------------------------------------
+            | FRACTIONS ALLOWED
+            |--------------------------------------------------------------------------
+            */
 
-    }
-}
+            if (allowFraction) {
+
+                quantity.step = '0.01';
+                quantity.min = '0.01';
+
+                quantityRuleFraction.classList.remove('d-none');
+                quantityRuleWhole.classList.add('d-none');
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | WHOLE NUMBERS ONLY
+                |--------------------------------------------------------------------------
+                */
+
+            } else {
+
+                quantity.step = '1';
+                quantity.min = '1';
+
+                quantityRuleFraction.classList.add('d-none');
+                quantityRuleWhole.classList.remove('d-none');
+
+            }
+        }
 
         /*
         |--------------------------------------------------------------------------
@@ -778,8 +780,13 @@ function updateQuantityRules() {
             description.value =
                 option.getAttribute('data-description') || '';
 
-            uom.value =
-                option.getAttribute('data-unit') || '';
+            const isArabic =
+    document.documentElement.lang === 'ar';
+
+uom.value =
+    isArabic
+        ? option.getAttribute('data-unit-ar') || ''
+        : option.getAttribute('data-unit-en') || '';
 
             updateQuantityRules();
 
@@ -824,8 +831,13 @@ function updateQuantityRules() {
             description.value =
                 option.getAttribute('data-description') || '';
 
-            uom.value =
-                option.getAttribute('data-unit') || '';
+          const isArabic =
+    document.documentElement.lang === 'ar';
+
+uom.value =
+    isArabic
+        ? option.getAttribute('data-unit-ar') || ''
+        : option.getAttribute('data-unit-en') || '';
 
             updateQuantityRules();
         }

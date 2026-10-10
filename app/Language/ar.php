@@ -1850,4 +1850,5 @@ return [
 
     'financial_cost_type' => 'نوع التكلفة المالية .',
 
+
 ];
