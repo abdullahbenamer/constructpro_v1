@@ -10,12 +10,11 @@ class ResourceRequisitionItemModel
         $this->db = new Database;
     }
 
-    public function getByRequisition($requisition_id)
-    {
-        return $this->db->query(
-            "
+public function getByRequisition($requisition_id)
+{
+    return $this->db->query(
+        "
         SELECT
-
             ri.*,
 
             CASE
@@ -30,6 +29,21 @@ class ResourceRequisitionItemModel
                 ELSE r.resource_code
             END AS resource_code,
 
+            -- English UOM
+            CASE
+                WHEN ri.resource_source = 'INVENTORY'
+                    THEN iu.unit_name
+                ELSE u.unit_name
+            END AS unit_name,
+
+            -- Arabic UOM
+            CASE
+                WHEN ri.resource_source = 'INVENTORY'
+                    THEN iu.unit_name_a
+                ELSE u.unit_name_a
+            END AS unit_name_a,
+
+            -- Preserve existing UOM alias
             CASE
                 WHEN ri.resource_source = 'INVENTORY'
                     THEN iu.unit_name
@@ -50,8 +64,8 @@ class ResourceRequisitionItemModel
             ON i.id = ri.resource_id
            AND ri.resource_source = 'INVENTORY'
 
-      LEFT JOIN units iu
-    ON iu.id = i.unit_id
+        LEFT JOIN units iu
+            ON iu.id = i.unit_id
 
         LEFT JOIN resources r
             ON r.id = ri.resource_id
@@ -67,11 +81,9 @@ class ResourceRequisitionItemModel
 
         ORDER BY ri.id ASC
         ",
-            [
-                $requisition_id
-            ]
-        )->fetchAll();
-    }
+        [$requisition_id]
+    )->fetchAll();
+}
 
     /**
      * Add requisition item

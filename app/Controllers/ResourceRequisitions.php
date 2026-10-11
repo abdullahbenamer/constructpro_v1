@@ -196,14 +196,11 @@ exit;
     public function details($id)
     {
         AuthHelper::can('resource_requisitions.view');
-
-
         /*
     |--------------------------------------------------------------
     | LOAD MODELS
     |--------------------------------------------------------------
     */
-
         $model =
             $this->model('ResourceRequisition');
 
