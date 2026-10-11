@@ -114,32 +114,36 @@ class PurchaseOrders extends Controller
         $this->view('purchase-orders/create', $data);
     }
 
-
-    public function details($id)
-    {
-        AuthHelper::can('purchase_orders.view');
-
-        $model = $this->model('PurchaseOrder');
-        $inventoryModel = $this->model('Inventory');
-
-        $po = $model->getById($id);
-
-        if (!$po) {
-
-            header('Location: ' . URLROOT . '/purchaseorders');
-            exit;
-        }
-
-        $data['po'] = $po;
-
-        $data['items'] =
-            $model->getItems($id);
-
-        $data['inventory'] =
-            $inventoryModel->getAll();
-
-        $this->view('purchase-orders/details', $data);
+public function details($id = null)
+{
+    if (
+        $id === null ||
+        !ctype_digit((string) $id) ||
+        (int) $id < 1
+    ) {
+        http_response_code(404);
+        require APPROOT . '/app/Views/errors/404.php';
+        return;
     }
+
+    AuthHelper::can('purchase_orders.view');
+
+    $model = $this->model('PurchaseOrder');
+    $inventoryModel = $this->model('Inventory');
+
+    $po = $model->getById($id);
+
+    if (!$po) {
+        header('Location: ' . URLROOT . '/purchaseorders');
+        exit;
+    }
+
+    $data['po'] = $po;
+    $data['items'] = $model->getItems($id);
+    $data['inventory'] = $inventoryModel->getAll();
+
+    $this->view('purchase-orders/details', $data);
+}
 
     public function items($po_id)
     {

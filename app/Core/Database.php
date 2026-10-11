@@ -1,4 +1,9 @@
 <?php
+
+class DatabaseConnectionException extends RuntimeException
+{
+}
+
 class Database
 {
     private $host;
@@ -26,8 +31,19 @@ class Database
                 ]
             );
         } catch (PDOException $e) {
-            die("Database connection failed: " . $e->getMessage());
+            // Keep technical details in the server error log only.
+            error_log(
+                'ConstructPro database connection failed: '
+                . $e->getMessage()
+            );
+
+            throw new DatabaseConnectionException(
+                'Database connection unavailable',
+                0,
+                $e
+            );
         }
+
     }
 
     public function exists()

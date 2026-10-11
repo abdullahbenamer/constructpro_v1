@@ -34,8 +34,7 @@ class App
         // ROUTING
         // --------------------
 
-        $controller_name =
-            !empty($url[0])
+        $controller_name = !empty($url[0])
             ? $this->controllerFromUrl($url[0])
             : 'Dashboard';
 
@@ -44,42 +43,47 @@ class App
 
         require_once '../app/Core/Controller.php';
 
-        if (file_exists($controller_file)) {
-
-            require_once $controller_file;
-
-            $this->controller =
-                new $controller_name();
-        } else {
-
-            require_once '../app/Controllers/Dashboard.php';
-
-            $this->controller =
-                new Dashboard();
+        // Unknown controller: display the custom 404 page.
+        if (!file_exists($controller_file)) {
+            $this->show404();
+            return;
         }
 
+        require_once $controller_file;
+
+        if (!class_exists($controller_name)) {
+            $this->show404();
+            return;
+        }
+
+        $this->controller = new $controller_name();
+
+        
+        // Resolve the requested method.
         if (
             isset($url[1]) &&
             method_exists($this->controller, $url[1])
         ) {
-
             $this->method = $url[1];
 
             unset($url[0], $url[1]);
         } else {
-
+            // Preserve existing routes such as /project-costs/57.
             $this->method = 'index';
 
             unset($url[0]);
         }
 
-        $this->params =
-            $url ? array_values($url) : [];
+        $this->params = $url ? array_values($url) : [];
 
         call_user_func_array(
             [$this->controller, $this->method],
             $this->params
         );
+
+
+
+        
     }
 
     private function controllerFromUrl($segment)
@@ -102,6 +106,14 @@ class App
         }
 
         return [];
+    }
+
+    // 404 page
+    private function show404(): void
+    {
+        http_response_code(404);
+
+        require_once '../app/Views/errors/404.php';
     }
 
 }

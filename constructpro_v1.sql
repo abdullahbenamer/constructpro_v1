@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2026 at 08:24 AM
+-- Generation Time: Oct 11, 2026 at 07:22 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -368,8 +368,8 @@ INSERT INTO `inventory` (`id`, `name`, `description`, `category`, `sku`, `quanti
 (153, 'PPR Pipe 25mm', 'PPR pipe, 25 mm', 'PLUMBING & DRAINAGE', 'PPR-25-001', 400.00, NULL, 80, 4.80, 'MTR', 10, 1, NULL, 12),
 (154, 'PVC Elbow 90° 25mm', 'PVC elbow, 90°, 25 mm', 'PLUMBING & DRAINAGE', 'ELB-25-90-001', 300.00, NULL, 50, 1.20, 'PCS', 1, 0, NULL, 12),
 (155, 'Brass Ball Valve 1\"', 'Brass ball valve, 1 inch', 'PLUMBING & DRAINAGE', 'VAL-BV-1-001', 65.00, NULL, 15, 24.00, 'PCS', 1, 0, NULL, 12),
-(156, 'Bearing 6204', 'Ball bearing, 6204', 'OTHER', 'BRG-6204-001', 214.00, NULL, 10, 35.00, 'PCS', 1, 0, 6, 3),
-(157, 'Bearing 6205', 'Ball bearing, 6205', 'OTHER', 'BRG-6205-001', 39.50, NULL, 10, 14.50, 'PCS', 1, 0, 6, 3),
+(156, 'Bearing 6204', 'Ball bearing, 6204', 'OTHER', 'BRG-6204-001', 208.00, NULL, 10, 35.00, 'PCS', 1, 0, 6, 3),
+(157, 'Bearing 6205', 'Ball bearing, 6205', 'OTHER', 'BRG-6205-001', 35.50, NULL, 10, 14.50, 'PCS', 1, 0, 6, 3),
 (158, 'V-Belt A-42', 'V-belt, A-42', 'OTHER', 'VBT-A42-001', 25.00, NULL, 5, 9.50, 'PCS', 1, 0, NULL, 12),
 (159, 'Hydraulic Hose 1/2\"', 'Hydraulic hose, 1/2 inch', 'OTHER', 'HYD-HS-12-001', 250.00, NULL, 50, 8.50, 'MTR', 10, 1, NULL, 12),
 (160, 'Hydraulic Oil ISO 46', 'Hydraulic oil, ISO VG 46', 'CONSUMABLES', 'OIL-ISO46-001', 200.00, NULL, 50, 4.80, 'LTR', 16, 1, 7, 12),
@@ -602,10 +602,10 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (390, 155, 3, 16.00),
 (391, 156, 1, 190.00),
 (392, 156, 2, 12.00),
-(393, 156, 3, 6.00),
+(393, 156, 3, 0.00),
 (394, 157, 1, 2.00),
 (395, 157, 2, 12.00),
-(396, 157, 3, 8.00),
+(396, 157, 3, 7.50),
 (397, 158, 1, 12.50),
 (398, 158, 2, 7.50),
 (399, 158, 3, 5.00),
@@ -725,7 +725,7 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (513, 135, 32, 3.44),
 (514, 136, 32, 1.90),
 (515, 134, 32, 35.00),
-(516, 157, 32, 17.50),
+(516, 157, 32, 14.00),
 (517, 118, 32, 0.50),
 (518, 118, 36, 0.00),
 (519, 118, 28, 0.50),
@@ -924,7 +924,10 @@ INSERT INTO `inventory_movements` (`id`, `inventory_id`, `location_id`, `type`, 
 (482, 168, 32, 'ADJUSTMENT', 100.00, NULL, NULL, NULL, NULL, 110.00, 334.00, 'ADJ-261007195913', 'PHYSICAL_COUNT_CORRECTION', 1, '2026-10-07 17:59:13'),
 (483, 156, 1, 'ADJUSTMENT', -30.00, NULL, NULL, NULL, NULL, 190.00, 224.00, 'ADJ-261007200320', 'LOST', 1, '2026-10-07 18:03:20'),
 (484, 156, 32, 'OUT', 10.00, NULL, 1, NULL, NULL, 0.00, 214.00, 'RTS-261007221111', 'Return to supplier', 1, '2026-10-07 20:11:11'),
-(485, 148, 2, 'OUT', 2.00, NULL, NULL, NULL, NULL, 8.00, 31.00, 'PROJECT #46', 'Reservation Fulfillment: Contactor 25A', 1, '2026-10-08 20:12:39');
+(485, 148, 2, 'OUT', 2.00, NULL, NULL, NULL, NULL, 8.00, 31.00, 'PROJECT #46', 'Reservation Fulfillment: Contactor 25A', 1, '2026-10-08 20:12:39'),
+(486, 157, 32, 'OUT', 3.50, 14.50, NULL, NULL, 1, 14.00, 36.00, 'RR-FUL-261009143357-139', 'Resource requisition fulfillment: REQ-261009142312', 1, '2026-10-09 12:33:57'),
+(487, 157, 3, 'OUT', 0.50, 14.50, NULL, NULL, 1, 7.50, 35.50, 'RR-FUL-261009202724-289', 'Resource requisition fulfillment: REQ-261009142312', 1, '2026-10-09 18:27:24'),
+(488, 156, 3, 'OUT', 6.00, 35.00, NULL, NULL, 1, 0.00, 208.00, 'RR-FUL-261009210215-181', 'Resource requisition fulfillment: REQ-261009210047', 1, '2026-10-09 19:02:15');
 
 -- --------------------------------------------------------
 
@@ -962,7 +965,8 @@ INSERT INTO `inventory_reservations` (`id`, `inventory_id`, `location_id`, `proj
 (38, 118, 2, 49, 7.00, 'FULFILLED', 'reservation of construction Gravel : 5 M3', 'reservation of construction Gravel : 5 M3 for Our tiny house in Sara Project', 1, '2026-10-04 15:37:59', '2026-10-06'),
 (39, 118, 2, 49, 3.00, 'CANCELLED', 'for cancelation test', '3 M3 for Cancel test', 1, '2026-10-04 15:49:15', '2026-10-06'),
 (40, 148, 2, 50, 2.00, 'CANCELLED', '', '', 1, '2026-10-08 20:10:05', '2026-10-15'),
-(41, 148, 2, 46, 2.00, 'FULFILLED', '', '', 1, '2026-10-08 20:12:13', '2026-10-15');
+(41, 148, 2, 46, 2.00, 'FULFILLED', '', '', 1, '2026-10-08 20:12:13', '2026-10-15'),
+(44, 134, 32, 57, 3.00, 'ACTIVE', '', '', 1, '2026-10-10 05:13:03', '2026-10-12');
 
 -- --------------------------------------------------------
 
@@ -1144,7 +1148,8 @@ INSERT INTO `permissions` (`id`, `name`, `description`) VALUES
 (104, 'admin.access', 'Full access for Admin.'),
 (110, 'goods_receipts.view', ''),
 (113, 'goods_returns.print', ''),
-(114, 'goods_receipts.print', '');
+(114, 'goods_receipts.print', ''),
+(119, 'dashboard.view', 'Can view the main dashboard page');
 
 -- --------------------------------------------------------
 
@@ -1244,6 +1249,7 @@ CREATE TABLE `project_costs` (
   `location_id` int(11) DEFAULT NULL,
   `cost_type` enum('MATERIALS','HUMAN_RESOURCES','TRANSPORT','EQUIPMENT','SUBCONTRACT','SITE_EXPENSES','PROFESSIONAL_SERVICES','PERMITS_FEES','INSURANCE','BANK_CHARGES','TAXES','MISCELLANEOUS') NOT NULL,
   `description` varchar(255) DEFAULT NULL,
+  `unit_id` int(11) DEFAULT NULL,
   `quantity` decimal(10,2) DEFAULT 1.00,
   `unit_price` decimal(10,2) DEFAULT NULL,
   `total_cost` decimal(10,2) GENERATED ALWAYS AS (`quantity` * `unit_price`) STORED,
@@ -1254,63 +1260,68 @@ CREATE TABLE `project_costs` (
 -- Dumping data for table `project_costs`
 --
 
-INSERT INTO `project_costs` (`id`, `project_id`, `requisition_id`, `fulfillment_id`, `inventory_id`, `resource_id`, `location_id`, `cost_type`, `description`, `quantity`, `unit_price`, `created_at`) VALUES
-(206, 54, NULL, NULL, 148, NULL, 1, 'MATERIALS', 'Contactor 25A', 5.00, 32.00, '2026-09-09 06:38:09'),
-(208, 51, NULL, NULL, 122, NULL, 1, 'MATERIALS', 'Ceramic Floor Tile 60x60', 500.00, 25.80, '2026-09-10 14:30:10'),
-(211, 49, NULL, NULL, 161, NULL, 3, 'MATERIALS', 'Engine Oil 15W40', 5.00, 5.50, '2026-09-12 05:53:55'),
-(212, 49, NULL, NULL, 134, NULL, 2, 'MATERIALS', 'Binding Wire', 1.00, 4.50, '2026-09-12 06:04:39'),
-(214, 55, NULL, NULL, 112, NULL, 1, 'MATERIALS', 'Reservation Fulfillment: Portland Cement 52.5N', 20.00, 15.50, '2026-09-12 14:07:30'),
-(215, 49, NULL, NULL, NULL, NULL, NULL, 'HUMAN_RESOURCES', 'عمالة طرح التربة', 12.00, 250.00, '2026-09-15 06:15:58'),
-(216, 47, NULL, NULL, NULL, NULL, NULL, 'SITE_EXPENSES', 'اعداد الموقع لبدء العمل', 1.00, 2000.00, '2026-09-15 06:36:08'),
-(217, 55, NULL, NULL, 123, NULL, 3, 'MATERIALS', 'Reservation Fulfillment: Ceramic Wall Tile 30x60', 30.00, 6.00, '2026-09-16 05:44:20'),
-(218, 45, NULL, NULL, 117, NULL, 32, 'MATERIALS', 'Coarse Aggregate 20mm', 10.00, 120.00, '2026-09-20 13:29:42'),
-(224, 57, NULL, NULL, 178, NULL, 1, 'MATERIALS', 'Cut Resistant Gloves', 5.00, 4.50, '2026-10-01 16:14:56'),
-(225, 57, NULL, NULL, NULL, NULL, NULL, 'HUMAN_RESOURCES', 'elelctrician work per point', 10.00, 300.00, '2026-10-01 16:22:05'),
-(226, 57, NULL, NULL, 134, NULL, 1, 'MATERIALS', 'Binding Wire', 8.00, 4.50, '2026-10-01 16:23:02'),
-(227, 57, NULL, NULL, 114, NULL, 3, 'MATERIALS', 'Concrete Block 20cm', 50.00, 3.25, '2026-10-01 19:59:25'),
-(228, 57, NULL, NULL, 114, NULL, 3, 'MATERIALS', 'Concrete Block 20cm', 25.00, 3.25, '2026-10-01 20:13:16'),
-(229, 57, NULL, NULL, 114, NULL, 3, 'MATERIALS', 'Concrete Block 20cm', 30.00, 3.25, '2026-10-01 20:16:44'),
-(230, 57, NULL, NULL, 148, NULL, 2, 'MATERIALS', 'Reservation Fulfillment: Contactor 25A', 2.00, 32.00, '2026-10-01 20:36:31'),
-(231, 57, NULL, NULL, 114, NULL, 2, 'MATERIALS', 'Concrete Block 20cm', 10.00, 3.25, '2026-10-02 05:28:09'),
-(232, 57, NULL, NULL, 111, NULL, 2, 'MATERIALS', 'Portland Cement 42.5N', 50.00, 12.50, '2026-10-02 06:07:06'),
-(233, 57, NULL, NULL, 114, NULL, 1, 'MATERIALS', 'Concrete Block 20cm', 800.00, 3.25, '2026-10-02 15:36:08'),
-(234, 57, NULL, NULL, 134, NULL, 1, 'MATERIALS', 'Reservation Fulfillment: Binding Wire', 5.00, 4.50, '2026-10-02 17:37:24'),
-(235, 57, NULL, NULL, 168, NULL, 1, 'MATERIALS', 'تنفيذ المواد المحجوزة: Acrylic Wall Paint White', 16.00, 18.00, '2026-10-02 18:03:38'),
-(238, 56, NULL, NULL, NULL, NULL, NULL, '', 'Electrician — تنفيذ طلب الموارد: REQ-261002215258 / RR-FUL-20261002215347-529', 1.00, 500.00, '2026-10-02 19:53:47'),
-(239, 56, NULL, NULL, NULL, NULL, NULL, 'HUMAN_RESOURCES', 'سباك', 5.00, 250.00, '2026-10-02 20:02:49'),
-(240, 56, NULL, NULL, NULL, NULL, NULL, 'TAXES', 'معزة المختار', 66.00, 120.00, '2026-10-02 20:19:59'),
-(242, 49, NULL, NULL, 167, NULL, 3, 'MATERIALS', 'Anchor Bolt M16 — تنفيذ طلب الموارد: REQ-260911164912 / RR-FUL-261002222148-711', 20.00, 3.00, '2026-10-02 20:21:48'),
-(243, 49, NULL, NULL, 170, NULL, 3, 'MATERIALS', 'Epoxy Primer — Resource Request Fulfillment: REQ-261002222859 / RR-FUL-261002224306-352', 1.00, 24.00, '2026-10-02 20:43:06'),
-(245, 49, NULL, NULL, 156, NULL, 3, 'MATERIALS', 'Bearing 6204 — تنفيذ طلب الموارد: REQ-261002224714 / RR-FUL-261002224751-945', 1.00, 35.00, '2026-10-02 20:47:51'),
-(246, 49, NULL, NULL, 143, NULL, 3, 'MATERIALS', 'Double Wall Socket 13A UK — تنفيذ طلب الموارد: REQ-261002231239 / RR-FUL-261002231326-769', 1.00, 3.40, '2026-10-02 21:13:26'),
-(248, 49, NULL, NULL, NULL, NULL, NULL, 'PERMITS_FEES', 'قيمة تراخيص', 1.00, 2500.00, '2026-10-03 05:59:11'),
-(249, 47, 50, 54, 190, NULL, 32, 'MATERIALS', 'Light Bulb 500W', 25.00, 0.00, '2026-10-03 06:04:49'),
-(250, 47, 62, 55, NULL, NULL, NULL, '', 'Plumber — تنفيذ طلب الموارد: REQ-261003080555 / RR-FUL-20261003080634-739', 1.00, 500.00, '2026-10-03 06:06:34'),
-(251, 47, 63, 56, 167, NULL, 3, 'MATERIALS', 'Anchor Bolt M16', 1.00, 3.00, '2026-10-03 06:45:31'),
-(252, 47, 64, 57, NULL, NULL, NULL, '', 'SITE ENGINEER — تنفيذ طلب الموارد: REQ-261003084643 / RR-FUL-20261003084725-457', 3.00, 600.00, '2026-10-03 06:47:25'),
-(253, 49, 65, 58, 183, NULL, 3, 'MATERIALS', 'Grinding Disc 115mm', 1.00, 1.50, '2026-10-03 09:41:43'),
-(254, 49, 66, 59, NULL, NULL, NULL, '', 'Plumber', 1.00, 500.00, '2026-10-03 09:43:52'),
-(255, 51, 45, 60, NULL, NULL, NULL, 'PROFESSIONAL_SERVICES', 'Plumber', 1.00, 5000.00, '2026-10-04 07:36:15'),
-(256, 51, 45, 61, NULL, NULL, NULL, 'PROFESSIONAL_SERVICES', 'Plumber', 1.00, 4000.00, '2026-10-04 07:41:32'),
-(257, 51, 67, 62, NULL, NULL, NULL, 'EQUIPMENT', 'Excavator', 1.00, 1500.00, '2026-10-04 08:18:20'),
-(258, 51, NULL, NULL, NULL, NULL, NULL, 'SITE_EXPENSES', 'ترخيص احضار الالات ثقيلة', 1.00, 95.00, '2026-10-04 08:37:46'),
-(259, 49, NULL, NULL, 118, NULL, 2, 'MATERIALS', 'Reservation Fulfillment: Construction Gravel', 7.00, 80.00, '2026-10-04 15:41:26'),
-(260, 57, NULL, NULL, 157, NULL, 32, 'MATERIALS', 'Bearing 6205', 1.50, 14.50, '2026-10-06 10:18:39'),
-(261, 57, NULL, NULL, 136, NULL, 3, 'MATERIALS', 'Electrical Cable 2.5mm² Single Core', 100.00, 1.75, '2026-10-06 11:07:42'),
-(262, 57, NULL, NULL, 155, NULL, 1, 'MATERIALS', 'Brass Ball Valve 1\"', 9.00, 24.00, '2026-10-06 11:08:55'),
-(263, 57, NULL, NULL, NULL, NULL, NULL, 'SUBCONTRACT', 'مقاولات بالباطن', 1.00, 20000.00, '2026-10-06 11:17:53'),
-(264, 53, NULL, NULL, 136, NULL, 3, 'MATERIALS', 'Electrical Cable 2.5mm² Single Core', 1.00, 1.75, '2026-10-06 12:22:00'),
-(265, 53, NULL, NULL, 136, NULL, 1, 'MATERIALS', 'Electrical Cable 2.5mm² Single Core', 12.00, 1.75, '2026-10-06 12:22:33'),
-(267, 53, NULL, NULL, NULL, NULL, NULL, 'HUMAN_RESOURCES', 'عمال نظافة', 19.00, 100.00, '2026-10-06 12:23:47'),
-(268, 53, NULL, NULL, 155, NULL, 1, 'MATERIALS', 'Brass Ball Valve 1\"', 16.00, 24.00, '2026-10-06 12:24:43'),
-(269, 53, NULL, NULL, 136, NULL, 3, 'MATERIALS', 'Electrical Cable 2.5mm² Single Core', 12.70, 1.75, '2026-10-06 12:28:13'),
-(270, 53, NULL, NULL, 182, NULL, 1, 'MATERIALS', 'Cutting Disc 115mm', 5.00, 1.20, '2026-10-06 12:44:49'),
-(271, 53, NULL, NULL, NULL, NULL, NULL, 'PROFESSIONAL_SERVICES', 'عمال بناء', 4.00, 500.00, '2026-10-06 12:45:48'),
-(272, 53, NULL, NULL, NULL, NULL, NULL, 'SITE_EXPENSES', 'مصروفات تمهيد التربة', 6.00, 400.00, '2026-10-06 12:46:28'),
-(273, 53, NULL, NULL, 136, NULL, 3, 'MATERIALS', 'Electrical Cable 2.5mm² Single Core', 12.50, 1.75, '2026-10-06 13:03:46'),
-(274, 53, NULL, NULL, NULL, NULL, NULL, 'TAXES', 'tax', 6.00, 300.00, '2026-10-06 13:06:18'),
-(275, 49, 68, 63, 167, NULL, 3, 'MATERIALS', 'Anchor Bolt M16', 8.00, 3.00, '2026-10-07 05:03:58'),
-(276, 46, NULL, NULL, 148, NULL, 2, 'MATERIALS', 'Reservation Fulfillment: Contactor 25A', 2.00, 32.00, '2026-10-08 20:12:39');
+INSERT INTO `project_costs` (`id`, `project_id`, `requisition_id`, `fulfillment_id`, `inventory_id`, `resource_id`, `location_id`, `cost_type`, `description`, `unit_id`, `quantity`, `unit_price`, `created_at`) VALUES
+(206, 54, NULL, NULL, 148, NULL, 1, 'MATERIALS', 'Contactor 25A', NULL, 5.00, 32.00, '2026-09-09 06:38:09'),
+(208, 51, NULL, NULL, 122, NULL, 1, 'MATERIALS', 'Ceramic Floor Tile 60x60', NULL, 500.00, 25.80, '2026-09-10 14:30:10'),
+(211, 49, NULL, NULL, 161, NULL, 3, 'MATERIALS', 'Engine Oil 15W40', NULL, 5.00, 5.50, '2026-09-12 05:53:55'),
+(212, 49, NULL, NULL, 134, NULL, 2, 'MATERIALS', 'Binding Wire', NULL, 1.00, 4.50, '2026-09-12 06:04:39'),
+(214, 55, NULL, NULL, 112, NULL, 1, 'MATERIALS', 'Reservation Fulfillment: Portland Cement 52.5N', NULL, 20.00, 15.50, '2026-09-12 14:07:30'),
+(215, 49, NULL, NULL, NULL, NULL, NULL, 'HUMAN_RESOURCES', 'عمالة طرح التربة', NULL, 12.00, 250.00, '2026-09-15 06:15:58'),
+(216, 47, NULL, NULL, NULL, NULL, NULL, 'SITE_EXPENSES', 'اعداد الموقع لبدء العمل', NULL, 1.00, 2000.00, '2026-09-15 06:36:08'),
+(217, 55, NULL, NULL, 123, NULL, 3, 'MATERIALS', 'Reservation Fulfillment: Ceramic Wall Tile 30x60', NULL, 30.00, 6.00, '2026-09-16 05:44:20'),
+(218, 45, NULL, NULL, 117, NULL, 32, 'MATERIALS', 'Coarse Aggregate 20mm', NULL, 10.00, 120.00, '2026-09-20 13:29:42'),
+(224, 57, NULL, NULL, 178, NULL, 1, 'MATERIALS', 'Cut Resistant Gloves', NULL, 5.00, 4.50, '2026-10-01 16:14:56'),
+(225, 57, NULL, NULL, NULL, NULL, NULL, 'HUMAN_RESOURCES', 'elelctrician work per point', NULL, 10.00, 300.00, '2026-10-01 16:22:05'),
+(226, 57, NULL, NULL, 134, NULL, 1, 'MATERIALS', 'Binding Wire', NULL, 8.00, 4.50, '2026-10-01 16:23:02'),
+(227, 57, NULL, NULL, 114, NULL, 3, 'MATERIALS', 'Concrete Block 20cm', NULL, 50.00, 3.25, '2026-10-01 19:59:25'),
+(228, 57, NULL, NULL, 114, NULL, 3, 'MATERIALS', 'Concrete Block 20cm', NULL, 25.00, 3.25, '2026-10-01 20:13:16'),
+(229, 57, NULL, NULL, 114, NULL, 3, 'MATERIALS', 'Concrete Block 20cm', NULL, 30.00, 3.25, '2026-10-01 20:16:44'),
+(230, 57, NULL, NULL, 148, NULL, 2, 'MATERIALS', 'Reservation Fulfillment: Contactor 25A', NULL, 2.00, 32.00, '2026-10-01 20:36:31'),
+(231, 57, NULL, NULL, 114, NULL, 2, 'MATERIALS', 'Concrete Block 20cm', NULL, 10.00, 3.25, '2026-10-02 05:28:09'),
+(232, 57, NULL, NULL, 111, NULL, 2, 'MATERIALS', 'Portland Cement 42.5N', NULL, 50.00, 12.50, '2026-10-02 06:07:06'),
+(233, 57, NULL, NULL, 114, NULL, 1, 'MATERIALS', 'Concrete Block 20cm', NULL, 800.00, 3.25, '2026-10-02 15:36:08'),
+(234, 57, NULL, NULL, 134, NULL, 1, 'MATERIALS', 'Reservation Fulfillment: Binding Wire', NULL, 5.00, 4.50, '2026-10-02 17:37:24'),
+(235, 57, NULL, NULL, 168, NULL, 1, 'MATERIALS', 'تنفيذ المواد المحجوزة: Acrylic Wall Paint White', NULL, 16.00, 18.00, '2026-10-02 18:03:38'),
+(238, 56, NULL, NULL, NULL, NULL, NULL, '', 'Electrician — تنفيذ طلب الموارد: REQ-261002215258 / RR-FUL-20261002215347-529', NULL, 1.00, 500.00, '2026-10-02 19:53:47'),
+(239, 56, NULL, NULL, NULL, NULL, NULL, 'HUMAN_RESOURCES', 'سباك', NULL, 5.00, 250.00, '2026-10-02 20:02:49'),
+(240, 56, NULL, NULL, NULL, NULL, NULL, 'TAXES', 'معزة المختار', NULL, 66.00, 120.00, '2026-10-02 20:19:59'),
+(242, 49, NULL, NULL, 167, NULL, 3, 'MATERIALS', 'Anchor Bolt M16 — تنفيذ طلب الموارد: REQ-260911164912 / RR-FUL-261002222148-711', NULL, 20.00, 3.00, '2026-10-02 20:21:48'),
+(243, 49, NULL, NULL, 170, NULL, 3, 'MATERIALS', 'Epoxy Primer — Resource Request Fulfillment: REQ-261002222859 / RR-FUL-261002224306-352', NULL, 1.00, 24.00, '2026-10-02 20:43:06'),
+(245, 49, NULL, NULL, 156, NULL, 3, 'MATERIALS', 'Bearing 6204 — تنفيذ طلب الموارد: REQ-261002224714 / RR-FUL-261002224751-945', NULL, 1.00, 35.00, '2026-10-02 20:47:51'),
+(246, 49, NULL, NULL, 143, NULL, 3, 'MATERIALS', 'Double Wall Socket 13A UK — تنفيذ طلب الموارد: REQ-261002231239 / RR-FUL-261002231326-769', NULL, 1.00, 3.40, '2026-10-02 21:13:26'),
+(248, 49, NULL, NULL, NULL, NULL, NULL, 'PERMITS_FEES', 'قيمة تراخيص', NULL, 1.00, 2500.00, '2026-10-03 05:59:11'),
+(249, 47, 50, 54, 190, NULL, 32, 'MATERIALS', 'Light Bulb 500W', NULL, 25.00, 0.00, '2026-10-03 06:04:49'),
+(250, 47, 62, 55, NULL, NULL, NULL, '', 'Plumber — تنفيذ طلب الموارد: REQ-261003080555 / RR-FUL-20261003080634-739', NULL, 1.00, 500.00, '2026-10-03 06:06:34'),
+(251, 47, 63, 56, 167, NULL, 3, 'MATERIALS', 'Anchor Bolt M16', NULL, 1.00, 3.00, '2026-10-03 06:45:31'),
+(252, 47, 64, 57, NULL, NULL, NULL, '', 'SITE ENGINEER — تنفيذ طلب الموارد: REQ-261003084643 / RR-FUL-20261003084725-457', NULL, 3.00, 600.00, '2026-10-03 06:47:25'),
+(253, 49, 65, 58, 183, NULL, 3, 'MATERIALS', 'Grinding Disc 115mm', NULL, 1.00, 1.50, '2026-10-03 09:41:43'),
+(254, 49, 66, 59, NULL, NULL, NULL, '', 'Plumber', NULL, 1.00, 500.00, '2026-10-03 09:43:52'),
+(255, 51, 45, 60, NULL, NULL, NULL, 'PROFESSIONAL_SERVICES', 'Plumber', NULL, 1.00, 5000.00, '2026-10-04 07:36:15'),
+(256, 51, 45, 61, NULL, NULL, NULL, 'PROFESSIONAL_SERVICES', 'Plumber', NULL, 1.00, 4000.00, '2026-10-04 07:41:32'),
+(257, 51, 67, 62, NULL, NULL, NULL, 'EQUIPMENT', 'Excavator', NULL, 1.00, 1500.00, '2026-10-04 08:18:20'),
+(258, 51, NULL, NULL, NULL, NULL, NULL, 'SITE_EXPENSES', 'ترخيص احضار الالات ثقيلة', NULL, 1.00, 95.00, '2026-10-04 08:37:46'),
+(259, 49, NULL, NULL, 118, NULL, 2, 'MATERIALS', 'Reservation Fulfillment: Construction Gravel', NULL, 7.00, 80.00, '2026-10-04 15:41:26'),
+(260, 57, NULL, NULL, 157, NULL, 32, 'MATERIALS', 'Bearing 6205', NULL, 1.50, 14.50, '2026-10-06 10:18:39'),
+(261, 57, NULL, NULL, 136, NULL, 3, 'MATERIALS', 'Electrical Cable 2.5mm² Single Core', NULL, 100.00, 1.75, '2026-10-06 11:07:42'),
+(262, 57, NULL, NULL, 155, NULL, 1, 'MATERIALS', 'Brass Ball Valve 1\"', NULL, 9.00, 24.00, '2026-10-06 11:08:55'),
+(263, 57, NULL, NULL, NULL, NULL, NULL, 'SUBCONTRACT', 'مقاولات بالباطن', NULL, 1.00, 20000.00, '2026-10-06 11:17:53'),
+(264, 53, NULL, NULL, 136, NULL, 3, 'MATERIALS', 'Electrical Cable 2.5mm² Single Core', NULL, 1.00, 1.75, '2026-10-06 12:22:00'),
+(265, 53, NULL, NULL, 136, NULL, 1, 'MATERIALS', 'Electrical Cable 2.5mm² Single Core', NULL, 12.00, 1.75, '2026-10-06 12:22:33'),
+(267, 53, NULL, NULL, NULL, NULL, NULL, 'HUMAN_RESOURCES', 'عمال نظافة', NULL, 19.00, 100.00, '2026-10-06 12:23:47'),
+(268, 53, NULL, NULL, 155, NULL, 1, 'MATERIALS', 'Brass Ball Valve 1\"', NULL, 16.00, 24.00, '2026-10-06 12:24:43'),
+(269, 53, NULL, NULL, 136, NULL, 3, 'MATERIALS', 'Electrical Cable 2.5mm² Single Core', NULL, 12.70, 1.75, '2026-10-06 12:28:13'),
+(270, 53, NULL, NULL, 182, NULL, 1, 'MATERIALS', 'Cutting Disc 115mm', NULL, 5.00, 1.20, '2026-10-06 12:44:49'),
+(271, 53, NULL, NULL, NULL, NULL, NULL, 'PROFESSIONAL_SERVICES', 'عمال بناء', NULL, 4.00, 500.00, '2026-10-06 12:45:48'),
+(272, 53, NULL, NULL, NULL, NULL, NULL, 'SITE_EXPENSES', 'مصروفات تمهيد التربة', NULL, 6.00, 400.00, '2026-10-06 12:46:28'),
+(273, 53, NULL, NULL, 136, NULL, 3, 'MATERIALS', 'Electrical Cable 2.5mm² Single Core', NULL, 12.50, 1.75, '2026-10-06 13:03:46'),
+(274, 53, NULL, NULL, NULL, NULL, NULL, 'TAXES', 'tax', NULL, 6.00, 300.00, '2026-10-06 13:06:18'),
+(275, 49, 68, 63, 167, NULL, 3, 'MATERIALS', 'Anchor Bolt M16', NULL, 8.00, 3.00, '2026-10-07 05:03:58'),
+(276, 46, NULL, NULL, 148, NULL, 2, 'MATERIALS', 'Reservation Fulfillment: Contactor 25A', NULL, 2.00, 32.00, '2026-10-08 20:12:39'),
+(277, 57, NULL, NULL, NULL, NULL, NULL, 'HUMAN_RESOURCES', 'عمال ردم التربة', 19, 10.00, 150.00, '2026-10-09 08:13:50'),
+(278, 57, NULL, NULL, NULL, NULL, NULL, 'BANK_CHARGES', 'دفع رسوم مقابل تحويل مبلغ', 29, 1.00, 120.00, '2026-10-09 10:00:03'),
+(279, 49, 70, 64, 157, NULL, 32, 'MATERIALS', 'Bearing 6205', NULL, 3.50, 14.50, '2026-10-09 12:33:57'),
+(280, 49, 70, 65, 157, NULL, 3, 'MATERIALS', 'Bearing 6205', NULL, 0.50, 14.50, '2026-10-09 18:27:24'),
+(281, 54, 74, 66, 156, NULL, 3, 'MATERIALS', 'Bearing 6204', NULL, 6.00, 35.00, '2026-10-09 19:02:15');
 
 -- --------------------------------------------------------
 
@@ -1458,7 +1469,12 @@ INSERT INTO `project_ledger` (`id`, `project_id`, `entry_type`, `ref_table`, `re
 (178, 53, 'cost', 'project_costs', 273, 'Electrical Cable 2.5mm² Single Core', 21.88, 0.00, -6756.86, '2026-10-06 13:03:46'),
 (179, 53, 'cost', 'project_costs', 274, 'tax', 1800.00, 0.00, -8556.86, '2026-10-06 13:06:18'),
 (180, 49, 'cost', 'project_costs', 275, 'تنفيذ طلب الموارد: Anchor Bolt M16', 24.00, 0.00, -1739.90, '2026-10-07 05:03:58'),
-(181, 46, 'cost', 'project_costs', 276, 'Reservation Fulfillment: Contactor 25A', 64.00, 0.00, -64.00, '2026-10-08 20:12:39');
+(181, 46, 'cost', 'project_costs', 276, 'Reservation Fulfillment: Contactor 25A', 64.00, 0.00, -64.00, '2026-10-08 20:12:39'),
+(182, 57, 'cost', 'project_costs', 277, 'عمال ردم التربة', 1500.00, 0.00, 474357.75, '2026-10-09 08:13:50'),
+(183, 57, 'cost', 'project_costs', 278, 'دفع رسوم مقابل تحويل مبلغ', 120.00, 0.00, 474237.75, '2026-10-09 10:00:03'),
+(184, 49, 'cost', 'project_costs', 279, 'تنفيذ طلب الموارد: Bearing 6205', 50.75, 0.00, -1790.65, '2026-10-09 12:33:57'),
+(185, 49, 'cost', 'project_costs', 280, 'Resource Request Fulfillment: Bearing 6205', 7.25, 0.00, -1797.90, '2026-10-09 18:27:24'),
+(186, 54, 'cost', 'project_costs', 281, 'تنفيذ طلب الموارد: Bearing 6204', 210.00, 0.00, 9630.00, '2026-10-09 19:02:15');
 
 -- --------------------------------------------------------
 
@@ -1636,6 +1652,7 @@ CREATE TABLE `resources` (
   `resource_type` enum('HUMAN_RESOURCES','SERVICE','TRANSPORT','EQUIPMENT','PROFESSIONAL_SERVICES','MISCELLANEOUS') DEFAULT 'HUMAN_RESOURCES',
   `unit_id` int(11) NOT NULL,
   `description` text DEFAULT NULL,
+  `description_a` varchar(255) DEFAULT NULL,
   `status` enum('ACTIVE','INACTIVE') DEFAULT 'ACTIVE',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `category_id` int(11) NOT NULL
@@ -1645,26 +1662,26 @@ CREATE TABLE `resources` (
 -- Dumping data for table `resources`
 --
 
-INSERT INTO `resources` (`id`, `resource_code`, `resource_name`, `resource_name_a`, `resource_type`, `unit_id`, `description`, `status`, `created_at`, `category_id`) VALUES
-(12, 'EQP-0001', 'Concrete Mixer', 'خلاطة خرسانة', 'EQUIPMENT', 17, 'Portable concrete mixer', 'ACTIVE', '2026-07-13 07:52:15', 8),
-(13, 'EQP-0002', 'Plate Compactor', 'مدك للارضيات', 'EQUIPMENT', 14, 'Soil compaction machine', 'ACTIVE', '2026-07-13 07:52:15', 8),
-(14, 'EQP-0003', 'Excavator', 'حفارة', 'EQUIPMENT', 17, 'Hydraulic excavator', 'ACTIVE', '2026-07-13 07:52:15', 8),
-(15, 'EQP-0004', 'Tower Crane', 'رافعة برجية', 'EQUIPMENT', 18, 'Heavy lifting equipment', 'ACTIVE', '2026-07-13 07:52:15', 8),
-(16, 'EQP-0005', 'Electric Generator', 'مولد كهرباء', 'EQUIPMENT', 18, 'Diesel generator', 'ACTIVE', '2026-07-13 07:52:15', 8),
-(17, 'HRS-0001', 'Civil Engineer', 'هندسة مدنية', 'HUMAN_RESOURCES', 20, 'Professional engineer', 'ACTIVE', '2026-07-13 07:52:15', 12),
-(18, 'HRS-0002', 'Site Supervisor', 'مشرف موقع', 'HUMAN_RESOURCES', 20, 'Construction supervisor', 'ACTIVE', '2026-07-13 07:52:15', 13),
-(19, 'HRS-0003', 'Mason', 'أسطى بناء', 'HUMAN_RESOURCES', 14, 'Block laying and plastering', 'ACTIVE', '2026-07-13 07:52:15', 13),
-(20, 'HRS-0004', 'Carpenter', 'اسطى نجار', 'PROFESSIONAL_SERVICES', 15, 'Formwork carpenter', 'ACTIVE', '2026-07-13 07:52:15', 13),
-(21, 'HRS-0005', 'Steel Fixer', 'اسطى حداد', 'HUMAN_RESOURCES', 14, 'Rebar installation', 'ACTIVE', '2026-07-13 07:52:15', 13),
-(22, 'HRS-0006', 'Electrician', 'اسطى كهربائي', 'HUMAN_RESOURCES', 22, 'Electrical installations', 'ACTIVE', '2026-07-13 07:52:15', 13),
-(23, 'HRS-0007', 'Plumber', 'اسطى سباك', 'HUMAN_RESOURCES', 21, 'Plumbing installation', 'ACTIVE', '2026-07-13 07:52:15', 13),
-(24, 'EQP-0006', 'Concrete Pumping', 'مضخة خرسانة', 'EQUIPMENT', 15, 'Concrete pumping service', 'ACTIVE', '2026-07-13 07:52:15', 8),
-(25, 'SRV-0002', 'Survey Works', 'أعمال مساحة', 'PROFESSIONAL_SERVICES', 21, 'Topographic survey', 'ACTIVE', '2026-07-13 07:52:15', 12),
-(26, 'EQP-0007', 'Equipment Rental', 'إيجار أليات', 'EQUIPMENT', 17, 'Heavy equipment rental', 'ACTIVE', '2026-07-13 07:52:15', 8),
-(27, 'TRS-0004', 'Material Delivery', 'نقل مواد', 'TRANSPORT', 9, 'Transportation service', 'ACTIVE', '2026-07-13 07:52:15', 11),
-(28, 'SRV-0005', 'Labor Supply', 'نوريد عمالة', 'SERVICE', 21, 'Temporary labor supply', 'ACTIVE', '2026-07-13 07:52:15', 11),
-(31, 'CON-0001', 'Sub-Contracting', 'مقاولات بالباطن', 'PROFESSIONAL_SERVICES', 21, 'Sub-Contracting at Lump Sum', 'ACTIVE', '2026-09-11 18:25:32', 11),
-(33, 'ABC-0033', 'SITE ENGINEER', 'مهندس موقع', 'HUMAN_RESOURCES', 20, 'مهندس راتب شهري', 'ACTIVE', '2026-09-27 17:45:23', 12);
+INSERT INTO `resources` (`id`, `resource_code`, `resource_name`, `resource_name_a`, `resource_type`, `unit_id`, `description`, `description_a`, `status`, `created_at`, `category_id`) VALUES
+(12, 'EQP-0001', 'Concrete Mixer', 'خلاطة خرسانة', 'EQUIPMENT', 17, 'Portable concrete mixer', NULL, 'ACTIVE', '2026-07-13 07:52:15', 8),
+(13, 'EQP-0002', 'Plate Compactor', 'مدك للارضيات', 'EQUIPMENT', 14, 'Soil compaction machine', NULL, 'ACTIVE', '2026-07-13 07:52:15', 8),
+(14, 'EQP-0003', 'Excavator', 'حفارة', 'EQUIPMENT', 17, 'Hydraulic excavator', NULL, 'ACTIVE', '2026-07-13 07:52:15', 8),
+(15, 'EQP-0004', 'Tower Crane', 'رافعة برجية', 'EQUIPMENT', 18, 'Heavy lifting equipment', NULL, 'ACTIVE', '2026-07-13 07:52:15', 8),
+(16, 'EQP-0005', 'Electric Generator', 'مولد كهرباء', 'EQUIPMENT', 18, 'Diesel generator', NULL, 'ACTIVE', '2026-07-13 07:52:15', 8),
+(17, 'HRS-0001', 'Civil Engineer', 'مهندس مدني', 'HUMAN_RESOURCES', 20, 'Professional engineer', NULL, 'ACTIVE', '2026-07-13 07:52:15', 12),
+(18, 'HRS-0002', 'Site Supervisor', 'مشرف موقع', 'HUMAN_RESOURCES', 20, 'Construction supervisor', NULL, 'ACTIVE', '2026-07-13 07:52:15', 13),
+(19, 'HRS-0003', 'Mason', 'أسطى بناء', 'HUMAN_RESOURCES', 14, 'Block laying and plastering', NULL, 'ACTIVE', '2026-07-13 07:52:15', 13),
+(20, 'HRS-0004', 'Carpenter', 'اسطى نجار', 'PROFESSIONAL_SERVICES', 15, 'Formwork carpenter', NULL, 'ACTIVE', '2026-07-13 07:52:15', 13),
+(21, 'HRS-0005', 'Steel Fixer', 'اسطى حداد', 'HUMAN_RESOURCES', 14, 'Rebar installation', NULL, 'ACTIVE', '2026-07-13 07:52:15', 13),
+(22, 'HRS-0006', 'Electrician', 'اسطى كهربائي', 'HUMAN_RESOURCES', 22, 'Electrical installations', NULL, 'ACTIVE', '2026-07-13 07:52:15', 13),
+(23, 'HRS-0007', 'Plumber', 'اسطى سباك', 'HUMAN_RESOURCES', 21, 'Plumbing installation', NULL, 'ACTIVE', '2026-07-13 07:52:15', 13),
+(24, 'EQP-0006', 'Concrete Pumping', 'مضخة خرسانة', 'EQUIPMENT', 15, 'Concrete pumping service', NULL, 'ACTIVE', '2026-07-13 07:52:15', 8),
+(25, 'SRV-0002', 'Survey Works', 'أعمال مساحة', 'PROFESSIONAL_SERVICES', 21, 'Topographic survey', NULL, 'ACTIVE', '2026-07-13 07:52:15', 12),
+(26, 'EQP-0007', 'Equipment Rental', 'إيجار أليات', 'EQUIPMENT', 17, 'Heavy equipment rental', NULL, 'ACTIVE', '2026-07-13 07:52:15', 8),
+(27, 'TRS-0004', 'Material Delivery', 'نقل مواد', 'TRANSPORT', 9, 'Transportation service', NULL, 'ACTIVE', '2026-07-13 07:52:15', 11),
+(28, 'SRV-0005', 'Labor Supply', 'نوريد عمالة', 'SERVICE', 21, 'Temporary labor supply', NULL, 'ACTIVE', '2026-07-13 07:52:15', 11),
+(31, 'CON-0001', 'Sub-Contracting', 'مقاولات بالباطن', 'PROFESSIONAL_SERVICES', 21, 'Sub-Contracting at Lump Sum', NULL, 'ACTIVE', '2026-09-11 18:25:32', 11),
+(33, 'ABC-0033', 'SITE ENGINEER', 'مهندس موقع', 'HUMAN_RESOURCES', 20, 'Engineer Monthly Based Salary', 'مهندس براتب شهري', 'ACTIVE', '2026-09-27 17:45:23', 12);
 
 -- --------------------------------------------------------
 
@@ -1758,7 +1775,9 @@ INSERT INTO `resource_requisitions` (`id`, `req_number`, `project_id`, `request_
 (66, 'REQ-261003114307', 49, '2026-10-03', '2026-10-14', NULL, 'DIRECT_TO_PROJECT_SITE', 'MEDIUM', 'FULFILLED', '', 1, '2026-10-03 11:43:30', 1, 1, '2026-10-03 11:43:34', '', NULL, '2026-10-03 09:43:07', '2026-10-03 09:43:52'),
 (67, 'REQ-261004101704', 51, '2026-10-04', '2026-10-12', 27, 'WAREHOUSE', 'HIGH', 'FULFILLED', '', 1, '2026-10-04 10:17:52', 1, 1, '2026-10-04 10:17:56', '', NULL, '2026-10-04 08:17:04', '2026-10-04 08:18:20'),
 (68, 'REQ-261004222012', 49, '2026-10-04', '2026-10-06', 3, 'WAREHOUSE', 'MEDIUM', 'PARTIAL', '', 1, '2026-10-07 06:48:46', 1, 1, '2026-10-07 06:48:50', '', NULL, '2026-10-04 20:20:12', '2026-10-07 05:03:58'),
-(69, 'REQ-261007141636', 49, '2026-10-07', '2026-10-10', NULL, 'DIRECT_TO_PROJECT_SITE', 'HIGH', 'DRAFT', '', NULL, NULL, 1, NULL, NULL, NULL, NULL, '2026-10-07 12:16:36', NULL);
+(70, 'REQ-261009142312', 49, '2026-10-09', '2026-10-15', NULL, 'DIRECT_TO_PROJECT_SITE', 'MEDIUM', 'FULFILLED', 'يتم تسليم المواد مباشرة الى مخزن المشروع', 1, '2026-10-09 14:32:13', 1, 1, '2026-10-09 14:32:19', '', NULL, '2026-10-09 12:23:12', '2026-10-09 18:27:24'),
+(74, 'REQ-261009210047', 54, '2026-10-09', '2026-10-22', NULL, 'DIRECT_TO_PROJECT_SITE', 'MEDIUM', 'FULFILLED', '', 1, '2026-10-09 21:01:07', 1, 1, '2026-10-09 21:01:29', '', NULL, '2026-10-09 19:00:47', '2026-10-09 19:02:15'),
+(75, 'REQ-261009210458', 51, '2026-10-09', '2026-10-15', NULL, 'DIRECT_TO_PROJECT_SITE', 'MEDIUM', 'DRAFT', '', NULL, NULL, 1, NULL, NULL, NULL, NULL, '2026-10-09 19:04:58', NULL);
 
 -- --------------------------------------------------------
 
@@ -1827,7 +1846,11 @@ INSERT INTO `resource_requisition_approvals` (`id`, `requisition_id`, `action`, 
 (98, 67, 'SUBMITTED', 1, NULL, '2026-10-04 10:17:52'),
 (99, 67, 'APPROVED', 1, '', '2026-10-04 10:17:56'),
 (100, 68, 'SUBMITTED', 1, NULL, '2026-10-07 06:48:46'),
-(101, 68, 'APPROVED', 1, '', '2026-10-07 06:48:50');
+(101, 68, 'APPROVED', 1, '', '2026-10-07 06:48:50'),
+(102, 70, 'SUBMITTED', 1, NULL, '2026-10-09 14:32:13'),
+(103, 70, 'APPROVED', 1, '', '2026-10-09 14:32:19'),
+(104, 74, 'SUBMITTED', 1, NULL, '2026-10-09 21:01:07'),
+(105, 74, 'APPROVED', 1, '', '2026-10-09 21:01:29');
 
 -- --------------------------------------------------------
 
@@ -1904,7 +1927,10 @@ INSERT INTO `resource_requisition_fulfillments` (`id`, `requisition_id`, `fulfil
 (60, 45, 'RR-FUL-20261004093615-639', '2026-10-04 09:36:15', 1, '', 'COMPLETED', '2026-10-04 07:36:15'),
 (61, 45, 'RR-FUL-20261004094132-908', '2026-10-04 09:41:32', 1, '', 'COMPLETED', '2026-10-04 07:41:32'),
 (62, 67, 'RR-FUL-20261004101820-491', '2026-10-04 10:18:20', 1, '', 'COMPLETED', '2026-10-04 08:18:20'),
-(63, 68, 'RR-FUL-261007070358-444', '2026-10-07 00:00:00', 1, '', 'COMPLETED', '2026-10-07 05:03:58');
+(63, 68, 'RR-FUL-261007070358-444', '2026-10-07 00:00:00', 1, '', 'COMPLETED', '2026-10-07 05:03:58'),
+(64, 70, 'RR-FUL-261009143357-139', '2026-10-09 00:00:00', 1, '', 'COMPLETED', '2026-10-09 12:33:57'),
+(65, 70, 'RR-FUL-261009202724-289', '2026-10-09 00:00:00', 1, '', 'COMPLETED', '2026-10-09 18:27:24'),
+(66, 74, 'RR-FUL-261009210215-181', '2026-10-09 00:00:00', 1, '', 'COMPLETED', '2026-10-09 19:02:15');
 
 -- --------------------------------------------------------
 
@@ -1955,7 +1981,10 @@ INSERT INTO `resource_requisition_fulfillment_items` (`id`, `fulfillment_id`, `r
 (51, 60, 70, NULL, NULL, 1.00, 5000.00, 'للفحص فيما يتعلق بنوع التكلفة', NULL, 255, '2026-10-04 07:36:15'),
 (52, 61, 72, NULL, NULL, 1.00, 4000.00, '', NULL, 256, '2026-10-04 07:41:32'),
 (53, 62, 73, NULL, NULL, 1.00, 1500.00, '', NULL, 257, '2026-10-04 08:18:20'),
-(54, 63, 75, 167, 3, 8.00, 3.00, '', 479, 275, '2026-10-07 05:03:58');
+(54, 63, 75, 167, 3, 8.00, 3.00, '', 479, 275, '2026-10-07 05:03:58'),
+(55, 64, 86, 157, 32, 3.50, 14.50, '', 486, 279, '2026-10-09 12:33:57'),
+(56, 65, 86, 157, 3, 0.50, 14.50, '', 487, 280, '2026-10-09 18:27:24'),
+(57, 66, 101, 156, 3, 6.00, 35.00, '', 488, 281, '2026-10-09 19:02:15');
 
 -- --------------------------------------------------------
 
@@ -2021,7 +2050,12 @@ INSERT INTO `resource_requisition_items` (`id`, `requisition_id`, `resource_sour
 (75, 68, 'INVENTORY', 'MATERIALS', NULL, 167, 'Anchor Bolt M16', 'Pieces', 8.00, 8.00, 0.00, 0.00, '', 'FULFILLED', '2026-10-04 21:47:00'),
 (77, 68, 'INVENTORY', 'MATERIALS', NULL, 138, 'Electrical Cable 6mm² Single Core', 'Meter', 5.75, 0.00, 0.00, 0.00, '', 'OPEN', '2026-10-04 21:49:36'),
 (82, 68, 'INVENTORY', 'MATERIALS', NULL, 157, 'Bearing 6205', 'Pieces', 25.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-10-05 06:42:06'),
-(84, 69, 'INVENTORY', NULL, NULL, 156, 'Bearing 6204', 'Pieces', 60.00, 0.00, 0.00, 0.00, '60 Bearings for wheelbarrows', 'OPEN', '2026-10-07 12:18:20');
+(86, 70, 'INVENTORY', 'MATERIALS', NULL, 157, 'Bearing 6205', 'PIECES', 4.00, 4.00, 0.00, 0.00, '', 'FULFILLED', '2026-10-09 12:31:39'),
+(101, 74, 'INVENTORY', 'MATERIALS', NULL, 156, 'Bearing 6204', 'PIECES', 6.00, 6.00, 0.00, 0.00, '', 'FULFILLED', '2026-10-09 19:01:04'),
+(102, 75, 'RESOURCE', 'HUMAN_RESOURCES', NULL, 33, 'SITE ENGINEER', 'شهري', 1.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-10-10 13:41:10'),
+(103, 75, 'INVENTORY', 'MATERIALS', NULL, 137, 'Electrical cable, 4 mm² single core', 'متر', 1.70, 0.00, 0.00, 0.00, '', 'OPEN', '2026-10-10 19:23:12'),
+(104, 75, 'INVENTORY', 'MATERIALS', NULL, 135, 'Electrical cable, 1.5 mm² single core', 'متر', 23.60, 0.00, 0.00, 0.00, '', 'OPEN', '2026-10-10 19:25:47'),
+(105, 75, 'RESOURCE', 'HUMAN_RESOURCES', NULL, 23, 'Plumber', 'مبلغ مقطوع', 1.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-10-10 19:37:54');
 
 -- --------------------------------------------------------
 
@@ -2612,35 +2646,35 @@ CREATE TABLE `units` (
 --
 
 INSERT INTO `units` (`id`, `unit_code`, `unit_name`, `unit_name_a`, `description`, `status`, `created_at`) VALUES
-(1, 'PCS', 'Pieces', 'قطعة', 'Used for individual pieces or units.', 'ACTIVE', '2026-07-12 05:15:58'),
-(2, 'BOX', 'Box', 'صندوق', 'Used for goods supplied or measured by box.', 'ACTIVE', '2026-07-12 05:15:58'),
-(3, 'BAG', 'Bag', 'كيس', 'Used for goods supplied or measured by bag.', 'ACTIVE', '2026-07-12 05:15:58'),
-(4, 'ROL', 'Roll', 'لفة', 'Used for goods supplied or measured by roll.', 'ACTIVE', '2026-07-12 05:15:58'),
-(5, 'SET', 'Set', 'طقم', 'Used for goods supplied or measured as a set.', 'ACTIVE', '2026-07-12 05:15:58'),
-(6, 'PAR', 'Pair', 'زوج', 'Used for goods supplied or measured as a pair.', 'ACTIVE', '2026-07-12 05:15:58'),
-(7, 'KG', 'Kilogram', 'كيلوجرام', 'Unit of mass equal to one thousand grams.', 'ACTIVE', '2026-07-12 05:15:58'),
-(8, 'GRM', 'Gram', 'جرام', 'Unit of mass equal to one thousandth of a kilogram.', 'ACTIVE', '2026-07-12 05:15:58'),
-(9, 'TON', 'Ton', 'طن', 'Unit of mass used for large quantities of materials.', 'ACTIVE', '2026-07-12 05:15:58'),
-(10, 'MTR', 'Meter', 'متر', 'Unit of length equal to one meter.', 'ACTIVE', '2026-07-12 05:15:58'),
-(11, 'CM', 'Centimeter', 'سنتمتر', 'سنتيميتر طولي', 'ACTIVE', '2026-07-12 05:15:58'),
-(12, 'MM', 'Millimeter', 'مليمتر', 'Unit of length equal to one thousandth of a meter.', 'ACTIVE', '2026-07-12 05:15:58'),
-(13, 'KM', 'Kilometer', 'كيلومتر', 'Unit of length equal to one thousand meters.', 'ACTIVE', '2026-07-12 05:15:58'),
-(14, 'M2', 'Square Meter', 'متر مربع', 'Unit of area equal to one square meter.', 'ACTIVE', '2026-07-12 05:15:58'),
-(15, 'M3', 'Cubic Meter', 'متر مكعب', 'Unit of volume equal to one cubic meter.', 'ACTIVE', '2026-07-12 05:15:58'),
-(16, 'LTR', 'Liter', 'لتر', 'Unit of volume equal to one liter.', 'ACTIVE', '2026-07-12 05:15:58'),
-(17, 'DAY', 'Day', 'اجر يومي', 'Used for daily labor, equipment, or service costs.', 'ACTIVE', '2026-07-12 05:15:58'),
-(18, 'HR', 'Hour', 'ساعة', 'Used for hourly labor, equipment, or service costs.', 'ACTIVE', '2026-07-12 05:15:58'),
-(19, 'WK', 'Week', 'اسبوعي', 'أجرة او مرتب اسبوعي ثابت', 'ACTIVE', '2026-07-12 05:15:58'),
-(20, 'MTH', 'Month', 'شهري', 'مرتب شهري', 'ACTIVE', '2026-07-12 05:15:58'),
-(21, 'LPS', 'Lump Sum', 'مبلغ مقطوع', 'التعاقد على مبلغ مقطوع من المال.', 'ACTIVE', '2026-09-11 18:16:23'),
-(22, 'PNT', 'Point', 'نقطة', 'Electrical Distribution Point or any similar professional work.', 'ACTIVE', '2026-09-13 06:09:05'),
-(25, 'TRIP', 'Trip', 'رحلة', 'Unit used for transportation trips.', 'ACTIVE', '2026-10-09 06:06:40'),
-(26, 'JOB', 'Job', 'مهمة', 'Unit used for a completed job or work package.', 'ACTIVE', '2026-10-09 06:06:40'),
-(27, 'SRVC', 'Service', 'خدمة', 'Unit used for professional or service-based costs.', 'ACTIVE', '2026-10-09 06:06:40'),
-(28, 'ITM', 'Item', 'بند', 'Unit used for miscellaneous individual items.', 'ACTIVE', '2026-10-09 06:06:40'),
-(29, 'FEE', 'Fee', 'رسوم', 'Unit used for fees and charges.', 'ACTIVE', '2026-10-09 06:06:40'),
-(30, 'PLC', 'Policy', 'وثيقة', 'Unit used for insurance policies.', 'ACTIVE', '2026-10-09 06:06:40'),
-(31, 'TRANSACTION', 'Transaction', 'معاملة', 'Unit used for transaction-based costs.', 'ACTIVE', '2026-10-09 06:06:40');
+(1, 'PCS', 'PIECES', 'قطعة', 'Used for individual pieces or units.', 'ACTIVE', '2026-07-12 05:15:58'),
+(2, 'BOX', 'BOX', 'صندوق', 'Used for goods supplied or measured by box.', 'ACTIVE', '2026-07-12 05:15:58'),
+(3, 'BAG', 'BAG', 'كيس', 'Used for goods supplied or measured by bag.', 'ACTIVE', '2026-07-12 05:15:58'),
+(4, 'ROL', 'ROLL', 'لفة', 'Used for goods supplied or measured by roll.', 'ACTIVE', '2026-07-12 05:15:58'),
+(5, 'SET', 'SET', 'طقم', 'Used for goods supplied or measured as a set.', 'ACTIVE', '2026-07-12 05:15:58'),
+(6, 'PAR', 'PAIR', 'زوج', 'Used for goods supplied or measured as a pair.', 'ACTIVE', '2026-07-12 05:15:58'),
+(7, 'KG', 'KILOGRAM', 'كيلوجرام', 'Unit of mass equal to one thousand grams.', 'ACTIVE', '2026-07-12 05:15:58'),
+(8, 'GRM', 'GRAM', 'جرام', 'Unit of mass equal to one thousandth of a kilogram.', 'ACTIVE', '2026-07-12 05:15:58'),
+(9, 'TON', 'TON', 'طن', 'Unit of mass used for large quantities of materials.', 'ACTIVE', '2026-07-12 05:15:58'),
+(10, 'MTR', 'METER', 'متر', 'Unit of length equal to one meter.', 'ACTIVE', '2026-07-12 05:15:58'),
+(11, 'CM', 'CENTIMETER', 'سنتمتر', 'سنتيميتر طولي', 'ACTIVE', '2026-07-12 05:15:58'),
+(12, 'MM', 'MILLIMETER', 'مليمتر', 'Unit of length equal to one thousandth of a meter.', 'ACTIVE', '2026-07-12 05:15:58'),
+(13, 'KM', 'KILOMETER', 'كيلومتر', 'Unit of length equal to one thousand meters.', 'ACTIVE', '2026-07-12 05:15:58'),
+(14, 'M2', 'SQUARE METER', 'متر مربع', 'Unit of area equal to one square meter.', 'ACTIVE', '2026-07-12 05:15:58'),
+(15, 'M3', 'CUBIC METER', 'متر مكعب', 'Unit of volume equal to one cubic meter.', 'ACTIVE', '2026-07-12 05:15:58'),
+(16, 'LTR', 'LITER', 'لتر', 'Unit of volume equal to one liter.', 'ACTIVE', '2026-07-12 05:15:58'),
+(17, 'DAY', 'DAY', 'اجر يومي', 'Used for daily labor, equipment, or service costs.', 'ACTIVE', '2026-07-12 05:15:58'),
+(18, 'HR', 'HOUR', 'ساعة', 'Used for hourly labor, equipment, or service costs.', 'ACTIVE', '2026-07-12 05:15:58'),
+(19, 'WK', 'WEEK', 'اسبوعي', 'أجرة او مرتب اسبوعي ثابت', 'ACTIVE', '2026-07-12 05:15:58'),
+(20, 'MTH', 'MONTH', 'شهري', 'مرتب شهري', 'ACTIVE', '2026-07-12 05:15:58'),
+(21, 'LPS', 'LUMP SUM', 'مبلغ مقطوع', 'التعاقد على مبلغ مقطوع من المال.', 'ACTIVE', '2026-09-11 18:16:23'),
+(22, 'PNT', 'POINT', 'نقطة', 'Electrical Distribution Point or any similar professional work.', 'ACTIVE', '2026-09-13 06:09:05'),
+(25, 'TRIP', 'TRIP', 'رحلة', 'Unit used for transportation trips.', 'ACTIVE', '2026-10-09 06:06:40'),
+(26, 'JOB', 'JOB', 'مهمة', 'Unit used for a completed job or work package.', 'ACTIVE', '2026-10-09 06:06:40'),
+(27, 'SRVC', 'SERVICE', 'خدمة', 'Unit used for professional or service-based costs.', 'ACTIVE', '2026-10-09 06:06:40'),
+(28, 'ITM', 'ITEM', 'بند', 'Unit used for miscellaneous individual items.', 'ACTIVE', '2026-10-09 06:06:40'),
+(29, 'FEE', 'FEE', 'رسوم', 'Unit used for fees and charges.', 'ACTIVE', '2026-10-09 06:06:40'),
+(30, 'PLC', 'POLICY', 'وثيقة', 'Unit used for insurance policies.', 'ACTIVE', '2026-10-09 06:06:40'),
+(31, 'TRN', 'TRANSACTION', 'معاملة', 'Unit used for transaction-based costs.', 'ACTIVE', '2026-10-09 06:06:40');
 
 -- --------------------------------------------------------
 
@@ -2869,7 +2903,8 @@ ALTER TABLE `project_costs`
   ADD PRIMARY KEY (`id`),
   ADD KEY `project_id` (`project_id`),
   ADD KEY `inventory_id` (`inventory_id`),
-  ADD KEY `project_costs_location_fk` (`location_id`);
+  ADD KEY `project_costs_location_fk` (`location_id`),
+  ADD KEY `fk_project_costs_unit` (`unit_id`);
 
 --
 -- Indexes for table `project_documents`
@@ -3174,13 +3209,13 @@ ALTER TABLE `inventory_location_stock`
 -- AUTO_INCREMENT for table `inventory_movements`
 --
 ALTER TABLE `inventory_movements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=486;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=489;
 
 --
 -- AUTO_INCREMENT for table `inventory_reservations`
 --
 ALTER TABLE `inventory_reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `inventory_transfers`
@@ -3192,7 +3227,7 @@ ALTER TABLE `inventory_transfers`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 
 --
 -- AUTO_INCREMENT for table `projects`
@@ -3210,7 +3245,7 @@ ALTER TABLE `project_advances`
 -- AUTO_INCREMENT for table `project_costs`
 --
 ALTER TABLE `project_costs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=277;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=282;
 
 --
 -- AUTO_INCREMENT for table `project_documents`
@@ -3222,7 +3257,7 @@ ALTER TABLE `project_documents`
 -- AUTO_INCREMENT for table `project_ledger`
 --
 ALTER TABLE `project_ledger`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=182;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=187;
 
 --
 -- AUTO_INCREMENT for table `project_scopes`
@@ -3270,13 +3305,13 @@ ALTER TABLE `resource_categories`
 -- AUTO_INCREMENT for table `resource_requisitions`
 --
 ALTER TABLE `resource_requisitions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT for table `resource_requisition_approvals`
 --
 ALTER TABLE `resource_requisition_approvals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT for table `resource_requisition_attachments`
@@ -3294,19 +3329,19 @@ ALTER TABLE `resource_requisition_comments`
 -- AUTO_INCREMENT for table `resource_requisition_fulfillments`
 --
 ALTER TABLE `resource_requisition_fulfillments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `resource_requisition_fulfillment_items`
 --
 ALTER TABLE `resource_requisition_fulfillment_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `resource_requisition_items`
 --
 ALTER TABLE `resource_requisition_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -3485,6 +3520,7 @@ ALTER TABLE `project_advances`
 -- Constraints for table `project_costs`
 --
 ALTER TABLE `project_costs`
+  ADD CONSTRAINT `fk_project_costs_unit` FOREIGN KEY (`unit_id`) REFERENCES `units` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `project_costs_fk` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `project_costs_location_fk` FOREIGN KEY (`location_id`) REFERENCES `inventory_locations` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `project_inventory_costs_fk` FOREIGN KEY (`inventory_id`) REFERENCES `inventory` (`id`) ON UPDATE CASCADE;

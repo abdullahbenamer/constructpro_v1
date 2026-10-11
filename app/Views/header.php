@@ -1074,7 +1074,7 @@ require_once '../app/Models/InventoryLocationModel.php';
                             <ul class="dropdown-menu">
 
 
-                                <?php if (AuthHelper::canView('quotation.view')) : ?>
+                                <?php if (AuthHelper::canView('supplier_quotations.view')) : ?>
 
                                     <li>
 

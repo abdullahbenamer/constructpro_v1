@@ -1848,4 +1848,9 @@ return [
 
 'not_available' => 'Not Available',
 
+'database_connection_failed' =>
+    'The system is temporarily unavailable. Please try again later or contact the system administrator.',
+
+    'username_or_email' => 'User Name or Email...',
+
     ];

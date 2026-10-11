@@ -1,7 +1,7 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 
 session_start();
 
@@ -25,4 +25,20 @@ require_once '../app/Core/Controller.php';
 require_once '../app/Core/Database.php';
 require_once '../app/Core/FlashHelper.php';
 
-$app = new App();
+
+try {
+    $app = new App();
+} catch (DatabaseConnectionException $e) {
+    FlashHelper::error(__('database_connection_failed'));
+
+    http_response_code(503);
+
+    $message = $_SESSION['error']
+        ?? __('database_connection_failed');
+
+    unset($_SESSION['error']);
+
+    require '../app/Views/errors/database.php';
+    exit;
+}
+
