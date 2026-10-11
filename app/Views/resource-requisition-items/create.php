@@ -149,13 +149,11 @@
                                     <option
                                         value="<?= (int)$resource->id ?>"
                                         data-source="RESOURCE"
-                                        data-unit-en="<?= htmlspecialchars($resource->unit_name ?? '') ?>"
-                                        data-unit-ar="<?= htmlspecialchars($resource->unit_name_a ?? '') ?>"
-                                        data-description="<?= htmlspecialchars($resource->resource_name) ?>">
+                                        data-unit-en="<?= htmlspecialchars($resource->unit_name ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                                        data-unit-ar="<?= htmlspecialchars($resource->unit_name_a ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                                        data-description-en="<?= htmlspecialchars($resource->description ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                                        data-description-ar="<?= htmlspecialchars($resource->description_a ?? '', ENT_QUOTES, 'UTF-8') ?>">
 
-                                        <!-- <? //= htmlspecialchars($resource->resource_code) 
-                                                ?>
-                                        - -->
                                         <?= htmlspecialchars($resource->resource_name) ?>
 
                                     </option>
@@ -781,12 +779,12 @@
                 option.getAttribute('data-description') || '';
 
             const isArabic =
-    document.documentElement.lang === 'ar';
+                document.documentElement.lang === 'ar';
 
-uom.value =
-    isArabic
-        ? option.getAttribute('data-unit-ar') || ''
-        : option.getAttribute('data-unit-en') || '';
+            uom.value =
+                isArabic ?
+                option.getAttribute('data-unit-ar') || '' :
+                option.getAttribute('data-unit-en') || '';
 
             updateQuantityRules();
 
@@ -828,16 +826,17 @@ uom.value =
                 return;
             }
 
-            description.value =
-                option.getAttribute('data-description') || '';
+            const isArabic =
+                document.documentElement.lang === 'ar';
 
-          const isArabic =
-    document.documentElement.lang === 'ar';
+            description.value = isArabic ?
+                option.getAttribute('data-description-ar') || '' :
+                option.getAttribute('data-description-en') || '';
 
-uom.value =
-    isArabic
-        ? option.getAttribute('data-unit-ar') || ''
-        : option.getAttribute('data-unit-en') || '';
+            uom.value =
+                isArabic ?
+                option.getAttribute('data-unit-ar') || '' :
+                option.getAttribute('data-unit-en') || '';
 
             updateQuantityRules();
         }

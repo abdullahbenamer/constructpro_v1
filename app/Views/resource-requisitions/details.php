@@ -1,33 +1,15 @@
 <div class="container-fluid mt-4">
-
-
     <!-- PAGE HEADER -->
-
     <div class="d-flex justify-content-between align-items-center mb-3">
-
-
         <div>
-
             <h4 class="mb-0">
-
                 <i class="fas fa-file-alt"></i>
                 <?= __('resource_requisition_details') ?>
-
             </h4>
-
-
             <small class="text-muted">
-
                 <?= __('view_requisition_header_information') ?>
-
             </small>
-
-
         </div>
-
-
-
-
         <div>
             <?php if (
                 $data['requisition']->status == 'DRAFT'
@@ -98,25 +80,18 @@
 
         <div class="card-header bg-white">
 
-
             <strong>
 
                 <i class="fas fa-info-circle"></i>
                 <?= __('header_information') ?>
 
             </strong>
-
-
         </div>
-
-
-
 
         <div class="card-body">
 
 
             <div class="row">
-
 
                 <!-- REQUISITION NUMBER -->
 
@@ -195,7 +170,6 @@
                     </div>
 
                 </div>
-
 
                 <!-- REQUIRED DATE -->
                 <div class="col-md-3 mb-3">
@@ -639,10 +613,17 @@
 
                                     </td>
 
-                                    <td>
-                                        <?= htmlspecialchars($item->uom ?? '-') ?>
-                                    </td>
+                                   <td>
+    <?php
+    $isArabic = (Language::direction() === 'rtl');
 
+    $uom = $isArabic
+        ? ($item->unit_name_a ?? $item->uom ?? '-')
+        : ($item->unit_name ?? $item->uom ?? '-');
+    ?>
+
+    <?= htmlspecialchars($uom, ENT_QUOTES, 'UTF-8') ?>
+</td>
                                     <td><?= $item->remarks ?></td>
 
                                     <td>

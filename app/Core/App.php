@@ -74,18 +74,35 @@ class App
             unset($url[0]);
         }
 
-        $this->params = $url ? array_values($url) : [];
+    
+$this->params = $url ? array_values($url) : [];
 
-        call_user_func_array(
-            [$this->controller, $this->method],
-            $this->params
-        );
+// ==================================================
+// CENTRALIZED REQUIRED-ARGUMENT VALIDATION
+// ==================================================
 
+$reflection = new ReflectionMethod(
+    $this->controller,
+    $this->method
+);
 
+$requiredParameters =
+    $reflection->getNumberOfRequiredParameters();
 
-        
+if (count($this->params) < $requiredParameters) {
+    $this->show404();
+    return;
+}
+
+// ==================================================
+// INVOKE CONTROLLER METHOD
+// ==================================================
+
+call_user_func_array(
+    [$this->controller, $this->method],
+    $this->params
+);
     }
-
     private function controllerFromUrl($segment)
     {
         return str_replace(
