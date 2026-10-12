@@ -1,5 +1,5 @@
 <?php
-class AccountsPayableService
+class AccountsPayableService extends BaseService
 {
     private $poModel;
     private $ledgerModel;

@@ -1337,6 +1337,7 @@ return [
     // project advance
     'invalid_amount' => 'المبلغ المدخل غير مقبول.',
     'advance_recorded_successfully' => 'تم تسجيل دفعة المشروع بنجاح.',
+    'advance_recording_failed' => 'فشل تسجيل دفعة المشروع.',
 
     //INVENTORY MODULE messages
     'inventory_name_sku_required' => 'الاسم ورقم الصنف (SKU) مطلوبان.',

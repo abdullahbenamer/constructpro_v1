@@ -1339,6 +1339,7 @@ return [
     // project advance messages
     'invalid_amount' => 'Invalid amount.',
     'advance_recorded_successfully' => 'Advance recorded successfully.',
+    'advance_recording_failed' => 'Advance recording failed.',
 
     //INVENTORY MODULE messages
     'inventory_name_sku_required' => 'Name and SKU are required.',

@@ -25,6 +25,73 @@ class ProjectAdvanceModel extends Model
         return $this->db->lastInsertId();
     }
 
+    
+/**
+ * New method:
+ * Record an advance and its Project Ledger entry atomically.
+ *
+ * Existing addAdvance() remains unchanged.
+ */
+
+public function recordAdvanceWithLedger(array $data): int
+{
+    return $this->db->transaction(function () use ($data) {
+
+        // 1. Save the advance using the existing method.
+        $advanceId = $this->addAdvance($data);
+
+        // 2. Get the latest stored project balance.
+        $lastBalanceRow = $this->db->query(
+            "
+            SELECT balance_after
+            FROM project_ledger
+            WHERE project_id = ?
+            ORDER BY id DESC
+            LIMIT 1
+            ",
+            [(int) $data['project_id']]
+        )->fetch();
+
+        $lastBalance = $lastBalanceRow
+            ? (float) $lastBalanceRow->balance_after
+            : 0.0;
+
+        $amount = (float) $data['amount'];
+        $newBalance = $lastBalance + $amount;
+
+        // 3. Insert the matching Project Ledger entry.
+        $this->db->query(
+            "
+            INSERT INTO project_ledger
+            (
+                project_id,
+                entry_type,
+                ref_table,
+                ref_id,
+                description,
+                debit,
+                credit,
+                balance_after
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ",
+            [
+                (int) $data['project_id'],
+                'advance',
+                'project_advances',
+                $advanceId,
+                $data['reference'] ?? null,
+                0,
+                $amount,
+                $newBalance
+            ]
+        );
+
+        return (int) $advanceId;
+    });
+}
+
+
     public function getAdvancesByProject($project_id)
     {
         return $this->db->query(
