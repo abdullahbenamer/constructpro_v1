@@ -70,11 +70,12 @@ class ProjectAdvance extends Controller
         AuthHelper::can('project_advances.view');
 
         $advanceModel = $this->model('ProjectAdvance');
+        $ledgerModel  = $this->model('ProjectLedger');
         $projectModel = $this->model('Project');
 
         $data['project'] = $projectModel->getById($project_id);
         $data['advances'] = $advanceModel->getAdvancesByProject($project_id);
-        $data['balance'] = $advanceModel->getProjectBalance($project_id);
+      $data['balance'] = $ledgerModel->getProjectSummary($project_id);
 
         $this->view('project-costs/advance_list', $data);
     }
@@ -99,4 +100,55 @@ class ProjectAdvance extends Controller
 
         exit;
     }
+
+// Printing a Receipt
+public function receipt($project_id, $advance_id)
+{
+    AuthHelper::can('project_advances.view');
+
+    $projectModel = $this->model('Project');
+    $advanceModel = $this->model('ProjectAdvance');
+
+    $project = $projectModel->getById($project_id);
+
+    if (!$project) {
+        FlashHelper::error(__('project_not_found'));
+        header("Location: " . URLROOT . "/projects");
+        exit;
+    }
+
+    // Retrieve the existing advance records for this project.
+    $advances = $advanceModel->getAdvancesByProject($project_id);
+
+    $advance = null;
+
+    foreach ($advances as $item) {
+        if ((int) $item->id === (int) $advance_id) {
+            $advance = $item;
+            break;
+        }
+    }
+
+    if (!$advance) {
+        FlashHelper::error(__('advance_not_found'));
+        header(
+            "Location: " . URLROOT . "/projectadvance/list/" . (int) $project_id
+        );
+        exit;
+    }
+
+    // Stable receipt number based on the saved advance ID and date.
+    $receiptNumber = 'ADV-'
+        . date('y', strtotime($advance->advance_date))
+        . '-'
+        . str_pad((string) $advance->id, 6, '0', STR_PAD_LEFT);
+
+    $this->view('project-costs/advance_receipt', [
+        'project'       => $project,
+        'advance'       => $advance,
+        'receiptNumber' => $receiptNumber
+    ]);
 }
+
+
+    }

@@ -92,10 +92,18 @@
     </div>
 
 
-    <button class="btn btn-success">
+<div class="d-flex gap-2 mt-3">
 
+    <button type="submit" class="btn btn-success">
         <?= __('save_advance') ?>
-
     </button>
+
+    <a
+        href="<?= URLROOT ?>/projectadvance/list/<?= (int) $project->id ?>"
+        class="btn btn-secondary">
+        <?= __('cancel') ?>
+    </a>
+
+</div>
 
 </form>

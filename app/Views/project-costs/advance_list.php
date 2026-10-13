@@ -94,7 +94,7 @@
 </div>
 
 
-<table class="table table-bordered">
+<table class="table table-striped table-hover table-bordered">
 
     <thead>
 
@@ -107,6 +107,8 @@
             <th><?= __('amount') ?></th>
 
             <th><?= __('reference') ?></th>
+
+            <th><?= __('actions') ?></th>
 
         </tr>
 
@@ -146,6 +148,19 @@
 
                 </td>
 
+                
+<td class="text-center">
+    <a
+        href="<?= URLROOT ?>/projectadvance/receipt/<?= (int) $project->id ?>/<?= (int) $a->id ?>"
+        class="btn btn-sm btn-outline-primary"
+        target="_blank"
+        rel="noopener">
+        <i class="fas fa-print"></i>
+        <?= __('print_receipt') ?>
+    </a>
+</td>
+
+
             </tr>
 
         <?php endforeach; ?>
@@ -155,7 +170,7 @@
         <tr>
 
             <td
-                colspan="4"
+                colspan="5"
                 class="text-center py-5 text-muted">
 
                 <i class="fas fa-money-check-alt fa-3x mb-3 d-block text-secondary"></i>

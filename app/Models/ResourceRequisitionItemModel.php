@@ -306,23 +306,23 @@ public function getByRequisition($requisition_id)
         );
     }
 
-    /**
-     * DELETE ITEM
-     */
-    public function delete($id)
-    {
+/**
+ * DELETE ITEM
+ */
+public function delete($id)
+{
+    $id = filter_var($id, FILTER_VALIDATE_INT);
 
-        return $this->db->query(
-
-            "
-        DELETE FROM resource_requisition_items
-
-        WHERE id = '$id'
-
-        "
-
-        );
+    if ($id === false || $id <= 0) {
+        return false;
     }
+
+    return $this->db->query(
+        "DELETE FROM resource_requisition_items WHERE id = ?",
+        [$id]
+    );
+}
+
 
     // find available item qty in stock
     public function getStockAvailability($resource_id)

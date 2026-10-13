@@ -685,7 +685,6 @@ if (
         ]);
     }
 
-    // temporary recordLedger for testing
     private function recordLedger(
         int $costId,
         array $data

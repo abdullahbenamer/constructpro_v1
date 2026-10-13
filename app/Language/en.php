@@ -1854,4 +1854,20 @@ return [
 
     'username_or_email' => 'User Name or Email...',
 
+    'no_goods_receipts_found' => 'No goods receipts found.',
+
+    // Advance payment receipts
+    'customer_advance_receipt' => 'Customer Advance Receipt',
+'receipt_number' => 'Receipt Number',
+'print_receipt' => 'Print Receipt',
+'amount_received' => 'Amount Received',
+'received_with_thanks' => 'Received with thanks',
+'customer_signature' => 'Customer Signature',
+
+'project_details' => 'Project Details',
+
+'amount_in_words' => 'Amount in Words',
+'Cash' => 'Cash',
+'Bank Transfer' => 'Bank Transfer',
+'Cheque' => 'Cheque',
     ];

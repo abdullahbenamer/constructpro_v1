@@ -60,9 +60,13 @@ class ResourceRequisitionModel extends Model
 
             u2.full_name AS submitted_by_name,
 
-            u3.full_name AS approved_by_name
+            u3.full_name AS approved_by_name,
 
-        FROM resource_requisitions rr
+             u4.id AS storekeeper_id,
+             u4.full_name AS storekeeper_name,
+             u4.mobile AS storekeeper_mobile
+            
+            FROM resource_requisitions rr
 
         LEFT JOIN projects p
             ON p.id = rr.project_id
@@ -78,6 +82,9 @@ class ResourceRequisitionModel extends Model
 
         LEFT JOIN users u3
             ON u3.id = rr.approved_by
+        
+        LEFT JOIN users u4
+    ON u4.id = l.storekeeper_id
 
         WHERE rr.id = ?
 

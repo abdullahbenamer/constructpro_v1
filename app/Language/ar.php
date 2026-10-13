@@ -1343,8 +1343,6 @@ return [
     'inventory_name_sku_required' => 'الاسم ورقم الصنف (SKU) مطلوبان.',
     'inventory_insert_failed' => 'فشلت عملية الإدخال.',
 
-
-
     //INVENTORY LOCATIONS messages
     'unable_to_save_location' => 'تعذر حفظ الموقع (المخزن).',
     'location_not_found' => 'الموقع غير موجود.',
@@ -1610,7 +1608,7 @@ return [
     'role_update_failed'              => 'فشل تحديث الدور.',
 
     'permission_created_successfully' => 'تم إنشاء الصلاحية بنجاح.',
- 'permission_creation_failed' => 'تعذر إنشاء الصلاحية. قد يكون اسم الصلاحية موجودًا بالفعل.',
+    'permission_creation_failed' => 'تعذر إنشاء الصلاحية. قد يكون اسم الصلاحية موجودًا بالفعل.',
     'permission_name_required'        => 'اسم الصلاحية مطلوب.',
     'permission_updated_successfully' => 'تم تحديث الصلاحية بنجاح.',
     'permission_update_failed'        => 'فشل تحديث الصلاحية.',
@@ -1731,117 +1729,117 @@ return [
     'fractional_quantities_allowed' => 'يسمح بالكميات الكسرية',
     'whole_quantities_only' => 'يسمح بالكميات الصحيحة فقط',
 
-'available_for_transfer' => 'متاح للنقل',
+    'available_for_transfer' => 'متاح للنقل',
 
-'total_cost' => 'إجمالي التكلفة',
+    'total_cost' => 'إجمالي التكلفة',
 
-'total_material_cost' => 'إجمالي تكلفة المواد',
+    'total_material_cost' => 'إجمالي تكلفة المواد',
 
-'total_resources_cost' => 'إجمالي تكلفة الموارد',
+    'total_resources_cost' => 'إجمالي تكلفة الموارد',
 
-'unit_of_measure' => 'وحدة القياس',
+    'unit_of_measure' => 'وحدة القياس',
 
-'grn_remaining' => 'المتبقي من اذن الاستلام',
+    'grn_remaining' => 'المتبقي من اذن الاستلام',
 
 
-// GOODS RETURNS
-'goods_return_note'                       => 'إشعار إرجاع البضائع',
-'grn_number'                              => 'رقم إذن استلام البضائع',
-'return_from_warehouse'                   => 'الإرجاع من المستودع',
-'quantity_returned'                       => 'الكمية المُرجعة',
-'supplier_acknowledgement'                => 'إقرار المورد بالاستلام',
-'supplier_receipt_acknowledgement_text'   => 'أقرّ أنا الموقع أدناه باستلام البضائع المُرجعة الموضحة أعلاه.',
-'received_by'                             => 'المستلم',
-'position'                                => 'الصفة الوظيفية',
-'signature'                               => 'التوقيع',
-'supplier_stamp'                          => 'ختم المورد',
-'goods_receipt_note' => 'إشعار استلام البضائع',
-'receipt_date' => 'تاريخ الاستلام',
-'received_quantity' => 'الكمية المستلمة',
-'delivery_acknowledgement' => 'إقرار التسليم',
-'receiving_acknowledgement' => 'إقرار الاستلام',
-'goods_receipt_acknowledgement_text' => 'أقرّ أنا الموقع أدناه باستلام البضائع الموضحة أعلاه.',
-'stamp' => 'الختم',
-'delivered_by' => 'قام بالتسليم',
-'goods_receipts_report' => 'قائمة إشعارات استلام البضائع',
+    // GOODS RETURNS
+    'goods_return_note'                       => 'إشعار إرجاع البضائع',
+    'grn_number'                              => 'رقم إذن استلام البضائع',
+    'return_from_warehouse'                   => 'الإرجاع من المستودع',
+    'quantity_returned'                       => 'الكمية المُرجعة',
+    'supplier_acknowledgement'                => 'إقرار المورد بالاستلام',
+    'supplier_receipt_acknowledgement_text'   => 'أقرّ أنا الموقع أدناه باستلام البضائع المُرجعة الموضحة أعلاه.',
+    'received_by'                             => 'المستلم',
+    'position'                                => 'الصفة الوظيفية',
+    'signature'                               => 'التوقيع',
+    'supplier_stamp'                          => 'ختم المورد',
+    'goods_receipt_note' => 'إشعار استلام البضائع',
+    'receipt_date' => 'تاريخ الاستلام',
+    'received_quantity' => 'الكمية المستلمة',
+    'delivery_acknowledgement' => 'إقرار التسليم',
+    'receiving_acknowledgement' => 'إقرار الاستلام',
+    'goods_receipt_acknowledgement_text' => 'أقرّ أنا الموقع أدناه باستلام البضائع الموضحة أعلاه.',
+    'stamp' => 'الختم',
+    'delivered_by' => 'قام بالتسليم',
+    'goods_receipts_report' => 'قائمة إشعارات استلام البضائع',
 
-'received_amount' => 'قيمة البضاعة المستلمة',
+    'received_amount' => 'قيمة البضاعة المستلمة',
 
-'cancel_reservation_confirm'       => 'هل أنت متأكد من رغبتك في إلغاء هذا الحجز؟',
-'reservation_cancelled_successfully' => 'تم إلغاء الحجز بنجاح.',
-'reservation_cancellation_failed'   => 'تعذر إلغاء الحجز.',
+    'cancel_reservation_confirm'       => 'هل أنت متأكد من رغبتك في إلغاء هذا الحجز؟',
+    'reservation_cancelled_successfully' => 'تم إلغاء الحجز بنجاح.',
+    'reservation_cancellation_failed'   => 'تعذر إلغاء الحجز.',
 
-'reservation_updated_successfully' => 'تم تحديث الحجز بنجاح.',
-'reservation_update_failed'        => 'تعذر تحديث الحجز.',
-'reservation_deleted_successfully' => 'تم حذف الحجز بنجاح.',
-'reservation_deletion_failed'      => 'تعذر حذف الحجز.',
-'print_goods_return'              => 'طباعة إشعار إرجاع البضائع',
+    'reservation_updated_successfully' => 'تم تحديث الحجز بنجاح.',
+    'reservation_update_failed'        => 'تعذر تحديث الحجز.',
+    'reservation_deleted_successfully' => 'تم حذف الحجز بنجاح.',
+    'reservation_deletion_failed'      => 'تعذر حذف الحجز.',
+    'print_goods_return'              => 'طباعة إشعار إرجاع البضائع',
 
-'please_select_unit_of_measure' => 'يرجى اختيار وحدة قياس.',
-'inventory_unit_not_found'      => 'الصنف المحدد لا توجد له وحدة قياس محددة.',
+    'please_select_unit_of_measure' => 'يرجى اختيار وحدة قياس.',
+    'inventory_unit_not_found'      => 'الصنف المحدد لا توجد له وحدة قياس محددة.',
 
-'select_unit_of_measure' => '-- اختر وحدة قياس --',
+    'select_unit_of_measure' => '-- اختر وحدة قياس --',
 
-'requisition_created_successfully'
+    'requisition_created_successfully'
     => 'تم إنشاء طلب الموارد بنجاح.',
 
-'requisition_creation_failed'
+    'requisition_creation_failed'
     => 'تعذر إنشاء طلب الموارد.',
 
-'requisition_updated_successfully'
+    'requisition_updated_successfully'
     => 'تم تحديث طلب الموارد بنجاح.',
 
-'requisition_update_failed'
+    'requisition_update_failed'
     => 'تعذر تحديث طلب الموارد.',
 
-'requisition_deleted_successfully'
+    'requisition_deleted_successfully'
     => 'تم حذف طلب الموارد بنجاح.',
 
-'requisition_deletion_failed'
+    'requisition_deletion_failed'
     => 'تعذر حذف طلب الموارد.',
 
-'requisition_item_added_successfully'
+    'requisition_item_added_successfully'
     => 'تمت إضافة بند طلب الموارد بنجاح.',
 
-'requisition_item_addition_failed'
+    'requisition_item_addition_failed'
     => 'تعذر إضافة بند طلب الموارد.',
 
-'requisition_item_updated_successfully'
+    'requisition_item_updated_successfully'
     => 'تم تحديث بند طلب الموارد بنجاح.',
 
-'requisition_item_update_failed'
+    'requisition_item_update_failed'
     => 'تعذر تحديث بند طلب الموارد.',
 
-'requisition_item_deleted_successfully'
+    'requisition_item_deleted_successfully'
     => 'تم حذف بند طلب الموارد بنجاح.',
 
-'requisition_item_deletion_failed'
+    'requisition_item_deletion_failed'
     => 'تعذر حذف بند طلب الموارد.',
 
-'resource_requisition_fulfillment_failed'
+    'resource_requisition_fulfillment_failed'
     => 'تعذر تنفيذ طلب الموارد.',
 
     'resource_requisition_item_added_successfully'
     => 'تمت إضافة بند طلب الموارد بنجاح.',
 
-'resource_requisition_item_updated_successfully'
+    'resource_requisition_item_updated_successfully'
     => 'تم تحديث بند طلب الموارد بنجاح.',
 
-'unable_to_update_resource_requisition_item'
+    'unable_to_update_resource_requisition_item'
     => 'تعذر تحديث بند طلب الموارد.',
 
-'resource_requisition_item_deleted_successfully'
+    'resource_requisition_item_deleted_successfully'
     => 'تم حذف بند طلب الموارد بنجاح.',
 
-'unable_to_delete_resource_requisition_item'
+    'unable_to_delete_resource_requisition_item'
     => 'تعذر حذف بند طلب الموارد.',
 
     'please_select_cost_type' => 'يرجى اختيار نوع التكلفة المالية.',
 
-'resource_requisition_updated_successfully'
+    'resource_requisition_updated_successfully'
     => 'تم تحديث طلب الموارد بنجاح.',
 
-'resource_requisition_deleted_successfully'
+    'resource_requisition_deleted_successfully'
     => 'تم حذف طلب الموارد بنجاح.',
 
     'confirm_delete_resource_requisition'
@@ -1852,8 +1850,25 @@ return [
     'financial_cost_type' => 'نوع التكلفة المالية',
 
     'not_available' => 'غير متوفر',
-'database_connection_failed' =>
+    'database_connection_failed' =>
     'النظام غير متاح مؤقتًا. يرجى المحاولة مرة أخرى لاحقًا أو التواصل مع مسؤول النظام.',
-      'username_or_email' => 'أدخل الايميل أو اسم المستخدم',
+    'username_or_email' => 'أدخل الايميل أو اسم المستخدم',
 
+
+    'no_goods_receipts_found' => 'لم يتم العثور على أي إشعارات استلام بضائع.',
+
+    // Advance payment receipts
+    'customer_advance_receipt' => 'إيصال دفعة مقدمة من العميل',
+    'receipt_number' => 'رقم الإيصال',
+    'print_receipt' => 'طباعة الإيصال',
+    'amount_received' => 'المبلغ المستلم',
+    'received_with_thanks' => 'تم الاستلام مع الشكر',
+    'customer_signature' => 'توقيع العميل',
+
+    'project_details' => 'تفاصيل المشروع',
+
+    'amount_in_words' => 'المبلغ كتابةً',
+    'Cash' => 'نقداً',
+    'Bank Transfer' => 'تحويل مصرفي',
+    'Cheque' => 'شيك',
 ];

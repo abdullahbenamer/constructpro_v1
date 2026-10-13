@@ -256,10 +256,9 @@
 
             </div>
 
-            <!-- Target warehouse -->
+            <!-- TARGET WAREHOUSE -->
             <div class="row">
 
-                <!-- TARGET WAREHOUSE -->
                 <div class="col-md-6 mb-3">
 
                     <label class="text-muted">
@@ -272,29 +271,60 @@
                             $data['requisition']->delivery_method === 'WAREHOUSE'
                             && !empty($data['requisition']->target_warehouse_name)
                         ): ?>
-
                             <i class="fas fa-warehouse text-primary"></i>
-
                             <?= htmlspecialchars(
                                 $data['requisition']->target_warehouse_name
                             ) ?>
+                            <br>
+                            <label class="text-muted">
+                                <?= __('storekeeper') ?>:
+                            </label>
 
-                        <?php elseif (
+                            <?php if (!empty($data['requisition']->storekeeper_id)): ?>
+                                <a
+                                    href="<?= URLROOT ?>/users/details/<?= (int) $data['requisition']->storekeeper_id ?>"
+                                    class="text-decoration-none">
+                                    <?= htmlspecialchars(
+                                        $data['requisition']->storekeeper_name ?? '-',
+                                        ENT_QUOTES,
+                                        'UTF-8'
+                                    ) ?>
+                                </a>
+                                <br>
+                                <label class="text-muted">
+                                        <?= __('mobile') ?>:
+                                    </label>
+                                    <?php if (!empty($data['requisition']->storekeeper_mobile)): ?>
+
+                                        <?= htmlspecialchars(
+                                            $data['requisition']->storekeeper_mobile,
+                                            ENT_QUOTES,
+                                            'UTF-8'
+                                        ) ?>
+                                
+                            <?php else: ?>
+                                -
+                            <?php endif; ?>
+                        <?php else: ?>
+                            -
+                        <?php endif; ?>
+                   
+                   <?php elseif (
                             $data['requisition']->delivery_method === 'DIRECT_TO_PROJECT_SITE'
                         ): ?>
 
-                            <span class="text-info">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <?= __('project_site') ?>
-                            </span>
+                        <span class="text-info">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <?= __('project_site') ?>
+                        </span>
 
-                        <?php else: ?>
+                    <?php else: ?>
 
-                            <span class="text-muted">
-                                -
-                            </span>
+                        <span class="text-muted">
+                            -
+                        </span>
 
-                        <?php endif; ?>
+                    <?php endif; ?>
 
                     </div>
 
@@ -613,17 +643,17 @@
 
                                     </td>
 
-                                   <td>
-    <?php
-    $isArabic = (Language::direction() === 'rtl');
+                                    <td>
+                                        <?php
+                                        $isArabic = (Language::direction() === 'rtl');
 
-    $uom = $isArabic
-        ? ($item->unit_name_a ?? $item->uom ?? '-')
-        : ($item->unit_name ?? $item->uom ?? '-');
-    ?>
+                                        $uom = $isArabic
+                                            ? ($item->unit_name_a ?? $item->uom ?? '-')
+                                            : ($item->unit_name ?? $item->uom ?? '-');
+                                        ?>
 
-    <?= htmlspecialchars($uom, ENT_QUOTES, 'UTF-8') ?>
-</td>
+                                        <?= htmlspecialchars($uom, ENT_QUOTES, 'UTF-8') ?>
+                                    </td>
                                     <td><?= $item->remarks ?></td>
 
                                     <td>
