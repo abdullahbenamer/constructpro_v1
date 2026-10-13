@@ -67,237 +67,149 @@ function amountInWords(float $amount): string
 
     return $words . ' Only';
 }
+
+// Amount in Arabic words
+function amountInWordsArabic(float $amount): string
+{
+    $ones = [
+        0 => 'صفر',
+        1 => 'واحد',
+        2 => 'اثنان',
+        3 => 'ثلاثة',
+        4 => 'أربعة',
+        5 => 'خمسة',
+        6 => 'ستة',
+        7 => 'سبعة',
+        8 => 'ثمانية',
+        9 => 'تسعة',
+        10 => 'عشرة',
+        11 => 'أحد عشر',
+        12 => 'اثنا عشر',
+        13 => 'ثلاثة عشر',
+        14 => 'أربعة عشر',
+        15 => 'خمسة عشر',
+        16 => 'ستة عشر',
+        17 => 'سبعة عشر',
+        18 => 'ثمانية عشر',
+        19 => 'تسعة عشر'
+    ];
+
+    $tens = [
+        2 => 'عشرون',
+        3 => 'ثلاثون',
+        4 => 'أربعون',
+        5 => 'خمسون',
+        6 => 'ستون',
+        7 => 'سبعون',
+        8 => 'ثمانون',
+        9 => 'تسعون'
+    ];
+
+    $convert = function (int $n) use (&$convert, $ones, $tens): string {
+        if ($n < 20) {
+            return $ones[$n];
+        }
+
+        if ($n < 100) {
+            $unit = $n % 10;
+            return $unit
+                ? $ones[$unit] . ' و' . $tens[intdiv($n, 10)]
+                : $tens[intdiv($n, 10)];
+        }
+
+        if ($n < 1000) {
+            $hundreds = [
+                1 => 'مائة',
+                2 => 'مائتان',
+                3 => 'ثلاثمائة',
+                4 => 'أربعمائة',
+                5 => 'خمسمائة',
+                6 => 'ستمائة',
+                7 => 'سبعمائة',
+                8 => 'ثمانمائة',
+                9 => 'تسعمائة'
+            ];
+
+            $h = intdiv($n, 100);
+            $r = $n % 100;
+
+            return $hundreds[$h]
+                . ($r ? ' و' . $convert($r) : '');
+        }
+
+        foreach ([
+            1000000000 => ['مليار', 'ملياران', 'مليارات'],
+            1000000    => ['مليون', 'مليونان', 'ملايين'],
+            1000       => ['ألف', 'ألفان', 'آلاف']
+        ] as $value => $labels) {
+            if ($n >= $value) {
+                $q = intdiv($n, $value);
+                $r = $n % $value;
+
+                if ($q === 1) {
+                    $part = $labels[0];
+                } elseif ($q === 2) {
+                    $part = $labels[1];
+                } elseif ($q >= 3 && $q <= 10) {
+                    $part = $convert($q) . ' ' . $labels[2];
+                } else {
+                    $part = $convert($q) . ' ' . $labels[0];
+                }
+
+                return $part . ($r ? ' و' . $convert($r) : '');
+            }
+        }
+
+        return '';
+    };
+
+    $amount = round(abs($amount), 2);
+    $whole = (int) floor($amount);
+    $fraction = (int) round(($amount - $whole) * 100);
+
+    $words = $convert($whole);
+
+    if ($fraction > 0) {
+        $words .= ' و' . $convert($fraction) . ' جزءًا من مائة';
+    }
+
+    return ($amount < 0 ? 'سالب ' : '') . $words . ' فقط لا غير';
+}
+
 ?>
+
 <?php
-$isArabic = ($_SESSION['lang'] ?? 'en') === 'ar';
-$direction = $isArabic ? 'rtl' : 'ltr';
+// Use the existing ConstructPro language mechanism
+$language  = Language::get();
+$direction = Language::direction();
+$isArabic  = ($direction === 'rtl');
 ?>
-<div class="container my-3">
 
-    <!-- SCREEN-ONLY ACTIONS -->
-    <div class="d-flex justify-content-between mb-3 no-print">
-        <a
-            href="<?= URLROOT ?>/projectadvance/list/<?= (int) $project->id ?>"
-            class="btn btn-secondary">
-            <?= __('back') ?>
-        </a>
-
-        <button
-            type="button"
-            class="btn btn-primary"
-            onclick="window.print()">
-            <i class="fas fa-print"></i>
-            <?= __('print_receipt') ?>
-        </button>
-    </div>
-    <!-- ===================== COMPANY HEADER ================== -->
-<div
-    class="company-header"
-    dir="<?= $direction ?>"
-    lang="<?= $isArabic ? 'ar' : 'en' ?>">
-    <?php if (!empty($settings->logo)): ?>
-        <img width="70"
-            src="<?= URLROOT ?>/<?= htmlspecialchars($settings->logo, ENT_QUOTES, 'UTF-8') ?>"
-            class="company-logo"
-            alt="<?= htmlspecialchars($settings->company_name ?? '', ENT_QUOTES, 'UTF-8') ?>">
-    <?php endif; ?>
-    <div class="company-info">
-        <strong class="company-name">
-            <?= htmlspecialchars($settings->company_name ?? '', ENT_QUOTES, 'UTF-8') ?>
-        </strong>
-        <?php if (!empty($settings->address)): ?>
-            <div class="company-contact">
-                <i class="fas fa-location-dot"></i>
-                <?= htmlspecialchars($settings->address, ENT_QUOTES, 'UTF-8') ?>
-            </div>
-        <?php endif; ?>
-        <?php if (!empty($settings->contacts)): ?>
-            <div class="company-contact" dir="auto">
-                <i class="fas fa-mobile"></i>
-                <span><?= htmlspecialchars($settings->contacts, ENT_QUOTES, 'UTF-8') ?></span>
-            </div>
-        <?php endif; ?>
-    </div>
-</div>
-    <!-- RECEIPT -->
-  <div
-    class="receipt mx-auto"
-    dir="<?= $direction ?>"
-    lang="<?= $isArabic ? 'ar' : 'en' ?>">
-
-        <div class="text-center receipt-heading">
-            <h4><?= __('customer_advance_receipt') ?></h4>
-        </div>
-
-        <!-- RECEIPT NUMBER AND DATE -->
-        <div class="row receipt-meta">
-            <div class="col-6">
-                <strong><?= __('receipt_number') ?>:</strong>
-                <?= htmlspecialchars($receiptNumber, ENT_QUOTES, 'UTF-8') ?>
-            </div>
-
-            <div class="col-6 text-end">
-                <strong><?= __('date') ?>:</strong>
-                <?= htmlspecialchars($receiptDate, ENT_QUOTES, 'UTF-8') ?>
-            </div>
-        </div>
-
-        <!-- PROJECT INFORMATION -->
-        <div class="project-box">
-            <h5><?= __('project_details') ?></h5>
-
-            <div class="project-code">
-                <span><?= __('project_code') ?></span>
-                <strong>
-                    <?= htmlspecialchars(
-                        $project->project_code ?? '-',
-                        ENT_QUOTES,
-                        'UTF-8'
-                    ) ?>
-                </strong>
-            </div>
-
-            <div class="row project-fields">
-                <div class="col-6">
-                    <strong><?= __('project') ?>:</strong>
-                    <?= htmlspecialchars(
-                        $project->title ?? '-',
-                        ENT_QUOTES,
-                        'UTF-8'
-                    ) ?>
-                </div>
-
-                <div class="col-6">
-                    <strong><?= __('customer') ?>:</strong>
-                    <?= htmlspecialchars(
-                        $project->customer_name ?? '-',
-                        ENT_QUOTES,
-                        'UTF-8'
-                    ) ?>
-                </div>
-
-                <div class="col-6">
-                    <strong><?= __('contract_number') ?>:</strong>
-                    <?= htmlspecialchars(
-                        $project->contract_number ?? '-',
-                        ENT_QUOTES,
-                        'UTF-8'
-                    ) ?>
-                </div>
-
-                <div class="col-6">
-                    <strong><?= __('site_location') ?>:</strong>
-                    <?= htmlspecialchars(
-                        $project->site_location ?? '-',
-                        ENT_QUOTES,
-                        'UTF-8'
-                    ) ?>
-                </div>
-            </div>
-        </div>
-
-        <!-- PAYMENT INFORMATION -->
-        <div class="payment-details">
-            <p>
-                <strong><?= __('payment_method') ?>:</strong>
-                <?= htmlspecialchars(
-                    __($advance->payment_method ?? '-'),
-                    ENT_QUOTES,
-                    'UTF-8'
-                ) ?>
-            </p>
-
-            <p>
-                <strong><?= __('reference') ?>:</strong>
-                <?= htmlspecialchars(
-                    $advance->reference ?? '-',
-                    ENT_QUOTES,
-                    'UTF-8'
-                ) ?>
-            </p>
-        </div>
-
-        <!-- AMOUNT -->
-        <div class="amount-box">
-            <div class="amount-label">
-                <?= __('amount_received') ?>
-            </div>
-
-            <div class="amount-number">
-                <?= $amount ?>
-            </div>
-
-            <div class="amount-words">
-                <strong><?= __('amount_in_words') ?>:</strong>
-                <span>
-                    <?= htmlspecialchars(
-                        amountInWords((float) $advance->amount),
-                        ENT_QUOTES,
-                        'UTF-8'
-                    ) ?>
-                </span>
-            </div>
-        </div>
-
-        <!-- OPTIONAL NOTES -->
-        <?php if (!empty($advance->notes)): ?>
-            <div class="receipt-notes">
-                <strong><?= __('notes') ?>:</strong>
-                <?= nl2br(htmlspecialchars(
-                    $advance->notes,
-                    ENT_QUOTES,
-                    'UTF-8'
-                )) ?>
-            </div>
-        <?php endif; ?>
-
-
-<!-- RECEIPT ACKNOWLEDGEMENT -->
-<div class="receipt-acknowledgement">
-
-    <p class="acknowledgement-title">
-        <?= __('receipt_acknowledgement') ?>
-    </p>
-
-    <p class="acknowledgement-text">
-        <?= __('advance_received_confirmation') ?>
-    </p>
-
-    <div class="signature-grid">
-
-        <div class="signature-item">
-            <div class="signature-space"></div>
-            <strong><?= __('received_by') ?></strong>
-            <div><?= __('name_and_signature') ?></div>
-        </div>
-
-        <div class="signature-item">
-            <div class="signature-space"></div>
-            <strong><?= __('authorized_signature') ?></strong>
-            <div><?= __('company_representative') ?></div>
-        </div>
-
-        <div class="signature-item stamp-item">
-            <div class="stamp-space">
-                <?= __('company_stamp') ?>
-            </div>
-        </div>
-
-    </div>
-
-</div>
-
-
-    </div>
-</div>
-
-<style>
-
-
+<html lang="<?= Language::get() ?>"
+      dir="<?= Language::direction() ?>">
+<head>
+    <style>
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
+ * {
+        font-family: 'Tajawal', 'Tahoma', 'Arial', sans-serif;
+    }
 
-* {
-    font-family: 'Tajawal', 'Tahoma', 'Arial', sans-serif;
+    body {
+        direction: inherit;
+    }
+
+/* Adapt to RTL and LTR automatically. */
+    .text-start {
+    text-align: start;
+}
+
+.text-end {
+    text-align: end;
+}
+
+.content {
+    margin-inline-start: 1rem;
+    padding-inline-end: 1rem;
 }
 
 .receipt {
@@ -416,6 +328,10 @@ $direction = $isArabic ? 'rtl' : 'ltr';
 }
 
 @media print {
+    .no-print {
+        display: none !important;
+        visibility: hidden !important;
+    }
 
     /* Hide shared layout elements */
     body > header,
@@ -476,14 +392,29 @@ $direction = $isArabic ? 'rtl' : 'ltr';
         page-break-inside: avoid;
     }
 }
-/* ----------For stand alone Receipt---------- */
 
 /* Standalone receipt layout */
+
 .receipt {
-    font-family: Arial, sans-serif;
-    background: #fff;
-    color: #000;
+    font-family: 'Tajawal', 'Tahoma', 'Arial', sans-serif;
+    direction: inherit;
+    text-align: start;
 }
+
+.receipt[dir="rtl"] {
+    direction: rtl;
+    text-align: right;
+}
+
+.receipt[dir="ltr"] {
+    direction: ltr;
+    text-align: left;
+}
+
+.company-info {
+    font-family: 'Tajawal', 'Tahoma', 'Arial', sans-serif;
+}
+
 
 .receipt .row {
     display: flex;
@@ -658,13 +589,11 @@ $direction = $isArabic ? 'rtl' : 'ltr';
 .receipt[dir="rtl"] {
     direction: rtl;
     text-align: right;
-    font-family: 'Tajawal', Arial, sans-serif;
 }
 
 .receipt[dir="ltr"] {
     direction: ltr;
     text-align: left;
-    font-family: Arial, sans-serif;
 }
 
 .receipt .receipt-heading {
@@ -703,9 +632,19 @@ $direction = $isArabic ? 'rtl' : 'ltr';
     unicode-bidi: plaintext;
 }
 
+/* Amount number: preserve digit order, adapt alignment */
 .receipt .amount-number {
     direction: ltr;
-    text-align: start;
+    unicode-bidi: isolate;
+    text-align: left;
+}
+
+.receipt[dir="rtl"] .amount-number {
+    text-align: right;
+}
+
+.receipt[dir="ltr"] .amount-number {
+    text-align: left;
 }
 
 .receipt .amount-words {
@@ -760,3 +699,233 @@ $direction = $isArabic ? 'rtl' : 'ltr';
     }
 }
 </style>
+</head>
+<body>
+<div class="container my-3">
+
+    <!-- SCREEN-ONLY ACTIONS -->
+<div class="no-print" style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+
+    <a
+        href="<?= URLROOT ?>/projectadvance/list/<?= (int) $project->id ?>"
+        style="display:inline-block; padding:10px 20px; background:#5c636a; color:#fff; border:1px solid #565e64; border-radius:6px; font-weight:bold; text-decoration:none;">
+        <?= __('back') ?>
+    </a>
+
+    <button
+        type="button"
+        onclick="window.print()"
+        style="padding:10px 20px; background:#0d6efd; color:#fff; border:1px solid #0d6efd; border-radius:6px; font-weight:bold; cursor:pointer;">
+        <?= __('print_receipt') ?>
+    </button>
+
+</div>
+    <!-- ===================== COMPANY HEADER ================== -->
+<div
+    class="company-header"
+    dir="<?= $direction ?>"
+    lang="<?= $isArabic ? 'ar' : 'en' ?>">
+    <?php if (!empty($settings->logo)): ?>
+        <img width="70"
+            src="<?= URLROOT ?>/<?= htmlspecialchars($settings->logo, ENT_QUOTES, 'UTF-8') ?>"
+            class="company-logo"
+            alt="<?= htmlspecialchars($settings->company_name ?? '', ENT_QUOTES, 'UTF-8') ?>">
+    <?php endif; ?>
+    <div class="company-info">
+        <strong class="company-name">
+            <?= htmlspecialchars($settings->company_name ?? '', ENT_QUOTES, 'UTF-8') ?>
+        </strong>
+        <?php if (!empty($settings->address)): ?>
+            <div class="company-contact">
+                <i class="fas fa-location-dot"></i>
+                <?= htmlspecialchars($settings->address, ENT_QUOTES, 'UTF-8') ?>
+            </div>
+        <?php endif; ?>
+        <?php if (!empty($settings->contacts)): ?>
+            <div class="company-contact" dir="auto">
+                <i class="fas fa-mobile"></i>
+                <span><?= htmlspecialchars($settings->contacts, ENT_QUOTES, 'UTF-8') ?></span>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
+    <!-- RECEIPT -->
+  <div
+    class="receipt mx-auto"
+    dir="<?= $direction ?>"
+    lang="<?= $isArabic ? 'ar' : 'en' ?>">
+
+        <div class="text-center receipt-heading">
+            <h4><?= __('customer_advance_receipt') ?></h4>
+        </div>
+
+        <!-- RECEIPT NUMBER AND DATE -->
+        <div class="row receipt-meta">
+            <div class="col-6">
+                <strong><?= __('receipt_number') ?>:</strong>
+                <?= htmlspecialchars($receiptNumber, ENT_QUOTES, 'UTF-8') ?>
+            </div>
+
+          <div class="col-6 text-end">
+    <strong><?= __('date') ?>:</strong>
+    <span dir="ltr" style="display: inline-block; unicode-bidi: isolate;">
+        <?= htmlspecialchars($receiptDate, ENT_QUOTES, 'UTF-8') ?>
+    </span>
+</div>
+        </div>
+
+        <!-- PROJECT INFORMATION -->
+        <div class="project-box">
+            <h5><?= __('project_details') ?></h5>
+
+            <div class="project-code">
+                <span><?= __('project_code') ?></span>
+                <strong>
+                    <?= htmlspecialchars(
+                        $project->project_code ?? '-',
+                        ENT_QUOTES,
+                        'UTF-8'
+                    ) ?>
+                </strong>
+            </div>
+
+            <div class="row project-fields">
+                <div class="col-6">
+                    <strong><?= __('project') ?>:</strong>
+                    <?= htmlspecialchars(
+                        $project->title ?? '-',
+                        ENT_QUOTES,
+                        'UTF-8'
+                    ) ?>
+                </div>
+
+                <div class="col-6">
+                    <strong><?= __('customer') ?>:</strong>
+                    <?= htmlspecialchars(
+                        $project->customer_name ?? '-',
+                        ENT_QUOTES,
+                        'UTF-8'
+                    ) ?>
+                </div>
+
+                <div class="col-6">
+                    <strong><?= __('contract_number') ?>:</strong>
+                    <?= htmlspecialchars(
+                        $project->contract_number ?? '-',
+                        ENT_QUOTES,
+                        'UTF-8'
+                    ) ?>
+                </div>
+
+                <div class="col-6">
+                    <strong><?= __('site_location') ?>:</strong>
+                    <?= htmlspecialchars(
+                        $project->site_location ?? '-',
+                        ENT_QUOTES,
+                        'UTF-8'
+                    ) ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAYMENT INFORMATION -->
+        <div class="payment-details">
+            <p>
+                <strong><?= __('payment_method') ?>:</strong>
+                <?= htmlspecialchars(
+                    __($advance->payment_method ?? '-'),
+                    ENT_QUOTES,
+                    'UTF-8'
+                ) ?>
+            </p>
+
+            <p>
+                <strong><?= __('reference') ?>:</strong>
+                <?= htmlspecialchars(
+                    $advance->reference ?? '-',
+                    ENT_QUOTES,
+                    'UTF-8'
+                ) ?>
+            </p>
+        </div>
+
+        <!-- AMOUNT -->
+        <div class="amount-box">
+            <div class="amount-label">
+                <?= __('amount_received') ?>
+            </div>
+
+            <div class="amount-number">
+                <?= $amount ?>
+            </div>
+
+            <div class="amount-words">
+                <strong><?= __('amount_in_words') ?>:</strong>
+        
+<span dir="auto" class="amount-words-value">
+    <?= htmlspecialchars(
+        $isArabic
+            ? amountInWordsArabic((float) $advance->amount)
+            : amountInWords((float) $advance->amount),
+        ENT_QUOTES,
+        'UTF-8'
+    ) ?>
+</span>
+
+            </div>
+        </div>
+
+        <!-- OPTIONAL NOTES -->
+        <?php if (!empty($advance->notes)): ?>
+            <div class="receipt-notes">
+                <strong><?= __('notes') ?>:</strong>
+                <?= nl2br(htmlspecialchars(
+                    $advance->notes,
+                    ENT_QUOTES,
+                    'UTF-8'
+                )) ?>
+            </div>
+        <?php endif; ?>
+
+
+<!-- RECEIPT ACKNOWLEDGEMENT -->
+<div class="receipt-acknowledgement">
+
+    <p class="acknowledgement-title">
+        <?= __('receipt_acknowledgement') ?>
+    </p>
+
+    <p class="acknowledgement-text">
+        <?= __('advance_received_confirmation') ?>
+    </p>
+
+    <div class="signature-grid">
+
+        <div class="signature-item">
+            <div class="signature-space"></div>
+            <strong><?= __('received_by') ?></strong>
+            <div><?= __('name_and_signature') ?></div>
+        </div>
+
+        <div class="signature-item">
+            <div class="signature-space"></div>
+            <strong><?= __('authorized_signature') ?></strong>
+            <div><?= __('company_representative') ?></div>
+        </div>
+
+        <div class="signature-item stamp-item">
+            <div class="stamp-space">
+                <?= __('company_stamp') ?>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+    </div>
+</div>
+
+        </body>
+</html>
