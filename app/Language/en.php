@@ -1870,4 +1870,14 @@ return [
 'Cash' => 'Cash',
 'Bank Transfer' => 'Bank Transfer',
 'Cheque' => 'Cheque',
-    ];
+    
+'receipt_acknowledgement' => 'RECEIPT ACKNOWLEDGEMENT',
+'advance_received_confirmation' => 'The advance payment stated above has been received.',
+'name_and_signature' => 'Name & Signature',
+'authorized_signature' => 'Authorized Signature',
+'company_representative' => 'Company Representative',
+'company_stamp' => 'COMPANY STAMP',
+
+
+
+];

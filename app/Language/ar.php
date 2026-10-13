@@ -1871,4 +1871,15 @@ return [
     'Cash' => 'نقداً',
     'Bank Transfer' => 'تحويل مصرفي',
     'Cheque' => 'شيك',
+
+
+    'receipt_acknowledgement' => 'إقرار استلام',
+'advance_received_confirmation' => 'تم استلام الدفعة المقدمة الموضحة أعلاه.',
+'name_and_signature' => 'الاسم والتوقيع',
+'authorized_signature' => 'التوقيع المعتمد',
+'company_representative' => 'ممثل الشركة',
+'company_stamp' => 'ختم الشركة',
+
+
+
 ];

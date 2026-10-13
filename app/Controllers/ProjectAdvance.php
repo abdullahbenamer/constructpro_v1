@@ -143,11 +143,16 @@ public function receipt($project_id, $advance_id)
         . '-'
         . str_pad((string) $advance->id, 6, '0', STR_PAD_LEFT);
 
-    $this->view('project-costs/advance_receipt', [
-        'project'       => $project,
-        'advance'       => $advance,
+   $this->view(
+    'project-costs/advance_receipt',
+    [
+        'project' => $project,
+        'advance' => $advance,
         'receiptNumber' => $receiptNumber
-    ]);
+    ],
+    false // STANDALONE RECEIPT VIEW without header and footer
+     );
+
 }
 
 

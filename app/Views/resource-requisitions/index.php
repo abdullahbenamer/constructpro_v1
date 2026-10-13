@@ -123,27 +123,15 @@
                                 <td>
 
                                     <?= htmlspecialchars($req->project_name ?? '-') ?>
-
                                 </td>
-
                                 <td>
-
-                                    <?= date('d M Y', strtotime($req->request_date)) ?>
-
+                                    <?= htmlspecialchars($req->request_date ?? '-') ?>
                                 </td>
-
                                 <td>
-
-                                    <?= !empty($req->required_date)
-                                        ? date('d M Y', strtotime($req->required_date))
-                                        : '-' ?>
-
+                                    <?= htmlspecialchars($req->required_date ?? '-') ?>
                                 </td>
-
                                 <td>
-
                                     <?php
-
                                     switch (strtoupper($req->priority)) {
 
                                         case 'LOW':
@@ -288,9 +276,9 @@
 
                                         </a>
 
-<a href="<?= URLROOT ?>/resourcerequisitions/delete/<?= $req->id ?>"
+                                        <a href="<?= URLROOT ?>/resourcerequisitions/delete/<?= $req->id ?>"
                                             class="btn btn-sm btn-danger"
- onclick="return confirm('<?= htmlspecialchars(__('confirm_delete_resource_requisition'), ENT_QUOTES, 'UTF-8') ?>');">
+                                            onclick="return confirm('<?= htmlspecialchars(__('confirm_delete_resource_requisition'), ENT_QUOTES, 'UTF-8') ?>');">
 
                                             <!-- <i class="fas fa-trash"></i> -->
                                             <?= __('delete') ?>

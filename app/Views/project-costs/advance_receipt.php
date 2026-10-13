@@ -68,7 +68,10 @@ function amountInWords(float $amount): string
     return $words . ' Only';
 }
 ?>
-
+<?php
+$isArabic = ($_SESSION['lang'] ?? 'en') === 'ar';
+$direction = $isArabic ? 'rtl' : 'ltr';
+?>
 <div class="container my-3">
 
     <!-- SCREEN-ONLY ACTIONS -->
@@ -87,9 +90,40 @@ function amountInWords(float $amount): string
             <?= __('print_receipt') ?>
         </button>
     </div>
-
+    <!-- ===================== COMPANY HEADER ================== -->
+<div
+    class="company-header"
+    dir="<?= $direction ?>"
+    lang="<?= $isArabic ? 'ar' : 'en' ?>">
+    <?php if (!empty($settings->logo)): ?>
+        <img width="70"
+            src="<?= URLROOT ?>/<?= htmlspecialchars($settings->logo, ENT_QUOTES, 'UTF-8') ?>"
+            class="company-logo"
+            alt="<?= htmlspecialchars($settings->company_name ?? '', ENT_QUOTES, 'UTF-8') ?>">
+    <?php endif; ?>
+    <div class="company-info">
+        <strong class="company-name">
+            <?= htmlspecialchars($settings->company_name ?? '', ENT_QUOTES, 'UTF-8') ?>
+        </strong>
+        <?php if (!empty($settings->address)): ?>
+            <div class="company-contact">
+                <i class="fas fa-location-dot"></i>
+                <?= htmlspecialchars($settings->address, ENT_QUOTES, 'UTF-8') ?>
+            </div>
+        <?php endif; ?>
+        <?php if (!empty($settings->contacts)): ?>
+            <div class="company-contact" dir="auto">
+                <i class="fas fa-mobile"></i>
+                <span><?= htmlspecialchars($settings->contacts, ENT_QUOTES, 'UTF-8') ?></span>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
     <!-- RECEIPT -->
-    <div class="receipt mx-auto">
+  <div
+    class="receipt mx-auto"
+    dir="<?= $direction ?>"
+    lang="<?= $isArabic ? 'ar' : 'en' ?>">
 
         <div class="text-center receipt-heading">
             <h4><?= __('customer_advance_receipt') ?></h4>
@@ -217,10 +251,55 @@ function amountInWords(float $amount): string
             </div>
         <?php endif; ?>
 
+
+<!-- RECEIPT ACKNOWLEDGEMENT -->
+<div class="receipt-acknowledgement">
+
+    <p class="acknowledgement-title">
+        <?= __('receipt_acknowledgement') ?>
+    </p>
+
+    <p class="acknowledgement-text">
+        <?= __('advance_received_confirmation') ?>
+    </p>
+
+    <div class="signature-grid">
+
+        <div class="signature-item">
+            <div class="signature-space"></div>
+            <strong><?= __('received_by') ?></strong>
+            <div><?= __('name_and_signature') ?></div>
+        </div>
+
+        <div class="signature-item">
+            <div class="signature-space"></div>
+            <strong><?= __('authorized_signature') ?></strong>
+            <div><?= __('company_representative') ?></div>
+        </div>
+
+        <div class="signature-item stamp-item">
+            <div class="stamp-space">
+                <?= __('company_stamp') ?>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
     </div>
 </div>
 
 <style>
+
+
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
+
+* {
+    font-family: 'Tajawal', 'Tahoma', 'Arial', sans-serif;
+}
+
 .receipt {
     box-sizing: border-box;
     width: 100%;
@@ -337,29 +416,42 @@ function amountInWords(float $amount): string
 }
 
 @media print {
+
+    /* Hide shared layout elements */
+    body > header,
+    body > footer,
+    header,
+    footer,
+    nav,
+    .navbar,
+    .sidebar,
+    .footer,
+    .main-footer,
+    #footer,
+    .no-print {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    /* Reset the printed page */
     html,
     body {
         margin: 0 !important;
         padding: 0 !important;
         background: #fff !important;
         color: #000 !important;
-    }  
+        min-height: 0 !important;
+        height: auto !important;
+    }
 
-    body {
+    /* Hide the shared layout footer and wrappers
+       when they are outside the receipt */
+    body * {
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
 
-    .no-print,
-    header,
-    footer,
-    nav,
-    .sidebar {
-        display: none !important;
-    }
-
-    .container,
-    .receipt {
+    .container {
         width: 100% !important;
         max-width: none !important;
         margin: 0 !important;
@@ -367,29 +459,304 @@ function amountInWords(float $amount): string
     }
 
     .receipt {
+        display: block !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
         border: none !important;
         border-radius: 0 !important;
         font-size: 11pt;
     }
 
-    .project-box {
-        break-inside: avoid;
-    }
-
-    .amount-box {
-        break-inside: avoid;
-    }
-
+    .project-box,
+    .amount-box,
     .receipt-notes {
         break-inside: avoid;
+        page-break-inside: avoid;
+    }
+}
+/* ----------For stand alone Receipt---------- */
+
+/* Standalone receipt layout */
+.receipt {
+    font-family: Arial, sans-serif;
+    background: #fff;
+    color: #000;
+}
+
+.receipt .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -6px;
+    margin-right: -6px;
+}
+
+.receipt .col-6,
+.receipt .col-md-6 {
+    box-sizing: border-box;
+    width: 50%;
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-bottom: 6px;
+}
+
+.receipt .text-center {
+    text-align: center;
+}
+
+.receipt .text-end {
+    text-align: right;
+}
+
+.receipt .text-muted {
+    color: #666;
+}
+
+.receipt-acknowledgement {
+    margin-top: 18px;
+    padding-top: 10px;
+    border-top: 1px solid #bbb;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+.acknowledgement-title {
+    margin: 0 0 5px;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.acknowledgement-text {
+    margin: 0 0 12px;
+    font-size: 11px;
+    text-align: center;
+}
+
+.signature-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.signature-item {
+    box-sizing: border-box;
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+    font-size: 10px;
+}
+
+.signature-item strong {
+    display: block;
+    margin-top: 4px;
+    font-size: 11px;
+}
+
+.signature-space {
+    height: 35px;
+    border-bottom: 1px solid #333;
+}
+
+.stamp-space {
+    height: 65px;
+    border: 1px dashed #888;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #666;
+}
+
+@media print {
+    .receipt {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        font-size: 10pt;
     }
 
-    footer,
-    .footer,
-    .main-footer,
-    #footer {
+    .receipt-acknowledgement,
+    .signature-grid,
+    .project-box,
+    .amount-box {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    .no-print {
         display: none !important;
     }
+}
 
+/* =========================================
+   COMPANY HEADER — RTL / LTR
+========================================= */
+
+.company-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 auto 15px;
+    padding: 10px 0;
+    max-width: 800px;
+    border-bottom: 1px solid #ccc;
+    text-align: start;
+}
+
+.company-header[dir="rtl"] {
+    flex-direction: row;
+    text-align: right;
+}
+
+.company-header[dir="ltr"] {
+    flex-direction: row;
+    text-align: left;
+}
+
+.company-logo {
+    width: auto;
+    height: auto;
+    max-width: 110px;
+    max-height: 75px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.company-info {
+    min-width: 0;
+    flex: 1;
+    font-family: 'Tajawal', Arial, sans-serif;
+    overflow-wrap: anywhere;
+}
+
+.company-name {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+.company-contact {
+    margin-top: 3px;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.company-contact i {
+    margin-inline-end: 4px;
+}
+
+/* =========================================
+   RECEIPT — RTL / LTR
+========================================= */
+
+.receipt[dir="rtl"] {
+    direction: rtl;
+    text-align: right;
+    font-family: 'Tajawal', Arial, sans-serif;
+}
+
+.receipt[dir="ltr"] {
+    direction: ltr;
+    text-align: left;
+    font-family: Arial, sans-serif;
+}
+
+.receipt .receipt-heading {
+    text-align: center;
+}
+
+.receipt[dir="rtl"] .text-end {
+    text-align: left !important;
+}
+
+.receipt[dir="ltr"] .text-end {
+    text-align: right !important;
+}
+
+.receipt[dir="rtl"] .project-code {
+    direction: rtl;
+}
+
+.receipt[dir="ltr"] .project-code {
+    direction: ltr;
+}
+
+.receipt[dir="rtl"] .project-code strong {
+    text-align: left;
+}
+
+.receipt[dir="ltr"] .project-code strong {
+    text-align: right;
+}
+
+/* Keep codes, references, dates and numbers readable */
+.receipt .project-code strong,
+.receipt .amount-number,
+.receipt-meta,
+.receipt .payment-details {
+    unicode-bidi: plaintext;
+}
+
+.receipt .amount-number {
+    direction: ltr;
+    text-align: start;
+}
+
+.receipt .amount-words {
+    overflow-wrap: anywhere;
+}
+
+.receipt .amount-words span {
+    unicode-bidi: plaintext;
+}
+
+/* Signatures and stamp */
+.receipt[dir="rtl"] .signature-grid {
+    direction: rtl;
+}
+
+.receipt[dir="ltr"] .signature-grid {
+    direction: ltr;
+}
+
+.signature-item {
+    overflow-wrap: anywhere;
+}
+
+/* =========================================
+   PRINT
+========================================= */
+
+@media print {
+    .company-header {
+        max-width: none;
+        margin-top: 0 !important;
+        margin-bottom: 10px;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .company-logo {
+        max-height: 65px;
+    }
+
+    .receipt {
+        box-sizing: border-box;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+    }
+
+    .company-header,
+    .receipt {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
 }
 </style>
