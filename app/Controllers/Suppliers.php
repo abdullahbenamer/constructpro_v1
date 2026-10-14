@@ -13,50 +13,90 @@ class Suppliers extends Controller
         $this->view('suppliers/index', $data);
     }
 
+
     public function create()
     {
         AuthHelper::can('suppliers.create');
 
         $model = $this->model('Supplier');
 
-        // HANDLE FORM
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
             $data = [
-
-                'company_name'   => trim($_POST['company_name']),
-                'contact_person' => trim($_POST['contact_person']),
-                'phone'          => trim($_POST['phone']),
-                'email'          => trim($_POST['email']),
-                'address'        => trim($_POST['address']),
-                'notes'          => trim($_POST['notes'])
-
+                'company_name'   => trim($_POST['company_name'] ?? ''),
+                'contact_person' => trim($_POST['contact_person'] ?? ''),
+                'phone'          => trim($_POST['phone'] ?? ''),
+                'email'          => strtolower(trim($_POST['email'] ?? '')),
+                'address'        => trim($_POST['address'] ?? ''),
+                'notes'          => trim($_POST['notes'] ?? '')
             ];
 
-            // =========================
-            // VALIDATION
-            // =========================
-
-            if (empty($data['company_name'])) {
+            // Required fields
+            $hasError = false;
+            if ($data['company_name'] === '') {
                 FlashHelper::error(__('company_name_required'));
+                $hasError = true;
+            } elseif ($data['contact_person'] === '') {
+                FlashHelper::error(__('contact_person_required'));
+                $hasError = true;
+            } elseif ($data['phone'] === '') {
+                FlashHelper::error(__('phone_required'));
+                $hasError = true;
+            } elseif (
+                $data['email'] !== '' &&
+                !filter_var($data['email'], FILTER_VALIDATE_EMAIL)
+            ) {
+                FlashHelper::error(__('email_invalid'));
+                $hasError = true;
+            } elseif (
+                $model->existsDuplicate('company_name', $data['company_name'])
+            ) {
+                FlashHelper::error(__('supplier_company_name_duplicate'));
+                $hasError = true;
+            } elseif (
+                $model->existsDuplicate('phone', $data['phone'])
+            ) {
+                FlashHelper::error(__('supplier_phone_duplicate'));
+                $hasError = true;
+            } elseif (
+                $data['email'] !== '' &&
+                $model->existsDuplicate('email', $data['email'])
+            ) {
+                FlashHelper::error(__('supplier_email_duplicate'));
+                $hasError = true;
+            } else {
+                try {
+                    $result = $model->create($data);
 
+                    if ($result) {
+                        FlashHelper::success(
+                            __('supplier_created_successfully')
+                        );
+                    } else {
+                        FlashHelper::error(__('unable_to_create_supplier'));
+                        $hasError = true;
+                    }
+                } catch (PDOException $e) {
+                    if ($e->getCode() === '23000') {
+                        FlashHelper::error(
+                            __('supplier_duplicate_or_constraint_error')
+                        );
+                        $hasError = true;
+                    } else {
+                        error_log($e->getMessage());
+                        FlashHelper::error(__('unable_to_create_supplier'));
+                        $hasError = true;
+                    }
+                }
+            }
+
+            if ($hasError) {
                 header('Location: ' . URLROOT . '/suppliers/create');
                 exit;
             }
 
-            // =========================
-            // SAVE
-            // =========================
-
-            $model->create($data);
-
             header('Location: ' . URLROOT . '/suppliers');
             exit;
         }
-
-        // =========================
-        // LOAD VIEW
-        // =========================
 
         $this->view('suppliers/create');
     }
@@ -66,43 +106,91 @@ class Suppliers extends Controller
         AuthHelper::can('suppliers.edit');
 
         $model = $this->model('Supplier');
-
         $supplier = $model->getById($id);
 
         if (!$supplier) {
-
+            FlashHelper::error(__('supplier_not_found'));
             header('Location: ' . URLROOT . '/suppliers');
             exit;
         }
-
-        // =========================
-        // HANDLE POST
-        // =========================
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
             $data = [
-
-                'company_name'   => trim($_POST['company_name']),
-                'contact_person' => trim($_POST['contact_person']),
-                'phone'          => trim($_POST['phone']),
-                'email'          => trim($_POST['email']),
-                'address'        => trim($_POST['address']),
-                'notes'          => trim($_POST['notes'])
-
+                'company_name'   => trim($_POST['company_name'] ?? ''),
+                'contact_person' => trim($_POST['contact_person'] ?? ''),
+                'phone'          => trim($_POST['phone'] ?? ''),
+                'email'          => strtolower(trim($_POST['email'] ?? '')),
+                'address'        => trim($_POST['address'] ?? ''),
+                'notes'          => trim($_POST['notes'] ?? '')
             ];
 
-            $model->update($id, $data);
+            // Required fields
+            if ($data['company_name'] === '') {
+                FlashHelper::error(__('company_name_required'));
+            } elseif ($data['contact_person'] === '') {
+                FlashHelper::error(__('contact_person_required'));
+            } elseif ($data['phone'] === '') {
+                FlashHelper::error(__('phone_required'));
+            } elseif (
+                $data['email'] !== '' &&
+                !filter_var($data['email'], FILTER_VALIDATE_EMAIL)
+            ) {
+                FlashHelper::error(__('email_invalid'));
+            } elseif (
+                $model->existsDuplicate(
+                    'company_name',
+                    $data['company_name'],
+                    (int) $id
+                )
+            ) {
+                FlashHelper::error(__('supplier_company_name_duplicate'));
+            } elseif (
+                $model->existsDuplicate(
+                    'phone',
+                    $data['phone'],
+                    (int) $id
+                )
+            ) {
+                FlashHelper::error(__('supplier_phone_duplicate'));
+            } elseif (
+                $data['email'] !== '' &&
+                $model->existsDuplicate(
+                    'email',
+                    $data['email'],
+                    (int) $id
+                )
+            ) {
+                FlashHelper::error(__('supplier_email_duplicate'));
+            } else {
+                try {
+                    $result = $model->update($id, $data);
+
+                    if ($result !== false) {
+                        FlashHelper::success(
+                            __('supplier_updated_successfully')
+                        );
+                    } else {
+                        FlashHelper::error(__('unable_to_update_supplier'));
+                    }
+                } catch (PDOException $e) {
+                    if ($e->getCode() === '23000') {
+                        FlashHelper::error(
+                            __('supplier_duplicate_or_constraint_error')
+                        );
+                    } else {
+                        error_log($e->getMessage());
+                        FlashHelper::error(__('unable_to_update_supplier'));
+                    }
+                }
+            }
 
             header('Location: ' . URLROOT . '/suppliers');
             exit;
         }
 
-        $data['supplier'] = $supplier;
-
+        $data = ['supplier' => $supplier];
         $this->view('suppliers/edit', $data);
     }
-
 
 
     public function delete($id)
@@ -112,28 +200,19 @@ class Suppliers extends Controller
         $model = $this->model('Supplier');
 
         try {
-
             $result = $model->delete($id);
 
             if (!$result) {
                 FlashHelper::error(__('supplier_not_found'));
-                header('Location: ' . URLROOT . '/suppliers');
-                exit;
-            }
-
-            FlashHelper::success(__('supplier_deleted_successfully'));
-        } catch (PDOException $e) {
-
-            if ($e->getCode() === '23000') {
-
-                FlashHelper::error(
-                    __('supplier_cannot_be_deleted')
-                );
             } else {
-
-                FlashHelper::error(
-                    __('unable_to_delete_supplier')
-                );
+                FlashHelper::success(__('supplier_deleted_successfully'));
+            }
+        } catch (PDOException $e) {
+            if ($e->getCode() === '23000') {
+                FlashHelper::error(__('supplier_cannot_be_deleted'));
+            } else {
+                error_log($e->getMessage());
+                FlashHelper::error(__('unable_to_delete_supplier'));
             }
         }
 
@@ -141,45 +220,45 @@ class Suppliers extends Controller
         exit;
     }
 
-public function details($id)
-{
-    AuthHelper::can('suppliers.view');
+    public function details($id)
+    {
+        AuthHelper::can('suppliers.view');
 
-    $model = $this->model('Supplier');
+        $model = $this->model('Supplier');
 
-    $supplier = $model->getById($id);
+        $supplier = $model->getById($id);
 
-    if (!$supplier) {
-        header('Location: ' . URLROOT . '/suppliers');
-        exit;
-    }
-
-    $purchase_orders = $model->getPurchaseOrders($id);
-
-    $total_purchases = $this->model('PurchaseOrder')
-        ->sumBySupplier($id);
-
-    $ledgerModel = $this->model('SupplierLedger');
-    $ledger = $ledgerModel->getStatement($id);
-
-    $total_goods_received = 0;
-
-    foreach ($ledger as $row) {
-        if ($row->type === 'GRN') {
-            $total_goods_received += (float)$row->debit;
+        if (!$supplier) {
+            header('Location: ' . URLROOT . '/suppliers');
+            exit;
         }
+
+        $purchase_orders = $model->getPurchaseOrders($id);
+
+        $total_purchases = $this->model('PurchaseOrder')
+            ->sumBySupplier($id);
+
+        $ledgerModel = $this->model('SupplierLedger');
+        $ledger = $ledgerModel->getStatement($id);
+
+        $total_goods_received = 0;
+
+        foreach ($ledger as $row) {
+            if ($row->type === 'GRN') {
+                $total_goods_received += (float)$row->debit;
+            }
+        }
+
+        $total_paid = $model->getTotalPaid($id);
+
+        $data['supplier'] = $supplier;
+        $data['purchase_orders'] = $purchase_orders;
+        $data['total_purchases'] = $total_purchases;
+        $data['total_goods_received'] = $total_goods_received;
+        $data['total_paid'] = $total_paid;
+
+        $this->view('suppliers/details', $data);
     }
-
-    $total_paid = $model->getTotalPaid($id);
-
-    $data['supplier'] = $supplier;
-    $data['purchase_orders'] = $purchase_orders;
-    $data['total_purchases'] = $total_purchases;
-    $data['total_goods_received'] = $total_goods_received;
-    $data['total_paid'] = $total_paid;
-
-    $this->view('suppliers/details', $data);
-}
 
     public function info($supplier_id)
     {

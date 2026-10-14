@@ -978,7 +978,6 @@ return [
     'edit_supplier'                        => 'تعديل المورد',
     'update_supplier'                      => 'تحديث المورد',
     'view_profile'                         => 'عرض الملف',
-    'delete_supplier_confirm'              => 'هل تريد حذف المورد؟',
     'no_suppliers_added_yet'               => 'لم تتم إضافة أي موردين بعد.',
     'create_first_supplier_description'   => 'أنشئ أول مورد لبدء إدارة أوامر الشراء والمشتريات.',
     'add_first_supplier'                   => 'إضافة أول مورد',
@@ -1880,6 +1879,23 @@ return [
 'company_representative' => 'ممثل الشركة',
 'company_stamp' => 'ختم الشركة',
 
+'customer_email_already_exists' => 'يوجد عميل مسجل بالفعل بهذا البريد الإلكتروني. يرجى استخدام بريد إلكتروني آخر.',
+'customer_creation_failed' => 'تعذر إنشاء العميل. يرجى المحاولة مرة أخرى.',
+'customer_mobile_already_exists' => 'يوجد عميل مسجل بالفعل بهذا الرقم المحمول. يرجى استخدام رقم آخر.',
+'customer_phone_already_exists' => 'يوجد عميل مسجل بالفعل بهذا الرقم الهاتفي. يرجى استخدام رقم آخر.',
+'customer_company_already_exists' => 'يوجد عميل مسجل بالفعل بهذا الاسم للشركة. يرجى استخدام اسم شركة آخر.',
 
 
+'supplier_created_successfully' => 'تم إنشاء المورد بنجاح.',
+'supplier_updated_successfully' => 'تم تحديث بيانات المورد بنجاح.',
+'unable_to_create_supplier' => 'تعذر إنشاء المورد.',
+'unable_to_update_supplier' => 'تعذر تحديث بيانات المورد.',
+'contact_person_required' => 'اسم الشخص المسؤول عن التواصل مطلوب.',
+'phone_required' => 'رقم الهاتف أو الهاتف المحمول مطلوب.',
+'email_invalid' => 'يرجى إدخال بريد إلكتروني صحيح.',
+'supplier_company_name_duplicate' => 'يوجد مورد مسجل بهذا الاسم بالفعل.',
+'supplier_phone_duplicate' => 'يوجد مورد مسجل برقم الهاتف هذا بالفعل.',
+'supplier_email_duplicate' => 'يوجد مورد مسجل بعنوان البريد الإلكتروني هذا بالفعل.',
+'supplier_duplicate_or_constraint_error' => 'تعذر حفظ المورد بسبب تكرار إحدى البيانات أو وجود قيد في قاعدة البيانات.',
+'delete_supplier_confirm' => 'هل أنت متأكد من حذف هذا المورد؟ لا يمكن التراجع عن هذا الإجراء.',
 ];

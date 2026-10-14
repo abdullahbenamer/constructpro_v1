@@ -18,7 +18,8 @@
         <input type="text"
                name="contact_person"
                class="form-control"
-               value="<?= htmlspecialchars($supplier->contact_person) ?>">
+               value="<?= htmlspecialchars($supplier->contact_person) ?>"
+               required>
     </div>
 
     <div class="mb-3">
@@ -27,7 +28,8 @@
         <input type="text"
                name="phone"
                class="form-control"
-               value="<?= htmlspecialchars($supplier->phone) ?>">
+               value="<?= htmlspecialchars($supplier->phone) ?>"
+               required>
     </div>
 
     <div class="mb-3">

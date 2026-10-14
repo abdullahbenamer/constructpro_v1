@@ -982,7 +982,6 @@ return [
     'edit_supplier'                        => 'Edit Supplier',
     'update_supplier'                      => 'Update Supplier',
     'view_profile'                         => 'View Profile',
-    'delete_supplier_confirm'              => 'Delete supplier?',
     'no_suppliers_added_yet'               => 'No suppliers have been added yet.',
     'create_first_supplier_description'   => 'Create your first supplier to start managing purchase orders and purchases.',
     'add_first_supplier'                   => 'Add First Supplier',
@@ -1878,6 +1877,25 @@ return [
 'company_representative' => 'Company Representative',
 'company_stamp' => 'COMPANY STAMP',
 
+'customer_email_already_exists' => 'A customer with this email address already exists. Please use a different email address.',
+'customer_creation_failed' => 'Unable to create the customer. Please try again.',
+'customer_mobile_already_exists' => 'A customer with this mobile number already exists. Please use a different mobile number.',
 
+'customer_phone_already_exists' => 'A customer with this phone number already exists. Please use a different phone number.',
+'customer_company_already_exists' => 'A customer with this company name already exists. Please use a different company name.',
+
+
+'supplier_created_successfully' => 'Supplier created successfully.',
+'supplier_updated_successfully' => 'Supplier updated successfully.',
+'unable_to_create_supplier' => 'Unable to create supplier.',
+'unable_to_update_supplier' => 'Unable to update supplier.',
+'contact_person_required' => 'Contact person is required.',
+'phone_required' => 'Phone/mobile number is required.',
+'email_invalid' => 'Please enter a valid email address.',
+'supplier_company_name_duplicate' => 'A supplier with this company name already exists.',
+'supplier_phone_duplicate' => 'A supplier with this phone/mobile number already exists.',
+'supplier_email_duplicate' => 'A supplier with this email address already exists.',
+'supplier_duplicate_or_constraint_error' => 'The supplier could not be saved because of a duplicate value or a database constraint.',
+'delete_supplier_confirm' => 'Are you sure you want to delete this supplier? This action cannot be undone.',
 
 ];

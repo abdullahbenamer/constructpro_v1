@@ -136,5 +136,36 @@ public function getTotalPaid($supplier_id)
     return (float)$result->total;
 }
 
+public function existsDuplicate(
+    string $field,
+    string $value,
+    ?int $excludeId = null
+): bool {
+    $allowedFields = ['company_name', 'phone', 'email'];
+
+    if (!in_array($field, $allowedFields, true)) {
+        throw new InvalidArgumentException(
+            'Invalid supplier duplicate-check field.'
+        );
+    }
+
+    $sql = "
+        SELECT COUNT(*) AS total
+        FROM suppliers
+        WHERE LOWER(TRIM($field)) = LOWER(TRIM(?))
+    ";
+
+    $params = [trim($value)];
+
+    if ($excludeId !== null) {
+        $sql .= " AND id != ?";
+        $params[] = $excludeId;
+    }
+
+    $row = $this->db->query($sql, $params)->fetch();
+
+    return (int) $row->total > 0;
+}
+
 
     }

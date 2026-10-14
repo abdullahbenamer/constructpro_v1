@@ -25,7 +25,8 @@
 
             <input type="text"
                    name="contact_person"
-                   class="form-control">
+                   class="form-control"
+                   required>
         </div>
 
     </div>
@@ -39,7 +40,8 @@
 
             <input type="text"
                    name="phone"
-                   class="form-control">
+                   class="form-control"
+                   required>
         </div>
 
         <div class="col-md-4 mb-3">

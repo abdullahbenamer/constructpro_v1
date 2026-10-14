@@ -95,13 +95,23 @@
 
                         </a>
 
-                        <a href="<?= URLROOT ?>/suppliers/delete/<?= $supplier->id ?>"
-                            class="btn btn-sm btn-danger"
-                            onclick="return confirm(<?= json_encode(__('delete_supplier_confirm')) ?>)">
+                        
+<a href="<?= URLROOT ?>/suppliers/delete/<?= (int) $supplier->id ?>"
+   class="btn btn-sm btn-danger"
+   onclick="return confirm(<?= htmlspecialchars(
+       json_encode(
+           __('delete_supplier_confirm'),
+           JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP
+       ),
+       ENT_QUOTES,
+       'UTF-8'
+   ) ?>)">
 
-                            <?= __('delete') ?>
+    <i class="fas fa-trash"></i>
+    <?= __('delete') ?>
 
-                        </a>
+</a>
+
 
                     </td>
 
