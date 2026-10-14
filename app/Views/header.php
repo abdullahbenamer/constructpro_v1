@@ -763,6 +763,128 @@ require_once '../app/Models/InventoryLocationModel.php';
             display: block;
             text-align: right;
         }
+
+        
+
+/* MOBILE SIDEBAR NAVIGATION */
+@media (max-width: 991.98px) {
+
+    #appSidebar {
+        position: fixed !important;
+        top: 0;
+        bottom: 0;
+        left: -260px !important;
+        right: auto !important;
+        width: 260px;
+        height: 100vh;
+        height: 100dvh;
+        display: flex !important;
+        flex-direction: column !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        z-index: 1050;
+        transition: left 0.25s ease, right 0.25s ease;
+    }
+
+    #appSidebar.show {
+        left: 0 !important;
+        right: auto !important;
+    }
+
+    html[dir="rtl"] #appSidebar {
+        left: auto !important;
+        right: -260px !important;
+    }
+
+    html[dir="rtl"] #appSidebar.show {
+        left: auto !important;
+        right: 0 !important;
+    }
+
+    /* Keep EN/AR switcher visible at the top */
+    #appSidebar > .language-switcher {
+        display: inline-flex !important;
+        flex: 0 0 auto;
+        align-self: flex-start;
+        margin: 12px;
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Override Bootstrap's collapsed state */
+    #appSidebar .navbar-collapse,
+    #appSidebar .navbar-collapse.collapse,
+    #appSidebar .navbar-collapse.collapsing {
+        display: block !important;
+        visibility: visible !important;
+        height: auto !important;
+        flex: 1 0 auto;
+        overflow: visible !important;
+    }
+
+    #appSidebar .navbar-nav {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100%;
+    }
+
+    /* Hide the old internal Bootstrap button */
+    #appSidebar .navbar-toggler {
+        display: none !important;
+    }
+
+    /* Menu button */
+    .mobile-menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        right: auto;
+        width: 44px;
+        height: 44px;
+        border: 0;
+        border-radius: 6px;
+        background: #0d6efd;
+        color: #fff;
+        font-size: 20px;
+        z-index: 1060;
+    }
+
+    html[dir="rtl"] .mobile-menu-toggle {
+        left: auto;
+        right: 12px;
+    }
+
+    /* Move close button away from EN/AR and the brand */
+    .mobile-menu-toggle.menu-open {
+        left: 270px;
+        right: auto;
+    }
+
+    html[dir="rtl"] .mobile-menu-toggle.menu-open {
+        left: auto;
+        right: 270px;
+    }
+
+    .mobile-menu-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1040;
+    }
+
+    .mobile-menu-overlay.show {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+
     </style>
 
 </head>
@@ -770,12 +892,31 @@ require_once '../app/Models/InventoryLocationModel.php';
 
 <body>
 
+<!-- MOBILE MENU BUTTON -->
+<button
+    type="button"
+    id="mobileMenuToggle"
+    class="mobile-menu-toggle d-lg-none"
+    aria-label="Open navigation menu"
+    aria-controls="appSidebar"
+    aria-expanded="false">
+
+    <i class="fas fa-bars"></i>
+</button>
+
+<!-- MOBILE MENU OVERLAY -->
+<div
+    id="mobileMenuOverlay"
+    class="mobile-menu-overlay d-lg-none">
+</div>
+
 
     <!-- =========================================================
      LEFT SIDEBAR NAVIGATION
 ========================================================= -->
 
-    <nav class="navbar navbar-expand-lg navbar-dark app-sidebar">
+    <nav  id="appSidebar"
+    class="navbar navbar-expand-lg navbar-dark app-sidebar">
         <!-- ############### -->
 
         <div class="language-switcher">
