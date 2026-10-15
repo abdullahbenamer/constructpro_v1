@@ -114,7 +114,8 @@
                         <input type="text"
                                name="category_name_a"
                                class="form-control"
-                               value="<?= $data['category']->category_name_a ?>">
+                               value="<?= $data['category']->category_name_a ?>"
+                               required>
 
 
                     </div>
@@ -128,7 +129,7 @@
                     </label>
                     <textarea name="description"
                               class="form-control"
-                              rows="4"><?= $data['category']->description ?></textarea>
+                              rows="4" required><?= $data['category']->description ?></textarea>
                 </div>
                 <!-- STATUS -->
                 <div class="col-md-3 mb-3">

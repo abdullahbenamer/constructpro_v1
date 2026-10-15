@@ -1898,4 +1898,11 @@ return [
 'supplier_duplicate_or_constraint_error' => 'The supplier could not be saved because of a duplicate value or a database constraint.',
 'delete_supplier_confirm' => 'Are you sure you want to delete this supplier? This action cannot be undone.',
 
+'resource_category_name_required' => 'Category name is required.',
+'resource_category_code_required' => 'Category code is required.',
+'resource_category_name_duplicate' => 'A category with this name already exists.',
+'resource_category_code_duplicate' => 'A category with this code already exists.',
+'resource_category_duplicate_or_constraint_error' => 'The category could not be saved because its name or code is duplicated, or a database constraint was violated.',
+
+
 ];

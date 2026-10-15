@@ -95,7 +95,8 @@
 
                         <input type="text"
                                name="category_name_a"
-                               class="form-control">
+                               class="form-control"
+                                required>
 
 
                     </div>
@@ -114,7 +115,8 @@
 
                     <textarea name="description"
                               class="form-control"
-                              rows="4"></textarea>
+                              rows="4"
+                               required></textarea>
 
 
                 </div>

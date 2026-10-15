@@ -31,56 +31,89 @@ class ResourceCategories extends Controller
         );
     }
 
-  /**
- * STORE CATEGORY
- */
+
 public function store()
 {
     AuthHelper::can('resource_categories.create');
 
-    if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-
-        header(
-            'Location: ' . URLROOT . '/ResourceCategories'
-        );
-
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        header('Location: ' . URLROOT . '/ResourceCategories');
         exit;
     }
 
     $model = $this->model('ResourceCategory');
 
     $data = [
-
-        'category_code'   => trim($_POST['category_code']),
-
-        'category_name'   => trim($_POST['category_name']),
-
-        'category_name_a' => trim($_POST['category_name_a']),
-
-        'description'     => trim($_POST['description']),
-
-        'status'          => $_POST['status']
-
+        'category_code'   => trim($_POST['category_code'] ?? ''),
+        'category_name'   => trim($_POST['category_name'] ?? ''),
+        'category_name_a' => trim($_POST['category_name_a'] ?? ''),
+        'description'     => trim($_POST['description'] ?? ''),
+        'status'          => trim($_POST['status'] ?? 'Active')
     ];
 
-    $result = $model->create($data);
-
-    if (!$result['success']) {
-
-        FlashHelper::error($result['message']);
-
-    } else {
-
-        FlashHelper::success($result['message']);
-
+    if ($data['category_name'] === '') {
+        FlashHelper::error(__('resource_category_name_required'));
+        header('Location: ' . URLROOT . '/ResourceCategories/create');
+        exit;
     }
 
-    header(
-        'Location: ' . URLROOT . '/ResourceCategories'
-    );
+    if ($data['category_code'] === '') {
+        FlashHelper::error(__('resource_category_code_required'));
+        header('Location: ' . URLROOT . '/ResourceCategories/create');
+        exit;
+    }
 
-    exit;
+    try {
+        $result = $model->create($data);
+
+        if (!empty($result['success'])) {
+            FlashHelper::success($result['message']);
+            header('Location: ' . URLROOT . '/ResourceCategories');
+            exit;
+        }
+
+        FlashHelper::error(
+            $result['message'] ?? __('resource_category_create_failed')
+        );
+
+        header('Location: ' . URLROOT . '/ResourceCategories/create');
+        exit;
+
+    } catch (\PDOException $e) {
+        if (
+            $e->getCode() === '23000' &&
+            isset($e->errorInfo[1]) &&
+            (int) $e->errorInfo[1] === 1062
+        ) {
+            $errorMessage = $e->getMessage();
+
+            if (strpos($errorMessage, 'category_code') !== false) {
+                FlashHelper::error(
+                    __('resource_category_code_duplicate')
+                );
+            } elseif (strpos($errorMessage, 'category_name') !== false) {
+                FlashHelper::error(
+                    __('resource_category_name_duplicate')
+                );
+            } else {
+                error_log('Resource category duplicate error: ' . $errorMessage);
+                FlashHelper::error(
+                    __('resource_category_duplicate_or_constraint_error')
+                );
+            }
+
+            header('Location: ' . URLROOT . '/ResourceCategories/create');
+            exit;
+        }
+
+        error_log('Resource category creation failed: ' . $e->getMessage());
+
+        FlashHelper::error(__('resource_category_create_failed'));
+        header('Location: ' . URLROOT . '/ResourceCategories/create');
+        exit;
+    }
 }
+
 
     /**
      * EDIT PAGE
