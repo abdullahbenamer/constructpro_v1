@@ -1665,8 +1665,13 @@ return [
     'resource_category_deleted_successfully' => 'Resource category deleted successfully.',
     'resource_category_not_found' => 'Resource category not found.',
     'can_not_delete_resource_category_in_use' => 'Cannot delete resource category because it is currently in use.',
+    'resource_category_name_a_duplicate' => 'Resource Category Arabic Name is Duplicate.',
 
+    'resource_category_name_duplicate' => 'Resource Category Name is duplicate',
 
+    'resource_category_code_duplicate' => 'Resource Category Code duplicate',
+
+    
     'unit_not_found' => 'Unit not found.',
     'unit_created_successfully' => 'Unit created successfully.',
     'unit_create_failed' => 'Unable to create unit.',

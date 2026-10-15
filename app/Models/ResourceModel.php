@@ -1,11 +1,8 @@
 <?php
-
 require_once '../app/Core/Model.php';
-
 
 class ResourceModel extends Model
 {
-
     /**
      * GET ALL RESOURCES
      */
@@ -26,26 +23,18 @@ class ResourceModel extends Model
         ORDER BY r.resource_name
     ")->fetchAll();
 }
-
     /**
      * GET RESOURCE BY ID
      */
     public function getById($id)
     {
-
         return $this->db->query(
-            "
-            SELECT
-
+            "SELECT
                 r.*,
-
                 rc.category_name,
-
                 u.unit_name,
                 u.unit_name_a
-
             FROM resources r
-
             LEFT JOIN resource_categories rc
 
                 ON rc.id = r.category_id

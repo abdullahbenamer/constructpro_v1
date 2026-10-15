@@ -1668,7 +1668,9 @@ return [
     'resource_category_code_duplicate' => 'توجد فئة بهذا الرمز حاليا.',
     'resource_category_duplicate_or_constraint_error' => 'تعذر حفظ فئة الموارد بسبب تكرار الاسم أو الرمز أو مخالفة أحد قيود قاعدة البيانات.',
 
-    'unit_not_found' => 'الوحدة غير موجودة.',
+     'resource_category_name_a_duplicate' => 'الاسم العربي لفئة الموارد مكرر',
+
+        'unit_not_found' => 'الوحدة غير موجودة.',
     'unit_created_successfully' => 'تم إنشاء الوحدة بنجاح.',
     'unit_create_failed' => 'تعذر إنشاء الوحدة.',
     'unit_updated_successfully' => 'تم تحديث الوحدة بنجاح.',
