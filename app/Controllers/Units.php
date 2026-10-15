@@ -42,12 +42,12 @@ class Units extends Controller
  /**
  * STORE
  */
+
 public function store()
 {
     AuthHelper::can('units.create');
 
-    if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         header('Location: ' . URLROOT . '/Units');
         exit;
     }
@@ -55,27 +55,22 @@ public function store()
     $model = $this->model('Unit');
 
     $data = [
-
-        'unit_code'   => trim($_POST['unit_code']),
-        'unit_name'   => trim($_POST['unit_name']),
-        'unit_name_a' => trim($_POST['unit_name_a']),
-        'description' => trim($_POST['description']),
-        'status'      => $_POST['status']
-
+        'unit_code'  => trim($_POST['unit_code'] ?? ''),
+        'unit_name'  => trim($_POST['unit_name'] ?? ''),
+        'unit_name_a' => trim($_POST['unit_name_a'] ?? ''),
+        'description' => trim($_POST['description'] ?? ''),
+        'status' => $_POST['status'] ?? 'ACTIVE'
     ];
 
     $result = $model->create($data);
 
     if (!$result['success']) {
-
         FlashHelper::error($result['message']);
-
-    } else {
-
-        FlashHelper::success($result['message']);
-
+        header('Location: ' . URLROOT . '/Units/create');
+        exit;
     }
 
+    FlashHelper::success($result['message']);
     header('Location: ' . URLROOT . '/Units');
     exit;
 }
@@ -85,60 +80,65 @@ public function store()
     /**
      * EDIT PAGE
      */
-    public function edit($id)
-    {
-
-        AuthHelper::can('units.edit');
-
-        $model = $this->model('Unit');
-
-        $data = [
-
-            'unit' => $model->getById($id)
-
-        ];
-
-        $this->view('units/edit', $data);
-
-    }
-
-/**
- * UPDATE
- */
-public function update($id)
+    
+public function edit($id)
 {
     AuthHelper::can('units.edit');
 
-    if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+    $model = $this->model('Unit');
+    $unit = $model->getById((int) $id);
 
+    if (!$unit) {
+        FlashHelper::error(__('unit_not_found'));
         header('Location: ' . URLROOT . '/Units');
         exit;
     }
 
+    $this->view('units/edit', ['unit' => $unit]);
+}
+
+
+/**
+ * UPDATE
+ */
+
+public function update($id)
+{
+    AuthHelper::can('units.edit');
+
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        header('Location: ' . URLROOT . '/Units');
+        exit;
+    }
+
+    $id = (int) $id;
     $model = $this->model('Unit');
 
+    $unit = $model->getById($id);
+
+    if (!$unit) {
+        FlashHelper::error(__('unit_not_found'));
+        header('Location: ' . URLROOT . '/Units');
+        exit;
+    }
+
     $data = [
-
-        'unit_code'   => trim($_POST['unit_code']),
-        'unit_name'   => trim($_POST['unit_name']),
-        'unit_name_a' => trim($_POST['unit_name_a']),
-        'description' => trim($_POST['description']),
-        'status'      => $_POST['status']
-
+        'unit_code'   => trim($_POST['unit_code'] ?? ''),
+        'unit_name'   => trim($_POST['unit_name'] ?? ''),
+        'unit_name_a' => trim($_POST['unit_name_a'] ?? ''),
+        'description' => trim($_POST['description'] ?? ''),
+        'status'      => $_POST['status'] ?? 'ACTIVE'
     ];
 
     $result = $model->update($id, $data);
 
     if (!$result['success']) {
-
         FlashHelper::error($result['message']);
-
-    } else {
-
-        FlashHelper::success($result['message']);
-
+        header('Location: ' . URLROOT . '/Units/edit/' . $id);
+        exit;
     }
 
+    FlashHelper::success($result['message']);
     header('Location: ' . URLROOT . '/Units');
     exit;
 }

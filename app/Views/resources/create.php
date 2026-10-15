@@ -72,7 +72,8 @@
                         <input type="text"
                                name="resource_name_a"
                                class="form-control"
-                               dir="rtl">
+                               dir="rtl"
+                               required>
 
                     </div>
 

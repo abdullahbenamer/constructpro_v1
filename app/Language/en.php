@@ -1671,7 +1671,7 @@ return [
 
     'resource_category_code_duplicate' => 'Resource Category Code duplicate',
 
-    
+
     'unit_not_found' => 'Unit not found.',
     'unit_created_successfully' => 'Unit created successfully.',
     'unit_create_failed' => 'Unable to create unit.',
@@ -1905,9 +1905,29 @@ return [
 
 'resource_category_name_required' => 'Category name is required.',
 'resource_category_code_required' => 'Category code is required.',
-'resource_category_name_duplicate' => 'A category with this name already exists.',
-'resource_category_code_duplicate' => 'A category with this code already exists.',
 'resource_category_duplicate_or_constraint_error' => 'The category could not be saved because its name or code is duplicated, or a database constraint was violated.',
 
+
+'unit_required_fields' => 'Unit code, English name, and Arabic name are required.',
+'unit_code_duplicate' => 'This unit code already exists.',
+'unit_name_duplicate' => 'This English unit name already exists.',
+'unit_name_a_duplicate' => 'This Arabic unit name already exists.',
+'unit_duplicate_or_constraint_error' => 'A duplicate unit value or database constraint error occurred.',
+
+
+'resource_required_fields' => 'Resource code, English name, Arabic name, category, unit, and resource type are required.',
+'resource_code_duplicate' => 'This resource code already exists.',
+'resource_name_duplicate' => 'This English resource name already exists.',
+'resource_name_a_duplicate' => 'This Arabic resource name already exists.',
+'resource_duplicate_or_constraint_error' => 'A duplicate resource value or database constraint error occurred.',
+
+'user_cannot_be_deleted_in_use' => 'This user cannot be deleted because other records depend on this account.',
+'user_delete_failed' => 'Unable to delete this user due to a database error.',
+
+'user_name_duplicate' => 'This username already exists. Please choose another.',
+'email_duplicate' => 'This email address already exists. Please use another.',
+'mobile_duplicate' => 'This mobile number already exists. Please use another.',
+'user_duplicate_or_constraint_error' => 'A duplicate user value or database constraint error occurred.',
+'user_create_failed' => 'Unable to create the user. Please try again.',
 
 ];

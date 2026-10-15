@@ -179,7 +179,7 @@
 
                                     </td>
 
-                                    <td>
+                                    <td class="text-nowrap">
 
                                         <a href="<?= URLROOT ?>/Resources/edit/<?= $resource->id ?>"
                                             class="btn btn-sm btn-warning">

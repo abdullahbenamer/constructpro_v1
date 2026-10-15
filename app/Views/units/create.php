@@ -81,7 +81,8 @@
 
                         <input type="text"
                                name="unit_name_a"
-                               class="form-control">
+                               class="form-control"
+                               required>
 
                     </div>
 

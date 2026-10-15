@@ -173,43 +173,48 @@ public function edit($id)
     $this->view('admin/users/edit', $data);
 }
 
-    public function delete($id)
-    {
-        AuthHelper::can('users.delete');
+  
+public function delete($id)
+{
+    AuthHelper::can('users.delete');
 
-        $userModel = $this->model('User');
+    $userModel = $this->model('User');
+    $user = $userModel->getById((int) $id);
 
-        $user = $userModel->getById($id);
-
-        if (!$user) {
-            header('Location: ' . URLROOT . '/users');
-            exit;
-        }
-if ($user->id == $_SESSION['user_id']) {
-    FlashHelper::error(__('cannot_delete_own_account'));
-    header('Location: ' . URLROOT . '/users');
-    exit;
-}
-
-        $roleName = $userModel->getRoleName($user->role_id);
-
-        if ($roleName === 'ADMIN') {
-
-            $adminCount = $userModel->countAdmins();
-
-        if ($adminCount <= 1) {
-    FlashHelper::error(__('cannot_delete_last_admin'));
-    header('Location: ' . URLROOT . '/users');
-    exit;
-}
-        }
-
-        $userModel->delete($id);
-        FlashHelper::success(__('user_deleted_successfully'));
-
+    if (!$user) {
+        FlashHelper::error(__('user_not_found'));
         header('Location: ' . URLROOT . '/users');
         exit;
     }
+
+    if ((int) $user->id === (int) $_SESSION['user_id']) {
+        FlashHelper::error(__('cannot_delete_own_account'));
+        header('Location: ' . URLROOT . '/users');
+        exit;
+    }
+
+    if (
+        $userModel->getRoleName($user->role_id) === 'ADMIN' &&
+        $userModel->countAdmins() <= 1
+    ) {
+        FlashHelper::error(__('cannot_delete_last_admin'));
+        header('Location: ' . URLROOT . '/users');
+        exit;
+    }
+
+    $result = $userModel->delete($id);
+
+    if (!$result['success']) {
+        FlashHelper::error($result['message']);
+        header('Location: ' . URLROOT . '/users');
+        exit;
+    }
+
+    FlashHelper::success($result['message']);
+    header('Location: ' . URLROOT . '/users');
+    exit;
+}
+
 
     public function details($id)
     {

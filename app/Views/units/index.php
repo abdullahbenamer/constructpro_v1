@@ -146,14 +146,10 @@
 
                                         </a>
 
-
-                                        <a href="<?= URLROOT ?>/Units/delete/<?= $unit->id ?>"
+                                        <a href="<?= URLROOT ?>/Units/delete/<?= (int) $unit->id ?>"
                                             class="btn btn-sm btn-danger"
-
-                                            onclick="return confirm(<?= json_encode(__('delete_unit_confirm')) ?>);">
-
+                                            onclick="return confirm('<?= __('delete_unit_confirm') ?>');">
                                             <i class="fas fa-trash"></i>
-
                                         </a>
 
                                     </td>

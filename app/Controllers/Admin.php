@@ -36,38 +36,36 @@ class Admin extends Controller
         $roleModel = $this->model('Role');
 
         // HANDLE CREATE ROLE
-      if ($_POST) {
+        if ($_POST) {
 
-    try {
+            try {
 
-        if (!empty($_POST['name'])) {
+                if (!empty($_POST['name'])) {
 
-            $result = $roleModel->create(
-                trim($_POST['name'])
-            );
+                    $result = $roleModel->create(
+                        trim($_POST['name'])
+                    );
 
-            if ($result) {
-                FlashHelper::success(
-                    __('role_created_successfully')
+                    if ($result) {
+                        FlashHelper::success(
+                            __('role_created_successfully')
+                        );
+                    }
+                } else {
+                    FlashHelper::error(
+                        __('role_name_required')
+                    );
+                }
+            } catch (Throwable $e) {
+
+                FlashHelper::error(
+                    $this->exceptionMessage($e)
                 );
             }
 
-        } else {
-            FlashHelper::error(
-                __('role_name_required')
-            );
+            header('Location: ' . URLROOT . '/admin/roles');
+            exit;
         }
-
-    } catch (Throwable $e) {
-
-        FlashHelper::error(
-            $this->exceptionMessage($e)
-        );
-    }
-
-    header('Location: ' . URLROOT . '/admin/roles');
-    exit;
-}
 
         $data['roles'] = $roleModel->getAll();
 
@@ -82,47 +80,46 @@ class Admin extends Controller
         $this->view('admin/roles/index', $data);
     }
 
-// permissions
-public function permissions()
-{
-    AuthHelper::can('admin.access');
+    // permissions
+    public function permissions()
+    {
+        AuthHelper::can('admin.access');
 
-    $permModel = $this->model('Permission');
+        $permModel = $this->model('Permission');
 
-    if ($_POST) {
+        if ($_POST) {
 
-        if (!empty($_POST['name'])) {
+            if (!empty($_POST['name'])) {
 
-            $result = $permModel->create(
-                $_POST['name'],
-                $_POST['description'] ?? null
-            );
-
-            if ($result) {
-                FlashHelper::success(
-                    __('permission_created_successfully')
+                $result = $permModel->create(
+                    $_POST['name'],
+                    $_POST['description'] ?? null
                 );
+
+                if ($result) {
+                    FlashHelper::success(
+                        __('permission_created_successfully')
+                    );
+                } else {
+                    FlashHelper::error(
+                        __('permission_creation_failed')
+                    );
+                }
             } else {
+
                 FlashHelper::error(
-                    __('permission_creation_failed')
+                    __('permission_name_required')
                 );
             }
 
-        } else {
-
-            FlashHelper::error(
-                __('permission_name_required')
-            );
+            header('Location: ' . URLROOT . '/admin/permissions');
+            exit;
         }
 
-        header('Location: ' . URLROOT . '/admin/permissions');
-        exit;
+        $data['permissions'] = $permModel->getAll();
+
+        $this->view('admin/permissions/index', $data);
     }
-
-    $data['permissions'] = $permModel->getAll();
-
-    $this->view('admin/permissions/index', $data);
-}
 
     public function createUser()
     {
@@ -167,18 +164,16 @@ public function permissions()
 
             $_POST['photo'] = $photo;
 
+
             $result = $userModel->createUser($_POST);
 
-            if ($result) {
-                FlashHelper::success(
-                    __('user_created_successfully')
-                );
-            } else {
-                FlashHelper::error(
-                    __('user_creation_failed')
-                );
+            if (!$result['success']) {
+                FlashHelper::error($result['message']);
+                header('Location: ' . URLROOT . '/admin/createUser');
+                exit;
             }
 
+            FlashHelper::success($result['message']);
             header('Location: ' . URLROOT . '/admin/users');
             exit;
         }
@@ -293,39 +288,39 @@ public function permissions()
         // SAVE permissions (POST)
         if ($_POST) {
 
-    $clearResult = $roleModel->clearPermissions($role_id);
+            $clearResult = $roleModel->clearPermissions($role_id);
 
-    $success = (bool)$clearResult;
+            $success = (bool)$clearResult;
 
-    if (!empty($_POST['permissions'])) {
+            if (!empty($_POST['permissions'])) {
 
-        foreach ($_POST['permissions'] as $perm_id) {
+                foreach ($_POST['permissions'] as $perm_id) {
 
-            $result = $roleModel->assignPermission(
-                $role_id,
-                $perm_id
-            );
+                    $result = $roleModel->assignPermission(
+                        $role_id,
+                        $perm_id
+                    );
 
-            if (!$result) {
-                $success = false;
-                break;
+                    if (!$result) {
+                        $success = false;
+                        break;
+                    }
+                }
             }
+
+            if ($success) {
+                FlashHelper::success(
+                    __('permissions_updated_successfully')
+                );
+            } else {
+                FlashHelper::error(
+                    __('permissions_update_failed')
+                );
+            }
+
+            header('Location: ' . URLROOT . '/admin/roles');
+            exit;
         }
-    }
-
-    if ($success) {
-        FlashHelper::success(
-            __('permissions_updated_successfully')
-        );
-    } else {
-        FlashHelper::error(
-            __('permissions_update_failed')
-        );
-    }
-
-    header('Location: ' . URLROOT . '/admin/roles');
-    exit;
-}
 
         // LOAD ROLE DETAILS
         $data['role'] = $roleModel->getById($role_id);
@@ -345,61 +340,61 @@ public function permissions()
         $this->view('admin/roles/assign_permissions', $data);
     }
 
-  // Edit Permissions
-public function editPermission($id)
-{
-    $permModel = $this->model('Permission');
+    // Edit Permissions
+    public function editPermission($id)
+    {
+        $permModel = $this->model('Permission');
 
-    if ($_POST) {
+        if ($_POST) {
 
-        $result = $permModel->update(
-            $id,
-            $_POST['name'],
-            $_POST['description'] ?? null
-        );
-
-        if ($result) {
-            FlashHelper::success(
-                __('permission_updated_successfully')
+            $result = $permModel->update(
+                $id,
+                $_POST['name'],
+                $_POST['description'] ?? null
             );
-        } else {
-            FlashHelper::error(
-                __('permission_update_failed')
-            );
+
+            if ($result) {
+                FlashHelper::success(
+                    __('permission_updated_successfully')
+                );
+            } else {
+                FlashHelper::error(
+                    __('permission_update_failed')
+                );
+            }
+
+            header('Location: ' . URLROOT . '/admin/permissions');
+            exit;
         }
 
-        header('Location: ' . URLROOT . '/admin/permissions');
-        exit;
+        $data['permission'] = $permModel->getById($id);
+
+        $this->view('admin/permissions/edit', $data);
     }
 
-    $data['permission'] = $permModel->getById($id);
+    public function deletePermission($id)
+    {
+        $permModel = $this->model('Permission');
 
-    $this->view('admin/permissions/edit', $data);
-}
+        $result = $permModel->delete($id);
 
-public function deletePermission($id)
-{
-    $permModel = $this->model('Permission');
+        if (!$result['success']) {
 
-    $result = $permModel->delete($id);
+            FlashHelper::error(
+                $result['message']
+            );
 
-    if (!$result['success']) {
+            header('Location: ' . URLROOT . '/admin/permissions');
+            exit;
+        }
 
-        FlashHelper::error(
-            $result['message']
+        FlashHelper::success(
+            __('permission_deleted_successfully')
         );
 
         header('Location: ' . URLROOT . '/admin/permissions');
         exit;
     }
-
-    FlashHelper::success(
-        __('permission_deleted_successfully')
-    );
-
-    header('Location: ' . URLROOT . '/admin/permissions');
-    exit;
-}
 
     // Edit Roles
     public function editRole($id)
@@ -408,24 +403,24 @@ public function deletePermission($id)
 
         if ($_POST) {
 
-    $result = $roleModel->update(
-        $id,
-        trim($_POST['name'])
-    );
+            $result = $roleModel->update(
+                $id,
+                trim($_POST['name'])
+            );
 
-    if ($result) {
-        FlashHelper::success(
-            __('role_updated_successfully')
-        );
-    } else {
-        FlashHelper::error(
-            __('role_update_failed')
-        );
-    }
+            if ($result) {
+                FlashHelper::success(
+                    __('role_updated_successfully')
+                );
+            } else {
+                FlashHelper::error(
+                    __('role_update_failed')
+                );
+            }
 
-    header('Location: ' . URLROOT . '/admin/roles');
-    exit;
-}
+            header('Location: ' . URLROOT . '/admin/roles');
+            exit;
+        }
 
         $data['role'] = $roleModel->getById($id);
 

@@ -1,128 +1,92 @@
 <?php
-
 class Resources extends Controller
 {
-
 
     /**
      * LIST RESOURCES
      */
     public function index()
     {
-
-     AuthHelper::can('resources.view');
-
-
+        AuthHelper::can('resources.view');
         $model = $this->model('Resource');
-
-
         $data = [
-
             'resources' => $model->getAll()
-
         ];
-
-
         $this->view(
             'resources/index',
             $data
         );
-
     }
-
-
-
-
 
     /**
      * CREATE PAGE
      */
     public function create()
     {
-
-      AuthHelper::can('resources.create');
-
-
+        AuthHelper::can('resources.create');
         $categoryModel = $this->model('ResourceCategory');
-
         $unitModel = $this->model('UnitModel');
-
-
-
         $data = [
-
             'categories' => $categoryModel->getAll(),
-
             'units'      => $unitModel->getAll()
-
         ];
-
-
-
         $this->view(
             'resources/create',
             $data
         );
-
     }
 
+    /**
+     * STORE RESOURCE
+     */
+    public function store()
+    {
+        AuthHelper::can('resources.create');
 
-   /**
- * STORE RESOURCE
- */
-public function store()
-{
-    AuthHelper::can('resources.create');
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
-    if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+            header(
+                'Location: ' . URLROOT . '/Resources'
+            );
 
-        header(
-            'Location: ' . URLROOT . '/Resources'
-        );
+            exit;
+        }
 
-        exit;
-    }
+        $model = $this->model('Resource');
 
-    $model = $this->model('Resource');
+        $data = [
 
-    $data = [
+            'resource_code'   => trim($_POST['resource_code']),
+            'resource_name'   => trim($_POST['resource_name']),
+            'resource_name_a' => trim($_POST['resource_name_a']),
+            'category_id'     => $_POST['category_id'],
+            'resource_type'   => $_POST['resource_type'],
+            'unit_id'         => $_POST['unit_id'],
+            'description'     => trim($_POST['description']),
+            'status'          => $_POST['status']
 
-        'resource_code'   => trim($_POST['resource_code']),
-        'resource_name'   => trim($_POST['resource_name']),
-        'resource_name_a' => trim($_POST['resource_name_a']),
-        'category_id'     => $_POST['category_id'],
-        'resource_type'   => $_POST['resource_type'],
-        'unit_id'         => $_POST['unit_id'],
-        'description'     => trim($_POST['description']),
-        'status'          => $_POST['status']
+        ];
 
-    ];
+        $result = $model->create($data);
 
-    $result = $model->create($data);
 
-    if (!$result['success']) {
-
-        FlashHelper::error($result['message']);
-
-    } else {
+        if (!$result['success']) {
+            FlashHelper::error($result['message']);
+            header('Location: ' . URLROOT . '/Resources/create');
+            exit;
+        }
 
         FlashHelper::success($result['message']);
-
+        header('Location: ' . URLROOT . '/Resources');
+        exit;
     }
-
-    header(
-        'Location: ' . URLROOT . '/Resources'
-    );
-
-    exit;
-}
     /**
      * EDIT PAGE
      */
     public function edit($id)
     {
 
-       AuthHelper::can('resources.edit');
+        AuthHelper::can('resources.edit');
 
         $model = $this->model('ResourceModel');
 
@@ -144,89 +108,80 @@ public function store()
             'resources/edit',
             $data
         );
-
     }
 
-/**
- * UPDATE RESOURCE
- */
-public function update($id)
-{
-    AuthHelper::can('resources.edit');
+    /**
+     * UPDATE RESOURCE
+     */
+    public function update($id)
+    {
+        AuthHelper::can('resources.edit');
 
-    if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
-        header(
-            'Location: ' . URLROOT . '/Resources'
-        );
+            header(
+                'Location: ' . URLROOT . '/Resources'
+            );
 
+            exit;
+        }
+
+        $model = $this->model('ResourceModel');
+
+        $data = [
+
+            'resource_code'   => trim($_POST['resource_code']),
+            'resource_name'   => trim($_POST['resource_name']),
+            'resource_name_a' => trim($_POST['resource_name_a']),
+            'category_id'     => $_POST['category_id'],
+            'resource_type'   => $_POST['resource_type'],
+            'unit_id'         => $_POST['unit_id'],
+            'description'     => trim($_POST['description']),
+            'status'          => $_POST['status']
+
+        ];
+
+        $result = $model->update($id, $data);
+
+        if (!$result['success']) {
+            FlashHelper::error($result['message']);
+            header('Location: ' . URLROOT . '/Resources/edit/' . (int) $id);
+            exit;
+        }
+
+        FlashHelper::success($result['message']);
+        header('Location: ' . URLROOT . '/Resources');
         exit;
     }
 
-    $model = $this->model('ResourceModel');
+    /**
+     * DELETE RESOURCE
+     */
+    public function delete($id)
+    {
+        AuthHelper::can('resources.delete');
 
-    $data = [
+        $model = $this->model('ResourceModel');
 
-        'resource_code'   => trim($_POST['resource_code']),
-        'resource_name'   => trim($_POST['resource_name']),
-        'resource_name_a' => trim($_POST['resource_name_a']),
-        'category_id'     => $_POST['category_id'],
-        'resource_type'   => $_POST['resource_type'],
-        'unit_id'         => $_POST['unit_id'],
-        'description'     => trim($_POST['description']),
-        'status'          => $_POST['status']
+        $result = $model->delete($id);
 
-    ];
+        if (!$result['success']) {
 
-    $result = $model->update($id, $data);
+            FlashHelper::error($result['message']);
 
-    if (!$result['success']) {
+            header(
+                'Location: ' . URLROOT . '/Resources'
+            );
 
-        FlashHelper::error($result['message']);
-
-    } else {
+            exit;
+        }
 
         FlashHelper::success($result['message']);
 
-    }
-
-    header(
-        'Location: ' . URLROOT . '/Resources'
-    );
-
-    exit;
-}
-
-/**
- * DELETE RESOURCE
- */
-public function delete($id)
-{
-    AuthHelper::can('resources.delete');
-
-    $model = $this->model('ResourceModel');
-
-    $result = $model->delete($id);
-
-    if (!$result['success']) {
-
-        FlashHelper::error($result['message']);
-
         header(
             'Location: ' . URLROOT . '/Resources'
         );
 
         exit;
     }
-
-    FlashHelper::success($result['message']);
-
-    header(
-        'Location: ' . URLROOT . '/Resources'
-    );
-
-    exit;
-}
-
-
 }

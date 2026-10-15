@@ -26,109 +26,158 @@ class UnitModel extends Model
     /**
      * GET UNIT BY ID
      */
-    public function getById($id)
-    {
+  
+public function getById($id)
+{
+    return $this->db->query(
+        "SELECT * FROM units WHERE id = ?",
+        [(int) $id]
+    )->fetch();
+}
 
-        return $this->db->query(
-            "
-            SELECT *
-            FROM units
-            WHERE id = '$id'
-            "
-        )->fetch();
-
-    }
 
 
 
     /**
  * CREATE UNIT
  */
+
 public function create($data)
 {
-    $result = $this->db->query(
-        "
-        INSERT INTO units
-        (
-            unit_code,
-            unit_name,
-            unit_name_a,
-            description,
-            status
-        )
-        VALUES
-        (
-            ?,
-            ?,
-            ?,
-            ?,
-            ?
-        )
-        ",
-        [
-            $data['unit_code'],
-            $data['unit_name'],
-            $data['unit_name_a'],
-            $data['description'],
-            $data['status']
-        ]
-    );
+    if (
+        trim($data['unit_code']) === '' ||
+        trim($data['unit_name']) === '' ||
+        trim($data['unit_name_a']) === ''
+    ) {
+        return [
+            'success' => false,
+            'message' => __('unit_required_fields')
+        ];
+    }
 
-    if (!$result) {
+    try {
+        $this->db->query(
+            "INSERT INTO units
+            (unit_code, unit_name, unit_name_a, description, status)
+            VALUES (?, ?, ?, ?, ?)",
+            [
+                $data['unit_code'],
+                $data['unit_name'],
+                $data['unit_name_a'],
+                $data['description'],
+                $data['status']
+            ]
+        );
+
+        return [
+            'success' => true,
+            'message' => __('unit_created_successfully')
+        ];
+    } catch (PDOException $e) {
+        if (
+            $e->getCode() === '23000' &&
+            isset($e->errorInfo[1]) &&
+            (int) $e->errorInfo[1] === 1062
+        ) {
+            $errorMessage = $e->getMessage();
+
+            if (strpos($errorMessage, 'uq_unit_name_a') !== false) {
+                $message = __('unit_name_a_duplicate');
+            } elseif (strpos($errorMessage, 'uq_unit_code') !== false) {
+                $message = __('unit_code_duplicate');
+            } elseif (strpos($errorMessage, 'uq_unit_name') !== false) {
+                $message = __('unit_name_duplicate');
+            } else {
+                $message = __('unit_duplicate_or_constraint_error');
+            }
+
+            return ['success' => false, 'message' => $message];
+        }
+
+        error_log('Unit create error: ' . $e->getMessage());
 
         return [
             'success' => false,
             'message' => __('unit_create_failed')
         ];
-
     }
-
-    return [
-        'success' => true,
-        'message' => __('unit_created_successfully')
-    ];
 }
 
 
 /**
  * UPDATE UNIT
  */
+
 public function update($id, $data)
 {
-    $result = $this->db->query(
-        "
-        UPDATE units
-        SET
-            unit_code = ?,
-            unit_name = ?,
-            unit_name_a = ?,
-            description = ?,
-            status = ?
-        WHERE id = ?
-        ",
-        [
-            $data['unit_code'],
-            $data['unit_name'],
-            $data['unit_name_a'],
-            $data['description'],
-            $data['status'],
-            $id
-        ]
-    );
+    $id = (int) $id;
 
-    if (!$result) {
+    if (!$this->getById($id)) {
+        return [
+            'success' => false,
+            'message' => __('unit_not_found')
+        ];
+    }
+
+    if (
+        trim($data['unit_code']) === '' ||
+        trim($data['unit_name']) === '' ||
+        trim($data['unit_name_a']) === ''
+    ) {
+        return [
+            'success' => false,
+            'message' => __('unit_required_fields')
+        ];
+    }
+
+    try {
+        $this->db->query(
+            "UPDATE units
+             SET unit_code = ?, unit_name = ?, unit_name_a = ?,
+                 description = ?, status = ?
+             WHERE id = ?",
+            [
+                $data['unit_code'],
+                $data['unit_name'],
+                $data['unit_name_a'],
+                $data['description'],
+                $data['status'],
+                $id
+            ]
+        );
+
+        return [
+            'success' => true,
+            'message' => __('unit_updated_successfully')
+        ];
+    } catch (PDOException $e) {
+        if (
+            $e->getCode() === '23000' &&
+            isset($e->errorInfo[1]) &&
+            (int) $e->errorInfo[1] === 1062
+        ) {
+            $errorMessage = $e->getMessage();
+
+            if (strpos($errorMessage, 'uq_unit_name_a') !== false) {
+                $message = __('unit_name_a_duplicate');
+            } elseif (strpos($errorMessage, 'uq_unit_code') !== false) {
+                $message = __('unit_code_duplicate');
+            } elseif (strpos($errorMessage, 'uq_unit_name') !== false) {
+                $message = __('unit_name_duplicate');
+            } else {
+                $message = __('unit_duplicate_or_constraint_error');
+            }
+
+            return ['success' => false, 'message' => $message];
+        }
+
+        error_log('Unit update error: ' . $e->getMessage());
 
         return [
             'success' => false,
             'message' => __('unit_update_failed')
         ];
-
     }
-
-    return [
-        'success' => true,
-        'message' => __('unit_updated_successfully')
-    ];
 }
 
 
