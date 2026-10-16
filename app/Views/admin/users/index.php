@@ -1,7 +1,7 @@
 <h3><?= __('users') ?></h3>
 
 <a href="<?= URLROOT ?>/admin/createUser"
-   class="btn btn-primary mb-3">
+    class="btn btn-primary mb-3">
 
     <?= __('add_user') ?>
 
@@ -24,52 +24,54 @@
 
         <tbody>
 
-        <?php foreach ($users as $user): ?>
+            <?php foreach ($users as $user): ?>
 
-            <tr>
+                <tr>
 
-                <td>
-                    <?= htmlspecialchars($user->full_name) ?>
-                </td>
+                    <td>
+                        <?= htmlspecialchars($user->full_name) ?>
+                    </td>
 
-                <td>
-                    <?= htmlspecialchars($user->user_name) ?>
-                </td>
+                    <td>
+                        <?= htmlspecialchars($user->user_name) ?>
+                    </td>
 
-                <td>
-                    <?= htmlspecialchars($user->email) ?>
-                </td>
+                    <td>
+                        <?= htmlspecialchars($user->email) ?>
+                    </td>
 
-                <td>
-                    <?= htmlspecialchars($user->mobile) ?>
-                </td>
+                    <td>
+                        <?= htmlspecialchars($user->mobile) ?>
+                    </td>
 
-                <td>
-                    <?= htmlspecialchars($user->role_name ?? '-') ?>
-                </td>
+                    <td>
+                        <?= htmlspecialchars($user->role_name ?? '-') ?>
+                    </td>
 
-                <td>
+                    <td>
 
-                    <a href="<?= URLROOT ?>/admin/editUser/<?= $user->id ?>"
-                       class="btn btn-sm btn-warning">
-                        <?= __('edit') ?>
-                    </a>
-
-                    <?php if ($user->id != $_SESSION['user_id']): ?>
-
-                        <a href="<?= URLROOT ?>/users/delete/<?= $user->id ?>"
-                           class="btn btn-sm btn-danger"
-                           onclick="return confirm(<?= json_encode(__('delete_user_confirm')) ?>)">
-                            <?= __('delete') ?>
+                        <a href="<?= URLROOT ?>/admin/editUser/<?= $user->id ?>"
+                            class="btn btn-sm btn-warning">
+                            <?= __('edit') ?>
                         </a>
 
-                    <?php endif; ?>
+                        <?php if ($user->id != $_SESSION['user_id']): ?>
 
-                </td>
+                          
+<a href="<?= URLROOT ?>/users/delete/<?= (int) $user->id ?>"
+   class="btn btn-sm btn-danger"
+   onclick="return confirm('<?= htmlspecialchars(__('delete_user_confirm'), ENT_QUOTES, 'UTF-8') ?>');">
+    <i class="fas fa-trash"></i> <?= __('delete') ?>
+</a>
 
-            </tr>
 
-        <?php endforeach; ?>
+                        <?php endif; ?>
+
+                    </td>
+
+                </tr>
+
+            <?php endforeach; ?>
 
         </tbody>
 

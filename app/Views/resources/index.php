@@ -154,13 +154,13 @@
                                     </td>
 
                                     <td>
-    <?php
-    $unitName = $language === 'ar'
-        ? ($resource->unit_name_a ?? $resource->unit_name ?? null)
-        : ($resource->unit_name ?? null);
-    ?>
+                                        <?php
+                                        $unitName = $language === 'ar'
+                                            ? ($resource->unit_name_a ?? $resource->unit_name ?? null)
+                                            : ($resource->unit_name ?? null);
+                                        ?>
 
-    <?= htmlspecialchars($unitName ?? __('not_available')) ?>
+                                        <?= htmlspecialchars($unitName ?? __('not_available')) ?>
                                     </td>
 
                                     <td>
@@ -189,7 +189,6 @@
                                             <?= __('edit') ?>
 
                                         </a>
-
 
                                         <a href="<?= URLROOT ?>/Resources/delete/<?= $resource->id ?>"
                                             class="btn btn-sm btn-danger"

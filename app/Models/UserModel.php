@@ -124,23 +124,24 @@ public function createUser($data)
 }
 
 
-    public function update($id, $data)
-    {
-        $existing = $this->getById($id);
 
-        return $this->db->query(
-            "
-            UPDATE users
-            SET
-                full_name = ?,
-                user_name = ?,
-                email = ?,
-                mobile = ?,
-                photo = ?,
-                role_id = ?,
-                password = ?
-            WHERE id = ?
-            ",
+public function update($id, $data)
+{
+    $existing = $this->getById($id);
+
+    if (!$existing) {
+        return [
+            'success' => false,
+            'message' => __('user_not_found')
+        ];
+    }
+
+    try {
+        $this->db->query(
+            "UPDATE users
+             SET full_name = ?, user_name = ?, email = ?, mobile = ?,
+                 photo = ?, role_id = ?, password = ?
+             WHERE id = ?",
             [
                 $data['full_name'] ?? $existing->full_name,
                 $data['user_name'] ?? $existing->user_name,
@@ -152,7 +153,42 @@ public function createUser($data)
                 $id
             ]
         );
+
+        return [
+            'success' => true,
+            'message' => __('user_updated_successfully')
+        ];
+
+    } catch (PDOException $e) {
+        if ($e->getCode() === '23000') {
+            $errorInfo = $e->errorInfo ?? [];
+            $errorMessage = $errorInfo[2] ?? '';
+
+            if (strpos($errorMessage, 'uq_user_name') !== false) {
+                $message = __('user_name_duplicate');
+            } elseif (strpos($errorMessage, 'uq_email') !== false) {
+                $message = __('email_duplicate');
+            } elseif (strpos($errorMessage, 'uq_mobile') !== false) {
+                $message = __('mobile_duplicate');
+            } else {
+                $message = __('user_duplicate_or_constraint_error');
+            }
+
+            return [
+                'success' => false,
+                'message' => $message
+            ];
+        }
+
+        error_log('User update failed: ' . $e->getMessage());
+
+        return [
+            'success' => false,
+            'message' => __('user_create_failed')
+        ];
     }
+}
+
 
     
 public function delete($id)
