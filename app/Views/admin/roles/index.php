@@ -109,15 +109,12 @@
         </a>
 
 
-        <a
-            href="<?= URLROOT ?>/admin/deleteRole/<?= $role->id ?>"
-            class="btn btn-sm btn-danger"
-
-            onclick="return confirm(<?= json_encode(__('delete_role_confirm')) ?>)">
-
-            <?= __('delete') ?>
-
-        </a>
+        
+<a href="<?= URLROOT ?>/admin/deleteRole/<?= (int) $role->id ?>"
+   class="btn btn-sm btn-danger"
+   onclick="return confirm(<?= htmlspecialchars(json_encode(__('delete_role_confirm'), JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8') ?>);">
+    <?= __('delete') ?>
+</a>
 
     </div>
 

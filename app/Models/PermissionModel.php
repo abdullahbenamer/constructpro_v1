@@ -32,14 +32,50 @@ public function create($name, $description = null)
     )->fetch();
 }
 
+
 public function update($id, $name, $description = null)
 {
-    return $this->db->query(
-        "UPDATE permissions
-         SET name = ?, description = ?
-         WHERE id = ?",
-        [$name, $description, $id]
-    );
+    $count = $this->db->query(
+        "SELECT COUNT(*) AS total
+         FROM role_permissions
+         WHERE permission_id = ?",
+        [$id]
+    )->fetch();
+
+    if ((int) $count->total > 0) {
+        return [
+            'success' => false,
+            'message' => __('permission_cannot_be_edited_in_use')
+        ];
+    }
+
+    $existing = $this->getById($id);
+
+    if (!$existing) {
+        return [
+            'success' => false,
+            'message' => __('permission_not_found')
+        ];
+    }
+
+    try {
+        $this->db->query(
+            "UPDATE permissions
+             SET name = ?, description = ?
+             WHERE id = ?",
+            [$name, $description, $id]
+        );
+
+        return [
+            'success' => true
+        ];
+
+    } catch (Throwable $e) {
+        return [
+            'success' => false,
+            'message' => __('permission_update_failed')
+        ];
+    }
 }
 
 public function delete($id)

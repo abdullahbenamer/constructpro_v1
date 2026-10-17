@@ -1051,7 +1051,7 @@ return [
     'save_permissions'          => 'حفظ الصلاحيات',
 
     'edit_role'                 => 'تعديل الدور',
-    'delete_role_confirm'      => 'هل تريد حذف الدور؟',
+    'delete_role_confirm'      => 'هل بالفعل تريد حذف هذا الدور؟',
     'no_permissions'            => 'لا توجد صلاحيات',
 
     'system_settings'           => 'إعدادات النظام',
@@ -1076,7 +1076,7 @@ return [
     'update_user'                               => 'تحديث المستخدم',
     'users'                                     => 'المستخدمون',
     'add_user'                                  => 'إضافة مستخدم',
-    'delete_user_confirm'                      => 'هل تريد حذف هذا المستخدم؟',
+    'delete_user_confirm'                      => 'هل تريد حذف هذا المستخدم بالفعل؟',
 
     'user_details' => 'تفاصيل المستخدم',
     'user_information' => 'معلومات المستخدم',
@@ -1171,6 +1171,11 @@ return [
     'permission_stock_transfers_view' => 'عرض تحويلات المخزون',
     'permission_suppliers_view' => 'عرض الموردين',
     'permission_users_view' => 'عرض المستخدمين',
+    'permission_dashboard_view' => 'عرض لوحة التحكم',
+    'permission_goods_receipts_print' => 'طباعة سند استلام البضائع (GRN)',
+    'permission_goods_receipts_view' => 'عرض سند استلام البضائع (GRN)',
+    'permission_goods_returns_print' => 'طباعة سند إرجاع البضائع',
+    'permission_group_dashboard' => 'مجموعة صلاحيات لوحة التحكم',
 
 
     'about_system_english' => 'عن نظام ConstructPro ERP',
@@ -1668,9 +1673,9 @@ return [
     'resource_category_code_duplicate' => 'توجد فئة بهذا الرمز حاليا.',
     'resource_category_duplicate_or_constraint_error' => 'تعذر حفظ فئة الموارد بسبب تكرار الاسم أو الرمز أو مخالفة أحد قيود قاعدة البيانات.',
 
-     'resource_category_name_a_duplicate' => 'الاسم العربي لفئة الموارد مكرر',
+    'resource_category_name_a_duplicate' => 'الاسم العربي لفئة الموارد مكرر',
 
-        'unit_not_found' => 'الوحدة غير موجودة.',
+    'unit_not_found' => 'الوحدة غير موجودة.',
     'unit_created_successfully' => 'تم إنشاء الوحدة بنجاح.',
     'unit_create_failed' => 'تعذر إنشاء الوحدة.',
     'unit_updated_successfully' => 'تم تحديث الوحدة بنجاح.',
@@ -1908,25 +1913,26 @@ return [
 
 
     'unit_required_fields' => 'رمز الوحدة والاسم الإنجليزي والاسم العربي حقول مطلوبة.',
-'unit_code_duplicate' => 'رمز الوحدة موجود مسبقاً.',
-'unit_name_duplicate' => 'اسم الوحدة بالإنجليزية موجود مسبقاً.',
-'unit_name_a_duplicate' => 'اسم الوحدة بالعربية موجود مسبقاً.',
-'unit_duplicate_or_constraint_error' => 'حدث تكرار في بيانات وحدة القياس أو خطأ .',
+    'unit_code_duplicate' => 'رمز الوحدة موجود مسبقاً.',
+    'unit_name_duplicate' => 'اسم الوحدة بالإنجليزية موجود مسبقاً.',
+    'unit_name_a_duplicate' => 'اسم الوحدة بالعربية موجود مسبقاً.',
+    'unit_duplicate_or_constraint_error' => 'حدث تكرار في بيانات وحدة القياس أو خطأ .',
 
-'resource_required_fields' => 'رمز المورد والاسم الإنجليزي والاسم العربي والفئة ووحدة القياس ونوع حقول مطلوبة.',
-'resource_code_duplicate' => 'رمز المورد موجود مسبقاً.',
-'resource_name_duplicate' => 'اسم المورد بالإنجليزية موجود مسبقاً.',
-'resource_name_a_duplicate' => 'اسم المورد بالعربية موجود مسبقاً.',
-'resource_duplicate_or_constraint_error' => 'حدث تكرار أو خطأ في بيانات المورد',
+    'resource_required_fields' => 'رمز المورد والاسم الإنجليزي والاسم العربي والفئة ووحدة القياس ونوع حقول مطلوبة.',
+    'resource_code_duplicate' => 'رمز المورد موجود مسبقاً.',
+    'resource_name_duplicate' => 'اسم المورد بالإنجليزية موجود مسبقاً.',
+    'resource_name_a_duplicate' => 'اسم المورد بالعربية موجود مسبقاً.',
+    'resource_duplicate_or_constraint_error' => 'حدث تكرار أو خطأ في بيانات المورد',
 
 
-'user_cannot_be_deleted_in_use' => 'لا يمكن حذف هذا المستخدم لارتباط حسابه بسجلات أخرى في النظام.',
-'user_delete_failed' => 'تعذر حذف المستخدم بسبب خطأ في قاعدة البيانات.',
+    'user_cannot_be_deleted_in_use' => 'لا يمكن حذف هذا المستخدم لارتباط حسابه بسجلات أخرى في النظام.',
+    'user_delete_failed' => 'تعذر حذف المستخدم بسبب خطأ في قاعدة البيانات.',
 
-'user_name_duplicate' => 'اسم المستخدم موجود مسبقاً. يرجى اختيار اسم آخر.',
-'email_duplicate' => 'البريد الإلكتروني موجود مسبقاً. يرجى استخدام بريد آخر.',
-'mobile_duplicate' => 'رقم الهاتف المحمول موجود مسبقاً. يرجى استخدام رقم آخر.',
-'user_duplicate_or_constraint_error' => 'حدث تكرار في بيانات المستخدم أو خطأ في قيود قاعدة البيانات.',
-'user_create_failed' => 'تعذر إنشاء المستخدم. يرجى المحاولة مرة أخرى.',
+    'user_name_duplicate' => 'اسم المستخدم موجود مسبقاً. يرجى اختيار اسم آخر.',
+    'email_duplicate' => 'البريد الإلكتروني موجود مسبقاً. يرجى استخدام بريد آخر.',
+    'mobile_duplicate' => 'رقم الهاتف المحمول موجود مسبقاً. يرجى استخدام رقم آخر.',
+    'user_duplicate_or_constraint_error' => 'حدث تكرار في بيانات المستخدم أو خطأ في قيود قاعدة البيانات.',
+    'user_create_failed' => 'تعذر إنشاء المستخدم. يرجى المحاولة مرة أخرى.',
 
+    'permission_cannot_be_edited_in_use' => 'لا يمكن تعديل هذه الصلاحية لأنها مُعيَّنة لدور واحد أو أكثر.',
 ];

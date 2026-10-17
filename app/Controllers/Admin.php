@@ -355,37 +355,42 @@ public function editUser($id)
         $this->view('admin/roles/assign_permissions', $data);
     }
 
-    // Edit Permissions
-    public function editPermission($id)
-    {
-        $permModel = $this->model('Permission');
+    
+public function editPermission($id)
+{
+    AuthHelper::can('admin.access');
 
-        if ($_POST) {
+    $permModel = $this->model('Permission');
 
-            $result = $permModel->update(
-                $id,
-                $_POST['name'],
-                $_POST['description'] ?? null
-            );
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            if ($result) {
-                FlashHelper::success(
-                    __('permission_updated_successfully')
-                );
-            } else {
-                FlashHelper::error(
-                    __('permission_update_failed')
-                );
-            }
+        $result = $permModel->update(
+            (int) $id,
+            trim($_POST['name'] ?? ''),
+            trim($_POST['description'] ?? '')
+        );
 
+        if (!$result['success']) {
+            FlashHelper::error($result['message']);
             header('Location: ' . URLROOT . '/admin/permissions');
             exit;
         }
 
-        $data['permission'] = $permModel->getById($id);
-
-        $this->view('admin/permissions/edit', $data);
+        FlashHelper::success(__('permission_updated_successfully'));
+        header('Location: ' . URLROOT . '/admin/permissions');
+        exit;
     }
+
+    $data['permission'] = $permModel->getById((int) $id);
+
+    if (!$data['permission']) {
+        FlashHelper::error(__('permission_not_found'));
+        header('Location: ' . URLROOT . '/admin/permissions');
+        exit;
+    }
+
+    $this->view('admin/permissions/edit', $data);
+}
 
     public function deletePermission($id)
     {

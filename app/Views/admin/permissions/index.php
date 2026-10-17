@@ -53,9 +53,7 @@
             <a
                 href="<?= URLROOT ?>/admin/deletePermission/<?= $perm->id ?>"
                 class="btn btn-sm btn-danger"
-
-                onclick="return confirm(<?= json_encode(__('delete_permission_confirm')) ?>)">
-
+              onclick="return confirm('<?= htmlspecialchars(__('delete_permission_confirm'), ENT_QUOTES, 'UTF-8') ?>');">
                 <?= __('delete') ?>
 
             </a>

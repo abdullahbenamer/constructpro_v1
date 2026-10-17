@@ -242,7 +242,7 @@ return [
     'available' => 'Available',
     'physical'  => 'Physical',
     'resource_description_placeholder' => 'Description of the Resource ....',
-      'resource_description_missing' => 'There is no description ...',
+    'resource_description_missing' => 'There is no description ...',
     'select_location' => 'Select Location',
     'quantity_warning' => "It's not possible to exceed the available quantity in the selected Warehouse",
     'unit_cost' => 'Unit Cost',
@@ -1054,7 +1054,7 @@ return [
     'save_permissions'         => 'Save Permissions',
 
     'edit_role'                => 'Edit Role',
-    'delete_role_confirm'     => 'Delete role?',
+    'delete_role_confirm'     => 'Are you sure you want to delete this role?',
     'no_permissions'           => 'No permissions',
 
     'system_settings'          => 'System Settings',
@@ -1127,6 +1127,12 @@ return [
     'permission_group_quotation'             => 'QUOTATIONS',
     'permission_group_resource_requisitions' => 'RESOURCE REQUISITIONS',
     'permission_group_stock_transfers'       => 'STOCK TRANSFERS',
+
+    'permission_dashboard_view' => 'DASHBOARD VIEW',
+    'permission_goods_receipts_print' => 'PRINT GRN',
+    'permission_goods_receipts_view' => 'VIEW GRN',
+    'permission_goods_returns_print' => 'PRINT GOODS RETURN NOTE',
+    'permission_group_dashboard' => 'DASHBOARD PERMISSIONS GROUP',
 
     'login' => 'Login',
 
@@ -1739,121 +1745,121 @@ return [
 
     'total_cost' => 'Total Cost',
 
-'total_material_cost' => 'Total Material Cost',
+    'total_material_cost' => 'Total Material Cost',
 
-'total_resources_cost' => 'Total Resources Cost',
+    'total_resources_cost' => 'Total Resources Cost',
 
-'unit_of_measure' => 'Unit of Measure',
+    'unit_of_measure' => 'Unit of Measure',
 
-'grn_remaining' => 'GRNRemaining',
+    'grn_remaining' => 'GRNRemaining',
 
-// GOODS RETURNS
-'goods_return_note'                       => 'Goods Return Note',
-'grn_number'                              => 'GRN Number',
-'return_from_warehouse'                   => 'Return From Warehouse',
-'quantity_returned'                       => 'Quantity Returned',
-'supplier_acknowledgement'                => 'Supplier Acknowledgement',
-'supplier_receipt_acknowledgement_text'   => 'I hereby acknowledge receipt of the returned goods described above.',
-'received_by'                             => 'Received By',
-'position'                                => 'Position',
-'signature'                               => 'Signature',
-'supplier_stamp'                          => 'Supplier Stamp',
-'goods_receipt_note' => 'Goods Receipt Note',
-'receipt_date' => 'Receipt Date',
-'received_quantity' => 'Received Quantity',
-'delivery_acknowledgement' => 'Delivery Acknowledgement',
-'receiving_acknowledgement' => 'Receiving Acknowledgement',
-'goods_receipt_acknowledgement_text' => 'I hereby acknowledge receipt of the goods described above.',
-'delivered_by' => 'Delivered By',
-'stamp' => 'Stamp',
-'goods_receipts_report' => 'Goods Receipts (GRN Report)',
-'received_amount' => 'Received Goods Amount',
+    // GOODS RETURNS
+    'goods_return_note'                       => 'Goods Return Note',
+    'grn_number'                              => 'GRN Number',
+    'return_from_warehouse'                   => 'Return From Warehouse',
+    'quantity_returned'                       => 'Quantity Returned',
+    'supplier_acknowledgement'                => 'Supplier Acknowledgement',
+    'supplier_receipt_acknowledgement_text'   => 'I hereby acknowledge receipt of the returned goods described above.',
+    'received_by'                             => 'Received By',
+    'position'                                => 'Position',
+    'signature'                               => 'Signature',
+    'supplier_stamp'                          => 'Supplier Stamp',
+    'goods_receipt_note' => 'Goods Receipt Note',
+    'receipt_date' => 'Receipt Date',
+    'received_quantity' => 'Received Quantity',
+    'delivery_acknowledgement' => 'Delivery Acknowledgement',
+    'receiving_acknowledgement' => 'Receiving Acknowledgement',
+    'goods_receipt_acknowledgement_text' => 'I hereby acknowledge receipt of the goods described above.',
+    'delivered_by' => 'Delivered By',
+    'stamp' => 'Stamp',
+    'goods_receipts_report' => 'Goods Receipts (GRN Report)',
+    'received_amount' => 'Received Goods Amount',
 
-'cancel_reservation_confirm'       => 'Are you sure you want to cancel this reservation?',
-'reservation_cancelled_successfully' => 'Reservation cancelled successfully.',
-'reservation_cancellation_failed'   => 'Unable to cancel the reservation.',
+    'cancel_reservation_confirm'       => 'Are you sure you want to cancel this reservation?',
+    'reservation_cancelled_successfully' => 'Reservation cancelled successfully.',
+    'reservation_cancellation_failed'   => 'Unable to cancel the reservation.',
 
-'reservation_updated_successfully' => 'Reservation updated successfully.',
-'reservation_update_failed'        => 'Unable to update the reservation.',
-'reservation_deleted_successfully' => 'Reservation deleted successfully.',
-'reservation_deletion_failed'      => 'Unable to delete the reservation.',
-'print_goods_return'              => 'Print Goods Return',
+    'reservation_updated_successfully' => 'Reservation updated successfully.',
+    'reservation_update_failed'        => 'Unable to update the reservation.',
+    'reservation_deleted_successfully' => 'Reservation deleted successfully.',
+    'reservation_deletion_failed'      => 'Unable to delete the reservation.',
+    'print_goods_return'              => 'Print Goods Return',
 
-'please_select_unit_of_measure' => 'Please select a unit of measure.',
-'inventory_unit_not_found'      => 'The selected inventory item has no unit of measure assigned.',
+    'please_select_unit_of_measure' => 'Please select a unit of measure.',
+    'inventory_unit_not_found'      => 'The selected inventory item has no unit of measure assigned.',
 
-'select_unit_of_measure' => '-- Select Measure Unit --',
+    'select_unit_of_measure' => '-- Select Measure Unit --',
 
-'requisition_created_successfully'
+    'requisition_created_successfully'
     => 'Resource requisition created successfully.',
 
-'requisition_creation_failed'
+    'requisition_creation_failed'
     => 'Unable to create the resource requisition.',
 
-'requisition_updated_successfully'
+    'requisition_updated_successfully'
     => 'Resource requisition updated successfully.',
 
-'requisition_update_failed'
+    'requisition_update_failed'
     => 'Unable to update the resource requisition.',
 
-'requisition_deleted_successfully'
+    'requisition_deleted_successfully'
     => 'Resource requisition deleted successfully.',
 
-'requisition_deletion_failed'
+    'requisition_deletion_failed'
     => 'Unable to delete the resource requisition.',
 
-'requisition_item_added_successfully'
+    'requisition_item_added_successfully'
     => 'Requisition item added successfully.',
 
-'requisition_item_addition_failed'
+    'requisition_item_addition_failed'
     => 'Unable to add the requisition item.',
 
-'requisition_item_updated_successfully'
+    'requisition_item_updated_successfully'
     => 'Requisition item updated successfully.',
 
-'requisition_item_update_failed'
+    'requisition_item_update_failed'
     => 'Unable to update the requisition item.',
 
-'requisition_item_deleted_successfully'
+    'requisition_item_deleted_successfully'
     => 'Requisition item deleted successfully.',
 
-'requisition_item_deletion_failed'
+    'requisition_item_deletion_failed'
     => 'Unable to delete the requisition item.',
 
-'resource_requisition_fulfillment_failed'
+    'resource_requisition_fulfillment_failed'
     => 'Unable to fulfill the resource requisition.',
 
     'resource_requisition_item_added_successfully'
     => 'Requisition item added successfully.',
 
-'resource_requisition_item_updated_successfully'
+    'resource_requisition_item_updated_successfully'
     => 'Requisition item updated successfully.',
 
-'unable_to_update_resource_requisition_item'
+    'unable_to_update_resource_requisition_item'
     => 'Unable to update the requisition item.',
 
-'resource_requisition_item_deleted_successfully'
+    'resource_requisition_item_deleted_successfully'
     => 'Requisition item deleted successfully.',
 
-'unable_to_delete_resource_requisition_item'
+    'unable_to_delete_resource_requisition_item'
     => 'Unable to delete the requisition item.',
 
-'please_select_cost_type' => 'Please select (Financial) Cost Type.',
+    'please_select_cost_type' => 'Please select (Financial) Cost Type.',
 
-'resource_requisition_updated_successfully'
+    'resource_requisition_updated_successfully'
     => 'Resource Requisition updated successfully.',
 
-'resource_requisition_deleted_successfully'
+    'resource_requisition_deleted_successfully'
     => 'Resource Requisition deleted successfully.',
 
-'confirm_delete_resource_requisition'
+    'confirm_delete_resource_requisition'
     => 'Are you sure you want to delete this Resource Requisition?',
 
-'financial_cost_type' => 'Financial Cost Type',
+    'financial_cost_type' => 'Financial Cost Type',
 
-'not_available' => 'Not Available',
+    'not_available' => 'Not Available',
 
-'database_connection_failed' =>
+    'database_connection_failed' =>
     'The system is temporarily unavailable. Please try again later or contact the system administrator.',
 
     'username_or_email' => 'User Name or Email...',
@@ -1862,72 +1868,76 @@ return [
 
     // Advance payment receipts
     'customer_advance_receipt' => 'Customer Advance Receipt',
-'receipt_number' => 'Receipt Number',
-'print_receipt' => 'Print Receipt',
-'amount_received' => 'Amount Received',
-'received_with_thanks' => 'Received with thanks',
-'customer_signature' => 'Customer Signature',
+    'receipt_number' => 'Receipt Number',
+    'print_receipt' => 'Print Receipt',
+    'amount_received' => 'Amount Received',
+    'received_with_thanks' => 'Received with thanks',
+    'customer_signature' => 'Customer Signature',
 
-'project_details' => 'Project Details',
+    'project_details' => 'Project Details',
 
-'amount_in_words' => 'Amount in Words',
-'Cash' => 'Cash',
-'Bank Transfer' => 'Bank Transfer',
-'Cheque' => 'Cheque',
-    
-'receipt_acknowledgement' => 'RECEIPT ACKNOWLEDGEMENT',
-'advance_received_confirmation' => 'The advance payment stated above has been received.',
-'name_and_signature' => 'Name & Signature',
-'authorized_signature' => 'Authorized Signature',
-'company_representative' => 'Company Representative',
-'company_stamp' => 'COMPANY STAMP',
+    'amount_in_words' => 'Amount in Words',
+    'Cash' => 'Cash',
+    'Bank Transfer' => 'Bank Transfer',
+    'Cheque' => 'Cheque',
 
-'customer_email_already_exists' => 'A customer with this email address already exists. Please use a different email address.',
-'customer_creation_failed' => 'Unable to create the customer. Please try again.',
-'customer_mobile_already_exists' => 'A customer with this mobile number already exists. Please use a different mobile number.',
+    'receipt_acknowledgement' => 'RECEIPT ACKNOWLEDGEMENT',
+    'advance_received_confirmation' => 'The advance payment stated above has been received.',
+    'name_and_signature' => 'Name & Signature',
+    'authorized_signature' => 'Authorized Signature',
+    'company_representative' => 'Company Representative',
+    'company_stamp' => 'COMPANY STAMP',
 
-'customer_phone_already_exists' => 'A customer with this phone number already exists. Please use a different phone number.',
-'customer_company_already_exists' => 'A customer with this company name already exists. Please use a different company name.',
+    'customer_email_already_exists' => 'A customer with this email address already exists. Please use a different email address.',
+    'customer_creation_failed' => 'Unable to create the customer. Please try again.',
+    'customer_mobile_already_exists' => 'A customer with this mobile number already exists. Please use a different mobile number.',
 
-
-'supplier_created_successfully' => 'Supplier created successfully.',
-'supplier_updated_successfully' => 'Supplier updated successfully.',
-'unable_to_create_supplier' => 'Unable to create supplier.',
-'unable_to_update_supplier' => 'Unable to update supplier.',
-'contact_person_required' => 'Contact person is required.',
-'phone_required' => 'Phone/mobile number is required.',
-'email_invalid' => 'Please enter a valid email address.',
-'supplier_company_name_duplicate' => 'A supplier with this company name already exists.',
-'supplier_phone_duplicate' => 'A supplier with this phone/mobile number already exists.',
-'supplier_email_duplicate' => 'A supplier with this email address already exists.',
-'supplier_duplicate_or_constraint_error' => 'The supplier could not be saved because of a duplicate value or a database constraint.',
-'delete_supplier_confirm' => 'Are you sure you want to delete this supplier? This action cannot be undone.',
-
-'resource_category_name_required' => 'Category name is required.',
-'resource_category_code_required' => 'Category code is required.',
-'resource_category_duplicate_or_constraint_error' => 'The category could not be saved because its name or code is duplicated, or a database constraint was violated.',
+    'customer_phone_already_exists' => 'A customer with this phone number already exists. Please use a different phone number.',
+    'customer_company_already_exists' => 'A customer with this company name already exists. Please use a different company name.',
 
 
-'unit_required_fields' => 'Unit code, English name, and Arabic name are required.',
-'unit_code_duplicate' => 'This unit code already exists.',
-'unit_name_duplicate' => 'This English unit name already exists.',
-'unit_name_a_duplicate' => 'This Arabic unit name already exists.',
-'unit_duplicate_or_constraint_error' => 'A duplicate unit value or database constraint error occurred.',
+    'supplier_created_successfully' => 'Supplier created successfully.',
+    'supplier_updated_successfully' => 'Supplier updated successfully.',
+    'unable_to_create_supplier' => 'Unable to create supplier.',
+    'unable_to_update_supplier' => 'Unable to update supplier.',
+    'contact_person_required' => 'Contact person is required.',
+    'phone_required' => 'Phone/mobile number is required.',
+    'email_invalid' => 'Please enter a valid email address.',
+    'supplier_company_name_duplicate' => 'A supplier with this company name already exists.',
+    'supplier_phone_duplicate' => 'A supplier with this phone/mobile number already exists.',
+    'supplier_email_duplicate' => 'A supplier with this email address already exists.',
+    'supplier_duplicate_or_constraint_error' => 'The supplier could not be saved because of a duplicate value or a database constraint.',
+    'delete_supplier_confirm' => 'Are you sure you want to delete this supplier? This action cannot be undone.',
+
+    'resource_category_name_required' => 'Category name is required.',
+    'resource_category_code_required' => 'Category code is required.',
+    'resource_category_duplicate_or_constraint_error' => 'The category could not be saved because its name or code is duplicated, or a database constraint was violated.',
 
 
-'resource_required_fields' => 'Resource code, English name, Arabic name, category, unit, and resource type are required.',
-'resource_code_duplicate' => 'This resource code already exists.',
-'resource_name_duplicate' => 'This English resource name already exists.',
-'resource_name_a_duplicate' => 'This Arabic resource name already exists.',
-'resource_duplicate_or_constraint_error' => 'A duplicate resource value or database constraint error occurred.',
+    'unit_required_fields' => 'Unit code, English name, and Arabic name are required.',
+    'unit_code_duplicate' => 'This unit code already exists.',
+    'unit_name_duplicate' => 'This English unit name already exists.',
+    'unit_name_a_duplicate' => 'This Arabic unit name already exists.',
+    'unit_duplicate_or_constraint_error' => 'A duplicate unit value or database constraint error occurred.',
 
-'user_cannot_be_deleted_in_use' => 'This user cannot be deleted because other records depend on this account.',
-'user_delete_failed' => 'Unable to delete this user due to a database error.',
 
-'user_name_duplicate' => 'This username already exists. Please choose another.',
-'email_duplicate' => 'This email address already exists. Please use another.',
-'mobile_duplicate' => 'This mobile number already exists. Please use another.',
-'user_duplicate_or_constraint_error' => 'A duplicate user value or database constraint error occurred.',
-'user_create_failed' => 'Unable to create the user. Please try again.',
+    'resource_required_fields' => 'Resource code, English name, Arabic name, category, unit, and resource type are required.',
+    'resource_code_duplicate' => 'This resource code already exists.',
+    'resource_name_duplicate' => 'This English resource name already exists.',
+    'resource_name_a_duplicate' => 'This Arabic resource name already exists.',
+    'resource_duplicate_or_constraint_error' => 'A duplicate resource value or database constraint error occurred.',
+
+    'user_cannot_be_deleted_in_use' => 'This user cannot be deleted because other records depend on this account.',
+    'user_delete_failed' => 'Unable to delete this user due to a database error.',
+
+    'user_name_duplicate' => 'This username already exists. Please choose another.',
+    'email_duplicate' => 'This email address already exists. Please use another.',
+    'mobile_duplicate' => 'This mobile number already exists. Please use another.',
+    'user_duplicate_or_constraint_error' => 'A duplicate user value or database constraint error occurred.',
+    'user_create_failed' => 'Unable to create the user. Please try again.',
+
+    'permission_cannot_be_edited_in_use' => 'This permission cannot be edited because it is assigned to one or more roles.',
+
+
 
 ];
