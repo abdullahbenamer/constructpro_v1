@@ -10,9 +10,9 @@
             <?= __('inventory_item') ?>
         </label>
 
-        <select name="inventory_id" 
-        id="inventory_id" 
-        class="form-select"
+        <select name="inventory_id"
+            id="inventory_id"
+            class="form-select"
             required>
 
             <?php foreach ($inventory as $item) : ?>
@@ -21,6 +21,7 @@
                     value="<?= $item->id ?>"
                     data-uom-en="<?= htmlspecialchars($item->unit_name ?? '') ?>"
                     data-uom-ar="<?= htmlspecialchars($item->unit_name_a ?? '') ?>"
+                    data-allow-fraction="<?= (int)($item->allow_fraction ?? 0) ?>"
                     <?= $reservation->inventory_id == $item->id ? 'selected' : '' ?>>
 
                     <?= htmlspecialchars($item->name) ?>
@@ -115,11 +116,13 @@
             <?= __('quantity') ?>
         </label>
 
-        <input type="number"
-            step="0.01"
-            min="0.01"
+        <input
+            type="number"
+            id="quantity"
             name="quantity"
-            value="<?= $reservation->quantity ?>"
+            value="<?= htmlspecialchars((string)$reservation->quantity) ?>"
+            step="1"
+            min="1"
             class="form-control"
             required>
 
@@ -195,6 +198,50 @@
                 option.dataset.uomEn || '';
         }
     }
+
+// address the Qty Allow and Not Allow Fraction 
+const quantityInput = document.getElementById('quantity');
+
+function updateQuantityRules() {
+    const option =
+        inventorySelect.options[inventorySelect.selectedIndex];
+
+    const allowFraction =
+        option?.dataset.allowFraction === '1';
+
+    quantityInput.step = allowFraction ? '0.01' : '1';
+    quantityInput.min = allowFraction ? '0.01' : '1';
+
+    quantityInput.setCustomValidity('');
+}
+
+inventorySelect.addEventListener('change', updateQuantityRules);
+
+// Apply rules to the initially selected item.
+updateQuantityRules();
+
+quantityInput.addEventListener('input', function () {
+    const option =
+        inventorySelect.options[inventorySelect.selectedIndex];
+
+    const allowFraction =
+        option?.dataset.allowFraction === '1';
+
+    if (
+        !allowFraction &&
+        this.value !== '' &&
+        !Number.isInteger(Number(this.value))
+    ) {
+        this.setCustomValidity(
+            '<?= htmlspecialchars(__('quantity_must_be_whole_number'), ENT_QUOTES, 'UTF-8') ?>'
+        );
+    } else {
+        this.setCustomValidity('');
+    }
+});
+
+
+
 
     inventorySelect.addEventListener(
         'change',

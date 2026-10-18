@@ -1,0 +1,10 @@
+inventoryreservations/cancel/id
+
+STEP 3 — EXPAND THE V1 INTEGRITY AUDIT
+Your concern about other modules is justified. We should review every state-changing operation, especially:
+- Cancel, delete, edit and fulfill actions.
+- Inventory transfers and reversals.
+- Project cost creation and deletion.
+- Purchase orders, goods receiving and requisitions.
+- Financial entries and linked records.
+- Direct URL access and server-side permission checks.

@@ -3,7 +3,7 @@
 </h2>
 
 <a href="<?= URLROOT ?>/inventoryreservations/create"
-   class="btn btn-primary mb-3">
+    class="btn btn-primary mb-3">
 
     <?= __('new_reservation') ?>
 
@@ -31,192 +31,191 @@
 
     <tbody>
 
-<?php if (!empty($reservations)): ?>
+        <?php if (!empty($reservations)): ?>
 
-    <?php foreach ($reservations as $r): ?>
+            <?php foreach ($reservations as $r): ?>
 
-        <tr>
+                <tr>
 
-            <td>
-                <?= $r->created_at ?>
-            </td>
+                    <td>
+                        <?= $r->created_at ?>
+                    </td>
 
-            <td>
-                <?= htmlspecialchars($r->item_name) ?>
-            </td>
+                    <td>
+                        <?= htmlspecialchars($r->item_name) ?>
+                    </td>
 
-            <td>
-                <?= htmlspecialchars($r->sku) ?>
-            </td>
+                    <td>
+                        <?= htmlspecialchars($r->sku) ?>
+                    </td>
 
-            <td>
-                <?= htmlspecialchars(
-                    $r->project_name ?? '-'
-                ) ?>
-            </td>
-
-            <?php
-
-                $required =
-                    strtotime($r->required_by_date);
-
-                $today =
-                    strtotime(date('Y-m-d'));
-
-            ?>
-
-            <td>
-
-                <?php if (
-                    $r->status == 'ACTIVE' &&
-                    $required < $today
-                ): ?>
-
-                    <span class="badge bg-danger">
-
-                        <?= date(
-                            'd M Y',
-                            $required
+                    <td>
+                        <?= htmlspecialchars(
+                            $r->project_name ?? '-'
                         ) ?>
+                    </td>
 
-                    </span>
+                    <?php
 
-                <?php elseif (
-                    $r->status == 'ACTIVE' &&
-                    $required == $today
-                ): ?>
+                    $required =
+                        strtotime($r->required_by_date);
 
-                    <span class="badge bg-warning text-dark">
+                    $today =
+                        strtotime(date('Y-m-d'));
 
-                        <?= __('today') ?>
+                    ?>
 
-                    </span>
+                    <td>
 
-                <?php else: ?>
+                        <?php if (
+                            $r->status == 'ACTIVE' &&
+                            $required < $today
+                        ): ?>
 
-                    <span class="badge bg-success">
+                            <span class="badge bg-danger">
 
-                        <?= date(
-                            'd M Y',
-                            $required
-                        ) ?>
+                                <?= date(
+                                    'd M Y',
+                                    $required
+                                ) ?>
 
-                    </span>
+                            </span>
 
-                <?php endif; ?>
+                        <?php elseif (
+                            $r->status == 'ACTIVE' &&
+                            $required == $today
+                        ): ?>
 
-            </td>
+                            <span class="badge bg-warning text-dark">
 
-            <td>
-                <?= $r->quantity ?>
-            </td>
+                                <?= __('today') ?>
 
-            <td>
+                            </span>
 
-                <a href="<?= URLROOT ?>/users/details/<?= $r->created_by ?>">
+                        <?php else: ?>
 
-                    <i class="fas fa-user text-primary"></i>
+                            <span class="badge bg-success">
 
-                    <?= htmlspecialchars(
-                        $r->created_by_name ?? '-'
-                    ) ?>
+                                <?= date(
+                                    'd M Y',
+                                    $required
+                                ) ?>
 
-                </a>
+                            </span>
 
-            </td>
+                        <?php endif; ?>
 
-            <td>
+                    </td>
 
-                <?php if ($r->status == 'ACTIVE'): ?>
+                    <td>
+                        <?= $r->quantity ?>
+                    </td>
 
-                    <span class="badge bg-warning">
-                        <?= __('active') ?>
-                    </span>
+                    <td>
 
-                <?php elseif ($r->status == 'FULFILLED'): ?>
+                        <a href="<?= URLROOT ?>/users/details/<?= $r->created_by ?>">
 
-                    <span class="badge bg-success">
-                        <?= __('fulfilled') ?>
-                    </span>
+                            <i class="fas fa-user text-primary"></i>
 
-                <?php else: ?>
+                            <?= htmlspecialchars(
+                                $r->created_by_name ?? '-'
+                            ) ?>
 
-                    <span class="badge bg-danger">
-                        <?= __('cancelled') ?>
-                    </span>
+                        </a>
 
-                <?php endif; ?>
+                    </td>
 
-            </td>
-<td style="white-space: nowrap;">
+                    <td>
 
-    <?php if ($r->status == 'ACTIVE'): ?>
+                        <?php if ($r->status == 'ACTIVE'): ?>
 
-        <a href="<?= URLROOT ?>/inventoryreservations/edit/<?= $r->id ?>"
-           class="btn btn-primary btn-sm"> <?= __('edit') ?> </a>
+                            <span class="badge bg-warning">
+                                <?= __('active') ?>
+                            </span>
 
-        <a href="<?= URLROOT ?>/inventoryreservations/fulfill/<?= $r->id ?>"
-           class="btn btn-success btn-sm"> <?= __('fulfill') ?> </a>
+                        <?php elseif ($r->status == 'FULFILLED'): ?>
 
-   <a
-    href="<?= URLROOT ?>/inventoryreservations/cancel/<?= $r->id ?>"
-    class="btn btn-warning btn-sm"
-    onclick="return confirm(<?= json_encode(
-        __('cancel_reservation_confirm')
-    ) ?>)"
->
-    <?= __('cancel') ?>
-</a>
+                            <span class="badge bg-success">
+                                <?= __('fulfilled') ?>
+                            </span>
 
-        <a href="<?= URLROOT ?>/inventoryreservations/delete/<?= $r->id ?>"
-           class="btn btn-outline-danger btn-sm"
-           onclick="return confirm('<?= __('delete_reservation_confirm') ?>')">
-            <?= __('delete') ?>
-        </a>
+                        <?php else: ?>
 
-    <?php endif; ?>
+                            <span class="badge bg-danger">
+                                <?= __('cancelled') ?>
+                            </span>
 
-</td>
+                        <?php endif; ?>
 
-        </tr>
+                    </td>
+                    <td style="white-space: nowrap;">
 
-    <?php endforeach; ?>
+                        <?php if ($r->status == 'ACTIVE'): ?>
 
-<?php else: ?>
+                            <a href="<?= URLROOT ?>/inventoryreservations/edit/<?= $r->id ?>"
+                                class="btn btn-primary btn-sm"> <?= __('edit') ?> </a>
 
-    <tr>
+                            <a href="<?= URLROOT ?>/inventoryreservations/fulfill/<?= $r->id ?>"
+                                class="btn btn-success btn-sm"> <?= __('fulfill') ?> </a>
 
-        <td colspan="9"
-            class="text-center py-5">
+                            <a
+                                href="<?= URLROOT ?>/inventoryreservations/cancel/<?= $r->id ?>"
+                                class="btn btn-warning btn-sm"
+                                onclick="return confirm(<?= json_encode(
+                                                            __('cancel_reservation_confirm')
+                                                        ) ?>)">
+                                <?= __('cancel') ?>
+                            </a>
+                            <a href="<?= URLROOT ?>/inventoryreservations/delete/<?= (int) $r->id ?>"
+                                class="btn btn-sm btn-danger"
+                                onclick="return confirm('<?= htmlspecialchars(__('delete_reservation_confirm'), ENT_QUOTES, 'UTF-8') ?>');">
+                                <i class="fas fa-trash"></i>
+                                <?= __('delete') ?>
+                            </a>
 
-            <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+                        <?php endif; ?>
 
-            <h5 class="text-muted">
+                    </td>
 
-                <?= __('no_inventory_reservations_found') ?>
+                </tr>
 
-            </h5>
+            <?php endforeach; ?>
 
-            <p class="text-muted mb-3">
+        <?php else: ?>
 
-                <?= __('no_inventory_reservations_currently') ?>
+            <tr>
 
-            </p>
+                <td colspan="9"
+                    class="text-center py-5">
 
-            <a href="<?= URLROOT ?>/inventoryreservations/create"
-               class="btn btn-primary">
+                    <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
 
-                <i class="fas fa-plus"></i>
+                    <h5 class="text-muted">
 
-                <?= __('create_first_reservation') ?>
+                        <?= __('no_inventory_reservations_found') ?>
 
-            </a>
+                    </h5>
 
-        </td>
+                    <p class="text-muted mb-3">
 
-    </tr>
+                        <?= __('no_inventory_reservations_currently') ?>
 
-<?php endif; ?>
+                    </p>
+
+                    <a href="<?= URLROOT ?>/inventoryreservations/create"
+                        class="btn btn-primary">
+
+                        <i class="fas fa-plus"></i>
+
+                        <?= __('create_first_reservation') ?>
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+        <?php endif; ?>
 
     </tbody>
 

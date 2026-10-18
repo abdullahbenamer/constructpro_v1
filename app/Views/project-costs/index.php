@@ -435,6 +435,7 @@
                     <th><?= __('date') ?></th>
                     <th><?= __('cost_type') ?></th>
                     <th><?= __('description') ?></th>
+                     <th><?= __('location') ?></th>
                     <th class="text-end"><?= __('quantity') ?></th>
                     <th class="text-end"><?= __('unit_price') ?></th>
                     <th class="text-end"><?= __('total') ?></th>
@@ -474,7 +475,7 @@
     ?>
 
     <?= htmlspecialchars(
-        $costTypeLabels[$costType] ?? ($costType ?: 'N/A')
+        $costTypeLabels[$costType] ?? ($costType ?: __('n_a'))
     ) ?>
 </td>
 
@@ -507,6 +508,10 @@
 
                             <?php endif; ?>
                         </td>
+
+                       <td>
+    <?= htmlspecialchars($cost->location_name ?? __('n_a')) ?>
+</td>
 
                         <td class="text-end">
                             <?= number_format((float)($cost->quantity ?? 0), 2) ?>

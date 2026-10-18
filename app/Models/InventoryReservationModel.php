@@ -237,16 +237,17 @@ ORDER BY r.created_at DESC
 }
 
     public function cancel($id)
-    {
-        return $this->db->query(
-            "
-            UPDATE inventory_reservations
-            SET status = 'CANCELLED'
-            WHERE id = ?
-            ",
-            [$id]
-        );
-    }
+{
+    return $this->db->query(
+        "
+        UPDATE inventory_reservations
+        SET status = 'CANCELLED'
+        WHERE id = ?
+          AND status = 'ACTIVE'
+        ",
+        [$id]
+    );
+}
 
     public function getById($id)
 {

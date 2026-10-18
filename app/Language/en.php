@@ -1708,7 +1708,7 @@ return [
 
     'supplier_information' => 'Supplier Information',
 
-    'cannot_delete_user_assigned_location_or_in_use' =>  'This location cannot be deleted because it is assigned to users or is referenced by existing transactions or historical records.',
+    'cannot_delete_user_assigned_location_or_in_use' =>  'This location cannot be deleted, it is linked to a Project, assigned to users or is referenced by existing transactions or historical records.',
 
     'unable_to_delete_location' => 'Unable to delete location.',
 
@@ -1937,7 +1937,7 @@ return [
     'user_create_failed' => 'Unable to create the user. Please try again.',
 
     'permission_cannot_be_edited_in_use' => 'This permission cannot be edited because it is assigned to one or more roles.',
-
+'reservation_cannot_be_cancelled_not_active' => 'This reservation cannot be cancelled because it is no longer active.',
 
 
 ];

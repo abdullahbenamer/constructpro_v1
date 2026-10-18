@@ -116,7 +116,28 @@ class InventoryReservations extends Controller
                 exit;
             }
 
+            $item = $inventoryModel->getById(
+                (int) $_POST['inventory_id']
+            );
 
+            if (!$item) {
+                FlashHelper::error(__('inventory_item_not_found'));
+
+                header('Location: ' . URLROOT . '/inventoryreservations/create');
+                exit;
+            }
+
+            $quantity = (float) $_POST['quantity'];
+
+            if (
+                (int) $item->allow_fraction !== 1 &&
+                floor($quantity) != $quantity
+            ) {
+                FlashHelper::error(__('quantity_must_be_whole_number'));
+
+                header('Location: ' . URLROOT . '/inventoryreservations/create');
+                exit;
+            }
             /*
         |--------------------------------------------------------------------------
         | CREATE RESERVATION
@@ -189,75 +210,74 @@ class InventoryReservations extends Controller
         );
     }
 
-  public function fulfill($id)
-{
-    AuthHelper::can('inventory_reservations.fulfill');
+    public function fulfill($id)
+    {
+        AuthHelper::can('inventory_reservations.fulfill');
 
-    try {
+        try {
 
-      
-   $service = $this->service('ReservationFulfillment');;
 
-        $service->fulfill(
-            (int)$id
+            $service = $this->service('ReservationFulfillment');;
+
+            $service->fulfill(
+                (int)$id
+            );
+
+            FlashHelper::success(
+                __('reservation_fulfilled_successfully')
+            );
+        } catch (Throwable $e) {
+
+            FlashHelper::error(
+                $e->getMessage()
+            );
+        }
+
+        header(
+            'Location: ' .
+                URLROOT .
+                '/inventoryreservations'
         );
 
-        FlashHelper::success(
-            __('reservation_fulfilled_successfully')
-        );
-
-    } catch (Throwable $e) {
-
-        FlashHelper::error(
-            $e->getMessage()
-        );
+        exit;
     }
-
-    header(
-        'Location: ' .
-            URLROOT .
-            '/inventoryreservations'
-    );
-
-    exit;
-}
 
     public function cancel($id)
-{
-    AuthHelper::can('inventory_reservations.cancel');
+    {
+        AuthHelper::can('inventory_reservations.cancel');
 
-    $model = $this->model(
-        'InventoryReservation'
-    );
+        $model = $this->model('InventoryReservation');
 
-    $result = $model->cancel($id);
+        $reservation = $model->getById($id);
 
-    if ($result) {
+        if (!$reservation) {
+            FlashHelper::error(__('reservation_not_found'));
+        } elseif ($reservation->status !== 'ACTIVE') {
+            FlashHelper::error(
+                __('reservation_cannot_be_cancelled_not_active')
+            );
+        } else {
+            $result = $model->cancel($id);
 
-        FlashHelper::success(
-            __('reservation_cancelled_successfully')
-        );
+            if ($result) {
+                FlashHelper::success(
+                    __('reservation_cancelled_successfully')
+                );
+            } else {
+                FlashHelper::error(
+                    __('reservation_cancellation_failed')
+                );
+            }
+        }
 
-    } else {
-
-        FlashHelper::error(
-            __('reservation_cancellation_failed')
-        );
+        header('Location: ' . URLROOT . '/inventoryreservations');
+        exit;
     }
-
-    header(
-        'Location: ' .
-            URLROOT .
-            '/inventoryreservations'
-    );
-
-    exit;
-}
 
     public function edit($id)
     {
 
-    AuthHelper::can('inventory_reservations.edit');
+        AuthHelper::can('inventory_reservations.edit');
 
         $model = $this->model(
             'InventoryReservation'
@@ -300,50 +320,73 @@ class InventoryReservations extends Controller
             exit;
         }
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $result = $model->update($id, [
+            $result = $model->update($id, [
 
-        'inventory_id' =>
-        $_POST['inventory_id'],
+                'inventory_id' =>
+                $_POST['inventory_id'],
 
-        'location_id' =>
-        $_POST['location_id'] ?: null,
+                'location_id' =>
+                $_POST['location_id'] ?: null,
 
-        'project_id' =>
-        $_POST['project_id'] ?: null,
+                'project_id' =>
+                $_POST['project_id'] ?: null,
 
-        'quantity' =>
-        $_POST['quantity'],
+                'quantity' =>
+                $_POST['quantity'],
 
-        'reference' =>
-        $_POST['reference'],
+                'reference' =>
+                $_POST['reference'],
 
-        'notes' =>
-        $_POST['notes']
-    ]);
+                'notes' =>
+                $_POST['notes']
+            ]);
 
-    if ($result) {
+            // --------RESERVATION FRACTION VALIDATION-----------
+            $item = $inventoryModel->getById(
+    (int) $_POST['inventory_id']
+);
 
-        FlashHelper::success(
-            __('reservation_updated_successfully')
-        );
+$quantity = (float) ($_POST['quantity'] ?? 0);
 
-    } else {
+if (!$item) {
+    FlashHelper::error(__('inventory_item_not_found'));
 
-        FlashHelper::error(
-            __('reservation_update_failed')
-        );
-    }
-
-    header(
-        'Location: ' .
-            URLROOT .
-            '/inventoryreservations'
-    );
-
+    header('Location: ' . URLROOT . '/inventoryreservations/edit/' . (int)$id);
     exit;
 }
+
+if (
+    (int) $item->allow_fraction !== 1 &&
+    floor($quantity) != $quantity
+) {
+    FlashHelper::error(__('quantity_must_be_whole_number'));
+
+    header('Location: ' . URLROOT . '/inventoryreservations/edit/' . (int)$id);
+    exit;
+}
+
+            if ($result) {
+
+                FlashHelper::success(
+                    __('reservation_updated_successfully')
+                );
+            } else {
+
+                FlashHelper::error(
+                    __('reservation_update_failed')
+                );
+            }
+
+            header(
+                'Location: ' .
+                    URLROOT .
+                    '/inventoryreservations'
+            );
+
+            exit;
+        }
 
         $data['reservation'] = $reservation;
 
@@ -365,7 +408,7 @@ class InventoryReservations extends Controller
     public function delete($id)
     {
 
-    AuthHelper::can('inventory_reservations.delete');
+        AuthHelper::can('inventory_reservations.delete');
 
         $model = $this->model(
             'InventoryReservation'
@@ -400,34 +443,33 @@ class InventoryReservations extends Controller
             exit;
         }
 
-       $result = $model->delete($id);
+        $result = $model->delete($id);
 
-if ($result) {
+        if ($result) {
 
-    FlashHelper::success(
-        __('reservation_deleted_successfully')
-    );
+            FlashHelper::success(
+                __('reservation_deleted_successfully')
+            );
+        } else {
 
-} else {
+            FlashHelper::error(
+                __('reservation_deletion_failed')
+            );
+        }
 
-    FlashHelper::error(
-        __('reservation_deletion_failed')
-    );
-}
+        header(
+            'Location: ' .
+                URLROOT .
+                '/inventoryreservations'
+        );
 
-header(
-    'Location: ' .
-        URLROOT .
-        '/inventoryreservations'
-);
-
-exit;
+        exit;
     }
 
     public function getItemLocations()
     {
 
-    AuthHelper::can('inventory_reservations.create');
+        AuthHelper::can('inventory_reservations.create');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             exit;
@@ -451,8 +493,8 @@ exit;
 
     public function getLocationStock()
     {
-         AuthHelper::can('inventory_reservations.create');
-         
+        AuthHelper::can('inventory_reservations.create');
+
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             exit;
         }

@@ -37,14 +37,15 @@
 
             <?php foreach ($inventory as $item): ?>
 
- <option
-    value="<?= $item->id ?>"
-    data-uom-en="<?= htmlspecialchars($item->unit_name ?? '') ?>"
-    data-uom-ar="<?= htmlspecialchars($item->unit_name_a ?? '') ?>">
+                <option
+                    value="<?= $item->id ?>"
+                    data-uom-en="<?= htmlspecialchars($item->unit_name ?? '') ?>"
+                    data-uom-ar="<?= htmlspecialchars($item->unit_name_a ?? '') ?>"
+                    data-allow-fraction="<?= (int)($item->allow_fraction ?? 0) ?>">
 
-    <?= htmlspecialchars($item->name) ?>
+                    <?= htmlspecialchars($item->name) ?>
 
-</option>
+                </option>
 
             <?php endforeach; ?>
 
@@ -52,19 +53,19 @@
 
     </div>
 
-   <div class="mb-3" style="max-width: 400px;">
+    <div class="mb-3" style="max-width: 400px;">
 
-    <label>
-        <?= __('unit_of_measure') ?>
-    </label>
+        <label>
+            <?= __('unit_of_measure') ?>
+        </label>
 
-    <input
-        type="text"
-        id="uom"
-        class="form-control"
-        readonly>
+        <input
+            type="text"
+            id="uom"
+            class="form-control"
+            readonly>
 
-</div>
+    </div>
 
     <div class="mb-3">
 
@@ -137,9 +138,9 @@
         <input
             type="number"
             id="quantity"
-            step="0.01"
-            min="0.01"
             name="quantity"
+            step="1"
+            min="1"
             class="form-control"
             required>
 
@@ -248,32 +249,32 @@
 
             const inventoryId = this.value;
 
-           const selectedOption =
-    this.options[this.selectedIndex];
+            const selectedOption =
+                this.options[this.selectedIndex];
 
-const currentLanguage =
-    document.documentElement.lang.toLowerCase();
+            const currentLanguage =
+                document.documentElement.lang.toLowerCase();
 
-if (currentLanguage === 'ar') {
+            if (currentLanguage === 'ar') {
 
-    uomInput.value =
-        selectedOption.dataset.uomAr || '';
+                uomInput.value =
+                    selectedOption.dataset.uomAr || '';
 
-} else {
+            } else {
 
-    uomInput.value =
-        selectedOption.dataset.uomEn || '';
-}
+                uomInput.value =
+                    selectedOption.dataset.uomEn || '';
+            }
             // ---------------
-          if (!inventoryId) {
+            if (!inventoryId) {
 
-    uomInput.value = '';
+                uomInput.value = '';
 
-    locationSelect.innerHTML =
-        '<option value=""><?= __('select_inventory_item_first') ?></option>';
+                locationSelect.innerHTML =
+                    '<option value=""><?= __('select_inventory_item_first') ?></option>';
 
-    return;
-}
+                return;
+            }
             // Reset location dropdown
             locationSelect.innerHTML =
                 '<option value=""><?= __('loading_locations') ?></option>';
@@ -346,6 +347,38 @@ if (currentLanguage === 'ar') {
 <script>
     const quantityInput =
         document.getElementById('quantity');
+
+    const allowFraction = () => {
+        const selectedOption =
+            inventorySelect.options[inventorySelect.selectedIndex];
+
+        return selectedOption?.dataset.allowFraction === '1';
+    };
+
+    inventorySelect.addEventListener('change', function() {
+        const fractional = allowFraction();
+
+        quantityInput.step = fractional ? '0.01' : '1';
+        quantityInput.min = fractional ? '0.01' : '1';
+        quantityInput.value = '';
+        quantityInput.setCustomValidity('');
+    });
+
+    quantityInput.addEventListener('input', function() {
+        const quantity = Number(this.value);
+
+        if (
+            !allowFraction() &&
+            this.value !== '' &&
+            !Number.isInteger(quantity)
+        ) {
+            this.setCustomValidity(
+                '<?= htmlspecialchars(__('quantity_must_be_whole_number'), ENT_QUOTES, 'UTF-8') ?>'
+            );
+        } else {
+            this.setCustomValidity('');
+        }
+    });
 
     const stockInfo =
         document.getElementById('stockInfo');

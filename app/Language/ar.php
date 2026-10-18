@@ -1704,7 +1704,7 @@ return [
 
     'supplier_information' => 'حساب المورد',
 
-    'cannot_delete_user_assigned_location_or_in_use'  => 'لا يمكن حذف هذا الموقع لأنه مرتبط بمستخدمين أو بمعاملات أو بسجلات تاريخية موجودة على المنظومة.',
+    'cannot_delete_user_assigned_location_or_in_use'  => 'لا يمكن حذف هذا الموقع/المخزن لأنه مرتبط بمشروع أومستخدمين أو بمعاملات أو بسجلات تاريخية.',
 
 
     'unable_to_delete_location' =>
@@ -1935,4 +1935,6 @@ return [
     'user_create_failed' => 'تعذر إنشاء المستخدم. يرجى المحاولة مرة أخرى.',
 
     'permission_cannot_be_edited_in_use' => 'لا يمكن تعديل هذه الصلاحية لأنها مُعيَّنة لدور واحد أو أكثر.',
+
+    'reservation_cannot_be_cancelled_not_active' => 'لا يمكن إلغاء هذا الحجز لأنه لم يعد نشطًا.',
 ];

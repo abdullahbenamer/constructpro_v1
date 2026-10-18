@@ -108,14 +108,14 @@ private function validateFulfillmentCost(array $data): array
     return $data;
 }
 
-public function createFromFulfillment(array $data): int
-{
-  $data = $this->validateFulfillmentCost($data);
+// public function createFromFulfillment(array $data): int
+// {
+//   $data = $this->validateFulfillmentCost($data);
 
-    $data['description'] =
-        $this->buildSourceDescription($data);
+//     $data['description'] =
+//         $this->buildSourceDescription($data);
 
-    return $this->transaction(function () use ($data) {
+//     return $this->transaction(function () use ($data) {
 
         /*
         |--------------------------------------------------------------------------
@@ -123,7 +123,7 @@ public function createFromFulfillment(array $data): int
         |--------------------------------------------------------------------------
         */
 
-        $costId = $this->costModel->create($data);
+        // $costId = $this->costModel->create($data);
 
         /*
         |--------------------------------------------------------------------------
@@ -131,14 +131,14 @@ public function createFromFulfillment(array $data): int
         |--------------------------------------------------------------------------
         */
 
-        $this->recordLedger(
-            $costId,
-            $data
-        );
+//         $this->recordLedger(
+//             $costId,
+//             $data
+//         );
 
-        return $costId;
-    });
-}
+//         return $costId;
+//     });
+// }
 
 
     public function update(int $id, array $data): bool
@@ -471,6 +471,8 @@ if (
 
  private function validate(array $data): array
 {
+    $data['cost_type'] = strtoupper(trim($data['cost_type'] ?? ''));
+    
     if (empty($data['cost_type'])) {
         throw new Exception(__('cost_type_required'));
     }
