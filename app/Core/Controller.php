@@ -66,7 +66,7 @@ class Controller
     public function model($model)
     {
 
-        $model_class = $model . 'Model';  // example, Inventory → InventoryModel
+        $model_class = $model . 'Model';  // example, 'Inventory . Model'
         $model_file = '../app/Models/' . $model_class . '.php';
 
         if (file_exists($model_file)) {

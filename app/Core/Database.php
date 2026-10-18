@@ -182,7 +182,6 @@ public function commit()
     return $result;
 }
 
-
 /**
  * Roll back the current transaction level.
  *
