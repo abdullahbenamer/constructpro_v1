@@ -7,10 +7,10 @@ class PurchaseOrderService extends BaseService
     private PurchaseOrderModel $poModel;
 
     public function __construct(
-    Database $db,
-    PurchaseOrderModel $poModel
-) {
-    parent::__construct($db);
+        Database $db,
+        PurchaseOrderModel $poModel
+    ) {
+        parent::__construct($db);
 
         $this->poModel = $poModel;
     }
@@ -58,12 +58,12 @@ class PurchaseOrderService extends BaseService
             |--------------------------------------------------------------------------
             */
 
-            $po = $this->poModel->getById($poId);
+            $po = $this->poModel->getByIdForUpdate($poId);
 
             if (!$po) {
                 throw new Exception(
-                 __('purchase_order_not_found')
-                    
+                    __('purchase_order_not_found')
+
                 );
             }
 
@@ -75,7 +75,7 @@ class PurchaseOrderService extends BaseService
 
             if ($po->status === 'cancelled') {
                 throw new Exception(
-               __('purchase_order_already_cancelled')
+                    __('purchase_order_already_cancelled')
                 );
             }
 
@@ -91,7 +91,7 @@ class PurchaseOrderService extends BaseService
                 true
             )) {
                 throw new Exception(
-                     __('purchase_order_cannot_be_cancelled')
+                    __('purchase_order_cannot_be_cancelled')
                 );
             }
 
@@ -111,8 +111,11 @@ class PurchaseOrderService extends BaseService
             |
             */
 
-            $this->poModel->cancel($poId);
-
+            if (!$this->poModel->cancel($poId)) {
+                throw new Exception(
+                    __('purchase_order_cannot_be_cancelled')
+                );
+            }
             return true;
         });
     }

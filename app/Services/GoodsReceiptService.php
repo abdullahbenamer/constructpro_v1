@@ -81,7 +81,7 @@ class GoodsReceiptService extends BaseService
 |--------------------------------------------------------------------------
 */
 
-            $po = $this->poModel->getById($poId);
+          $po = $this->poModel->getByIdForUpdate($poId);
 
             if (!$po) {
                 throw new Exception(

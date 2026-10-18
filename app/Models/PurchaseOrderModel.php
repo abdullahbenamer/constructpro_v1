@@ -100,6 +100,20 @@ public function getById($id)
     )->fetch();
 }
 
+public function getByIdForUpdate(int $id)
+{
+    return $this->db->query(
+        "
+        SELECT *
+        FROM purchase_orders
+        WHERE id = ?
+        LIMIT 1
+        FOR UPDATE
+        ",
+        [$id]
+    )->fetch();
+}
+
     /*
     |--------------------------------------------------------------------------
     | CREATE PURCHASE ORDER
@@ -246,16 +260,19 @@ public function create($data)
     );
 }
 
-public function cancel($id)
+public function cancel($id): bool
 {
-    return $this->db->query(
+    $stmt = $this->db->query(
         "
         UPDATE purchase_orders
         SET status = 'cancelled'
         WHERE id = ?
+          AND status IN ('draft', 'approved', 'partial')
         ",
         [$id]
     );
+
+    return $stmt->rowCount() === 1;
 }
 
 public function isEditable($id)
@@ -372,11 +389,16 @@ public function updatePOStatus($po_id)
         $status = 'received';
     }
 
-    $this->db->query("
-        UPDATE purchase_orders
-        SET status = ?, received_at = IF(? = 'received', NOW(), received_at)
-        WHERE id = ?
-    ", [$status, $status, $po_id]);
+  $this->db->query(
+    "
+    UPDATE purchase_orders
+    SET status = ?,
+        received_at = IF(? = 'received', NOW(), received_at)
+    WHERE id = ?
+      AND status <> 'cancelled'
+    ",
+    [$status, $status, $po_id]
+);
 }
 
 public function getRemainingQuantity($po_id, $inventory_id)
