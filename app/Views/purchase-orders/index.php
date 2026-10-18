@@ -58,9 +58,33 @@
                 </td>
 
 
-                <td>
-                    <?= $po->status ?>
-                </td>
+               <td>
+    <?php if ($po->status === 'cancelled'): ?>
+
+        <span class="badge bg-danger">
+            <?= htmlspecialchars($po->status) ?>
+        </span>
+
+    <?php elseif ($po->status === 'received'): ?>
+
+        <span class="badge bg-success">
+            <?= htmlspecialchars($po->status) ?>
+        </span>
+
+    <?php elseif ($po->status === 'draft'): ?>
+
+        <span class="badge bg-secondary">
+            <?= htmlspecialchars($po->status) ?>
+        </span>
+
+    <?php else: ?>
+
+        <span class="badge bg-warning text-dark">
+            <?= htmlspecialchars($po->status) ?>
+        </span>
+
+    <?php endif; ?>
+</td>
 
 
                 <td>

@@ -108,34 +108,28 @@ private function validateFulfillmentCost(array $data): array
     return $data;
 }
 
+// REMOVE AFTER GLOBAL WIDE TEST
 // public function createFromFulfillment(array $data): int
 // {
 //   $data = $this->validateFulfillmentCost($data);
-
 //     $data['description'] =
 //         $this->buildSourceDescription($data);
-
 //     return $this->transaction(function () use ($data) {
-
         /*
         |--------------------------------------------------------------------------
         | CREATE PROJECT COST
         |--------------------------------------------------------------------------
         */
-
         // $costId = $this->costModel->create($data);
-
         /*
         |--------------------------------------------------------------------------
         | CREATE PROJECT LEDGER ENTRY
         |--------------------------------------------------------------------------
         */
-
 //         $this->recordLedger(
 //             $costId,
 //             $data
 //         );
-
 //         return $costId;
 //     });
 // }

@@ -45,7 +45,7 @@ class PurchaseOrders extends Controller
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $po_number = 'PO-' . date('YmdHis');
+            $po_number = 'PO-' . date('ymdHis');
 
             $delivery_method = $_POST['delivery_method'] ?? 'WAREHOUSE';
 
