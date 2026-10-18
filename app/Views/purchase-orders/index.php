@@ -19,6 +19,8 @@
             <th><?= __('supplier') ?></th>
 
             <th><?= __('status') ?></th>
+            
+            <th><?= __('receiving_status') ?></th>
 
             <th><?= __('total') ?></th>
 
@@ -86,6 +88,53 @@
     <?php endif; ?>
 </td>
 
+
+<td>
+    <?php
+    $receivingStatus = strtoupper(
+        $po->receiving_status ?? 'OPEN'
+    );
+
+    $receivingBadge = match ($receivingStatus) {
+        'OPEN'     => 'secondary',
+        'PARTIAL'  => 'warning',
+        'RECEIVED' => 'success',
+        default    => 'secondary',
+    };
+    ?>
+
+    <span class="badge bg-<?= $receivingBadge ?> <?= $receivingBadge === 'warning' ? 'text-dark' : '' ?>">
+        <?= htmlspecialchars($receivingStatus) ?>
+    </span>
+
+
+    <!-- ///////////////////// -->
+
+    <?php
+$receivingStatus = strtoupper(
+    $po->receiving_status ?? 'OPEN'
+);
+
+$receivingLabels = [
+    'OPEN'     => __('receiving_not_received'),
+    'PARTIAL'  => __('receiving_partially_received'),
+    'RECEIVED' => __('receiving_fully_received'),
+];
+
+$receivingBadge = match ($receivingStatus) {
+    'OPEN'     => 'secondary',
+    'PARTIAL'  => 'warning',
+    'RECEIVED' => 'success',
+    default    => 'secondary',
+};
+?>
+
+<span class="badge bg-<?= $receivingBadge ?> <?= $receivingBadge === 'warning' ? 'text-dark' : '' ?>">
+    <?= htmlspecialchars(
+        $receivingLabels[$receivingStatus] ?? $receivingStatus
+    ) ?>
+</span>
+</td>
 
                 <td>
                     <?= number_format($po->total_amount, 2) ?>

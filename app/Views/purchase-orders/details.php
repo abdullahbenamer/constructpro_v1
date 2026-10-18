@@ -20,42 +20,73 @@
                     <?= htmlspecialchars($po->supplier_name) ?>
                 </p>
 
-                <p>
-                    <strong><?= __('status') ?>:</strong>
+             <p>
+    <strong><?= __('status') ?>:</strong>
 
-                    <?php if ($po->status === 'draft'): ?>
+    <?php
+    $poStatus = strtolower($po->status);
 
-                        <span class="badge bg-secondary">
-                            <?= __('draft') ?>
-                        </span>
+    $statusBadge = match ($poStatus) {
+        'draft'     => 'secondary',
+        'approved'  => 'success',
+        'partial'   => 'warning',
+        'received'  => 'success',
+        'cancelled' => 'danger',
+        default     => 'dark',
+    };
+    ?>
 
-                    <?php elseif ($po->status === 'approved'): ?>
+    <span class="badge bg-<?= $statusBadge ?> <?= $statusBadge === 'warning' ? 'text-dark' : '' ?>">
+        <?= htmlspecialchars(ucfirst($poStatus)) ?>
+    </span>
+</p>
 
-                        <span class="badge bg-success">
-                            <?= __('approved') ?>
-                        </span>
+<p>
+    <strong><?= __('receiving_status') ?>:</strong>
 
-                    <?php elseif ($po->status === 'partially_received'): ?>
+    <?php
+    $receivingStatus = strtoupper(
+        $po->receiving_status ?? 'OPEN'
+    );
 
-                        <span class="badge bg-warning text-dark">
-                            <?= __('partially_received') ?>
-                        </span>
+    $receivingBadge = match ($receivingStatus) {
+        'OPEN'     => 'secondary',
+        'PARTIAL'  => 'warning',
+        'RECEIVED' => 'success',
+        default    => 'secondary',
+    };
+    ?>
 
-                    <?php elseif ($po->status === 'received'): ?>
+    <span class="badge bg-<?= $receivingBadge ?> <?= $receivingBadge === 'warning' ? 'text-dark' : '' ?>">
+        <?= htmlspecialchars($receivingStatus) ?>
+    </span>
 
-                        <span class="badge bg-primary">
-                            <?= __('received') ?>
-                        </span>
+    <!-- ///////////////////// -->
+     <?php
+$receivingStatus = strtoupper(
+    $po->receiving_status ?? 'OPEN'
+);
 
-                    <?php else: ?>
+$receivingLabels = [
+    'OPEN'     => __('receiving_not_received'),
+    'PARTIAL'  => __('receiving_partially_received'),
+    'RECEIVED' => __('receiving_fully_received'),
+];
 
-                        <span class="badge bg-dark">
-                            <?= htmlspecialchars($po->status) ?>
-                        </span>
+$receivingBadge = match ($receivingStatus) {
+    'OPEN'     => 'secondary',
+    'PARTIAL'  => 'warning',
+    'RECEIVED' => 'success',
+    default    => 'secondary',
+};
+?>
 
-                    <?php endif; ?>
-
-                </p>
+<span class="badge bg-<?= $receivingBadge ?> <?= $receivingBadge === 'warning' ? 'text-dark' : '' ?>">
+    <?= htmlspecialchars(
+        $receivingLabels[$receivingStatus] ?? $receivingStatus
+    ) ?>
+</span>
+</p>
 
             </div>
 

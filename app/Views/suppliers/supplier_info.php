@@ -440,6 +440,7 @@
 
                                 </th>
 
+
                                 <td>
 
                                     <span class="badge bg-success">
@@ -506,6 +507,10 @@
                                 <?= __('status') ?>
                             </th>
 
+                            <th>
+                                <?= __('receiving_status') ?>
+                            </th>
+
                             <th class="text-end">
                                 <?= __('total_amount') ?>
                             </th>
@@ -563,7 +568,6 @@
 
                                             default:
                                                 $badge = 'primary';
-
                                         }
 
                                         ?>
@@ -575,6 +579,52 @@
                                         </span>
 
                                     </td>
+
+                                    <td>
+    <?php
+    $receivingStatus = strtoupper(
+        $po->receiving_status ?? 'OPEN'
+    );
+
+    $receivingBadge = match ($receivingStatus) {
+        'OPEN'     => 'secondary',
+        'PARTIAL'  => 'warning',
+        'RECEIVED' => 'success',
+        default    => 'secondary',
+    };
+    ?>
+
+    <span class="badge bg-<?= $receivingBadge ?> <?= $receivingBadge === 'warning' ? 'text-dark' : '' ?>">
+        <?= htmlspecialchars($receivingStatus) ?>
+    </span>
+
+    <!-- ///////////////// -->
+
+    <?php
+$receivingStatus = strtoupper(
+    $po->receiving_status ?? 'OPEN'
+);
+
+$receivingLabels = [
+    'OPEN'     => __('receiving_not_received'),
+    'PARTIAL'  => __('receiving_partially_received'),
+    'RECEIVED' => __('receiving_fully_received'),
+];
+
+$receivingBadge = match ($receivingStatus) {
+    'OPEN'     => 'secondary',
+    'PARTIAL'  => 'warning',
+    'RECEIVED' => 'success',
+    default    => 'secondary',
+};
+?>
+
+<span class="badge bg-<?= $receivingBadge ?> <?= $receivingBadge === 'warning' ? 'text-dark' : '' ?>">
+    <?= htmlspecialchars(
+        $receivingLabels[$receivingStatus] ?? $receivingStatus
+    ) ?>
+</span>
+</td>
 
 
                                     <td class="text-end fw-bold">
@@ -620,7 +670,7 @@
 
                         <tr>
 
-                            <th colspan="2"
+                            <th colspan="3"
                                 class="text-primary fs-5">
 
                                 <?= __('total_purchase_order_value') ?>

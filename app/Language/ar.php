@@ -1937,4 +1937,10 @@ return [
     'permission_cannot_be_edited_in_use' => 'لا يمكن تعديل هذه الصلاحية لأنها مُعيَّنة لدور واحد أو أكثر.',
 
     'reservation_cannot_be_cancelled_not_active' => 'لا يمكن إلغاء هذا الحجز لأنه لم يعد نشطًا.',
+
+    'receiving_status' => 'حالة الاستلام',
+    'receiving_not_received'      => 'لم يتم الاستلام',
+    'receiving_partially_received' => 'تم الاستلام جزئياً',
+    'receiving_fully_received'    => 'تم الاستلام بالكامل',
+
 ];

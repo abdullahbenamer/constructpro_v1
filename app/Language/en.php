@@ -1939,5 +1939,10 @@ return [
     'permission_cannot_be_edited_in_use' => 'This permission cannot be edited because it is assigned to one or more roles.',
 'reservation_cannot_be_cancelled_not_active' => 'This reservation cannot be cancelled because it is no longer active.',
 
+'receiving_status' => 'Receiving Status',
+
+'receiving_not_received'      => 'Not Received',
+'receiving_partially_received' => 'Partially Received',
+'receiving_fully_received'    => 'Fully Received',
 
 ];
