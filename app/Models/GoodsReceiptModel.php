@@ -125,7 +125,7 @@ public function create($data)
     */
     public function nextNumber()
     {
-        return 'GRN-'.date('YmdHis');
+        return 'GRN-'.date('ymdHis');
     }
 
     public function countBySupplier($supplier_id)
