@@ -164,18 +164,19 @@
         </div>
 
 
-        <!-- EXPECTED DATE -->
-        <div class="mb-3">
+       <!-- EXPECTED DATE -->
+<div class="mb-3">
 
-            <label class="form-label">
-                <?= __('expected_date') ?>
-            </label>
+    <label class="form-label">
+        <?= __('expected_date') ?>
+    </label>
 
-            <input type="date"
-                   name="expected_date"
-                   class="form-control">
+    <input type="date"
+           name="expected_date"
+           class="form-control"
+           min="<?= date('Y-m-d') ?>">
 
-        </div>
+</div>
 
 
         <!-- NOTES -->
