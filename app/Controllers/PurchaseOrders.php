@@ -20,99 +20,140 @@ class PurchaseOrders extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function create()
-    {
-        AuthHelper::can('purchase_orders.create');
+   
+public function create()
+{
+    AuthHelper::can('purchase_orders.create');
 
-        $supplierModel = $this->model('Supplier');
-        $locationModel = $this->model('InventoryLocation');
-        $projectModel  = $this->model('Project');
+    $supplierModel = $this->model('Supplier');
+    $locationModel = $this->model('InventoryLocation');
+    $projectModel  = $this->model('Project');
 
-        $data = [
-            'suppliers' => $supplierModel->getAll(),
-            // 'warehouses' => $locationModel->getAll(),
+    $data = [
+        'suppliers' => $supplierModel->getAll(),
 
-            // prevent project inventory locations from appearing in the warehouse selector.
-            'warehouses' => array_filter(
-                $locationModel->getAll(),
-                function ($location) {
-                    return strpos($location->code ?? '', 'PRJ-') !== 0;
-                }
-            ),
-
-            'projects' => $projectModel->getAll()
-        ];
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            $po_number = 'PO-' . date('ymdHis');
-
-            $delivery_method = $_POST['delivery_method'] ?? 'WAREHOUSE';
-
-            $target_warehouse_id = null;
-            $project_id = null;
-
-            if ($delivery_method === 'WAREHOUSE') {
-
-                $target_warehouse_id = !empty($_POST['target_warehouse_id'])
-                    ? (int)$_POST['target_warehouse_id']
-                    : null;
-
-                if (!$target_warehouse_id) {
-                    FlashHelper::error(__('delivery_warehouse_required'));
-                    $this->view('purchase-orders/create', $data);
-                    return;
-                }
-            } elseif ($delivery_method === 'DIRECT_TO_PROJECT_SITE') {
-
-                $project_id = !empty($_POST['project_id'])
-                    ? (int)$_POST['project_id']
-                    : null;
-
-                if (!$project_id) {
-                    FlashHelper::error(__('project_required'));
-                    $this->view('purchase-orders/create', $data);
-                    return;
-                }
+        // Exclude project inventory locations from the warehouse selector.
+        'warehouses' => array_filter(
+            $locationModel->getAll(),
+            function ($location) {
+                return strpos($location->code ?? '', 'PRJ-') !== 0;
             }
+        ),
 
-            $poData = [
-                'po_number'           => $po_number,
-                'supplier_id'         => (int)$_POST['supplier_id'],
-                'project_id'          => $project_id,
-                'requisition_id'      => null,
-                'target_warehouse_id' => $target_warehouse_id,
-                'delivery_method'     => $delivery_method,
-                'order_date'          => $_POST['order_date'] ?? null,
-                'expected_date'       => $_POST['expected_date'] ?? null,
-                'notes'               => trim($_POST['notes'] ?? '')
-            ];
+        'projects' => $projectModel->getAll()
+    ];
 
-            try {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-                $model = $this->model('PurchaseOrderModel');
+        // Validate expected delivery date on the server.
+        $expectedDate = trim($_POST['expected_date'] ?? '');
 
-                $id = $model->create($poData);
+        if ($expectedDate !== '') {
+            $dateObject = DateTime::createFromFormat(
+                '!Y-m-d',
+                $expectedDate
+            );
 
-                if ($id) {
-                    FlashHelper::success(__('purchase_order_created_successfully'));
+            $dateErrors = DateTime::getLastErrors();
 
-                    header(
-                        'Location: ' .
-                            URLROOT .
-                            '/PurchaseOrders/details/' .
-                            $id
-                    );
-                    exit;
-                }
-            } catch (Throwable $e) {
+            $validDate = $dateObject !== false
+                && (
+                    $dateErrors === false
+                    || (
+                        $dateErrors['warning_count'] === 0
+                        && $dateErrors['error_count'] === 0
+                    )
+                )
+                && $dateObject->format('Y-m-d') === $expectedDate;
 
-                FlashHelper::error($e->getMessage());
+            if (!$validDate || $expectedDate < date('Y-m-d')) {
+                FlashHelper::error(
+                    __('expected_date_cannot_be_in_past')
+                );
+
+                $this->view('purchase-orders/create', $data);
+                return;
             }
         }
 
-        $this->view('purchase-orders/create', $data);
+        $po_number = 'PO-' . date('ymdHis');
+
+        $delivery_method = $_POST['delivery_method'] ?? 'WAREHOUSE';
+
+        $target_warehouse_id = null;
+        $project_id = null;
+
+        if ($delivery_method === 'WAREHOUSE') {
+
+            $target_warehouse_id = !empty($_POST['target_warehouse_id'])
+                ? (int) $_POST['target_warehouse_id']
+                : null;
+
+            if (!$target_warehouse_id) {
+                FlashHelper::error(__('delivery_warehouse_required'));
+                $this->view('purchase-orders/create', $data);
+                return;
+            }
+
+        } elseif ($delivery_method === 'DIRECT_TO_PROJECT_SITE') {
+
+            $project_id = !empty($_POST['project_id'])
+                ? (int) $_POST['project_id']
+                : null;
+
+            if (!$project_id) {
+                FlashHelper::error(__('project_required'));
+                $this->view('purchase-orders/create', $data);
+                return;
+            }
+
+        } else {
+            FlashHelper::error(__('invalid_delivery_method'));
+            $this->view('purchase-orders/create', $data);
+            return;
+        }
+
+        $poData = [
+            'po_number'           => $po_number,
+            'supplier_id'         => (int) ($_POST['supplier_id'] ?? 0),
+            'project_id'          => $project_id,
+            'requisition_id'      => null,
+            'target_warehouse_id' => $target_warehouse_id,
+            'delivery_method'     => $delivery_method,
+            'order_date'          => $_POST['order_date'] ?? null,
+            'expected_date'       => $expectedDate !== '' ? $expectedDate : null,
+            'notes'               => trim($_POST['notes'] ?? '')
+        ];
+
+        try {
+
+            $model = $this->model('PurchaseOrderModel');
+
+            $id = $model->create($poData);
+
+            if ($id) {
+                FlashHelper::success(
+                    __('purchase_order_created_successfully')
+                );
+
+                header(
+                    'Location: ' .
+                    URLROOT .
+                    '/PurchaseOrders/details/' .
+                    $id
+                );
+                exit;
+            }
+
+        } catch (Throwable $e) {
+
+            FlashHelper::error($e->getMessage());
+        }
     }
+
+    $this->view('purchase-orders/create', $data);
+}
+
 
 public function details($id = null)
 {
@@ -226,11 +267,9 @@ public function details($id = null)
             'total_cost' => $total
         ]);
 
-        // 🔥 ADD THIS
         $poModel = $this->model('PurchaseOrder');
         $poModel->updateTotals($po_id);
 
-        // header('Location: ' . URLROOT . '/purchaseorders/items/' . $po_id);
         header('Location: ' . URLROOT . '/purchaseorders/itemsPage/' . $po_id);
 
         exit;

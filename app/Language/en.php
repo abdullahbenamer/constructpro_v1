@@ -1945,4 +1945,8 @@ return [
 'receiving_partially_received' => 'Partially Received',
 'receiving_fully_received'    => 'Fully Received',
 
+'expected_date_cannot_be_in_past' => 'Expected delivery date cannot be in the past.',
+
+ 'expected_delivery_not_specified' => 'Not specified',
+
 ];

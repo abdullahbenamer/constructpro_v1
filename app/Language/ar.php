@@ -1943,4 +1943,7 @@ return [
     'receiving_partially_received' => 'تم الاستلام جزئياً',
     'receiving_fully_received'    => 'تم الاستلام بالكامل',
 
+    'expected_date_cannot_be_in_past' => 'لا يمكن أن يكون تاريخ التسليم المتوقع في الماضي.',
+   
+'expected_delivery_not_specified' => 'غير محدد',
 ];

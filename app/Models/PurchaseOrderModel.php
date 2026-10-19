@@ -187,7 +187,7 @@ public function create($data)
     |--------------------------------------------------------------------------
     */
 
-   public function getItems($po_id)
+  public function getItems($po_id)
 {
     return $this->db->query(
         "
@@ -195,18 +195,14 @@ public function create($data)
             poi.*,
             i.name,
             i.sku,
-            u.unit_name
-
+            u.unit_name,
+            u.unit_name_a
         FROM purchase_order_items poi
-
         JOIN inventory i
             ON i.id = poi.inventory_id
-
-      LEFT JOIN units u
-    ON u.id = i.unit_id
-
+        LEFT JOIN units u
+            ON u.id = i.unit_id
         WHERE poi.purchase_order_id = ?
-
         ORDER BY poi.id ASC
         ",
         [$po_id]

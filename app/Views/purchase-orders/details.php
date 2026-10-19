@@ -101,13 +101,16 @@ $receivingBadge = match ($receivingStatus) {
                 <p>
                     <strong><?= __('expected_date') ?>:</strong>
 
-                    <span class="bg-primary text-white px-2 py-1 rounded">
+           <?php if (!empty($po->expected_date)): ?>
+    <span class="badge bg-info text-dark">
+        <?= htmlspecialchars(date('d M Y', strtotime($po->expected_date))) ?>
+    </span>
+<?php else: ?>
+    <span class="text-muted fst-italic"><?= __('expected_delivery_not_specified') ?></span>
+<?php endif; ?>         
 
-                        <?= $po->expected_date ?>
+</p>
 
-                    </span>
-
-                </p>
 
                 <p>
                     <strong><?= __('created') ?>:</strong>
@@ -537,9 +540,17 @@ $receivingBadge = match ($receivingStatus) {
                         ) ?>
                     </td>
 
-                      <td>
-                        <?= htmlspecialchars($item->unit_name) ?>
-                    </td>
+                     <td>
+    <?php
+    $language = strtolower($_SESSION['language'] ?? 'en');
+
+    $unitName = ($language === 'ar')
+        ? ($item->unit_name_a ?? $item->unit_name ?? '')
+        : ($item->unit_name ?? $item->unit_name_a ?? '');
+    ?>
+
+    <?= htmlspecialchars($unitName, ENT_QUOTES, 'UTF-8') ?>
+</td>
 
                     <td>
                         <?= number_format(
