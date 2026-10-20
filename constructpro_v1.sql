@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 13, 2026 at 09:27 PM
+-- Generation Time: Oct 20, 2026 at 07:29 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -136,7 +136,7 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `name`, `company`, `email`, `phone`, `address`, `status`, `created_at`, `account_manager_id`) VALUES
-(2, 'Sayed Saleem', 'Libya Power Instrumentation Ltd', 'info@lpp.com', '0923456789', '', 'active', '2026-04-07 20:11:12', 6),
+(2, 'Sayed Saleem', 'Libya Power Instrumentation Ltd', 'info@lpp.com', '0923456787', '', 'active', '2026-04-07 20:11:12', 6),
 (5, 'Khaled Sadoon', 'Switchgear Electric Co.', 'info@khaled.ly', '0944567899', 'Misrata Industrial Area', 'active', '2026-04-07 20:34:24', 8),
 (14, 'عبدالحميد العبدالله', 'الموارد الذاتية المساهمة الليبية', 'mawared@ems.com', '0960258765', 'جنة العريف طرابلس ليبيا', 'active', '2026-09-24 10:32:54', NULL),
 (16, 'سالم سلوم', 'شركة الاخوة للتنمية', 'bico@email.com', '0982658765', 'زاوية الدهماني ', 'active', '2026-09-27 13:15:05', NULL);
@@ -199,6 +199,18 @@ CREATE TABLE `goods_receipts` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `goods_receipts`
+--
+
+INSERT INTO `goods_receipts` (`id`, `grn_number`, `purchase_order_id`, `supplier_id`, `receipt_date`, `subtotal`, `total_amount`, `remarks`, `created_by`, `created_at`) VALUES
+(45, 'GRN-20261018091129', 65, 3, '2026-10-18', 160000.00, 160000.00, '', 1, '2026-10-18 07:11:29'),
+(46, 'GRN-261018140750', 69, 3, '2026-10-18', 240.00, 240.00, '', 1, '2026-10-18 12:07:50'),
+(47, 'GRN-261018141015', 70, 2, '2026-10-18', 105.00, 105.00, '', 1, '2026-10-18 12:10:15'),
+(48, 'GRN-261018143227', 71, 4, '2026-10-18', 6125.00, 6125.00, '', 1, '2026-10-18 12:32:27'),
+(49, 'GRN-261018143319', 71, 4, '2026-10-18', 245.00, 245.00, '', 1, '2026-10-18 12:33:19'),
+(50, 'GRN-261020072756', 74, 4, '2026-10-20', 56.25, 56.25, '', 1, '2026-10-20 05:27:56');
+
 -- --------------------------------------------------------
 
 --
@@ -215,6 +227,18 @@ CREATE TABLE `goods_receipt_items` (
   `unit_cost` decimal(15,2) NOT NULL,
   `total_cost` decimal(15,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `goods_receipt_items`
+--
+
+INSERT INTO `goods_receipt_items` (`id`, `goods_receipt_id`, `purchase_order_item_id`, `inventory_id`, `location_id`, `quantity`, `unit_cost`, `total_cost`) VALUES
+(37, 45, 69, 111, 41, 5000.00, 32.00, 160000.00),
+(38, 46, 73, 148, 41, 10.00, 24.00, 240.00),
+(39, 47, 74, 157, 3, 5.00, 21.00, 105.00),
+(40, 48, 75, 114, 3, 2500.00, 2.45, 6125.00),
+(41, 49, 75, 114, 3, 100.00, 2.45, 245.00),
+(42, 50, 83, 155, 2, 15.00, 3.75, 56.25);
 
 -- --------------------------------------------------------
 
@@ -282,10 +306,10 @@ CREATE TABLE `inventory` (
 --
 
 INSERT INTO `inventory` (`id`, `name`, `description`, `category`, `sku`, `quantity`, `location_id`, `min_stock`, `cost_price`, `base_unit`, `unit_id`, `allow_fraction`, `brand_id`, `country_id`) VALUES
-(111, 'Portland Cement 42.5N', 'Portland cement, strength class 42.5N', 'BUILDING & FINISHING', 'CEM-42-001', 450.00, NULL, 50, 12.50, 'BAG', 3, 0, 36, 12),
+(111, 'Portland Cement 42.5N', 'Portland cement, strength class 42.5N', 'BUILDING & FINISHING', 'CEM-42-001', 5350.00, NULL, 50, 32.00, 'BAG', 3, 0, 36, 12),
 (112, 'Portland Cement 52.5N', 'Portland cement, strength class 52.5N', 'BUILDING & FINISHING', 'CEM-52-001', 230.00, NULL, 50, 15.50, 'BAG', 3, 0, 36, 12),
 (113, 'Ready Mix Concrete C25', 'Ready-mix concrete, C25', 'BUILDING & FINISHING', 'CON-C25-001', 25.00, NULL, 5, 95.00, 'M3', 15, 1, NULL, 12),
-(114, 'Concrete Block 20cm', 'Concrete block, 20 cm thickness', 'BUILDING & FINISHING', 'BLK-20-001', 2360.00, NULL, 500, 3.25, 'PCS', 1, 0, 36, 12),
+(114, 'Concrete Block 20cm', 'Concrete block, 20 cm thickness', 'BUILDING & FINISHING', 'BLK-20-001', 4685.00, NULL, 500, 2.45, 'PCS', 1, 0, 36, 12),
 (115, 'Concrete Block 15cm', 'Concrete block, 15 cm thickness', 'BUILDING & FINISHING', 'BLK-15-001', 5285.00, NULL, 500, 1.55, 'PCS', 1, 0, NULL, 12),
 (117, 'Coarse Aggregate 20mm', 'Coarse aggregate, 20 mm', 'BUILDING & FINISHING', 'AGR-20-001', 100.00, NULL, 15, 120.00, 'M3', 15, 1, NULL, 12),
 (118, 'Construction Gravel', 'Construction gravel', 'BUILDING & FINISHING', 'GRV-001', 43.00, NULL, 10, 80.00, 'M3', 15, 1, NULL, 12),
@@ -301,8 +325,7 @@ INSERT INTO `inventory` (`id`, `name`, `description`, `category`, `sku`, `quanti
 (129, 'Rebar 16mm', 'Steel reinforcement bar, 16 mm', 'BUILDING & FINISHING', 'REB-16-001', 2200.00, NULL, 400, 11.80, 'MTR', 10, 1, 34, 12),
 (130, 'Rebar 20mm', 'Steel reinforcement bar, 20 mm', 'BUILDING & FINISHING', 'REB-20-001', 1200.00, NULL, 250, 18.20, 'MTR', 10, 1, 34, 12),
 (131, 'Steel Angle 50x50x5mm', 'Steel angle, 50 × 50 × 5 mm', 'BUILDING & FINISHING', 'ANG-50505-001', 400.00, NULL, 50, 28.00, 'MTR', 10, 1, 34, 12),
-(132, 'Steel Channel 100mm', 'Steel channel, 100 mm', 'BUILDING & FINISHING', 'CHN-100-001', 250.00, NULL, 50, 42.00, 'MTR', 10, 1, 34, 12),
-(134, 'Binding Wire', 'Binding wire', 'BUILDING & FINISHING', 'BW-001', 94.00, NULL, 15, 4.50, 'KG', 7, 0, NULL, 12),
+(132, 'Steel Channel 100mm', 'Steel channel, 100 mm', 'BUILDING & FINISHING', 'CHN-100-001', 230.00, NULL, 50, 42.00, 'MTR', 10, 1, 34, 12),
 (135, 'Electrical Cable 1.5mm² Single Core', 'Electrical cable, 1.5 mm² single core', 'ELECTRICAL', 'CAB-1.5-001', 2500.00, NULL, 500, 1.15, 'MTR', 10, 1, 3, 3),
 (136, 'Electrical Cable 2.5mm² Single Core', 'Electrical cable, 2.5 mm² single core', 'ELECTRICAL ', 'CAB-2.5-001', 2861.80, NULL, 500, 1.75, 'MTR', 10, 1, 3, 3),
 (137, 'Electrical Cable 4mm² Single Core', 'Electrical cable, 4 mm² single core', 'ELECTRICAL ', 'CAB-4-001', 1399.25, NULL, 400, 2.80, 'MTR', 10, 1, 3, 3),
@@ -315,17 +338,17 @@ INSERT INTO `inventory` (`id`, `name`, `description`, `category`, `sku`, `quanti
 (144, 'LED Panel Light 600x600 40W', 'LED panel light, 600 × 600 mm, 40 W', 'ELECTRICAL', 'LED-PNL-40-001', 100.00, NULL, 20, 28.00, 'PCS', 1, 0, 5, 9),
 (145, 'MCB 1P 16A', 'MCB, 1P, 16A', 'ELECTRICAL', 'MCB-1P16-001', 150.00, NULL, 30, 8.50, 'PCS', 1, 0, 5, 9),
 (146, 'MCB 3P 32A', 'MCB, 3P, 32A', 'ELECTRICAL', 'MCB-3P32-001', 80.00, NULL, 15, 24.00, 'PCS', 1, 0, 5, 9),
-(147, 'Distribution Board 12-Way', 'Distribution board, 12-way', 'ELECTRICAL', 'DB-12W-001', 25.00, NULL, 5, 95.00, 'PCS', 1, 0, 5, 9),
-(148, 'Contactor 25A', 'Contactor, 25A', 'ELECTRICAL', 'CNT-25A-001', 31.00, NULL, 10, 32.00, 'PCS', 1, 0, 1, 1),
+(147, 'Distribution Board 12-Way', 'Distribution board, 12-way', 'ELECTRICAL', 'DB-12W-001', 24.00, NULL, 5, 95.00, 'PCS', 1, 0, 5, 9),
+(148, 'Contactor 25A', 'Contactor, 25A', 'ELECTRICAL', 'CNT-25A-001', 41.00, NULL, 10, 24.00, 'PCS', 1, 0, 1, 1),
 (149, 'Terminal Block 6mm²', 'Terminal block, 6 mm²', 'ELECTRICAL', 'TB-6-001', 500.00, NULL, 100, 0.75, 'PCS', 1, 0, 21, 1),
 (150, 'PVC Pipe 20mm', 'PVC pipe, 20 mm', 'PLUMBING & DRAINAGE', 'PVC-20-001', 800.00, NULL, 100, 2.40, 'MTR', 10, 1, NULL, 12),
 (151, 'PVC Pipe 32mm', 'PVC pipe, 32 mm', 'PLUMBING & DRAINAGE', 'PVC-32-001', 600.00, NULL, 100, 3.80, 'MTR', 10, 1, NULL, 12),
 (152, 'PVC Pipe 50mm', 'PVC pipe, 50 mm', 'PLUMBING & DRAINAGE', 'PVC-50-001', 450.00, NULL, 80, 5.90, 'MTR', 10, 1, NULL, 12),
 (153, 'PPR Pipe 25mm', 'PPR pipe, 25 mm', 'PLUMBING & DRAINAGE', 'PPR-25-001', 400.00, NULL, 80, 4.80, 'MTR', 10, 1, NULL, 12),
 (154, 'PVC Elbow 90° 25mm', 'PVC elbow, 90°, 25 mm', 'PLUMBING & DRAINAGE', 'ELB-25-90-001', 300.00, NULL, 50, 1.20, 'PCS', 1, 0, NULL, 12),
-(155, 'Brass Ball Valve 1\"', 'Brass ball valve, 1 inch', 'PLUMBING & DRAINAGE', 'VAL-BV-1-001', 65.00, NULL, 15, 24.00, 'PCS', 1, 0, NULL, 12),
+(155, 'Brass Ball Valve 1\"', 'Brass ball valve, 1 inch', 'PLUMBING & DRAINAGE', 'VAL-BV-1-001', 80.00, NULL, 15, 3.75, 'PCS', 1, 0, NULL, 12),
 (156, 'Bearing 6204', 'Ball bearing, 6204', 'OTHER', 'BRG-6204-001', 202.00, NULL, 10, 35.00, 'PCS', 1, 0, 6, 3),
-(157, 'Bearing 6205', 'Ball bearing, 6205', 'OTHER', 'BRG-6205-001', 35.50, NULL, 10, 14.50, 'PCS', 1, 0, 6, 3),
+(157, 'Bearing 6205', 'Ball bearing, 6205', 'OTHER', 'BRG-6205-001', 40.50, NULL, 10, 21.00, 'PCS', 1, 0, 6, 3),
 (158, 'V-Belt A-42', 'V-belt, A-42', 'OTHER', 'VBT-A42-001', 25.00, NULL, 5, 9.50, 'PCS', 1, 0, NULL, 12),
 (159, 'Hydraulic Hose 1/2\"', 'Hydraulic hose, 1/2 inch', 'OTHER', 'HYD-HS-12-001', 250.00, NULL, 50, 8.50, 'MTR', 10, 1, NULL, 12),
 (160, 'Hydraulic Oil ISO 46', 'Hydraulic oil, ISO VG 46', 'CONSUMABLES', 'OIL-ISO46-001', 200.00, NULL, 50, 4.80, 'LTR', 16, 1, 7, 12),
@@ -336,7 +359,7 @@ INSERT INTO `inventory` (`id`, `name`, `description`, `category`, `sku`, `quanti
 (165, 'Hex Nut M10', 'Hex nut, M10', 'OTHER', 'NUT-M10-001', 1200.00, NULL, 200, 0.12, 'PCS', 1, 0, NULL, 12),
 (166, 'Washer M10', 'Flat washer, M10', 'OTHER', 'WSR-M10-001', 1500.00, NULL, 300, 0.06, 'PCS', 1, 0, NULL, 12),
 (167, 'Anchor Bolt M16', 'Anchor bolt, M16', 'OTHER', 'ANC-M16-001', 281.00, NULL, 50, 3.00, 'PCS', 1, 0, NULL, 12),
-(168, 'Acrylic Wall Paint White', 'Acrylic wall paint, white', 'BUILDING & FINISHING', 'PNT-WHT-001', 334.00, NULL, 50, 18.00, 'LTR', 16, 0, NULL, 12),
+(168, 'Acrylic Wall Paint White', 'Acrylic wall paint, white', 'BUILDING & FINISHING', 'PNT-WHT-001', 323.00, NULL, 50, 18.00, 'LTR', 16, 0, NULL, 12),
 (169, 'Exterior Paint White', 'Exterior paint, white', 'BUILDING & FINISHING', 'PNT-EXT-WHT-001', 180.00, NULL, 30, 21.00, 'LTR', 16, 1, NULL, 12),
 (170, 'Epoxy Primer', 'Epoxy primer', 'CONSUMABLES', 'EPX-PRM-001', 99.00, NULL, 20, 24.00, 'LTR', 5, 0, NULL, 12),
 (171, 'Silicone Sealant', 'Silicone sealant', 'CONSUMABLES', 'SIL-001', 126.00, NULL, 20, 3.80, 'PCS', 1, 0, NULL, 12),
@@ -363,7 +386,9 @@ INSERT INTO `inventory` (`id`, `name`, `description`, `category`, `sku`, `quanti
 (192, 'Light Bulb 10W', 'Light bulb, 10 W', 'ELECTRICAL', 'LB-10', 0.00, NULL, 150, 0.00, 'PCS', 1, 0, 7, 7),
 (193, 'حذاء مطري طويل', 'Long waterproof safety boot', 'CONSUMABLES', 'SH-RS24', 1500.00, NULL, 10, 0.00, 'PCS', 6, 0, 14, 13),
 (194, 'صندوق معدات خفيفة', 'Light-duty tool box', 'HAND TOOLS', 'BX-112', 15.00, NULL, 5, 0.00, 'PCS', 1, 0, 4, 10),
-(195, 'Plywood Sheets 0.5\"', 'Plywood Sheets, thickness is 1/2 inch', 'BUILDING & FINISHING', 'PLY-5IN', 0.00, NULL, 50, 0.00, 'unit', 1, 0, 35, 12);
+(195, 'Plywood Sheets 0.5\"', 'Plywood Sheets, thickness is 1/2 inch', 'BUILDING & FINISHING', 'PLY-5IN', 0.00, NULL, 50, 0.00, 'unit', 1, 0, 35, 12),
+(196, 'Flood Light 1000W', 'Outdoor High Power Waterproof 1000W LED Flood Light', 'ELECTRICAL', 'FL-1000', 0.00, NULL, 2, 0.00, 'unit', 1, 0, 6, 1),
+(197, 'test', 'descriptionn', 'CIVIL & STRUCTURAL', 'test2', 5.00, NULL, 5, 25.00, 'unit', 1, 0, 14, 8);
 
 -- --------------------------------------------------------
 
@@ -387,11 +412,12 @@ CREATE TABLE `inventory_locations` (
 --
 
 INSERT INTO `inventory_locations` (`id`, `code`, `name`, `notes`, `address`, `storekeeper_id`, `mobile`, `created_at`) VALUES
-(1, 'MAIN WH', 'MAIN WAREHOUSE', 'Central Main Warehouse', 'Central Main Warehouse', 15, '092609876', '2026-06-12 06:27:59'),
+(1, 'MAIN WH', 'MAIN WAREHOUSE', 'Central Main Warehouse', 'Central Main Warehouse', NULL, '092609876', '2026-06-12 06:27:59'),
 (2, 'TAJORA', 'TAJORA WH', 'مخزن النشيع', 'مخزن النشيع', 12, '098723654', '2026-06-12 06:27:59'),
-(3, 'JANZOUR', 'JANZOUR WAREHOUSE', 'Janzour Center', 'Janzour Center', 15, '0942787698', '2026-06-12 06:27:59'),
-(32, 'N-TAJ', 'مخزن النشيع تاجوراء', 'مواعيد العمل من 9 صباحا الى 5 مساء', 'النشيع - تاجوراء - شارع اللطعي بقرب ملعب الجولف', 15, '098635442', '2026-09-18 07:11:34'),
-(39, 'PRJ-26-0059', 'PROJECT - PRJ-26-0059 # تعبيد الطريق الدائري الخامس', 'Project inventory location', 'طرابلس طريق الفلاح', NULL, NULL, '2026-10-12 18:38:49');
+(3, 'JANZOUR', 'JANZOUR WAREHOUSE', 'Janzour Center', 'Janzour Center', NULL, '0942787698', '2026-06-12 06:27:59'),
+(32, 'N-TAJ', 'مخزن النشيع تاجوراء', 'مواعيد العمل من 9 صباحا الى 5 مساء', 'النشيع - تاجوراء - شارع اللطعي بقرب ملعب الجولف', NULL, '098635442', '2026-09-18 07:11:34'),
+(39, 'PRJ-26-0059', 'PROJECT - PRJ-26-0059 # تعبيد الطريق الدائري الخامس', 'Project inventory location', 'طرابلس طريق الفلاح', NULL, NULL, '2026-10-12 18:38:49'),
+(41, 'PRJ-26-0060', 'PROJECT - PRJ-26-0060 # contribution ONE', 'Project inventory location', 'Ghat', NULL, NULL, '2026-10-17 19:40:55');
 
 -- --------------------------------------------------------
 
@@ -422,7 +448,7 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (264, 113, 3, 5.00),
 (265, 114, 1, 200.00),
 (266, 114, 2, 790.00),
-(267, 114, 3, 495.00),
+(267, 114, 3, 3095.00),
 (268, 115, 1, 1250.00),
 (269, 115, 2, 685.00),
 (270, 115, 3, 350.00),
@@ -474,7 +500,7 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (316, 131, 1, 200.00),
 (317, 131, 2, 120.00),
 (318, 131, 3, 80.00),
-(319, 132, 1, 125.00),
+(319, 132, 1, 105.00),
 (320, 132, 2, 75.00),
 (321, 132, 3, 50.00),
 (322, 133, 1, 60.00),
@@ -521,7 +547,7 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (363, 146, 3, 16.00),
 (364, 147, 1, 12.50),
 (365, 147, 2, 7.50),
-(366, 147, 3, 5.00),
+(366, 147, 3, 4.00),
 (367, 148, 1, 10.00),
 (368, 148, 2, 8.00),
 (369, 148, 3, 8.00),
@@ -544,14 +570,14 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (386, 154, 2, 90.00),
 (387, 154, 3, 60.00),
 (388, 155, 1, 24.00),
-(389, 155, 2, 24.00),
+(389, 155, 2, 39.00),
 (390, 155, 3, 16.00),
 (391, 156, 1, 190.00),
 (392, 156, 2, 12.00),
 (393, 156, 3, 0.00),
 (394, 157, 1, 2.00),
 (395, 157, 2, 12.00),
-(396, 157, 3, 7.50),
+(396, 157, 3, 12.50),
 (397, 158, 1, 12.50),
 (398, 158, 2, 7.50),
 (399, 158, 3, 5.00),
@@ -651,7 +677,7 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (501, 193, 32, 1000.00),
 (502, 194, 32, 15.00),
 (503, 193, 3, 500.00),
-(504, 168, 32, 110.00),
+(504, 168, 32, 99.00),
 (505, 148, 32, 5.00),
 (506, 115, 32, 2000.00),
 (507, 120, 32, 200.00),
@@ -664,7 +690,11 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (514, 136, 32, 1.90),
 (515, 134, 32, 35.00),
 (516, 157, 32, 14.00),
-(517, 118, 32, 0.50);
+(517, 118, 32, 0.50),
+(521, 197, 32, 5.00),
+(522, 111, 32, 0.00),
+(523, 111, 41, 5000.00),
+(524, 148, 41, 10.00);
 
 -- --------------------------------------------------------
 
@@ -690,6 +720,30 @@ CREATE TABLE `inventory_movements` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `inventory_movements`
+--
+
+INSERT INTO `inventory_movements` (`id`, `inventory_id`, `location_id`, `type`, `quantity`, `unit_cost`, `supplier_id`, `supplier`, `movement_by`, `balance_after`, `global_balance_after`, `reference`, `notes`, `created_by`, `created_at`) VALUES
+(490, 197, 32, 'ADJUSTMENT', 7.50, NULL, NULL, NULL, NULL, 7.50, 7.50, 'ADJ-261016182325', 'PHYSICAL_COUNT_CORRECTION - some notes', 1, '2026-10-16 16:23:25'),
+(491, 197, 32, 'ADJUSTMENT', 0.50, NULL, NULL, NULL, NULL, 8.00, 8.00, 'ADJ-261016182609', 'FOUND - test', 1, '2026-10-16 16:26:09'),
+(492, 197, 32, 'OUT', 3.00, NULL, NULL, NULL, NULL, 5.00, 5.00, 'PROJECT #59', 'descriptionn', 1, '2026-10-16 16:34:07'),
+(493, 197, 32, 'OUT', 2.00, NULL, NULL, NULL, NULL, 3.00, 3.00, 'PROJECT #59', 'descriptionn', 1, '2026-10-16 16:36:29'),
+(494, 197, 32, 'IN', 2.00, NULL, NULL, NULL, NULL, 5.00, 5.00, 'PROJECT #59', 'descriptionn', 1, '2026-10-16 16:37:30'),
+(495, 147, 3, 'OUT', 1.00, NULL, NULL, NULL, NULL, 4.00, 24.00, 'PROJECT #59', 'Distribution board, 12-way', 1, '2026-10-17 19:05:25'),
+(496, 111, 3, 'OUT', 10.00, NULL, NULL, NULL, NULL, 90.00, 350.00, NULL, 'Warehouse Transfer #89', 1, '2026-10-17 19:50:11'),
+(497, 111, 32, 'IN', 10.00, NULL, NULL, NULL, NULL, 10.00, 350.00, NULL, 'Warehouse Transfer #89', 1, '2026-10-17 19:50:11'),
+(498, 111, 32, 'OUT', 10.00, NULL, NULL, NULL, NULL, 0.00, 350.00, NULL, 'Reversal of Transfer #89', 1, '2026-10-17 19:54:32'),
+(499, 111, 3, 'IN', 10.00, NULL, NULL, NULL, NULL, 100.00, 350.00, NULL, 'Reversal of Transfer #89', 1, '2026-10-17 19:54:32'),
+(500, 132, 1, 'OUT', 20.00, NULL, NULL, NULL, NULL, 105.00, 230.00, 'PROJECT #59', 'Reservation Fulfillment: Steel Channel 100mm', 1, '2026-10-17 21:00:48'),
+(501, 168, 32, 'OUT', 11.00, NULL, NULL, NULL, NULL, 99.00, 323.00, 'PROJECT #60', 'تنفيذ المواد المحجوزة: Acrylic Wall Paint White', 1, '2026-10-18 05:41:29'),
+(502, 111, 41, 'IN', 5000.00, NULL, 3, NULL, NULL, 5000.00, 5350.00, 'GRN-45 / PO-PO-20261014093535', NULL, 1, '2026-10-18 07:11:29'),
+(503, 148, 41, 'IN', 10.00, NULL, 3, NULL, NULL, 10.00, 41.00, 'GRN-46 / PO-PO-261018140232', NULL, 1, '2026-10-18 12:07:50'),
+(504, 157, 3, 'IN', 5.00, NULL, 2, NULL, NULL, 12.50, 40.50, 'GRN-47 / PO-PO-261018140832', NULL, 1, '2026-10-18 12:10:15'),
+(505, 114, 3, 'IN', 2500.00, NULL, 4, NULL, NULL, 2995.00, 4585.00, 'GRN-48 / PO-PO-261018143032', NULL, 1, '2026-10-18 12:32:27'),
+(506, 114, 3, 'IN', 100.00, NULL, 4, NULL, NULL, 3095.00, 4685.00, 'GRN-49 / PO-PO-261018143032', NULL, 1, '2026-10-18 12:33:19'),
+(507, 155, 2, 'IN', 15.00, NULL, 4, NULL, NULL, 39.00, 80.00, 'GRN-50 / PO-PO-261019225425', NULL, 1, '2026-10-20 05:27:56');
+
 -- --------------------------------------------------------
 
 --
@@ -709,6 +763,19 @@ CREATE TABLE `inventory_reservations` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `required_by_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `inventory_reservations`
+--
+
+INSERT INTO `inventory_reservations` (`id`, `inventory_id`, `location_id`, `project_id`, `quantity`, `status`, `reference`, `notes`, `created_by`, `created_at`, `required_by_date`) VALUES
+(45, 112, 1, 60, 6.00, 'CANCELLED', 'by site engineer', 'by site engineer', 1, '2026-10-17 20:01:18', '2026-10-18'),
+(52, 132, 1, 59, 20.00, 'CANCELLED', '', '', 1, '2026-10-17 20:25:34', '2026-10-21'),
+(53, 167, 1, 60, 5.00, 'CANCELLED', '', '', 1, '2026-10-18 05:07:34', '2026-10-20'),
+(54, 168, 32, 60, 11.00, 'FULFILLED', '', '', 1, '2026-10-18 05:40:51', '2026-10-20'),
+(55, 157, 32, 60, 1.98, 'CANCELLED', '', '', 1, '2026-10-18 06:04:42', '2026-10-20'),
+(56, 136, 1, 60, 1.38, 'ACTIVE', '', '', 1, '2026-10-18 06:27:57', '2026-10-20'),
+(57, 156, 1, 60, 5.00, 'ACTIVE', '', '', 1, '2026-10-18 06:30:12', '2026-10-28');
 
 -- --------------------------------------------------------
 
@@ -731,6 +798,14 @@ CREATE TABLE `inventory_transfers` (
   `reversal_transfer_id` int(11) DEFAULT NULL,
   `status` enum('COMPLETED','REVERSED','','') NOT NULL DEFAULT 'COMPLETED'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `inventory_transfers`
+--
+
+INSERT INTO `inventory_transfers` (`id`, `inventory_id`, `from_location_id`, `to_location_id`, `quantity`, `reference`, `notes`, `created_by`, `created_at`, `reversed_at`, `reversed_by`, `reversal_transfer_id`, `status`) VALUES
+(89, 111, 3, 32, 10.00, '', '', 1, '2026-10-17 19:50:11', '2026-10-17 21:54:32', 1, 90, 'REVERSED'),
+(90, 111, 32, 3, 10.00, '', 'Reversal of Transfer #89', 1, '2026-10-17 19:54:32', NULL, NULL, NULL, 'COMPLETED');
 
 -- --------------------------------------------------------
 
@@ -875,7 +950,8 @@ CREATE TABLE `projects` (
 --
 
 INSERT INTO `projects` (`id`, `location_id`, `customer_id`, `title`, `project_type`, `description`, `deadline`, `status`, `budget`, `created_at`, `is_archived`, `site_location`, `start_date`, `project_manager_id`, `contract_number`, `project_code`, `priority`) VALUES
-(59, 39, 16, 'تعبيد الطريق الدائري الخامس', 'Construction', 'تعبيد الطريق الدائري الخامس وتوصيله بالرابع', '2026-12-31', 'planning', 2000000.00, '2026-10-12 18:38:49', 0, 'طرابلس طريق الفلاح', '2026-10-12', 14, '261012', 'PRJ-26-0059', 'medium');
+(59, 39, 16, 'تعبيد الطريق الدائري الخامس', 'Construction', 'تعبيد الطريق الدائري الخامس وتوصيله بالرابع', '2026-12-31', 'planning', 2000000.00, '2026-10-12 18:38:49', 0, 'طرابلس طريق الفلاح', '2026-10-12', 14, '261012', 'PRJ-26-0059', 'medium'),
+(60, 41, 14, 'contribution ONE', 'Maintenance', 'Ghat contribution ONEcontribution ONEcontribution ONE', '2026-12-10', 'planning', 0.00, '2026-10-17 19:40:55', 0, 'Ghat', '2026-10-19', NULL, '26905', 'PRJ-26-0060', 'medium');
 
 -- --------------------------------------------------------
 
@@ -928,6 +1004,18 @@ CREATE TABLE `project_costs` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `project_costs`
+--
+
+INSERT INTO `project_costs` (`id`, `project_id`, `requisition_id`, `fulfillment_id`, `inventory_id`, `resource_id`, `location_id`, `cost_type`, `description`, `unit_id`, `quantity`, `unit_price`, `created_at`) VALUES
+(284, 59, NULL, NULL, NULL, NULL, NULL, 'EQUIPMENT', 'رافعة شوكية', 17, 2.00, 500.00, '2026-10-15 16:08:57'),
+(285, 59, NULL, NULL, 197, NULL, 32, 'MATERIALS', 'descriptionn', 1, 1.00, 25.00, '2026-10-16 16:34:07'),
+(286, 59, NULL, NULL, 197, NULL, 32, 'MATERIALS', 'descriptionn', 1, 2.00, 25.00, '2026-10-16 16:36:29'),
+(287, 59, NULL, NULL, 147, NULL, 3, 'MATERIALS', 'Distribution board, 12-way', 1, 1.00, 95.00, '2026-10-17 19:05:25'),
+(288, 59, NULL, NULL, 132, NULL, 1, 'MATERIALS', 'Reservation Fulfillment: Steel Channel 100mm', 10, 20.00, 42.00, '2026-10-17 21:00:48'),
+(289, 60, NULL, NULL, 168, NULL, 32, 'MATERIALS', 'تنفيذ المواد المحجوزة: Acrylic Wall Paint White', 16, 11.00, 18.00, '2026-10-18 05:41:29');
+
 -- --------------------------------------------------------
 
 --
@@ -974,7 +1062,13 @@ CREATE TABLE `project_ledger` (
 
 INSERT INTO `project_ledger` (`id`, `project_id`, `entry_type`, `ref_table`, `ref_id`, `description`, `debit`, `credit`, `balance_after`, `created_at`) VALUES
 (198, 59, 'advance', 'project_advances', 38, 'الدفعة الاولى', 0.00, 500000.00, 500000.00, '2026-10-12 18:42:39'),
-(199, 59, 'advance', 'project_advances', 39, 'نقليات اضافية', 0.00, 2000.00, 502000.00, '2026-10-12 20:32:14');
+(199, 59, 'advance', 'project_advances', 39, 'نقليات اضافية', 0.00, 2000.00, 502000.00, '2026-10-12 20:32:14'),
+(200, 59, 'cost', 'project_costs', 284, 'رافعة شوكية', 1000.00, 0.00, 501000.00, '2026-10-15 16:08:57'),
+(201, 59, 'cost', 'project_costs', 285, 'descriptionn', 25.00, 0.00, 500975.00, '2026-10-16 16:34:07'),
+(202, 59, 'cost', 'project_costs', 286, 'descriptionn', 50.00, 0.00, 500925.00, '2026-10-16 16:36:29'),
+(203, 59, 'cost', 'project_costs', 287, 'Distribution board, 12-way', 95.00, 0.00, 500830.00, '2026-10-17 19:05:25'),
+(204, 59, 'cost', 'project_costs', 288, 'Reservation Fulfillment: Steel Channel 100mm', 840.00, 0.00, 499990.00, '2026-10-17 21:00:48'),
+(205, 60, 'cost', 'project_costs', 289, 'تنفيذ المواد المحجوزة: Acrylic Wall Paint White', 198.00, 0.00, -198.00, '2026-10-18 05:41:29');
 
 -- --------------------------------------------------------
 
@@ -1026,7 +1120,10 @@ INSERT INTO `project_scopes` (`id`, `project_id`, `scope`) VALUES
 (60, 57, 'Civil'),
 (67, 58, 'Architectural'),
 (66, 58, 'Civil'),
-(69, 59, 'Civil');
+(69, 59, 'Civil'),
+(71, 60, 'Architectural'),
+(70, 60, 'Civil'),
+(72, 60, 'Structural');
 
 -- --------------------------------------------------------
 
@@ -1090,6 +1187,23 @@ CREATE TABLE `purchase_orders` (
   `receiving_status` enum('OPEN','PARTIAL','RECEIVED') DEFAULT 'OPEN'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `purchase_orders`
+--
+
+INSERT INTO `purchase_orders` (`id`, `po_number`, `supplier_id`, `project_id`, `requisition_id`, `target_warehouse_id`, `delivery_method`, `status`, `order_date`, `expected_date`, `subtotal`, `tax_amount`, `discount_amount`, `total_amount`, `notes`, `created_by`, `approved_by`, `approved_at`, `received_at`, `created_at`, `receiving_status`) VALUES
+(65, 'PO-20261014093535', 3, 59, NULL, NULL, 'DIRECT_TO_PROJECT_SITE', 'received', '2026-10-14', '2026-10-21', 175000.00, 0.00, 0.00, 175000.00, 'ملاحظاتي', 1, 1, '2026-10-18 09:03:26', '2026-10-18 09:11:29', '2026-10-14 07:35:35', 'RECEIVED'),
+(66, 'PO-261018090908', 4, 60, NULL, NULL, 'DIRECT_TO_PROJECT_SITE', 'cancelled', '2026-10-18', '2026-10-24', 3000.00, 0.00, 0.00, 3000.00, '', 1, NULL, NULL, NULL, '2026-10-18 07:09:08', 'OPEN'),
+(67, 'PO-261018135921', 1, NULL, NULL, 3, 'WAREHOUSE', 'cancelled', '2026-10-18', '2026-10-01', 340.00, 0.00, 0.00, 340.00, 'some notes', 1, NULL, NULL, NULL, '2026-10-18 11:59:21', 'OPEN'),
+(68, 'PO-261018140054', 4, 60, NULL, NULL, 'DIRECT_TO_PROJECT_SITE', 'cancelled', '2026-10-18', '2026-10-21', 1500.00, 0.00, 0.00, 1500.00, '', 1, 1, '2026-10-18 14:01:24', NULL, '2026-10-18 12:00:54', 'OPEN'),
+(69, 'PO-261018140232', 3, 60, NULL, NULL, 'DIRECT_TO_PROJECT_SITE', 'received', '2026-10-18', '2026-10-20', 240.00, 0.00, 0.00, 240.00, '', 1, 1, '2026-10-18 14:02:58', '2026-10-18 14:07:50', '2026-10-18 12:02:32', 'RECEIVED'),
+(70, 'PO-261018140832', 2, NULL, NULL, 3, 'WAREHOUSE', 'cancelled', '2026-10-18', '2026-10-20', 460.00, 0.00, 0.00, 460.00, '', 1, 1, '2026-10-18 14:09:00', NULL, '2026-10-18 12:08:32', 'PARTIAL'),
+(71, 'PO-261018143032', 4, NULL, NULL, 3, 'WAREHOUSE', 'cancelled', '2026-10-18', '2026-10-21', 7350.00, 0.00, 0.00, 7350.00, '', 1, 1, '2026-10-18 14:31:23', NULL, '2026-10-18 12:30:32', 'PARTIAL'),
+(72, 'PO-261019125338', 1, NULL, NULL, 1, 'WAREHOUSE', 'approved', '2026-10-19', NULL, 500.00, 0.00, 0.00, 500.00, '', 1, 1, '2026-10-19 13:52:52', NULL, '2026-10-19 10:53:38', 'OPEN'),
+(73, 'PO-261019141114', 1, 60, NULL, NULL, 'DIRECT_TO_PROJECT_SITE', 'draft', '2026-10-19', NULL, 2335.03, 0.00, 0.00, 2335.03, '', 1, NULL, NULL, NULL, '2026-10-19 12:11:14', 'OPEN'),
+(74, 'PO-261019225425', 4, NULL, NULL, 2, 'WAREHOUSE', 'received', '2026-10-19', NULL, 56.25, 0.00, 0.00, 56.25, '', 1, 1, '2026-10-19 22:55:37', '2026-10-20 07:27:56', '2026-10-19 20:54:25', 'RECEIVED'),
+(75, 'PO-261019225657', 4, 60, NULL, NULL, 'DIRECT_TO_PROJECT_SITE', 'approved', '2026-10-19', NULL, 460.00, 0.00, 0.00, 460.00, '', 1, 1, '2026-10-19 22:57:23', NULL, '2026-10-19 20:56:57', 'OPEN');
+
 -- --------------------------------------------------------
 
 --
@@ -1108,6 +1222,27 @@ CREATE TABLE `purchase_order_items` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `purchase_order_items`
+--
+
+INSERT INTO `purchase_order_items` (`id`, `purchase_order_id`, `inventory_id`, `quantity`, `received_quantity`, `unit_cost`, `total_cost`, `notes`, `created_at`) VALUES
+(69, 65, 111, 5000.00, 5000.00, 35.00, 0.00, NULL, '2026-10-18 07:02:35'),
+(70, 66, 167, 2000.00, 0.00, 1.50, 0.00, NULL, '2026-10-18 07:09:37'),
+(71, 67, 123, 10.00, 0.00, 34.00, 0.00, NULL, '2026-10-18 11:59:39'),
+(72, 68, 155, 100.00, 0.00, 15.00, 0.00, NULL, '2026-10-18 12:01:12'),
+(73, 69, 148, 10.00, 10.00, 24.00, 0.00, NULL, '2026-10-18 12:02:48'),
+(74, 70, 157, 20.00, 5.00, 23.00, 0.00, NULL, '2026-10-18 12:08:47'),
+(75, 71, 114, 3000.00, 2600.00, 2.45, 0.00, NULL, '2026-10-18 12:30:54'),
+(76, 72, 193, 20.00, 0.00, 25.00, 0.00, NULL, '2026-10-19 11:51:28'),
+(77, 73, 122, 1.62, 0.00, 34.00, 0.00, NULL, '2026-10-19 12:11:42'),
+(78, 73, 115, 500.00, 0.00, 2.45, 0.00, NULL, '2026-10-19 17:39:59'),
+(79, 73, 123, 5.00, 0.00, 23.00, 0.00, NULL, '2026-10-19 17:51:59'),
+(81, 73, 136, 23.35, 0.00, 12.00, 0.00, NULL, '2026-10-19 18:04:23'),
+(82, 73, 138, 50.75, 0.00, 13.00, 0.00, NULL, '2026-10-19 20:10:29'),
+(83, 74, 155, 15.00, 15.00, 3.75, 0.00, NULL, '2026-10-19 20:55:08'),
+(84, 75, 122, 20.00, 0.00, 23.00, 0.00, NULL, '2026-10-19 20:57:12');
+
 -- --------------------------------------------------------
 
 --
@@ -1118,8 +1253,8 @@ CREATE TABLE `resources` (
   `id` int(11) NOT NULL,
   `resource_code` varchar(50) NOT NULL,
   `resource_name` varchar(150) NOT NULL,
-  `resource_name_a` varchar(255) DEFAULT NULL,
-  `resource_type` enum('HUMAN_RESOURCES','SERVICE','TRANSPORT','EQUIPMENT','PROFESSIONAL_SERVICES','MISCELLANEOUS') DEFAULT 'HUMAN_RESOURCES',
+  `resource_name_a` varchar(255) NOT NULL,
+  `resource_type` enum('HUMAN_RESOURCES','SERVICE','TRANSPORT','EQUIPMENT','PROFESSIONAL_SERVICES','MISCELLANEOUS') NOT NULL DEFAULT 'HUMAN_RESOURCES',
   `unit_id` int(11) NOT NULL,
   `description` text DEFAULT NULL,
   `description_a` text DEFAULT NULL,
@@ -1151,7 +1286,9 @@ INSERT INTO `resources` (`id`, `resource_code`, `resource_name`, `resource_name_
 (27, 'TRS-0004', 'Material Delivery', 'نقل مواد', 'TRANSPORT', 9, 'Transportation service', 'خدمة النقل', 'ACTIVE', '2026-07-13 07:52:15', 11),
 (28, 'SRV-0005', 'Labor Supply', 'نوريد عمالة', 'SERVICE', 21, 'Temporary labor supply', 'توفير العمالة المؤقتة', 'ACTIVE', '2026-07-13 07:52:15', 11),
 (31, 'CON-0001', 'Sub-Contracting', 'مقاولات بالباطن', 'PROFESSIONAL_SERVICES', 21, 'Sub-Contracting at Lump Sum', 'تنفيذ أعمال مقاولة من الباطن بمبلغ مقطوع', 'ACTIVE', '2026-09-11 18:25:32', 11),
-(33, 'ABC-0033', 'SITE ENGINEER', 'مهندس موقع', 'HUMAN_RESOURCES', 20, 'Engineer Monthly Based Salary', 'مهندس براتب شهري', 'ACTIVE', '2026-09-27 17:45:23', 12);
+(33, 'ABC-0033', 'SITE ENGINEER', 'مهندس موقع', 'HUMAN_RESOURCES', 20, 'Engineer Monthly Based Salary', 'مهندس براتب شهري', 'ACTIVE', '2026-09-27 17:45:23', 12),
+(35, 'HRS-0009', 'Telecommunication Technician', 'فني إتصالات وشبكات', 'HUMAN_RESOURCES', 27, 'فني إتصالات وشبكات', NULL, 'ACTIVE', '2026-10-15 19:23:01', 13),
+(39, 'HRS-99904', 'penter', 'نجار', 'HUMAN_RESOURCES', 7, '', NULL, 'ACTIVE', '2026-10-15 19:31:37', 13);
 
 -- --------------------------------------------------------
 
@@ -1163,7 +1300,7 @@ CREATE TABLE `resource_categories` (
   `id` int(11) NOT NULL,
   `category_code` varchar(30) NOT NULL,
   `category_name` varchar(100) NOT NULL,
-  `category_name_a` varchar(100) DEFAULT NULL,
+  `category_name_a` varchar(100) NOT NULL,
   `description` text DEFAULT NULL,
   `status` enum('ACTIVE','INACTIVE') DEFAULT 'ACTIVE',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
@@ -1177,7 +1314,7 @@ INSERT INTO `resource_categories` (`id`, `category_code`, `category_name`, `cate
 (2, 'STL', 'Steel', 'حديد', NULL, 'ACTIVE', '2026-07-12 05:40:56'),
 (3, 'MAS', 'Masonary', 'بناء', NULL, 'ACTIVE', '2026-07-12 05:40:56'),
 (5, 'PLB', 'Plumbing', 'سباكة', NULL, 'ACTIVE', '2026-07-12 05:40:56'),
-(6, 'HVAC', 'HVAC', 'تكييف وتهوية', NULL, 'ACTIVE', '2026-07-12 05:40:56'),
+(6, 'HVC', 'Heat, Ventilation & Air Conditioning', 'تكييف وتهوية', 'Heat, Ventilation & Air Conditions - التدفئة والتهوية وتكييف الهواء', 'ACTIVE', '2026-07-12 05:40:56'),
 (7, 'FIN', 'Finishes', 'تشطيبات نهائية', NULL, 'ACTIVE', '2026-07-12 05:40:56'),
 (8, 'EQP', 'Equipment', 'ألات ثقيلة', NULL, 'ACTIVE', '2026-07-12 05:40:56'),
 (9, 'TLS', 'Tools', 'ادوات ومعدات', NULL, 'ACTIVE', '2026-07-12 05:40:56'),
@@ -1221,7 +1358,8 @@ CREATE TABLE `resource_requisitions` (
 --
 
 INSERT INTO `resource_requisitions` (`id`, `req_number`, `project_id`, `request_date`, `required_date`, `target_warehouse_id`, `delivery_method`, `priority`, `status`, `remarks`, `submitted_by`, `submitted_at`, `requested_by`, `approved_by`, `approved_at`, `approval_remarks`, `approval_notes`, `created_at`, `updated_at`) VALUES
-(76, 'REQ-261012224055', 59, '2026-10-12', '2026-10-14', 1, 'WAREHOUSE', 'MEDIUM', 'DRAFT', '', NULL, NULL, 1, NULL, NULL, NULL, NULL, '2026-10-12 20:40:55', '2026-10-12 20:41:36');
+(76, 'REQ-261012224055', 59, '2026-10-12', '2026-10-14', 1, 'WAREHOUSE', 'MEDIUM', 'APPROVED', '', 1, '2026-10-18 09:45:15', 1, 1, '2026-10-18 09:55:56', '', NULL, '2026-10-12 20:40:55', '2026-10-18 07:55:56'),
+(77, 'REQ-261018095225', 60, '2026-10-18', '2026-10-22', 32, 'WAREHOUSE', 'MEDIUM', 'DRAFT', '', NULL, NULL, 1, NULL, NULL, NULL, NULL, '2026-10-18 07:52:25', NULL);
 
 -- --------------------------------------------------------
 
@@ -1237,6 +1375,14 @@ CREATE TABLE `resource_requisition_approvals` (
   `remarks` text DEFAULT NULL,
   `action_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `resource_requisition_approvals`
+--
+
+INSERT INTO `resource_requisition_approvals` (`id`, `requisition_id`, `action`, `action_by`, `remarks`, `action_date`) VALUES
+(106, 76, 'SUBMITTED', 1, NULL, '2026-10-18 09:45:15'),
+(107, 76, 'APPROVED', 1, '', '2026-10-18 09:55:56');
 
 -- --------------------------------------------------------
 
@@ -1327,6 +1473,15 @@ CREATE TABLE `resource_requisition_items` (
   `status` enum('OPEN','PARTIAL','FULFILLED','CANCELLED') NOT NULL DEFAULT 'OPEN',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `resource_requisition_items`
+--
+
+INSERT INTO `resource_requisition_items` (`id`, `requisition_id`, `resource_source`, `cost_type`, `inventory_id`, `resource_id`, `description`, `uom`, `quantity`, `fulfilled_quantity`, `estimated_unit_cost`, `estimated_total`, `remarks`, `status`, `created_at`) VALUES
+(107, 76, 'RESOURCE', 'EQUIPMENT', NULL, 12, 'Portable concrete mixer', 'DAY', 10.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-10-15 16:04:29'),
+(108, 76, 'INVENTORY', 'MATERIALS', NULL, 137, 'Electrical cable, 4 mm² single core', 'متر', 100.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-10-15 16:05:19'),
+(109, 77, 'RESOURCE', 'HUMAN_RESOURCES', NULL, 23, 'Plumbing installation', 'LUMP SUM', 1.00, 0.00, 0.00, 0.00, '', 'OPEN', '2026-10-18 07:53:39');
 
 -- --------------------------------------------------------
 
@@ -1462,6 +1617,7 @@ INSERT INTO `role_permissions` (`role_id`, `permission_id`) VALUES
 (1, 110),
 (2, 5),
 (2, 6),
+(2, 7),
 (2, 12),
 (2, 17),
 (2, 21),
@@ -1609,8 +1765,6 @@ INSERT INTO `role_permissions` (`role_id`, `permission_id`) VALUES
 (7, 7),
 (7, 12),
 (7, 17),
-(7, 18),
-(7, 19),
 (7, 21),
 (7, 29),
 (7, 31),
@@ -1630,7 +1784,6 @@ INSERT INTO `role_permissions` (`role_id`, `permission_id`) VALUES
 (8, 12),
 (8, 17),
 (8, 21),
-(8, 22),
 (8, 29),
 (8, 30),
 (8, 31),
@@ -1640,12 +1793,13 @@ INSERT INTO `role_permissions` (`role_id`, `permission_id`) VALUES
 (8, 35),
 (8, 37),
 (8, 39),
+(8, 44),
 (8, 49),
-(8, 50),
 (8, 56),
 (8, 61),
 (8, 62),
 (8, 67),
+(8, 68),
 (8, 69),
 (8, 81),
 (8, 95),
@@ -1712,7 +1866,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `company_name`, `logo`, `address`, `contacts`, `created_at`, `updated_at`) VALUES
-(1, 'BONYA ALEAMAR - بنية الاعمار الهندسية', 'uploads/1782371337_ba-logo-logo.png', ' Tripoli, Seyahiya', '+218910610067', '2026-06-24 07:24:04', '2026-06-25 07:08:57');
+(1, 'BONYA ALEAMAR - بنية الاعمار الهندسيه', 'uploads/1792165939_ba-logo.png', ' Tripoli, Seyahiya District', '+218910610067', '2026-06-24 07:24:04', '2026-10-16 15:52:19');
 
 -- --------------------------------------------------------
 
@@ -1736,7 +1890,7 @@ CREATE TABLE `suppliers` (
 --
 
 INSERT INTO `suppliers` (`id`, `company_name`, `contact_person`, `phone`, `email`, `address`, `notes`, `created_at`) VALUES
-(1, 'ABB Libya', 'sAMI Ahmed Salem', '+2189987615', 'ales@abb-bya.ly', 'THE SECOND Tripoli Industrial Area', 'THE Authorized ABB distributor and local', '2026-05-08 07:56:15'),
+(1, 'ABB Libya', 'Sami Salem', '+2189987615', 'ales@abb-bya.ly', 'THE SECOND Tripoli Industrial Area', 'THE Authorized ABB distributor and local', '2026-05-08 07:56:15'),
 (2, 'Siemens Libya', 'Mohamed Ali', '+218922222222', 'supply@siemens.ly', 'Misrata', 'Protection relays supplier', '2026-05-08 07:56:15'),
 (3, 'General Electric Supplies', 'Khaled Omar', '+218933333333', 'info@gesupplies.ly', 'Benghazi', 'General electrical materials', '2026-05-08 07:56:15'),
 (4, 'Almadar Industrial', 'Hassan Faraj', '+218944444444', 'sales@almadar.ly', 'Tripoli', 'Cables and accessories', '2026-05-08 07:56:15');
@@ -1757,6 +1911,18 @@ CREATE TABLE `supplier_ledger` (
   `direction` enum('DEBIT','CREDIT') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `supplier_ledger`
+--
+
+INSERT INTO `supplier_ledger` (`id`, `supplier_id`, `type`, `reference_type`, `reference_id`, `amount`, `direction`, `created_at`) VALUES
+(47, 3, 'GRN', 'GoodsReceipt', 45, 160000.00, 'DEBIT', '2026-10-18 07:11:29'),
+(48, 3, 'GRN', 'GoodsReceipt', 46, 240.00, 'DEBIT', '2026-10-18 12:07:50'),
+(49, 2, 'GRN', 'GoodsReceipt', 47, 105.00, 'DEBIT', '2026-10-18 12:10:15'),
+(50, 4, 'GRN', 'GoodsReceipt', 48, 6125.00, 'DEBIT', '2026-10-18 12:32:27'),
+(51, 4, 'GRN', 'GoodsReceipt', 49, 245.00, 'DEBIT', '2026-10-18 12:33:19'),
+(52, 4, 'GRN', 'GoodsReceipt', 50, 56.25, 'DEBIT', '2026-10-20 05:27:56');
 
 -- --------------------------------------------------------
 
@@ -1858,7 +2024,7 @@ CREATE TABLE `units` (
   `id` int(11) NOT NULL,
   `unit_code` varchar(20) NOT NULL,
   `unit_name` varchar(100) NOT NULL,
-  `unit_name_a` varchar(100) DEFAULT NULL,
+  `unit_name_a` varchar(100) NOT NULL,
   `description` text DEFAULT NULL,
   `status` enum('ACTIVE','INACTIVE') DEFAULT 'ACTIVE',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
@@ -1887,7 +2053,6 @@ INSERT INTO `units` (`id`, `unit_code`, `unit_name`, `unit_name_a`, `description
 (16, 'LTR', 'LITER', 'لتر', 'Unit of volume equal to one liter.', 'ACTIVE', '2026-07-12 05:15:58'),
 (17, 'DAY', 'DAY', 'اجر يومي', 'Used for daily labor, equipment, or service costs.', 'ACTIVE', '2026-07-12 05:15:58'),
 (18, 'HR', 'HOUR', 'ساعة', 'Used for hourly labor, equipment, or service costs.', 'ACTIVE', '2026-07-12 05:15:58'),
-(19, 'WK', 'WEEK', 'اسبوعي', 'أجرة او مرتب اسبوعي ثابت', 'ACTIVE', '2026-07-12 05:15:58'),
 (20, 'MTH', 'MONTH', 'شهري', 'مرتب شهري', 'ACTIVE', '2026-07-12 05:15:58'),
 (21, 'LPS', 'LUMP SUM', 'مبلغ مقطوع', 'التعاقد على مبلغ مقطوع من المال.', 'ACTIVE', '2026-09-11 18:16:23'),
 (22, 'PNT', 'POINT', 'نقطة', 'Electrical Distribution Point or any similar professional work.', 'ACTIVE', '2026-09-13 06:09:05'),
@@ -1897,7 +2062,8 @@ INSERT INTO `units` (`id`, `unit_code`, `unit_name`, `unit_name_a`, `description
 (28, 'ITM', 'ITEM', 'بند', 'Unit used for miscellaneous individual items.', 'ACTIVE', '2026-10-09 06:06:40'),
 (29, 'FEE', 'FEE', 'رسوم', 'Unit used for fees and charges.', 'ACTIVE', '2026-10-09 06:06:40'),
 (30, 'PLC', 'POLICY', 'وثيقة', 'Unit used for insurance policies.', 'ACTIVE', '2026-10-09 06:06:40'),
-(31, 'TRN', 'TRANSACTION', 'معاملة', 'Unit used for transaction-based costs.', 'ACTIVE', '2026-10-09 06:06:40');
+(31, 'TRN', 'TRANSACTION', 'معاملة', 'Unit used for transaction-based costs.', 'ACTIVE', '2026-10-09 06:06:40'),
+(38, 'WK', 'Week', 'اسبوعي', 'أجر اسبوعي', 'ACTIVE', '2026-10-15 17:22:59');
 
 -- --------------------------------------------------------
 
@@ -1923,20 +2089,14 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `full_name`, `user_name`, `email`, `mobile`, `photo`, `password`, `created_at`, `role_id`) VALUES
 (1, 'Abdullah AlSahli', 'Abdullah', 'admin@ems.com', '+2189988457687', 'uploads/users/user_6aa8e7ac334196.66652294.jpg', '$2y$10$uNBYvJRdBnd5xdlc8ADmb.oCxl4EIVLmd3kuftCWcW7Epbj7CiQrK', '2026-04-07 20:11:12', 1),
-(6, 'Ahmad Sudan', 'Ahmad', 'ac@ems.com', '+218912345745', 'uploads/users/user_6aa8ec904ca723.73806793.jpg', '$2y$10$g.O9QjwPsW60VVrZZ.UGGebvqu3YqCbDq4DknouqpBIxR/iiA9JKu', '2026-04-07 20:34:24', 5),
-(7, 'Omar Khalid', 'Omar', 'eng@ems.com', '+218912345298', NULL, '$2y$10$uNBYvJRdBnd5xdlc8ADmb.oCxl4EIVLmd3kuftCWcW7Epbj7CiQrK', '2026-04-07 20:34:24', 3),
+(6, 'Ahmad Sudan', 'Ahmad', 'ac@ems.com', '+218912345745', 'uploads/users/user_6ad1f40e39d824.50231873.jpg', '$2y$10$K170SUkPfIqPiRKuTo/ooOL/oxljnnW1tc6h8Tlr7JkdgNjO1UcFS', '2026-04-07 20:34:24', 5),
 (8, 'Ali Salem', 'Ali', 'tech@ems.com', '+218918762345', 'uploads/users/user_6abbb32ab44531.94162267.jpg', '$2y$10$uNBYvJRdBnd5xdlc8ADmb.oCxl4EIVLmd3kuftCWcW7Epbj7CiQrK', '2026-04-07 20:34:24', 4),
 (11, 'Abdullah Ben Amer', 'Amer', 'benamer@gmail.com', '+218972987645', NULL, '$2y$10$YSYPAjp4O/R.pe40wv4Equfr18/r70omV36YJkE5VU94iTeDCF2P6', '2026-04-20 20:29:44', 8),
 (12, 'Sumaya Abdullah', 'Sumaya', 'sumaya@ems.com', '+2189123457687', 'uploads/users/user_6abb622c124b03.34558456.png', '$2y$10$Y.8EQGCefp30HlCMXKLS2OMuMbWAxnaTRHR88HX8AzTRbHRPoYxgG', '2026-04-22 11:59:21', 5),
-(13, 'Mustafa Saqer', 'Mustafa', 'cash@ems.com', '+2189123457687', NULL, '$2y$10$XeB5nEBG9iuu87/pCrjMU.tVgMAxOpvl7j5uYhQ9b/TbTXrCg/fM.', '2026-04-24 20:14:40', 7),
-(14, 'Taha Hussain', 'Taha', 'th@ems.com', '+2189123457687', 'uploads/users/user_6aaf6c9f7141e6.68874237.jpg', '$2y$10$fLhJosWCRxuPtL0C/s5dTup98BZ11Xa0n72HW4qLCBGdEGM0byvEW', '2026-06-12 15:52:02', 2),
-(15, 'khalil salem', 'salem', 'ks@ems.com', '2189123457687+', 'uploads/users/user_6abb6171844544.00756220.jpg', '$2y$10$1QScFHLSeyeWP2bcjk4fnujmDhz0hFGFYGLl8H1W09fIa9ymw2mMm', '2026-06-19 16:29:37', 8),
-(16, 'abdulatif musa', 'abdulatif', 'am@ems.com', '+2189123776487', 'uploads/users/user_6aaed492527af9.10740308.jpg', '$2y$10$PlLMFxaLWxS01oXxwqpFUenxYKAHHGe32.M8yAwdh6oj8izQIvXsW', '2026-06-19 16:50:12', 7),
-(17, 'faraj mugharbi', 'faraj', 'fm@ems.com', '+2189127657687', NULL, '$2y$10$pA06wD0MRIA4COTnDPVEt.tlEPyPdrj/Ebkf9RTyzzkaLjuCwRd22', '2026-06-20 08:00:48', 7),
-(18, 'sami khalid', 'sami', 'sami@ems.com', '+2189123457687', NULL, '$2y$10$KclciMNyrrKA/6MZSlCGy.aEY0ekS4bMttTrcTmKMeP6Nv17VVbpO', '2026-06-25 05:50:21', 5),
-(19, 'test permissions', 'test perm', 'test@ems.com', '+218911112233', NULL, '$2y$10$Y.8EQGCefp30HlCMXKLS2OMuMbWAxnaTRHR88HX8AzTRbHRPoYxgG', '2026-07-22 16:42:24', 10),
-(20, 'فرج المفيربي', 'faraj', 'faraj@ems.com', '+218972763765', NULL, '$2y$10$.HaOLKzSERJPuNOKHOlVLeSJlxwLrh2UCTBuUTQA4r5SJtCbxthx2', '2026-09-14 12:41:37', 3),
-(23, 'عبدالباسط المغيربي', 'abdelbaset', 'abdelbaset@ems.com', '+218982658736', 'uploads/users/user_6aa7f02a799083.87514601.jpg', '$2y$10$pChk5ib7vSOAm6ZRIjI1xu5/PR3RsTWn4o.dn/5qTijL4FTyZjc.e', '2026-09-14 12:46:29', 2);
+(14, 'Taha Hussain', 'Taha', 'th@ems.com', '+2189343457687', 'uploads/users/user_6aaf6c9f7141e6.68874237.jpg', '$2y$10$fLhJosWCRxuPtL0C/s5dTup98BZ11Xa0n72HW4qLCBGdEGM0byvEW', '2026-06-12 15:52:02', 2),
+(16, 'abdulatif musa', 'abdelatif', 'am@ems.com', '+2189123776487', 'uploads/users/user_6aaed492527af9.10740308.jpg', '$2y$10$PlLMFxaLWxS01oXxwqpFUenxYKAHHGe32.M8yAwdh6oj8izQIvXsW', '2026-06-19 16:50:12', 7),
+(17, 'faraj mugharbi', 'farajm', 'fm@ems.com', '+2189127657687', NULL, '$2y$10$pA06wD0MRIA4COTnDPVEt.tlEPyPdrj/Ebkf9RTyzzkaLjuCwRd22', '2026-06-20 08:00:48', 7),
+(40, 'sdhjfGHjg', 'kjahjksfhj', 'jxxhvjkdshj@mail.com', '808098908', NULL, '$2y$10$BxWx2bzBj/Lsa5xdi/HLXejkV1gb1Lw61HZ0lh3ga7rQ2zC7WeaWW', '2026-10-16 10:23:42', 7);
 
 -- --------------------------------------------------------
 
@@ -2196,7 +2356,9 @@ ALTER TABLE `purchase_order_items`
 --
 ALTER TABLE `resources`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `resource_code` (`resource_code`),
+  ADD UNIQUE KEY `uq_resource_name` (`resource_name`) USING BTREE,
+  ADD UNIQUE KEY `uq_resource_code` (`resource_code`) USING BTREE,
+  ADD UNIQUE KEY `uq_resource_name_a` (`resource_name_a`) USING BTREE,
   ADD KEY `fk_resources_category` (`category_id`),
   ADD KEY `fk_resources_unit` (`unit_id`);
 
@@ -2205,7 +2367,9 @@ ALTER TABLE `resources`
 --
 ALTER TABLE `resource_categories`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `category_code` (`category_code`);
+  ADD UNIQUE KEY `uq_resource_categories_name` (`category_name`) USING BTREE,
+  ADD UNIQUE KEY `uq_resource_categories_code` (`category_code`) USING BTREE,
+  ADD UNIQUE KEY `uq_resource_categories_name_a` (`category_name_a`);
 
 --
 -- Indexes for table `resource_requisitions`
@@ -2343,14 +2507,18 @@ ALTER TABLE `technicians`
 --
 ALTER TABLE `units`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `unit_code` (`unit_code`);
+  ADD UNIQUE KEY `uq_unit_code` (`unit_code`) USING BTREE,
+  ADD UNIQUE KEY `uq_unit_name` (`unit_name`) USING BTREE,
+  ADD UNIQUE KEY `uq_unit_name_a` (`unit_name_a`) USING BTREE;
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `uq_mobile` (`mobile`) USING BTREE,
+  ADD UNIQUE KEY `uq_user_name` (`user_name`) USING BTREE,
+  ADD UNIQUE KEY `uq_email` (`email`) USING BTREE,
   ADD KEY `fk_role` (`role_id`);
 
 --
@@ -2380,7 +2548,7 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `employees`
@@ -2392,13 +2560,13 @@ ALTER TABLE `employees`
 -- AUTO_INCREMENT for table `goods_receipts`
 --
 ALTER TABLE `goods_receipts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `goods_receipt_items`
 --
 ALTER TABLE `goods_receipt_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `goods_returns`
@@ -2416,49 +2584,49 @@ ALTER TABLE `goods_return_items`
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=196;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
 
 --
 -- AUTO_INCREMENT for table `inventory_locations`
 --
 ALTER TABLE `inventory_locations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `inventory_location_stock`
 --
 ALTER TABLE `inventory_location_stock`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=521;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=525;
 
 --
 -- AUTO_INCREMENT for table `inventory_movements`
 --
 ALTER TABLE `inventory_movements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=490;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=508;
 
 --
 -- AUTO_INCREMENT for table `inventory_reservations`
 --
 ALTER TABLE `inventory_reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `inventory_transfers`
 --
 ALTER TABLE `inventory_transfers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `project_advances`
@@ -2470,7 +2638,7 @@ ALTER TABLE `project_advances`
 -- AUTO_INCREMENT for table `project_costs`
 --
 ALTER TABLE `project_costs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=284;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=290;
 
 --
 -- AUTO_INCREMENT for table `project_documents`
@@ -2482,13 +2650,13 @@ ALTER TABLE `project_documents`
 -- AUTO_INCREMENT for table `project_ledger`
 --
 ALTER TABLE `project_ledger`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=206;
 
 --
 -- AUTO_INCREMENT for table `project_scopes`
 --
 ALTER TABLE `project_scopes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `project_settlements`
@@ -2506,37 +2674,37 @@ ALTER TABLE `purchase_items`
 -- AUTO_INCREMENT for table `purchase_orders`
 --
 ALTER TABLE `purchase_orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT for table `purchase_order_items`
 --
 ALTER TABLE `purchase_order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `resources`
 --
 ALTER TABLE `resources`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `resource_categories`
 --
 ALTER TABLE `resource_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `resource_requisitions`
 --
 ALTER TABLE `resource_requisitions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `resource_requisition_approvals`
 --
 ALTER TABLE `resource_requisition_approvals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 
 --
 -- AUTO_INCREMENT for table `resource_requisition_attachments`
@@ -2566,13 +2734,13 @@ ALTER TABLE `resource_requisition_fulfillment_items`
 -- AUTO_INCREMENT for table `resource_requisition_items`
 --
 ALTER TABLE `resource_requisition_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -2584,13 +2752,13 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `suppliers`
 --
 ALTER TABLE `suppliers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `supplier_ledger`
 --
 ALTER TABLE `supplier_ledger`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `supplier_payments`
@@ -2620,13 +2788,13 @@ ALTER TABLE `technicians`
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- Constraints for dumped tables

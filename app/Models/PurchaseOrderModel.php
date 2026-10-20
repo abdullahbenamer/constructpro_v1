@@ -38,9 +38,9 @@ class PurchaseOrderModel extends Model
     */
 
 /*
-|--------------------------------------------------------------------------
+|-----------------------------------------------------------
 | GET BY ID
-|--------------------------------------------------------------------------
+|-----------------------------------------------------------
 */
 
 public function getById($id)
@@ -80,8 +80,7 @@ public function getById($id)
         JOIN suppliers s
             ON s.id = po.supplier_id
 
-        LEFT JOIN projects p
-            ON p.id = po.project_id
+LEFT JOIN projects p ON p.id = po.project_id
 
         LEFT JOIN users pm
             ON pm.id = p.project_manager_id
