@@ -123,9 +123,6 @@ return [
 
     // ---------------------
 
-
-
-
     'actions'                  => 'الإجراءات',
 
     'no_archived_projects'     => 'لا توجد مشاريع مؤرشفة متاحة.',
@@ -175,7 +172,6 @@ return [
     'maintenance'                 => 'صيانة',
     'inspection'                  => 'فحص',
     'consultancy'                 => 'استشارات',
-    'other'                       => 'أخرى',
 
     'project_scope'               => 'نطاق المشروع',
     'civil'                       => 'مدني',
@@ -364,7 +360,6 @@ return [
     'received'                     => 'تم الاستلام',
     'created'                      => 'تاريخ الإنشاء',
     'delivery_ship_to'             => 'التسليم / الشحن إلى',
-    'delivery_method'              => 'طريقة التسليم',
     'direct_to_project_site'       => 'مباشرة إلى موقع المشروع',
     'delivery_location'            => 'موقع التسليم',
     'site_contact'                 => 'جهة الاتصال بالموقع',
@@ -555,7 +550,6 @@ return [
     'new_resource_requisition'           => 'طلب موارد جديد',
     'create_resource_requisition'        => 'إنشاء طلب موارد',
     'request_date'                       => 'تاريخ الطلب',
-    'select_project'                     => '-- اختر المشروع --',
     'warehouse'                          => 'المستودع',
     'target_warehouse'                  => 'المستودع المستهدف',
     'direct_project_site_delivery_info' => 'سيتم تسليم هذا الطلب مباشرة إلى موقع المشروع المحدد.',
@@ -653,12 +647,8 @@ return [
     'allow_fraction'                   => 'السماح بالكسور؟',
     'allow_fraction_tick'  => 'السماح',
     'example_fraction'                 => 'مثال: 2.5 متر',
-    // 'sale_unit'                        => 'وحدة البيع',
-    //'sale_unit_placeholder'            => 'لفة / صندوق',
-    // 'units_per_sale'                   => 'الوحدات لكل عملية بيع',
     'selling_prices'                   => 'أسعار البيع',
     'price_per_base_unit'              => 'السعر لكل وحدة أساسية',
-    // 'price_per_sale_unit'              => 'السعر لكل وحدة بيع',
     'you_selected'                     => 'لقد اخترت',
     'confirm'                           => 'تأكيد',
     'change'                            => 'تغيير',
@@ -680,7 +670,7 @@ return [
     'reserved'                          => 'محجوز',
     'pricing'                           => 'الأسعار',
     'sale'                              => 'البيع',
-    // 'ok'                                => 'جيد',
+    'ok'                                => 'موافق',
     'view_global_stock_details'         => 'عرض تفاصيل المخزون الإجمالي',
     'stock_details'                     => 'تفاصيل المخزون',
     'adjust_quantity'                   => 'تعديل الكمية',
@@ -1104,8 +1094,7 @@ return [
     //Permession groups
     'permission'         => 'صلاحية',
     'permissions'         => 'الصلاحيات',
-    'permission_group_admin'         => 'الإدارة',
-    'permission_group_costs'         => 'التكاليف',
+    'permission_group_admin'         => 'ادارة النظام',
     'permission_group_customers'     => 'العملاء',
     'permission_group_finance'      => 'المالية',
     'permission_group_inventory'    => 'المخزون',
@@ -1117,157 +1106,130 @@ return [
     'permission_group_permissions'  => 'الصلاحيات',
     'permission_group_reports'      => 'التقارير',
     'permission_group_goods_returns'         => 'مرتجعات البضائع',
-    'permission_group_inventory_locations'   => 'مواقع المخزون',
+    'permission_group_inventory_locations'   => 'المخازن',
     'permission_group_inventory_movements'   => 'حركات المخزون',
     'permission_group_inventory_reservations' => 'حجوزات المخزون',
     'permission_group_purchase_orders'       => 'أوامر الشراء',
     'permission_group_quotation'             => 'عروض الأسعار',
     'permission_group_resource_requisitions' => 'طلبات الموارد',
-    'permission_group_stock_transfers'       => 'تحويلات المخزون',
+    'permission_group_stock_transfers'       => 'نقل المخزون',
+  'permission_admin_access' => 'الدخول إلى لوحة إدارة النظام',
+'permission_resource_requisitions_approve' => 'اعتماد طلبات توفير الموارد',
+'permission_purchase_orders_approve' => 'اعتماد أوامر الشراء',
+'permission_customers_create' => 'إضافة عملاء جدد',
+'permission_inventory_adjustment_create' => 'إجراء تسويات على كميات المخزون',
+'permission_inventory_create' => 'إضافة أصناف جديدة إلى المخازن',
+'permission_inventory_locations_create' => 'إضافة مخازن جديدة',
+'permission_inventory_movements_create' => 'تسجيل حركات المخازن',
+'permission_inventory_reservations_create' => 'حجز أصناف من المخازن',
+'permission_projects_create' => 'إنشاء مشاريع جديدة',
+'permission_purchase_orders_create' => 'إنشاء أوامر شراء جديدة',
+'permission_quotation_create' => 'إعداد عروض أسعار للعملاء',
+'permission_stock_transfers_create' => 'إنشاء حركات النقل بين المخازن',
+'permission_suppliers_create' => 'إضافة موردين جدد',
+'permission_users_create' => 'إضافة مستخدمين جدد للنظام',
+'permission_customers_delete' => 'حذف سجلات العملاء',
+'permission_inventory_delete' => 'حذف أصناف المخزون',
+'permission_projects_delete' => 'حذف سجلات المشاريع',
+'permission_users_delete' => 'حذف حسابات المستخدمين',
+'permission_customers_edit' => 'تعديل بيانات العملاء',
+'permission_inventory_edit' => 'تعديل بيانات أصناف المخزون',
+'permission_projects_edit' => 'تعديل بيانات المشاريع',
+'permission_users_edit' => 'تعديل بيانات المستخدمين',
+'permission_goods_returns_create' => 'إنشاء مستندات إرجاع البضائع',
+'permission_customers_view' => 'استعراض بيانات العملاء',
+'permission_finance_view' => 'الاطلاع على البيانات والتقارير المالية',
+'permission_inventory_view' => 'استعراض أصناف المخزون وكمياتها',
+'permission_inventory_adjustment_view' => 'استعراض تسويات المخزون',
+'permission_inventory_locations_view' => 'استعراض مواقع التخزين',
+'permission_inventory_movements_view' => 'استعراض سجل حركات المخزون',
+'permission_inventory_reservations_view' => 'استعراض حجوزات المخزون',
+'permission_costs_view' => 'الاطلاع على تكاليف المشاريع وتفاصيلها',
+'permission_projects_view' => 'استعراض بيانات المشاريع',
+'permission_purchase_orders_view' => 'استعراض أوامر الشراء',
+'permission_quotation_view' => 'استعراض عروض الأسعار',
+'permission_reports_view' => 'الاطلاع على التقارير',
+'permission_stock_transfers_view' => 'استعراض تحويلات المخزون',
+'permission_suppliers_view' => 'استعراض بيانات الموردين',
+'permission_users_view' => 'استعراض حسابات المستخدمين',
+'permission_dashboard_view' => ' مؤشرات لوحة الاداء',
+'permission_goods_receipts_print' => 'طباعة سندات استلام البضائع (GRN)',
+'permission_goods_receipts_view' => 'استعراض سندات استلام البضائع (GRN)',
+'permission_goods_returns_print' => 'طباعة مستندات إرجاع البضائع',
+'permission_group_dashboard' => 'الأداء لوحة مؤشرات',
+'permission_goods_receipts_create' => 'تسجيل استلام البضائع وإصدار سندات الاستلام',
+'permission_goods_returns_view' => 'استعراض مستندات إرجاع البضائع',
+'permission_group_inventory_adjustments' => 'تسويات المخزون',
+'permission_inventory_adjustments_create' => 'إجراء تسويات على المخزون',
+'permission_inventory_adjustments_view' => 'استعراض تسويات المخزون',
+'permission_inventory_locations_delete' => 'حذف مواقع التخزين',
+'permission_inventory_locations_edit' => 'تعديل بيانات مواقع التخزين',
+'permission_inventory_reservations_cancel' => 'إلغاء حجوزات المخزون',
+'permission_inventory_reservations_delete' => 'حذف سجلات حجوزات المخزون',
+'permission_inventory_reservations_edit' => 'تعديل حجوزات المخزون',
+'permission_inventory_reservations_fulfill' => 'تنفيذ حجوزات المخزون وصرف الأصناف المحجوزة',
+'permission_projects_archive' => 'أرشفة المشاريع',
+'permission_projects_documents_create' => 'إرفاق مستندات بالمشاريع',
+'permission_projects_documents_delete' => 'حذف مستندات المشاريع',
+'permission_projects_restore' => 'استعادة المشاريع المؤرشفة',
+'permission_group_project_advances' => 'الدفعات المالية للمشاريع',
+'permission_project_advances_create' => 'تسجيل سلف مالية للمشاريع',
+'permission_project_advances_settle' => 'تسوية السلف المالية للمشاريع',
+'permission_project_advances_view' => 'استعراض السلف المالية للمشاريع',
+'permission_group_project_costs' => 'تكاليف المشاريع',
+'permission_project_costs_create' => 'تسجيل تكاليف جديدة للمشاريع',
+'permission_project_costs_delete' => 'حذف سجلات تكاليف المشاريع',
+'permission_project_costs_edit' => 'تعديل سجلات تكاليف المشاريع',
+'permission_project_costs_view' => 'استعراض تكاليف المشاريع',
+'permission_group_project_finance' => 'الإدارة المالية للمشاريع',
+'permission_project_finance_view' => 'الاطلاع على البيانات المالية للمشاريع',
+'permission_group_purchases' => 'المشتريات',
+'permission_purchases_view' => 'استعراض بيانات المشتريات',
+'permission_purchase_orders_cancel' => 'إلغاء أوامر الشراء',
+'permission_purchase_orders_edit' => 'تعديل أوامر الشراء',
+'permission_group_resources' => 'إدارة الموارد',
+'permission_resources_create' => 'إضافة موارد جديدة',
+'permission_resources_delete' => 'حذف سجلات الموارد',
+'permission_resources_edit' => 'تعديل بيانات الموارد',
+'permission_resources_view' => 'استعراض الموارد',
+'permission_group_resource_categories' => 'تصنيف الموارد',
+'permission_resource_categories_create' => 'إضافة تصنيفات جديدة للموارد',
+'permission_resource_categories_delete' => 'حذف تصنيفات الموارد',
+'permission_resource_categories_edit' => 'تعديل تصنيفات الموارد',
+'permission_resource_categories_view' => 'استعراض تصنيفات الموارد',
+'permission_resource_requisitions_create' => 'إنشاء طلبات توفير الموارد',
+'permission_resource_requisitions_delete' => 'حذف طلبات توفير الموارد',
+'permission_resource_requisitions_edit' => 'تعديل طلبات توفير الموارد',
+'permission_resource_requisitions_fulfill' => 'تجهيز وصرف الموارد المطلوبة',
+'permission_resource_requisitions_reject' => 'رفض طلبات توفير الموارد',
+'permission_resource_requisitions_submit' => 'إرسال طلبات توفير الموارد للاعتماد',
+'permission_resource_requisitions_view' => 'استعراض طلبات توفير الموارد',
+'permission_stock_transfers_reverse' => 'إلغاء أثر تحويل المخزون وإعادة الحركة إلى حالتها السابقة',
+'permission_suppliers_delete' => 'حذف سجلات الموردين',
+'permission_suppliers_edit' => 'تعديل بيانات الموردين',
+'permission_suppliers_ledger' => 'الاطلاع على كشف حساب المورد',
+'permission_group_supplier_payments' => 'مدفوعات الموردين',
+'permission_supplier_payments_create' => 'تسجيل مدفوعات للموردين',
+'permission_supplier_payments_view' => 'استعراض مدفوعات الموردين',
+'permission_group_supplier_quotations' => 'عروض أسعار الموردين',
+'permission_supplier_quotations_accept' => 'قبول عروض أسعار الموردين',
+'permission_supplier_quotations_cancel' => 'إلغاء عروض أسعار الموردين',
+'permission_supplier_quotations_create' => 'تسجيل عروض أسعار الموردين',
+'permission_supplier_quotations_create_po' => 'إنشاء أمر شراء استناداً إلى عرض سعر المورد',
+'permission_supplier_quotations_edit' => 'تعديل عروض أسعار الموردين',
+'permission_supplier_quotations_view' => 'استعراض عروض أسعار الموردين',
+'permission_group_technicians' => 'إدارة الفنيين',
+'permission_technicians_view' => 'استعراض بيانات الفنيين',
+'permission_group_units' => 'إدارة وحدات القياس',
+'permission_units_create' => 'إضافة وحدات قياس جديدة',
+'permission_units_delete' => 'حذف وحدات القياس',
+'permission_units_edit' => 'تعديل وحدات القياس',
+'permission_units_view' => 'استعراض وحدات القياس',
+'permission_group_goods_receipts' => 'استلام البضائع',
 
     'login' => 'تسجيل الدخول',
-
-    'permission_admin_access' => 'الوصول إلى لوحة الإدارة',
-    'permission_resource_requisitions_approve' => 'اعتماد طلبات الموارد',
-    'permission_purchase_orders_approve' => 'اعتماد أوامر الشراء',
-    'permission_customers_create' => 'إنشاء العملاء',
-    'permission_inventory_adjustment_create' => 'إنشاء تسويات المخزون',
-    'permission_inventory_create' => 'إنشاء أصناف المخزون',
-    'permission_inventory_locations_create' => 'إنشاء مواقع المخزون',
-    'permission_inventory_movements_create' => 'إنشاء حركات المخزون',
-    'permission_inventory_reservations_create' => 'إنشاء حجوزات المخزون',
-    'permission_projects_create' => 'إنشاء المشاريع',
-    'permission_purchase_orders_create' => 'إنشاء أوامر الشراء',
-    'permission_quotation_create' => 'إنشاء عروض الأسعار',
-    'permission_stock_transfers_create' => 'إنشاء تحويلات المخزون',
-    'permission_suppliers_create' => 'إنشاء الموردين',
-    'permission_users_create' => 'إنشاء المستخدمين',
-
-    'permission_customers_delete' => 'حذف العملاء',
-    'permission_inventory_delete' => 'حذف أصناف المخزون',
-    'permission_projects_delete' => 'حذف المشاريع',
-    'permission_users_delete' => 'حذف المستخدمين',
-
-    'permission_customers_edit' => 'تعديل العملاء',
-    'permission_inventory_edit' => 'تعديل أصناف المخزون',
-    'permission_projects_edit' => 'تعديل المشاريع',
-    'permission_users_edit' => 'تعديل المستخدمين',
-
-    'permission_resource_requisitions_fulfill' => 'تنفيذ طلبات الموارد',
-    'permission_goods_returns_create' => 'إنشاء نماذج إرجاع البضائع',
-
-    'permission_customers_view' => 'عرض العملاء',
-    'permission_finance_view' => 'عرض المالية',
-    'permission_inventory_view' => 'عرض المخزون',
-    'permission_inventory_adjustment_view' => 'عرض تسويات المخزون',
-    'permission_inventory_locations_view' => 'عرض مواقع المخزون',
-    'permission_inventory_movements_view' => 'عرض حركات المخزون',
-    'permission_inventory_reservations_view' => 'عرض حجوزات المخزون',
-    'permission_costs_view' => 'عرض تكاليف المشاريع',
-    'permission_projects_view' => 'عرض المشاريع',
-    'permission_purchase_orders_view' => 'عرض أوامر الشراء',
-    'permission_quotation_view' => 'عرض عروض الأسعار',
-    'permission_reports_view' => 'عرض التقارير',
-    'permission_stock_transfers_view' => 'عرض تحويلات المخزون',
-    'permission_suppliers_view' => 'عرض الموردين',
-    'permission_users_view' => 'عرض المستخدمين',
-    'permission_dashboard_view' => 'عرض لوحة التحكم',
-    'permission_goods_receipts_print' => 'طباعة سند استلام البضائع (GRN)',
-    'permission_goods_receipts_view' => 'عرض سند استلام البضائع (GRN)',
-    'permission_goods_returns_print' => 'طباعة سند إرجاع البضائع',
-    'permission_group_dashboard' => 'مجموعة صلاحيات لوحة التحكم',
-
-
     'about_system_english' => 'عن نظام ConstructPro ERP',
     'about_system_arabic'  => 'عن نظام ConstructPro ERP (العربية)',
-
-    'permission_goods_receipts_create' => 'إنشاء مستندات استلام البضائع',
-    'permission_goods_returns_view' => 'عرض مرتجعات البضائع',
-
-    'permission_group_inventory_adjustments' => 'تسويات المخزون',
-    'permission_inventory_adjustments_create' => 'إنشاء تسويات المخزون',
-    'permission_inventory_adjustments_view' => 'عرض تسويات المخزون',
-
-    'permission_inventory_locations_delete' => 'حذف مواقع المخزون',
-    'permission_inventory_locations_edit' => 'تعديل مواقع المخزون',
-
-    'permission_inventory_reservations_cancel' => 'إلغاء حجوزات المخزون',
-    'permission_inventory_reservations_delete' => 'حذف حجوزات المخزون',
-    'permission_inventory_reservations_edit' => 'تعديل حجوزات المخزون',
-    'permission_inventory_reservations_fulfill' => 'تنفيذ حجوزات المخزون',
-
-    'permission_projects_archive' => 'أرشفة المشاريع',
-    'permission_projects_documents_create' => 'رفع مستندات المشاريع',
-    'permission_projects_documents_delete' => 'حذف مستندات المشاريع',
-    'permission_projects_restore' => 'استعادة المشاريع',
-
-    'permission_group_project_advances' => 'مدفوعات المشاريع',
-    'permission_project_advances_create' => 'إنشاء مدفوعات المشاريع',
-    'permission_project_advances_settle' => 'تسوية مدفوعات المشاريع',
-    'permission_project_advances_view' => 'عرض  مدفوعات المشاريع',
-
-    'permission_group_project_costs' => 'تكاليف المشاريع',
-    'permission_project_costs_create' => 'إنشاء تكاليف المشاريع',
-    'permission_project_costs_delete' => 'حذف تكاليف المشاريع',
-    'permission_project_costs_edit' => 'تعديل تكاليف المشاريع',
-    'permission_project_costs_view' => 'عرض تكاليف المشاريع',
-
-    'permission_group_project_finance' => 'مالية المشاريع',
-    'permission_project_finance_view' => 'عرض مالية المشاريع',
-
-    'permission_group_purchases' => 'المشتريات',
-    'permission_purchases_view' => 'عرض المشتريات',
-
-    'permission_purchase_orders_cancel' => 'إلغاء أوامر الشراء',
-    'permission_purchase_orders_edit' => 'تعديل أوامر الشراء',
-
-    'permission_group_resources' => 'الموارد',
-    'permission_resources_create' => 'إنشاء الموارد',
-    'permission_resources_delete' => 'حذف الموارد',
-    'permission_resources_edit' => 'تعديل الموارد',
-    'permission_resources_view' => 'عرض الموارد',
-
-    'permission_group_resource_categories' => 'فئات الموارد',
-    'permission_resource_categories_create' => 'إنشاء فئات الموارد',
-    'permission_resource_categories_delete' => 'حذف فئات الموارد',
-    'permission_resource_categories_edit' => 'تعديل فئات الموارد',
-    'permission_resource_categories_view' => 'عرض فئات الموارد',
-
-    'permission_resource_requisitions_create' => 'إنشاء طلبات الموارد',
-    'permission_resource_requisitions_delete' => 'حذف طلبات الموارد',
-    'permission_resource_requisitions_edit' => 'تعديل طلبات الموارد',
-    'permission_resource_requisitions_fulfill' => 'تنفيذ طلبات الموارد',
-    'permission_resource_requisitions_reject' => 'رفض طلبات الموارد',
-    'permission_resource_requisitions_submit' => 'إرسال طلبات الموارد',
-    'permission_resource_requisitions_view' => 'عرض طلبات الموارد',
-
-    'permission_stock_transfers_reverse' => 'عكس تحويلات المخزون',
-
-    'permission_suppliers_delete' => 'حذف الموردين',
-    'permission_suppliers_edit' => 'تعديل الموردين',
-    'permission_suppliers_ledger' => 'عرض حساب المورد',
-
-    'permission_group_supplier_payments' => 'مدفوعات الموردين',
-    'permission_supplier_payments_create' => 'إنشاء مدفوعات الموردين',
-    'permission_supplier_payments_view' => 'عرض مدفوعات الموردين',
-
-    'permission_group_supplier_quotations' => 'عروض أسعار الموردين',
-    'permission_supplier_quotations_accept' => 'اعتماد عروض أسعار الموردين',
-    'permission_supplier_quotations_cancel' => 'إلغاء عروض أسعار الموردين',
-    'permission_supplier_quotations_create' => 'إنشاء عروض أسعار الموردين',
-    'permission_supplier_quotations_create_po' => 'إنشاء أمر شراء من عرض السعر',
-    'permission_supplier_quotations_edit' => 'تعديل عروض أسعار الموردين',
-    'permission_supplier_quotations_view' => 'عرض عروض أسعار الموردين',
-
-    'permission_group_technicians' => 'الفنيون',
-    'permission_technicians_view' => 'عرض الفنيين',
-
-    'permission_group_units' => 'وحدات القياس',
-    'permission_units_create' => 'إنشاء وحدات القياس',
-    'permission_units_delete' => 'حذف وحدات القياس',
-    'permission_units_edit' => 'تعديل وحدات القياس',
-    'permission_units_view' => 'عرض وحدات القياس',
-    'permission_group_goods_receipts' => 'استلام البضائع',
 
     'my_profile' => 'ملفي الشخصي',
     'edit_profile' => 'تعديل الملف الشخصي',
@@ -1381,17 +1343,10 @@ return [
     'reservation_fulfilled_successfully' => 'تم تنفيذ الحجز بنجاح.',
     'active_reservations_only_editable' => 'لا يمكن تعديل سوى الحجوزات النشطة.',
     'active_reservations_only_deletable' => 'لا يمكن حذف سوى الحجوزات النشطة.',
-
-
     'transfer_completed_successfully' => 'تم تنفيذ التحويل بنجاح.',
-
-
-
     'invalid_warehouse_location' => 'موقع المستودع غير صالح.',
-
     'unit_cost_cannot_be_negative' => 'لا يمكن أن تكون تكلفة الوحدة سالبة.',
     'unable_to_add_stock' => 'تعذر إضافة المخزون إلى المستودع.',
-
     'source_destination_warehouses_same' => 'لا يمكن أن يكون مستودع المصدر والوجهة متطابقين.',
     'not_enough_stock_source_warehouse' => 'لا توجد كمية كافية في مستودع المصدر.',
     'adjustment_quantity_cannot_be_zero' => 'لا يمكن أن تكون كمية التعديل صفراً.',
@@ -1402,15 +1357,12 @@ return [
     'completed_transfers_only_reverse' => 'لا يمكن عكس سوى التحويلات المكتملة.',
     'unable_to_reverse_transfer' => 'تعذر عكس التحويل. لا توجد كمية كافية في موقع الوجهة.',
     'transfer_reversed_successfully' => 'تم عكس التحويل بنجاح.',
-
     'invalid_adjustment_type' => 'نوع التعديل غير صالح.',
     'adjustment_quantity_must_be_greater_than_zero' => 'يجب أن تكون كمية التعديل أكبر من صفر.',
     'valid_adjustment_reason_required' => 'يرجى اختيار سبب صالح للتعديل.',
     'notes_required_for_other_reason' => 'يرجى إدخال ملاحظات عند اختيار السبب "أخرى".',
     'stock_adjustment_posted_successfully' => 'تم تسجيل تعديل المخزون بنجاح. المرجع: %s',
-
     'goods_receipt_created_successfully' => 'تم استلام البضائع بنجاح.',
-
     'received_quantity_must_be_greater_than_zero' => 'يجب أن تكون الكمية المستلمة أكبر من صفر.',
     'purchase_order_not_found' => 'أمر الشراء غير موجود.',
     'purchase_order_not_available_for_receiving' => 'أمر الشراء هذا غير متاح للاستلام.',
@@ -1706,12 +1658,9 @@ return [
 
     'cannot_delete_user_assigned_location_or_in_use'  => 'لا يمكن حذف هذا الموقع/المخزن لأنه مرتبط بمشروع أومستخدمين أو بمعاملات أو بسجلات تاريخية.',
 
-
     'unable_to_delete_location' =>
     'تعذر حذف الموقع.',
-
     'print' => 'طباعة الصغحة',
-
 
     'physical_quantity' => 'الكمية الموجودة',
     'reserved_quantity' => 'الكمية المحجوزة',
@@ -1741,17 +1690,11 @@ return [
     'whole_quantities_only' => 'يسمح بالكميات الصحيحة فقط',
 
     'available_for_transfer' => 'متاح للنقل',
-
     'total_cost' => 'إجمالي التكلفة',
-
     'total_material_cost' => 'إجمالي تكلفة المواد',
-
     'total_resources_cost' => 'إجمالي تكلفة الموارد',
-
     'unit_of_measure' => 'وحدة القياس',
-
     'grn_remaining' => 'المتبقي من اذن الاستلام',
-
 
     // GOODS RETURNS
     'goods_return_note'                       => 'إشعار إرجاع البضائع',
@@ -1791,35 +1734,25 @@ return [
 
     'select_unit_of_measure' => '-- اختر وحدة قياس --',
 
-    'requisition_created_successfully'
-    => 'تم إنشاء طلب الموارد بنجاح.',
+    'requisition_created_successfully' => 'تم إنشاء طلب الموارد بنجاح.',
 
-    'requisition_creation_failed'
-    => 'تعذر إنشاء طلب الموارد.',
+    'requisition_creation_failed'  => 'تعذر إنشاء طلب الموارد.',
 
-    'requisition_updated_successfully'
-    => 'تم تحديث طلب الموارد بنجاح.',
+    'requisition_updated_successfully' => 'تم تحديث طلب الموارد بنجاح.',
 
-    'requisition_update_failed'
-    => 'تعذر تحديث طلب الموارد.',
+    'requisition_update_failed'  => 'تعذر تحديث طلب الموارد.',
 
-    'requisition_deleted_successfully'
-    => 'تم حذف طلب الموارد بنجاح.',
+    'requisition_deleted_successfully'  => 'تم حذف طلب الموارد بنجاح.',
 
-    'requisition_deletion_failed'
-    => 'تعذر حذف طلب الموارد.',
+    'requisition_deletion_failed'  => 'تعذر حذف طلب الموارد.',
 
-    'requisition_item_added_successfully'
-    => 'تمت إضافة بند طلب الموارد بنجاح.',
+  'requisition_item_added_successfully'  => 'تمت إضافة بند طلب الموارد بنجاح.',
 
-    'requisition_item_addition_failed'
-    => 'تعذر إضافة بند طلب الموارد.',
+    'requisition_item_addition_failed'  => 'تعذر إضافة بند طلب الموارد.',
 
-    'requisition_item_updated_successfully'
-    => 'تم تحديث بند طلب الموارد بنجاح.',
+    'requisition_item_updated_successfully'  => 'تم تحديث بند طلب الموارد بنجاح.',
 
-    'requisition_item_update_failed'
-    => 'تعذر تحديث بند طلب الموارد.',
+    'requisition_item_update_failed'  => 'تعذر تحديث بند طلب الموارد.',
 
     'requisition_item_deleted_successfully'
     => 'تم حذف بند طلب الموارد بنجاح.',
@@ -1944,6 +1877,8 @@ return [
     'receiving_fully_received'    => 'تم الاستلام بالكامل',
 
     'expected_date_cannot_be_in_past' => 'لا يمكن أن يكون تاريخ التسليم المتوقع في الماضي.',
-   
-'expected_delivery_not_specified' => 'غير محدد',
+
+    'expected_delivery_not_specified' => 'غير محدد',
+
+    'permission_description_ar' => 'وصف الصلاحية باللغة العربية',
 ];

@@ -1,26 +1,55 @@
 <h3><?= __('permissions') ?></h3>
 
-<form method="POST">
+<form method="POST" action="<?= URLROOT ?>/admin/permissions">
 
-    <input
-        type="text"
-        name="name"
-        placeholder="<?= __('permission_name') ?>"
-        class="form-control mb-2"
-        required>
+    <div class="mb-2">
+        <label for="permission_name" class="form-label">
+            <?= __('permission_name') ?>
+        </label>
 
-    <textarea
-        name="description"
-        placeholder="<?= __('permission_description') ?>"
-        class="form-control mb-2"
-        rows="2"></textarea>
+        <input
+            type="text"
+            id="permission_name"
+            name="name"
+            placeholder="<?= __('permission_name') ?>"
+            class="form-control"
+            maxlength="100"
+            required>
+    </div>
 
-    <button class="btn btn-primary">
+    <div class="mb-2">
+        <label for="permission_description" class="form-label">
+            <?= __('permission_description') ?> (EN)
+        </label>
+
+        <textarea
+            id="permission_description"
+            name="description"
+            class="form-control"
+            rows="2"
+            maxlength="1000"
+            dir="ltr"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="permission_description_a" class="form-label">
+            <?= __('permission_description_ar') ?>
+        </label>
+
+        <textarea
+            id="permission_description_a"
+            name="description_a"
+            class="form-control"
+            rows="2"
+            maxlength="1000"
+            dir="rtl"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
         <?= __('add_permission') ?>
     </button>
 
 </form>
-
 
 <ul class="list-group mt-3">
 
@@ -31,12 +60,30 @@
         <div>
             <strong><?= htmlspecialchars($perm->name) ?></strong>
 
-            <?php if (!empty($perm->description)): ?>
-                <br>
-                <small class="text-muted">
-                    <?= htmlspecialchars($perm->description) ?>
-                </small>
-            <?php endif; ?>
+       <?php
+$currentLanguage = strtolower($_SESSION['language'] ?? 'en');
+$isArabic = in_array($currentLanguage, ['ar', 'arabic'], true);
+
+$description = $isArabic
+    ? ($perm->description_a ?? '')
+    : ($perm->description ?? '');
+
+// Fall back to the other language if the selected one is empty.
+if (trim($description) === '') {
+    $description = $isArabic
+        ? ($perm->description ?? '')
+        : ($perm->description_a ?? '');
+}
+?>
+
+<?php if (trim($description) !== ''): ?>
+    <br>
+    <small
+        class="text-muted d-block"
+        dir="<?= $isArabic ? 'rtl' : 'ltr' ?>">
+        <?= nl2br(htmlspecialchars($description, ENT_QUOTES, 'UTF-8')) ?>
+    </small>
+<?php endif; ?>
         </div>
 
         <div>

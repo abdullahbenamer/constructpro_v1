@@ -8,18 +8,15 @@ class PermissionModel extends Model {
             "SELECT * FROM permissions ORDER BY name")->fetchAll();
     }
 
-public function create($name, $description = null)
+public function create($name, $description = null, $description_a = null)
 {
     try {
-
         return $this->db->query(
-            "INSERT INTO permissions (name, description)
-             VALUES (?, ?)",
-            [$name, $description]
+            "INSERT INTO permissions (name, description, description_a)
+             VALUES (?, ?, ?)",
+            [$name, $description, $description_a]
         );
-
     } catch (Throwable $e) {
-
         return false;
     }
 }
@@ -33,22 +30,8 @@ public function create($name, $description = null)
 }
 
 
-public function update($id, $name, $description = null)
+public function update($id, $name, $description = null, $description_a = null)
 {
-    $count = $this->db->query(
-        "SELECT COUNT(*) AS total
-         FROM role_permissions
-         WHERE permission_id = ?",
-        [$id]
-    )->fetch();
-
-    if ((int) $count->total > 0) {
-        return [
-            'success' => false,
-            'message' => __('permission_cannot_be_edited_in_use')
-        ];
-    }
-
     $existing = $this->getById($id);
 
     if (!$existing) {
@@ -58,17 +41,33 @@ public function update($id, $name, $description = null)
         ];
     }
 
+    $count = $this->db->query(
+        "SELECT COUNT(*) AS total
+         FROM role_permissions
+         WHERE permission_id = ?",
+        [$id]
+    )->fetch();
+
+    // Keep permission names stable when assigned to roles.
+    if (
+        (int) $count->total > 0 &&
+        $name !== $existing->name
+    ) {
+        return [
+            'success' => false,
+            'message' => __('permission_cannot_be_edited_in_use')
+        ];
+    }
+
     try {
         $this->db->query(
             "UPDATE permissions
-             SET name = ?, description = ?
+             SET name = ?, description = ?, description_a = ?
              WHERE id = ?",
-            [$name, $description, $id]
+            [$name, $description, $description_a, $id]
         );
 
-        return [
-            'success' => true
-        ];
+        return ['success' => true];
 
     } catch (Throwable $e) {
         return [

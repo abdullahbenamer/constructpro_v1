@@ -105,8 +105,6 @@ return [
     'costs_lyd'                => 'Costs LYD',
     'cost_status'              => 'Cost Status',
     'select_one_or_more_project_scopes.' => 'Select one or more applicable project scopes.',
-
-    // ----------------
     'materials' => 'MATERIALS',
     'human_resources' => 'HUMAN RESOURCES',
     'transport' => 'TRANSPORT',
@@ -118,7 +116,6 @@ return [
     'bank_charges' => 'BANK CHARGES',
     'taxes' => 'TAXES',
     'miscellaneous' => 'MISCELLANEOUS',
-    // ----------------
     'actions'                  => 'Actions',
     'no_archived_projects'     => 'No archived projects available.',
     'no_active_projects_available' => 'No active projects available.',
@@ -370,7 +367,6 @@ return [
     'received'                     => 'Received',
     'created'                      => 'Created',
     'delivery_ship_to'             => 'Delivery / Ship To',
-    'delivery_method'              => 'Delivery Method',
     'direct_to_project_site'       => 'Direct to Project Site',
     'delivery_location'            => 'Delivery Location',
     'site_contact'                 => 'Site Contact',
@@ -562,7 +558,6 @@ return [
     'new_resource_requisition'           => 'New Resource Requisition',
     'create_resource_requisition'        => 'Create Resource Requisition',
     'request_date'                       => 'Request Date',
-    'select_project'                     => '-- Select Project --',
     'warehouse'                          => 'Warehouse',
     'target_warehouse'                  => 'Target Warehouse',
     'direct_project_site_delivery_info' => "This requisition will be delivered directly to the selected project's site.",
@@ -657,12 +652,6 @@ return [
     'allow_fraction'                   => 'Allow Fraction?',
     'allow_fraction_tick'            => 'Allow',
     'example_fraction'                 => 'e.g. 2.5 meters',
-    // 'sale_unit'                        => 'Sale Unit',
-    // 'sale_unit_placeholder'            => 'Roll / Box',
-    // 'units_per_sale'                   => 'Units per Sale',
-    // 'selling_prices'                   => 'Selling Prices',
-    // 'price_per_base_unit'              => 'Price per Base Unit',
-    // 'price_per_sale_unit'              => 'Price per Sale Unit',
     'you_selected'                     => 'You selected',
     'confirm'                           => 'Confirm',
     'change'                            => 'Change',
@@ -1241,7 +1230,6 @@ return [
     'permission_resource_requisitions_create' => 'Create Resource Requisitions',
     'permission_resource_requisitions_delete' => 'Delete Resource Requisitions',
     'permission_resource_requisitions_edit' => 'Edit Resource Requisitions',
-    'permission_resource_requisitions_fulfill' => 'Fulfill Resource Requisitions',
     'permission_resource_requisitions_reject' => 'Reject Resource Requisitions',
     'permission_resource_requisitions_submit' => 'Submit Resource Requisitions',
     'permission_resource_requisitions_view' => 'View Resource Requisitions',
@@ -1937,16 +1925,18 @@ return [
     'user_create_failed' => 'Unable to create the user. Please try again.',
 
     'permission_cannot_be_edited_in_use' => 'This permission cannot be edited because it is assigned to one or more roles.',
-'reservation_cannot_be_cancelled_not_active' => 'This reservation cannot be cancelled because it is no longer active.',
+    'reservation_cannot_be_cancelled_not_active' => 'This reservation cannot be cancelled because it is no longer active.',
 
-'receiving_status' => 'Receiving Status',
+    'receiving_status' => 'Receiving Status',
 
-'receiving_not_received'      => 'Not Received',
-'receiving_partially_received' => 'Partially Received',
-'receiving_fully_received'    => 'Fully Received',
+    'receiving_not_received'      => 'Not Received',
+    'receiving_partially_received' => 'Partially Received',
+    'receiving_fully_received'    => 'Fully Received',
 
-'expected_date_cannot_be_in_past' => 'Expected delivery date cannot be in the past.',
+    'expected_date_cannot_be_in_past' => 'Expected delivery date cannot be in the past.',
 
- 'expected_delivery_not_specified' => 'Not specified',
+    'expected_delivery_not_specified' => 'Not specified',
+
+    'permission_description_ar' => 'Permission Description (Arabic)',
 
 ];

@@ -92,8 +92,9 @@ class Admin extends Controller
             if (!empty($_POST['name'])) {
 
                 $result = $permModel->create(
-                    $_POST['name'],
-                    $_POST['description'] ?? null
+                    trim($_POST['name'] ?? ''),
+                    trim($_POST['description'] ?? ''),
+                    trim($_POST['description_a'] ?? '')
                 );
 
                 if ($result) {
@@ -146,30 +147,30 @@ class Admin extends Controller
 
                 $allowed = ['jpg', 'jpeg', 'png', 'webp'];
 
-               if (!in_array($extension, $allowed, true)) {
-   $oldData = $_POST;
-unset($oldData['password']);
-$_SESSION['old_user_data'] = $oldData;
+                if (!in_array($extension, $allowed, true)) {
+                    $oldData = $_POST;
+                    unset($oldData['password']);
+                    $_SESSION['old_user_data'] = $oldData;
 
-    FlashHelper::error(__('invalid_photo_format'));
-    header('Location: ' . URLROOT . '/admin/createUser');
-    exit;
-}
+                    FlashHelper::error(__('invalid_photo_format'));
+                    header('Location: ' . URLROOT . '/admin/createUser');
+                    exit;
+                }
 
                 $filename = uniqid('user_', true) . '.' . $extension;
 
-              if (!move_uploaded_file(
-    $_FILES['photo']['tmp_name'],
-    $uploadDir . $filename
-)) {
-   $oldData = $_POST;
-unset($oldData['password']);
-$_SESSION['old_user_data'] = $oldData;
+                if (!move_uploaded_file(
+                    $_FILES['photo']['tmp_name'],
+                    $uploadDir . $filename
+                )) {
+                    $oldData = $_POST;
+                    unset($oldData['password']);
+                    $_SESSION['old_user_data'] = $oldData;
 
-    FlashHelper::error(__('unable_to_upload_photo'));
-    header('Location: ' . URLROOT . '/admin/createUser');
-    exit;
-}
+                    FlashHelper::error(__('unable_to_upload_photo'));
+                    header('Location: ' . URLROOT . '/admin/createUser');
+                    exit;
+                }
 
                 $photo = $uploadDir . $filename;
             }
@@ -199,100 +200,100 @@ $_SESSION['old_user_data'] = $oldData;
     }
 
 
-  
-public function editUser($id)
-{
-    AuthHelper::can('users.edit');
 
-    $userModel = $this->model('User');
-    $roleModel = $this->model('Role');
+    public function editUser($id)
+    {
+        AuthHelper::can('users.edit');
 
-    $data['user'] = $userModel->getById($id);
-    $data['roles'] = $roleModel->getAll();
+        $userModel = $this->model('User');
+        $roleModel = $this->model('Role');
 
-    if (!$data['user']) {
-        FlashHelper::error(__('user_not_found'));
-        header('Location: ' . URLROOT . '/admin/users');
-        exit;
-    }
+        $data['user'] = $userModel->getById($id);
+        $data['roles'] = $roleModel->getAll();
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-        $updateData = [
-            'full_name' => trim($_POST['full_name'] ?? ''),
-            'user_name' => trim($_POST['user_name'] ?? ''),
-            'email'     => trim($_POST['email'] ?? ''),
-            'mobile'    => trim($_POST['mobile'] ?? ''),
-            'role_id'   => $_POST['role_id'] ?? $data['user']->role_id,
-            'photo'     => $data['user']->photo
-        ];
-
-        if (!empty($_POST['password'])) {
-            $updateData['password'] = password_hash(
-                $_POST['password'],
-                PASSWORD_DEFAULT
-            );
-        }
-
-        if (!empty($_FILES['photo']['name'])) {
-
-            $uploadDir = 'uploads/users/';
-
-            if (!is_dir($uploadDir)) {
-                mkdir($uploadDir, 0755, true);
-            }
-
-            $extension = strtolower(
-                pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION)
-            );
-
-            $allowed = ['jpg', 'jpeg', 'png', 'webp'];
-
-            if (!in_array($extension, $allowed, true)) {
-                $oldData = $_POST;
-                unset($oldData['password']);
-
-                $_SESSION['old_edit_user_data'][(int) $id] = $oldData;
-
-                FlashHelper::error(__('invalid_photo_format'));
-                header('Location: ' . URLROOT . '/admin/editUser/' . (int) $id);
-                exit;
-            }
-
-            $filename = uniqid('user_', true) . '.' . $extension;
-
-            if (!move_uploaded_file(
-                $_FILES['photo']['tmp_name'],
-                $uploadDir . $filename
-            )) {
-                $oldData = $_POST;
-                unset($oldData['password']);
-
-                $_SESSION['old_edit_user_data'][(int) $id] = $oldData;
-
-                FlashHelper::error(__('unable_to_upload_photo'));
-                header('Location: ' . URLROOT . '/admin/editUser/' . (int) $id);
-                exit;
-            }
-
-            $updateData['photo'] = $uploadDir . $filename;
-        }
-
-        $result = $userModel->update($id, $updateData);
-
-        if (!$result['success']) {
-            FlashHelper::error($result['message']);
-            header('Location: ' . URLROOT . '/admin/editUser/' . (int) $id);
+        if (!$data['user']) {
+            FlashHelper::error(__('user_not_found'));
+            header('Location: ' . URLROOT . '/admin/users');
             exit;
         }
 
-        FlashHelper::success($result['message']);
-        header('Location: ' . URLROOT . '/admin/users');
-        exit;
-    }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $this->view('admin/users/edit', $data);
-}
+            $updateData = [
+                'full_name' => trim($_POST['full_name'] ?? ''),
+                'user_name' => trim($_POST['user_name'] ?? ''),
+                'email'     => trim($_POST['email'] ?? ''),
+                'mobile'    => trim($_POST['mobile'] ?? ''),
+                'role_id'   => $_POST['role_id'] ?? $data['user']->role_id,
+                'photo'     => $data['user']->photo
+            ];
+
+            if (!empty($_POST['password'])) {
+                $updateData['password'] = password_hash(
+                    $_POST['password'],
+                    PASSWORD_DEFAULT
+                );
+            }
+
+            if (!empty($_FILES['photo']['name'])) {
+
+                $uploadDir = 'uploads/users/';
+
+                if (!is_dir($uploadDir)) {
+                    mkdir($uploadDir, 0755, true);
+                }
+
+                $extension = strtolower(
+                    pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION)
+                );
+
+                $allowed = ['jpg', 'jpeg', 'png', 'webp'];
+
+                if (!in_array($extension, $allowed, true)) {
+                    $oldData = $_POST;
+                    unset($oldData['password']);
+
+                    $_SESSION['old_edit_user_data'][(int) $id] = $oldData;
+
+                    FlashHelper::error(__('invalid_photo_format'));
+                    header('Location: ' . URLROOT . '/admin/editUser/' . (int) $id);
+                    exit;
+                }
+
+                $filename = uniqid('user_', true) . '.' . $extension;
+
+                if (!move_uploaded_file(
+                    $_FILES['photo']['tmp_name'],
+                    $uploadDir . $filename
+                )) {
+                    $oldData = $_POST;
+                    unset($oldData['password']);
+
+                    $_SESSION['old_edit_user_data'][(int) $id] = $oldData;
+
+                    FlashHelper::error(__('unable_to_upload_photo'));
+                    header('Location: ' . URLROOT . '/admin/editUser/' . (int) $id);
+                    exit;
+                }
+
+                $updateData['photo'] = $uploadDir . $filename;
+            }
+
+            $result = $userModel->update($id, $updateData);
+
+            if (!$result['success']) {
+                FlashHelper::error($result['message']);
+                header('Location: ' . URLROOT . '/admin/editUser/' . (int) $id);
+                exit;
+            }
+
+            FlashHelper::success($result['message']);
+            header('Location: ' . URLROOT . '/admin/users');
+            exit;
+        }
+
+        $this->view('admin/users/edit', $data);
+    }
 
 
     public function assignPermissions($role_id)
@@ -355,42 +356,42 @@ public function editUser($id)
         $this->view('admin/roles/assign_permissions', $data);
     }
 
-    
-public function editPermission($id)
-{
-    AuthHelper::can('admin.access');
 
-    $permModel = $this->model('Permission');
+    public function editPermission($id)
+    {
+        AuthHelper::can('admin.access');
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $permModel = $this->model('Permission');
 
-        $result = $permModel->update(
-            (int) $id,
-            trim($_POST['name'] ?? ''),
-            trim($_POST['description'] ?? '')
-        );
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        if (!$result['success']) {
-            FlashHelper::error($result['message']);
+          $result = $permModel->update(
+    (int) $id,
+    trim($_POST['name'] ?? ''),
+    trim($_POST['description'] ?? ''),
+    trim($_POST['description_a'] ?? '')
+);
+            if (!$result['success']) {
+                FlashHelper::error($result['message']);
+                header('Location: ' . URLROOT . '/admin/permissions');
+                exit;
+            }
+
+            FlashHelper::success(__('permission_updated_successfully'));
             header('Location: ' . URLROOT . '/admin/permissions');
             exit;
         }
 
-        FlashHelper::success(__('permission_updated_successfully'));
-        header('Location: ' . URLROOT . '/admin/permissions');
-        exit;
+        $data['permission'] = $permModel->getById((int) $id);
+
+        if (!$data['permission']) {
+            FlashHelper::error(__('permission_not_found'));
+            header('Location: ' . URLROOT . '/admin/permissions');
+            exit;
+        }
+
+        $this->view('admin/permissions/edit', $data);
     }
-
-    $data['permission'] = $permModel->getById((int) $id);
-
-    if (!$data['permission']) {
-        FlashHelper::error(__('permission_not_found'));
-        header('Location: ' . URLROOT . '/admin/permissions');
-        exit;
-    }
-
-    $this->view('admin/permissions/edit', $data);
-}
 
     public function deletePermission($id)
     {
