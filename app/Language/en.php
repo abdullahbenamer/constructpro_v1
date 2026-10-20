@@ -1939,4 +1939,7 @@ return [
 
     'permission_description_ar' => 'Permission Description (Arabic)',
 
+
+    'initial_cost_price' => 'Initial Cost Price',
+'initial_cost_price_help' => 'Optional reference price. The actual receiving price will update this value when goods are received.',
 ];

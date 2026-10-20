@@ -103,6 +103,32 @@ unset($_SESSION['old']);
 
 </div>
 
+ <!-- INITIAL COST PRICE -->
+
+<div class="row mt-2">
+    <div class="col-md-6">
+        <div class="mb-3">
+            <label for="cost_price" class="form-label">
+                <?= __('initial_cost_price') ?>
+            </label>
+
+            <input
+                type="number"
+                id="cost_price"
+                name="cost_price"
+                class="form-control"
+                min="0"
+                step="0.01"
+                value="<?= htmlspecialchars($old['cost_price'] ?? '') ?>"
+            >
+
+            <small class="form-text text-danger">
+                <?= __('initial_cost_price_help') ?>
+            </small>
+        </div>
+    </div>
+</div>
+
     <!-- BRAND + COUNTRY -->
 
     <div class="row mt-2">

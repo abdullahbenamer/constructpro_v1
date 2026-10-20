@@ -1881,4 +1881,7 @@ return [
     'expected_delivery_not_specified' => 'غير محدد',
 
     'permission_description_ar' => 'وصف الصلاحية باللغة العربية',
-];
+
+'initial_cost_price' => 'سعر التكلفة المبدئي',
+'initial_cost_price_help' => 'سعر مرجعي اختياري. يتم تحديثه تلقائيا بالسعر الفعلي عند استلام البضاعة.',
+    ];

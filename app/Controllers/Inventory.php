@@ -49,6 +49,12 @@ class Inventory extends Controller
                 'unit_id' => !empty($_POST['unit_id'])
                     ? (int)$_POST['unit_id']
                     : null,
+                    'cost_price' => (
+    isset($_POST['cost_price']) &&
+    $_POST['cost_price'] !== ''
+)
+    ? (float) $_POST['cost_price']
+    : 0,
                 'min_stock' => (int)($_POST['min_stock'] ?? 10),
                 'allow_fraction' =>
                 !empty($_POST['allow_fraction']) ? 1 : 0

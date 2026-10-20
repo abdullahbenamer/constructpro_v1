@@ -314,13 +314,13 @@ LEFT JOIN countries c
         )->fetch();
     }
 
-    public function create($data)
-    {
-        $this->db->query(
-            "INSERT INTO inventory
+public function create($data)
+{
+    $this->db->query(
+        "INSERT INTO inventory
         (
             name,
-                description,
+            description,
             category,
             sku,
             brand_id,
@@ -328,29 +328,31 @@ LEFT JOIN countries c
             quantity,
             min_stock,
             unit_id,
-            allow_fraction
+            allow_fraction,
+            cost_price
         )
         VALUES
         (
             ?, ?, ?, ?, ?, ?,
             0,
-            ?, ?, ?
+            ?, ?, ?, ?
         )",
-            [
-                $data['name'],
-                $data['description'],
-                $data['category'],
-                $data['sku'],
-                $data['brand_id'],
-                $data['country_id'],
-                $data['min_stock'],
-                $data['unit_id'] ?? null,
-                $data['allow_fraction'] ?? 0
-            ]
-        );
+        [
+            $data['name'],
+            $data['description'],
+            $data['category'],
+            $data['sku'],
+            $data['brand_id'],
+            $data['country_id'],
+            $data['min_stock'],
+            $data['unit_id'] ?? null,
+            $data['allow_fraction'] ?? 0,
+            $data['cost_price'] ?? 0
+        ]
+    );
 
-        return $this->db->lastInsertId();
-    }
+    return $this->db->lastInsertId();
+}
 
     public function getByBarcode($barcode)
     {
