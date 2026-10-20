@@ -312,9 +312,15 @@ LEFT JOIN units u
 public function getOpenPurchaseOrders()
 {
     return $this->db->query("
-        SELECT po.*, s.company_name
+        SELECT
+            po.*,
+            s.company_name,
+            p.location_id AS project_location_id
         FROM purchase_orders po
-        LEFT JOIN suppliers s ON s.id = po.supplier_id
+        LEFT JOIN suppliers s
+            ON s.id = po.supplier_id
+        LEFT JOIN projects p
+            ON p.id = po.project_id
         WHERE po.status IN ('approved', 'partial')
         ORDER BY po.id DESC
     ")->fetchAll();

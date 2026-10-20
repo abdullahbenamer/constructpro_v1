@@ -19,23 +19,23 @@
 
             <?php foreach ($purchaseOrders as $po): ?>
                 <option
-                    value="<?= (int) $po->id ?>"
-                    data-supplier-id="<?= (int) $po->supplier_id ?>"
-                    data-supplier-name="<?= htmlspecialchars(
-                                            $po->company_name,
-                                            ENT_QUOTES,
-                                            'UTF-8'
-                                        ) ?>"
-                    data-delivery-method="<?= htmlspecialchars(
-                                                $po->delivery_method ?? '',
-                                                ENT_QUOTES,
-                                                'UTF-8'
-                                            ) ?>"
-                    data-target-location-id="<?= (int) ($po->target_warehouse_id ?? 0) ?>">
-
-                    <?= htmlspecialchars($po->po_number) ?> -
-                    <?= htmlspecialchars($po->company_name) ?>
-                </option>
+    value="<?= (int) $po->id ?>"
+    data-supplier-id="<?= (int) $po->supplier_id ?>"
+    data-supplier-name="<?= htmlspecialchars(
+        $po->company_name,
+        ENT_QUOTES,
+        'UTF-8'
+    ) ?>"
+    data-delivery-method="<?= htmlspecialchars(
+        $po->delivery_method ?? '',
+        ENT_QUOTES,
+        'UTF-8'
+    ) ?>"
+    data-target-location-id="<?= (int) ($po->target_warehouse_id ?? 0) ?>"
+    data-project-location-id="<?= (int) ($po->project_location_id ?? 0) ?>">
+    <?= htmlspecialchars($po->po_number) ?> -
+    <?= htmlspecialchars($po->company_name) ?>
+</option>
             <?php endforeach; ?>
 
         </select>
@@ -310,27 +310,29 @@
             remaining;
     }
 
-
+// ------------- Delivery Location logic ----------------------
     poSelect.addEventListener('change', function() {
 
         const selected =
             this.options[this.selectedIndex];
 
         // Default receiving location from the selected PO.
-        const deliveryMethod = selected.dataset.deliveryMethod || '';
-        const targetLocationId = selected.dataset.targetLocationId || '';
+      const deliveryMethod = selected.dataset.deliveryMethod || '';
+const warehouseLocationId = selected.dataset.targetLocationId || '';
+const projectLocationId = selected.dataset.projectLocationId || '';
 
-        if (deliveryMethod === 'WAREHOUSE' && targetLocationId !== '' &&
-            targetLocationId !== '0') {
+const defaultLocationId =
+    deliveryMethod === 'WAREHOUSE'
+        ? warehouseLocationId
+        : deliveryMethod === 'DIRECT_TO_PROJECT_SITE'
+            ? projectLocationId
+            : '';
 
-            // Select the PO's predefined warehouse.
-            receiveLocation.value = targetLocationId;
+const locationExists = Array.from(receiveLocation.options).some(
+    option => option.value === defaultLocationId && defaultLocationId !== ''
+);
 
-        } else {
-            // No predefined warehouse destination.
-            // Let the receiver select the appropriate stock location.
-            receiveLocation.value = '';
-        }
+receiveLocation.value = locationExists ? defaultLocationId : '';
 
         document.getElementById('supplier_id').value =
             selected.dataset.supplierId || '';
