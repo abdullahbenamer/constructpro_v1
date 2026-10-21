@@ -23,7 +23,7 @@ class InventoryService extends BaseService
         $this->movementModel = $movementModel;
         $this->transferModel = $transferModel;
         $this->reservationModel = $reservationModel;
-           $this->inventoryModel = $inventoryModel;
+        $this->inventoryModel = $inventoryModel;
     }
 
     /**
@@ -213,28 +213,28 @@ class InventoryService extends BaseService
 |--------------------------------------------------------------------------
 */
 
-$inventory =
-    $this->inventoryModel->getById(
-        $data['inventory_id']
-    );
+            $inventory =
+                $this->inventoryModel->getById(
+                    $data['inventory_id']
+                );
 
-if (!$inventory) {
-    throw new Exception(
-        __('inventory_not_found')
-    );
-}
+            if (!$inventory) {
+                throw new Exception(
+                    __('inventory_not_found')
+                );
+            }
 
-$allowFraction =
-    (int)$inventory->allow_fraction === 1;
+            $allowFraction =
+                (int)$inventory->allow_fraction === 1;
 
-if (
-    !$allowFraction &&
-    floor($data['quantity']) != $data['quantity']
-) {
-    throw new Exception(
-        __('quantity_must_be_whole_number')
-    );
-}
+            if (
+                !$allowFraction &&
+                floor($data['quantity']) != $data['quantity']
+            ) {
+                throw new Exception(
+                    __('quantity_must_be_whole_number')
+                );
+            }
 
             /*
 |--------------------------------------------------------------------------
@@ -362,6 +362,23 @@ if (
 
             if ($delta == 0) {
                 throw new Exception(__('adjustment_quantity_cannot_be_zero'));
+            }
+
+            // Validate quantity according to the item's unit configuration.
+            $inventory = $this->inventoryModel->getById($inventoryId);
+
+            if (!$inventory) {
+                throw new Exception(__('inventory_not_found'));
+            }
+
+            $quantity = abs($delta);
+            $allowFraction = (int) $inventory->allow_fraction === 1;
+
+            if (
+                !$allowFraction &&
+                abs($quantity - round($quantity)) > 0.000001
+            ) {
+                throw new Exception(__('quantity_must_be_whole_number'));
             }
 
             /*

@@ -6,161 +6,78 @@
 <div id="jsNotification"></div>
 
 <form method="POST" id="adjustmentForm">
-
     <!-- ITEM -->
-
     <div class="mb-3">
-
         <label class="form-label">
             <?= __('inventory_item') ?>
             <span class="text-danger">*</span>
         </label>
 
-        <select
-            name="inventory_id"
-            id="inventory_id"
-            class="form-select"
-            required>
-
-            <option value="">
-                <?= __('select_inventory_item') ?>
-            </option>
+        <select name="inventory_id" id="inventory_id" class="form-select" required>
+            <option value=""><?= __('select_inventory_item') ?></option>
 
             <?php foreach ($inventory as $item): ?>
-
                 <option
-                    value="<?= (int)$item->id ?>"
-                    <?= (
-                        (int)$item->id ===
-                        (int)($selected_inventory_id ?? 0)
-                    ) ? 'selected' : '' ?>>
-
-                    <?= htmlspecialchars($item->name) ?>
-
+                    value="<?= (int) $item->id ?>"
+                    data-allow-fraction="<?= !empty($item->allow_fraction) ? '1' : '0' ?>"
+                    <?= ((int) $item->id === (int) ($selected_inventory_id ?? 0)) ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($item->name, ENT_QUOTES, 'UTF-8') ?>
                     <?php if (!empty($item->sku)): ?>
-                        — <?= htmlspecialchars($item->sku) ?>
+                        — <?= htmlspecialchars($item->sku, ENT_QUOTES, 'UTF-8') ?>
                     <?php endif; ?>
-
                 </option>
-
             <?php endforeach; ?>
-
         </select>
-
     </div>
-
 
     <!-- LOCATION -->
-
     <div class="mb-3">
-
         <label class="form-label">
-
             <?= __('location') ?>
-
             <span class="text-danger">*</span>
-
         </label>
 
-        <select
-            name="location_id"
-            id="location_id"
-            class="form-select"
-            required>
-
-            <option value="">
-                <?= __('select_location') ?>
-            </option>
+        <select name="location_id" id="location_id" class="form-select" required>
+            <option value=""><?= __('select_location') ?></option>
 
             <?php foreach ($locations as $location): ?>
-
-                <option value="<?= (int)$location->id ?>">
-
-                    <?= htmlspecialchars($location->code) ?>
+                <option value="<?= (int) $location->id ?>">
+                    <?= htmlspecialchars($location->code, ENT_QUOTES, 'UTF-8') ?>
                     -
-                    <?= htmlspecialchars($location->name) ?>
-
+                    <?= htmlspecialchars($location->name, ENT_QUOTES, 'UTF-8') ?>
                 </option>
-
             <?php endforeach; ?>
-
         </select>
-
     </div>
-
 
     <!-- CURRENT STOCK INFO -->
-
-    <div
-        id="stockInfo"
-        class="alert alert-info d-none"
-        style="max-width: 500px;">
-
-        <div>
-            <?= __('physical_stock') ?>:
-            <strong id="physicalQty">0.00</strong>
-        </div>
-
-        <div>
-            <?= __('reserved') ?>:
-            <strong id="reservedQty">0.00</strong>
-        </div>
-
-        <div>
-            <?= __('available_for_adjustment') ?>:
-            <strong id="availableQty">0.00</strong>
-        </div>
-
+    <div id="stockInfo" class="alert alert-info d-none" style="max-width: 500px;">
+        <div><?= __('physical_stock') ?>: <strong id="physicalQty">0.00</strong></div>
+        <div><?= __('reserved') ?>: <strong id="reservedQty">0.00</strong></div>
+        <div><?= __('available_for_adjustment') ?>: <strong id="availableQty">0.00</strong></div>
     </div>
-
 
     <!-- ADJUSTMENT TYPE -->
-
     <div class="mb-3">
-
         <label class="form-label">
-
             <?= __('adjustment_type') ?>
-
             <span class="text-danger">*</span>
-
         </label>
 
-        <select
-            name="adjustment_type"
-            id="adjustment_type"
-            class="form-select"
-            required>
-
-            <option value="">
-                <?= __('select_adjustment_type') ?>
-            </option>
-
-            <option value="INCREASE">
-                <?= __('increase_stock') ?>
-            </option>
-
-            <option value="DECREASE">
+        <select name="adjustment_type" id="adjustment_type" class="form-select" required>
+            <option value=""><?= __('select_adjustment_type') ?></option>
+            <option value="INCREASE"><?= __('increase_stock') ?></option>
+            <option value="DECREASE" id="decreaseStockOption" disabled>
                 <?= __('decrease_stock') ?>
             </option>
-
         </select>
-
     </div>
 
-
     <!-- QUANTITY -->
-
-    <div
-        class="mb-3"
-        style="max-width: 400px;">
-
+    <div class="mb-3" style="max-width: 400px;">
         <label class="form-label">
-
             <?= __('quantity') ?>
-
             <span class="text-danger">*</span>
-
         </label>
 
         <input
@@ -168,519 +85,316 @@
             name="quantity"
             id="quantity"
             class="form-control"
-            step="0.01"
-            min="0.01"
+            step="1"
+            min="1"
             required>
 
-        <small
-            id="quantityHelp"
-            class="text-muted">
-        </small>
-
+        <small id="quantityHelp" class="text-muted"></small>
     </div>
-
 
     <!-- NEW BALANCE -->
-
-    <div
-        id="balancePreview"
-        class="alert alert-secondary d-none"
-        style="max-width: 500px;">
-
+    <div id="balancePreview" class="alert alert-secondary d-none" style="max-width: 500px;">
         <?= __('new_physical_balance') ?>:
-
-        <strong id="newBalance">
-            0.00
-        </strong>
-
+        <strong id="newBalance">0.00</strong>
         <span id="baseUnit"></span>
-
     </div>
 
-
     <!-- REASON -->
-
     <div class="mb-3">
-
         <label class="form-label">
-
             <?= __('reason') ?>
-
             <span class="text-danger">*</span>
-
         </label>
 
-        <select
-            name="reason"
-            id="reason"
-            class="form-select"
-            required>
-
-            <option value="">
-                <?= __('select_reason') ?>
-            </option>
-
-            <option value="DAMAGED" data-types="DECREASE">
-                <?= __('damaged') ?>
-            </option>
-
-            <option value="BROKEN" data-types="DECREASE">
-                <?= __('broken') ?>
-            </option>
-
-            <option value="LOST" data-types="DECREASE">
-                <?= __('lost') ?>
-            </option>
-
-            <option value="FOUND" data-types="INCREASE">
-                <?= __('found') ?>
-            </option>
-
+        <select name="reason" id="reason" class="form-select" required disabled>
+            <option value=""><?= __('select_reason') ?></option>
+            <option value="DAMAGED" data-types="DECREASE"><?= __('damaged') ?></option>
+            <option value="BROKEN" data-types="DECREASE"><?= __('broken') ?></option>
+            <option value="LOST" data-types="DECREASE"><?= __('lost') ?></option>
+            <option value="FOUND" data-types="INCREASE"><?= __('found') ?></option>
             <option value="PHYSICAL_COUNT_CORRECTION" data-types="INCREASE,DECREASE">
                 <?= __('physical_count_correction') ?>
             </option>
-
-            <option value="EXPIRED" data-types="DECREASE">
-                <?= __('expired') ?>
-            </option>
-
-            <option value="OTHER" data-types="INCREASE,DECREASE">
-                <?= __('other') ?>
-            </option>
-
+            <option value="EXPIRED" data-types="DECREASE"><?= __('expired') ?></option>
+            <option value="OTHER" data-types="INCREASE,DECREASE"><?= __('other') ?></option>
         </select>
     </div>
 
-
     <!-- NOTES -->
-
     <div class="mb-3">
-
-        <label class="form-label">
-            <?= __('notes') ?>
-        </label>
-
+        <label class="form-label"><?= __('notes') ?></label>
         <textarea
             name="notes"
             id="notes"
             class="form-control"
             rows="3"
             placeholder="<?= __('additional_explanation') ?>"></textarea>
-
     </div>
 
-
     <!-- ACTIONS -->
-
-    <button
-        type="submit"
-        id="submitBtn"
-        class="btn btn-primary">
-
+    <button type="submit" id="submitBtn" class="btn btn-primary">
         <i class="fas fa-sliders-h"></i>
         <?= __('post_adjustment') ?>
-
     </button>
 
-    <a
-        href="<?= URLROOT ?>/inventory"
-        class="btn btn-secondary">
-
+    <a href="<?= URLROOT ?>/inventory" class="btn btn-secondary">
         <?= __('cancel') ?>
-
     </a>
-
 </form>
 
-
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-
-        const inventorySelect =
-            document.getElementById('inventory_id');
-
-        const locationSelect =
-            document.getElementById('location_id');
-
-        const adjustmentType =
-            document.getElementById('adjustment_type');
-
-        const reason =
-            document.getElementById('reason');
-
-        const quantityInput =
-            document.getElementById('quantity');
-
-        const stockInfo =
-            document.getElementById('stockInfo');
-
-        const physicalQty =
-            document.getElementById('physicalQty');
-
-        const reservedQty =
-            document.getElementById('reservedQty');
-
-        const availableQty =
-            document.getElementById('availableQty');
-
-        const quantityHelp =
-            document.getElementById('quantityHelp');
-
-        const balancePreview =
-            document.getElementById('balancePreview');
-
-        const newBalance =
-            document.getElementById('newBalance');
-
-        const submitBtn =
-            document.getElementById('submitBtn');
-
-        let currentPhysical = 0;
-        let currentReserved = 0;
-        let currentAvailable = 0;
-
-
-        function resetStockInfo() {
-
-            currentPhysical = 0;
-            currentReserved = 0;
-            currentAvailable = 0;
-
-            stockInfo.classList.add('d-none');
-
-            balancePreview.classList.add('d-none');
-
-            quantityInput.removeAttribute('max');
-
-            quantityInput.value = '';
-
-            quantityHelp.textContent = '';
-
-        }
-
-
-
-        function updateReasonOptions() {
-
-            const type = adjustmentType.value;
-            const reasonOptions = reason.querySelectorAll('option[data-types]');
-
-            reason.value = '';
-
-            reasonOptions.forEach(function(option) {
-
-                const allowedTypes =
-                    option.dataset.types.split(',');
-
-                option.hidden = !allowedTypes.includes(type);
-            });
-
-            // Hide reason until adjustment type is selected
-            reason.disabled = !type;
-        }
-
-
-        function loadStock() {
-
-            const inventoryId =
-                inventorySelect.value;
-
-            const locationId =
-                locationSelect.value;
-
-            if (!inventoryId || !locationId) {
-
-                resetStockInfo();
-
-                return;
-            }
-
-
-            fetch(
-                    '<?= URLROOT ?>/stockadjustments/getLocationStock', {
-                        method: 'POST',
-
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-
-                        body: 'inventory_id=' +
-                            encodeURIComponent(inventoryId) +
-                            '&location_id=' +
-                            encodeURIComponent(locationId)
-                    }
-                )
-
-                .then(response => response.json())
-
-                .then(data => {
-
-                    currentPhysical =
-                        parseFloat(data.physical_qty || 0);
-
-                    currentReserved =
-                        parseFloat(data.reserved_qty || 0);
-
-                    currentAvailable =
-                        parseFloat(data.available_qty || 0);
-
-
-                    physicalQty.textContent =
-                        currentPhysical.toFixed(2);
-
-                    reservedQty.textContent =
-                        currentReserved.toFixed(2);
-
-                    availableQty.textContent =
-                        currentAvailable.toFixed(2);
-
-
-                    stockInfo.classList.remove('d-none');
-
-
-                    if (
-                        adjustmentType.value === 'DECREASE'
-                    ) {
-
-                        quantityInput.max =
-                            currentAvailable;
-
-                        quantityHelp.textContent =
-                            '<?= __('maximum_decrease') ?>: ' +
-                            currentAvailable.toFixed(2);
-
-                    } else {
-
-                        quantityInput.removeAttribute('max');
-
-                        quantityHelp.textContent =
-                            '<?= __('increase_not_limited_by_stock') ?>';
-
-                    }
-
-                    updatePreview();
-
-                })
-
-                .catch(error => {
-
-                    console.error(
-                        '<?= __('error_loading_stock') ?>:',
-                        error
-                    );
-
-                    resetStockInfo();
-
-                });
-
-        }
-
-
-        function updatePreview() {
-
-            if (
-                !inventorySelect.value ||
-                !locationSelect.value ||
-                !adjustmentType.value ||
-                !quantityInput.value
-            ) {
-
-                balancePreview.classList.add('d-none');
-
-                return;
-            }
-
-
-            const quantity =
-                parseFloat(quantityInput.value || 0);
-
-
-            if (quantity <= 0) {
-
-                balancePreview.classList.add('d-none');
-
-                return;
-            }
-
-
-            let result = currentPhysical;
-
-
-            if (
-                adjustmentType.value === 'INCREASE'
-            ) {
-
-                result += quantity;
-
-            } else {
-
-                result -= quantity;
-
-            }
-
-
-            if (result < 0) {
-
-                balancePreview.classList.add('d-none');
-
-                return;
-            }
-
-
-            newBalance.textContent =
-                result.toFixed(2);
-
-            balancePreview.classList.remove('d-none');
-
-        }
-
-
-        inventorySelect.addEventListener(
-            'change',
-            loadStock
-        );
-
-        locationSelect.addEventListener(
-            'change',
-            loadStock
-        );
-
-
-        adjustmentType.addEventListener(
-            'change',
-            function() {
-                updateReasonOptions();
-
-                if (
-                    this.value === 'DECREASE'
-                ) {
-
-                    quantityInput.max =
-                        currentAvailable;
-
-                    quantityHelp.textContent =
-                        '<?= __('maximum_decrease') ?>: ' +
-                        currentAvailable.toFixed(2);
-
-                } else if (
-                    this.value === 'INCREASE'
-                ) {
-
-                    quantityInput.removeAttribute(
-                        'max'
-                    );
-
-                    quantityHelp.textContent =
-                        '<?= __('increase_not_limited_by_stock') ?>';
-
-                } else {
-
-                    quantityInput.removeAttribute(
-                        'max'
-                    );
-
-                    quantityHelp.textContent = '';
-
-                }
-
-                updatePreview();
-
-            }
-        );
-
-
-        quantityInput.addEventListener(
-            'input',
-            updatePreview
-        );
-
-
-        document
-            .getElementById('reason')
-            .addEventListener(
-                'change',
-                function() {
-
-                    const notes =
-                        document.getElementById('notes');
-
-                    if (this.value === 'OTHER') {
-
-                        notes.required = true;
-
-                        notes.placeholder =
-                            '<?= __('please_explain_reason') ?>';
-
-                    } else {
-
-                        notes.required = false;
-
-                        notes.placeholder =
-                            '<?= __('additional_explanation') ?>';
-
-                    }
-
-                }
-            );
-
-
-        document
-            .getElementById('adjustmentForm')
-            .addEventListener(
-                'submit',
-                function(e) {
-
-                  if (
-    adjustmentType.value === 'DECREASE' &&
-    (
-        parseFloat(
-            quantityInput.value || 0
-        ) > currentAvailable
-    )
-) {
-
-    e.preventDefault();
-
+document.addEventListener('DOMContentLoaded', function () {
+    const inventorySelect = document.getElementById('inventory_id');
+    const locationSelect = document.getElementById('location_id');
+    const adjustmentType = document.getElementById('adjustment_type');
+    const decreaseOption = document.getElementById('decreaseStockOption');
+    const reason = document.getElementById('reason');
+    const quantityInput = document.getElementById('quantity');
+    const stockInfo = document.getElementById('stockInfo');
+    const physicalQty = document.getElementById('physicalQty');
+    const reservedQty = document.getElementById('reservedQty');
+    const availableQty = document.getElementById('availableQty');
+    const quantityHelp = document.getElementById('quantityHelp');
+    const balancePreview = document.getElementById('balancePreview');
+    const newBalance = document.getElementById('newBalance');
     const notification = document.getElementById('jsNotification');
+    const adjustmentForm = document.getElementById('adjustmentForm');
 
-    notification.innerHTML = `
-        <div class="alert alert-danger alert-dismissible fade show"
-             role="alert">
+    let currentPhysical = 0;
+    let currentReserved = 0;
+    let currentAvailable = 0;
+    let allowFraction = false;
+    let stockRequestNumber = 0;
 
-            <?= __('adjustment_quantity_exceeds_available') ?>
+    function configureQuantityInput() {
+        const selectedOption = inventorySelect.options[inventorySelect.selectedIndex];
+        allowFraction = selectedOption?.dataset.allowFraction === '1';
 
-            <button type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="<?= __('close') ?>">
-            </button>
+        quantityInput.step = allowFraction ? '0.01' : '1';
+        quantityInput.min = allowFraction ? '0.01' : '1';
 
-        </div>
-    `;
+        if (quantityInput.value !== '') {
+            const value = Number(quantityInput.value);
+            const invalidMinimum = value < Number(quantityInput.min);
+            const invalidFraction = !allowFraction && !Number.isInteger(value);
 
-    notification.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center'
+            if (invalidMinimum || invalidFraction) {
+                quantityInput.value = '';
+            }
+        }
+
+        updatePreview();
+    }
+
+    function resetStockInfo() {
+        currentPhysical = 0;
+        currentReserved = 0;
+        currentAvailable = 0;
+
+        stockInfo.classList.add('d-none');
+        balancePreview.classList.add('d-none');
+        decreaseOption.disabled = true;
+        quantityInput.removeAttribute('max');
+        quantityInput.value = '';
+        quantityHelp.textContent = '';
+        physicalQty.textContent = '0.00';
+        reservedQty.textContent = '0.00';
+        availableQty.textContent = '0.00';
+    }
+
+    function updateReasonOptions() {
+        const type = adjustmentType.value;
+        const reasonOptions = reason.querySelectorAll('option[data-types]');
+
+        reason.value = '';
+        reasonOptions.forEach(function (option) {
+            const allowedTypes = option.dataset.types.split(',');
+            option.hidden = !allowedTypes.includes(type);
+        });
+
+        reason.disabled = !type;
+    }
+
+    function updateQuantityHelp() {
+        if (adjustmentType.value === 'DECREASE') {
+            quantityInput.max = String(currentAvailable);
+            quantityHelp.textContent =
+                '<?= __('maximum_decrease') ?>: ' + currentAvailable.toFixed(2);
+        } else if (adjustmentType.value === 'INCREASE') {
+            quantityInput.removeAttribute('max');
+            quantityHelp.textContent = '<?= __('increase_not_limited_by_stock') ?>';
+        } else {
+            quantityInput.removeAttribute('max');
+            quantityHelp.textContent = '';
+        }
+    }
+
+    function loadStock() {
+        const inventoryId = inventorySelect.value;
+        const locationId = locationSelect.value;
+        const requestNumber = ++stockRequestNumber;
+
+        // Do not allow a decrease until stock for this item/location is known.
+        decreaseOption.disabled = true;
+
+        if (!inventoryId || !locationId) {
+            resetStockInfo();
+            return;
+        }
+
+        fetch('<?= URLROOT ?>/stockadjustments/getLocationStock', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'inventory_id=' + encodeURIComponent(inventoryId) +
+                '&location_id=' + encodeURIComponent(locationId)
+        })
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error('Stock lookup failed');
+            }
+            return response.json();
+        })
+        .then(function (data) {
+            // Ignore an older response if the user changed item/location meanwhile.
+            if (requestNumber !== stockRequestNumber) {
+                return;
+            }
+
+            currentPhysical = Math.max(0, parseFloat(data.physical_qty) || 0);
+            currentReserved = Math.max(0, parseFloat(data.reserved_qty) || 0);
+            currentAvailable = Math.max(0, parseFloat(data.available_qty) || 0);
+
+            physicalQty.textContent = currentPhysical.toFixed(2);
+            reservedQty.textContent = currentReserved.toFixed(2);
+            availableQty.textContent = currentAvailable.toFixed(2);
+            stockInfo.classList.remove('d-none');
+
+            decreaseOption.disabled = currentAvailable <= 0;
+
+            if (currentAvailable <= 0 && adjustmentType.value === 'DECREASE') {
+                adjustmentType.value = '';
+                quantityInput.value = '';
+                balancePreview.classList.add('d-none');
+                updateReasonOptions();
+            }
+
+            updateQuantityHelp();
+            updatePreview();
+        })
+        .catch(function (error) {
+            if (requestNumber !== stockRequestNumber) {
+                return;
+            }
+            console.error('<?= __('error_loading_stock') ?>:', error);
+            resetStockInfo();
+        });
+    }
+
+    function updatePreview() {
+        if (
+            !inventorySelect.value ||
+            !locationSelect.value ||
+            !adjustmentType.value ||
+            quantityInput.value === ''
+        ) {
+            balancePreview.classList.add('d-none');
+            return;
+        }
+
+        const quantity = Number(quantityInput.value);
+        if (!Number.isFinite(quantity) || quantity <= 0) {
+            balancePreview.classList.add('d-none');
+            return;
+        }
+
+        if (!allowFraction && !Number.isInteger(quantity)) {
+            balancePreview.classList.add('d-none');
+            return;
+        }
+
+        let result = currentPhysical;
+        if (adjustmentType.value === 'INCREASE') {
+            result += quantity;
+        } else if (adjustmentType.value === 'DECREASE') {
+            if (quantity > currentAvailable) {
+                balancePreview.classList.add('d-none');
+                return;
+            }
+            result -= quantity;
+        } else {
+            balancePreview.classList.add('d-none');
+            return;
+        }
+
+        newBalance.textContent = result.toFixed(2);
+        balancePreview.classList.remove('d-none');
+    }
+
+    inventorySelect.addEventListener('change', function () {
+        configureQuantityInput();
+        loadStock();
     });
 
-    return;
-}
+    locationSelect.addEventListener('change', loadStock);
 
-                }
-            );
-
-
-        if (
-            inventorySelect.value &&
-            locationSelect.value
-        ) {
-
-            loadStock();
-
+    adjustmentType.addEventListener('change', function () {
+        if (this.value === 'DECREASE' && (decreaseOption.disabled || currentAvailable <= 0)) {
+            this.value = '';
         }
 
         updateReasonOptions();
-
-
+        updateQuantityHelp();
+        updatePreview();
     });
+
+    quantityInput.addEventListener('input', updatePreview);
+
+    reason.addEventListener('change', function () {
+        const notes = document.getElementById('notes');
+        if (this.value === 'OTHER') {
+            notes.required = true;
+            notes.placeholder = '<?= __('please_explain_reason') ?>';
+        } else {
+            notes.required = false;
+            notes.placeholder = '<?= __('additional_explanation') ?>';
+        }
+    });
+
+    adjustmentForm.addEventListener('submit', function (event) {
+        notification.innerHTML = '';
+
+        const quantity = Number(quantityInput.value);
+        let validationMessage = '';
+
+        if (!Number.isFinite(quantity) || quantity <= 0) {
+            validationMessage = '<?= __('adjustment_quantity_must_be_greater_than_zero') ?>';
+        } else if (!allowFraction && !Number.isInteger(quantity)) {
+            validationMessage = '<?= __('quantity_must_be_whole_number') ?>';
+        } else if (
+            adjustmentType.value === 'DECREASE' &&
+            (decreaseOption.disabled || quantity > currentAvailable)
+        ) {
+            validationMessage = '<?= __('adjustment_quantity_exceeds_available') ?>';
+        }
+
+        if (validationMessage !== '') {
+            event.preventDefault();
+            notification.innerHTML =
+                '<div class="alert alert-danger" role="alert"></div>';
+            notification.firstElementChild.textContent = validationMessage;
+            notification.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    });
+
+    configureQuantityInput();
+    updateReasonOptions();
+
+    if (inventorySelect.value && locationSelect.value) {
+        loadStock();
+    } else {
+        resetStockInfo();
+    }
+});
 </script>
