@@ -5,7 +5,7 @@ class PurchaseOrders extends Controller
     // list all purchase orders
     public function index()
     {
-     AuthHelper::can('purchase_orders.view');
+        AuthHelper::can('purchase_orders.view');
 
         $model = $this->model('PurchaseOrder');
 
@@ -20,176 +20,173 @@ class PurchaseOrders extends Controller
     |--------------------------------------------------------------------------
     */
 
-   
-public function create()
-{
-    AuthHelper::can('purchase_orders.create');
 
-    $supplierModel = $this->model('Supplier');
-    $locationModel = $this->model('InventoryLocation');
-    $projectModel  = $this->model('Project');
+    public function create()
+    {
+        AuthHelper::can('purchase_orders.create');
 
-    $data = [
-        'suppliers' => $supplierModel->getAll(),
+        $supplierModel = $this->model('Supplier');
+        $locationModel = $this->model('InventoryLocation');
+        $projectModel  = $this->model('Project');
 
-        // Exclude project inventory locations from the warehouse selector.
-        'warehouses' => array_filter(
-            $locationModel->getAll(),
-            function ($location) {
-                return strpos($location->code ?? '', 'PRJ-') !== 0;
-            }
-        ),
+        $data = [
+            'suppliers' => $supplierModel->getAll(),
 
-        'projects' => $projectModel->getAll()
-    ];
+            // Exclude project inventory locations from the warehouse selector.
+            'warehouses' => array_filter(
+                $locationModel->getAll(),
+                function ($location) {
+                    return strpos($location->code ?? '', 'PRJ-') !== 0;
+                }
+            ),
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            'projects' => $projectModel->getAll()
+        ];
 
-        // Validate expected delivery date on the server.
-        $expectedDate = trim($_POST['expected_date'] ?? '');
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        if ($expectedDate !== '') {
-            $dateObject = DateTime::createFromFormat(
-                '!Y-m-d',
-                $expectedDate
-            );
+            // Validate expected delivery date on the server.
+            $expectedDate = trim($_POST['expected_date'] ?? '');
 
-            $dateErrors = DateTime::getLastErrors();
-
-            $validDate = $dateObject !== false
-                && (
-                    $dateErrors === false
-                    || (
-                        $dateErrors['warning_count'] === 0
-                        && $dateErrors['error_count'] === 0
-                    )
-                )
-                && $dateObject->format('Y-m-d') === $expectedDate;
-
-            if (!$validDate || $expectedDate < date('Y-m-d')) {
-                FlashHelper::error(
-                    __('expected_date_cannot_be_in_past')
+            if ($expectedDate !== '') {
+                $dateObject = DateTime::createFromFormat(
+                    '!Y-m-d',
+                    $expectedDate
                 );
 
+                $dateErrors = DateTime::getLastErrors();
+
+                $validDate = $dateObject !== false
+                    && (
+                        $dateErrors === false
+                        || (
+                            $dateErrors['warning_count'] === 0
+                            && $dateErrors['error_count'] === 0
+                        )
+                    )
+                    && $dateObject->format('Y-m-d') === $expectedDate;
+
+                if (!$validDate || $expectedDate < date('Y-m-d')) {
+                    FlashHelper::error(
+                        __('expected_date_cannot_be_in_past')
+                    );
+
+                    $this->view('purchase-orders/create', $data);
+                    return;
+                }
+            }
+
+            $po_number = 'PO-' . date('ymdHis');
+
+            $delivery_method = $_POST['delivery_method'] ?? 'WAREHOUSE';
+
+            $target_warehouse_id = null;
+            $project_id = null;
+
+            if ($delivery_method === 'WAREHOUSE') {
+
+                $target_warehouse_id = !empty($_POST['target_warehouse_id'])
+                    ? (int) $_POST['target_warehouse_id']
+                    : null;
+
+                if (!$target_warehouse_id) {
+                    FlashHelper::error(__('delivery_warehouse_required'));
+                    $this->view('purchase-orders/create', $data);
+                    return;
+                }
+            } elseif ($delivery_method === 'DIRECT_TO_PROJECT_SITE') {
+
+                $project_id = !empty($_POST['project_id'])
+                    ? (int) $_POST['project_id']
+                    : null;
+
+                if (!$project_id) {
+                    FlashHelper::error(__('project_required'));
+                    $this->view('purchase-orders/create', $data);
+                    return;
+                }
+            } else {
+                FlashHelper::error(__('invalid_delivery_method'));
                 $this->view('purchase-orders/create', $data);
                 return;
+            }
+
+            $poData = [
+                'po_number'           => $po_number,
+                'supplier_id'         => (int) ($_POST['supplier_id'] ?? 0),
+                'project_id'          => $project_id,
+                'requisition_id'      => null,
+                'target_warehouse_id' => $target_warehouse_id,
+                'delivery_method'     => $delivery_method,
+                'order_date'          => $_POST['order_date'] ?? null,
+                'expected_date'       => $expectedDate !== '' ? $expectedDate : null,
+                'notes'               => trim($_POST['notes'] ?? '')
+            ];
+
+            try {
+
+                $model = $this->model('PurchaseOrderModel');
+
+                $id = $model->create($poData);
+
+                if ($id) {
+                    FlashHelper::success(
+                        __('purchase_order_created_successfully')
+                    );
+
+                    header(
+                        'Location: ' .
+                            URLROOT .
+                            '/PurchaseOrders/details/' .
+                            $id
+                    );
+                    exit;
+                }
+            } catch (Throwable $e) {
+
+                FlashHelper::error($e->getMessage());
             }
         }
 
-        $po_number = 'PO-' . date('ymdHis');
+        $this->view('purchase-orders/create', $data);
+    }
 
-        $delivery_method = $_POST['delivery_method'] ?? 'WAREHOUSE';
 
-        $target_warehouse_id = null;
-        $project_id = null;
-
-        if ($delivery_method === 'WAREHOUSE') {
-
-            $target_warehouse_id = !empty($_POST['target_warehouse_id'])
-                ? (int) $_POST['target_warehouse_id']
-                : null;
-
-            if (!$target_warehouse_id) {
-                FlashHelper::error(__('delivery_warehouse_required'));
-                $this->view('purchase-orders/create', $data);
-                return;
-            }
-
-        } elseif ($delivery_method === 'DIRECT_TO_PROJECT_SITE') {
-
-            $project_id = !empty($_POST['project_id'])
-                ? (int) $_POST['project_id']
-                : null;
-
-            if (!$project_id) {
-                FlashHelper::error(__('project_required'));
-                $this->view('purchase-orders/create', $data);
-                return;
-            }
-
-        } else {
-            FlashHelper::error(__('invalid_delivery_method'));
-            $this->view('purchase-orders/create', $data);
+    public function details($id = null)
+    {
+        if (
+            $id === null ||
+            !ctype_digit((string) $id) ||
+            (int) $id < 1
+        ) {
+            http_response_code(404);
+            require APPROOT . '/app/Views/errors/404.php';
             return;
         }
 
-        $poData = [
-            'po_number'           => $po_number,
-            'supplier_id'         => (int) ($_POST['supplier_id'] ?? 0),
-            'project_id'          => $project_id,
-            'requisition_id'      => null,
-            'target_warehouse_id' => $target_warehouse_id,
-            'delivery_method'     => $delivery_method,
-            'order_date'          => $_POST['order_date'] ?? null,
-            'expected_date'       => $expectedDate !== '' ? $expectedDate : null,
-            'notes'               => trim($_POST['notes'] ?? '')
-        ];
+        AuthHelper::can('purchase_orders.view');
 
-        try {
+        $model = $this->model('PurchaseOrder');
+        $inventoryModel = $this->model('Inventory');
 
-            $model = $this->model('PurchaseOrderModel');
+        $po = $model->getById($id);
 
-            $id = $model->create($poData);
-
-            if ($id) {
-                FlashHelper::success(
-                    __('purchase_order_created_successfully')
-                );
-
-                header(
-                    'Location: ' .
-                    URLROOT .
-                    '/PurchaseOrders/details/' .
-                    $id
-                );
-                exit;
-            }
-
-        } catch (Throwable $e) {
-
-            FlashHelper::error($e->getMessage());
+        if (!$po) {
+            header('Location: ' . URLROOT . '/purchaseorders');
+            exit;
         }
+
+        $data['po'] = $po;
+        $data['items'] = $model->getItems($id);
+        $data['inventory'] = $inventoryModel->getAll();
+
+        $this->view('purchase-orders/details', $data);
     }
-
-    $this->view('purchase-orders/create', $data);
-}
-
-
-public function details($id = null)
-{
-    if (
-        $id === null ||
-        !ctype_digit((string) $id) ||
-        (int) $id < 1
-    ) {
-        http_response_code(404);
-        require APPROOT . '/app/Views/errors/404.php';
-        return;
-    }
-
-    AuthHelper::can('purchase_orders.view');
-
-    $model = $this->model('PurchaseOrder');
-    $inventoryModel = $this->model('Inventory');
-
-    $po = $model->getById($id);
-
-    if (!$po) {
-        header('Location: ' . URLROOT . '/purchaseorders');
-        exit;
-    }
-
-    $data['po'] = $po;
-    $data['items'] = $model->getItems($id);
-    $data['inventory'] = $inventoryModel->getAll();
-
-    $this->view('purchase-orders/details', $data);
-}
 
     public function items($po_id)
     {
 
-      AuthHelper::can('purchase_orders.view');
+        AuthHelper::can('purchase_orders.view');
 
         $purchaseOrderModel = $this->model('PurchaseOrder');
 
@@ -219,15 +216,16 @@ public function details($id = null)
         }
 
         $data['po'] = $po;
-        $data['items'] = $model->getItems($po_id); // HTML view data
+        $data['items'] = $model->getItems($po_id);
         $data['inventory'] = $inventoryModel->getAll();
+        $data['isEditable'] = $model->isEditable($po_id);
 
         $this->view('purchase-orders/items', $data);
     }
 
     public function addItem($po_id)
     {
-      AuthHelper::can('purchase_orders.edit');
+        AuthHelper::can('purchase_orders.edit');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: ' . URLROOT . '/purchaseorders/itemsPage/' . $po_id);
@@ -273,6 +271,108 @@ public function details($id = null)
         header('Location: ' . URLROOT . '/purchaseorders/itemsPage/' . $po_id);
 
         exit;
+    }
+
+
+    public function updateItem($id)
+    {
+        AuthHelper::can('purchase_orders.edit');
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: ' . URLROOT . '/purchaseorders');
+            exit;
+        }
+
+        $itemModel = $this->model('PurchaseOrderItem');
+        $poModel = $this->model('PurchaseOrder');
+        $inventoryModel = $this->model('Inventory');
+
+        $item = $itemModel->getById((int) $id);
+
+        if (!$item) {
+            FlashHelper::error(__('purchase_order_item_not_found'));
+            header('Location: ' . URLROOT . '/purchaseorders');
+            exit;
+        }
+
+        $poId = (int) $item->purchase_order_id;
+
+        // Only Draft purchase orders can be modified.
+        if (!$poModel->isEditable($poId)) {
+            FlashHelper::error(__('purchase_order_locked'));
+            header('Location: ' . URLROOT . '/purchaseorders/itemsPage/' . $poId);
+            exit;
+        }
+
+        $inventoryId = filter_input(INPUT_POST, 'inventory_id', FILTER_VALIDATE_INT);
+        $quantity = filter_input(INPUT_POST, 'quantity', FILTER_VALIDATE_FLOAT);
+        $unitCost = filter_input(INPUT_POST, 'unit_cost', FILTER_VALIDATE_FLOAT);
+
+        // VALIDATE THE SELECTED INVENTORY ITEM
+        $inventory = $inventoryId
+            ? $inventoryModel->getById($inventoryId)
+            : false;
+
+        if (!$inventory) {
+            FlashHelper::error(__('invalid_purchase_order_item'));
+            header('Location: ' . URLROOT . '/purchaseorders/itemsPage/' . $poId);
+            exit;
+        }
+
+        // Never modify an item that already has received quantity.
+        if ((float) ($item->received_quantity ?? 0) > 0) {
+            FlashHelper::error(__('purchase_order_locked'));
+            header('Location: ' . URLROOT . '/purchaseorders/itemsPage/' . $poId);
+            exit;
+        }
+
+
+
+        $allowFraction = (int) ($inventory->allow_fraction ?? 0) === 1;
+
+        $invalidQuantity = (
+            $quantity === false ||
+            $quantity === null ||
+            $quantity <= 0
+        );
+
+        if (!$allowFraction && !$invalidQuantity) {
+            $invalidQuantity = (floor($quantity) != $quantity);
+        }
+
+        // ENFORCE THE QUANTITY RULE (Fraction rule)
+        if (
+            !$inventoryId ||
+            $invalidQuantity ||
+            $unitCost === false ||
+            $unitCost === null ||
+            $unitCost < 0
+        ) {
+            FlashHelper::error(__('invalid_purchase_order_quantity'));
+            header('Location: ' . URLROOT . '/purchaseorders/itemsPage/' . $poId);
+            exit;
+        }
+
+try {
+    $itemModel->update((int) $id, [
+        'inventory_id' => $inventoryId,
+        'quantity' => $quantity,
+        'unit_cost' => $unitCost
+    ]);
+
+    $poModel->updateTotals($poId);
+
+    FlashHelper::success(__('purchase_order_item_updated_successfully'));
+
+} catch (Throwable $e) {
+    error_log('Purchase order item update failed: ' . $e->getMessage());
+
+    FlashHelper::error(__('invalid_purchase_order_item'));
+}
+
+header('Location: ' . URLROOT . '/purchaseorders/itemsPage/' . $poId);
+exit;
+
     }
 
     public function deleteItem($id)

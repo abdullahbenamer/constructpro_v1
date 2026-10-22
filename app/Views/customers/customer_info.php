@@ -13,7 +13,7 @@
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0">
-
+<!-- This page is the list of Customers, the name is misleading -->
     <title>
         <?= __('customer_information') ?>
     </title>

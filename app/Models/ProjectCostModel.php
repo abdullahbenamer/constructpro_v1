@@ -108,7 +108,6 @@ public function create($data)
     return $this->db->lastInsertId();
 }
 
-     // Add to existing ProjectCostModel
  public function getById($id) {
     $stmt = $this->db->query("SELECT * FROM project_costs  WHERE id = ?", [$id]);
     $result = $stmt->fetch();

@@ -57,6 +57,26 @@ class PurchaseOrderItemModel extends Model
         );
     }
 
+public function update($id, $data)
+{
+    return $this->db->query(
+        "
+        UPDATE purchase_order_items
+        SET
+            inventory_id = ?,
+            quantity = ?,
+            unit_cost = ?
+        WHERE id = ?
+        ",
+        [
+            (int) $data['inventory_id'],
+            (float) $data['quantity'],
+            (float) $data['unit_cost'],
+            (int) $id
+        ]
+    );
+}
+
     public function delete($id)
     {
         return $this->db->query(

@@ -150,6 +150,27 @@
 
             </div>
 
+            
+<!-- ACCOUNT MANAGER -->
+<div class="mb-3">
+    <label class="form-label">
+        <?= __('account_manager') ?>
+    </label>
+
+    <select name="account_manager_id" class="form-select">
+        <option value="">
+            <?= __('not_assigned') ?>
+        </option>
+
+        <?php foreach (($data['users'] ?? []) as $user): ?>
+            <option value="<?= (int)$user->id ?>">
+                <?= htmlspecialchars($user->full_name, ENT_QUOTES, 'UTF-8') ?>
+                (<?= htmlspecialchars($user->user_name, ENT_QUOTES, 'UTF-8') ?>)
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
+
 
             <button
                 type="submit"

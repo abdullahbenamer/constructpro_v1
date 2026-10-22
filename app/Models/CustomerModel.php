@@ -37,20 +37,60 @@ class CustomerModel extends Model {
     )->fetch();
 }
     
-    public function create($data) {
-        return $this->db->query(
-            "INSERT INTO customers (name, company, email, phone, address, status) VALUES (?, ?, ?, ?, ?, ?)",
-            [$data['name'], $data['company'], $data['email'], $data['phone'], $data['address'], $data['status']]
-        )->rowCount() > 0;
-    }
-    
-    public function update($id, $data) {
-        return $this->db->query(
-            "UPDATE customers SET name=?, company=?, email=?, phone=?, address=?, status=? WHERE id=?",
-            [$data['name'], $data['company'], $data['email'], $data['phone'], $data['address'], $data['status'], $id]
-        )->rowCount() > 0;
-    }
-    
+   
+public function create($data)
+{
+    $accountManagerId = isset($data['account_manager_id'])
+        && $data['account_manager_id'] !== ''
+        ? (int)$data['account_manager_id']
+        : null;
+
+    return $this->db->query(
+        "INSERT INTO customers
+            (name, company, email, phone, address, status, account_manager_id)
+         VALUES (?, ?, ?, ?, ?, ?, ?)",
+        [
+            $data['name'],
+            $data['company'] ?? null,
+            $data['email'] ?? null,
+            $data['phone'] ?? null,
+            $data['address'] ?? null,
+            $data['status'] ?? 'active',
+            $accountManagerId
+        ]
+    )->rowCount() > 0;
+}
+
+public function update($id, $data)
+{
+    $accountManagerId = isset($data['account_manager_id'])
+        && $data['account_manager_id'] !== ''
+        ? (int)$data['account_manager_id']
+        : null;
+
+    return $this->db->query(
+        "UPDATE customers
+         SET name = ?,
+             company = ?,
+             email = ?,
+             phone = ?,
+             address = ?,
+             status = ?,
+             account_manager_id = ?
+         WHERE id = ?",
+        [
+            $data['name'],
+            $data['company'] ?? null,
+            $data['email'] ?? null,
+            $data['phone'] ?? null,
+            $data['address'] ?? null,
+            $data['status'] ?? 'active',
+            $accountManagerId,
+            $id
+        ]
+    )->rowCount() > 0;
+}
+        
     public function delete($id) {
         return $this->db->query("DELETE FROM customers WHERE id = ?", [$id])->rowCount() > 0;
     }

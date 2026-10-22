@@ -139,6 +139,7 @@ $data['units']      = $unitModel->getAll();
         $costModel = $this->model('ProjectCost');
         $inventoryModel = $this->model('Inventory');
         $locationModel = $this->model('InventoryLocation');
+        $stockModel = $this->model('InventoryLocationStock');
         $projectModel = $this->model('Project');
 
         // ==================================================
@@ -207,6 +208,26 @@ $data['units']      = $unitModel->getAll();
         $data['project_id'] = $cost->project_id;
         $data['inventory'] = $inventoryModel->getAll();
         $data['locations'] = $locationModel->getAll();
+
+        $data['availableQuantity'] = null;
+
+if (
+    $cost->cost_type === 'MATERIALS' &&
+    !empty($cost->inventory_id) &&
+    !empty($cost->location_id)
+) {
+    $locationInventory = $stockModel->getLocationInventory(
+        (int)$cost->location_id
+    );
+
+    foreach ($locationInventory as $stockItem) {
+        if ((int)$stockItem->id === (int)$cost->inventory_id) {
+            $data['availableQuantity'] =
+                (float)$stockItem->available_quantity;
+            break;
+        }
+    }
+}
 
         $this->view(
             'project-costs/edit',

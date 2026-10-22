@@ -1885,5 +1885,11 @@ return [
 'initial_cost_price' => 'سعر التكلفة المبدئي',
 'initial_cost_price_help' => 'سعر مرجعي اختياري. يتم تحديثه تلقائيا بالسعر الفعلي عند استلام البضاعة.',
 
+'purchase_order_item_updated_successfully' => 'تم تحديث صنف أمر الشراء بنجاح.',
+'invalid_purchase_order_item' =>  'تعذّر تحديث الصنف. يُرجى التحقق من الصنف المحدد و الكمية .',
+
+'purchase_order_item_not_found'  => 'لم يتم العثور على صنف أمر الشراء.',
+
+'original_source_warehouse' => 'المصدر (المخزن) الاصلي للصنف',
 
     ];

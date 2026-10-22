@@ -108,33 +108,6 @@ private function validateFulfillmentCost(array $data): array
     return $data;
 }
 
-// REMOVE AFTER GLOBAL WIDE TEST
-// public function createFromFulfillment(array $data): int
-// {
-//   $data = $this->validateFulfillmentCost($data);
-//     $data['description'] =
-//         $this->buildSourceDescription($data);
-//     return $this->transaction(function () use ($data) {
-        /*
-        |--------------------------------------------------------------------------
-        | CREATE PROJECT COST
-        |--------------------------------------------------------------------------
-        */
-        // $costId = $this->costModel->create($data);
-        /*
-        |--------------------------------------------------------------------------
-        | CREATE PROJECT LEDGER ENTRY
-        |--------------------------------------------------------------------------
-        */
-//         $this->recordLedger(
-//             $costId,
-//             $data
-//         );
-//         return $costId;
-//     });
-// }
-
-
     public function update(int $id, array $data): bool
     {
         /*
@@ -270,6 +243,50 @@ if (
         $quantityDifference =
             $data['quantity'] - $old['quantity'];
 
+
+            /*
+|--------------------------------------------------------------------------
+| VALIDATE AVAILABLE WAREHOUSE QUANTITY
+|--------------------------------------------------------------------------
+*/
+
+if ($this->isMaterial($old)) {
+
+    $locationInventory = $this->stockModel->getLocationInventory(
+        (int)$old['location_id']
+    );
+
+    $availableQuantity = null;
+
+    foreach ($locationInventory as $stockItem) {
+
+        if ((int)$stockItem->id === (int)$old['inventory_id']) {
+
+            $availableQuantity =
+                (float)$stockItem->available_quantity;
+
+            break;
+        }
+    }
+
+    if ($availableQuantity === null) {
+
+        throw new Exception(
+            __('not_enough_stock_in_selected_warehouse')
+        );
+    }
+
+    $maximumQuantity =
+        $availableQuantity + (float)$old['quantity'];
+
+    if ($data['quantity'] > $maximumQuantity) {
+
+        throw new Exception(
+            __('not_enough_stock_in_selected_warehouse')
+        );
+    }
+}
+
         /*
     |--------------------------------------------------------------------------
     | TRANSACTION
@@ -385,15 +402,12 @@ if (
         |--------------------------------------------------------------------------
         */
 
-            $this->ledgerService->updateCostEntry(
-
-                $id,
-
-                $data['description'],
-
-                $this->total($data)
-
-            );
+          $this->ledgerService->updateCostEntry(
+    $id,
+    $data['description'],
+    $this->total($data),
+    (float) $data['quantity']
+);
 
             return true;
         });
@@ -687,25 +701,19 @@ if (
     ): void {
         $total = $this->total($data);
 
-        $result = $this->ledgerService->addEntry([
+        
+$result = $this->ledgerService->addEntry([
+    'project_id'  => $data['project_id'],
+    'entry_type'  => 'cost',
+    'ref_table'   => 'project_costs',
+    'ref_id'      => $costId,
+    'description' => $data['description'],
+    'quantity'    => $data['quantity'],
+    'debit'       => $total,
+    'credit'      => 0,
+    'balance_after' => 0
+]);
 
-            'project_id'   => $data['project_id'],
-
-            'entry_type'   => 'cost',
-
-            'ref_table'    => 'project_costs',
-
-            'ref_id'       => $costId,
-
-            'description'  => $data['description'],
-
-            'debit'        => $total,
-
-            'credit'       => 0,
-
-            'balance_after' => 0
-
-        ]);
     }
 
     private function loadCost(int $id)

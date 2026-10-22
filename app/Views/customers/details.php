@@ -1,6 +1,33 @@
-<h2 class="mb-3">
-    <?= __('customer_details') ?>
-</h2>
+
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+
+    <h2 class="mb-0">
+        <?= __('customer_details') ?>
+    </h2>
+
+    <div class="d-flex gap-2">
+
+        <a
+            href="<?= URLROOT ?>/customers/edit/<?= (int)$data['customer']->id ?>"
+            class="btn btn-primary">
+
+            <i class="fas fa-edit me-1"></i>
+            <?= __('edit_customer') ?>
+
+        </a>
+
+        <a
+            href="<?= URLROOT ?>/customers"
+            class="btn btn-secondary">
+
+            <i class="fas fa-arrow-left me-1"></i>
+            <?= __('back_to_customers') ?>
+
+        </a>
+
+    </div>
+
+</div>
 
 <!-- CUSTOMER INFORMATION -->
 <div class="card mb-4">

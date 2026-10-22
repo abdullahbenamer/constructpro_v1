@@ -25,7 +25,7 @@ class InventoryLocationStockModel extends Model
         )->fetchAll();
     }
 
-/*
+    /*
 |--------------------------------------------------------------------------
 | GET ALL LOCATIONS WITH CURRENT STOCK FOR AN ITEM
 |--------------------------------------------------------------------------
@@ -36,10 +36,10 @@ class InventoryLocationStockModel extends Model
 |--------------------------------------------------------------------------
 */
 
-public function getItemLocationsForReturn($inventory_id)
-{
-    return $this->db->query(
-        "
+    public function getItemLocationsForReturn($inventory_id)
+    {
+        return $this->db->query(
+            "
         SELECT
             l.id AS location_id,
             l.code,
@@ -55,18 +55,18 @@ public function getItemLocationsForReturn($inventory_id)
         ORDER BY
             l.code
         ",
-        [$inventory_id]
-    )->fetchAll();
-}
- /*
+            [$inventory_id]
+        )->fetchAll();
+    }
+    /*
     |--------------------------------------------------------------------------
     | GET ITEM STOCK BY LOCATION for TRANSFER Logic Only
     |--------------------------------------------------------------------------
     */
     public function getAvailableItemLocations($inventory_id)
-{
-    return $this->db->query(
-        "
+    {
+        return $this->db->query(
+            "
         SELECT
             ils.*,
             l.code,
@@ -82,46 +82,45 @@ public function getItemLocationsForReturn($inventory_id)
 
         ORDER BY ils.quantity DESC
         ",
-        [$inventory_id]
-    )->fetchAll();
-}
+            [$inventory_id]
+        )->fetchAll();
+    }
 
-       /*
+    /*
     |--------------------------------------------------------------------------
     | ADD STOCK TO LOCATION
     |--------------------------------------------------------------------------
     */
- // for initial stock when creating inventory item
+    // for initial stock when creating inventory item
     public function createInitialStock(
-    $inventory_id,
-    $location_id,
-    $qty
-)
-{
-    return $this->db->query(
-        "INSERT INTO inventory_location_stock
+        $inventory_id,
+        $location_id,
+        $qty
+    ) {
+        return $this->db->query(
+            "INSERT INTO inventory_location_stock
         (
             inventory_id,
             location_id,
             quantity
         )
         VALUES (?, ?, ?)",
-        [
+            [
+                $inventory_id,
+                $location_id,
+                $qty
+            ]
+        );
+    }
+
+    public function addStock($inventory_id, $location_id, $qty)
+    {
+        return $this->adjustStock(
             $inventory_id,
             $location_id,
             $qty
-        ]
-    );
-}
-
-public function addStock($inventory_id, $location_id, $qty)
-{
-    return $this->adjustStock(
-        $inventory_id,
-        $location_id,
-        $qty
-    );
-}
+        );
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -129,14 +128,14 @@ public function addStock($inventory_id, $location_id, $qty)
     |--------------------------------------------------------------------------
     */
 
-public function removeStock($inventory_id, $location_id, $qty)
-{
-    return $this->adjustStock(
-        $inventory_id,
-        $location_id,
-        -$qty
-    );
-}
+    public function removeStock($inventory_id, $location_id, $qty)
+    {
+        return $this->adjustStock(
+            $inventory_id,
+            $location_id,
+            -$qty
+        );
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -165,83 +164,21 @@ public function removeStock($inventory_id, $location_id, $qty)
         return $total;
     }
 
-// public function getLocationInventory($location_id)
-// {
-//     return $this->db->query(
-//         "
-//         SELECT
-//             ils.quantity,
-
-//             i.id,
-//             i.name,
-//             i.sku,
-//             i.min_stock,
-//             u.unit_name,
-
-//             COALESCE(
-//                 reservations.reserved_quantity,
-//                 0
-//             ) AS reserved_quantity,
-
-//             (
-//                 ils.quantity
-//                 -
-//                 COALESCE(
-//                     reservations.reserved_quantity,
-//                     0
-//                 )
-//             ) AS available_quantity
-
-//         FROM inventory_location_stock ils
-
-//         JOIN inventory i
-//             ON i.id = ils.inventory_id
-
-//         LEFT JOIN units u
-//     ON u.id = i.unit_id
-
-//         LEFT JOIN
-//         (
-//             SELECT
-//                 inventory_id,
-//                 location_id,
-
-//                 SUM(quantity) AS reserved_quantity
-
-//             FROM inventory_reservations
-
-//             WHERE status = 'ACTIVE'
-
-//             GROUP BY
-//                 inventory_id,
-//                 location_id
-
-//         ) reservations
-
-//             ON reservations.inventory_id = ils.inventory_id
-
-//             AND reservations.location_id = ils.location_id
-
-//         WHERE ils.location_id = ?
-
-//         ORDER BY i.name
-//         ",
-//         [$location_id]
-//     )->fetchAll();
-// }
-
-public function getLocationInventory($location_id)
-{
-    return $this->db->query(
-        "
+   
+    public function getLocationInventory($location_id)
+    {
+        return $this->db->query(
+            "
         SELECT
 
             ils.quantity,
 
-            i.id,
-            i.name,
-            i.sku,
-            i.base_unit,
+          i.id,
+i.name,
+i.sku,
+i.base_unit,
+u.unit_name,
+u.unit_name_a,
 
             COALESCE(
                 (
@@ -270,116 +207,119 @@ public function getLocationInventory($location_id)
 
         FROM inventory_location_stock ils
 
-        JOIN inventory i
-            ON i.id = ils.inventory_id
+     JOIN inventory i
+    ON i.id = ils.inventory_id
+
+LEFT JOIN units u
+    ON u.id = i.unit_id
 
         WHERE ils.location_id = ?
 
         ORDER BY i.name
         ",
-        [$location_id]
-    )->fetchAll();
-}
+            [$location_id]
+        )->fetchAll();
+    }
 
-/*
+    /*
     |--------------------------------------------------------------------------
     | GET STOCK from LOCATION
     |--------------------------------------------------------------------------
     */
 
     public function getStock($inventory_id, $location_id)
-{
-    return $this->db->query(
-        "
+    {
+        return $this->db->query(
+            "
         SELECT *
         FROM inventory_location_stock
         WHERE inventory_id = ?
         AND location_id = ?
         LIMIT 1
         ",
-        [$inventory_id, $location_id]
-    )->fetch();
-}
+            [$inventory_id, $location_id]
+        )->fetch();
+    }
 
-public function getLocations()
-{
-    return $this->db->query("
+    public function getLocations()
+    {
+        return $this->db->query("
         SELECT * FROM inventory_locations ORDER BY name
     ")->fetchAll();
-}
+    }
 
-public function getLocationById($id)
-{
-    return $this->db->query(
-        "
+    public function getLocationById($id)
+    {
+        return $this->db->query(
+            "
         SELECT *
         FROM inventory_locations
         WHERE id = ?
         ",
-        [$id]
-    )->fetch();
-}
+            [$id]
+        )->fetch();
+    }
 
-public function increaseStock($inventory_id, $location_id, $qty)
-{
-    return $this->adjustStock(
-        $inventory_id,
-        $location_id,
-        $qty
-    );
-}
+    public function increaseStock($inventory_id, $location_id, $qty)
+    {
+        return $this->adjustStock(
+            $inventory_id,
+            $location_id,
+            $qty
+        );
+    }
 
-public function reduceStock($inventory_id, $location_id, $qty)
-{
-    return $this->adjustStock(
-        $inventory_id,
-        $location_id,
-        -$qty
-    );
-}
+    public function reduceStock($inventory_id, $location_id, $qty)
+    {
+        return $this->adjustStock(
+            $inventory_id,
+            $location_id,
+            -$qty
+        );
+    }
 
-// Get Global Stock for Inventory Item across all locations
-public function getGlobalStock($inventory_id)
-{
-    $result = $this->db->query(
-        "
+    // Get Global Stock for Inventory Item across all locations
+    public function getGlobalStock($inventory_id)
+    {
+        $result = $this->db->query(
+            "
         SELECT
             COALESCE(SUM(quantity),0) AS qty
         FROM inventory_location_stock
         WHERE inventory_id = ?
         ",
-        [$inventory_id]
-    )->fetch();
+            [$inventory_id]
+        )->fetch();
 
-    return (float)$result->qty;
-}
+        return (float)$result->qty;
+    }
 
-// helper for multiple items (this will make the inventory list much faster)
-public function getAllGlobalStock()
-{
-    return $this->db->query(
-        "
+    // helper for multiple items (this will make the inventory list much faster)
+    public function getAllGlobalStock()
+    {
+        return $this->db->query(
+            "
         SELECT
             inventory_id,
             SUM(quantity) AS quantity
         FROM inventory_location_stock
         GROUP BY inventory_id
         "
-    )->fetchAll();
-}
+        )->fetchAll();
+    }
 
-/**
- * The Universal Method
- * This method is the only one that directly changes warehouse stock.
- */
-public function adjustStock($inventory_id, $location_id, $delta)
-{
-    // Positive delta = add stock
-    // Negative delta = remove stock
+    /**
+     * The Universal Method
+     * This method is the only one that directly changes warehouse stock.
+     */
+    public function adjustStock($inventory_id, $location_id, $delta)
+    {
+        // Positive delta = add stock
+        // Negative delta = remove stock
 
-    if ($delta < 0) {
+        if ($delta < 0) {
 
-        /*
+            /*
         |--------------------------------------------------------------------------
         | ATOMIC STOCK DEDUCTION
         |--------------------------------------------------------------------------
@@ -391,80 +331,78 @@ public function adjustStock($inventory_id, $location_id, $delta)
         |
         */
 
-        $quantity = abs($delta);
+            $quantity = abs($delta);
 
-        $stmt = $this->db->query(
-            "
+            $stmt = $this->db->query(
+                "
             UPDATE inventory_location_stock
             SET quantity = quantity - ?
             WHERE inventory_id = ?
               AND location_id = ?
               AND quantity >= ?
             ",
-            [
-                $quantity,
-                $inventory_id,
-                $location_id,
-                $quantity
-            ]
-        );
+                [
+                    $quantity,
+                    $inventory_id,
+                    $location_id,
+                    $quantity
+                ]
+            );
 
-        /*
+            /*
         |--------------------------------------------------------------------------
         | Verify the atomic deduction
         |--------------------------------------------------------------------------
         */
 
-        if ($stmt->rowCount() !== 1) {
-            return false;
-        }
+            if ($stmt->rowCount() !== 1) {
+                return false;
+            }
+        } else {
 
-    } else {
-
-        /*
+            /*
         |--------------------------------------------------------------------------
         | ADD STOCK
         |--------------------------------------------------------------------------
         */
 
-        $exists = $this->db->query(
-            "
+            $exists = $this->db->query(
+                "
             SELECT id
             FROM inventory_location_stock
             WHERE inventory_id = ?
               AND location_id = ?
             ",
-            [
-                $inventory_id,
-                $location_id
-            ]
-        )->fetch();
+                [
+                    $inventory_id,
+                    $location_id
+                ]
+            )->fetch();
 
-        if ($exists) {
+            if ($exists) {
 
-            $this->db->query(
-                "
+                $this->db->query(
+                    "
                 UPDATE inventory_location_stock
                 SET quantity = quantity + ?
                 WHERE inventory_id = ?
                   AND location_id = ?
                 ",
-                [
-                    $delta,
-                    $inventory_id,
-                    $location_id
-                ]
-            );
+                    [
+                        $delta,
+                        $inventory_id,
+                        $location_id
+                    ]
+                );
+            } else {
 
-        } else {
+                // Cannot create a new row with negative quantity
+                if ($delta < 0) {
+                    return false;
+                }
 
-            // Cannot create a new row with negative quantity
-            if ($delta < 0) {
-                return false;
-            }
-
-            $this->db->query(
-                "
+                $this->db->query(
+                    "
                 INSERT INTO inventory_location_stock
                 (
                     inventory_id,
@@ -473,41 +411,40 @@ public function adjustStock($inventory_id, $location_id, $delta)
                 )
                 VALUES (?, ?, ?)
                 ",
-                [
-                    $inventory_id,
-                    $location_id,
-                    $delta
-                ]
-            );
+                    [
+                        $inventory_id,
+                        $location_id,
+                        $delta
+                    ]
+                );
+            }
         }
-    }
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | Synchronize Global Inventory Quantity
     |--------------------------------------------------------------------------
     */
 
-    $this->syncInventoryQuantity($inventory_id);
+        $this->syncInventoryQuantity($inventory_id);
 
-    return true;
-}
-
-public function transferStock($inventory_id, $from, $to, $qty)
-{
-    if ($from == $to) {
-        return false;
+        return true;
     }
 
-    // Remove from source
-    if (!$this->adjustStock($inventory_id, $from, -$qty)) {
-        return false;
+    public function transferStock($inventory_id, $from, $to, $qty)
+    {
+        if ($from == $to) {
+            return false;
+        }
+
+        // Remove from source
+        if (!$this->adjustStock($inventory_id, $from, -$qty)) {
+            return false;
+        }
+
+        // Add to destination
+        $this->adjustStock($inventory_id, $to, $qty);
+
+        return true;
     }
-
-    // Add to destination
-    $this->adjustStock($inventory_id, $to, $qty);
-
-    return true;
-}
-
 }

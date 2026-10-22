@@ -1,15 +1,10 @@
 <h2>
-
     <?= __('location') ?>:
-
     <?= htmlspecialchars($location->code) ?>
-
 </h2>
-
 <p>
     <?= htmlspecialchars($location->name) ?>
 </p>
-
 <div>
     <a
     href="<?= URLROOT ?>/inventorylocations/print/<?= (int)$location->id ?>"
@@ -154,9 +149,16 @@
                 ) ?>
 </td>
 <td>
-              <?= htmlspecialchars($item->unit_name ?? '-') ?>
+    <?php
+    $language = strtolower($_SESSION['language'] ?? 'en');
 
-            </td>
+    $unitName = ($language === 'ar')
+        ? ($item->unit_name_a ?? $item->unit_name ?? '')
+        : ($item->unit_name ?? $item->unit_name_a ?? '');
+    ?>
+
+    <?= htmlspecialchars($unitName, ENT_QUOTES, 'UTF-8') ?: '-' ?>
+</td>
 
             <!-- RESERVED QUANTITY -->
 

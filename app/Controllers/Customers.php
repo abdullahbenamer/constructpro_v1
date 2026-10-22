@@ -58,7 +58,10 @@ class Customers extends Controller
             }
         }
 
-        $this->view('customers/create');
+        $userModel = $this->model('User');
+        $data['users'] = $userModel->getAllUsers();
+
+        $this->view('customers/create', $data);
     }
 
 
@@ -83,9 +86,12 @@ class Customers extends Controller
             header('Location: ' . URLROOT . '/customers');
             exit;
         }
+$data['customer'] = $item;
 
-        $data['customer'] = $item;
-        $this->view('customers/edit', $data);
+$userModel = $this->model('User');
+$data['users'] = $userModel->getAllUsers();
+
+$this->view('customers/edit', $data);
     }
 
     //  delete a Customer

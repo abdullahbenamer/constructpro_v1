@@ -115,16 +115,18 @@ if (
                 <?= __('quantity') ?>
             </label>
 
-   <input
+  <input
     type="number"
     name="quantity"
     id="quantity"
-    value="<?= $cost->quantity ?>"
+    value="<?= htmlspecialchars((string)$cost->quantity) ?>"
     class="form-control"
     min="1"
     step="1"
+    max="<?= $cost->cost_type === 'MATERIALS' && $data['availableQuantity'] !== null
+        ? htmlspecialchars((string)($data['availableQuantity'] + (float)$cost->quantity))
+        : '' ?>"
     required>
-
 <small
     id="qtyRuleFraction"
     class="text-success d-none">
@@ -211,12 +213,12 @@ if (
 
 
     <!-- LOCATION for Materials read-only -->
-    <?php if ($cost->cost_type == 'materials'): ?>
+    <?php if ($cost->cost_type === 'MATERIALS'): ?>
 
         <div class="col-md-6 mt-2">
 
             <label class="form-label">
-                <?= __('warehouse_location') ?>
+                <?= __('original_source_warehouse') ?>
             </label>
 
             <select class="form-select" disabled>
@@ -238,6 +240,24 @@ if (
                 <?php endforeach; ?>
 
             </select>
+
+            <?php if ($data['availableQuantity'] !== null): ?>
+
+    <small class="form-text text-danger d-block mt-2">
+        <?= __('available_quantity') ?>:
+        <strong>
+            <?= number_format($data['availableQuantity'], 2) ?>
+        </strong>
+    </small>
+
+<?php else: ?>
+
+    <small class="form-text text-muted d-block mt-2">
+        <?= __('available_quantity') ?>:
+        <?= __('not_available') ?>
+    </small>
+
+<?php endif; ?>
 
         </div>
 

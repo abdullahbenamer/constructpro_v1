@@ -1943,4 +1943,14 @@ return [
     'initial_cost_price' => 'Initial Cost Price',
 'initial_cost_price_help' => 'Optional reference price. The actual receiving price will update this value when goods are received.',
 
+'purchase_order_item_updated_successfully' => 'Purchase order item updated successfully.',
+'invalid_purchase_order_item' => 'Unable to update the item. Please check the selected item, and quantity.',
+
+'purchase_order_item_not_found' =>	'Purchase order item not found.',
+
+'original_source_warehouse' => 'Item Original Source (Warehouse)',
+
+
+
+
 ];

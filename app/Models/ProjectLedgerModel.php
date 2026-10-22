@@ -17,32 +17,37 @@ public function addEntry(array $data): bool
         + $credit
         - $debit;
 
-    $this->db->query(
-        "
-        INSERT INTO project_ledger
-        (
-            project_id,
-            entry_type,
-            ref_table,
-            ref_id,
-            description,
-            debit,
-            credit,
-            balance_after
-        )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        ",
-        [
-            $data['project_id'],
-            $data['entry_type'],
-            $data['ref_table'],
-            $data['ref_id'],
-            $data['description'],
-            $debit,
-            $credit,
-            $newBalance
-        ]
-    );
+    
+$this->db->query(
+    "
+    INSERT INTO project_ledger
+    (
+        project_id,
+        entry_type,
+        ref_table,
+        ref_id,
+        description,
+        quantity,
+        debit,
+        credit,
+        balance_after
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ",
+    [
+        $data['project_id'],
+        $data['entry_type'],
+        $data['ref_table'] ?? null,
+        $data['ref_id'] ?? null,
+        $data['description'] ?? '',
+        isset($data['quantity']) && $data['quantity'] !== ''
+            ? (float)$data['quantity']
+            : null,
+        $debit,
+        $credit,
+        $newBalance
+    ]
+);
 
     return true;
 }
@@ -65,12 +70,13 @@ public function addEntry(array $data): bool
             : 0.0;
     }
 
-    public function getLedger($project_id)
-    {
-        return $this->db->query("
+    
+public function getLedger($project_id)
+{
+    return $this->db->query("
         SELECT
             l.*,
-            pc.quantity,
+            COALESCE(l.quantity, pc.quantity) AS quantity,
             pc.cost_type,
             i.name AS item_name
         FROM project_ledger l
@@ -86,11 +92,25 @@ public function addEntry(array $data): bool
 
         ORDER BY l.id ASC
     ", [$project_id])->fetchAll();
-    }
+}
 
   public function reverseCost(int $costId): void
 {
-    $entry = $this->getCostEntry($costId);
+ $entry = $this->db->query(
+    "
+    SELECT
+        l.*,
+        pc.quantity AS cost_quantity
+    FROM project_ledger l
+    LEFT JOIN project_costs pc
+        ON pc.id = l.ref_id
+    WHERE l.ref_table = 'project_costs'
+      AND l.ref_id = ?
+    ORDER BY l.id ASC
+    LIMIT 1
+    ",
+    [$costId]
+)->fetch();
 
     if (!$entry) {
         throw new Exception(
@@ -155,10 +175,14 @@ public function addEntry(array $data): bool
         'description' =>
             'Reversal: ' . $entry->description,
 
+          'quantity' => $entry->cost_quantity ?? $entry->quantity ?? null,
+
         // Reverse the original debit with a credit
         'debit'       => 0,
 
         'credit'      => (float)$entry->debit
+
+        
     ]);
 }
 
@@ -190,68 +214,49 @@ public function addEntry(array $data): bool
     ", [$project_id])->fetch();
     }
 
-    public function updateCostEntry(
-        int $costId,
-        string $description,
-        float $total
-    ): bool {
-        /*
-    |--------------------------------------------------------------------------
-    | Find the ledger entry belonging to this project cost
-    |--------------------------------------------------------------------------
-    */
-
-        $entry = $this->db->query(
-            "
+  public function updateCostEntry(
+    int $costId,
+    string $description,
+    float $total,
+    float $quantity
+): bool {
+    $entry = $this->db->query(
+        "
         SELECT id, project_id
         FROM project_ledger
         WHERE ref_table = 'project_costs'
           AND ref_id = ?
+          AND entry_type = 'cost'
+        ORDER BY id ASC
         LIMIT 1
         ",
-            [$costId]
-        )->fetch();
+        [$costId]
+    )->fetch();
 
-        if (!$entry) {
+    if (!$entry) {
+        return false;
+    }
 
-            throw new Exception(
-                __('project_ledger_entry_for_cost_not_found')
-            );
-        }
-
-        /*
-    |--------------------------------------------------------------------------
-    | Update ledger entry
-    |--------------------------------------------------------------------------
-    */
-
-        $this->db->query(
-            "
+    $this->db->query(
+        "
         UPDATE project_ledger
-        SET
-            description = ?,
-            debit = ?
+        SET description = ?,
+            debit = ?,
+            quantity = ?
         WHERE id = ?
         ",
-            [
-                $description,
-                $total,
-                $entry->id
-            ]
-        );
+        [
+            $description,
+            $total,
+            $quantity,
+            $entry->id
+        ]
+    );
 
-        /*
-    |--------------------------------------------------------------------------
-    | Recalculate stored balances
-    |--------------------------------------------------------------------------
-    */
+    $this->recalculateBalances((int) $entry->project_id);
 
-        $this->recalculateBalances(
-            $entry->project_id
-        );
-
-        return true;
-    }
+    return true;
+}
 
     public function recalculateBalances(int $project_id): void
     {
