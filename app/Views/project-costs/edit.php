@@ -248,6 +248,9 @@ if (
         <strong>
             <?= number_format($data['availableQuantity'], 2) ?>
         </strong>
+        <br>
+<strong><?= __('available_stock_for_editing') ?></strong>
+
     </small>
 
 <?php else: ?>

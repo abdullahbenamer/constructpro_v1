@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2026 at 01:46 PM
+-- Generation Time: Oct 23, 2026 at 11:35 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -324,7 +324,7 @@ INSERT INTO `inventory` (`id`, `name`, `description`, `category`, `sku`, `quanti
 (153, 'PPR Pipe 25mm', 'PPR pipe, 25 mm', 'PLUMBING & DRAINAGE', 'PPR-25-001', 400.00, NULL, 80, 4.80, 'MTR', 10, 1, NULL, 12),
 (154, 'PVC Elbow 90° 25mm', 'PVC elbow, 90°, 25 mm', 'PLUMBING & DRAINAGE', 'ELB-25-90-001', 300.00, NULL, 50, 1.20, 'PCS', 1, 0, NULL, 12),
 (155, 'Brass Ball Valve 1\"', 'Brass ball valve, 1 inch', 'PLUMBING & DRAINAGE', 'VAL-BV-1-001', 89.00, NULL, 15, 3.75, 'PCS', 1, 0, NULL, 12),
-(156, 'Bearing 6204', 'Ball bearing, 6204', 'OTHER', 'BRG-6204-001', 15.00, NULL, 10, 35.00, 'PCS', 1, 0, 6, 3),
+(156, 'Bearing 6204', 'Ball bearing, 6204', 'OTHER', 'BRG-6204-001', 13.00, NULL, 10, 35.00, 'PCS', 1, 0, 6, 3),
 (157, 'Bearing 6205', 'Ball bearing, 6205', 'OTHER', 'BRG-6205-001', 26.00, NULL, 10, 21.00, 'PCS', 1, 0, 6, 3),
 (158, 'V-Belt A-42', 'V-belt, A-42', 'OTHER', 'VBT-A42-001', 25.00, NULL, 5, 9.50, 'PCS', 1, 0, NULL, 12),
 (159, 'Hydraulic Hose 1/2\"', 'Hydraulic hose, 1/2 inch', 'OTHER', 'HYD-HS-12-001', 250.00, NULL, 50, 8.50, 'MTR', 10, 1, NULL, 12),
@@ -336,7 +336,7 @@ INSERT INTO `inventory` (`id`, `name`, `description`, `category`, `sku`, `quanti
 (165, 'Hex Nut M10', 'Hex nut, M10', 'OTHER', 'NUT-M10-001', 1200.00, NULL, 200, 0.12, 'PCS', 1, 0, NULL, 12),
 (166, 'Washer M10', 'Flat washer, M10', 'OTHER', 'WSR-M10-001', 1500.00, NULL, 300, 0.06, 'PCS', 1, 0, NULL, 12),
 (167, 'Anchor Bolt M16', 'Anchor bolt, M16', 'OTHER', 'ANC-M16-001', 271.00, NULL, 50, 3.00, 'PCS', 1, 0, NULL, 12),
-(168, 'Acrylic Wall Paint White', 'Acrylic wall paint, white', 'BUILDING & FINISHING', 'PNT-WHT-001', 318.00, NULL, 50, 18.00, 'LTR', 16, 0, NULL, 12),
+(168, 'Acrylic Wall Paint White', 'Acrylic wall paint, white', 'BUILDING & FINISHING', 'PNT-WHT-001', 316.00, NULL, 50, 18.00, 'LTR', 16, 0, NULL, 12),
 (169, 'Exterior Paint White', 'Exterior paint, white', 'BUILDING & FINISHING', 'PNT-EXT-WHT-001', 180.00, NULL, 30, 21.00, 'LTR', 16, 1, NULL, 12),
 (170, 'Epoxy Primer', 'Epoxy primer', 'CONSUMABLES', 'EPX-PRM-001', 99.00, NULL, 20, 24.00, 'LTR', 5, 0, NULL, 12),
 (171, 'Silicone Sealant', 'Silicone sealant', 'CONSUMABLES', 'SIL-001', 126.00, NULL, 20, 3.80, 'PCS', 1, 0, NULL, 12),
@@ -548,7 +548,7 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (389, 155, 2, 39.00),
 (390, 155, 3, 16.00),
 (391, 156, 1, 5.00),
-(392, 156, 2, 10.00),
+(392, 156, 2, 8.00),
 (393, 156, 3, 0.00),
 (394, 157, 1, 2.00),
 (395, 157, 2, 12.00),
@@ -584,7 +584,7 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (425, 167, 2, 90.00),
 (426, 167, 3, 31.00),
 (427, 168, 1, 139.00),
-(428, 168, 2, 70.00),
+(428, 168, 2, 68.00),
 (429, 168, 3, 109.00),
 (430, 169, 1, 90.00),
 (431, 169, 2, 54.00),
@@ -690,7 +690,18 @@ INSERT INTO `inventory_movements` (`id`, `inventory_id`, `location_id`, `type`, 
 (528, 156, 2, 'OUT', 2.00, NULL, NULL, NULL, NULL, 10.00, 15.00, 'PROJECT #61', 'Ball bearing, 6204', 1, '2026-10-21 20:07:42'),
 (529, 131, 3, 'ADJUSTMENT', 1.31, NULL, NULL, NULL, NULL, 80.00, 400.00, 'ADJ-261022074626', 'FOUND', 1, '2026-10-22 05:46:26'),
 (530, 135, 1, 'ADJUSTMENT', 3.44, NULL, NULL, NULL, NULL, 1250.00, 2500.00, 'ADJ-261022075211', 'PHYSICAL_COUNT_CORRECTION', 1, '2026-10-22 05:52:11'),
-(531, 187, 1, 'ADJUSTMENT', 20.00, NULL, NULL, NULL, NULL, 70.00, 75.00, 'ADJ-261022124630', 'PHYSICAL_COUNT_CORRECTION', 1, '2026-10-22 10:46:30');
+(531, 187, 1, 'ADJUSTMENT', 20.00, NULL, NULL, NULL, NULL, 70.00, 75.00, 'ADJ-261022124630', 'PHYSICAL_COUNT_CORRECTION', 1, '2026-10-22 10:46:30'),
+(532, 156, 2, 'OUT', 2.00, NULL, NULL, NULL, NULL, 8.00, 13.00, 'PROJECT #61', 'Ball bearing, 6204', 1, '2026-10-22 17:09:29'),
+(533, 168, 2, 'OUT', 66.00, NULL, NULL, NULL, NULL, 4.00, 252.00, 'PROJECT #61', 'Acrylic wall paint, white Color', 1, '2026-10-22 17:17:09'),
+(534, 168, 2, 'IN', 66.00, NULL, NULL, NULL, NULL, 70.00, 318.00, 'PROJECT #61', 'Acrylic wall paint, white Color', 1, '2026-10-22 17:19:56'),
+(535, 156, 2, 'OUT', 6.00, NULL, NULL, NULL, NULL, 2.00, 7.00, 'PROJECT #61', 'Ball bearing, 6204', 1, '2026-10-22 17:25:22'),
+(536, 156, 2, 'IN', 6.00, NULL, NULL, NULL, NULL, 8.00, 13.00, 'PROJECT #61', 'Ball bearing, 6204', 1, '2026-10-22 17:25:50'),
+(537, 168, 2, 'OUT', 70.00, NULL, NULL, NULL, NULL, 0.00, 248.00, 'PROJECT #61', 'Acrylic wall paint, white Color', 1, '2026-10-22 17:28:39'),
+(538, 168, 2, 'IN', 70.00, NULL, NULL, NULL, NULL, 70.00, 318.00, 'PROJECT #61', 'Acrylic wall paint, white Color', 1, '2026-10-22 17:29:45'),
+(539, 168, 2, 'OUT', 5.00, NULL, NULL, NULL, NULL, 65.00, 313.00, 'PROJECT #61', 'Acrylic wall paint, white Color', 1, '2026-10-22 17:38:38'),
+(540, 168, 2, 'OUT', 65.00, NULL, NULL, NULL, NULL, 0.00, 248.00, 'PROJECT #61', 'Acrylic wall paint, white Color', 1, '2026-10-22 17:39:18'),
+(541, 168, 2, 'IN', 70.00, NULL, NULL, NULL, NULL, 70.00, 318.00, 'PROJECT #61', 'Acrylic wall paint, white Color', 1, '2026-10-22 17:39:29'),
+(542, 168, 2, 'OUT', 2.00, NULL, NULL, NULL, NULL, 68.00, 316.00, 'PROJECT #61', 'Acrylic wall paint, white Color', 1, '2026-10-23 09:28:52');
 
 -- --------------------------------------------------------
 
@@ -711,6 +722,13 @@ CREATE TABLE `inventory_reservations` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `required_by_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `inventory_reservations`
+--
+
+INSERT INTO `inventory_reservations` (`id`, `inventory_id`, `location_id`, `project_id`, `quantity`, `status`, `reference`, `notes`, `created_by`, `created_at`, `required_by_date`) VALUES
+(58, 164, 2, 61, 100.00, 'ACTIVE', '', '', 1, '2026-10-23 05:46:47', '2026-10-26');
 
 -- --------------------------------------------------------
 
@@ -937,8 +955,8 @@ CREATE TABLE `project_costs` (
 --
 
 INSERT INTO `project_costs` (`id`, `project_id`, `requisition_id`, `fulfillment_id`, `inventory_id`, `resource_id`, `location_id`, `cost_type`, `description`, `unit_id`, `quantity`, `unit_price`, `created_at`) VALUES
-(292, 61, NULL, NULL, 168, NULL, 2, 'MATERIALS', 'Acrylic wall paint, white Color', 16, 5.00, 18.00, '2026-10-21 12:18:17'),
-(295, 61, NULL, NULL, 156, NULL, 2, 'MATERIALS', 'Ball bearing, 6204', 1, 2.00, 35.00, '2026-10-21 20:07:42');
+(292, 61, NULL, NULL, 168, NULL, 2, 'MATERIALS', 'Acrylic wall paint, white Color', 16, 7.00, 18.00, '2026-10-21 12:18:17'),
+(295, 61, NULL, NULL, 156, NULL, 2, 'MATERIALS', 'Ball bearing, 6204', 1, 4.00, 35.00, '2026-10-21 20:07:42');
 
 -- --------------------------------------------------------
 
@@ -990,12 +1008,12 @@ INSERT INTO `project_ledger` (`id`, `project_id`, `entry_type`, `ref_table`, `re
 (207, 61, 'cost', 'project_costs', 291, 'Construction wheelbarrow', NULL, 45.00, 0.00, -10045.00, '2026-10-21 11:49:51'),
 (208, 61, 'cost', 'project_costs', 290, 'Reversal: أعمال المساحة للمنطقة والشارع المزمع تعبيده', NULL, 0.00, 10000.00, -45.00, '2026-10-21 12:04:11'),
 (209, 61, 'cost', 'project_costs', 291, 'Reversal: Construction wheelbarrow', NULL, 0.00, 45.00, 0.00, '2026-10-21 12:09:58'),
-(210, 61, 'cost', 'project_costs', 292, 'Acrylic wall paint, white Color', NULL, 90.00, 0.00, -90.00, '2026-10-21 12:18:17'),
-(211, 61, 'cost', 'project_costs', 293, 'Construction wheelbarrow', NULL, 315.00, 0.00, -405.00, '2026-10-21 15:21:02'),
-(212, 61, 'cost', 'project_costs', 293, 'Reversal: Construction wheelbarrow', NULL, 0.00, 315.00, -90.00, '2026-10-21 15:31:16'),
-(213, 61, 'cost', 'project_costs', 294, 'Brass ball valve, 1 inch', 7.00, 26.25, 0.00, -116.25, '2026-10-21 19:35:00'),
-(214, 61, 'cost', 'project_costs', 294, 'Reversal: Brass ball valve, 1 inch', 7.00, 0.00, 26.25, -90.00, '2026-10-21 19:58:07'),
-(215, 61, 'cost', 'project_costs', 295, 'Ball bearing, 6204', 2.00, 70.00, 0.00, -160.00, '2026-10-21 20:07:42');
+(210, 61, 'cost', 'project_costs', 292, 'Acrylic wall paint, white Color', 7.00, 126.00, 0.00, -126.00, '2026-10-21 12:18:17'),
+(211, 61, 'cost', 'project_costs', 293, 'Construction wheelbarrow', NULL, 315.00, 0.00, -441.00, '2026-10-21 15:21:02'),
+(212, 61, 'cost', 'project_costs', 293, 'Reversal: Construction wheelbarrow', NULL, 0.00, 315.00, -126.00, '2026-10-21 15:31:16'),
+(213, 61, 'cost', 'project_costs', 294, 'Brass ball valve, 1 inch', 7.00, 26.25, 0.00, -152.25, '2026-10-21 19:35:00'),
+(214, 61, 'cost', 'project_costs', 294, 'Reversal: Brass ball valve, 1 inch', 7.00, 0.00, 26.25, -126.00, '2026-10-21 19:58:07'),
+(215, 61, 'cost', 'project_costs', 295, 'Ball bearing, 6204', 4.00, 140.00, 0.00, -266.00, '2026-10-21 20:07:42');
 
 -- --------------------------------------------------------
 
@@ -2439,13 +2457,13 @@ ALTER TABLE `inventory_location_stock`
 -- AUTO_INCREMENT for table `inventory_movements`
 --
 ALTER TABLE `inventory_movements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=532;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=543;
 
 --
 -- AUTO_INCREMENT for table `inventory_reservations`
 --
 ALTER TABLE `inventory_reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `inventory_transfers`

@@ -240,6 +240,42 @@ LEFT JOIN units u
             [$inventory_id, $location_id]
         )->fetch();
     }
+    
+    
+/**
+ * Retrieve and lock a warehouse stock row.
+ *
+ * IMPORTANT:
+ * Must be called inside an active database transaction.
+ * The lock is held until the transaction commits or rolls back.
+ */
+public function getStockForUpdate(
+    int $inventory_id,
+    int $location_id
+) {
+    if (!$this->db->inTransaction()) {
+        throw new LogicException(
+            'getStockForUpdate() requires an active transaction.'
+        );
+    }
+
+    return $this->db->query(
+        "
+        SELECT *
+        FROM inventory_location_stock
+        WHERE inventory_id = ?
+          AND location_id = ?
+        LIMIT 1
+        FOR UPDATE
+        ",
+        [
+            $inventory_id,
+            $location_id
+        ]
+    )->fetch();
+}
+
+
 
     public function getLocations()
     {

@@ -1950,7 +1950,7 @@ return [
 
 'original_source_warehouse' => 'Item Original Source (Warehouse)',
 
-
+'available_stock_for_editing' => 'Quantity adjustment limits: Available quantity + current quantity'
 
 
 ];

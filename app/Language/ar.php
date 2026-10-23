@@ -1892,4 +1892,6 @@ return [
 
 'original_source_warehouse' => 'المصدر (المخزن) الاصلي للصنف',
 
-    ];
+'available_stock_for_editing' => 'حدود تعديل الكمية: الكمية المتاحة + الكمية الحالية.'
+
+];

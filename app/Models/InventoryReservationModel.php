@@ -3,6 +3,7 @@ require_once '../app/Core/Model.php';
 
 class InventoryReservationModel extends Model
 {
+    
    public function create($data)
 {
     $inventory_id = (int)$data['inventory_id'];
