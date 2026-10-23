@@ -75,6 +75,11 @@
 
             <span class="text-danger">*</span>
 
+            <div class="alert alert-danger mt-2 mb-3" role="alert">
+    <i class="bi bi-info-circle me-2"></i>
+    <?= __('reservation_location_stock_info') ?>
+</div>
+
         </label>
 
         <select

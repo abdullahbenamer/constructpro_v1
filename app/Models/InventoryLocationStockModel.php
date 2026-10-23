@@ -58,33 +58,48 @@ class InventoryLocationStockModel extends Model
             [$inventory_id]
         )->fetchAll();
     }
-    /*
-    |--------------------------------------------------------------------------
-    | GET ITEM STOCK BY LOCATION for TRANSFER Logic Only
-    |--------------------------------------------------------------------------
-    */
-    public function getAvailableItemLocations($inventory_id)
-    {
-        return $this->db->query(
-            "
+   
+    
+public function getAvailableItemLocations($inventory_id)
+{
+    return $this->db->query(
+        "
         SELECT
             ils.*,
             l.code,
-            l.name
+            l.name,
+            COALESCE(r.reserved_quantity, 0) AS reserved_quantity,
+            (
+                ils.quantity - COALESCE(r.reserved_quantity, 0)
+            ) AS available_quantity
 
         FROM inventory_location_stock ils
 
         JOIN inventory_locations l
             ON l.id = ils.location_id
 
-        WHERE ils.inventory_id = ?
-        AND ils.quantity > 0
+        LEFT JOIN (
+            SELECT
+                inventory_id,
+                location_id,
+                SUM(quantity) AS reserved_quantity
+            FROM inventory_reservations
+            WHERE status = 'ACTIVE'
+            GROUP BY inventory_id, location_id
+        ) r
+            ON r.inventory_id = ils.inventory_id
+            AND r.location_id = ils.location_id
 
-        ORDER BY ils.quantity DESC
+        WHERE ils.inventory_id = ?
+          AND (
+              ils.quantity - COALESCE(r.reserved_quantity, 0)
+          ) > 0
+
+        ORDER BY available_quantity DESC
         ",
-            [$inventory_id]
-        )->fetchAll();
-    }
+        [(int)$inventory_id]
+    )->fetchAll();
+}
 
     /*
     |--------------------------------------------------------------------------
@@ -240,7 +255,7 @@ LEFT JOIN units u
             [$inventory_id, $location_id]
         )->fetch();
     }
-    
+
     
 /**
  * Retrieve and lock a warehouse stock row.

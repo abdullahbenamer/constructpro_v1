@@ -244,49 +244,6 @@ if (
             $data['quantity'] - $old['quantity'];
 
 
-            /*
-|--------------------------------------------------------------------------
-| VALIDATE AVAILABLE WAREHOUSE QUANTITY
-|--------------------------------------------------------------------------
-*/
-
-if ($this->isMaterial($old)) {
-
-    $locationInventory = $this->stockModel->getLocationInventory(
-        (int)$old['location_id']
-    );
-
-    $availableQuantity = null;
-
-    foreach ($locationInventory as $stockItem) {
-
-        if ((int)$stockItem->id === (int)$old['inventory_id']) {
-
-            $availableQuantity =
-                (float)$stockItem->available_quantity;
-
-            break;
-        }
-    }
-
-    if ($availableQuantity === null) {
-
-        throw new Exception(
-            __('not_enough_stock_in_selected_warehouse')
-        );
-    }
-
-    $maximumQuantity =
-        $availableQuantity + (float)$old['quantity'];
-
-    if ($data['quantity'] > $maximumQuantity) {
-
-        throw new Exception(
-            __('not_enough_stock_in_selected_warehouse')
-        );
-    }
-}
-
         /*
     |--------------------------------------------------------------------------
     | TRANSACTION
@@ -301,9 +258,9 @@ if ($this->isMaterial($old)) {
         ) {
 
             /*
-        |--------------------------------------------------------------------------
+        |-------------------------------------------------------------
         | MATERIAL STOCK ADJUSTMENT
-        |--------------------------------------------------------------------------
+        |-------------------------------------------------------------
         */
 
             if ($this->isMaterial($old)) {
@@ -411,6 +368,64 @@ if ($this->isMaterial($old)) {
 
             return true;
         });
+
+        
+            /*
+            |--------------------------------------------------------------------------
+            | LOCK STOCK AND VALIDATE AVAILABLE QUANTITY
+            |--------------------------------------------------------------------------
+            */
+
+            if ($this->isMaterial($old)) {
+
+                // Lock the warehouse stock row until this transaction ends.
+                $lockedStock = $this->stockModel->getStockForUpdate(
+                    (int)$old['inventory_id'],
+                    (int)$old['location_id']
+                );
+
+                if (!$lockedStock) {
+                    throw new Exception(
+                        __('not_enough_stock_in_selected_warehouse')
+                    );
+                }
+
+                // Calculate availability while holding the stock-row lock.
+                $locationInventory = $this->stockModel->getLocationInventory(
+                    (int)$old['location_id']
+                );
+
+                $availableQuantity = null;
+
+                foreach ($locationInventory as $stockItem) {
+                    if (
+                        (int)$stockItem->id ===
+                        (int)$old['inventory_id']
+                    ) {
+                        $availableQuantity =
+                            (float)$stockItem->available_quantity;
+
+                        break;
+                    }
+                }
+
+                if ($availableQuantity === null) {
+                    throw new Exception(
+                        __('not_enough_stock_in_selected_warehouse')
+                    );
+                }
+
+                // Add back the quantity already consumed by this cost.
+                $maximumQuantity =
+                    $availableQuantity + (float)$old['quantity'];
+
+                if ($data['quantity'] > $maximumQuantity) {
+                    throw new Exception(
+                        __('not_enough_stock_in_selected_warehouse')
+                    );
+                }
+            }
+
     }
 
     public function delete(int $id): void

@@ -370,41 +370,41 @@
         // -----------------------------
         // STOCK BY LOCATION
         // -----------------------------
-function loadStock() {
+        function loadStock() {
 
-    const inventory_id =
-        inventorySelect.value;
+            const inventory_id =
+                inventorySelect.value;
 
-    const location_id =
-        fromLocation.value;
-
-
-
-console.log(
-    'TRANSFER STOCK CHECK:',
-    'inventory_id =',
-    inventory_id,
-    'location_id =',
-    location_id
-);
+            const location_id =
+                fromLocation.value;
 
 
 
-    if (!inventory_id || !location_id) {
+            console.log(
+                'TRANSFER STOCK CHECK:',
+                'inventory_id =',
+                inventory_id,
+                'location_id =',
+                location_id
+            );
 
-        stockInfo.classList.add('d-none');
 
-        physicalQty.textContent =
-            '0.00';
 
-        reservedQty.textContent =
-            '0.00';
+            if (!inventory_id || !location_id) {
 
-        availableQty.textContent =
-            '0.00';
+                stockInfo.classList.add('d-none');
 
-        return;
-    }
+                physicalQty.textContent =
+                    '0.00';
+
+                reservedQty.textContent =
+                    '0.00';
+
+                availableQty.textContent =
+                    '0.00';
+
+                return;
+            }
 
             fetch(
                     '<?= URLROOT ?>/inventorytransfers/getLocationStock', {
@@ -418,16 +418,16 @@ console.log(
                             inventory_id +
                             '&location_id=' +
                             location_id
-                    
-                    
-                    
-                    
-                        }
 
-                    
+
+
+
+                    }
+
+
                 )
 
-            
+
 
                 .then(res => res.json())
 
@@ -527,13 +527,11 @@ console.log(
                     locations.forEach(loc => {
 
                         fromLocation.innerHTML += `
-                    <option value="${loc.location_id}">
-                        ${loc.code} - ${loc.name} (${loc.quantity})
-                    </option>
+                   <option value="${loc.location_id}">
+                ${loc.code} - ${loc.name} (${loc.available_quantity})
+                </option>
                 `;
-
                     });
-
 
                     // 👇 auto-select first location (important fix)
 

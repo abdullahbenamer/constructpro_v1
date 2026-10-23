@@ -1950,7 +1950,10 @@ return [
 
 'original_source_warehouse' => 'Item Original Source (Warehouse)',
 
-'available_stock_for_editing' => 'Quantity adjustment limits: Available quantity + current quantity'
+'available_stock_for_editing' => 'Quantity adjustment limits: Available quantity + current quantity',
+
+'reservation_location_stock_info' =>
+    'Displays Only warehouse(s) with available stock. If the dropdown is empty, no available stock exists for this item in any warehouse.',
 
 
 ];
