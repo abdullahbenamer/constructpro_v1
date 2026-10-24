@@ -2,1899 +2,1910 @@
 
 return [
 
-    // GENERAL
-    'constructpro_system' => 'نظام ConstructPro',
-    'constructpro_system_title' => 'النظام الاحترافي للمشاريع والانشاءات',
-    'about_constructpro'     => 'حول النظام',
-    'dashboard'              => 'لوحة المعلومات الرئيسة',
-    'projects'               => 'المشاريع',
-    'customers'              => 'العملاء',
-    'inventory'              => 'المخزون',
-    'procurement'            => 'المشتريات',
-    'suppliers'              => 'الموردون',
-    'finance'                => 'مالي',
-    'admin_panel'            => 'لوحة ادارة المنظومة',
-    'logout'                 => 'تسجيل الخروج',
-    'please_login_first'  => 'يرجى تسجيل الدخول ...',
-
-    // RESOURCE REQUISITIONS
-    'resource_requisitions'  => 'طلبات الموارد',
-
-    // INVENTORY
-    'inventory_list'         => 'قائمة المخزون',
-    'locations_warehouse'    => 'المواقع (المستودعات)',
-    'material_reservations'  => 'حجوزات المواد',
-    'stock_transfers'        => 'تحويلات (نقل) المخزون',
-    'stock_movements_report' => 'حركات المخزون (تقرير)',
-
-    // Inventory Categories
-    'civil_structural'      => 'الأعمال المدنية والإنشائية',
-    'building_finishing'    => 'مواد البناء والتشطيبات',
-    'plumbing_drainage'     => 'السباكة والصرف الصحي',
-    'hvac'                   => 'التكييف والتهوية',
-    'electrical'             => 'الكهرباء',
-    'fire_fighting_alarm'   => 'مكافحة الحريق والإنذار',
-    'low_current'            => 'التيار الخفيف',
-    'hand_tools'             => 'العدد اليدوية',
-    'equipment'              => 'الالات',
-    'safety_ppe'             => 'السلامة ومعدات الحماية الشخصية',
-    'consumables'            => 'المواد الاستهلاكية',
-    'other'                  => 'أخرى',
-    'material'     => 'بضاعة - مواد',
-    'materials'     => 'المواد',
-    'non_material' => 'غير المواد',
-
-    // PROCUREMENT
-    'supplier_quotations'    => 'عروض أسعار الموردين',
-    'purchase_orders'        => 'أوامر الشراء',
-    'receive_stock_from_po'  => 'استلام المخزون (من أمر الشراء)',
-    'return_goods_warehouse' => 'إرجاع البضائع (من المستودع)',
-    'goods_returns_report'   => 'مرتجعات البضائع (تقرير)',
-    'view_requisition'                  => 'عرض طلب الموارد',
-    'actual_unit_cost'                  => 'تكلفة الوحدة الفعلية',
-    'process_resource_fulfillment'      => 'تنفيذ الموارد',
-    'fulfilled_materials'               => 'مواد تم تنفيذها',
-    'resource_requisition_fulfillment'  => 'تنفيذ طلب الموارد',
-    'fulfillment_information'           => 'معلومات التنفيذ',
-    'fulfillment_id'                    => 'معرف التنفيذ',
-    'requisition'                       => 'طلب الموارد',
-    'fulfilled_by'                      => 'تم التنفيذ بواسطة',
-    'fulfillment_number'                => 'رقم التنفيذ',
-    'material_items_to_fulfill'         => 'بنود المواد المطلوب تنفيذها',
-    'resource_items_to_fulfill'         => 'بنود الموارد المطلوب تنفيذها',
-    'resource_fulfillment'              => 'تنفيذ الموارد',
-    'requisition_label'                 => 'طلب الموارد:',
-    'fulfillment_remarks'               => 'ملاحظات التنفيذ',
-    'enter_fulfillment_remarks'         => 'أدخل ملاحظات التنفيذ',
-    'optional_remarks'                  => 'ملاحظات اختيارية',
-    'no_fulfillment_items_found' => 'لم يتم العثور على بنود تنفيذ.',
-    'delivery_method'    => 'طريقة التسليم',
-    'delivery_warehouse' => 'مستودع التسليم',
-    'select_project'     => 'اختر (مستودع) المشروع',
-
-    // FINANCE
-    'projects_cost_report'   => 'تكاليف المشاريع (تقرير)',
-    'portfolio_dashboard'    => 'لوحة محفظة المشاريع',
-
-    // DASHBOARD
-    'construction_professional'   => 'محترف الإنشاءات',
-    'active_projects'             => 'المشاريع النشطة',
-    'low_stock'                    => 'مخزون منخفض',
-
-    'total_portfolio_budget'       => 'إجمالي ميزانية المحفظة',
-    'total_portfolio_projects_cost' => 'إجمالي تكاليف مشاريع المحفظة',
-    'remaining_budget'             => 'الميزانية المتبقية',
-    'budget_remaining'             => 'من الميزانية المتبقية',
-    'supplier_payables'            => 'المبالغ المستحقة للموردين',
-    'total_outstanding'            => 'إجمالي المبالغ المستحقة',
-
-    'recent_projects'              => 'المشاريع الحديثة',
-    'customer'                     => 'العميل:',
-    'no_active_projects'           => 'لا توجد مشاريع نشطة',
-
-    // PROJECTS
-    'archived_projects'        => 'المشاريع المؤرشفة',
-    'new_project'              => 'مشروع جديد',
-
-    'project'                  => 'المشروع',
-    'type'                     => 'النوع',
-    'location'                 => 'المستودع - الموقع',
-    'doc'                      => 'المستند',
-    'work_status'              => 'حالة العمل',
-    'deadline'                 => 'الموعد النهائي',
-    'budget_lyd'               => 'الميزانية LYD',
-    'costs_lyd'                => 'التكاليف LYD',
-    'cost_status'              => 'حالة التكلفة',
-    'select_one_or_more_project_scopes.' => 'اختر نطاقاً واحداً أو أكثر من نطاقات المشروع المنطبقة.',
-
-
-    // -----------------------
-
-    'human_resources' => 'الموارد البشرية',
-    'transport' => 'النقل',
-    'subcontract' => 'المقاولات من الباطن',
-    'site_expenses' => 'مصاريف الموقع',
-    'professional_services' => 'الخدمات المهنية',
-    'permits_fees' => 'التراخيص والرسوم',
-    'insurance' => 'التأمين',
-    'bank_charges' => 'الرسوم المصرفية',
-    'taxes' => 'الضرائب',
-    'miscellaneous' => 'متفرقات',
-
-    // ---------------------
-
-    'actions'                  => 'الإجراءات',
-
-    'no_archived_projects'     => 'لا توجد مشاريع مؤرشفة متاحة.',
-    'no_active_projects_available' => 'لا توجد مشاريع نشطة متاحة.',
-    'no_archived_projects_currently' => 'لا توجد حالياً مشاريع مؤرشفة.',
-    'create_first_project'     => 'أنشئ مشروعك الأول للبدء.',
-
-    'not_started'              => 'لم يبدأ',
-    'healthy'                  => 'سليم',
-    'warning'                  => 'تحذير',
-    'over_budget'              => 'تجاوز الميزانية',
-
-    'completed'                => 'مكتمل',
-    'overdue_by'               => 'متأخر بمقدار',
-    'due_today'                => 'مستحق اليوم',
-    'days_left'                => 'أيام متبقية',
-    'day_left'                 => 'يوم متبقٍ',
-    'days'      => 'أيام',
-    'day'       => 'يوم',
-
-    'details'                  => 'التفاصيل',
-    'edit'                     => 'تعديل',
-    'archive'                  => 'أرشفة',
-    'restore'                  => 'استعادة',
-    'delete'                   => 'حذف',
-
-    'archive_project_confirm'  => 'هل تريد أرشفة هذا المشروع؟',
-    'restore_project_confirm'  => 'هل تريد استعادة هذا المشروع؟',
-    'delete_project_confirm'   => 'هل تريد حذف هذا المشروع نهائياً؟',
-
-    // PROJECT WORK STATUSES
-    'planning'                 => 'التخطيط',
-    'in_progress'              => 'قيد التنفيذ',
-    'testing'                  => 'قيد الاختبار',
-    'completed_status'         => 'مكتمل',
-    'cancelled'                => 'ملغى',
-
-    // PROJECT FORM
-    'a_new_project'               => 'مشروع جديد',
-
-    'select_customer'             => 'اختر العميل',
-    'project_title'               => 'عنوان المشروع',
-    'project_type'                => 'نوع المشروع',
-    'select_type'                 => 'اختر النوع',
-
-    'construction'                => 'إنشاءات',
-    'maintenance'                 => 'صيانة',
-    'inspection'                  => 'فحص',
-    'consultancy'                 => 'استشارات',
-
-    'project_scope'               => 'نطاق المشروع',
-    'civil'                       => 'مدني',
-    'architectural'               => 'معماري',
-    'structural'                 => 'إنشائي',
-    'mep'                         => 'الأعمال الميكانيكية والكهربائية والصحية',
-    'finishing'                  => 'التشطيبات',
-    'instrumentation_control'    => 'أجهزة القياس والتحكم',
-    'telecommunications'         => 'الاتصالات',
-
-    'select_project_scopes'       => 'اختر نطاقاً واحداً أو أكثر من نطاقات المشروع.',
-
-    'project_code'                => 'رمز المشروع',
-    'auto_generated'              => 'يتم إنشاؤه تلقائياً',
-    'project_code_auto_generated' => 'سيتم إنشاء رمز المشروع تلقائياً عند إنشاء المشروع.',
-    'contract_number'             => 'رقم العقد',
-    'site_location'               => 'موقع المشروع',
-    'project_manager'             => 'مدير المشروع',
-    'select_project_manager'      => '-- اختر مدير المشروع --',
-    'start_date'                  => 'تاريخ البدء',
-    'priority'                    => 'الأولوية',
-    'low'                         => 'منخفض',
-    'medium'                      => 'متوسطة',
-    'high'                        => 'عالية',
-    'critical'                    => 'حرج',
-    'status'                      => 'الحالة',
-    'budget_lyd_label'            => 'الميزانية (LYD)',
-    'description'                 => 'الوصف',
-    'create_project'              => 'إنشاء المشروع',
-    'cancel'                      => 'إلغاء',
-    'edit_project' => 'تعديل المشروع',
-    'customer_label' => 'العميل',
-    'select_manager' => '-- اختر المدير --',
-    'project_code_cannot_change' => 'يتم إنشاء رمز المشروع تلقائياً ولا يمكن تغييره.',
-    'budget' => 'الميزانية',
-    'save_changes' => 'حفظ التغييرات',
-    'project_specifications' => 'مواصفات المشروع',
-    'project_budget' => 'ميزانية المشروع',
-    'project_costs'  => 'تكاليف المشروع',
-    'no_project_scope' => 'لم يتم تحديد نطاق للمشروع.',
-    'documents' => 'المستندات',
-    'advance_payment' => 'دفعة مقدمة',
-    'finance_ledger' => 'دفتر الحسابات المالي',
-    'finance_dashboard' => 'لوحة المعلومات المالية',
-    'date'       => 'التاريخ',
-    'cost_type'  => 'نوع التكلفة',
-    'quantity'   => 'الكمية او العدد',
-    'unit_price' => 'سعر الوحدة',
-    'total'      => 'الإجمالي',
-    'delete_this_cost' => 'هل تريد حذف هذه التكلفة؟',
-    'total_project_cost' => 'إجمالي تكلفة المشروع',
-    'no_project_costs_recorded' => 'لم يتم تسجيل تكاليف للمشروع',
-    'no_costs_yet'             => 'لم يتم تسجيل أي تكاليف لهذا المشروع بعد.',
-    'start_first_project_cost' => 'ابدأ بإضافة أول تكلفة للمشروع.',
-    'add_first_cost' => 'إضافة أول تكلفة',
-    'project_warehouse' => 'مستودع المشروع',
-    'add_cost_to_project' => 'إضافة تكلفة إلى المشروع',
-    'labor'         => 'العمالة',
-    'inventory_item' => 'صنف المادة',
-    'select_item' => 'اختر الصنف',
-    'available' => 'متوفر/متاح',
-    'physical'  => 'الفعلي',
-    'resource_description_placeholder' => 'الوصف ....',
-    'resource_description_missing' => 'لا يوجد وصف متاح لهذا المورد.',
-    'select_location' => 'اختر الموقع - المستودع',
-    'quantity_warning' => 'لا يمكن تجاوز الكمية المتاحة في المستودع الذي تم اختياره',
-    'unit_cost' => 'تكلفة الوحدة',
-    'autofill_materials' => 'سعرالاصناف تلقائي ...',
-    'add_cost' => 'إضافة التكلفة',
-    'qty' => 'الكمية',
-    // PROJECT DOCUMENTS
-    'project_documents'       => 'مستندات المشروع',
-    'upload_documents'        => 'رفع المستندات',
-    'category'                => 'الفئة',
-    'document'                => 'المستند',
-    'version_date'            => 'تاريخ إصدار المستند',
-    'size'                    => 'الحجم',
-    'upload_date'             => 'تاريخ الرفع',
-    'view'                    => 'عرض',
-    'download'                => 'تنزيل',
-    'delete_document'         => 'حذف',
-    'delete_document_confirm' => 'هل تريد حذف هذا المستند؟',
-    'no_documents_uploaded'   => 'لم يتم رفع أي مستندات بعد.',
-    'pdf'                     => 'PDF',
-    'ms_word'                 => 'MS Word',
-    'word'                    => 'Word',
-    'ms_excel'                => 'MS Excel',
-    'excel'                   => 'Excel',
-    'powerpoint'               => 'PowerPoint',
-    'jpeg_image'              => 'صورة JPEG',
-    'png_image'               => 'صورة PNG',
-    'gif_image'               => 'صورة GIF',
-    'webp_image'              => 'صورة WEBP',
-    'text_file'               => 'ملف نصي',
-    'zip_compressed_file'     => 'ملف ZIP مضغوط',
-    'rar_compressed_file'     => 'ملف RAR مضغوط',
-    // PROJECT DOCUMENT UPLOAD
-    'upload_project_documents' => 'رفع مستندات المشروع',
-    'title'                    => 'العنوان',
-    'select_document_category' => '-- اختر فئة المستند --',
-    'contract'                 => 'العقد',
-    'drawing'                  => 'الرسم الهندسي',
-    'quotation'                => 'عرض السعر',
-    'invoice'                  => 'الفاتورة',
-    'receipt'                  => 'الإيصال',
-    'purchase_order'           => 'أمر الشراء',
-    'report'                   => 'التقرير',
-    'photo'                    => 'الصورة',
-    'certificate'              => 'الشهادة',
-    'permit'                   => 'التصريح',
-    'manual'                   => 'الدليل',
-    'document_date'            => 'تاريخ المستند',
-    'actual_document_date'     => 'التاريخ الفعلي للمستند',
-    'select_files'             => 'اختر الملفات',
-    'multiple_files_note'      => 'يمكنك رفع عدة ملفات في وقت واحد',
-    'allowed_file_types'       => 'PDF، صور، Word، Excel، ZIP...',
-    'upload'                   => 'رفع',
-
-    // PROJECT COST EDIT
-    'edit_cost_item'        => 'تعديل بند التكلفة',
-    'note'                  => 'ملاحظة',
-    'cost_edit_restriction' => 'تغيير الصنف أو المستودع أو نوع التكلفة يتطلب حذف التكلفة الحالية وإنشاء تكلفة جديدة.',
-    'unit_cost_dollar'      => 'تكلفة الوحدة',
-    'warehouse_location'    => 'موقع المستودع',
-    'update_cost'           => 'تحديث التكلفة',
-
-    // PROJECT ADVANCE
-    'add_project_advance' => 'إضافة دفعة مقدمة للمشروع',
-    'amount'             => 'المبلغ',
-    'payment_method'     => 'طريقة الدفع',
-    'cash'               => 'نقداً',
-    'bank_transfer'      => 'تحويل مصرفي',
-    'cheque'             => 'شيك',
-    'reference'          => 'المرجع',
-    'notes'              => 'ملاحظات',
-    'save_advance'       => 'حفظ الدفعة المقدمة',
-
-    // PROJECT ADVANCE LIST
-    'project_advance_payments' => 'دفعات المشروع المقدمة',
-    'go_back_to_projects'      => 'العودة إلى المشاريع',
-    'profile'                  => 'الملف الشخصي',
-    'add_advance_payments'     => 'إضافة دفعات مقدمة',
-    'total_in'                 => 'إجمالي الداخل',
-    'total_out'                => 'إجمالي الخارج',
-    'balance'                  => 'الرصيد',
-    'advance'                  => 'دفعة مقدمة',
-    'no_customer_advances'     => 'لم يتم العثور على دفعات مقدمة للعميل.',
-    'no_advance_payments_yet'  => 'لم يتم تسجيل أي دفعات مقدمة لهذا العميل حتى الآن.',
-
-    // PROJECT FINANCE DASHBOARD
-    'total_advances'               => 'إجمالي الدفعات المقدمة',
-    'total_costs'                  => 'إجمالي التكاليف',
-    'available_balance'            => 'الرصيد المتاح',
-    'budget_utilization'            => 'استخدام الميزانية',
-    'project_timeline_utilization' => 'استخدام المدة الزمنية للمشروع',
-    'advance_funding_vs_budget'    => 'الدفعات المقدمة مقابل الميزانية',
-    'advances_label'               => 'الدفعات المقدمة:',
-    'budget_label'                 => 'الميزانية:',
-    'budget_funded_by_advances'    => 'نسبة ميزانية المشروع التي تم تمويلها من الدفعات المقدمة المستلمة.',
-    'costs_exceeded_advances'      => 'تجاوزت تكاليف المشروع الدفعات المقدمة المتاحة.',
-    'budget_over_90_percent'       => 'استهلك المشروع أكثر من 90% من ميزانيته.',
-
-    // PROJECT LEDGER
-    'project_ledger' => 'دفتر حسابات المشروع',
-    'print_ledger'   => 'طباعة دفتر الحسابات',
-    'debit'          => 'مدين',
-    'credit'         => 'دائن',
-    'cost'           => 'التكلفة',
-
-    // PROJECT LEDGER REPORT
-    'project_financial_ledger_report' => 'تقرير دفتر الحسابات المالي للمشروع',
-    'printed'                        => 'تمت الطباعة',
-
-    // PURCHASE ORDERS
-    'create_purchase_order' => 'إنشاء أمر شراء',
-    'select_supplier'      => 'اختر المزوّد/ المورّد',
-    'order_date'           => 'تاريخ الطلب',
-    'expected_date'        => 'التاريخ المتوقع',
-
-    // PURCHASE ORDER DETAILS
-    'purchase_order_details'       => 'تفاصيل أمر الشراء',
-    'po_number'                    => 'رقم أمر الشراء',
-    'draft'                        => 'مسودة',
-    'approved'                     => 'معتمد',
-    'partially_received'           => 'تم استلامه جزئياً',
-    'received'                     => 'تم الاستلام',
-    'created'                      => 'تاريخ الإنشاء',
-    'delivery_ship_to'             => 'التسليم / الشحن إلى',
-    'direct_to_project_site'       => 'مباشرة إلى موقع المشروع',
-    'delivery_location'            => 'موقع التسليم',
-    'site_contact'                 => 'جهة الاتصال بالموقع',
-    'contact_number'               => 'رقم الاتصال',
-    'warehouse_contact_number'     => 'رقم اتصال المستودع',
-    'storekeeper'                  => 'أمين المستودع',
-    'delivery_information_not_specified' => 'لم يتم تحديد معلومات التسليم.',
-    'back'                         => 'رجوع',
-    'manage_items'                 => 'إدارة الأصناف',
-    'approve_purchase_order'       => 'اعتماد أمر الشراء',
-    'approve_purchase_order_confirm' => 'هل تريد اعتماد أمر الشراء هذا؟',
-    'print_po'                     => 'طباعة أمر الشراء',
-    'purchase_order_items'         => 'أصناف أمر الشراء',
-    'item'                         => 'الصنف',
-    'sku'                          => 'رمز SKU',
-    'no_items_added_yet'           => 'لم تتم إضافة أي أصناف بعد',
-    'grand_total'                  => 'الإجمالي الكلي',
-
-    // PURCHASE ORDERS INDEX
-    'supplier'                     => 'المزوّد/المورّد',
-    'open'                         => 'فتح',
-    'items'                        => 'الأصناف',
-    'approve'                      => 'اعتماد',
-    'cancel_purchase_order_confirm'  => 'هل تريد إلغاء أمر الشراء هذا؟ لا يمكن التراجع عن هذا الإجراء.',
-
-    // PURCHASE ORDER ITEMS
-    'po'                            => 'أمر الشراء',
-    'add_item'                      => 'إضافة صنف',
-    'qty_received'                  => 'الكمية المستلمة',
-    'delete_item_confirm'           => 'هل تريد حذف الصنف؟',
-
-    // PURCHASE ORDER PRINT
-    'print_purchase_order'  => 'طباعة أمر الشراء',
-    'close'                 => 'إغلاق',
-    'no_items'              => 'لا توجد أصناف.',
-    'prepared_by'           => 'أعده',
-    'approved_by'           => 'اعتمده',
-
-    // ALL PROJECT COSTS
-    'all_project_costs' => 'جميع تكاليف المشاريع',
-    'proj_id'           => 'رقم المشروع',
-    'cost_details'      => 'التفاصيل',
-
-    // CUSTOMERS INDEX
-    'add_customer'              => 'إضافة عميل',
-    'company'                   => 'الشركة',
-    'contact'                   => 'جهة الاتصال',
-    'phone'                     => 'الهاتف',
-    'email'                     => 'البريد الإلكتروني',
-    'active'                    => 'نشط',
-    'no_customers_available'    => 'لا يوجد عملاء متاحون.',
-    'no_customers_yet'          => 'لم تقم بإضافة أي عملاء بعد.',
-    'create_first_customer'     => 'أنشئ أول عميل للبدء.',
-    'delete_customer_confirm'   => 'هل تريد حذف هذا العميل؟',
-
-    // CUSTOMER CREATE
-    'add_new_customer' => 'إضافة عميل جديد',
-    'contact_name'     => 'اسم جهة الاتصال',
-    'address'          => 'العنوان',
-    'inactive'         => 'غير نشط',
-
-    // CUSTOMER INFORMATION
-    'customer_information' => 'معلومات العميل',
-    'company_information'  => 'معلومات الشركة',
-    'contact_information'  => 'معلومات الاتصال',
-    'contact_person'       => 'جهة الاتصال',
-
-    // CUSTOMER DETAILS
-    'customer_details' => 'تفاصيل العميل',
-    'account_manager'  => 'مدير الحساب',
-    'not_assigned'     => 'غير محدد',
-    'action'           => 'الإجراء',
-    'n_a'              => 'لا ينطبق',
-
-    // CUSTOMER EDIT
-    'edit_customer'          => 'تعديل العميل',
-    'created_at'              => 'تاريخ الإنشاء',
-    'update_customer'         => 'تحديث العميل',
-    'customer_not_found'      => 'العميل غير موجود!',
-    'customer_record_missing' => 'سجل العميل لم يعد موجوداً.',
-    'back_to_customers'       => 'العودة إلى العملاء',
-
-    // ERRORS
-    'error_404'           => 'خطأ 404',
-    'page_not_found'      => 'الصفحة غير موجودة',
-    'page_does_not_exist' => 'الصفحة التي تبحث عنها غير موجودة.',
-    'go_to_dashboard'    => 'الذهاب إلى لوحة التحكم',
-
-    // GOOD RECEIPTS
-    'receive_stock_po'              => 'استلام المخزون (أمر شراء)',
-    'select_purchase_order'         => '-- اختر أمر الشراء --',
-    'ordered'                       => 'الكمية المطلوبة:',
-    'remaining'                     => 'الكمية المتبقية:',
-    'scan_barcode'                  => 'مسح الباركود',
-    'inventory_item_required'       => 'صنف المخزون *',
-    'select_po_item'                => 'اختر صنف أمر الشراء',
-    'receive_to_location'           => 'الاستلام إلى الموقع',
-    'quantity_required'             => 'الكمية *',
-    'unit_cost_required'            => 'تكلفة الوحدة *',
-    'invoice_reference'             => 'الفاتورة / المرجع',
-    'receive_stock'                 => 'استلام المخزون',
-    'item_not_in_selected_po'       => 'هذا الصنف لا ينتمي إلى أمر الشراء المحدد',
-
-    // GOODS RETURNS
-    'goods_returns'          => 'مرتجعات البضائع',
-    'return_goods'           => 'إرجاع البضائع',
-    'return_number'          => 'رقم المرتجع',
-    'grn'                    => 'إذن استلام البضائع',
-    'return_date'            => 'تاريخ الإرجاع',
-    'reason'                 => 'السبب',
-    'no_goods_returns_found' => 'لم يتم العثور على مرتجعات بضائع.',
-
-    // GOODS RETURNS
-    'return_goods_to_supplier'       => 'إرجاع البضائع إلى المورد',
-    'goods_receipt_grn_required'     => 'إذن استلام البضائع (GRN) *',
-    'select_goods_receipt'           => '-- اختر إذن استلام البضائع --',
-    'item_required'                  => 'الصنف *',
-    'select_grn_item'                => '-- اختر صنف إذن الاستلام --',
-    'original_grn_location'          => 'مخزن الاستلام الأصلي:',
-    'already_returned'               => 'تم إرجاعه بالفعل:',
-    'returnable'                     => 'القابل للإرجاع:',
-    'return_from_warehouse_required' => 'الإرجاع من المستودع *',
-    'select_warehouse'               => '-- اختر المستودع --',
-    'return_quantity_required'       => 'كمية الإرجاع *',
-    'maximum_returnable_quantity'    => 'الحد الأقصى للكمية القابلة للإرجاع:',
-    'return_date_required'           => 'تاريخ الإرجاع *',
-    'reason_for_returning_goods'     => 'سبب إرجاع البضائع',
-    'unable_to_load_grn_items'       => 'تعذر تحميل أصناف إذن الاستلام.',
-    'returnable_label'               => 'القابل للإرجاع:',
-    'loading_warehouses'             => 'جارٍ تحميل المستودعات...',
-    'unable_to_load_warehouse_stock' => 'تعذر تحميل مخزون المستودع.',
-    'unable_to_load_warehouses'      => 'تعذر تحميل المستودعات',
-    'not_recorded'                   => 'غير مسجل',
-
-    // SUPPLIER QUOTATIONS
-    'new_supplier_quotation'               => 'عرض سعر جديد من المورد',
-    'quotation_number'                     => 'رقم العرض',
-    'supplier_reference'                  => 'مرجع المورد',
-    'procurement_reference'               => 'مرجع المشتريات',
-    'valid_until'                          => 'صالح حتى',
-    'delivery'                             => 'التسليم',
-    'can_meet_date'                        => 'يمكن الالتزام بالتاريخ',
-    'late'                                 => 'متأخر',
-    'not_specified'                        => 'غير محدد',
-    'accepted'                             => 'مقبول',
-    'accept'                               => 'قبول',
-    'compare'                              => 'مقارنة',
-    'compare_quotations_for_procurement'   => 'مقارنة عروض الأسعار لهذه المشتريات',
-    'accept_supplier_quotation_confirm'    => 'هل تريد قبول عرض السعر هذا من المورد؟',
-    'cancel_quotation_confirm'             => 'هل تريد إلغاء عرض السعر هذا؟',
-    'no_supplier_quotations_found'         => 'لم يتم العثور على عروض أسعار للموردين.',
-
-    // SUPPLIER QUOTATION - CREATE
-    'create_supplier_quotation'              => 'إنشاء عرض سعر من المورد',
-    'supplier_required'                      => 'المورد *',
-    'supplier_quotation_no'                  => 'رقم عرض سعر المورد',
-    'procurement_reference_placeholder'     => 'مثال: PR-2026-001',
-    'procurement_reference_help'             => 'استخدم نفس المرجع لعروض الأسعار التي تتم مقارنتها لنفس المتطلب.',
-    'quotation_date_required'                => ' مطلوب تاريخ عرض السعر *',
-    'required_delivery_date'                 => 'تاريخ التسليم المطلوب',
-    'supplier_promised_delivery_date'       => 'تاريخ التسليم المتعهد به من المورد',
-    'procurement_evaluation_notes'           => 'ملاحظات المشتريات / التقييم',
-    'procurement_evaluation_notes_placeholder' => 'التقييم العام للمشتريات، والملاحظات التجارية، وخبرة المورد، وما إلى ذلك.',
-    'create_quotation'                       => 'إنشاء عرض السعر',
-
-    // INVENTORY MOVEMENTS
-    'inventory_movements'        => 'حركات المخزون',
-    'user'                       => 'المستخدم',
-    'source_location'            => 'الوجهة/المصدر',
-    'warehouse_balance_after'    => 'رصيد المستودع بعد الحركة',
-    'global_balance_after'       => 'الرصيد الإجمالي بعد الحركة',
-
-    // RESOURCE REQUISITIONS - APPROVAL
-    'approval_decision'                  => 'قرار الاعتماد',
-    'review_approve_reject_requisition' => 'مراجعة طلب الموارد واعتماده أو رفضه',
-    'requisition_summary'               => 'ملخص طلب الموارد',
-    'requisition_no'                    => 'رقم الطلب',
-    'requested_by'                      => 'مقدم الطلب',
-    'required_date'                     => 'التاريخ المطلوب',
-    'not_set'                           => 'غير محدد',
-    'approval_remarks'                  => 'ملاحظات الاعتماد',
-    'approval_remarks_placeholder'      => 'أدخل ملاحظات الاعتماد أو الرفض...',
-    'reject'                            => 'رفض',
-    'reject_requisition_confirm'        => 'هل تريد رفض طلب الموارد هذا؟',
-    'approve_requisition_confirm'       => 'هل تريد اعتماد طلب الموارد هذا؟',
-
-    // RESOURCE REQUISITIONS - CREATE
-    'new_resource_requisition'           => 'طلب موارد جديد',
-    'create_resource_requisition'        => 'إنشاء طلب موارد',
-    'request_date'                       => 'تاريخ الطلب',
-    'warehouse'                          => 'المستودع',
-    'target_warehouse'                  => 'المستودع المستهدف',
-    'direct_project_site_delivery_info' => 'سيتم تسليم هذا الطلب مباشرة إلى موقع المشروع المحدد.',
-    'remarks'                            => 'ملاحظات',
-    'remarks_placeholder'               => 'أدخل الغرض أو وصف العمل أو التعليمات الخاصة...',
-    'save_draft'                         => 'حفظ كمسودة',
-
-
-    // RESOURCE REQUISITIONS - DETAILS
-    'resource_requisition_details'          => 'تفاصيل طلب الموارد',
-    'view_requisition_header_information'   => 'عرض المعلومات الرئيسية لطلب الموارد',
-    'submit_requisition'                    => 'إرسال الطلب',
-    'submit_requisition_confirm'            => "هل تريد إرسال طلب الموارد هذا؟\n\nبعد الإرسال، لا يمكن تعديله.",
-    'back_to_resource_requisitions'         => 'العودة إلى طلبات الموارد',
-    'header_information'                    => 'المعلومات الرئيسية',
-    'project_site'                          => 'موقع المشروع',
-    'destination'                           => 'الوجهة',
-    'goods_planned_selected_warehouse'      => 'من المخطط تسليم المواد إلى المستودع المحدد.',
-    'goods_planned_project_site'             => 'من المخطط تسليم المواد مباشرة إلى موقع المشروع.',
-    'submitted_by'                           => 'تم الإرسال بواسطة',
-    'not_submitted'                          => 'لم يتم الإرسال',
-    'fulfill_materials'                     => 'تنفيذ المواد',
-    'create_po_for_materials'               => 'إنشاء أمر شراء للمواد',
-    'fulfill_resources'                     => 'تنفيذ الموارد',
-    'requisition_items'                     => 'بنود طلب الموارد',
-    'resource'                              => 'المورد',
-    'requested'                             => 'المطلوب',
-    'unit'                                  => 'الوحدة',
-    'out_of_stock'                          => 'مخزون نافذ',
-    'no_stock'                              => 'نافذ',
-    'locked'                                => 'مقفل',
-    'no_requisition_items_added'            => 'لم تتم إضافة أي بنود إلى طلب الموارد.',
-    'approval_history'                      => 'سجل الاعتماد',
-    'approval_workflow_future_milestone'   => 'سيتم تنفيذ سير عمل الاعتماد في مرحلة مستقبلية.',
-    'attachments'                           => 'المرفقات',
-    'attachment_management_future_milestone' => 'سيتم تنفيذ إدارة المرفقات في مرحلة مستقبلية.',
-    'comments'                              => 'التعليقات',
-    'comments_future_milestone'             => 'سيتم تنفيذ التعليقات في مرحلة مستقبلية.',
-
-
-    // RESOURCE REQUISITIONS - EDIT
-    'edit_resource_requisition'             => 'تعديل طلب الموارد',
-    'update_requisition_header_information' => 'تحديث المعلومات الرئيسية لطلب الموارد',
-    'requisition_header'                    => 'المعلومات الرئيسية للطلب',
-    'update_requisition'                    => 'تحديث الطلب',
-
-
-    // RESOURCE REQUISITIONS - INDEX
-    'resource_requisition_register'    => 'سجل طلبات الموارد',
-    'requisition_no_short'            => 'رقم الطلب',
-    'normal'                           => 'عادي',
-    'urgent'                           => 'عاجل',
-    'submitted'                        => 'مُرسل',
-    'under_review'                     => 'قيد المراجعة',
-    'partially_fulfilled'              => 'تم التنفيذ جزئياً',
-    'rejected'                         => 'مرفوض',
-    'delete_requisition_confirm'       => 'هل تريد حذف طلب الموارد هذا؟',
-    'no_resource_requisitions_found'   => 'لم يتم العثور على طلبات موارد.',
-    'create_first_requisition'         => 'إنشاء أول طلب',
-
-
-    // GOODS RETURN - DETAILS
-    'goods_return_details'       => 'تفاصيل مرتجع البضائع',
-    'return_information'         => 'معلومات المرتجع',
-    'total_amount'               => 'إجمالي المبلغ',
-    'returned_items'             => 'الأصناف المرتجعة',
-    'returned_from'              => 'تم الإرجاع من',
-    'no_returned_items_found'    => 'لم يتم العثور على أصناف مرتجعة.',
-    'back_to_goods_returns'      => 'العودة إلى مرتجعات البضائع',
-
-    // INVENTORY MODULE
-    'add_inventory_item'              => 'إضافة صنف مخزون',
-    'item_name'                       => 'اسم الصنف',
-    'brand'                           => 'العلامة التجارية',
-    'select_brand'                    => '-- اختر العلامة التجارية --',
-    'made_in_country'                 => 'بلد الصنع',
-    'select_country'                  => '-- اختر الدولة --',
-    'switchgear'                      => 'معدات التبديل',
-    'component'                       => 'مكوّن',
-    'instrumentation'                 => 'أجهزة القياس والتحكم',
-    'protection'                      => 'الحماية',
-    'tools'                           => 'أدوات',
-    'storage_location'                => 'موقع التخزين',
-    'select_location_option'          => '-- اختر الموقع --',
-    'default'                         => '⭐ افتراضي',
-    'confirm_storage_location'        => 'أؤكد على موقع التخزين هذا',
-    'min_stock'                       => 'الحد الأدنى للمخزون',
-    'cost_price'                      => 'سعر التكلفة',
-    'unit_configuration'              => 'إعدادات الوحدات',
-    'base_unit'                       => 'الوحدة الأساسية',
-    'piece'                            => 'قطعة',
-    'meter'                            => 'متر',
-    'kg'                               => 'كجم',
-    'liter'                            => 'لتر',
-    'allow_fraction'                   => 'السماح بالكسور؟',
-    'allow_fraction_tick'  => 'السماح',
-    'example_fraction'                 => 'مثال: 2.5 متر',
-    'selling_prices'                   => 'أسعار البيع',
-    'price_per_base_unit'              => 'السعر لكل وحدة أساسية',
-    'you_selected'                     => 'لقد اخترت',
-    'confirm'                           => 'تأكيد',
-    'change'                            => 'تغيير',
-    'select_storage_location_first'     => 'يرجى اختيار موقع التخزين أولاً',
-
-    'edit_inventory_item'              => 'تعديل صنف المخزون',
-    'update_item'                       => 'تحديث الصنف',
-    'item_not_found'                    => 'الصنف غير موجود!',
-    'back_to_inventory'                 => 'العودة إلى المخزون',
-
-    'inventory_management'              => 'إدارة المخزون',
-    'items_below_minimum_stock'         => 'أصناف أقل من الحد الأدنى للمخزون!',
-    'total_items'                       => 'إجمالي الأصناف',
-    'inventory_value'                   => 'قيمة المخزون',
-    'reserved_stock'                    => 'المخزون المحجوز',
-    'search'                            => 'بحث',
-    'search_inventory_placeholder'      => 'ابحث باسم الصنف أو SKU/الباركود ...',
-    'made'                              => 'بلد الصنع',
-    'reserved'                          => 'محجوز',
-    'pricing'                           => 'الأسعار',
-    'sale'                              => 'البيع',
-    'ok'                                => 'موافق',
-    'view_global_stock_details'         => 'عرض تفاصيل المخزون الإجمالي',
-    'stock_details'                     => 'تفاصيل المخزون',
-    'adjust_quantity'                   => 'تعديل الكمية',
-
-    'add_stock_movement'                => 'إضافة حركة مخزون',
-    'stock_in'                          => 'إدخال مخزون',
-    'stock_out'                         => 'إخراج مخزون',
-    'select_stock_location'              => '-- اختر موقع المخزون --',
-    'save'                              => 'حفظ',
-
-    'global_stock_details'              => 'تفاصيل المخزون الإجمالي',
-    'system_quantity'                   => 'الكمية في النظام',
-    'location_physical_total'            => 'إجمالي الكمية الفعلية بالمواقع',
-    'active_reserved'                   => 'المحجوز النشط',
-    'total_available'                   => 'إجمالي المتاح',
-    'stock_matched'                     => 'المخزون متطابق.',
-    'stock_quantity_matches_locations'  => 'كمية النظام مطابقة لإجمالي الكمية الفعلية في جميع مواقع المخزون.',
-    'stock_mismatch_detected'           => 'تم اكتشاف عدم تطابق في المخزون.',
-    'difference'                        => 'الفرق',
-    'location_stock_distribution'       => 'توزيع المخزون حسب الموقع',
-    'physical_qty'                      => 'الكمية الفعلية',
-    'reserved_qty'                      => 'الكمية المحجوزة',
-    'available_qty'                     => 'الكمية المتاحة',
-    'no_location_stock_found'           => 'لم يتم العثور على مخزون لهذا الصنف في أي موقع.',
-    'fully_reserved'                    => 'محجوز بالكامل',
-    'partially_reserved'                => 'محجوز جزئياً',
-    'item_details_history'              => 'تفاصيل الصنف والسجل',
-
-    'inventory_details'                 => 'تفاصيل المخزون',
-    'current_stock'                     => 'المخزون الحالي',
-    'total_value'                       => 'القيمة الإجمالية',
-    'stock_movements'                   => 'حركات المخزون',
-    'project_usage'                     => 'استخدام المشروع',
-
-    'stock_adjustment'                       => 'تسوية المخزون',
-    'select_inventory_item'                  => 'اختر صنف المخزون',
-    'physical_stock'                         => 'المخزون الفعلي',
-    'available_for_adjustment'               => 'المتاح للتسوية',
-    'adjustment_type'                        => 'نوع التسوية',
-    'select_adjustment_type'                 => 'اختر نوع التسوية',
-    'increase_stock'                         => 'زيادة المخزون',
-    'decrease_stock'                         => 'خفض المخزون',
-    'increase'                          => 'زيادة',
-    'decrease'                          => 'نقص',
-    'new_physical_balance'                   => 'الرصيد الفعلي الجديد',
-    'select_reason'                          => 'اختر السبب',
-    'damaged'                                => 'تالف',
-    'broken'                                 => 'معطل او مكسور',
-    'lost'                                   => 'مفقود',
-    'found'                                  => 'تم العثور عليه',
-    'physical_count_correction'              => 'تصحيح الجرد الفعلي',
-
-    'reservation_fulfillment' => 'تنفيذ المواد المحجوزة',
-    'return_to_supplier' => 'إرجاع إلى المورد',
-
-    'warehouse_transfer'                     => 'نقل بين المخازن',
-    'expired'                                => 'منتهي الصلاحية',
-    'additional_explanation'                => 'شرح إضافي...',
-    'post_adjustment'                        => 'ترحيل التسوية',
-    'maximum_decrease'                       => 'الحد الأقصى للخفض',
-    'increase_not_limited_by_stock'          => 'الزيادة غير محدودة بالمخزون الحالي.',
-    'error_loading_stock'                    => 'خطأ في تحميل المخزون',
-    'please_explain_reason'                  => 'يرجى توضيح السبب...',
-    'adjustment_quantity_exceeds_available'  => 'لا يمكن أن تتجاوز كمية التسوية الكمية المتاحة من المخزون.',
-
-    'manage_units'           => 'إدارة وحدات القياس',
-
-    // INVENTORY LOCATIONS
-    'add_inventory_location'              => 'إضافة موقع للمخزون',
-    'code'                                => 'الرمز',
-    'warehouse_name'                      => 'اسم المستودع',
-    'address_location'                   => 'العنوان / الموقع',
-    'responsible_storekeeper'             => 'أمين المستودع المسؤول',
-    'select_storekeeper'                  => '-- اختر أمين المستودع --',
-    'authorized_users'                    => 'المستخدمون المصرح لهم',
-    'hold_ctrl_multiple_users'            => 'اضغط باستمرار على Ctrl لاختيار عدة مستخدمين.',
-    'authorized_users_access_location'    => 'حدد المستخدمين المصرح لهم بالوصول إلى موقع المخزون هذا.',
-    'mobile_number'                       => 'رقم الهاتف المحمول',
-    'save_warehouse'                      => 'حفظ المستودع',
-
-    'edit_update_inventory_location'     => 'تعديل / تحديث موقع المخزون',
-    'warehouse_team'                      => 'فريق المستودع',
-    'hold_ctrl_authorized_users'          => 'اضغط باستمرار على Ctrl لاختيار عدة مستخدمين مصرح لهم بالوصول إلى هذا المستودع.',
-
-    'hold_ctrl_unauthorize_users'          => 'لإلغاء مستخدم من القائمة اضغط باستمرار على CTRL مع النقر على المستخدم',
-    'update_location'                     => 'تحديث الموقع',
-
-    'inventory_locations'                 => 'مواقع المخزون',
-    'add_location'                        => 'إضافة موقع',
-    'id'                                  => 'المعرف',
-    'no_inventory_locations_available'    => 'لا توجد مواقع مخزون متاحة.',
-    'add_first_warehouse_location'        => 'أضف أول مستودع أو موقع تخزين لبدء إدارة المخزون.',
-    'delete_location_confirm'             => 'هل أنت متأكد من رغبتك في حذف هذا الموقع؟ لا يمكن التراجع عن هذا الإجراء.',
-    'location_contains_stock_cannot_delete' => 'لا يمكن حذف هذا الموقع لأنه يحتوي حالياً على مخزون.',
-    'contains_stock'                      => '[يحتوي على مخزون]',
-
-    'all_items'                           => 'جميع الأصناف',
-    'search_item_or_sku'                 => 'ابحث عن الصنف أو SKU...',
-    'fully_reserved_out_of_stock'         => 'محجوز بالكامل / نفد المخزون',
-    'low_available_stock'                 => 'المخزون المتاح منخفض',
-
-    // INVENTORY RESERVATIONS
-    'materials_reservation'              => 'حجز مواد',
-    'reserved_by'                         => 'تم الحجز بواسطة',
-    'from_location'                       => 'من الموقع',
-    'select_inventory_item_first'         => 'اختر صنف المخزون أولاً',
-    'already_reserved'                   => 'المحجوز بالفعل',
-    'available_to_reserve'                => 'المتاح للحجز',
-    'quantity_to_reserve'                => 'الكمية المطلوب حجزها',
-    'required_by_date'                    => 'التاريخ المطلوب',
-    'reserve'                             => 'حجز',
-
-    'loading_locations'                  => 'جارٍ تحميل المواقع...',
-    'error_loading_locations'            => 'خطأ في تحميل المواقع',
-    'unable_to_load_locations'           => 'تعذر تحميل المواقع',
-
-    'edit_inventory_reservation'         => 'تعديل حجز المخزون',
-    'any_location'                       => 'أي موقع',
-    'no_project'                         => 'بدون مشروع',
-    'save_update'                        => 'حفظ التحديث',
-
-    'inventory_reservations'             => 'حجوزات المخزون',
-    'new_reservation'                    => 'حجز جديد',
-    'ordered_by'                         => 'تم الطلب بواسطة',
-    'today'                              => 'اليوم',
-    'fulfilled'                          => 'تم التنفيذ',
-    'fulfill'                            => 'تنفيذ',
-    'delete_reservation_confirm'         => 'هل تريد حذف هذا الحجز؟',
-    'no_inventory_reservations_found'   => 'لم يتم العثور على حجوزات للمخزون',
-    'no_inventory_reservations_currently' => 'لا توجد حالياً حجوزات للمخزون.',
-    'create_first_reservation'           => 'إنشاء أول حجز',
-
-    // INVENTORY TRANSFERS
-    'transfer_inventory'             => 'نقل المخزون',
-    'scan_enter_sku_barcode'         => 'امسح / أدخل SKU أو الباركود',
-    'scan_barcode_or_type_sku'       => 'امسح الباركود أو أدخل SKU...',
-    'select_manually_below'          => 'يمكنك أيضاً الاختيار يدوياً أدناه',
-    'select_source'                  => 'اختر المصدر',
-    'to_location'                    => 'إلى الموقع',
-    'select_destination'             => 'اختر الوجهة',
-    'transfer'                       => 'نقل',
-    'stock_load_error'               => 'خطأ في تحميل المخزون',
-    'source_destination_same'        => 'لا يمكن أن يكون موقع المصدر والوجهة متطابقين.',
-
-    'new_transfer'                   => 'نقل جديد',
-    'from'                           => 'من',
-    'to'                             => 'إلى',
-    'reversal'                       => 'عكس الحركة',
-    'reversed'                       => 'تم عكس الحركة',
-    'reverse'                        => 'عكس الحركة',
-    'reverse_transfer_confirm'       => 'هل أنت متأكد من رغبتك في عكس عملية النقل هذه؟',
-    'no_inventory_transfers_found'  => 'لم يتم العثور على عمليات نقل للمخزون',
-    'no_inventory_transfer_records' => 'لا توجد حالياً سجلات لنقل المخزون.',
-    'create_first_transfer'          => 'إنشاء أول عملية نقل',
-
-    // REPORTS
-    'project_portfolio_dashboard'  => 'لوحة معلومات محفظة المشاريع',
-    'total_projects'               => 'إجمالي المشاريع',
-    'due_soon'                     => 'مستحق قريباً',
-    'total_budget'                 => 'إجمالي الميزانية',
-    'total_cash_in_advances'       => 'إجمالي النقد الداخل (الدفعات المقدمة)',
-    'total_cash_out_costs'         => 'إجمالي النقد الخارج (التكاليف)',
-    'net_position'                 => 'صافي المركز المالي',
-    'cost_vs_budget_table'         => 'جدول التكلفة مقابل الميزانية',
-    'cost_vs_budget_analysis'      => 'تحليل التكلفة مقابل الميزانية',
-    'project_id'                   => 'معرف المشروع',
-    'actual_cost'                  => 'التكلفة الفعلية',
-    'variance'                     => 'الانحراف',
-    'under_budget'                 => 'أقل من الميزانية',
-    'overdue'               => 'متأخر',
-
-    // REQUISITION PURCHASE ORDERS
-    'from_resource_requisition'       => 'من طلب الموارد',
-    'source_rr'                       => 'طلب الموارد المصدر',
-    'direct_to_site'                  => 'مباشرة إلى الموقع',
-    'materials_to_purchase'           => 'المواد المطلوب شراؤها',
-    'uom'                             => 'وحدة القياس',
-    'rr_remaining'                    => 'المتبقي في طلب الموارد',
-    'quantity_to_purchase'            => 'الكمية المطلوب شراؤها',
-    'enter_price'                     => 'أدخل السعر',
-    'reference_only_current_cost'     => 'للمرجع فقط — التكلفة الحالية',
-
-    // RESOURCE CATEGORIES
-    'new_resource_category'           => 'فئة موارد جديدة',
-    'create_resource_classification'  => 'إنشاء تصنيف للموارد',
-    'category_code'                   => 'رمز الفئة',
-    'category_name'                   => 'اسم الفئة',
-    'arabic_name'                     => 'الاسم بالعربية',
-    'save_category'                  => 'حفظ الفئة',
-    'edit_resource_category'          => 'تعديل فئة الموارد',
-    'update_resource_classification' => 'تحديث تصنيف الموارد',
-    'update_category'                 => 'تحديث الفئة',
-    'resource_categories'             => 'فئات الموارد',
-    'manage_resource_classification'  => 'إدارة تصنيف الموارد',
-    'new_category'                    => 'فئة جديدة',
-    'delete_category_confirm'         => 'هل تريد حذف هذه الفئة؟',
-    'no_categories_found'             => 'لم يتم العثور على فئات.',
-
-    'fulfill_material_requisition'                 => 'تنفيذ طلب المواد',
-    'issue_materials_from_inventory'               => 'صرف المواد من المخزون لتنفيذ طلب الموارد المعتمد.',
-    'requisition_information'                      => 'معلومات طلب الموارد',
-    'fulfillment_details'                          => 'تفاصيل التنفيذ',
-    'fulfillment_reference'                        => 'مرجع التنفيذ',
-    'auto_generated_after_processing'              => 'يتم إنشاؤه تلقائياً بعد المعالجة',
-    'fulfillment_date'                             => 'تاريخ التنفيذ',
-    'fulfillment_type'                             => 'نوع التنفيذ',
-    'material_inventory'                           => 'مواد / مخزون',
-    'fulfillment_remarks_placeholder'              => 'أدخل ملاحظات أو توضيحات التنفيذ...',
-    'previously_fulfilled'                         => 'تم تنفيذه سابقاً',
-    'issue_from_location'                          => 'الصرف من الموقع',
-    'available_stock'                              => 'المخزون المتاح',
-    'quantity_to_fulfill'                          => 'الكمية المطلوب تنفيذها',
-    'no_material_items_remaining'                  => 'لا توجد مواد متبقية للتنفيذ.',
-    'process_material_fulfillment'                 => 'تنفيذ المواد',
-    'invalid_material'                             => 'مادة غير صالحة',
-    'quantity_cannot_exceed_remaining'             => 'لا يمكن أن تتجاوز الكمية الكمية المتبقية في طلب الموارد.',
-    'quantity_exceeds_available_stock'             => 'الكمية تتجاوز المخزون المتاح في الموقع المحدد.',
-    'select_inventory_location_for_every_item'     => 'يرجى اختيار موقع للمخزون لكل مادة يتم تنفيذها.',
-    'enter_fulfillment_quantity_for_at_least_one_material' => 'يرجى إدخال كمية تنفيذ لمادة واحدة على الأقل.',
-
-    'add_resource_requisition_item'                    => 'إضافة بند إلى طلب الموارد',
-    'add_new_item_to_requisition'                     => 'إضافة بند جديد إلى طلب الموارد',
-    'back_to_requisition'                              => 'العودة إلى طلب الموارد',
-    'item_details'                                     => 'تفاصيل البند',
-    'select_resource_type'                             => 'اختر نوع المورد',
-    'material_item'                                    => 'بند مادي',
-    'select_material'                                  => '-- اختر المادة --',
-    'search_by_sku_or_material_name'                  => 'ابحث بواسطة رمز SKU أو اسم المادة.',
-    'select_resource'                                  => '-- اختر المورد --',
-    'search_by_resource_code_or_name'                 => 'ابحث بواسطة رمز المورد أو اسمه.',
-    'requested_quantity'                               => 'الكمية المطلوبة',
-    'save_item'                                        => 'حفظ البند',
-    'search_by_sku_or_material_name_placeholder'      => '-- البحث بواسطة SKU أو اسم المادة --',
-    'search_resource_placeholder'                     => '-- البحث عن المورد --',
-    'search_by_sku_or_material_name_dots'             => 'ابحث بواسطة SKU أو اسم المادة...',
-    'search_resource_dots'                             => 'ابحث عن المورد...',
-    'please_select_material_item'                     => 'يرجى اختيار بند مادي.',
-    'please_select_non_material_resource'             => 'يرجى اختيار مورد غير مادي.',
-    'edit_requisition_item'                            => 'تعديل بند طلب الموارد',
-    'edit_update_quantity_description_remarks_only'   => 'يمكنك تعديل أو تحديث الكمية والوصف والملاحظات فقط',
-    'changing_material_resource_requires_new_item'    => 'تغيير المادة أو المورد أو نوع المورد يتطلب حذف البند الحالي وإنشاء بند جديد.',
-    'requisition_item'                                 => 'بند طلب الموارد',
-    'resource_type'                                    => 'نوع المورد',
-
-    'record_supplier_payment' => 'تسجيل دفعة للمورد',
-    'method'                  => 'طريقة الدفع',
-    'save_payment'            => 'حفظ الدفعة',
-
-    'supplier_quotation_comparison'              => 'مقارنة عروض أسعار الموردين',
-    'quote'                                      => 'العرض',
-    'quotation_date'                             => 'تاريخ عرض السعر',
-    'required_delivery'                          => 'التسليم المطلوب',
-    'supplier_promised_delivery'                 => 'موعد التسليم المتعهد به من المورد',
-    'can_meet'                                   => 'يمكنه الالتزام',
-    'specification'                              => 'المواصفات',
-    'quality'                                    => 'الجودة',
-    'new_item'                                   => 'بند جديد',
-    'meets'                                      => 'مطابق',
-    'partial'                                    => 'مطابق جزئياً',
-    'does_not_meet'                              => 'غير مطابق',
-    'no_quotation_items'                         => 'لا توجد بنود في عرض السعر.',
-    'procurement_evaluation'                     => 'تقييم المشتريات',
-
-    'supplier_quotation'                         => 'عرض سعر المورد',
-    'quotation_number_label'                     => 'رقم عرض السعر:',
-    'supplier_label'                             => 'المورد:',
-    'supplier_reference_label'                   => 'مرجع المورد:',
-    'procurement_reference_label'                => 'مرجع المشتريات:',
-    'required_delivery_label'                    => 'التسليم المطلوب:',
-    'supplier_promised_delivery_label'           => 'موعد التسليم المتعهد به من المورد:',
-    'quotation_date_label'                       => 'تاريخ عرض السعر:',
-    'valid_until_label'                          => 'صالح حتى:',
-    'add_quotation_item'                         => 'إضافة بند إلى عرض السعر',
-    'existing_inventory_item'                    => 'بند مخزون موجود',
-    'new_not_yet_in_inventory'                   => '-- جديد / غير موجود في المخزون بعد --',
-    'select_uom'                                 => 'اختر وحدة القياس',
-    'supplier_specification_placeholder'         => 'مواصفات المورد، المقاس، الطول، الوزن، الموديل، إلخ.',
-    'quality_specification_assessment'            => 'تقييم الجودة / المطابقة للمواصفات',
-    'not_evaluated'                              => 'لم يتم التقييم',
-    'meets_specification'                        => 'مطابق للمواصفات',
-    'partially_meets'                            => 'مطابق جزئياً',
-    'does_not_meet_specification'                => 'غير مطابق للمواصفات',
-    'quality_evaluation_notes'                   => 'ملاحظات الجودة / التقييم',
-    'quality_notes_placeholder'                  => 'ملاحظات فنية، تأكيد الشركة المصنعة/الموديل، الاختلافات، إلخ.',
-    'quotation_items'                            => 'بنود عرض السعر',
-    'delete_quotation_item_confirm'              => 'هل تريد حذف بند عرض السعر هذا؟',
-    'accept_quotation'                            => 'اعتماد عرض السعر',
-    'create_po_from_accepted_quotation_confirm'  => 'هل تريد إنشاء أمر شراء من عرض السعر المعتمد هذا؟',
-    'create_po'                                  => 'إنشاء أمر شراء',
-    'view_po'                                    => 'عرض أمر الشراء',
-
-    'add_supplier'                         => 'إضافة مورد',
-    'company_name'                         => 'اسم الشركة',
-    'save_supplier'                        => 'حفظ المورد',
-    'edit_supplier'                        => 'تعديل المورد',
-    'update_supplier'                      => 'تحديث المورد',
-    'view_profile'                         => 'عرض الملف',
-    'no_suppliers_added_yet'               => 'لم تتم إضافة أي موردين بعد.',
-    'create_first_supplier_description'   => 'أنشئ أول مورد لبدء إدارة أوامر الشراء والمشتريات.',
-    'add_first_supplier'                   => 'إضافة أول مورد',
-    'total_purchases'                      => 'إجمالي المشتريات',
-
-    'supplier_financial_ledger'            => 'السجل المالي للمورد',
-    'construct_pro'                        => 'CONSTRUCT PRO',
-    'supplier_financial_ledger_report'     => 'تقرير السجل المالي للمورد',
-    'total_debit'                          => 'إجمالي المدين',
-    'total_credit'                         => 'إجمالي الدائن',
-    'outstanding_balance'                  => 'الرصيد المستحق',
-    'goods_receipt'                        => 'إذن استلام البضائع',
-    'supplier_payment'                     => 'دفعة للمورد',
-    'goods_return'                         => 'مرتجع بضائع',
-    'no_ledger_transactions_found'         => 'لم يتم العثور على معاملات في السجل.',
-
-    'record_payment'                              => 'تسجيل دفعة',
-    'supplier_profile'                            => 'ملف المورد',
-    'view_supplier_information_purchase_history_performance'
-    => 'عرض معلومات المورد وسجل المشتريات والأداء.',
-    'print_supplier_ledger'                       => 'طباعة سجل المورد',
-    'ordered_value'                               => 'قيمة الطلبات',
-    'additional_information'                      => 'معلومات إضافية',
-    'records'                                     => 'سجل',
-    'no_purchase_orders_found'                    => 'لم يتم العثور على أوامر شراء.',
-    'total_purchase_order_value'                  => 'إجمالي قيمة أوامر الشراء',
-    'goods_receipts'                              => 'إيصالات استلام البضائع',
-    'total_received_value'                        => 'إجمالي قيمة المستلم',
-    'supplier_payments'                           => 'دفعات المورد',
-    'paid_total'                                  => 'إجمالي المدفوع',
-    'supplier_ledger'                             => 'سجل المورد',
-    'opening_balance'                             => 'الرصيد الافتتاحي',
-    'payment'                                     => 'دفعة',
-    'no_ledger_entries_found'                     => 'لم يتم العثور على قيود في السجل.',
-
-    'technician_details'                         => 'تفاصيل الفني',
-    'specialty'                                  => 'التخصص',
-
-    'new_unit'                                   => 'وحدة جديدة',
-    'create_unit_of_measure'                     => 'إنشاء وحدة قياس',
-    'unit_code'                                  => 'رمز الوحدة',
-    'unit_name'                                  => 'اسم الوحدة',
-    'save_unit'                                  => 'حفظ الوحدة',
-    'edit_unit'                                  => 'تعديل الوحدة',
-    'update_unit_of_measure'                     => 'تحديث وحدة القياس',
-    'update_unit'                                => 'تحديث الوحدة',
-    'units'                                      => 'الوحدات',
-    'manage_units_of_measure'                    => 'إدارة وحدات القياس',
-    'delete_unit_confirm'                        => 'هل تريد حذف هذه الوحدة؟',
-    'no_units_found'                             => 'لم يتم العثور على وحدات.',
-
-    'employee_details'                           => 'تفاصيل الموظف',
-    'mobile'                                     => 'الهاتف المحمول',
-    'role'                                       => 'الدور',
-
-    // footer
-    'dedicated_to_quality'            => 'ملتزمون بالجودة',
-    'construction_professional_system' => 'النظام الاحترافي للمشروعات والإنشاءات',
-    'home'                            => 'الرئيسية',
-
-    // ADMIN
-    'permission_name'           => 'اسم الصلاحية',
-    'add_permission'            => 'إضافة صلاحية',
-    'edit_permission'           => 'تعديل الصلاحية',
-    'delete_permission_confirm' => 'هل تريد حذف الصلاحية؟',
-    'user_name' =>  'أسم المستخدم',
-
-    'assign_permissions'        => 'تعيين الصلاحيات',
-    'for'                       => 'لـ',
-    'select_all'                => 'تحديد الكل',
-    'save_permissions'          => 'حفظ الصلاحيات',
-
-    'edit_role'                 => 'تعديل الدور',
-    'delete_role_confirm'      => 'هل بالفعل تريد حذف هذا الدور؟',
-    'no_permissions'            => 'لا توجد صلاحيات',
-
-    'system_settings'           => 'إعدادات النظام',
-    'contacts'                  => 'بيانات الاتصال',
-    'company_logo'              => 'شعار الشركة',
-    'save_settings'             => 'حفظ الإعدادات',
-
-    'manage_users'              => 'إدارة المستخدمين',
-    'manage_roles'              => 'إدارة الأدوار',
-    'manage_permissions'        => 'إدارة الصلاحيات',
-
-    'create_user'                              => 'إنشاء مستخدم',
-    'full_name'                                => 'الاسم بالكامل',
-    'short_name'                               => 'الاسم المختصر',
-    'password'                                 => 'كلمة المرور',
-    'warehouse_access'                         => 'صلاحية الوصول إلى المستودعات',
-    'default_warehouse'                        => 'المستودع الافتراضي',
-    'select_default_warehouse'                 => 'اختر المستودع الافتراضي',
-    'edit_user'                                => 'تعديل المستخدم',
-    'name'                                      => 'الاسم',
-    'password_leave_blank_to_keep_current'     => 'كلمة المرور (اتركها فارغة للإبقاء على الحالية)',
-    'update_user'                               => 'تحديث المستخدم',
-    'users'                                     => 'المستخدمون',
-    'add_user'                                  => 'إضافة مستخدم',
-    'delete_user_confirm'                      => 'هل تريد حذف هذا المستخدم بالفعل؟',
-
-    'user_details' => 'تفاصيل المستخدم',
-    'user_information' => 'معلومات المستخدم',
-    'select_role' => 'اختر الدور',
-    'create' => 'إنشاء',
-
-    'resources'                  => 'الموارد',
-    'new_resource'               => 'مورد جديد',
-    'resource_code'              => 'رمز المورد',
-    'resource_name'              => 'اسم المورد',
-
-    'select_unit'                => 'اختر الوحدة',
-    'select_category'            => 'اختر الفئة',
-
-    'service'                    => 'خدمة',
-    'save_resource'              => 'حفظ المورد',
-    'edit_resource'              => 'تعديل المورد',
-    'update_resource'            => 'تحديث المورد',
-    'delete_resource_confirm'    => 'هل تريد حذف هذا المورد؟',
-    'no_resources_found'         => 'لم يتم العثور على موارد.',
-    'resource_not_found'         => 'المورد غير موجود.',
-    'resource_cannot_be_deleted_already_in_use' => 'المورد مستخدم لا يمكن حذفه',
-    'resource_deleted_successfully' => 'تم حذف المورد بنجاح',
-
-    //Permession groups
-    'permission'         => 'صلاحية',
-    'permissions'         => 'الصلاحيات',
-    'permission_group_admin'         => 'ادارة النظام',
-    'permission_group_customers'     => 'العملاء',
-    'permission_group_finance'      => 'المالية',
-    'permission_group_inventory'    => 'المخزون',
-    'permission_group_projects'     => 'المشاريع',
-    'permission_group_procurement'  => 'المشتريات',
-    'permission_group_suppliers'    => 'الموردون',
-    'permission_group_users'        => 'المستخدمون',
-    'permission_group_roles'        => 'الأدوار',
-    'permission_group_permissions'  => 'الصلاحيات',
-    'permission_group_reports'      => 'التقارير',
-    'permission_group_goods_returns'         => 'مرتجعات البضائع',
-    'permission_group_inventory_locations'   => 'المخازن',
-    'permission_group_inventory_movements'   => 'حركات المخزون',
-    'permission_group_inventory_reservations' => 'حجوزات المخزون',
-    'permission_group_purchase_orders'       => 'أوامر الشراء',
-    'permission_group_quotation'             => 'عروض الأسعار',
-    'permission_group_resource_requisitions' => 'طلبات الموارد',
-    'permission_group_stock_transfers'       => 'نقل المخزون',
+  // GENERAL
+  'constructpro_system' => 'نظام ConstructPro',
+  'constructpro_system_title' => 'النظام الاحترافي للمشاريع والانشاءات',
+  'about_constructpro'     => 'حول النظام',
+  'dashboard'              => 'لوحة المعلومات الرئيسة',
+  'projects'               => 'المشاريع',
+  'customers'              => 'العملاء',
+  'inventory'              => 'المخزون',
+  'procurement'            => 'المشتريات',
+  'suppliers'              => 'الموردون',
+  'finance'                => 'مالي',
+  'admin_panel'            => 'لوحة ادارة المنظومة',
+  'logout'                 => 'تسجيل الخروج',
+  'please_login_first'  => 'يرجى تسجيل الدخول ...',
+
+  // RESOURCE REQUISITIONS
+  'resource_requisitions'  => 'طلبات الموارد',
+
+  // INVENTORY
+  'inventory_list'         => 'قائمة المخزون',
+  'locations_warehouse'    => 'المواقع (المستودعات)',
+  'material_reservations'  => 'حجوزات المواد',
+  'stock_transfers'        => 'تحويلات (نقل) المخزون',
+  'stock_movements_report' => 'حركات المخزون (تقرير)',
+
+  // Inventory Categories
+  'civil_structural'      => 'الأعمال المدنية والإنشائية',
+  'building_finishing'    => 'مواد البناء والتشطيبات',
+  'plumbing_drainage'     => 'السباكة والصرف الصحي',
+  'hvac'                   => 'التكييف والتهوية',
+  'electrical'             => 'الكهرباء',
+  'fire_fighting_alarm'   => 'مكافحة الحريق والإنذار',
+  'low_current'            => 'التيار الخفيف',
+  'hand_tools'             => 'العدد اليدوية',
+  'equipment'              => 'الالات',
+  'safety_ppe'             => 'السلامة ومعدات الحماية الشخصية',
+  'consumables'            => 'المواد الاستهلاكية',
+  'other'                  => 'أخرى',
+  'material'     => 'بضاعة - مواد',
+  'materials'     => 'المواد',
+  'non_material' => 'غير المواد',
+
+  // PROCUREMENT
+  'supplier_quotations'    => 'عروض أسعار الموردين',
+  'purchase_orders'        => 'أوامر الشراء',
+  'receive_stock_from_po'  => 'استلام المخزون (من أمر الشراء)',
+  'return_goods_warehouse' => 'إرجاع البضائع (من المستودع)',
+  'goods_returns_report'   => 'مرتجعات البضائع (تقرير)',
+  'view_requisition'                  => 'عرض طلب الموارد',
+  'actual_unit_cost'                  => 'تكلفة الوحدة الفعلية',
+  'process_resource_fulfillment'      => 'تنفيذ الموارد',
+  'fulfilled_materials'               => 'مواد تم تنفيذها',
+  'resource_requisition_fulfillment'  => 'تنفيذ طلب الموارد',
+  'fulfillment_information'           => 'معلومات التنفيذ',
+  'fulfillment_id'                    => 'معرف التنفيذ',
+  'requisition'                       => 'طلب الموارد',
+  'fulfilled_by'                      => 'تم التنفيذ بواسطة',
+  'fulfillment_number'                => 'رقم التنفيذ',
+  'material_items_to_fulfill'         => 'بنود المواد المطلوب تنفيذها',
+  'resource_items_to_fulfill'         => 'بنود الموارد المطلوب تنفيذها',
+  'resource_fulfillment'              => 'تنفيذ الموارد',
+  'requisition_label'                 => 'طلب الموارد:',
+  'fulfillment_remarks'               => 'ملاحظات التنفيذ',
+  'enter_fulfillment_remarks'         => 'أدخل ملاحظات التنفيذ',
+  'optional_remarks'                  => 'ملاحظات اختيارية',
+  'no_fulfillment_items_found' => 'لم يتم العثور على بنود تنفيذ.',
+  'delivery_method'    => 'طريقة التسليم',
+  'delivery_warehouse' => 'مستودع التسليم',
+  'select_project'     => 'اختر (مستودع) المشروع',
+
+  // FINANCE
+  'projects_cost_report'   => 'تكاليف المشاريع (تقرير)',
+  'portfolio_dashboard'    => 'لوحة محفظة المشاريع',
+
+  // DASHBOARD
+  'construction_professional'   => 'محترف الإنشاءات',
+  'active_projects'             => 'المشاريع النشطة',
+  'low_stock'                    => 'مخزون منخفض',
+
+  'total_portfolio_budget'       => 'إجمالي ميزانية المحفظة',
+  'total_portfolio_projects_cost' => 'إجمالي تكاليف مشاريع المحفظة',
+  'remaining_budget'             => 'الميزانية المتبقية',
+  'budget_remaining'             => 'من الميزانية المتبقية',
+  'supplier_payables'            => 'المبالغ المستحقة للموردين',
+  'total_outstanding'            => 'إجمالي المبالغ المستحقة',
+
+  'recent_projects'              => 'المشاريع الحديثة',
+  'customer'                     => 'العميل:',
+  'no_active_projects'           => 'لا توجد مشاريع نشطة',
+
+  // PROJECTS
+  'archived_projects'        => 'المشاريع المؤرشفة',
+  'new_project'              => 'مشروع جديد',
+
+  'project'                  => 'المشروع',
+  'type'                     => 'النوع',
+  'location'                 => 'المستودع - الموقع',
+  'doc'                      => 'المستند',
+  'work_status'              => 'حالة العمل',
+  'deadline'                 => 'الموعد النهائي',
+  'budget_lyd'               => 'الميزانية LYD',
+  'costs_lyd'                => 'التكاليف LYD',
+  'cost_status'              => 'حالة التكلفة',
+  'select_one_or_more_project_scopes.' => 'اختر نطاقاً واحداً أو أكثر من نطاقات المشروع المنطبقة.',
+
+
+  // -----------------------
+
+  'human_resources' => 'الموارد البشرية',
+  'transport' => 'النقل',
+  'subcontract' => 'المقاولات من الباطن',
+  'site_expenses' => 'مصاريف الموقع',
+  'professional_services' => 'الخدمات المهنية',
+  'permits_fees' => 'التراخيص والرسوم',
+  'insurance' => 'التأمين',
+  'bank_charges' => 'الرسوم المصرفية',
+  'taxes' => 'الضرائب',
+  'miscellaneous' => 'متفرقات',
+
+  // ---------------------
+
+  'actions'                  => 'الإجراءات',
+
+  'no_archived_projects'     => 'لا توجد مشاريع مؤرشفة متاحة.',
+  'no_active_projects_available' => 'لا توجد مشاريع نشطة متاحة.',
+  'no_archived_projects_currently' => 'لا توجد حالياً مشاريع مؤرشفة.',
+  'create_first_project'     => 'أنشئ مشروعك الأول للبدء.',
+
+  'not_started'              => 'لم يبدأ',
+  'healthy'                  => 'سليم',
+  'warning'                  => 'تحذير',
+  'over_budget'              => 'تجاوز الميزانية',
+
+  'completed'                => 'مكتمل',
+  'overdue_by'               => 'متأخر بمقدار',
+  'due_today'                => 'مستحق اليوم',
+  'days_left'                => 'أيام متبقية',
+  'day_left'                 => 'يوم متبقٍ',
+  'days'      => 'أيام',
+  'day'       => 'يوم',
+
+  'details'                  => 'التفاصيل',
+  'edit'                     => 'تعديل',
+  'archive'                  => 'أرشفة',
+  'restore'                  => 'استعادة',
+  'delete'                   => 'حذف',
+
+  'archive_project_confirm'  => 'هل تريد أرشفة هذا المشروع؟',
+  'restore_project_confirm'  => 'هل تريد استعادة هذا المشروع؟',
+  'delete_project_confirm'   => 'هل تريد حذف هذا المشروع نهائياً؟',
+
+  // PROJECT WORK STATUSES
+  'planning'                 => 'التخطيط',
+  'in_progress'              => 'قيد التنفيذ',
+  'testing'                  => 'قيد الاختبار',
+  'completed_status'         => 'مكتمل',
+  'cancelled'                => 'ملغى',
+
+  // PROJECT FORM
+  'a_new_project'               => 'مشروع جديد',
+
+  'select_customer'             => 'اختر العميل',
+  'project_title'               => 'عنوان المشروع',
+  'project_type'                => 'نوع المشروع',
+  'select_type'                 => 'اختر النوع',
+
+  'construction'                => 'إنشاءات',
+  'maintenance'                 => 'صيانة',
+  'inspection'                  => 'فحص',
+  'consultancy'                 => 'استشارات',
+
+  'project_scope'               => 'نطاق المشروع',
+  'civil'                       => 'مدني',
+  'architectural'               => 'معماري',
+  'structural'                 => 'إنشائي',
+  'mep'                         => 'الأعمال الميكانيكية والكهربائية والصحية',
+  'finishing'                  => 'التشطيبات',
+  'instrumentation_control'    => 'أجهزة القياس والتحكم',
+  'telecommunications'         => 'الاتصالات',
+
+  'select_project_scopes'       => 'اختر نطاقاً واحداً أو أكثر من نطاقات المشروع.',
+
+  'project_code'                => 'رمز المشروع',
+  'auto_generated'              => 'يتم إنشاؤه تلقائياً',
+  'project_code_auto_generated' => 'سيتم إنشاء رمز المشروع تلقائياً عند إنشاء المشروع.',
+  'contract_number'             => 'رقم العقد',
+  'site_location'               => 'موقع المشروع',
+  'project_manager'             => 'مدير المشروع',
+  'select_project_manager'      => '-- اختر مدير المشروع --',
+  'start_date'                  => 'تاريخ البدء',
+  'priority'                    => 'الأولوية',
+  'low'                         => 'منخفض',
+  'medium'                      => 'متوسطة',
+  'high'                        => 'عالية',
+  'critical'                    => 'حرج',
+  'status'                      => 'الحالة',
+  'budget_lyd_label'            => 'الميزانية (LYD)',
+  'description'                 => 'الوصف',
+  'create_project'              => 'إنشاء المشروع',
+  'cancel'                      => 'إلغاء',
+  'edit_project' => 'تعديل المشروع',
+  'customer_label' => 'العميل',
+  'select_manager' => '-- اختر المدير --',
+  'project_code_cannot_change' => 'يتم إنشاء رمز المشروع تلقائياً ولا يمكن تغييره.',
+  'budget' => 'الميزانية',
+  'save_changes' => 'حفظ التغييرات',
+  'project_specifications' => 'مواصفات المشروع',
+  'project_budget' => 'ميزانية المشروع',
+  'project_costs'  => 'تكاليف المشروع',
+  'no_project_scope' => 'لم يتم تحديد نطاق للمشروع.',
+  'documents' => 'المستندات',
+  'advance_payment' => 'دفعة مقدمة',
+  'finance_ledger' => 'دفتر الحسابات المالي',
+  'finance_dashboard' => 'لوحة المعلومات المالية',
+  'date'       => 'التاريخ',
+  'cost_type'  => 'نوع التكلفة',
+  'quantity'   => 'الكمية او العدد',
+  'unit_price' => 'سعر الوحدة',
+  'total'      => 'الإجمالي',
+  'delete_this_cost' => 'هل تريد حذف هذه التكلفة؟',
+  'total_project_cost' => 'إجمالي تكلفة المشروع',
+  'no_project_costs_recorded' => 'لم يتم تسجيل تكاليف للمشروع',
+  'no_costs_yet'             => 'لم يتم تسجيل أي تكاليف لهذا المشروع بعد.',
+  'start_first_project_cost' => 'ابدأ بإضافة أول تكلفة للمشروع.',
+  'add_first_cost' => 'إضافة أول تكلفة',
+  'project_warehouse' => 'مستودع المشروع',
+  'add_cost_to_project' => 'إضافة تكلفة إلى المشروع',
+  'labor'         => 'العمالة',
+  'inventory_item' => 'صنف المادة',
+  'select_item' => 'اختر الصنف',
+  'available' => 'متوفر/متاح',
+  'physical'  => 'الفعلي',
+  'resource_description_placeholder' => 'الوصف ....',
+  'resource_description_missing' => 'لا يوجد وصف متاح لهذا المورد.',
+  'select_location' => 'اختر الموقع - المستودع',
+  'quantity_warning' => 'لا يمكن تجاوز الكمية المتاحة في المستودع الذي تم اختياره',
+  'unit_cost' => 'تكلفة الوحدة',
+  'autofill_materials' => 'سعرالاصناف تلقائي ...',
+  'add_cost' => 'إضافة التكلفة',
+  'qty' => 'الكمية',
+  // PROJECT DOCUMENTS
+  'project_documents'       => 'مستندات المشروع',
+  'upload_documents'        => 'رفع المستندات',
+  'category'                => 'الفئة',
+  'document'                => 'المستند',
+  'version_date'            => 'تاريخ إصدار المستند',
+  'size'                    => 'الحجم',
+  'upload_date'             => 'تاريخ الرفع',
+  'view'                    => 'عرض',
+  'download'                => 'تنزيل',
+  'delete_document'         => 'حذف',
+  'delete_document_confirm' => 'هل تريد حذف هذا المستند؟',
+  'no_documents_uploaded'   => 'لم يتم رفع أي مستندات بعد.',
+  'pdf'                     => 'PDF',
+  'ms_word'                 => 'MS Word',
+  'word'                    => 'Word',
+  'ms_excel'                => 'MS Excel',
+  'excel'                   => 'Excel',
+  'powerpoint'               => 'PowerPoint',
+  'jpeg_image'              => 'صورة JPEG',
+  'png_image'               => 'صورة PNG',
+  'gif_image'               => 'صورة GIF',
+  'webp_image'              => 'صورة WEBP',
+  'text_file'               => 'ملف نصي',
+  'zip_compressed_file'     => 'ملف ZIP مضغوط',
+  'rar_compressed_file'     => 'ملف RAR مضغوط',
+  // PROJECT DOCUMENT UPLOAD
+  'upload_project_documents' => 'رفع مستندات المشروع',
+  'title'                    => 'العنوان',
+  'select_document_category' => '-- اختر فئة المستند --',
+  'contract'                 => 'العقد',
+  'drawing'                  => 'الرسم الهندسي',
+  'quotation'                => 'عرض السعر',
+  'invoice'                  => 'الفاتورة',
+  'receipt'                  => 'الإيصال',
+  'purchase_order'           => 'أمر الشراء',
+  'report'                   => 'التقرير',
+  'photo'                    => 'الصورة',
+  'certificate'              => 'الشهادة',
+  'permit'                   => 'التصريح',
+  'manual'                   => 'الدليل',
+  'document_date'            => 'تاريخ المستند',
+  'actual_document_date'     => 'التاريخ الفعلي للمستند',
+  'select_files'             => 'اختر الملفات',
+  'multiple_files_note'      => 'يمكنك رفع عدة ملفات في وقت واحد',
+  'allowed_file_types'       => 'PDF، صور، Word، Excel، ZIP...',
+  'upload'                   => 'رفع',
+
+  // PROJECT COST EDIT
+  'edit_cost_item'        => 'تعديل بند التكلفة',
+  'note'                  => 'ملاحظة',
+  'cost_edit_restriction' => 'تغيير الصنف أو المستودع أو نوع التكلفة يتطلب حذف التكلفة الحالية وإنشاء تكلفة جديدة.',
+  'unit_cost_dollar'      => 'تكلفة الوحدة',
+  'warehouse_location'    => 'موقع المستودع',
+  'update_cost'           => 'تحديث التكلفة',
+
+  // PROJECT ADVANCE
+  'add_project_advance' => 'إضافة دفعة مقدمة للمشروع',
+  'amount'             => 'المبلغ',
+  'payment_method'     => 'طريقة الدفع',
+  'cash'               => 'نقداً',
+  'bank_transfer'      => 'تحويل مصرفي',
+  'cheque'             => 'شيك',
+  'reference'          => 'المرجع',
+  'notes'              => 'ملاحظات',
+  'save_advance'       => 'حفظ الدفعة المقدمة',
+
+  // PROJECT ADVANCE LIST
+  'project_advance_payments' => 'دفعات المشروع المقدمة',
+  'go_back_to_projects'      => 'العودة إلى المشاريع',
+  'profile'                  => 'الملف الشخصي',
+  'add_advance_payments'     => 'إضافة دفعات مقدمة',
+  'total_in'                 => 'إجمالي الداخل',
+  'total_out'                => 'إجمالي الخارج',
+  'balance'                  => 'الرصيد',
+  'advance'                  => 'دفعة مقدمة',
+  'no_customer_advances'     => 'لم يتم العثور على دفعات مقدمة للعميل.',
+  'no_advance_payments_yet'  => 'لم يتم تسجيل أي دفعات مقدمة لهذا العميل حتى الآن.',
+
+  // PROJECT FINANCE DASHBOARD
+  'total_advances'               => 'إجمالي الدفعات المقدمة',
+  'total_costs'                  => 'إجمالي التكاليف',
+  'available_balance'            => 'الرصيد المتاح',
+  'budget_utilization'            => 'استخدام الميزانية',
+  'project_timeline_utilization' => 'استخدام المدة الزمنية للمشروع',
+  'advance_funding_vs_budget'    => 'الدفعات المقدمة مقابل الميزانية',
+  'advances_label'               => 'الدفعات المقدمة:',
+  'budget_label'                 => 'الميزانية:',
+  'budget_funded_by_advances'    => 'نسبة ميزانية المشروع التي تم تمويلها من الدفعات المقدمة المستلمة.',
+  'costs_exceeded_advances'      => 'تجاوزت تكاليف المشروع الدفعات المقدمة المتاحة.',
+  'budget_over_90_percent'       => 'استهلك المشروع أكثر من 90% من ميزانيته.',
+
+  // PROJECT LEDGER
+  'project_ledger' => 'دفتر حسابات المشروع',
+  'print_ledger'   => 'طباعة دفتر الحسابات',
+  'debit'          => 'مدين',
+  'credit'         => 'دائن',
+  'cost'           => 'التكلفة',
+
+  // PROJECT LEDGER REPORT
+  'project_financial_ledger_report' => 'تقرير دفتر الحسابات المالي للمشروع',
+  'printed'                        => 'تمت الطباعة',
+
+  // PURCHASE ORDERS
+  'create_purchase_order' => 'إنشاء أمر شراء',
+  'select_supplier'      => 'اختر المزوّد/ المورّد',
+  'order_date'           => 'تاريخ الطلب',
+  'expected_date'        => 'التاريخ المتوقع',
+
+  // PURCHASE ORDER DETAILS
+  'purchase_order_details'       => 'تفاصيل أمر الشراء',
+  'po_number'                    => 'رقم أمر الشراء',
+  'draft'                        => 'مسودة',
+  'approved'                     => 'معتمد',
+  'partially_received'           => 'تم استلامه جزئياً',
+  'received'                     => 'تم الاستلام',
+  'created'                      => 'تاريخ الإنشاء',
+  'delivery_ship_to'             => 'التسليم / الشحن إلى',
+  'direct_to_project_site'       => 'مباشرة إلى موقع المشروع',
+  'delivery_location'            => 'موقع التسليم',
+  'site_contact'                 => 'جهة الاتصال بالموقع',
+  'contact_number'               => 'رقم الاتصال',
+  'warehouse_contact_number'     => 'رقم اتصال المستودع',
+  'storekeeper'                  => 'أمين المستودع',
+  'delivery_information_not_specified' => 'لم يتم تحديد معلومات التسليم.',
+  'back'                         => 'رجوع',
+  'manage_items'                 => 'إدارة الأصناف',
+  'approve_purchase_order'       => 'اعتماد أمر الشراء',
+  'approve_purchase_order_confirm' => 'هل تريد اعتماد أمر الشراء هذا؟',
+  'print_po'                     => 'طباعة أمر الشراء',
+  'purchase_order_items'         => 'أصناف أمر الشراء',
+  'item'                         => 'الصنف',
+  'sku'                          => 'رمز SKU',
+  'no_items_added_yet'           => 'لم تتم إضافة أي أصناف بعد',
+  'grand_total'                  => 'الإجمالي الكلي',
+
+  // PURCHASE ORDERS INDEX
+  'supplier'                     => 'المزوّد/المورّد',
+  'open'                         => 'فتح',
+  'items'                        => 'الأصناف',
+  'approve'                      => 'اعتماد',
+  'cancel_purchase_order_confirm'  => 'هل تريد إلغاء أمر الشراء هذا؟ لا يمكن التراجع عن هذا الإجراء.',
+
+  // PURCHASE ORDER ITEMS
+  'po'                            => 'أمر الشراء',
+  'add_item'                      => 'إضافة صنف',
+  'qty_received'                  => 'الكمية المستلمة',
+  'delete_item_confirm'           => 'هل تريد حذف الصنف؟',
+
+  // PURCHASE ORDER PRINT
+  'print_purchase_order'  => 'طباعة أمر الشراء',
+  'close'                 => 'إغلاق',
+  'no_items'              => 'لا توجد أصناف.',
+  'prepared_by'           => 'أعده',
+  'approved_by'           => 'اعتمده',
+
+  // ALL PROJECT COSTS
+  'all_project_costs' => 'جميع تكاليف المشاريع',
+  'proj_id'           => 'رقم المشروع',
+  'cost_details'      => 'التفاصيل',
+
+  // CUSTOMERS INDEX
+  'add_customer'              => 'إضافة عميل',
+  'company'                   => 'الشركة',
+  'contact'                   => 'جهة الاتصال',
+  'phone'                     => 'الهاتف',
+  'email'                     => 'البريد الإلكتروني',
+  'active'                    => 'نشط',
+  'no_customers_available'    => 'لا يوجد عملاء متاحون.',
+  'no_customers_yet'          => 'لم تقم بإضافة أي عملاء بعد.',
+  'create_first_customer'     => 'أنشئ أول عميل للبدء.',
+  'delete_customer_confirm'   => 'هل تريد حذف هذا العميل؟',
+
+  // CUSTOMER CREATE
+  'add_new_customer' => 'إضافة عميل جديد',
+  'contact_name'     => 'اسم جهة الاتصال',
+  'address'          => 'العنوان',
+  'inactive'         => 'غير نشط',
+
+  // CUSTOMER INFORMATION
+  'customer_information' => 'معلومات العميل',
+  'company_information'  => 'معلومات الشركة',
+  'contact_information'  => 'معلومات الاتصال',
+  'contact_person'       => 'جهة الاتصال',
+
+  // CUSTOMER DETAILS
+  'customer_details' => 'تفاصيل العميل',
+  'account_manager'  => 'مدير الحساب',
+  'not_assigned'     => 'غير محدد',
+  'action'           => 'الإجراء',
+  'n_a'              => 'لا ينطبق',
+
+  // CUSTOMER EDIT
+  'edit_customer'          => 'تعديل العميل',
+  'created_at'              => 'تاريخ الإنشاء',
+  'update_customer'         => 'تحديث العميل',
+  'customer_not_found'      => 'العميل غير موجود!',
+  'customer_record_missing' => 'سجل العميل لم يعد موجوداً.',
+  'back_to_customers'       => 'العودة إلى العملاء',
+
+  // ERRORS
+  'error_404'           => 'خطأ 404',
+  'page_not_found'      => 'الصفحة غير موجودة',
+  'page_does_not_exist' => 'الصفحة التي تبحث عنها غير موجودة.',
+  'go_to_dashboard'    => 'الذهاب إلى لوحة التحكم',
+
+  // GOOD RECEIPTS
+  'receive_stock_po'              => 'استلام المخزون (أمر شراء)',
+  'select_purchase_order'         => '-- اختر أمر الشراء --',
+  'ordered'                       => 'الكمية المطلوبة:',
+  'remaining'                     => 'الكمية المتبقية:',
+  'scan_barcode'                  => 'مسح الباركود',
+  'inventory_item_required'       => 'صنف المخزون *',
+  'select_po_item'                => 'اختر صنف أمر الشراء',
+  'receive_to_location'           => 'الاستلام إلى الموقع',
+  'quantity_required'             => 'الكمية *',
+  'unit_cost_required'            => 'تكلفة الوحدة *',
+  'invoice_reference'             => 'الفاتورة / المرجع',
+  'receive_stock'                 => 'استلام المخزون',
+  'item_not_in_selected_po'       => 'هذا الصنف لا ينتمي إلى أمر الشراء المحدد',
+
+  // GOODS RETURNS
+  'goods_returns'          => 'مرتجعات البضائع',
+  'return_goods'           => 'إرجاع البضائع',
+  'return_number'          => 'رقم المرتجع',
+  'grn'                    => 'إذن استلام البضائع',
+  'return_date'            => 'تاريخ الإرجاع',
+  'reason'                 => 'السبب',
+  'no_goods_returns_found' => 'لم يتم العثور على مرتجعات بضائع.',
+
+  // GOODS RETURNS
+  'return_goods_to_supplier'       => 'إرجاع البضائع إلى المورد',
+  'goods_receipt_grn_required'     => 'إذن استلام البضائع (GRN) *',
+  'select_goods_receipt'           => '-- اختر إذن استلام البضائع --',
+  'item_required'                  => 'الصنف *',
+  'select_grn_item'                => '-- اختر صنف إذن الاستلام --',
+  'original_grn_location'          => 'مخزن الاستلام الأصلي:',
+  'already_returned'               => 'تم إرجاعه بالفعل:',
+  'returnable'                     => 'القابل للإرجاع:',
+  'return_from_warehouse_required' => 'الإرجاع من المستودع *',
+  'select_warehouse'               => '-- اختر المستودع --',
+  'return_quantity_required'       => 'كمية الإرجاع *',
+  'maximum_returnable_quantity'    => 'الحد الأقصى للكمية القابلة للإرجاع:',
+  'return_date_required'           => 'تاريخ الإرجاع *',
+  'reason_for_returning_goods'     => 'سبب إرجاع البضائع',
+  'unable_to_load_grn_items'       => 'تعذر تحميل أصناف إذن الاستلام.',
+  'returnable_label'               => 'القابل للإرجاع:',
+  'loading_warehouses'             => 'جارٍ تحميل المستودعات...',
+  'unable_to_load_warehouse_stock' => 'تعذر تحميل مخزون المستودع.',
+  'unable_to_load_warehouses'      => 'تعذر تحميل المستودعات',
+  'not_recorded'                   => 'غير مسجل',
+
+  // SUPPLIER QUOTATIONS
+  'new_supplier_quotation'               => 'عرض سعر جديد من المورد',
+  'quotation_number'                     => 'رقم العرض',
+  'supplier_reference'                  => 'مرجع المورد',
+  'procurement_reference'               => 'مرجع المشتريات',
+  'valid_until'                          => 'صالح حتى',
+  'delivery'                             => 'التسليم',
+  'can_meet_date'                        => 'يمكن الالتزام بالتاريخ',
+  'late'                                 => 'متأخر',
+  'not_specified'                        => 'غير محدد',
+  'accepted'                             => 'مقبول',
+  'accept'                               => 'قبول',
+  'compare'                              => 'مقارنة',
+  'compare_quotations_for_procurement'   => 'مقارنة عروض الأسعار لهذه المشتريات',
+  'accept_supplier_quotation_confirm'    => 'هل تريد قبول عرض السعر هذا من المورد؟',
+  'cancel_quotation_confirm'             => 'هل تريد إلغاء عرض السعر هذا؟',
+  'no_supplier_quotations_found'         => 'لم يتم العثور على عروض أسعار للموردين.',
+
+  // SUPPLIER QUOTATION - CREATE
+  'create_supplier_quotation'              => 'إنشاء عرض سعر من المورد',
+  'supplier_required'                      => 'المورد *',
+  'supplier_quotation_no'                  => 'رقم عرض سعر المورد',
+  'procurement_reference_placeholder'     => 'مثال: PR-2026-001',
+  'procurement_reference_help'             => 'استخدم نفس المرجع لعروض الأسعار التي تتم مقارنتها لنفس المتطلب.',
+  'quotation_date_required'                => ' مطلوب تاريخ عرض السعر *',
+  'required_delivery_date'                 => 'تاريخ التسليم المطلوب',
+  'supplier_promised_delivery_date'       => 'تاريخ التسليم المتعهد به من المورد',
+  'procurement_evaluation_notes'           => 'ملاحظات المشتريات / التقييم',
+  'procurement_evaluation_notes_placeholder' => 'التقييم العام للمشتريات، والملاحظات التجارية، وخبرة المورد، وما إلى ذلك.',
+  'create_quotation'                       => 'إنشاء عرض السعر',
+
+  // INVENTORY MOVEMENTS
+  'inventory_movements'        => 'حركات المخزون',
+  'user'                       => 'المستخدم',
+  'source_location'            => 'الوجهة/المصدر',
+  'warehouse_balance_after'    => 'رصيد المستودع بعد الحركة',
+  'global_balance_after'       => 'الرصيد الإجمالي بعد الحركة',
+
+  // RESOURCE REQUISITIONS - APPROVAL
+  'approval_decision'                  => 'قرار الاعتماد',
+  'review_approve_reject_requisition' => 'مراجعة طلب الموارد واعتماده أو رفضه',
+  'requisition_summary'               => 'ملخص طلب الموارد',
+  'requisition_no'                    => 'رقم الطلب',
+  'requested_by'                      => 'مقدم الطلب',
+  'required_date'                     => 'التاريخ المطلوب',
+  'not_set'                           => 'غير محدد',
+  'approval_remarks'                  => 'ملاحظات الاعتماد',
+  'approval_remarks_placeholder'      => 'أدخل ملاحظات الاعتماد أو الرفض...',
+  'reject'                            => 'رفض',
+  'reject_requisition_confirm'        => 'هل تريد رفض طلب الموارد هذا؟',
+  'approve_requisition_confirm'       => 'هل تريد اعتماد طلب الموارد هذا؟',
+
+  // RESOURCE REQUISITIONS - CREATE
+  'new_resource_requisition'           => 'طلب موارد جديد',
+  'create_resource_requisition'        => 'إنشاء طلب موارد',
+  'request_date'                       => 'تاريخ الطلب',
+  'warehouse'                          => 'المستودع',
+  'target_warehouse'                  => 'المستودع المستهدف',
+  'direct_project_site_delivery_info' => 'سيتم تسليم هذا الطلب مباشرة إلى موقع المشروع المحدد.',
+  'remarks'                            => 'ملاحظات',
+  'remarks_placeholder'               => 'أدخل الغرض أو وصف العمل أو التعليمات الخاصة...',
+  'save_draft'                         => 'حفظ كمسودة',
+
+
+  // RESOURCE REQUISITIONS - DETAILS
+  'resource_requisition_details'          => 'تفاصيل طلب الموارد',
+  'view_requisition_header_information'   => 'عرض المعلومات الرئيسية لطلب الموارد',
+  'submit_requisition'                    => 'إرسال الطلب',
+  'submit_requisition_confirm'            => "هل تريد إرسال طلب الموارد هذا؟\n\nبعد الإرسال، لا يمكن تعديله.",
+  'back_to_resource_requisitions'         => 'العودة إلى طلبات الموارد',
+  'header_information'                    => 'المعلومات الرئيسية',
+  'project_site'                          => 'موقع المشروع',
+  'destination'                           => 'الوجهة',
+  'goods_planned_selected_warehouse'      => 'من المخطط تسليم المواد إلى المستودع المحدد.',
+  'goods_planned_project_site'             => 'من المخطط تسليم المواد مباشرة إلى موقع المشروع.',
+  'submitted_by'                           => 'تم الإرسال بواسطة',
+  'not_submitted'                          => 'لم يتم الإرسال',
+  'fulfill_materials'                     => 'تنفيذ المواد',
+  'create_po_for_materials'               => 'إنشاء أمر شراء للمواد',
+  'fulfill_resources'                     => 'تنفيذ الموارد',
+  'requisition_items'                     => 'بنود طلب الموارد',
+  'resource'                              => 'المورد',
+  'requested'                             => 'المطلوب',
+  'unit'                                  => 'الوحدة',
+  'out_of_stock'                          => 'مخزون نافذ',
+  'no_stock'                              => 'نافذ',
+  'locked'                                => 'مقفل',
+  'no_requisition_items_added'            => 'لم تتم إضافة أي بنود إلى طلب الموارد.',
+  'approval_history'                      => 'سجل الاعتماد',
+  'approval_workflow_future_milestone'   => 'سيتم تنفيذ سير عمل الاعتماد في مرحلة مستقبلية.',
+  'attachments'                           => 'المرفقات',
+  'attachment_management_future_milestone' => 'سيتم تنفيذ إدارة المرفقات في مرحلة مستقبلية.',
+  'comments'                              => 'التعليقات',
+  'comments_future_milestone'             => 'سيتم تنفيذ التعليقات في مرحلة مستقبلية.',
+
+
+  // RESOURCE REQUISITIONS - EDIT
+  'edit_resource_requisition'             => 'تعديل طلب الموارد',
+  'update_requisition_header_information' => 'تحديث المعلومات الرئيسية لطلب الموارد',
+  'requisition_header'                    => 'المعلومات الرئيسية للطلب',
+  'update_requisition'                    => 'تحديث الطلب',
+
+
+  // RESOURCE REQUISITIONS - INDEX
+  'resource_requisition_register'    => 'سجل طلبات الموارد',
+  'requisition_no_short'            => 'رقم الطلب',
+  'normal'                           => 'عادي',
+  'urgent'                           => 'عاجل',
+  'submitted'                        => 'مُرسل',
+  'under_review'                     => 'قيد المراجعة',
+  'partially_fulfilled'              => 'تم التنفيذ جزئياً',
+  'rejected'                         => 'مرفوض',
+  'delete_requisition_confirm'       => 'هل تريد حذف طلب الموارد هذا؟',
+  'no_resource_requisitions_found'   => 'لم يتم العثور على طلبات موارد.',
+  'create_first_requisition'         => 'إنشاء أول طلب',
+
+
+  // GOODS RETURN - DETAILS
+  'goods_return_details'       => 'تفاصيل مرتجع البضائع',
+  'return_information'         => 'معلومات المرتجع',
+  'total_amount'               => 'إجمالي المبلغ',
+  'returned_items'             => 'الأصناف المرتجعة',
+  'returned_from'              => 'تم الإرجاع من',
+  'no_returned_items_found'    => 'لم يتم العثور على أصناف مرتجعة.',
+  'back_to_goods_returns'      => 'العودة إلى مرتجعات البضائع',
+
+  // INVENTORY MODULE
+  'add_inventory_item'              => 'إضافة صنف مخزون',
+  'item_name'                       => 'اسم الصنف',
+  'brand'                           => 'العلامة التجارية',
+  'select_brand'                    => '-- اختر العلامة التجارية --',
+  'made_in_country'                 => 'بلد الصنع',
+  'select_country'                  => '-- اختر الدولة --',
+  'switchgear'                      => 'معدات التبديل',
+  'component'                       => 'مكوّن',
+  'instrumentation'                 => 'أجهزة القياس والتحكم',
+  'protection'                      => 'الحماية',
+  'tools'                           => 'أدوات',
+  'storage_location'                => 'موقع التخزين',
+  'select_location_option'          => '-- اختر الموقع --',
+  'default'                         => '⭐ افتراضي',
+  'confirm_storage_location'        => 'أؤكد على موقع التخزين هذا',
+  'min_stock'                       => 'الحد الأدنى للمخزون',
+  'cost_price'                      => 'سعر التكلفة',
+  'unit_configuration'              => 'إعدادات الوحدات',
+  'base_unit'                       => 'الوحدة الأساسية',
+  'piece'                            => 'قطعة',
+  'meter'                            => 'متر',
+  'kg'                               => 'كجم',
+  'liter'                            => 'لتر',
+  'allow_fraction'                   => 'السماح بالكسور؟',
+  'allow_fraction_tick'  => 'السماح',
+  'example_fraction'                 => 'مثال: 2.5 متر',
+  'selling_prices'                   => 'أسعار البيع',
+  'price_per_base_unit'              => 'السعر لكل وحدة أساسية',
+  'you_selected'                     => 'لقد اخترت',
+  'confirm'                           => 'تأكيد',
+  'change'                            => 'تغيير',
+  'select_storage_location_first'     => 'يرجى اختيار موقع التخزين أولاً',
+
+  'edit_inventory_item'              => 'تعديل صنف المخزون',
+  'update_item'                       => 'تحديث الصنف',
+  'item_not_found'                    => 'الصنف غير موجود!',
+  'back_to_inventory'                 => 'العودة إلى المخزون',
+
+  'inventory_management'              => 'إدارة المخزون',
+  'items_below_minimum_stock'         => 'أصناف أقل من الحد الأدنى للمخزون!',
+  'total_items'                       => 'إجمالي الأصناف',
+  'inventory_value'                   => 'قيمة المخزون',
+  'reserved_stock'                    => 'المخزون المحجوز',
+  'search'                            => 'بحث',
+  'search_inventory_placeholder'      => 'ابحث باسم الصنف أو SKU/الباركود ...',
+  'made'                              => 'بلد الصنع',
+  'reserved'                          => 'محجوز',
+  'pricing'                           => 'الأسعار',
+  'sale'                              => 'البيع',
+  'ok'                                => 'موافق',
+  'view_global_stock_details'         => 'عرض تفاصيل المخزون الإجمالي',
+  'stock_details'                     => 'تفاصيل المخزون',
+  'adjust_quantity'                   => 'تعديل الكمية',
+
+  'add_stock_movement'                => 'إضافة حركة مخزون',
+  'stock_in'                          => 'إدخال مخزون',
+  'stock_out'                         => 'إخراج مخزون',
+  'select_stock_location'              => '-- اختر موقع المخزون --',
+  'save'                              => 'حفظ',
+
+  'global_stock_details'              => 'تفاصيل المخزون الإجمالي',
+  'system_quantity'                   => 'الكمية في النظام',
+  'location_physical_total'            => 'إجمالي الكمية الفعلية بالمواقع',
+  'active_reserved'                   => 'المحجوز النشط',
+  'total_available'                   => 'إجمالي المتاح',
+  'stock_matched'                     => 'المخزون متطابق.',
+  'stock_quantity_matches_locations'  => 'كمية النظام مطابقة لإجمالي الكمية الفعلية في جميع مواقع المخزون.',
+  'stock_mismatch_detected'           => 'تم اكتشاف عدم تطابق في المخزون.',
+  'difference'                        => 'الفرق',
+  'location_stock_distribution'       => 'توزيع المخزون حسب الموقع',
+  'physical_qty'                      => 'الكمية الفعلية',
+  'reserved_qty'                      => 'الكمية المحجوزة',
+  'available_qty'                     => 'الكمية المتاحة',
+  'no_location_stock_found'           => 'لم يتم العثور على مخزون لهذا الصنف في أي موقع.',
+  'fully_reserved'                    => 'محجوز بالكامل',
+  'partially_reserved'                => 'محجوز جزئياً',
+  'item_details_history'              => 'تفاصيل الصنف والسجل',
+
+  'inventory_details'                 => 'تفاصيل المخزون',
+  'current_stock'                     => 'المخزون الحالي',
+  'total_value'                       => 'القيمة الإجمالية',
+  'stock_movements'                   => 'حركات المخزون',
+  'project_usage'                     => 'استخدام المشروع',
+
+  'stock_adjustment'                       => 'تسوية المخزون',
+  'select_inventory_item'                  => 'اختر صنف المخزون',
+  'physical_stock'                         => 'المخزون الفعلي',
+  'available_for_adjustment'               => 'المتاح للتسوية',
+  'adjustment_type'                        => 'نوع التسوية',
+  'select_adjustment_type'                 => 'اختر نوع التسوية',
+  'increase_stock'                         => 'زيادة المخزون',
+  'decrease_stock'                         => 'خفض المخزون',
+  'increase'                          => 'زيادة',
+  'decrease'                          => 'نقص',
+  'new_physical_balance'                   => 'الرصيد الفعلي الجديد',
+  'select_reason'                          => 'اختر السبب',
+  'damaged'                                => 'تالف',
+  'broken'                                 => 'معطل او مكسور',
+  'lost'                                   => 'مفقود',
+  'found'                                  => 'تم العثور عليه',
+  'physical_count_correction'              => 'تصحيح الجرد الفعلي',
+
+  'reservation_fulfillment' => 'تنفيذ المواد المحجوزة',
+  'return_to_supplier' => 'إرجاع إلى المورد',
+
+  'warehouse_transfer'                     => 'نقل بين المخازن',
+  'expired'                                => 'منتهي الصلاحية',
+  'additional_explanation'                => 'شرح إضافي...',
+  'post_adjustment'                        => 'ترحيل التسوية',
+  'maximum_decrease'                       => 'الحد الأقصى للخفض',
+  'increase_not_limited_by_stock'          => 'الزيادة غير محدودة بالمخزون الحالي.',
+  'error_loading_stock'                    => 'خطأ في تحميل المخزون',
+  'please_explain_reason'                  => 'يرجى توضيح السبب...',
+  'adjustment_quantity_exceeds_available'  => 'لا يمكن أن تتجاوز كمية التسوية الكمية المتاحة من المخزون.',
+
+  'manage_units'           => 'إدارة وحدات القياس',
+
+  // INVENTORY LOCATIONS
+  'add_inventory_location'              => 'إضافة موقع للمخزون',
+  'code'                                => 'الرمز',
+  'warehouse_name'                      => 'اسم المستودع',
+  'address_location'                   => 'العنوان / الموقع',
+  'responsible_storekeeper'             => 'أمين المستودع المسؤول',
+  'select_storekeeper'                  => '-- اختر أمين المستودع --',
+  'authorized_users'                    => 'المستخدمون المصرح لهم',
+  'hold_ctrl_multiple_users'            => 'اضغط باستمرار على Ctrl لاختيار عدة مستخدمين.',
+  'authorized_users_access_location'    => 'حدد المستخدمين المصرح لهم بالوصول إلى موقع المخزون هذا.',
+  'mobile_number'                       => 'رقم الهاتف المحمول',
+  'save_warehouse'                      => 'حفظ المستودع',
+
+  'edit_update_inventory_location'     => 'تعديل / تحديث موقع المخزون',
+  'warehouse_team'                      => 'فريق المستودع',
+  'hold_ctrl_authorized_users'          => 'اضغط باستمرار على Ctrl لاختيار عدة مستخدمين مصرح لهم بالوصول إلى هذا المستودع.',
+
+  'hold_ctrl_unauthorize_users'          => 'لإلغاء مستخدم من القائمة اضغط باستمرار على CTRL مع النقر على المستخدم',
+  'update_location'                     => 'تحديث الموقع',
+
+  'inventory_locations'                 => 'مواقع المخزون',
+  'add_location'                        => 'إضافة موقع',
+  'id'                                  => 'المعرف',
+  'no_inventory_locations_available'    => 'لا توجد مواقع مخزون متاحة.',
+  'add_first_warehouse_location'        => 'أضف أول مستودع أو موقع تخزين لبدء إدارة المخزون.',
+  'delete_location_confirm'             => 'هل أنت متأكد من رغبتك في حذف هذا الموقع؟ لا يمكن التراجع عن هذا الإجراء.',
+  'location_contains_stock_cannot_delete' => 'لا يمكن حذف هذا الموقع لأنه يحتوي حالياً على مخزون.',
+  'contains_stock'                      => '[يحتوي على مخزون]',
+
+  'all_items'                           => 'جميع الأصناف',
+  'search_item_or_sku'                 => 'ابحث عن الصنف أو SKU...',
+  'fully_reserved_out_of_stock'         => 'محجوز بالكامل / نفد المخزون',
+  'low_available_stock'                 => 'المخزون المتاح منخفض',
+
+  // INVENTORY RESERVATIONS
+  'materials_reservation'              => 'حجز مواد',
+  'reserved_by'                         => 'تم الحجز بواسطة',
+  'from_location'                       => 'من الموقع',
+  'select_inventory_item_first'         => 'اختر صنف المخزون أولاً',
+  'already_reserved'                   => 'المحجوز بالفعل',
+  'available_to_reserve'                => 'المتاح للحجز',
+  'quantity_to_reserve'                => 'الكمية المطلوب حجزها',
+  'required_by_date'                    => 'التاريخ المطلوب',
+  'reserve'                             => 'حجز',
+
+  'loading_locations'                  => 'جارٍ تحميل المواقع...',
+  'error_loading_locations'            => 'خطأ في تحميل المواقع',
+  'unable_to_load_locations'           => 'تعذر تحميل المواقع',
+
+  'edit_inventory_reservation'         => 'تعديل حجز المخزون',
+  'any_location'                       => 'أي موقع',
+  'no_project'                         => 'بدون مشروع',
+  'save_update'                        => 'حفظ التحديث',
+
+  'inventory_reservations'             => 'حجوزات المخزون',
+  'new_reservation'                    => 'حجز جديد',
+  'ordered_by'                         => 'تم الطلب بواسطة',
+  'today'                              => 'اليوم',
+  'fulfilled'                          => 'تم التنفيذ',
+  'fulfill'                            => 'تنفيذ',
+  'delete_reservation_confirm'         => 'هل تريد حذف هذا الحجز؟',
+  'no_inventory_reservations_found'   => 'لم يتم العثور على حجوزات للمخزون',
+  'no_inventory_reservations_currently' => 'لا توجد حالياً حجوزات للمخزون.',
+  'create_first_reservation'           => 'إنشاء أول حجز',
+
+  // INVENTORY TRANSFERS
+  'transfer_inventory'             => 'نقل المخزون',
+  'scan_enter_sku_barcode'         => 'امسح / أدخل SKU أو الباركود',
+  'scan_barcode_or_type_sku'       => 'امسح الباركود أو أدخل SKU...',
+  'select_manually_below'          => 'يمكنك أيضاً الاختيار يدوياً أدناه',
+  'select_source'                  => 'اختر المصدر',
+  'to_location'                    => 'إلى الموقع',
+  'select_destination'             => 'اختر الوجهة',
+  'transfer'                       => 'نقل',
+  'stock_load_error'               => 'خطأ في تحميل المخزون',
+  'source_destination_same'        => 'لا يمكن أن يكون موقع المصدر والوجهة متطابقين.',
+
+  'new_transfer'                   => 'نقل جديد',
+  'from'                           => 'من',
+  'to'                             => 'إلى',
+  'reversal'                       => 'عكس الحركة',
+  'reversed'                       => 'تم عكس الحركة',
+  'reverse'                        => 'عكس الحركة',
+  'reverse_transfer_confirm'       => 'هل أنت متأكد من رغبتك في عكس عملية النقل هذه؟',
+  'no_inventory_transfers_found'  => 'لم يتم العثور على عمليات نقل للمخزون',
+  'no_inventory_transfer_records' => 'لا توجد حالياً سجلات لنقل المخزون.',
+  'create_first_transfer'          => 'إنشاء أول عملية نقل',
+
+  // REPORTS
+  'project_portfolio_dashboard'  => 'لوحة معلومات محفظة المشاريع',
+  'total_projects'               => 'إجمالي المشاريع',
+  'due_soon'                     => 'مستحق قريباً',
+  'total_budget'                 => 'إجمالي الميزانية',
+  'total_cash_in_advances'       => 'إجمالي النقد الداخل (الدفعات المقدمة)',
+  'total_cash_out_costs'         => 'إجمالي النقد الخارج (التكاليف)',
+  'net_position'                 => 'صافي المركز المالي',
+  'cost_vs_budget_table'         => 'جدول التكلفة مقابل الميزانية',
+  'cost_vs_budget_analysis'      => 'تحليل التكلفة مقابل الميزانية',
+  'project_id'                   => 'معرف المشروع',
+  'actual_cost'                  => 'التكلفة الفعلية',
+  'variance'                     => 'الانحراف',
+  'under_budget'                 => 'أقل من الميزانية',
+  'overdue'               => 'متأخر',
+
+  // REQUISITION PURCHASE ORDERS
+  'from_resource_requisition'       => 'من طلب الموارد',
+  'source_rr'                       => 'طلب الموارد المصدر',
+  'direct_to_site'                  => 'مباشرة إلى الموقع',
+  'materials_to_purchase'           => 'المواد المطلوب شراؤها',
+  'uom'                             => 'وحدة القياس',
+  'rr_remaining'                    => 'المتبقي في طلب الموارد',
+  'quantity_to_purchase'            => 'الكمية المطلوب شراؤها',
+  'enter_price'                     => 'أدخل السعر',
+  'reference_only_current_cost'     => 'للمرجع فقط — التكلفة الحالية',
+
+  // RESOURCE CATEGORIES
+  'new_resource_category'           => 'فئة موارد جديدة',
+  'create_resource_classification'  => 'إنشاء تصنيف للموارد',
+  'category_code'                   => 'رمز الفئة',
+  'category_name'                   => 'اسم الفئة',
+  'arabic_name'                     => 'الاسم بالعربية',
+  'save_category'                  => 'حفظ الفئة',
+  'edit_resource_category'          => 'تعديل فئة الموارد',
+  'update_resource_classification' => 'تحديث تصنيف الموارد',
+  'update_category'                 => 'تحديث الفئة',
+  'resource_categories'             => 'فئات الموارد',
+  'manage_resource_classification'  => 'إدارة تصنيف الموارد',
+  'new_category'                    => 'فئة جديدة',
+  'delete_category_confirm'         => 'هل تريد حذف هذه الفئة؟',
+  'no_categories_found'             => 'لم يتم العثور على فئات.',
+
+  'fulfill_material_requisition'                 => 'تنفيذ طلب المواد',
+  'issue_materials_from_inventory'               => 'صرف المواد من المخزون لتنفيذ طلب الموارد المعتمد.',
+  'requisition_information'                      => 'معلومات طلب الموارد',
+  'fulfillment_details'                          => 'تفاصيل التنفيذ',
+  'fulfillment_reference'                        => 'مرجع التنفيذ',
+  'auto_generated_after_processing'              => 'يتم إنشاؤه تلقائياً بعد المعالجة',
+  'fulfillment_date'                             => 'تاريخ التنفيذ',
+  'fulfillment_type'                             => 'نوع التنفيذ',
+  'material_inventory'                           => 'مواد / مخزون',
+  'fulfillment_remarks_placeholder'              => 'أدخل ملاحظات أو توضيحات التنفيذ...',
+  'previously_fulfilled'                         => 'تم تنفيذه سابقاً',
+  'issue_from_location'                          => 'الصرف من الموقع',
+  'available_stock'                              => 'المخزون المتاح',
+  'quantity_to_fulfill'                          => 'الكمية المطلوب تنفيذها',
+  'no_material_items_remaining'                  => 'لا توجد مواد متبقية للتنفيذ.',
+  'process_material_fulfillment'                 => 'تنفيذ المواد',
+  'invalid_material'                             => 'مادة غير صالحة',
+  'quantity_cannot_exceed_remaining'             => 'لا يمكن أن تتجاوز الكمية الكمية المتبقية في طلب الموارد.',
+  'quantity_exceeds_available_stock'             => 'الكمية تتجاوز المخزون المتاح في الموقع المحدد.',
+  'select_inventory_location_for_every_item'     => 'يرجى اختيار موقع للمخزون لكل مادة يتم تنفيذها.',
+  'enter_fulfillment_quantity_for_at_least_one_material' => 'يرجى إدخال كمية تنفيذ لمادة واحدة على الأقل.',
+
+  'add_resource_requisition_item'                    => 'إضافة بند إلى طلب الموارد',
+  'add_new_item_to_requisition'                     => 'إضافة بند جديد إلى طلب الموارد',
+  'back_to_requisition'                              => 'العودة إلى طلب الموارد',
+  'item_details'                                     => 'تفاصيل البند',
+  'select_resource_type'                             => 'اختر نوع المورد',
+  'material_item'                                    => 'بند مادي',
+  'select_material'                                  => '-- اختر المادة --',
+  'search_by_sku_or_material_name'                  => 'ابحث بواسطة رمز SKU أو اسم المادة.',
+  'select_resource'                                  => '-- اختر المورد --',
+  'search_by_resource_code_or_name'                 => 'ابحث بواسطة رمز المورد أو اسمه.',
+  'requested_quantity'                               => 'الكمية المطلوبة',
+  'save_item'                                        => 'حفظ البند',
+  'search_by_sku_or_material_name_placeholder'      => '-- البحث بواسطة SKU أو اسم المادة --',
+  'search_resource_placeholder'                     => '-- البحث عن المورد --',
+  'search_by_sku_or_material_name_dots'             => 'ابحث بواسطة SKU أو اسم المادة...',
+  'search_resource_dots'                             => 'ابحث عن المورد...',
+  'please_select_material_item'                     => 'يرجى اختيار بند مادي.',
+  'please_select_non_material_resource'             => 'يرجى اختيار مورد غير مادي.',
+  'edit_requisition_item'                            => 'تعديل بند طلب الموارد',
+  'edit_update_quantity_description_remarks_only'   => 'يمكنك تعديل أو تحديث الكمية والوصف والملاحظات فقط',
+  'changing_material_resource_requires_new_item'    => 'تغيير المادة أو المورد أو نوع المورد يتطلب حذف البند الحالي وإنشاء بند جديد.',
+  'requisition_item'                                 => 'بند طلب الموارد',
+  'resource_type'                                    => 'نوع المورد',
+
+  'record_supplier_payment' => 'تسجيل دفعة للمورد',
+  'method'                  => 'طريقة الدفع',
+  'save_payment'            => 'حفظ الدفعة',
+
+  'supplier_quotation_comparison'              => 'مقارنة عروض أسعار الموردين',
+  'quote'                                      => 'العرض',
+  'quotation_date'                             => 'تاريخ عرض السعر',
+  'required_delivery'                          => 'التسليم المطلوب',
+  'supplier_promised_delivery'                 => 'موعد التسليم المتعهد به من المورد',
+  'can_meet'                                   => 'يمكنه الالتزام',
+  'specification'                              => 'المواصفات',
+  'quality'                                    => 'الجودة',
+  'new_item'                                   => 'بند جديد',
+  'meets'                                      => 'مطابق',
+  'partial'                                    => 'مطابق جزئياً',
+  'does_not_meet'                              => 'غير مطابق',
+  'no_quotation_items'                         => 'لا توجد بنود في عرض السعر.',
+  'procurement_evaluation'                     => 'تقييم المشتريات',
+
+  'supplier_quotation'                         => 'عرض سعر المورد',
+  'quotation_number_label'                     => 'رقم عرض السعر:',
+  'supplier_label'                             => 'المورد:',
+  'supplier_reference_label'                   => 'مرجع المورد:',
+  'procurement_reference_label'                => 'مرجع المشتريات:',
+  'required_delivery_label'                    => 'التسليم المطلوب:',
+  'supplier_promised_delivery_label'           => 'موعد التسليم المتعهد به من المورد:',
+  'quotation_date_label'                       => 'تاريخ عرض السعر:',
+  'valid_until_label'                          => 'صالح حتى:',
+  'add_quotation_item'                         => 'إضافة بند إلى عرض السعر',
+  'existing_inventory_item'                    => 'بند مخزون موجود',
+  'new_not_yet_in_inventory'                   => '-- جديد / غير موجود في المخزون بعد --',
+  'select_uom'                                 => 'اختر وحدة القياس',
+  'supplier_specification_placeholder'         => 'مواصفات المورد، المقاس، الطول، الوزن، الموديل، إلخ.',
+  'quality_specification_assessment'            => 'تقييم الجودة / المطابقة للمواصفات',
+  'not_evaluated'                              => 'لم يتم التقييم',
+  'meets_specification'                        => 'مطابق للمواصفات',
+  'partially_meets'                            => 'مطابق جزئياً',
+  'does_not_meet_specification'                => 'غير مطابق للمواصفات',
+  'quality_evaluation_notes'                   => 'ملاحظات الجودة / التقييم',
+  'quality_notes_placeholder'                  => 'ملاحظات فنية، تأكيد الشركة المصنعة/الموديل، الاختلافات، إلخ.',
+  'quotation_items'                            => 'بنود عرض السعر',
+  'delete_quotation_item_confirm'              => 'هل تريد حذف بند عرض السعر هذا؟',
+  'accept_quotation'                            => 'اعتماد عرض السعر',
+  'create_po_from_accepted_quotation_confirm'  => 'هل تريد إنشاء أمر شراء من عرض السعر المعتمد هذا؟',
+  'create_po'                                  => 'إنشاء أمر شراء',
+  'view_po'                                    => 'عرض أمر الشراء',
+
+  'add_supplier'                         => 'إضافة مورد',
+  'company_name'                         => 'اسم الشركة',
+  'save_supplier'                        => 'حفظ المورد',
+  'edit_supplier'                        => 'تعديل المورد',
+  'update_supplier'                      => 'تحديث المورد',
+  'view_profile'                         => 'عرض الملف',
+  'no_suppliers_added_yet'               => 'لم تتم إضافة أي موردين بعد.',
+  'create_first_supplier_description'   => 'أنشئ أول مورد لبدء إدارة أوامر الشراء والمشتريات.',
+  'add_first_supplier'                   => 'إضافة أول مورد',
+  'total_purchases'                      => 'إجمالي المشتريات',
+
+  'supplier_financial_ledger'            => 'السجل المالي للمورد',
+  'construct_pro'                        => 'CONSTRUCT PRO',
+  'supplier_financial_ledger_report'     => 'تقرير السجل المالي للمورد',
+  'total_debit'                          => 'إجمالي المدين',
+  'total_credit'                         => 'إجمالي الدائن',
+  'outstanding_balance'                  => 'الرصيد المستحق',
+  'goods_receipt'                        => 'إذن استلام البضائع',
+  'supplier_payment'                     => 'دفعة للمورد',
+  'goods_return'                         => 'مرتجع بضائع',
+  'no_ledger_transactions_found'         => 'لم يتم العثور على معاملات في السجل.',
+
+  'record_payment'                              => 'تسجيل دفعة',
+  'supplier_profile'                            => 'ملف المورد',
+  'view_supplier_information_purchase_history_performance'
+  => 'عرض معلومات المورد وسجل المشتريات والأداء.',
+  'print_supplier_ledger'                       => 'طباعة سجل المورد',
+  'ordered_value'                               => 'قيمة الطلبات',
+  'additional_information'                      => 'معلومات إضافية',
+  'records'                                     => 'سجل',
+  'no_purchase_orders_found'                    => 'لم يتم العثور على أوامر شراء.',
+  'total_purchase_order_value'                  => 'إجمالي قيمة أوامر الشراء',
+  'goods_receipts'                              => 'إيصالات استلام البضائع',
+  'total_received_value'                        => 'إجمالي قيمة المستلم',
+  'supplier_payments'                           => 'دفعات المورد',
+  'paid_total'                                  => 'إجمالي المدفوع',
+  'supplier_ledger'                             => 'سجل المورد',
+  'opening_balance'                             => 'الرصيد الافتتاحي',
+  'payment'                                     => 'دفعة',
+  'no_ledger_entries_found'                     => 'لم يتم العثور على قيود في السجل.',
+
+  'technician_details'                         => 'تفاصيل الفني',
+  'specialty'                                  => 'التخصص',
+
+  'new_unit'                                   => 'وحدة جديدة',
+  'create_unit_of_measure'                     => 'إنشاء وحدة قياس',
+  'unit_code'                                  => 'رمز الوحدة',
+  'unit_name'                                  => 'اسم الوحدة',
+  'save_unit'                                  => 'حفظ الوحدة',
+  'edit_unit'                                  => 'تعديل الوحدة',
+  'update_unit_of_measure'                     => 'تحديث وحدة القياس',
+  'update_unit'                                => 'تحديث الوحدة',
+  'units'                                      => 'الوحدات',
+  'manage_units_of_measure'                    => 'إدارة وحدات القياس',
+  'delete_unit_confirm'                        => 'هل تريد حذف هذه الوحدة؟',
+  'no_units_found'                             => 'لم يتم العثور على وحدات.',
+
+  'employee_details'                           => 'تفاصيل الموظف',
+  'mobile'                                     => 'الهاتف المحمول',
+  'role'                                       => 'الدور',
+
+  // footer
+  'dedicated_to_quality'            => 'ملتزمون بالجودة',
+  'construction_professional_system' => 'النظام الاحترافي للمشروعات والإنشاءات',
+  'home'                            => 'الرئيسية',
+
+  // ADMIN
+  'permission_name'           => 'اسم الصلاحية',
+  'add_permission'            => 'إضافة صلاحية',
+  'edit_permission'           => 'تعديل الصلاحية',
+  'delete_permission_confirm' => 'هل تريد حذف الصلاحية؟',
+  'user_name' =>  'أسم المستخدم',
+
+  'assign_permissions'        => 'تعيين الصلاحيات',
+  'for'                       => 'لـ',
+  'select_all'                => 'تحديد الكل',
+  'save_permissions'          => 'حفظ الصلاحيات',
+
+  'edit_role'                 => 'تعديل الدور',
+  'delete_role_confirm'      => 'هل بالفعل تريد حذف هذا الدور؟',
+  'no_permissions'            => 'لا توجد صلاحيات',
+
+  'system_settings'           => 'إعدادات النظام',
+  'contacts'                  => 'بيانات الاتصال',
+  'company_logo'              => 'شعار الشركة',
+  'save_settings'             => 'حفظ الإعدادات',
+
+  'manage_users'              => 'إدارة المستخدمين',
+  'manage_roles'              => 'إدارة الأدوار',
+  'manage_permissions'        => 'إدارة الصلاحيات',
+
+  'create_user'                              => 'إنشاء مستخدم',
+  'full_name'                                => 'الاسم بالكامل',
+  'short_name'                               => 'الاسم المختصر',
+  'password'                                 => 'كلمة المرور',
+  'warehouse_access'                         => 'صلاحية الوصول إلى المستودعات',
+  'default_warehouse'                        => 'المستودع الافتراضي',
+  'select_default_warehouse'                 => 'اختر المستودع الافتراضي',
+  'edit_user'                                => 'تعديل المستخدم',
+  'name'                                      => 'الاسم',
+  'password_leave_blank_to_keep_current'     => 'كلمة المرور (اتركها فارغة للإبقاء على الحالية)',
+  'update_user'                               => 'تحديث المستخدم',
+  'users'                                     => 'المستخدمون',
+  'add_user'                                  => 'إضافة مستخدم',
+  'delete_user_confirm'                      => 'هل تريد حذف هذا المستخدم بالفعل؟',
+
+  'user_details' => 'تفاصيل المستخدم',
+  'user_information' => 'معلومات المستخدم',
+  'select_role' => 'اختر الدور',
+  'create' => 'إنشاء',
+
+  'resources'                  => 'الموارد',
+  'new_resource'               => 'مورد جديد',
+  'resource_code'              => 'رمز المورد',
+  'resource_name'              => 'اسم المورد',
+
+  'select_unit'                => 'اختر الوحدة',
+  'select_category'            => 'اختر الفئة',
+
+  'service'                    => 'خدمة',
+  'save_resource'              => 'حفظ المورد',
+  'edit_resource'              => 'تعديل المورد',
+  'update_resource'            => 'تحديث المورد',
+  'delete_resource_confirm'    => 'هل تريد حذف هذا المورد؟',
+  'no_resources_found'         => 'لم يتم العثور على موارد.',
+  'resource_not_found'         => 'المورد غير موجود.',
+  'resource_cannot_be_deleted_already_in_use' => 'المورد مستخدم لا يمكن حذفه',
+  'resource_deleted_successfully' => 'تم حذف المورد بنجاح',
+
+  //Permession groups
+  'permission'         => 'صلاحية',
+  'permissions'         => 'الصلاحيات',
+  'permission_group_admin'         => 'ادارة النظام',
+  'permission_group_customers'     => 'العملاء',
+  'permission_group_finance'      => 'المالية',
+  'permission_group_inventory'    => 'المخزون',
+  'permission_group_projects'     => 'المشاريع',
+  'permission_group_procurement'  => 'المشتريات',
+  'permission_group_suppliers'    => 'الموردون',
+  'permission_group_users'        => 'المستخدمون',
+  'permission_group_roles'        => 'الأدوار',
+  'permission_group_permissions'  => 'الصلاحيات',
+  'permission_group_reports'      => 'التقارير',
+  'permission_group_goods_returns'         => 'مرتجعات البضائع',
+  'permission_group_inventory_locations'   => 'المخازن',
+  'permission_group_inventory_movements'   => 'حركات المخزون',
+  'permission_group_inventory_reservations' => 'حجوزات المخزون',
+  'permission_group_purchase_orders'       => 'أوامر الشراء',
+  'permission_group_quotation'             => 'عروض الأسعار',
+  'permission_group_resource_requisitions' => 'طلبات الموارد',
+  'permission_group_stock_transfers'       => 'نقل المخزون',
   'permission_admin_access' => 'الدخول إلى لوحة إدارة النظام',
-'permission_resource_requisitions_approve' => 'اعتماد طلبات توفير الموارد',
-'permission_purchase_orders_approve' => 'اعتماد أوامر الشراء',
-'permission_customers_create' => 'إضافة عملاء جدد',
-'permission_inventory_adjustment_create' => 'إجراء تسويات على كميات المخزون',
-'permission_inventory_create' => 'إضافة أصناف جديدة إلى المخازن',
-'permission_inventory_locations_create' => 'إضافة مخازن جديدة',
-'permission_inventory_movements_create' => 'تسجيل حركات المخازن',
-'permission_inventory_reservations_create' => 'حجز أصناف من المخازن',
-'permission_projects_create' => 'إنشاء مشاريع جديدة',
-'permission_purchase_orders_create' => 'إنشاء أوامر شراء جديدة',
-'permission_quotation_create' => 'إعداد عروض أسعار للعملاء',
-'permission_stock_transfers_create' => 'إنشاء حركات النقل بين المخازن',
-'permission_suppliers_create' => 'إضافة موردين جدد',
-'permission_users_create' => 'إضافة مستخدمين جدد للنظام',
-'permission_customers_delete' => 'حذف سجلات العملاء',
-'permission_inventory_delete' => 'حذف أصناف المخزون',
-'permission_projects_delete' => 'حذف سجلات المشاريع',
-'permission_users_delete' => 'حذف حسابات المستخدمين',
-'permission_customers_edit' => 'تعديل بيانات العملاء',
-'permission_inventory_edit' => 'تعديل بيانات أصناف المخزون',
-'permission_projects_edit' => 'تعديل بيانات المشاريع',
-'permission_users_edit' => 'تعديل بيانات المستخدمين',
-'permission_goods_returns_create' => 'إنشاء مستندات إرجاع البضائع',
-'permission_customers_view' => 'استعراض بيانات العملاء',
-'permission_finance_view' => 'الاطلاع على البيانات والتقارير المالية',
-'permission_inventory_view' => 'استعراض أصناف المخزون وكمياتها',
-'permission_inventory_adjustment_view' => 'استعراض تسويات المخزون',
-'permission_inventory_locations_view' => 'استعراض مواقع التخزين',
-'permission_inventory_movements_view' => 'استعراض سجل حركات المخزون',
-'permission_inventory_reservations_view' => 'استعراض حجوزات المخزون',
-'permission_costs_view' => 'الاطلاع على تكاليف المشاريع وتفاصيلها',
-'permission_projects_view' => 'استعراض بيانات المشاريع',
-'permission_purchase_orders_view' => 'استعراض أوامر الشراء',
-'permission_quotation_view' => 'استعراض عروض الأسعار',
-'permission_reports_view' => 'الاطلاع على التقارير',
-'permission_stock_transfers_view' => 'استعراض تحويلات المخزون',
-'permission_suppliers_view' => 'استعراض بيانات الموردين',
-'permission_users_view' => 'استعراض حسابات المستخدمين',
-'permission_dashboard_view' => ' مؤشرات لوحة الاداء',
-'permission_goods_receipts_print' => 'طباعة سندات استلام البضائع (GRN)',
-'permission_goods_receipts_view' => 'استعراض سندات استلام البضائع (GRN)',
-'permission_goods_returns_print' => 'طباعة مستندات إرجاع البضائع',
-'permission_group_dashboard' => 'الأداء لوحة مؤشرات',
-'permission_goods_receipts_create' => 'تسجيل استلام البضائع وإصدار سندات الاستلام',
-'permission_goods_returns_view' => 'استعراض مستندات إرجاع البضائع',
-'permission_group_inventory_adjustments' => 'تسويات المخزون',
-'permission_inventory_adjustments_create' => 'إجراء تسويات على المخزون',
-'permission_inventory_adjustments_view' => 'استعراض تسويات المخزون',
-'permission_inventory_locations_delete' => 'حذف مواقع التخزين',
-'permission_inventory_locations_edit' => 'تعديل بيانات مواقع التخزين',
-'permission_inventory_reservations_cancel' => 'إلغاء حجوزات المخزون',
-'permission_inventory_reservations_delete' => 'حذف سجلات حجوزات المخزون',
-'permission_inventory_reservations_edit' => 'تعديل حجوزات المخزون',
-'permission_inventory_reservations_fulfill' => 'تنفيذ حجوزات المخزون وصرف الأصناف المحجوزة',
-'permission_projects_archive' => 'أرشفة المشاريع',
-'permission_projects_documents_create' => 'إرفاق مستندات بالمشاريع',
-'permission_projects_documents_delete' => 'حذف مستندات المشاريع',
-'permission_projects_restore' => 'استعادة المشاريع المؤرشفة',
-'permission_group_project_advances' => 'الدفعات المالية للمشاريع',
-'permission_project_advances_create' => 'تسجيل سلف مالية للمشاريع',
-'permission_project_advances_settle' => 'تسوية السلف المالية للمشاريع',
-'permission_project_advances_view' => 'استعراض السلف المالية للمشاريع',
-'permission_group_project_costs' => 'تكاليف المشاريع',
-'permission_project_costs_create' => 'تسجيل تكاليف جديدة للمشاريع',
-'permission_project_costs_delete' => 'حذف سجلات تكاليف المشاريع',
-'permission_project_costs_edit' => 'تعديل سجلات تكاليف المشاريع',
-'permission_project_costs_view' => 'استعراض تكاليف المشاريع',
-'permission_group_project_finance' => 'الإدارة المالية للمشاريع',
-'permission_project_finance_view' => 'الاطلاع على البيانات المالية للمشاريع',
-'permission_group_purchases' => 'المشتريات',
-'permission_purchases_view' => 'استعراض بيانات المشتريات',
-'permission_purchase_orders_cancel' => 'إلغاء أوامر الشراء',
-'permission_purchase_orders_edit' => 'تعديل أوامر الشراء',
-'permission_group_resources' => 'إدارة الموارد',
-'permission_resources_create' => 'إضافة موارد جديدة',
-'permission_resources_delete' => 'حذف سجلات الموارد',
-'permission_resources_edit' => 'تعديل بيانات الموارد',
-'permission_resources_view' => 'استعراض الموارد',
-'permission_group_resource_categories' => 'تصنيف الموارد',
-'permission_resource_categories_create' => 'إضافة تصنيفات جديدة للموارد',
-'permission_resource_categories_delete' => 'حذف تصنيفات الموارد',
-'permission_resource_categories_edit' => 'تعديل تصنيفات الموارد',
-'permission_resource_categories_view' => 'استعراض تصنيفات الموارد',
-'permission_resource_requisitions_create' => 'إنشاء طلبات توفير الموارد',
-'permission_resource_requisitions_delete' => 'حذف طلبات توفير الموارد',
-'permission_resource_requisitions_edit' => 'تعديل طلبات توفير الموارد',
-'permission_resource_requisitions_fulfill' => 'تجهيز وصرف الموارد المطلوبة',
-'permission_resource_requisitions_reject' => 'رفض طلبات توفير الموارد',
-'permission_resource_requisitions_submit' => 'إرسال طلبات توفير الموارد للاعتماد',
-'permission_resource_requisitions_view' => 'استعراض طلبات توفير الموارد',
-'permission_stock_transfers_reverse' => 'إلغاء أثر تحويل المخزون وإعادة الحركة إلى حالتها السابقة',
-'permission_suppliers_delete' => 'حذف سجلات الموردين',
-'permission_suppliers_edit' => 'تعديل بيانات الموردين',
-'permission_suppliers_ledger' => 'الاطلاع على كشف حساب المورد',
-'permission_group_supplier_payments' => 'مدفوعات الموردين',
-'permission_supplier_payments_create' => 'تسجيل مدفوعات للموردين',
-'permission_supplier_payments_view' => 'استعراض مدفوعات الموردين',
-'permission_group_supplier_quotations' => 'عروض أسعار الموردين',
-'permission_supplier_quotations_accept' => 'قبول عروض أسعار الموردين',
-'permission_supplier_quotations_cancel' => 'إلغاء عروض أسعار الموردين',
-'permission_supplier_quotations_create' => 'تسجيل عروض أسعار الموردين',
-'permission_supplier_quotations_create_po' => 'إنشاء أمر شراء استناداً إلى عرض سعر المورد',
-'permission_supplier_quotations_edit' => 'تعديل عروض أسعار الموردين',
-'permission_supplier_quotations_view' => 'استعراض عروض أسعار الموردين',
-'permission_group_technicians' => 'إدارة الفنيين',
-'permission_technicians_view' => 'استعراض بيانات الفنيين',
-'permission_group_units' => 'إدارة وحدات القياس',
-'permission_units_create' => 'إضافة وحدات قياس جديدة',
-'permission_units_delete' => 'حذف وحدات القياس',
-'permission_units_edit' => 'تعديل وحدات القياس',
-'permission_units_view' => 'استعراض وحدات القياس',
-'permission_group_goods_receipts' => 'استلام البضائع',
-
-    'login' => 'تسجيل الدخول',
-    'about_system_english' => 'عن نظام ConstructPro ERP',
-    'about_system_arabic'  => 'عن نظام ConstructPro ERP (العربية)',
-
-    'my_profile' => 'ملفي الشخصي',
-    'edit_profile' => 'تعديل الملف الشخصي',
-    'update_profile' => 'تحديث الملف الشخصي',
-    'change_password' => 'تغيير كلمة المرور',
-    'current_password' => 'كلمة المرور الحالية',
-    'new_password' => 'كلمة المرور الجديدة',
-    'confirm_password' => 'تأكيد كلمة المرور',
-    'profile_updated_successfully' => 'تم تحديث الملف الشخصي بنجاح.',
-    'password_changed_successfully' => 'تم تغيير كلمة المرور بنجاح.',
-    'current_password_incorrect' => 'كلمة المرور الحالية غير صحيحة.',
-    'passwords_do_not_match' => 'كلمتا المرور غير متطابقتين.',
-    'new_password_required' => 'كلمة المرور الجديدة مطلوبة.',
-    'phase' => 'المرحلة',
-
-
-    // User controller messages 
-    'full_name_required' => 'الاسم الكامل مطلوب.',
-    'user_name_required' => 'اسم المستخدم مطلوب.',
-    'email_required' => 'البريد الإلكتروني مطلوب.',
-    'password_required' => 'كلمة المرور مطلوبة.',
-    'invalid_photo_format' => 'صيغة الصورة غير صالحة. يرجى رفع صورة بصيغة JPG أو JPEG أو PNG أو WEBP.',
-    'unable_to_upload_photo' => 'تعذر رفع الصورة.',
-    'user_created_successfully' => 'تم إنشاء المستخدم بنجاح.',
-    'user_updated_successfully' => 'تم تحديث المستخدم بنجاح.',
-    'user_deleted_successfully' => 'تم حذف المستخدم بنجاح.',
-    'cannot_delete_own_account' => 'لا يمكنك حذف حسابك الخاص.',
-    'cannot_delete_last_admin' => 'لا يمكن حذف آخر حساب مدير للنظام.',
-
-
-    // Customers messages
-    'customer_created_successfully' => 'تم إنشاء العميل بنجاح.',
-    'customer_updated_successfully' => 'تم تحديث العميل بنجاح.',
-    'customer_deleted_successfully' => 'تم حذف العميل بنجاح.',
-    'customer_cannot_be_deleted' => 'لا يمكن حذف هذا العميل لأنه مرتبط بمشاريع موجودة.',
-
-    //projects messages
-
-    'project_created_successfully' => 'تم إنشاء المشروع بنجاح.',
-    'project_updated_successfully' => 'تم تحديث المشروع بنجاح.',
-    'project_deleted_successfully' => 'تم حذف المشروع بنجاح.',
-    'project_archived_successfully' => 'تمت أرشفة المشروع بنجاح.',
-    'project_restored_successfully' => 'تمت استعادة المشروع بنجاح.',
-    'unable_to_create_project' => 'تعذر إنشاء المشروع.',
-    'unable_to_update_project' => 'تعذر تحديث المشروع.',
-    'project_not_found' => 'المشروع غير موجود.',
-    'cannot_delete_project_costs' => 'لا يمكن حذف المشروع. يجب حذف جميع تكاليف المشروع أولاً.',
-    'archive_failed' => 'فشلت أرشفة المشروع.',
-    'uploaded_files_successfully' => 'تم رفع %s ملف/ملفات بنجاح.',
-    'document_not_found' => 'المستند غير موجود.',
-    'document_deleted_successfully' => 'تم حذف المستند بنجاح.',
-
-    // project costs module messages
-    'project_cost_added_successfully' => 'تمت إضافة تكلفة المشروع بنجاح.',
-    'project_cost_updated_successfully' => 'تم تحديث تكلفة المشروع بنجاح.',
-    'project_cost_deleted_successfully' => 'تم حذف تكلفة المشروع بنجاح.',
-    'project_cost_not_found' => 'تكلفة المشروع غير موجودة.',
-
-
-    //PROJECT COST SERVICE — ERROR MESSAGES
-    'cost_type_required' => 'نوع التكلفة مطلوب.',
-    'quantity_must_be_greater_than_zero' => 'يجب أن تكون الكمية أكبر من صفر.',
-    'unit_price_must_be_greater_than_zero' => 'يجب أن يكون سعر الوحدة أكبر من صفر.',
-    'please_select_material' => 'يرجى اختيار مادة.',
-    'please_select_warehouse' => 'يرجى اختيار مستودع.',
-    'inventory_item_not_found' => 'صنف المخزون غير موجود.',
-    'not_enough_stock_selected_warehouse' => 'لا توجد كمية كافية في المستودع المحدد.',
-    'not_enough_stock_in_selected_warehouse' => 'لا توجد كمية كافية في المستودع المحدد.',
-    'unable_to_deduct_inventory' => 'تعذر خصم الكمية من المخزون.',
-
-    // project advance
-    'invalid_amount' => 'المبلغ المدخل غير مقبول.',
-    'advance_recorded_successfully' => 'تم تسجيل دفعة المشروع بنجاح.',
-    'advance_recording_failed' => 'فشل تسجيل دفعة المشروع.',
-
-    //INVENTORY MODULE messages
-    'inventory_name_sku_required' => 'الاسم ورقم الصنف (SKU) مطلوبان.',
-    'inventory_insert_failed' => 'فشلت عملية الإدخال.',
-
-    //INVENTORY LOCATIONS messages
-    'unable_to_save_location' => 'تعذر حفظ الموقع (المخزن).',
-    'location_not_found' => 'الموقع غير موجود.',
-    'location_updated_successfully' => 'تم تحديث الموقع بنجاح.',
-    'cannot_delete_location_contains_stock' => 'لا يمكن حذف الموقع لأنه يحتوي على مخزون.',
-    'location_deleted_successfully' => 'تم حذف الموقع بنجاح.',
-    'location_code_already_exists' => 'رمز الموقع موجود سابقا.',
-
-    'goods_received_successfully' => 'تم استلام البضائع بنجاح.',
-
-
-    // INVENTORY MOVEMENT MODEL messages
-    'invalid_inventory_item' => 'صنف المخزون غير صحيح.',
-    'invalid_location' => 'الموقع غير صحيح.',
-    'invalid_adjustment_quantity' => 'كمية التعديل غير مقبولة.',
-    'invalid_quantity' => 'الكمية غير مقبولة.',
-    'invalid_movement_type' => 'نوع حركة المخزون غير صحيحة.',
-
-
-    //INVENTORY RESERVATION MODEL messages
-    'reservation_quantity_must_be_greater_than_zero' => 'يجب أن تكون كمية الحجز أكبر من صفر.',
-    'insufficient_available_stock' => 'الكمية المتاحة غير كافية للحجز. الكمية المتاحة للحجز: %s',
-    'insufficient_available_transfer_stock' => 'الكمية المتاحة غير كافية. الكمية المتاحة للنقل: %s',
-
-
-    //INVENTORY RESERVATIONS CONTROLLER messages
-    'please_select_inventory_item' => 'يرجى اختيار صنف من المخزون.',
-    'please_select_location' => 'يرجى اختيار الموقع.',
-    'please_select_project' => 'يرجى اختيار المشروع.',
-    'please_select_required_by_date' => 'يرجى تحديد التاريخ المطلوب.',
-    'reservation_created_successfully' => 'تم إنشاء حجز المادة بنجاح.',
-    'reservation_fulfilled_successfully' => 'تم تنفيذ الحجز بنجاح.',
-    'active_reservations_only_editable' => 'لا يمكن تعديل سوى الحجوزات النشطة.',
-    'active_reservations_only_deletable' => 'لا يمكن حذف سوى الحجوزات النشطة.',
-    'transfer_completed_successfully' => 'تم تنفيذ التحويل بنجاح.',
-    'invalid_warehouse_location' => 'موقع المستودع غير صالح.',
-    'unit_cost_cannot_be_negative' => 'لا يمكن أن تكون تكلفة الوحدة سالبة.',
-    'unable_to_add_stock' => 'تعذر إضافة المخزون إلى المستودع.',
-    'source_destination_warehouses_same' => 'لا يمكن أن يكون مستودع المصدر والوجهة متطابقين.',
-    'not_enough_stock_source_warehouse' => 'لا توجد كمية كافية في مستودع المصدر.',
-    'adjustment_quantity_cannot_be_zero' => 'لا يمكن أن تكون كمية التعديل صفراً.',
-    'adjustment_exceeds_available_stock' => 'سيؤدي التعديل إلى تجاوز المخزون المتاح. الكمية المتاحة بعد الحجوزات: %s',
-    'adjustment_insufficient_stock' => 'سيؤدي التعديل إلى عدم كفاية المخزون.',
-    'unable_to_adjust_inventory_stock' => 'تعذر تعديل مخزون الصنف.',
-    'transfer_not_found' => 'التحويل غير موجود.',
-    'completed_transfers_only_reverse' => 'لا يمكن عكس سوى التحويلات المكتملة.',
-    'unable_to_reverse_transfer' => 'تعذر عكس التحويل. لا توجد كمية كافية في موقع الوجهة.',
-    'transfer_reversed_successfully' => 'تم عكس التحويل بنجاح.',
-    'invalid_adjustment_type' => 'نوع التعديل غير صالح.',
-    'adjustment_quantity_must_be_greater_than_zero' => 'يجب أن تكون كمية التعديل أكبر من صفر.',
-    'valid_adjustment_reason_required' => 'يرجى اختيار سبب صالح للتعديل.',
-    'notes_required_for_other_reason' => 'يرجى إدخال ملاحظات عند اختيار السبب "أخرى".',
-    'stock_adjustment_posted_successfully' => 'تم تسجيل تعديل المخزون بنجاح. المرجع: %s',
-    'goods_receipt_created_successfully' => 'تم استلام البضائع بنجاح.',
-    'received_quantity_must_be_greater_than_zero' => 'يجب أن تكون الكمية المستلمة أكبر من صفر.',
-    'purchase_order_not_found' => 'أمر الشراء غير موجود.',
-    'purchase_order_not_available_for_receiving' => 'أمر الشراء هذا غير متاح للاستلام.',
-    'supplier_does_not_match_purchase_order' => 'المورد المحدد لا يطابق مورد أمر الشراء.',
-    'inventory_item_not_in_purchase_order' => 'صنف المخزون المحدد لا ينتمي إلى أمر الشراء هذا.',
-    'po_item_already_fully_received' => 'تم استلام صنف أمر الشراء هذا بالكامل بالفعل.',
-    'cannot_receive_remaining_quantity' => 'لا يمكن استلام %s وحدة. المتبقي في أمر الشراء هو %s وحدة فقط.',
-
-    'invalid_purchase_order' => 'أمر الشراء غير صحيح.',
-    'invalid_supplier' => 'المورد غير صحيح.',
-
-    'goods_returned_successfully' => 'تمت اجراءات إعادة البضائع إلى المورد بنجاح.',
-
-    'invalid_goods_receipt_item' => 'صنف استلام البضائع غير صحيح.',
-    'return_quantity_must_be_greater_than_zero' => 'يجب أن تكون كمية الإرجاع أكبر من صفر.',
-    'goods_receipt_item_not_found' => 'صنف استلام البضائع غير موجود.',
-    'goods_receipt_no_receiving_location' => 'لا يحتوي استلام البضائع الأصلي على موقع استلام.',
-    'return_location_does_not_match_receiving_location' => 'المستودع المحدد لا يطابق المستودع الذي تم فيه استلام هذه البضائع.',
-    'goods_receipt_item_already_fully_returned' => 'تم إرجاع صنف استلام البضائع هذا بالكامل بالفعل.',
-    'cannot_return_remaining_quantity' => 'لا يمكن إرجاع %s وحدة. الكمية المتبقية القابلة للإرجاع هي %s وحدة فقط.',
-    'not_enough_stock_selected_warehouse_available' => 'لا توجد كمية كافية في المستودع المحدد. الكمية المتاحة: %s.',
-
-    'delivery_warehouse_required' => 'مستودع التسليم مطلوب.',
-    'project_required' => 'المشروع مطلوب.',
-    'purchase_order_created_successfully' => 'تم إنشاء أمر الشراء بنجاح.',
-    'purchase_order_locked' => 'أمر الشراء مقفل ولا يمكن تعديله.',
-    'draft_purchase_orders_only_approve' => 'لا يمكن اعتماد سوى أوامر الشراء بحالة المسودة.',
-    'add_item_before_approving_po' => 'يرجى إضافة صنف واحد على الأقل قبل اعتماد أمر الشراء هذا.',
-    'purchase_order_approved_successfully' => 'تم اعتماد أمر الشراء بنجاح.',
-    'purchase_order_cancelled_successfully' => 'تم إلغاء أمر الشراء بنجاح.',
-    'approved_purchase_orders_only_print' => 'لا يمكن طباعة سوى أوامر الشراء المعتمدة.',
-
-    'purchase_order_already_cancelled' => 'أمر الشراء ملغى بالفعل.',
-    'fully_received_po_cannot_be_cancelled' => 'لا يمكن إلغاء أمر شراء تم استلامه بالكامل.',
-    'purchase_order_cannot_be_cancelled' => 'لا يمكن إلغاء أمر الشراء في وضعه الحالي.',
-
-    'company_name_required' => 'اسم الشركة مطلوب.',
-
-    'unable_to_delete_customer' => 'تعذر حذف العميل.',
-
-    'user_not_found' => 'المستخدم غير موجود.',
-    'settings_updated' => 'تم تحديث الإعدادات بنجاح.',
-
-    'invalid_username_or_email_or_password' => 'اسم المستخدم/البريد الإلكتروني أو كلمة المرور غير صحيحة.',
-
-    'please_select_resource' => 'يرجى اختيار مورد.',
-    'invalid_resource_source' => 'مصدر المورد غير صالح.',
-    'unable_to_create_requisition_item' => 'تعذر إنشاء بند الطلب.',
-
-    'only_draft_requisitions_editable' => 'لا يمكن تعديل سوى الطلبات التي بحالة المسودة.',
-    'please_add_item_before_submitting' => 'يرجى إضافة بند واحد على الأقل قبل الإرسال.',
-    'resource_requisition_submitted_successfully' => 'تم إرسال طلب الموارد بنجاح.',
-    'only_draft_requisitions_deletable' => 'لا يمكن حذف سوى الطلبات التي بحالة المسودة.',
-    'only_submitted_requisitions_approve_reject' => 'لا يمكن اعتماد أو رفض سوى الطلبات المقدمة.',
-    'requisition_rejected' => 'تم رفض الطلب.',
-    'invalid_approval_action' => 'إجراء الاعتماد غير صالح.',
-    'resource_requisition_approved_successfully' => 'تم اعتماد طلب الموارد بنجاح.',
-    'resource_requisition_rejected' => 'تم رفض طلب الموارد.',
-
-    'resource_requisition_not_found' => 'طلب الموارد غير موجود.',
-    'approved_or_partial_requisitions_only_fulfill' => 'لا يمكن تنفيذ سوى الطلبات المعتمدة أو المنفذة جزئياً.',
-    'no_remaining_resource_items' => 'لا توجد بنود موارد متبقية للتنفيذ.',
-    'invalid_requisition' => 'الطلب غير صالح.',
-    'requisition_not_available_for_fulfillment' => 'هذا الطلب غير متاح للتنفيذ.',
-    'please_enter_fulfillment_quantity' => 'يرجى إدخال كمية تنفيذ واحدة على الأقل.',
-    'invalid_requisition_item' => 'بند الطلب غير صالح.',
-    'invalid_resource_fulfillment_item' => 'بند تنفيذ المورد غير صالح.',
-    'fulfillment_quantity_exceeds_remaining' => 'لا يمكن أن تتجاوز كمية تنفيذ "%s" الكمية المتبقية البالغة %s.',
-    'unit_cost_negative_for_item' => 'لا يمكن أن تكون تكلفة الوحدة سالبة للبند "%s".',
-    'please_select_inventory_location_for_item' => 'يرجى اختيار موقع المخزون لمادة: %s',
-    'please_enter_quantity_greater_than_zero' => 'يرجى إدخال كمية أكبر من صفر.',
-    'fulfillment_created_no_id' => 'تم إنشاء التنفيذ ولكن لم يتم إرجاع رقم التنفيذ.',
-    'resource_fulfillment_created_no_id' => 'تم إنشاء تنفيذ المورد ولكن لم يتم إرجاع رقم التنفيذ.',
-    'resource_requisition_fulfilled_successfully' => 'تم تنفيذ طلب الموارد بنجاح.',
-    'fulfillment_record_not_found' => 'سجل التنفيذ غير موجود.',
-    'please_enter_resource_fulfillment_quantity' => 'يرجى إدخال كمية تنفيذ واحدة على الأقل لمورد.',
-    'please_enter_resource_quantity_greater_than_zero' => 'يرجى إدخال كمية تنفيذ أكبر من صفر لبند مورد واحد على الأقل.',
-
-    'inventory_item_missing_for_requisition_item' =>
-    'صنف المخزون مفقود لبند الطلب: %s',
-
-    'inventory_item_not_available_in_selected_location' =>
-    'صنف المخزون غير متوفر في الموقع المحدد.',
-
-    'insufficient_stock_selected_location_for_item' =>
-    'لا توجد كمية كافية في الموقع المحدد للبند: %s',
-
-    'insufficient_global_inventory_stock_for_item' =>
-    'لا توجد كمية كافية من المخزون الإجمالي للبند: %s',
-
-    'failed_to_create_resource_fulfillment' =>
-    'فشل إنشاء تنفيذ المورد.',
-
-    'role_cannot_be_deleted_in_use' =>
-    'لا يمكن حذف هذا الدور، لأنه مُسند إلى مستخدم واحد أو أكثر.',
-
-    'role_deleted_successfully' => 'تم حذف الدور بنجاح.',
-
-    'approved_or_partial_requisitions_only_create_po' =>
-    'لا يمكن إنشاء أمر شراء إلا للطلبات المعتمدة أو المنفذة جزئياً.',
-
-    'no_remaining_inventory_materials_to_purchase' =>
-    'لا توجد مواد مخزنية متبقية للشراء.',
-
-    'please_select_supplier' =>
-    'يرجى اختيار المورد.',
-
-    'rr_quantity_exceeds_remaining' =>
-    'لا يمكن أن تتجاوز كمية "%s" الكمية المتبقية في طلب الموارد.',
-
-    'actual_supplier_unit_cost_required' =>
-    'يرجى إدخال تكلفة الوحدة الفعلية للمورد للبند "%s".',
-
-    'quantity_required_for_material' =>
-    'يرجى إدخال كمية لمادة واحدة على الأقل.',
-
-    'purchase_order_created_from_requisition_successfully' =>
-    'تم إنشاء أمر الشراء بنجاح من طلب الموارد.',
-
-    'quotation_locked' =>
-    'عرض السعر مقفل ولا يمكن تعديله.',
-
-    'item_description_required' =>
-    'وصف البند مطلوب.',
-
-    'unit_price_cannot_be_negative' =>
-    'لا يمكن أن يكون سعر الوحدة سالباً.',
-
-    'invalid_quality_status' =>
-    'حالة الجودة غير صالحة.',
-
-    'quotation_item_added_successfully' =>
-    'تمت إضافة بند عرض السعر بنجاح.',
-
-    'quotation_not_found' =>
-    'عرض السعر غير موجود.',
-
-    'only_draft_quotations_can_be_accepted' =>
-    'لا يمكن اعتماد سوى عروض الأسعار التي بحالة المسودة.',
-
-    'add_item_before_accepting_quotation' =>
-    'يرجى إضافة بند واحد على الأقل قبل اعتماد عرض السعر.',
-
-    'supplier_quotation_accepted_successfully' =>
-    'تم اعتماد عرض سعر المورد بنجاح.',
-
-    'quotation_cancelled_successfully' =>
-    'تم إلغاء عرض السعر.',
-
-    'no_quotations_found_for_procurement_reference' =>
-    'لم يتم العثور على عروض أسعار لمرجع الشراء هذا.',
-
-    'only_accepted_quotations_can_create_po' =>
-    'لا يمكن تحويل سوى عروض الأسعار المعتمدة إلى أمر شراء.',
-
-    'po_already_created_from_quotation' =>
-    'تم بالفعل إنشاء أمر شراء من عرض السعر هذا.',
-
-    'quotation_contains_no_items' =>
-    'عرض السعر لا يحتوي على اصناف.',
-
-    'quotation_item_not_linked_to_inventory' =>
-    'يحتوي عرض السعر على بند غير مرتبط بالمخزون بعد. يرجى إضافته إلى المخزون أولاً.',
-
-    'purchase_order_created_from_quotation_successfully' =>
-    'تم إنشاء أمر الشراء بنجاح بناء على عرض السعر.',
-
-    'reservation_not_found' =>
-    'حجز المواد غير موجود.',
-
-    'only_active_reservations_can_be_fulfilled' =>
-    'لا يمكن تنفيذ سوى الحجوزات النشطة.',
-
-    'reservation_project_required_for_fulfillment' =>
-    'يجب أن يكون لحجز المواد مشروع قبل تنفيذه.',
-
-    'original_project_cost_ledger_entry_not_found' =>
-    'قيد تكلفة المشروع الأصلي غير موجود.',
-
-    'project_cost_already_reversed' =>
-    'تم عكس تكلفة المشروع هذه بالفعل.',
-
-    'project_ledger_entry_for_cost_not_found' =>
-    'قيد دفتر المشروع الخاص بهذه التكلفة غير موجود.',
-
-    'unable_to_create_project_inventory_location' =>
-    'تعذر إنشاء موقع مخزن للمشروع.',
-
-    'roles_management' => 'إدارة الادوار',
-
-    'role_name'   => 'اسم الدور',
-    'create_role' => 'إنشاء دور',
-
-
-    'role_created_successfully'       => 'تم إنشاء الدور بنجاح.',
-    'role_creation_failed'            => 'فشل إنشاء الدور.',
-    'role_name_required'              => 'اسم الدور مطلوب.',
-    'role_updated_successfully'       => 'تم تحديث الدور بنجاح.',
-    'role_update_failed'              => 'فشل تحديث الدور.',
-
-    'permission_created_successfully' => 'تم إنشاء الصلاحية بنجاح.',
-    'permission_creation_failed' => 'تعذر إنشاء الصلاحية. قد يكون اسم الصلاحية موجودًا بالفعل.',
-    'permission_name_required'        => 'اسم الصلاحية مطلوب.',
-    'permission_updated_successfully' => 'تم تحديث الصلاحية بنجاح.',
-    'permission_update_failed'        => 'فشل تحديث الصلاحية.',
-    'permission_deleted_successfully' => 'تم حذف الصلاحية بنجاح.',
-    'permission_deletion_failed'      => 'فشل حذف الصلاحية.',
-
-    'permissions_updated_successfully' => 'تم تحديث الصلاحيات بنجاح.',
-    'permissions_update_failed'       => 'فشل تحديث الصلاحيات.',
-
-    'user_creation_failed'            => 'فشل إنشاء المستخدم.',
-    'user_update_failed'              => 'فشل تحديث المستخدم.',
-
-    // DB Helper Messages
-    'db_duplicate_entry'        => 'هذا السجل موجود بالفعل.',
-    'db_cannot_delete_in_use'   => 'لا يمكن حذف هذا السجل لأنه مستخدم حالياً.',
-    'db_invalid_reference'      => 'المرجع المحدد غير صالح.',
-    'db_data_too_long'          => 'إحدى القيم المدخلة أطول من الحد المسموح.',
-    'db_required_field_missing' => 'هناك حقل مطلوب لم يتم إدخال قيمته.',
-    'db_operation_failed'       => 'تعذر إتمام عملية قاعدة البيانات.',
-    'operation_failed'          => 'تعذر إتمام العملية.',
-
-    'permission_cannot_be_deleted_in_use' => 'لا يمكن حذف هذه الصلاحية لأنها مرتبطة بدور واحد أو أكثر.',
-    'permission_not_found'                => 'الصلاحية غير موجودة.',
-
-    'role_cannot_be_deleted_has_permissions' => 'لا يمكن حذف هذا الدور لأنه يحتوي على صلاحيات مرتبطة به.',
-    'role_not_found' => 'الدور غير موجود.',
-
-    'permission_description' => 'وصف الصلاحية',
-
-    // JS form fields validation messages
-    'validation_required'   => 'يرجى ملء هذا الحقل.',
-    'validation_email'      => 'يرجى إدخال إسم مستخدم أوبريد إلكتروني صحيح.',
-    'validation_url'        => 'يرجى إدخال رابط صحيح.',
-    'validation_invalid'   => 'يرجى إدخال قيمة صحيحة.',
-    'validation_min'        => 'يجب ألا تقل القيمة عن :min.',
-    'validation_max'        => 'يجب ألا تتجاوز القيمة :max.',
-    'validation_minlength'  => 'يجب أن يحتوي النص على :minlength أحرف على الأقل.',
-    'validation_maxlength'  => 'يجب ألا يتجاوز النص :maxlength حرفًا.',
-    'validation_step'       => 'يرجى إدخال قيمة صحيحة',
-    'validation_pattern'    => 'يرجى إدخال القيمة بالصيغة المطلوبة.',
-
-    'supplier_not_found' => 'المورد غير موجود.',
-    'supplier_deleted_successfully' => 'تم حذف المورد بنجاح.',
-    'supplier_cannot_be_deleted' => 'لا يمكن حذف هذا المورد لأنه مرتبط بمعاملات موجودة في النظام.',
-    'unable_to_delete_supplier' => 'تعذر حذف المورد.',
-
-    'resource_category_created_successfully' => 'تم إنشاء فئة الموارد بنجاح.',
-    'resource_category_create_failed' => 'تعذر إنشاء فئة الموارد.',
-    'resource_category_updated_successfully' => 'تم تحديث فئة الموارد بنجاح.',
-    'resource_category_update_failed' => 'تعذر تحديث فئة الموارد.',
-    'resource_category_deleted_successfully' => 'تم حذف فئة الموارد بنجاح.',
-    'resource_category_not_found' => 'فئة الموارد غير موجودة.',
-    'can_not_delete_resource_category_in_use' => 'لا يمكن حذف فئة الموارد لأنها قيد الاستخدام.',
-
-    'resource_category_name_required' => 'اسم فئة الموارد مطلوب.',
-    'resource_category_code_required' => 'رمز فئة الموارد مطلوب.',
-    'resource_category_name_duplicate' => 'توجد فئة بهذا الاسم حاليا.',
-    'resource_category_code_duplicate' => 'توجد فئة بهذا الرمز حاليا.',
-    'resource_category_duplicate_or_constraint_error' => 'تعذر حفظ فئة الموارد بسبب تكرار الاسم أو الرمز أو مخالفة أحد قيود قاعدة البيانات.',
-
-    'resource_category_name_a_duplicate' => 'الاسم العربي لفئة الموارد مكرر',
-
-    'unit_not_found' => 'الوحدة غير موجودة.',
-    'unit_created_successfully' => 'تم إنشاء الوحدة بنجاح.',
-    'unit_create_failed' => 'تعذر إنشاء الوحدة.',
-    'unit_updated_successfully' => 'تم تحديث الوحدة بنجاح.',
-    'unit_update_failed' => 'تعذر تحديث الوحدة.',
-    'unit_deleted_successfully' => 'تم حذف الوحدة بنجاح.',
-    'unit_cannot_be_deleted' => 'لا يمكن حذف هذه الوحدة لأنها مستخدمة حالياً في النظام.',
-
-    'resource_created_successfully' => 'تم إنشاء المورد بنجاح.',
-    'resource_create_failed' => 'تعذر إنشاء المورد.',
-    'resource_updated_successfully' => 'تم تحديث المورد بنجاح.',
-    'resource_update_failed' => 'تعذر تحديث المورد.',
-
-    'wh' => 'مخزن الموقع',
-    'global' => 'اجمالي المخازن',
-    'balance_after' => 'بعد الحركة',
-
-    'in' => 'وارد',
-    'out' => 'صادر',
-    'adjustment' => 'تسوية',
-
-    'financial_profile' => 'الملف المالي',
-    'total_paid' => 'إجمالي المسدد',
-
-    'total_purchase_orders' => 'إجمالي طلبات الشراء',
-    'total_goods_received' => 'إجمالي البضاعة المستلمة',
-
-    'supplier_information' => 'حساب المورد',
-
-    'cannot_delete_user_assigned_location_or_in_use'  => 'لا يمكن حذف هذا الموقع/المخزن لأنه مرتبط بمشروع أومستخدمين أو بمعاملات أو بسجلات تاريخية.',
-
-    'unable_to_delete_location' =>
-    'تعذر حذف الموقع.',
-    'print' => 'طباعة الصغحة',
-
-    'physical_quantity' => 'الكمية الموجودة',
-    'reserved_quantity' => 'الكمية المحجوزة',
-    'available_quantity' => 'الكمية المتاحة',
-
-    'inventory_item_deleted_successfully' => 'تم حذف عنصر المخزون بنجاح.',
-    'inventory_item_cannot_be_deleted' => 'لا يمكن حذف عنصر المخزون لأنه مستخدم بالفعل في معاملات موجودة.',
-    'unable_to_delete_inventory_item' => 'تعذر حذف عنصر المخزون.',
-
-    'supplier_source_destination' => 'المورد / المصدر / الوجهة',
-    'source' => 'المصدر',
-
-    'rr_fulfillment' => 'تنفيذ طلب الموارد',
-
-    'PERMITS_FEES' => 'مصاريف تصاريح',
-
-    'select_cost_type' => '--- اختر نوع التكلفة  ---',
-
-    'quantity_must_be_whole_number' =>
-    'يجب أن تكون الكمية رقماً صحيحاً.',
-
-    'fractional_quantity_not_allowed' =>
-    'هذه المادة لا تسمح باستخدام كميات فيها كسور.',
-
-    'quantity_rule' => 'قاعدة الكمية',
-    'fractional_quantities_allowed' => 'يسمح بالكميات الكسرية',
-    'whole_quantities_only' => 'يسمح بالكميات الصحيحة فقط',
-
-    'available_for_transfer' => 'متاح للنقل',
-    'total_cost' => 'إجمالي التكلفة',
-    'total_material_cost' => 'إجمالي تكلفة المواد',
-    'total_resources_cost' => 'إجمالي تكلفة الموارد',
-    'unit_of_measure' => 'وحدة القياس',
-    'grn_remaining' => 'المتبقي من اذن الاستلام',
-
-    // GOODS RETURNS
-    'goods_return_note'                       => 'إشعار إرجاع البضائع',
-    'grn_number'                              => 'رقم إذن استلام البضائع',
-    'return_from_warehouse'                   => 'الإرجاع من المستودع',
-    'quantity_returned'                       => 'الكمية المُرجعة',
-    'supplier_acknowledgement'                => 'إقرار المورد بالاستلام',
-    'supplier_receipt_acknowledgement_text'   => 'أقرّ أنا الموقع أدناه باستلام البضائع المُرجعة الموضحة أعلاه.',
-    'received_by'                             => 'المستلم',
-    'position'                                => 'الصفة الوظيفية',
-    'signature'                               => 'التوقيع',
-    'supplier_stamp'                          => 'ختم المورد',
-    'goods_receipt_note' => 'إشعار استلام البضائع',
-    'receipt_date' => 'تاريخ الاستلام',
-    'received_quantity' => 'الكمية المستلمة',
-    'delivery_acknowledgement' => 'إقرار التسليم',
-    'receiving_acknowledgement' => 'إقرار الاستلام',
-    'goods_receipt_acknowledgement_text' => 'أقرّ أنا الموقع أدناه باستلام البضائع الموضحة أعلاه.',
-    'stamp' => 'الختم',
-    'delivered_by' => 'قام بالتسليم',
-    'goods_receipts_report' => 'قائمة إشعارات استلام البضائع',
-
-    'received_amount' => 'قيمة البضاعة المستلمة',
-
-    'cancel_reservation_confirm'       => 'هل أنت متأكد من رغبتك في إلغاء هذا الحجز؟',
-    'reservation_cancelled_successfully' => 'تم إلغاء الحجز بنجاح.',
-    'reservation_cancellation_failed'   => 'تعذر إلغاء الحجز.',
-
-    'reservation_updated_successfully' => 'تم تحديث الحجز بنجاح.',
-    'reservation_update_failed'        => 'تعذر تحديث الحجز.',
-    'reservation_deleted_successfully' => 'تم حذف الحجز بنجاح.',
-    'reservation_deletion_failed'      => 'تعذر حذف الحجز.',
-    'print_goods_return'              => 'طباعة إشعار إرجاع البضائع',
-
-    'please_select_unit_of_measure' => 'يرجى اختيار وحدة قياس.',
-    'inventory_unit_not_found'      => 'الصنف المحدد لا توجد له وحدة قياس محددة.',
-
-    'select_unit_of_measure' => '-- اختر وحدة قياس --',
-
-    'requisition_created_successfully' => 'تم إنشاء طلب الموارد بنجاح.',
-
-    'requisition_creation_failed'  => 'تعذر إنشاء طلب الموارد.',
-
-    'requisition_updated_successfully' => 'تم تحديث طلب الموارد بنجاح.',
-
-    'requisition_update_failed'  => 'تعذر تحديث طلب الموارد.',
-
-    'requisition_deleted_successfully'  => 'تم حذف طلب الموارد بنجاح.',
-
-    'requisition_deletion_failed'  => 'تعذر حذف طلب الموارد.',
+  'permission_resource_requisitions_approve' => 'اعتماد طلبات توفير الموارد',
+  'permission_purchase_orders_approve' => 'اعتماد أوامر الشراء',
+  'permission_customers_create' => 'إضافة عملاء جدد',
+  'permission_inventory_adjustment_create' => 'إجراء تسويات على كميات المخزون',
+  'permission_inventory_create' => 'إضافة أصناف جديدة إلى المخازن',
+  'permission_inventory_locations_create' => 'إضافة مخازن جديدة',
+  'permission_inventory_movements_create' => 'تسجيل حركات المخازن',
+  'permission_inventory_reservations_create' => 'حجز أصناف من المخازن',
+  'permission_projects_create' => 'إنشاء مشاريع جديدة',
+  'permission_purchase_orders_create' => 'إنشاء أوامر شراء جديدة',
+  'permission_quotation_create' => 'إعداد عروض أسعار للعملاء',
+  'permission_stock_transfers_create' => 'إنشاء حركات النقل بين المخازن',
+  'permission_suppliers_create' => 'إضافة موردين جدد',
+  'permission_users_create' => 'إضافة مستخدمين جدد للنظام',
+  'permission_customers_delete' => 'حذف سجلات العملاء',
+  'permission_inventory_delete' => 'حذف أصناف المخزون',
+  'permission_projects_delete' => 'حذف سجلات المشاريع',
+  'permission_users_delete' => 'حذف حسابات المستخدمين',
+  'permission_customers_edit' => 'تعديل بيانات العملاء',
+  'permission_inventory_edit' => 'تعديل بيانات أصناف المخزون',
+  'permission_projects_edit' => 'تعديل بيانات المشاريع',
+  'permission_users_edit' => 'تعديل بيانات المستخدمين',
+  'permission_goods_returns_create' => 'إنشاء مستندات إرجاع البضائع',
+  'permission_customers_view' => 'استعراض بيانات العملاء',
+  'permission_finance_view' => 'الاطلاع على البيانات والتقارير المالية',
+  'permission_inventory_view' => 'استعراض أصناف المخزون وكمياتها',
+  'permission_inventory_adjustment_view' => 'استعراض تسويات المخزون',
+  'permission_inventory_locations_view' => 'استعراض مواقع التخزين',
+  'permission_inventory_movements_view' => 'استعراض سجل حركات المخزون',
+  'permission_inventory_reservations_view' => 'استعراض حجوزات المخزون',
+  'permission_costs_view' => 'الاطلاع على تكاليف المشاريع وتفاصيلها',
+  'permission_projects_view' => 'استعراض بيانات المشاريع',
+  'permission_purchase_orders_view' => 'استعراض أوامر الشراء',
+  'permission_quotation_view' => 'استعراض عروض الأسعار',
+  'permission_reports_view' => 'الاطلاع على التقارير',
+  'permission_stock_transfers_view' => 'استعراض تحويلات المخزون',
+  'permission_suppliers_view' => 'استعراض بيانات الموردين',
+  'permission_users_view' => 'استعراض حسابات المستخدمين',
+  'permission_dashboard_view' => ' مؤشرات لوحة الاداء',
+  'permission_goods_receipts_print' => 'طباعة سندات استلام البضائع (GRN)',
+  'permission_goods_receipts_view' => 'استعراض سندات استلام البضائع (GRN)',
+  'permission_goods_returns_print' => 'طباعة مستندات إرجاع البضائع',
+  'permission_group_dashboard' => 'الأداء لوحة مؤشرات',
+  'permission_goods_receipts_create' => 'تسجيل استلام البضائع وإصدار سندات الاستلام',
+  'permission_goods_returns_view' => 'استعراض مستندات إرجاع البضائع',
+  'permission_group_inventory_adjustments' => 'تسويات المخزون',
+  'permission_inventory_adjustments_create' => 'إجراء تسويات على المخزون',
+  'permission_inventory_adjustments_view' => 'استعراض تسويات المخزون',
+  'permission_inventory_locations_delete' => 'حذف مواقع التخزين',
+  'permission_inventory_locations_edit' => 'تعديل بيانات مواقع التخزين',
+  'permission_inventory_reservations_cancel' => 'إلغاء حجوزات المخزون',
+  'permission_inventory_reservations_delete' => 'حذف سجلات حجوزات المخزون',
+  'permission_inventory_reservations_edit' => 'تعديل حجوزات المخزون',
+  'permission_inventory_reservations_fulfill' => 'تنفيذ حجوزات المخزون وصرف الأصناف المحجوزة',
+  'permission_projects_archive' => 'أرشفة المشاريع',
+  'permission_projects_documents_create' => 'إرفاق مستندات بالمشاريع',
+  'permission_projects_documents_delete' => 'حذف مستندات المشاريع',
+  'permission_projects_restore' => 'استعادة المشاريع المؤرشفة',
+  'permission_group_project_advances' => 'الدفعات المالية للمشاريع',
+  'permission_project_advances_create' => 'تسجيل سلف مالية للمشاريع',
+  'permission_project_advances_settle' => 'تسوية السلف المالية للمشاريع',
+  'permission_project_advances_view' => 'استعراض السلف المالية للمشاريع',
+  'permission_group_project_costs' => 'تكاليف المشاريع',
+  'permission_project_costs_create' => 'تسجيل تكاليف جديدة للمشاريع',
+  'permission_project_costs_delete' => 'حذف سجلات تكاليف المشاريع',
+  'permission_project_costs_edit' => 'تعديل سجلات تكاليف المشاريع',
+  'permission_project_costs_view' => 'استعراض تكاليف المشاريع',
+  'permission_group_project_finance' => 'الإدارة المالية للمشاريع',
+  'permission_project_finance_view' => 'الاطلاع على البيانات المالية للمشاريع',
+  'permission_group_purchases' => 'المشتريات',
+  'permission_purchases_view' => 'استعراض بيانات المشتريات',
+  'permission_purchase_orders_cancel' => 'إلغاء أوامر الشراء',
+  'permission_purchase_orders_edit' => 'تعديل أوامر الشراء',
+  'permission_group_resources' => 'إدارة الموارد',
+  'permission_resources_create' => 'إضافة موارد جديدة',
+  'permission_resources_delete' => 'حذف سجلات الموارد',
+  'permission_resources_edit' => 'تعديل بيانات الموارد',
+  'permission_resources_view' => 'استعراض الموارد',
+  'permission_group_resource_categories' => 'تصنيف الموارد',
+  'permission_resource_categories_create' => 'إضافة تصنيفات جديدة للموارد',
+  'permission_resource_categories_delete' => 'حذف تصنيفات الموارد',
+  'permission_resource_categories_edit' => 'تعديل تصنيفات الموارد',
+  'permission_resource_categories_view' => 'استعراض تصنيفات الموارد',
+  'permission_resource_requisitions_create' => 'إنشاء طلبات توفير الموارد',
+  'permission_resource_requisitions_delete' => 'حذف طلبات توفير الموارد',
+  'permission_resource_requisitions_edit' => 'تعديل طلبات توفير الموارد',
+  'permission_resource_requisitions_fulfill' => 'تجهيز وصرف الموارد المطلوبة',
+  'permission_resource_requisitions_reject' => 'رفض طلبات توفير الموارد',
+  'permission_resource_requisitions_submit' => 'إرسال طلبات توفير الموارد للاعتماد',
+  'permission_resource_requisitions_view' => 'استعراض طلبات توفير الموارد',
+  'permission_stock_transfers_reverse' => 'إلغاء أثر تحويل المخزون وإعادة الحركة إلى حالتها السابقة',
+  'permission_suppliers_delete' => 'حذف سجلات الموردين',
+  'permission_suppliers_edit' => 'تعديل بيانات الموردين',
+  'permission_suppliers_ledger' => 'الاطلاع على كشف حساب المورد',
+  'permission_group_supplier_payments' => 'مدفوعات الموردين',
+  'permission_supplier_payments_create' => 'تسجيل مدفوعات للموردين',
+  'permission_supplier_payments_view' => 'استعراض مدفوعات الموردين',
+  'permission_group_supplier_quotations' => 'عروض أسعار الموردين',
+  'permission_supplier_quotations_accept' => 'قبول عروض أسعار الموردين',
+  'permission_supplier_quotations_cancel' => 'إلغاء عروض أسعار الموردين',
+  'permission_supplier_quotations_create' => 'تسجيل عروض أسعار الموردين',
+  'permission_supplier_quotations_create_po' => 'إنشاء أمر شراء استناداً إلى عرض سعر المورد',
+  'permission_supplier_quotations_edit' => 'تعديل عروض أسعار الموردين',
+  'permission_supplier_quotations_view' => 'استعراض عروض أسعار الموردين',
+  'permission_group_technicians' => 'إدارة الفنيين',
+  'permission_technicians_view' => 'استعراض بيانات الفنيين',
+  'permission_group_units' => 'إدارة وحدات القياس',
+  'permission_units_create' => 'إضافة وحدات قياس جديدة',
+  'permission_units_delete' => 'حذف وحدات القياس',
+  'permission_units_edit' => 'تعديل وحدات القياس',
+  'permission_units_view' => 'استعراض وحدات القياس',
+  'permission_group_goods_receipts' => 'استلام البضائع',
+
+  'login' => 'تسجيل الدخول',
+  'about_system_english' => 'عن نظام ConstructPro ERP',
+  'about_system_arabic'  => 'عن نظام ConstructPro ERP (العربية)',
+
+  'my_profile' => 'ملفي الشخصي',
+  'edit_profile' => 'تعديل الملف الشخصي',
+  'update_profile' => 'تحديث الملف الشخصي',
+  'change_password' => 'تغيير كلمة المرور',
+  'current_password' => 'كلمة المرور الحالية',
+  'new_password' => 'كلمة المرور الجديدة',
+  'confirm_password' => 'تأكيد كلمة المرور',
+  'profile_updated_successfully' => 'تم تحديث الملف الشخصي بنجاح.',
+  'password_changed_successfully' => 'تم تغيير كلمة المرور بنجاح.',
+  'current_password_incorrect' => 'كلمة المرور الحالية غير صحيحة.',
+  'passwords_do_not_match' => 'كلمتا المرور غير متطابقتين.',
+  'new_password_required' => 'كلمة المرور الجديدة مطلوبة.',
+  'phase' => 'المرحلة',
+
+
+  // User controller messages 
+  'full_name_required' => 'الاسم الكامل مطلوب.',
+  'user_name_required' => 'اسم المستخدم مطلوب.',
+  'email_required' => 'البريد الإلكتروني مطلوب.',
+  'password_required' => 'كلمة المرور مطلوبة.',
+  'invalid_photo_format' => 'صيغة الصورة غير صالحة. يرجى رفع صورة بصيغة JPG أو JPEG أو PNG أو WEBP.',
+  'unable_to_upload_photo' => 'تعذر رفع الصورة.',
+  'user_created_successfully' => 'تم إنشاء المستخدم بنجاح.',
+  'user_updated_successfully' => 'تم تحديث المستخدم بنجاح.',
+  'user_deleted_successfully' => 'تم حذف المستخدم بنجاح.',
+  'cannot_delete_own_account' => 'لا يمكنك حذف حسابك الخاص.',
+  'cannot_delete_last_admin' => 'لا يمكن حذف آخر حساب مدير للنظام.',
+
+
+  // Customers messages
+  'customer_created_successfully' => 'تم إنشاء العميل بنجاح.',
+  'customer_updated_successfully' => 'تم تحديث العميل بنجاح.',
+  'customer_deleted_successfully' => 'تم حذف العميل بنجاح.',
+  'customer_cannot_be_deleted' => 'لا يمكن حذف هذا العميل لأنه مرتبط بمشاريع موجودة.',
+
+  //projects messages
+
+  'project_created_successfully' => 'تم إنشاء المشروع بنجاح.',
+  'project_updated_successfully' => 'تم تحديث المشروع بنجاح.',
+  'project_deleted_successfully' => 'تم حذف المشروع بنجاح.',
+  'project_archived_successfully' => 'تمت أرشفة المشروع بنجاح.',
+  'project_restored_successfully' => 'تمت استعادة المشروع بنجاح.',
+  'unable_to_create_project' => 'تعذر إنشاء المشروع.',
+  'unable_to_update_project' => 'تعذر تحديث المشروع.',
+  'project_not_found' => 'المشروع غير موجود.',
+  'cannot_delete_project_costs' => 'لا يمكن حذف المشروع. يجب حذف جميع تكاليف المشروع أولاً.',
+  'archive_failed' => 'فشلت أرشفة المشروع.',
+  'uploaded_files_successfully' => 'تم رفع %s ملف/ملفات بنجاح.',
+  'document_not_found' => 'المستند غير موجود.',
+  'document_deleted_successfully' => 'تم حذف المستند بنجاح.',
+
+  // project costs module messages
+  'project_cost_added_successfully' => 'تمت إضافة تكلفة المشروع بنجاح.',
+  'project_cost_updated_successfully' => 'تم تحديث تكلفة المشروع بنجاح.',
+  'project_cost_deleted_successfully' => 'تم حذف تكلفة المشروع بنجاح.',
+  'project_cost_not_found' => 'تكلفة المشروع غير موجودة.',
+
+
+  //PROJECT COST SERVICE — ERROR MESSAGES
+  'cost_type_required' => 'نوع التكلفة مطلوب.',
+  'quantity_must_be_greater_than_zero' => 'يجب أن تكون الكمية أكبر من صفر.',
+  'unit_price_must_be_greater_than_zero' => 'يجب أن يكون سعر الوحدة أكبر من صفر.',
+  'please_select_material' => 'يرجى اختيار مادة.',
+  'please_select_warehouse' => 'يرجى اختيار مستودع.',
+  'inventory_item_not_found' => 'صنف المخزون غير موجود.',
+  'not_enough_stock_selected_warehouse' => 'لا توجد كمية كافية في المستودع المحدد.',
+  'not_enough_stock_in_selected_warehouse' => 'لا توجد كمية كافية في المستودع المحدد.',
+  'unable_to_deduct_inventory' => 'تعذر خصم الكمية من المخزون.',
+
+  // project advance
+  'invalid_amount' => 'المبلغ المدخل غير مقبول.',
+  'advance_recorded_successfully' => 'تم تسجيل دفعة المشروع بنجاح.',
+  'advance_recording_failed' => 'فشل تسجيل دفعة المشروع.',
+
+  //INVENTORY MODULE messages
+  'inventory_name_sku_required' => 'الاسم ورقم الصنف (SKU) مطلوبان.',
+  'inventory_insert_failed' => 'فشلت عملية الإدخال.',
+
+  //INVENTORY LOCATIONS messages
+  'unable_to_save_location' => 'تعذر حفظ الموقع (المخزن).',
+  'location_not_found' => 'الموقع غير موجود.',
+  'location_updated_successfully' => 'تم تحديث الموقع بنجاح.',
+  'cannot_delete_location_contains_stock' => 'لا يمكن حذف الموقع لأنه يحتوي على مخزون.',
+  'location_deleted_successfully' => 'تم حذف الموقع بنجاح.',
+  'location_code_already_exists' => 'رمز الموقع موجود سابقا.',
+
+  'goods_received_successfully' => 'تم استلام البضائع بنجاح.',
+
+
+  // INVENTORY MOVEMENT MODEL messages
+  'invalid_inventory_item' => 'صنف المخزون غير صحيح.',
+  'invalid_location' => 'الموقع غير صحيح.',
+  'invalid_adjustment_quantity' => 'كمية التعديل غير مقبولة.',
+  'invalid_quantity' => 'الكمية غير مقبولة.',
+  'invalid_movement_type' => 'نوع حركة المخزون غير صحيحة.',
+
+
+  //INVENTORY RESERVATION MODEL messages
+  'reservation_quantity_must_be_greater_than_zero' => 'يجب أن تكون كمية الحجز أكبر من صفر.',
+  'insufficient_available_stock' => 'الكمية المتاحة غير كافية للحجز. الكمية المتاحة للحجز: %s',
+  'insufficient_available_transfer_stock' => 'الكمية المتاحة غير كافية. الكمية المتاحة للنقل: %s',
+
+
+  //INVENTORY RESERVATIONS CONTROLLER messages
+  'please_select_inventory_item' => 'يرجى اختيار صنف من المخزون.',
+  'please_select_location' => 'يرجى اختيار الموقع.',
+  'please_select_project' => 'يرجى اختيار المشروع.',
+  'please_select_required_by_date' => 'يرجى تحديد التاريخ المطلوب.',
+  'reservation_created_successfully' => 'تم إنشاء حجز المادة بنجاح.',
+  'reservation_fulfilled_successfully' => 'تم تنفيذ الحجز بنجاح.',
+  'active_reservations_only_editable' => 'لا يمكن تعديل سوى الحجوزات النشطة.',
+  'active_reservations_only_deletable' => 'لا يمكن حذف سوى الحجوزات النشطة.',
+  'transfer_completed_successfully' => 'تم تنفيذ التحويل بنجاح.',
+  'invalid_warehouse_location' => 'موقع المستودع غير صالح.',
+  'unit_cost_cannot_be_negative' => 'لا يمكن أن تكون تكلفة الوحدة سالبة.',
+  'unable_to_add_stock' => 'تعذر إضافة المخزون إلى المستودع.',
+  'source_destination_warehouses_same' => 'لا يمكن أن يكون مستودع المصدر والوجهة متطابقين.',
+  'not_enough_stock_source_warehouse' => 'لا توجد كمية كافية في مستودع المصدر.',
+  'adjustment_quantity_cannot_be_zero' => 'لا يمكن أن تكون كمية التعديل صفراً.',
+  'adjustment_exceeds_available_stock' => 'سيؤدي التعديل إلى تجاوز المخزون المتاح. الكمية المتاحة بعد الحجوزات: %s',
+  'adjustment_insufficient_stock' => 'سيؤدي التعديل إلى عدم كفاية المخزون.',
+  'unable_to_adjust_inventory_stock' => 'تعذر تعديل مخزون الصنف.',
+  'transfer_not_found' => 'التحويل غير موجود.',
+  'completed_transfers_only_reverse' => 'لا يمكن عكس سوى التحويلات المكتملة.',
+  'unable_to_reverse_transfer' => 'تعذر عكس التحويل. لا توجد كمية كافية في موقع الوجهة.',
+  'transfer_reversed_successfully' => 'تم عكس التحويل بنجاح.',
+  'invalid_adjustment_type' => 'نوع التعديل غير صالح.',
+  'adjustment_quantity_must_be_greater_than_zero' => 'يجب أن تكون كمية التعديل أكبر من صفر.',
+  'valid_adjustment_reason_required' => 'يرجى اختيار سبب صالح للتعديل.',
+  'notes_required_for_other_reason' => 'يرجى إدخال ملاحظات عند اختيار السبب "أخرى".',
+  'stock_adjustment_posted_successfully' => 'تم تسجيل تعديل المخزون بنجاح. المرجع: %s',
+  'goods_receipt_created_successfully' => 'تم استلام البضائع بنجاح.',
+  'received_quantity_must_be_greater_than_zero' => 'يجب أن تكون الكمية المستلمة أكبر من صفر.',
+  'purchase_order_not_found' => 'أمر الشراء غير موجود.',
+  'purchase_order_not_available_for_receiving' => 'أمر الشراء هذا غير متاح للاستلام.',
+  'supplier_does_not_match_purchase_order' => 'المورد المحدد لا يطابق مورد أمر الشراء.',
+  'inventory_item_not_in_purchase_order' => 'صنف المخزون المحدد لا ينتمي إلى أمر الشراء هذا.',
+  'po_item_already_fully_received' => 'تم استلام صنف أمر الشراء هذا بالكامل بالفعل.',
+  'cannot_receive_remaining_quantity' => 'لا يمكن استلام %s وحدة. المتبقي في أمر الشراء هو %s وحدة فقط.',
+
+  'invalid_purchase_order' => 'أمر الشراء غير صحيح.',
+  'invalid_supplier' => 'المورد غير صحيح.',
+
+  'goods_returned_successfully' => 'تمت اجراءات إعادة البضائع إلى المورد بنجاح.',
+
+  'invalid_goods_receipt_item' => 'صنف استلام البضائع غير صحيح.',
+  'return_quantity_must_be_greater_than_zero' => 'يجب أن تكون كمية الإرجاع أكبر من صفر.',
+  'goods_receipt_item_not_found' => 'صنف استلام البضائع غير موجود.',
+  'goods_receipt_no_receiving_location' => 'لا يحتوي استلام البضائع الأصلي على موقع استلام.',
+  'return_location_does_not_match_receiving_location' => 'المستودع المحدد لا يطابق المستودع الذي تم فيه استلام هذه البضائع.',
+  'goods_receipt_item_already_fully_returned' => 'تم إرجاع صنف استلام البضائع هذا بالكامل بالفعل.',
+  'cannot_return_remaining_quantity' => 'لا يمكن إرجاع %s وحدة. الكمية المتبقية القابلة للإرجاع هي %s وحدة فقط.',
+  'not_enough_stock_selected_warehouse_available' => 'لا توجد كمية كافية في المستودع المحدد. الكمية المتاحة: %s.',
+
+  'delivery_warehouse_required' => 'مستودع التسليم مطلوب.',
+  'project_required' => 'المشروع مطلوب.',
+  'purchase_order_created_successfully' => 'تم إنشاء أمر الشراء بنجاح.',
+  'purchase_order_locked' => 'أمر الشراء مقفل ولا يمكن تعديله.',
+  'draft_purchase_orders_only_approve' => 'لا يمكن اعتماد سوى أوامر الشراء بحالة المسودة.',
+  'add_item_before_approving_po' => 'يرجى إضافة صنف واحد على الأقل قبل اعتماد أمر الشراء هذا.',
+  'purchase_order_approved_successfully' => 'تم اعتماد أمر الشراء بنجاح.',
+  'purchase_order_cancelled_successfully' => 'تم إلغاء أمر الشراء بنجاح.',
+  'approved_purchase_orders_only_print' => 'لا يمكن طباعة سوى أوامر الشراء المعتمدة.',
+
+  'purchase_order_already_cancelled' => 'أمر الشراء ملغى بالفعل.',
+  'fully_received_po_cannot_be_cancelled' => 'لا يمكن إلغاء أمر شراء تم استلامه بالكامل.',
+  'purchase_order_cannot_be_cancelled' => 'لا يمكن إلغاء أمر الشراء في وضعه الحالي.',
+
+  'company_name_required' => 'اسم الشركة مطلوب.',
+
+  'unable_to_delete_customer' => 'تعذر حذف العميل.',
+
+  'user_not_found' => 'المستخدم غير موجود.',
+  'settings_updated' => 'تم تحديث الإعدادات بنجاح.',
+
+  'invalid_username_or_email_or_password' => 'اسم المستخدم/البريد الإلكتروني أو كلمة المرور غير صحيحة.',
+
+  'please_select_resource' => 'يرجى اختيار مورد.',
+  'invalid_resource_source' => 'مصدر المورد غير صالح.',
+  'unable_to_create_requisition_item' => 'تعذر إنشاء بند الطلب.',
+
+  'only_draft_requisitions_editable' => 'لا يمكن تعديل سوى الطلبات التي بحالة المسودة.',
+  'please_add_item_before_submitting' => 'يرجى إضافة بند واحد على الأقل قبل الإرسال.',
+  'resource_requisition_submitted_successfully' => 'تم إرسال طلب الموارد بنجاح.',
+  'only_draft_requisitions_deletable' => 'لا يمكن حذف سوى الطلبات التي بحالة المسودة.',
+  'only_submitted_requisitions_approve_reject' => 'لا يمكن اعتماد أو رفض سوى الطلبات المقدمة.',
+  'requisition_rejected' => 'تم رفض الطلب.',
+  'invalid_approval_action' => 'إجراء الاعتماد غير صالح.',
+  'resource_requisition_approved_successfully' => 'تم اعتماد طلب الموارد بنجاح.',
+  'resource_requisition_rejected' => 'تم رفض طلب الموارد.',
+
+  'resource_requisition_not_found' => 'طلب الموارد غير موجود.',
+  'approved_or_partial_requisitions_only_fulfill' => 'لا يمكن تنفيذ سوى الطلبات المعتمدة أو المنفذة جزئياً.',
+  'no_remaining_resource_items' => 'لا توجد بنود موارد متبقية للتنفيذ.',
+  'invalid_requisition' => 'الطلب غير صالح.',
+  'requisition_not_available_for_fulfillment' => 'هذا الطلب غير متاح للتنفيذ.',
+  'please_enter_fulfillment_quantity' => 'يرجى إدخال كمية تنفيذ واحدة على الأقل.',
+  'invalid_requisition_item' => 'بند الطلب غير صالح.',
+  'invalid_resource_fulfillment_item' => 'بند تنفيذ المورد غير صالح.',
+  'fulfillment_quantity_exceeds_remaining' => 'لا يمكن أن تتجاوز كمية تنفيذ "%s" الكمية المتبقية البالغة %s.',
+  'unit_cost_negative_for_item' => 'لا يمكن أن تكون تكلفة الوحدة سالبة للبند "%s".',
+  'please_select_inventory_location_for_item' => 'يرجى اختيار موقع المخزون لمادة: %s',
+  'please_enter_quantity_greater_than_zero' => 'يرجى إدخال كمية أكبر من صفر.',
+  'fulfillment_created_no_id' => 'تم إنشاء التنفيذ ولكن لم يتم إرجاع رقم التنفيذ.',
+  'resource_fulfillment_created_no_id' => 'تم إنشاء تنفيذ المورد ولكن لم يتم إرجاع رقم التنفيذ.',
+  'resource_requisition_fulfilled_successfully' => 'تم تنفيذ طلب الموارد بنجاح.',
+  'fulfillment_record_not_found' => 'سجل التنفيذ غير موجود.',
+  'please_enter_resource_fulfillment_quantity' => 'يرجى إدخال كمية تنفيذ واحدة على الأقل لمورد.',
+  'please_enter_resource_quantity_greater_than_zero' => 'يرجى إدخال كمية تنفيذ أكبر من صفر لبند مورد واحد على الأقل.',
+
+  'inventory_item_missing_for_requisition_item' =>
+  'صنف المخزون مفقود لبند الطلب: %s',
+
+  'inventory_item_not_available_in_selected_location' =>
+  'صنف المخزون غير متوفر في الموقع المحدد.',
+
+  'insufficient_stock_selected_location_for_item' =>
+  'لا توجد كمية كافية في الموقع المحدد للبند: %s',
+
+  'insufficient_global_inventory_stock_for_item' =>
+  'لا توجد كمية كافية من المخزون الإجمالي للبند: %s',
+
+  'failed_to_create_resource_fulfillment' =>
+  'فشل إنشاء تنفيذ المورد.',
+
+  'role_cannot_be_deleted_in_use' =>
+  'لا يمكن حذف هذا الدور، لأنه مُسند إلى مستخدم واحد أو أكثر.',
+
+  'role_deleted_successfully' => 'تم حذف الدور بنجاح.',
+
+  'approved_or_partial_requisitions_only_create_po' =>
+  'لا يمكن إنشاء أمر شراء إلا للطلبات المعتمدة أو المنفذة جزئياً.',
+
+  'no_remaining_inventory_materials_to_purchase' =>
+  'لا توجد مواد مخزنية متبقية للشراء.',
+
+  'please_select_supplier' =>
+  'يرجى اختيار المورد.',
+
+  'rr_quantity_exceeds_remaining' =>
+  'لا يمكن أن تتجاوز كمية "%s" الكمية المتبقية في طلب الموارد.',
+
+  'actual_supplier_unit_cost_required' =>
+  'يرجى إدخال تكلفة الوحدة الفعلية للمورد للبند "%s".',
+
+  'quantity_required_for_material' =>
+  'يرجى إدخال كمية لمادة واحدة على الأقل.',
+
+  'purchase_order_created_from_requisition_successfully' =>
+  'تم إنشاء أمر الشراء بنجاح من طلب الموارد.',
+
+  'quotation_locked' =>
+  'عرض السعر مقفل ولا يمكن تعديله.',
+
+  'item_description_required' =>
+  'وصف البند مطلوب.',
+
+  'unit_price_cannot_be_negative' =>
+  'لا يمكن أن يكون سعر الوحدة سالباً.',
+
+  'invalid_quality_status' =>
+  'حالة الجودة غير صالحة.',
+
+  'quotation_item_added_successfully' =>
+  'تمت إضافة بند عرض السعر بنجاح.',
+
+  'quotation_not_found' =>
+  'عرض السعر غير موجود.',
+
+  'only_draft_quotations_can_be_accepted' =>
+  'لا يمكن اعتماد سوى عروض الأسعار التي بحالة المسودة.',
+
+  'add_item_before_accepting_quotation' =>
+  'يرجى إضافة بند واحد على الأقل قبل اعتماد عرض السعر.',
+
+  'supplier_quotation_accepted_successfully' =>
+  'تم اعتماد عرض سعر المورد بنجاح.',
+
+  'quotation_cancelled_successfully' =>
+  'تم إلغاء عرض السعر.',
+
+  'no_quotations_found_for_procurement_reference' =>
+  'لم يتم العثور على عروض أسعار لمرجع الشراء هذا.',
+
+  'only_accepted_quotations_can_create_po' =>
+  'لا يمكن تحويل سوى عروض الأسعار المعتمدة إلى أمر شراء.',
+
+  'po_already_created_from_quotation' =>
+  'تم بالفعل إنشاء أمر شراء من عرض السعر هذا.',
+
+  'quotation_contains_no_items' =>
+  'عرض السعر لا يحتوي على اصناف.',
+
+  'quotation_item_not_linked_to_inventory' =>
+  'يحتوي عرض السعر على بند غير مرتبط بالمخزون بعد. يرجى إضافته إلى المخزون أولاً.',
+
+  'purchase_order_created_from_quotation_successfully' =>
+  'تم إنشاء أمر الشراء بنجاح بناء على عرض السعر.',
+
+  'reservation_not_found' =>
+  'حجز المواد غير موجود.',
+
+  'only_active_reservations_can_be_fulfilled' =>
+  'لا يمكن تنفيذ سوى الحجوزات النشطة.',
+
+  'reservation_project_required_for_fulfillment' =>
+  'يجب أن يكون لحجز المواد مشروع قبل تنفيذه.',
+
+  'original_project_cost_ledger_entry_not_found' =>
+  'قيد تكلفة المشروع الأصلي غير موجود.',
+
+  'project_cost_already_reversed' =>
+  'تم عكس تكلفة المشروع هذه بالفعل.',
+
+  'project_ledger_entry_for_cost_not_found' =>
+  'قيد دفتر المشروع الخاص بهذه التكلفة غير موجود.',
+
+  'unable_to_create_project_inventory_location' =>
+  'تعذر إنشاء موقع مخزن للمشروع.',
+
+  'roles_management' => 'إدارة الادوار',
+
+  'role_name'   => 'اسم الدور',
+  'create_role' => 'إنشاء دور',
+
+
+  'role_created_successfully'       => 'تم إنشاء الدور بنجاح.',
+  'role_creation_failed'            => 'فشل إنشاء الدور.',
+  'role_name_required'              => 'اسم الدور مطلوب.',
+  'role_updated_successfully'       => 'تم تحديث الدور بنجاح.',
+  'role_update_failed'              => 'فشل تحديث الدور.',
+
+  'permission_created_successfully' => 'تم إنشاء الصلاحية بنجاح.',
+  'permission_creation_failed' => 'تعذر إنشاء الصلاحية. قد يكون اسم الصلاحية موجودًا بالفعل.',
+  'permission_name_required'        => 'اسم الصلاحية مطلوب.',
+  'permission_updated_successfully' => 'تم تحديث الصلاحية بنجاح.',
+  'permission_update_failed'        => 'فشل تحديث الصلاحية.',
+  'permission_deleted_successfully' => 'تم حذف الصلاحية بنجاح.',
+  'permission_deletion_failed'      => 'فشل حذف الصلاحية.',
+
+  'permissions_updated_successfully' => 'تم تحديث الصلاحيات بنجاح.',
+  'permissions_update_failed'       => 'فشل تحديث الصلاحيات.',
+
+  'user_creation_failed'            => 'فشل إنشاء المستخدم.',
+  'user_update_failed'              => 'فشل تحديث المستخدم.',
+
+  // DB Helper Messages
+  'db_duplicate_entry'        => 'هذا السجل موجود بالفعل.',
+  'db_cannot_delete_in_use'   => 'لا يمكن حذف هذا السجل لأنه مستخدم حالياً.',
+  'db_invalid_reference'      => 'المرجع المحدد غير صالح.',
+  'db_data_too_long'          => 'إحدى القيم المدخلة أطول من الحد المسموح.',
+  'db_required_field_missing' => 'هناك حقل مطلوب لم يتم إدخال قيمته.',
+  'db_operation_failed'       => 'تعذر إتمام عملية قاعدة البيانات.',
+  'operation_failed'          => 'تعذر إتمام العملية.',
+
+  'permission_cannot_be_deleted_in_use' => 'لا يمكن حذف هذه الصلاحية لأنها مرتبطة بدور واحد أو أكثر.',
+  'permission_not_found'                => 'الصلاحية غير موجودة.',
+
+  'role_cannot_be_deleted_has_permissions' => 'لا يمكن حذف هذا الدور لأنه يحتوي على صلاحيات مرتبطة به.',
+  'role_not_found' => 'الدور غير موجود.',
+
+  'permission_description' => 'وصف الصلاحية',
+
+  // JS form fields validation messages
+  'validation_required'   => 'يرجى ملء هذا الحقل.',
+  'validation_email'      => 'يرجى إدخال إسم مستخدم أوبريد إلكتروني صحيح.',
+  'validation_url'        => 'يرجى إدخال رابط صحيح.',
+  'validation_invalid'   => 'يرجى إدخال قيمة صحيحة.',
+  'validation_min'        => 'يجب ألا تقل القيمة عن :min.',
+  'validation_max'        => 'يجب ألا تتجاوز القيمة :max.',
+  'validation_minlength'  => 'يجب أن يحتوي النص على :minlength أحرف على الأقل.',
+  'validation_maxlength'  => 'يجب ألا يتجاوز النص :maxlength حرفًا.',
+  'validation_step'       => 'يرجى إدخال قيمة صحيحة',
+  'validation_pattern'    => 'يرجى إدخال القيمة بالصيغة المطلوبة.',
+
+  'supplier_not_found' => 'المورد غير موجود.',
+  'supplier_deleted_successfully' => 'تم حذف المورد بنجاح.',
+  'supplier_cannot_be_deleted' => 'لا يمكن حذف هذا المورد لأنه مرتبط بمعاملات موجودة في النظام.',
+  'unable_to_delete_supplier' => 'تعذر حذف المورد.',
+
+  'resource_category_created_successfully' => 'تم إنشاء فئة الموارد بنجاح.',
+  'resource_category_create_failed' => 'تعذر إنشاء فئة الموارد.',
+  'resource_category_updated_successfully' => 'تم تحديث فئة الموارد بنجاح.',
+  'resource_category_update_failed' => 'تعذر تحديث فئة الموارد.',
+  'resource_category_deleted_successfully' => 'تم حذف فئة الموارد بنجاح.',
+  'resource_category_not_found' => 'فئة الموارد غير موجودة.',
+  'can_not_delete_resource_category_in_use' => 'لا يمكن حذف فئة الموارد لأنها قيد الاستخدام.',
+
+  'resource_category_name_required' => 'اسم فئة الموارد مطلوب.',
+  'resource_category_code_required' => 'رمز فئة الموارد مطلوب.',
+  'resource_category_name_duplicate' => 'توجد فئة بهذا الاسم حاليا.',
+  'resource_category_code_duplicate' => 'توجد فئة بهذا الرمز حاليا.',
+  'resource_category_duplicate_or_constraint_error' => 'تعذر حفظ فئة الموارد بسبب تكرار الاسم أو الرمز أو مخالفة أحد قيود قاعدة البيانات.',
+
+  'resource_category_name_a_duplicate' => 'الاسم العربي لفئة الموارد مكرر',
+
+  'unit_not_found' => 'الوحدة غير موجودة.',
+  'unit_created_successfully' => 'تم إنشاء الوحدة بنجاح.',
+  'unit_create_failed' => 'تعذر إنشاء الوحدة.',
+  'unit_updated_successfully' => 'تم تحديث الوحدة بنجاح.',
+  'unit_update_failed' => 'تعذر تحديث الوحدة.',
+  'unit_deleted_successfully' => 'تم حذف الوحدة بنجاح.',
+  'unit_cannot_be_deleted' => 'لا يمكن حذف هذه الوحدة لأنها مستخدمة حالياً في النظام.',
+
+  'resource_created_successfully' => 'تم إنشاء المورد بنجاح.',
+  'resource_create_failed' => 'تعذر إنشاء المورد.',
+  'resource_updated_successfully' => 'تم تحديث المورد بنجاح.',
+  'resource_update_failed' => 'تعذر تحديث المورد.',
+
+  'wh' => 'مخزن الموقع',
+  'global' => 'اجمالي المخازن',
+  'balance_after' => 'بعد الحركة',
+
+  'in' => 'وارد',
+  'out' => 'صادر',
+  'adjustment' => 'تسوية',
+
+  'financial_profile' => 'الملف المالي',
+  'total_paid' => 'إجمالي المسدد',
+
+  'total_purchase_orders' => 'إجمالي طلبات الشراء',
+  'total_goods_received' => 'إجمالي البضاعة المستلمة',
+
+  'supplier_information' => 'حساب المورد',
+
+  'cannot_delete_user_assigned_location_or_in_use'  => 'لا يمكن حذف هذا الموقع/المخزن لأنه مرتبط بمشروع أومستخدمين أو بمعاملات أو بسجلات تاريخية.',
+
+  'unable_to_delete_location' =>
+  'تعذر حذف الموقع.',
+  'print' => 'طباعة الصغحة',
+
+  'physical_quantity' => 'الكمية الموجودة',
+  'reserved_quantity' => 'الكمية المحجوزة',
+  'available_quantity' => 'الكمية المتاحة',
+
+  'inventory_item_deleted_successfully' => 'تم حذف عنصر المخزون بنجاح.',
+  'inventory_item_cannot_be_deleted' => 'لا يمكن حذف عنصر المخزون لأنه مستخدم بالفعل في معاملات موجودة.',
+  'unable_to_delete_inventory_item' => 'تعذر حذف عنصر المخزون.',
+
+  'supplier_source_destination' => 'المورد / المصدر / الوجهة',
+  'source' => 'المصدر',
+
+  'rr_fulfillment' => 'تنفيذ طلب الموارد',
+
+  'PERMITS_FEES' => 'مصاريف تصاريح',
+
+  'select_cost_type' => '--- اختر نوع التكلفة  ---',
+
+  'quantity_must_be_whole_number' =>
+  'يجب أن تكون الكمية رقماً صحيحاً.',
+
+  'fractional_quantity_not_allowed' =>
+  'هذه المادة لا تسمح باستخدام كميات فيها كسور.',
+
+  'quantity_rule' => 'قاعدة الكمية',
+  'fractional_quantities_allowed' => 'يسمح بالكميات الكسرية',
+  'whole_quantities_only' => 'يسمح بالكميات الصحيحة فقط',
+
+  'available_for_transfer' => 'متاح للنقل',
+  'total_cost' => 'إجمالي التكلفة',
+  'total_material_cost' => 'إجمالي تكلفة المواد',
+  'total_resources_cost' => 'إجمالي تكلفة الموارد',
+  'unit_of_measure' => 'وحدة القياس',
+  'grn_remaining' => 'المتبقي من اذن الاستلام',
+
+  // GOODS RETURNS
+  'goods_return_note'                       => 'إشعار إرجاع البضائع',
+  'grn_number'                              => 'رقم إذن استلام البضائع',
+  'return_from_warehouse'                   => 'الإرجاع من المستودع',
+  'quantity_returned'                       => 'الكمية المُرجعة',
+  'supplier_acknowledgement'                => 'إقرار المورد بالاستلام',
+  'supplier_receipt_acknowledgement_text'   => 'أقرّ أنا الموقع أدناه باستلام البضائع المُرجعة الموضحة أعلاه.',
+  'received_by'                             => 'المستلم',
+  'position'                                => 'الصفة الوظيفية',
+  'signature'                               => 'التوقيع',
+  'supplier_stamp'                          => 'ختم المورد',
+  'goods_receipt_note' => 'إشعار استلام البضائع',
+  'receipt_date' => 'تاريخ الاستلام',
+  'received_quantity' => 'الكمية المستلمة',
+  'delivery_acknowledgement' => 'إقرار التسليم',
+  'receiving_acknowledgement' => 'إقرار الاستلام',
+  'goods_receipt_acknowledgement_text' => 'أقرّ أنا الموقع أدناه باستلام البضائع الموضحة أعلاه.',
+  'stamp' => 'الختم',
+  'delivered_by' => 'قام بالتسليم',
+  'goods_receipts_report' => 'قائمة إشعارات استلام البضائع',
+
+  'received_amount' => 'قيمة البضاعة المستلمة',
+
+  'cancel_reservation_confirm'       => 'هل أنت متأكد من رغبتك في إلغاء هذا الحجز؟',
+  'reservation_cancelled_successfully' => 'تم إلغاء الحجز بنجاح.',
+  'reservation_cancellation_failed'   => 'تعذر إلغاء الحجز.',
+
+  'reservation_updated_successfully' => 'تم تحديث الحجز بنجاح.',
+  'reservation_update_failed'        => 'تعذر تحديث الحجز.',
+  'reservation_deleted_successfully' => 'تم حذف الحجز بنجاح.',
+  'reservation_deletion_failed'      => 'تعذر حذف الحجز.',
+  'print_goods_return'              => 'طباعة إشعار إرجاع البضائع',
+
+  'please_select_unit_of_measure' => 'يرجى اختيار وحدة قياس.',
+  'inventory_unit_not_found'      => 'الصنف المحدد لا توجد له وحدة قياس محددة.',
+
+  'select_unit_of_measure' => '-- اختر وحدة قياس --',
+
+  'requisition_created_successfully' => 'تم إنشاء طلب الموارد بنجاح.',
+
+  'requisition_creation_failed'  => 'تعذر إنشاء طلب الموارد.',
+
+  'requisition_updated_successfully' => 'تم تحديث طلب الموارد بنجاح.',
+
+  'requisition_update_failed'  => 'تعذر تحديث طلب الموارد.',
+
+  'requisition_deleted_successfully'  => 'تم حذف طلب الموارد بنجاح.',
+
+  'requisition_deletion_failed'  => 'تعذر حذف طلب الموارد.',
 
   'requisition_item_added_successfully'  => 'تمت إضافة بند طلب الموارد بنجاح.',
 
-    'requisition_item_addition_failed'  => 'تعذر إضافة بند طلب الموارد.',
+  'requisition_item_addition_failed'  => 'تعذر إضافة بند طلب الموارد.',
 
-    'requisition_item_updated_successfully'  => 'تم تحديث بند طلب الموارد بنجاح.',
+  'requisition_item_updated_successfully'  => 'تم تحديث بند طلب الموارد بنجاح.',
 
-    'requisition_item_update_failed'  => 'تعذر تحديث بند طلب الموارد.',
+  'requisition_item_update_failed'  => 'تعذر تحديث بند طلب الموارد.',
 
-    'requisition_item_deleted_successfully'
-    => 'تم حذف بند طلب الموارد بنجاح.',
+  'requisition_item_deleted_successfully'
+  => 'تم حذف بند طلب الموارد بنجاح.',
 
-    'requisition_item_deletion_failed'
-    => 'تعذر حذف بند طلب الموارد.',
+  'requisition_item_deletion_failed'
+  => 'تعذر حذف بند طلب الموارد.',
 
-    'resource_requisition_fulfillment_failed'
-    => 'تعذر تنفيذ طلب الموارد.',
+  'resource_requisition_fulfillment_failed'
+  => 'تعذر تنفيذ طلب الموارد.',
 
-    'resource_requisition_item_added_successfully'
-    => 'تمت إضافة بند طلب الموارد بنجاح.',
+  'resource_requisition_item_added_successfully'
+  => 'تمت إضافة بند طلب الموارد بنجاح.',
 
-    'resource_requisition_item_updated_successfully'
-    => 'تم تحديث بند طلب الموارد بنجاح.',
+  'resource_requisition_item_updated_successfully'
+  => 'تم تحديث بند طلب الموارد بنجاح.',
 
-    'unable_to_update_resource_requisition_item'
-    => 'تعذر تحديث بند طلب الموارد.',
+  'unable_to_update_resource_requisition_item'
+  => 'تعذر تحديث بند طلب الموارد.',
 
-    'resource_requisition_item_deleted_successfully'
-    => 'تم حذف بند طلب الموارد بنجاح.',
+  'resource_requisition_item_deleted_successfully'
+  => 'تم حذف بند طلب الموارد بنجاح.',
 
-    'unable_to_delete_resource_requisition_item'
-    => 'تعذر حذف بند طلب الموارد.',
+  'unable_to_delete_resource_requisition_item'
+  => 'تعذر حذف بند طلب الموارد.',
 
-    'please_select_cost_type' => 'يرجى اختيار نوع التكلفة المالية.',
+  'please_select_cost_type' => 'يرجى اختيار نوع التكلفة المالية.',
 
-    'resource_requisition_updated_successfully'
-    => 'تم تحديث طلب الموارد بنجاح.',
+  'resource_requisition_updated_successfully'
+  => 'تم تحديث طلب الموارد بنجاح.',
 
-    'resource_requisition_deleted_successfully'
-    => 'تم حذف طلب الموارد بنجاح.',
+  'resource_requisition_deleted_successfully'
+  => 'تم حذف طلب الموارد بنجاح.',
 
-    'confirm_delete_resource_requisition'
-    => 'هل أنت متأكد من رغبتك في حذف طلب الموارد هذا؟',
+  'confirm_delete_resource_requisition'
+  => 'هل أنت متأكد من رغبتك في حذف طلب الموارد هذا؟',
 
-    'financial_cost_type_required' => 'نوع التكلفة المالية مطلوب.',
+  'financial_cost_type_required' => 'نوع التكلفة المالية مطلوب.',
 
-    'financial_cost_type' => 'نوع التكلفة المالية',
+  'financial_cost_type' => 'نوع التكلفة المالية',
 
-    'not_available' => 'غير متوفر',
-    'database_connection_failed' =>
-    'النظام غير متاح مؤقتًا. يرجى المحاولة مرة أخرى لاحقًا أو التواصل مع مسؤول النظام.',
-    'username_or_email' => 'أدخل الايميل أو اسم المستخدم',
-
-
-    'no_goods_receipts_found' => 'لم يتم العثور على أي إشعارات استلام بضائع.',
-
-    // Advance payment receipts
-    'customer_advance_receipt' => 'إيصال دفعة مقدمة من العميل',
-    'receipt_number' => 'رقم الإيصال',
-    'print_receipt' => 'طباعة الإيصال',
-    'amount_received' => 'المبلغ المستلم',
-    'received_with_thanks' => 'تم الاستلام مع الشكر',
-    'customer_signature' => 'توقيع العميل',
-
-    'project_details' => 'تفاصيل المشروع',
-
-    'amount_in_words' => 'المبلغ كتابةً',
-    'Cash' => 'نقداً',
-    'Bank Transfer' => 'تحويل مصرفي',
-    'Cheque' => 'شيك',
+  'not_available' => 'غير متوفر',
+  'database_connection_failed' =>
+  'النظام غير متاح مؤقتًا. يرجى المحاولة مرة أخرى لاحقًا أو التواصل مع مسؤول النظام.',
+  'username_or_email' => 'أدخل الايميل أو اسم المستخدم',
 
 
-    'receipt_acknowledgement' => 'إقرار استلام',
-    'advance_received_confirmation' => 'تم استلام الدفعة المقدمة الموضحة أعلاه.',
-    'name_and_signature' => 'الاسم والتوقيع',
-    'authorized_signature' => 'التوقيع المعتمد',
-    'company_representative' => 'ممثل الشركة',
-    'company_stamp' => 'ختم الشركة',
+  'no_goods_receipts_found' => 'لم يتم العثور على أي إشعارات استلام بضائع.',
 
-    'customer_email_already_exists' => 'يوجد عميل مسجل بالفعل بهذا البريد الإلكتروني. يرجى استخدام بريد إلكتروني آخر.',
-    'customer_creation_failed' => 'تعذر إنشاء العميل. يرجى المحاولة مرة أخرى.',
-    'customer_mobile_already_exists' => 'يوجد عميل مسجل بالفعل بهذا الرقم المحمول. يرجى استخدام رقم آخر.',
-    'customer_phone_already_exists' => 'يوجد عميل مسجل بالفعل بهذا الرقم الهاتفي. يرجى استخدام رقم آخر.',
-    'customer_company_already_exists' => 'يوجد عميل مسجل بالفعل بهذا الاسم للشركة. يرجى استخدام اسم شركة آخر.',
+  // Advance payment receipts
+  'customer_advance_receipt' => 'إيصال دفعة مقدمة من العميل',
+  'receipt_number' => 'رقم الإيصال',
+  'print_receipt' => 'طباعة الإيصال',
+  'amount_received' => 'المبلغ المستلم',
+  'received_with_thanks' => 'تم الاستلام مع الشكر',
+  'customer_signature' => 'توقيع العميل',
 
+  'project_details' => 'تفاصيل المشروع',
 
-    'supplier_created_successfully' => 'تم إنشاء المورد بنجاح.',
-    'supplier_updated_successfully' => 'تم تحديث بيانات المورد بنجاح.',
-    'unable_to_create_supplier' => 'تعذر إنشاء المورد.',
-    'unable_to_update_supplier' => 'تعذر تحديث بيانات المورد.',
-    'contact_person_required' => 'اسم الشخص المسؤول عن التواصل مطلوب.',
-    'phone_required' => 'رقم الهاتف أو الهاتف المحمول مطلوب.',
-    'email_invalid' => 'يرجى إدخال بريد إلكتروني صحيح.',
-    'supplier_company_name_duplicate' => 'يوجد مورد مسجل بهذا الاسم بالفعل.',
-    'supplier_phone_duplicate' => 'يوجد مورد مسجل برقم الهاتف هذا بالفعل.',
-    'supplier_email_duplicate' => 'يوجد مورد مسجل بعنوان البريد الإلكتروني هذا بالفعل.',
-    'supplier_duplicate_or_constraint_error' => 'تعذر حفظ المورد بسبب تكرار إحدى البيانات أو وجود قيد في قاعدة البيانات.',
-    'delete_supplier_confirm' => 'هل أنت متأكد من حذف هذا المورد؟ لا يمكن التراجع عن هذا الإجراء.',
+  'amount_in_words' => 'المبلغ كتابةً',
+  'Cash' => 'نقداً',
+  'Bank Transfer' => 'تحويل مصرفي',
+  'Cheque' => 'شيك',
 
 
-    'unit_required_fields' => 'رمز الوحدة والاسم الإنجليزي والاسم العربي حقول مطلوبة.',
-    'unit_code_duplicate' => 'رمز الوحدة موجود مسبقاً.',
-    'unit_name_duplicate' => 'اسم الوحدة بالإنجليزية موجود مسبقاً.',
-    'unit_name_a_duplicate' => 'اسم الوحدة بالعربية موجود مسبقاً.',
-    'unit_duplicate_or_constraint_error' => 'حدث تكرار في بيانات وحدة القياس أو خطأ .',
+  'receipt_acknowledgement' => 'إقرار استلام',
+  'advance_received_confirmation' => 'تم استلام الدفعة المقدمة الموضحة أعلاه.',
+  'name_and_signature' => 'الاسم والتوقيع',
+  'authorized_signature' => 'التوقيع المعتمد',
+  'company_representative' => 'ممثل الشركة',
+  'company_stamp' => 'ختم الشركة',
 
-    'resource_required_fields' => 'رمز المورد والاسم الإنجليزي والاسم العربي والفئة ووحدة القياس ونوع حقول مطلوبة.',
-    'resource_code_duplicate' => 'رمز المورد موجود مسبقاً.',
-    'resource_name_duplicate' => 'اسم المورد بالإنجليزية موجود مسبقاً.',
-    'resource_name_a_duplicate' => 'اسم المورد بالعربية موجود مسبقاً.',
-    'resource_duplicate_or_constraint_error' => 'حدث تكرار أو خطأ في بيانات المورد',
+  'customer_email_already_exists' => 'يوجد عميل مسجل بالفعل بهذا البريد الإلكتروني. يرجى استخدام بريد إلكتروني آخر.',
+  'customer_creation_failed' => 'تعذر إنشاء العميل. يرجى المحاولة مرة أخرى.',
+  'customer_mobile_already_exists' => 'يوجد عميل مسجل بالفعل بهذا الرقم المحمول. يرجى استخدام رقم آخر.',
+  'customer_phone_already_exists' => 'يوجد عميل مسجل بالفعل بهذا الرقم الهاتفي. يرجى استخدام رقم آخر.',
+  'customer_company_already_exists' => 'يوجد عميل مسجل بالفعل بهذا الاسم للشركة. يرجى استخدام اسم شركة آخر.',
 
 
-    'user_cannot_be_deleted_in_use' => 'لا يمكن حذف هذا المستخدم لارتباط حسابه بسجلات أخرى في النظام.',
-    'user_delete_failed' => 'تعذر حذف المستخدم بسبب خطأ في قاعدة البيانات.',
+  'supplier_created_successfully' => 'تم إنشاء المورد بنجاح.',
+  'supplier_updated_successfully' => 'تم تحديث بيانات المورد بنجاح.',
+  'unable_to_create_supplier' => 'تعذر إنشاء المورد.',
+  'unable_to_update_supplier' => 'تعذر تحديث بيانات المورد.',
+  'contact_person_required' => 'اسم الشخص المسؤول عن التواصل مطلوب.',
+  'phone_required' => 'رقم الهاتف أو الهاتف المحمول مطلوب.',
+  'email_invalid' => 'يرجى إدخال بريد إلكتروني صحيح.',
+  'supplier_company_name_duplicate' => 'يوجد مورد مسجل بهذا الاسم بالفعل.',
+  'supplier_phone_duplicate' => 'يوجد مورد مسجل برقم الهاتف هذا بالفعل.',
+  'supplier_email_duplicate' => 'يوجد مورد مسجل بعنوان البريد الإلكتروني هذا بالفعل.',
+  'supplier_duplicate_or_constraint_error' => 'تعذر حفظ المورد بسبب تكرار إحدى البيانات أو وجود قيد في قاعدة البيانات.',
+  'delete_supplier_confirm' => 'هل أنت متأكد من حذف هذا المورد؟ لا يمكن التراجع عن هذا الإجراء.',
 
-    'user_name_duplicate' => 'اسم المستخدم موجود مسبقاً. يرجى اختيار اسم آخر.',
-    'email_duplicate' => 'البريد الإلكتروني موجود مسبقاً. يرجى استخدام بريد آخر.',
-    'mobile_duplicate' => 'رقم الهاتف المحمول موجود مسبقاً. يرجى استخدام رقم آخر.',
-    'user_duplicate_or_constraint_error' => 'حدث تكرار في بيانات المستخدم أو خطأ في قيود قاعدة البيانات.',
-    'user_create_failed' => 'تعذر إنشاء المستخدم. يرجى المحاولة مرة أخرى.',
 
-    'permission_cannot_be_edited_in_use' => 'لا يمكن تعديل هذه الصلاحية لأنها مُعيَّنة لدور واحد أو أكثر.',
+  'unit_required_fields' => 'رمز الوحدة والاسم الإنجليزي والاسم العربي حقول مطلوبة.',
+  'unit_code_duplicate' => 'رمز الوحدة موجود مسبقاً.',
+  'unit_name_duplicate' => 'اسم الوحدة بالإنجليزية موجود مسبقاً.',
+  'unit_name_a_duplicate' => 'اسم الوحدة بالعربية موجود مسبقاً.',
+  'unit_duplicate_or_constraint_error' => 'حدث تكرار في بيانات وحدة القياس أو خطأ .',
 
-    'reservation_cannot_be_cancelled_not_active' => 'لا يمكن إلغاء هذا الحجز لأنه لم يعد نشطًا.',
+  'resource_required_fields' => 'رمز المورد والاسم الإنجليزي والاسم العربي والفئة ووحدة القياس ونوع حقول مطلوبة.',
+  'resource_code_duplicate' => 'رمز المورد موجود مسبقاً.',
+  'resource_name_duplicate' => 'اسم المورد بالإنجليزية موجود مسبقاً.',
+  'resource_name_a_duplicate' => 'اسم المورد بالعربية موجود مسبقاً.',
+  'resource_duplicate_or_constraint_error' => 'حدث تكرار أو خطأ في بيانات المورد',
 
-    'receiving_status' => 'حالة الاستلام',
-    'receiving_not_received'      => 'لم يتم الاستلام',
-    'receiving_partially_received' => 'تم الاستلام جزئياً',
-    'receiving_fully_received'    => 'تم الاستلام بالكامل',
 
-    'expected_date_cannot_be_in_past' => 'لا يمكن أن يكون تاريخ التسليم المتوقع في الماضي.',
+  'user_cannot_be_deleted_in_use' => 'لا يمكن حذف هذا المستخدم لارتباط حسابه بسجلات أخرى في النظام.',
+  'user_delete_failed' => 'تعذر حذف المستخدم بسبب خطأ في قاعدة البيانات.',
 
-    'expected_delivery_not_specified' => 'غير محدد',
+  'user_name_duplicate' => 'اسم المستخدم موجود مسبقاً. يرجى اختيار اسم آخر.',
+  'email_duplicate' => 'البريد الإلكتروني موجود مسبقاً. يرجى استخدام بريد آخر.',
+  'mobile_duplicate' => 'رقم الهاتف المحمول موجود مسبقاً. يرجى استخدام رقم آخر.',
+  'user_duplicate_or_constraint_error' => 'حدث تكرار في بيانات المستخدم أو خطأ في قيود قاعدة البيانات.',
+  'user_create_failed' => 'تعذر إنشاء المستخدم. يرجى المحاولة مرة أخرى.',
 
-    'permission_description_ar' => 'وصف الصلاحية باللغة العربية',
+  'permission_cannot_be_edited_in_use' => 'لا يمكن تعديل هذه الصلاحية لأنها مُعيَّنة لدور واحد أو أكثر.',
 
-'initial_cost_price' => 'سعر التكلفة المبدئي',
-'initial_cost_price_help' => 'سعر مرجعي اختياري. يتم تحديثه تلقائيا بالسعر الفعلي عند استلام البضاعة.',
+  'reservation_cannot_be_cancelled_not_active' => 'لا يمكن إلغاء هذا الحجز لأنه لم يعد نشطًا.',
 
-'purchase_order_item_updated_successfully' => 'تم تحديث صنف أمر الشراء بنجاح.',
-'invalid_purchase_order_item' =>  'تعذّر تحديث الصنف. يُرجى التحقق من الصنف المحدد و الكمية .',
+  'receiving_status' => 'حالة الاستلام',
+  'receiving_not_received'      => 'لم يتم الاستلام',
+  'receiving_partially_received' => 'تم الاستلام جزئياً',
+  'receiving_fully_received'    => 'تم الاستلام بالكامل',
 
-'purchase_order_item_not_found'  => 'لم يتم العثور على صنف أمر الشراء.',
+  'expected_date_cannot_be_in_past' => 'لا يمكن أن يكون تاريخ التسليم المتوقع في الماضي.',
 
-'original_source_warehouse' => 'المصدر (المخزن) الاصلي للصنف',
+  'expected_delivery_not_specified' => 'غير محدد',
 
-'available_stock_for_editing' => 'حدود تعديل الكمية: الكمية المتاحة + الكمية الحالية.',
+  'permission_description_ar' => 'وصف الصلاحية باللغة العربية',
 
-'reservation_location_stock_info' =>
-    'تُظهر المخازن التي يتوفر بها مخزون متاح للصنف المحدد. إذا كانت القائمة فارغة، فهذا يعني انه لا يوجد مخزون متاح لهذا الصنف في أي مخزن.',
+  'initial_cost_price' => 'سعر التكلفة المبدئي',
+  'initial_cost_price_help' => 'سعر مرجعي اختياري. يتم تحديثه تلقائيا بالسعر الفعلي عند استلام البضاعة.',
+
+  'purchase_order_item_updated_successfully' => 'تم تحديث صنف أمر الشراء بنجاح.',
+  'invalid_purchase_order_item' =>  'تعذّر تحديث الصنف. يُرجى التحقق من الصنف المحدد و الكمية .',
+
+  'purchase_order_item_not_found'  => 'لم يتم العثور على صنف أمر الشراء.',
+
+  'original_source_warehouse' => 'المصدر (المخزن) الاصلي للصنف',
+
+  'available_stock_for_editing' => 'حدود تعديل الكمية: الكمية المتاحة + الكمية الحالية.',
+
+  'reservation_location_stock_info' =>
+  'تُظهر المخازن التي يتوفر بها مخزون متاح للصنف المحدد. إذا كانت القائمة فارغة، فهذا يعني انه لا يوجد مخزون متاح لهذا الصنف في أي مخزن.',
+
+  'stock_availability' => 'توفر المخزون',
+  'reserved_by_others' => 'الكمية المحجوزة لحجوزات أخرى',
+  'current_reserved_quantity' => 'الكمية المحجوزة الحالية',
+  'maximum_editable_quantity' => 'الحد الأقصى للكمية المسموح بها',
+  'reservation_quantity_limit_info' => 'يتم احتساب الحد الأقصى للكمية المسموح بها بناءً على مخزون المستودع الحالي، مع استبعاد هذا الحجز.',
+  'stock_summary_unavailable' => 'معلومات المخزون غير متاحة حالياً. يرجى تحديث الصفحة أو التواصل مع المسؤول.',
+
+'check_qty_and_availability' => 'تعذر تحديث الحجز. يرجى التحقق من الكمية والمخزون المتاح ثم المحاولة مجدداً.',
+
+
 
 ];

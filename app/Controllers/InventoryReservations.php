@@ -322,73 +322,101 @@ class InventoryReservations extends Controller
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $result = $model->update($id, [
+            try {
+                // Only permitted fields are accepted from the form.
+                // Item, warehouse and project remain unchanged.
+                $quantity = $_POST['quantity'] ?? null;
 
-                'inventory_id' =>
-                $_POST['inventory_id'],
+                if (
+                    !is_numeric($quantity) ||
+                    (float) $quantity <= 0
+                ) {
+                    throw new RuntimeException(
+                        'Reservation quantity must be greater than zero.'
+                    );
+                }
 
-                'location_id' =>
-                $_POST['location_id'] ?: null,
+                $quantity = (float) $quantity;
 
-                'project_id' =>
-                $_POST['project_id'] ?: null,
-
-                'quantity' =>
-                $_POST['quantity'],
-
-                'reference' =>
-                $_POST['reference'],
-
-                'notes' =>
-                $_POST['notes']
-            ]);
-
-            // --------RESERVATION FRACTION VALIDATION-----------
-            $item = $inventoryModel->getById(
-    (int) $_POST['inventory_id']
-);
-
-$quantity = (float) ($_POST['quantity'] ?? 0);
-
-if (!$item) {
-    FlashHelper::error(__('inventory_item_not_found'));
-
-    header('Location: ' . URLROOT . '/inventoryreservations/edit/' . (int)$id);
-    exit;
-}
-
-if (
-    (int) $item->allow_fraction !== 1 &&
-    floor($quantity) != $quantity
-) {
-    FlashHelper::error(__('quantity_must_be_whole_number'));
-
-    header('Location: ' . URLROOT . '/inventoryreservations/edit/' . (int)$id);
-    exit;
-}
-
-            if ($result) {
-
-                FlashHelper::success(
-                    __('reservation_updated_successfully')
+                // Validate the date format before saving.
+                $requiredByDate = trim(
+                    $_POST['required_by_date'] ?? ''
                 );
-            } else {
+
+                if ($requiredByDate !== '') {
+                    $date = DateTime::createFromFormat(
+                        '!Y-m-d',
+                        $requiredByDate
+                    );
+
+                    if (
+                        !$date ||
+                        $date->format('Y-m-d') !== $requiredByDate
+                    ) {
+                        throw new RuntimeException(
+                            'Invalid required-by date.'
+                        );
+                    }
+                }
+
+                // The model performs the authoritative status,
+                // stock-locking and availability checks.
+                $result = $model->update((int) $id, [
+                    'quantity' => $quantity,
+                    'required_by_date' => $requiredByDate,
+                    'reference' => trim(
+                        $_POST['reference'] ?? ''
+                    ),
+                    'notes' => trim(
+                        $_POST['notes'] ?? ''
+                    )
+                ]);
+
+                if ($result) {
+                    FlashHelper::success(
+                        __('reservation_updated_successfully')
+                    );
+                } else {
+                    FlashHelper::error(
+                        __('reservation_update_failed')
+                    );
+                }
+            } catch (Throwable $e) {
+
+                // Log the technical error; show a safe message to users.
+                error_log(
+                    'Reservation update failed for ID ' .
+                        (int) $id . ': ' . $e->getMessage()
+                );
 
                 FlashHelper::error(
-                    __('reservation_update_failed')
+                    __('check_qty_and_availability')
                 );
             }
 
             header(
                 'Location: ' .
                     URLROOT .
-                    '/inventoryreservations'
+                    '/inventoryreservations/edit/' .
+                    (int) $id
             );
-
             exit;
         }
 
+
         $data['reservation'] = $reservation;
+
+        /*
+        disply Qty on the reservation edit screen
+        The view will receive:
+    - physical_quantity — physical stock in the selected warehouse.
+    - reserved_by_others — active reservations excluding this reservation.
+    - current_quantity — the reservation's existing quantity.
+    - max_editable_quantity — the maximum quantity permitted by the current stock snapshot.
+    - allow_fraction — whether decimal quantities are allowed.
+        */
+        $data['stockSummary'] =
+            $model->getEditStockSummary((int) $id);
 
         $data['inventory'] =
             $inventoryModel->getAll();

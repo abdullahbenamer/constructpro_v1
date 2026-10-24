@@ -245,50 +245,161 @@ ORDER BY r.created_at DESC
     );
 }
 
-    public function getById($id)
+ 
+
+public function getById($id)
 {
     return $this->db->query(
-
         "
-        SELECT *
-        FROM inventory_reservations
-        WHERE id = ?
+        SELECT
+            ir.*,
+            i.name AS inventory_name,
+            u.unit_name AS unit_name,
+            u.unit_name_a AS unit_name_a,
+            i.allow_fraction AS allow_fraction,
+            il.code AS location_name,
+            p.title AS project_title
+        FROM inventory_reservations ir
+        LEFT JOIN inventory i
+            ON i.id = ir.inventory_id
+        LEFT JOIN units u
+            ON u.id = i.unit_id
+        LEFT JOIN inventory_locations il
+            ON il.id = ir.location_id
+        LEFT JOIN projects p
+            ON p.id = ir.project_id
+        WHERE ir.id = ?
         LIMIT 1
         ",
-        [$id]
-
+        [(int) $id]
     )->fetch();
 }
 
+
 public function update($id, $data)
 {
-    return $this->db->query(
+    return $this->db->transaction(function () use ($id, $data) {
 
-        "
-        UPDATE inventory_reservations
+        $id = (int) $id;
+        $quantity = $data['quantity'] ?? null;
 
-        SET
-            inventory_id = ?,
-            location_id = ?,
-            project_id = ?,
-            quantity = ?,
-            reference = ?,
-            notes = ?
+        // 1. Validate the requested quantity.
+        if (!is_numeric($quantity) || (float) $quantity <= 0) {
+            throw new RuntimeException(
+                'Reservation quantity must be greater than zero.'
+            );
+        }
 
-        WHERE id = ?
-        ",
-        [
-            $data['inventory_id'],
-            $data['location_id'],
-            $data['project_id'],
-            $data['quantity'],
-            $data['reference'],
-            $data['notes'],
+        $quantity = (float) $quantity;
+
+        // 2. Lock the reservation and verify its status.
+        $reservation = $this->db->query(
+            "
+            SELECT *
+            FROM inventory_reservations
+            WHERE id = ?
+            LIMIT 1
+            FOR UPDATE
+            ",
+            [$id]
+        )->fetch();
+
+        if (!$reservation) {
+            throw new RuntimeException(
+                __('reservation_not_found')
+            );
+        }
+
+        if ($reservation->status !== 'ACTIVE') {
+            throw new RuntimeException(
+                __('only_active_reservations_can_be_edited')
+            );
+        }
+
+        $inventoryId = (int) $reservation->inventory_id;
+        $locationId  = (int) $reservation->location_id;
+
+        // 3. Check the inventory item's quantity rules.
+        $item = $this->db->query(
+            "
+            SELECT id, allow_fraction
+            FROM inventory
+            WHERE id = ?
+            LIMIT 1
+            ",
+            [$inventoryId]
+        )->fetch();
+
+        if (!$item) {
+            throw new RuntimeException(
+                __('inventory_item_not_found')
+            );
+        }
+
+        if (
+            (int) $item->allow_fraction !== 1
+            && floor($quantity) != $quantity
+        ) {
+            throw new RuntimeException(
+                'This inventory item does not allow fractional quantities.'
+            );
+        }
+
+        // 4. Lock the stock row before checking availability.
+        $stockModel = new InventoryLocationStockModel($this->db);
+
+        $stock = $stockModel->getStockForUpdate(
+            $inventoryId,
+            $locationId
+        );
+
+        if (!$stock) {
+            throw new RuntimeException(
+                'No stock record exists for this item and warehouse.'
+            );
+        }
+
+        // 5. Calculate availability excluding this reservation.
+        $reservedByOthers = $this->getReservedQuantityExcluding(
+            $inventoryId,
+            $locationId,
             $id
-        ]
+        );
 
-    );
+        $availableQuantity =
+            (float) $stock->quantity - $reservedByOthers;
+
+        if ($quantity > $availableQuantity) {
+            throw new RuntimeException(
+                'The requested quantity exceeds the available stock.'
+            );
+        }
+
+        // 6. Update permitted fields only.
+        return $this->db->query(
+            "
+            UPDATE inventory_reservations
+            SET
+                quantity = ?,
+                required_by_date = ?,
+                reference = ?,
+                notes = ?
+            WHERE id = ?
+              AND status = 'ACTIVE'
+            ",
+            [
+                $quantity,
+                !empty($data['required_by_date'])
+                    ? $data['required_by_date']
+                    : null,
+                $data['reference'] ?? null,
+                $data['notes'] ?? null,
+                $id
+            ]
+        );
+    });
 }
+
 
 public function delete($id)
 {
@@ -331,5 +442,74 @@ public function getReservedQuantity(
         $result->reserved_qty ?? 0
     );
 }
+
+// displaying the stock information read-only
+public function getEditStockSummary(int $reservationId)
+{
+    return $this->db->query(    
+        "
+        SELECT
+            ir.id AS reservation_id,
+            ir.inventory_id,
+            ir.location_id,
+            ir.quantity AS current_quantity,
+            ir.status,
+            i.allow_fraction,
+            COALESCE(ils.quantity, 0) AS physical_quantity,
+            COALESCE(r.reserved_by_others, 0) AS reserved_by_others,
+            (
+                COALESCE(ils.quantity, 0)
+                - COALESCE(r.reserved_by_others, 0)
+            ) AS max_editable_quantity
+        FROM inventory_reservations ir
+        JOIN inventory i
+            ON i.id = ir.inventory_id
+        LEFT JOIN inventory_location_stock ils
+            ON ils.inventory_id = ir.inventory_id
+           AND ils.location_id = ir.location_id
+        LEFT JOIN (
+            SELECT
+                inventory_id,
+                location_id,
+                SUM(quantity) AS reserved_by_others
+            FROM inventory_reservations
+            WHERE status = 'ACTIVE'
+              AND id <> ?
+            GROUP BY inventory_id, location_id
+        ) r
+            ON r.inventory_id = ir.inventory_id
+           AND r.location_id = ir.location_id
+        WHERE ir.id = ?
+        LIMIT 1
+        ",
+        [$reservationId, $reservationId]
+    )->fetch();
+}
+
+
+public function getReservedQuantityExcluding(
+    int $inventory_id,
+    int $location_id,
+    int $exclude_reservation_id
+): float {
+    $result = $this->db->query(
+        "
+        SELECT COALESCE(SUM(quantity), 0) AS reserved_qty
+        FROM inventory_reservations
+        WHERE inventory_id = ?
+          AND location_id = ?
+          AND status = 'ACTIVE'
+          AND id <> ?
+        ",
+        [
+            $inventory_id,
+            $location_id,
+            $exclude_reservation_id
+        ]
+    )->fetch();
+
+    return (float) ($result->reserved_qty ?? 0);
+}
+
 
 }

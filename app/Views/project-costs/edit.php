@@ -211,6 +211,32 @@ if (
 
     <?php endif; ?>
 
+    
+<?php if ($cost->cost_type === 'MATERIALS' && $selectedInventory): ?>
+
+    <?php
+    $currentLanguage = strtolower(
+        substr($_SESSION['language'] ?? 'en', 0, 2)
+    );
+
+    $uom = $currentLanguage === 'ar'
+        ? ($selectedInventory->unit_name_a ?? '')
+        : ($selectedInventory->unit_name ?? '');
+    ?>
+
+    <div class="col-md-6 mt-2">
+        <label class="form-label">
+            <?= __('unit_of_measure') ?>
+        </label>
+
+        <input
+            type="text"
+            class="form-control bg-light"
+            value="<?= htmlspecialchars($uom, ENT_QUOTES, 'UTF-8') ?>"
+            readonly>
+    </div>
+
+<?php endif; ?>
 
     <!-- LOCATION for Materials read-only -->
     <?php if ($cost->cost_type === 'MATERIALS'): ?>

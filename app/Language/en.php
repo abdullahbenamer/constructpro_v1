@@ -1956,4 +1956,15 @@ return [
     'Displays Only warehouse(s) with available stock. If the dropdown is empty, no available stock exists for this item in any warehouse.',
 
 
+
+'stock_availability' => 'Stock Availability',
+'reserved_by_others' => 'Reserved by Other Reservations',
+'current_reserved_quantity' => 'Current Reserved Quantity',
+'maximum_editable_quantity' => 'Maximum Permitted Quantity',
+'reservation_quantity_limit_info' => 'The maximum permitted quantity is calculated using current warehouse stock, excluding this reservation.',
+'stock_summary_unavailable' => 'Stock information is currently unavailable. Please refresh or contact an administrator.',
+
+'check_qty_and_availability' => 'Reservation update failed. Please check the quantity and available stock  then try again.',
+
+
 ];

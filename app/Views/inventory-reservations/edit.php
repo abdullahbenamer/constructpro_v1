@@ -10,32 +10,16 @@
             <?= __('inventory_item') ?>
         </label>
 
-        <select name="inventory_id"
-            id="inventory_id"
-            class="form-select"
-            required>
 
-            <?php foreach ($inventory as $item) : ?>
-
-                <option
-                    value="<?= $item->id ?>"
-                    data-uom-en="<?= htmlspecialchars($item->unit_name ?? '') ?>"
-                    data-uom-ar="<?= htmlspecialchars($item->unit_name_a ?? '') ?>"
-                    data-allow-fraction="<?= (int)($item->allow_fraction ?? 0) ?>"
-                    <?= $reservation->inventory_id == $item->id ? 'selected' : '' ?>>
-
-                    <?= htmlspecialchars($item->name) ?>
-
-                </option>
-            <?php endforeach; ?>
-
-        </select>
+        <div class="form-control bg-light">
+            <?= htmlspecialchars($reservation->inventory_name ?? '') ?>
+        </div>
 
     </div>
 
-    <div class="mb-3">
 
-        <label>
+    <div class="mb-3">
+        <label for="uom" class="form-label">
             <?= __('unit_of_measure') ?>
         </label>
 
@@ -43,8 +27,14 @@
             type="text"
             id="uom"
             class="form-control"
+            value="<?= htmlspecialchars(
+                        (strtolower(substr($_SESSION['language'] ?? 'en', 0, 2)) === 'ar')
+                            ? ($reservation->unit_name_a ?? '')
+                            : ($reservation->unit_name ?? ''),
+                        ENT_QUOTES,
+                        'UTF-8'
+                    ) ?>"
             readonly>
-
     </div>
 
     <div class="mb-3">
@@ -53,31 +43,12 @@
             <?= __('location') ?>
         </label>
 
-        <select name="location_id"
-            id="location_id"
-            class="form-select">
 
-            <option value="">
-                <?= __('any_location') ?>
-            </option>
-
-            <?php foreach ($locations as $loc) : ?>
-
-                <option value="<?= $loc->id ?>"
-                    <?= $reservation->location_id == $loc->id
-                        ? 'selected'
-                        : '' ?>>
-
-                    <?= htmlspecialchars($loc->code) ?>
-
-                </option>
-
-            <?php endforeach; ?>
-
-        </select>
+        <div class="form-control bg-light">
+            <?= htmlspecialchars($reservation->location_name ?? '') ?>
+        </div>
 
     </div>
-
 
     <div class="mb-3">
 
@@ -85,34 +56,19 @@
             <?= __('project') ?>
         </label>
 
-        <select name="project_id"
-            class="form-select">
-
-            <option value="">
-                <?= __('no_project') ?>
-            </option>
-
-            <?php foreach ($projects as $p) : ?>
-
-                <option value="<?= $p->id ?>"
-                    <?= $reservation->project_id == $p->id
-                        ? 'selected'
-                        : '' ?>>
-
-                    <?= htmlspecialchars($p->title) ?>
-
-                </option>
-
-            <?php endforeach; ?>
-
-        </select>
-
+        <div class="form-control bg-light">
+            <?= htmlspecialchars($reservation->project_title ?? '') ?>
+        </div>
     </div>
 
 
-    <div class="mb-3">
 
-        <label>
+    <?php
+    $allowFraction = (int) ($reservation->allow_fraction ?? 0) === 1;
+    ?>
+
+    <div class="mb-3">
+        <label for="quantity" class="form-label">
             <?= __('quantity') ?>
         </label>
 
@@ -120,29 +76,86 @@
             type="number"
             id="quantity"
             name="quantity"
-            value="<?= htmlspecialchars((string)$reservation->quantity) ?>"
-            step="1"
-            min="1"
+            value="<?= htmlspecialchars((string) $reservation->quantity, ENT_QUOTES, 'UTF-8') ?>"
+            step="<?= $allowFraction ? '0.01' : '1' ?>"
+            min="<?= $allowFraction ? '0.01' : '1' ?>"
             class="form-control"
             required>
+    </div>
+
+<!-- Inventory Stock Summary -->
+<?php if (!empty($stockSummary)) : ?>
+
+    <?php
+    $physicalQty = (float) $stockSummary->physical_quantity;
+    $reservedByOthers = (float) $stockSummary->reserved_by_others;
+    $currentQty = (float) $stockSummary->current_quantity;
+
+    $maxEditableQty = max(
+        0,
+        (float) $stockSummary->max_editable_quantity
+    );
+    ?>
+
+    <div class="alert alert-info py-2 px-3 mb-3"
+         style="max-width: 400px;">
+
+        <div>
+            <strong><?= __('physical_stock') ?>:</strong>
+            <?= number_format($physicalQty, 2) ?>
+        </div>
+
+        <div>
+            <strong><?= __('reserved_by_others') ?>:</strong>
+            <?= number_format($reservedByOthers, 2) ?>
+        </div>
+
+        <div>
+            <strong><?= __('current_reserved_quantity') ?>:</strong>
+            <?= number_format($currentQty, 2) ?>
+        </div>
+
+        <hr class="my-2">
+
+        <div>
+            <strong><?= __('maximum_editable_quantity') ?>:</strong>
+            <span class="fw-bold text-success">
+                <?= number_format($maxEditableQty, 2) ?>
+            </span>
+        </div>
 
     </div>
 
+<?php else : ?>
+
+    <div class="alert alert-warning py-2 px-3 mb-3"
+         style="max-width: 400px;">
+        <?= __('stock_summary_unavailable') ?>
+    </div>
+
+<?php endif; ?>
+<!-- End Inventory Stock Summary -->
 
     <div class="mb-3">
-
+        <label for="required_by_date" class="form-label">
+            <?= __('required_by_date') ?>
+        </label>
+        <input
+            type="date"
+            id="required_by_date"
+            name="required_by_date"
+            value="<?= htmlspecialchars($reservation->required_by_date ?? '') ?>"
+            class="form-control">
+    </div>
+    <div class="mb-3">
         <label>
             <?= __('reference') ?>
         </label>
-
         <input type="text"
             name="reference"
             value="<?= htmlspecialchars($reservation->reference) ?>"
             class="form-control">
-
     </div>
-
-
     <div class="mb-3">
 
         <label>
@@ -151,19 +164,13 @@
 
         <textarea name="notes"
             class="form-control"><?= htmlspecialchars($reservation->notes) ?></textarea>
-
     </div>
-
-
     <button class="btn btn-primary">
-
         <?= __('save_update') ?>
-
     </button>
-
 </form>
 
-<script>
+<!-- <script>
     const inventorySelect =
         document.getElementById('inventory_id');
 
@@ -233,7 +240,8 @@ quantityInput.addEventListener('input', function () {
         !Number.isInteger(Number(this.value))
     ) {
         this.setCustomValidity(
-            '<?= htmlspecialchars(__('quantity_must_be_whole_number'), ENT_QUOTES, 'UTF-8') ?>'
+            '<? //= htmlspecialchars(__('quantity_must_be_whole_number'), ENT_QUOTES, 'UTF-8') 
+                ?>'
         );
     } else {
         this.setCustomValidity('');
@@ -250,4 +258,4 @@ quantityInput.addEventListener('input', function () {
 
     // Display UOM for the initially selected item
     updateUOM();
-</script>
+</script> -->
