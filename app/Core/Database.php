@@ -13,38 +13,79 @@ class Database
     private $dbh;
     private $stmt;
 
-    public function __construct()
-    {
-        $this->host = DBHOST;
-        $this->user = DBUSER;
-        $this->pass = DBPASS;
-        $this->dbname = DBNAME;
+    // public function __construct()
+    // {
+    //     $this->host = DBHOST;
+    //     $this->user = DBUSER;
+    //     $this->pass = DBPASS;
+    //     $this->dbname = DBNAME;
 
-        try {
-            $this->dbh = new PDO(
-                'mysql:host=' . $this->host . ';dbname=' . $this->dbname,
-                $this->user,
-                $this->pass,
-                [
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ
-                ]
-            );
-        } catch (PDOException $e) {
-            // Keep technical details in the server error log only.
-            error_log(
-                'ConstructPro database connection failed: '
-                . $e->getMessage()
-            );
+    //     try {
+    //         $this->dbh = new PDO(
+    //             'mysql:host=' . $this->host . ';dbname=' . $this->dbname,
+    //             $this->user,
+    //             $this->pass,
+    //             [
+    //                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    //                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ
+    //             ]
+    //         );
+    //     } catch (PDOException $e) {
+    //         // Keep technical details in the server error log only.
+    //         error_log(
+    //             'ConstructPro database connection failed: '
+    //             . $e->getMessage()
+    //         );
 
-            throw new DatabaseConnectionException(
-                'Database connection unavailable',
-                0,
-                $e
-            );
-        }
+    //         throw new DatabaseConnectionException(
+    //             'Database connection unavailable',
+    //             0,
+    //             $e
+    //         );
+    //     }
 
+    // }
+
+    
+public function __construct()
+{
+    $this->host = DBHOST;
+    $this->user = DBUSER;
+    $this->pass = DBPASS;
+    $this->dbname = DBNAME;
+
+    try {
+        $this->dbh = new PDO(
+            'mysql:host=' . $this->host
+                . ';dbname=' . $this->dbname
+                . ';charset=utf8mb4', 
+                /* 
+                /charset=utf8mb4: Configures the connection 
+                /for Arabic, English, and other Unicode characters.
+                */
+            $this->user,
+            $this->pass,
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+                PDO::ATTR_EMULATE_PREPARES => false
+            ]
+        );
+    } catch (PDOException $e) {
+        // Keep technical details in the server error log only.
+        error_log(
+            'ConstructPro database connection failed: '
+            . $e->getMessage()
+        );
+
+        throw new DatabaseConnectionException(
+            'Database connection unavailable',
+            0,
+            $e
+        );
     }
+}
+
 
     public function exists()
     {
@@ -258,7 +299,6 @@ public function transaction(callable $callback)
         throw $e;
     }
 }
-
 
 /**
  * Generate a safe SAVEPOINT name.

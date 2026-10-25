@@ -45,6 +45,30 @@ unset($_SESSION['old_user_data']);
                 required>
         </div>
 
+        
+<div class="col-md-6">
+    <label for="sex" class="form-label">
+        <?= __('sex') ?>
+    </label>
+
+    <select name="sex" id="sex" class="form-select" required>
+        <option value="">
+            <?= __('select_sex') ?>
+        </option>
+
+        <option value="MALE"
+            <?= ($oldData['sex'] ?? '') === 'MALE' ? 'selected' : '' ?>>
+            <?= __('male') ?>
+        </option>
+
+        <option value="FEMALE"
+            <?= ($oldData['sex'] ?? '') === 'FEMALE' ? 'selected' : '' ?>>
+            <?= __('female') ?>
+        </option>
+    </select>
+</div>
+
+
         <div class="col-md-6">
             <label class="form-label"><?= __('password') ?></label>
             <input type="password"

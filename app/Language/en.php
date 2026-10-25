@@ -1966,5 +1966,9 @@ return [
 
 'check_qty_and_availability' => 'Reservation update failed. Please check the quantity and available stock  then try again.',
 
+'sex' => 'Sex',
+'select_sex' => 'Select Sex',
+'male' => 'Male',
+'female' => 'Female',
 
 ];

@@ -65,20 +65,21 @@ public function login($login, $password)
             "
         )->fetchAll();
     }
-
     
+
 public function createUser($data)
 {
     try {
         $this->db->query(
             "INSERT INTO users
-                (full_name, user_name, email, mobile, photo, password, role_id)
-             VALUES (?, ?, ?, ?, ?, ?, ?)",
+                (full_name, user_name, email, mobile, sex, photo, password, role_id)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
             [
                 trim($data['full_name']),
                 trim($data['user_name']),
                 trim($data['email']),
                 trim($data['mobile']),
+                $data['sex'],
                 $data['photo'] ?? null,
                 password_hash($data['password'], PASSWORD_DEFAULT),
                 (int) $data['role_id']
@@ -92,9 +93,9 @@ public function createUser($data)
 
     } catch (PDOException $e) {
         if (
-            $e->getCode() === '23000' &&
-            isset($e->errorInfo[1]) &&
-            (int) $e->errorInfo[1] === 1062
+            $e->getCode() === '23000'
+            && isset($e->errorInfo[1])
+            && (int) $e->errorInfo[1] === 1062
         ) {
             $error = $e->getMessage();
 
@@ -124,7 +125,6 @@ public function createUser($data)
 }
 
 
-
 public function update($id, $data)
 {
     $existing = $this->getById($id);
@@ -137,23 +137,24 @@ public function update($id, $data)
     }
 
     try {
-        $this->db->query(
-            "UPDATE users
-             SET full_name = ?, user_name = ?, email = ?, mobile = ?,
-                 photo = ?, role_id = ?, password = ?
-             WHERE id = ?",
-            [
-                $data['full_name'] ?? $existing->full_name,
-                $data['user_name'] ?? $existing->user_name,
-                $data['email'] ?? $existing->email,
-                $data['mobile'] ?? $existing->mobile,
-                $data['photo'] ?? $existing->photo,
-                $data['role_id'] ?? $existing->role_id,
-                $data['password'] ?? $existing->password,
-                $id
-            ]
-        );
-
+        
+$this->db->query(
+    "UPDATE users
+     SET full_name = ?, user_name = ?, email = ?, mobile = ?,
+         sex = ?, photo = ?, role_id = ?, password = ?
+     WHERE id = ?",
+    [
+        $data['full_name'] ?? $existing->full_name,
+        $data['user_name'] ?? $existing->user_name,
+        $data['email'] ?? $existing->email,
+        $data['mobile'] ?? $existing->mobile,
+        $data['sex'] ?? $existing->sex,
+        $data['photo'] ?? $existing->photo,
+        $data['role_id'] ?? $existing->role_id,
+        $data['password'] ?? $existing->password,
+        $id
+    ]
+);
         return [
             'success' => true,
             'message' => __('user_updated_successfully')
@@ -188,8 +189,6 @@ public function update($id, $data)
         ];
     }
 }
-
-
     
 public function delete($id)
 {
@@ -234,8 +233,7 @@ public function delete($id)
     }
 }
 
-
-    public function countAdmins()
+public function countAdmins()
     {
         $result = $this->db->query(
             "

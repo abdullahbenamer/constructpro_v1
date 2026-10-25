@@ -40,6 +40,16 @@ class Users extends Controller
                 exit;
             }
 
+            $sex = strtoupper(trim($_POST['sex'] ?? ''));
+
+            if (!in_array($sex, ['MALE', 'FEMALE'], true)) {
+                FlashHelper::error(__('select_sex'));
+                header('Location: ' . URLROOT . '/users/create');
+                exit;
+            }
+
+            $_POST['sex'] = $sex;
+
             if (empty($_POST['password'] ?? '')) {
                 FlashHelper::error(__('password_required'));
                 header('Location: ' . URLROOT . '/users/create');

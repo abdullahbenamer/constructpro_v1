@@ -224,9 +224,18 @@ class Admin extends Controller
                 'user_name' => trim($_POST['user_name'] ?? ''),
                 'email'     => trim($_POST['email'] ?? ''),
                 'mobile'    => trim($_POST['mobile'] ?? ''),
+                 'sex'       => strtoupper(trim($_POST['sex'] ?? '')),
                 'role_id'   => $_POST['role_id'] ?? $data['user']->role_id,
                 'photo'     => $data['user']->photo
             ];
+
+            
+if (!in_array($updateData['sex'], ['MALE', 'FEMALE'], true)) {
+    FlashHelper::error(__('select_sex'));
+    header('Location: ' . URLROOT . '/users/edit/' . (int) $id);
+    exit;
+}
+
 
             if (!empty($_POST['password'])) {
                 $updateData['password'] = password_hash(
