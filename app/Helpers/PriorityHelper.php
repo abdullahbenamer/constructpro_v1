@@ -38,29 +38,3 @@ class PriorityHelper
     }
 }
 
-// /-------------------------------
-
-// Then every view becomes:
-
-// <select name="priority" class="form-select">
-
-// <?php foreach (PriorityHelper::all() as $priority): ?>
-
-// <option value="<?//= $priority ?>"
-//     <?//= ($requisition->priority == $priority) ? 'selected' : '' ?>>
-
-//     <?//= $priority ?>
-
-// </option>
-
-// <?php //endforeach; ?>
-
-// </select>
-
-<!-- //////////////////////// -->
-<!-- 
-badges become simply:
-
-<span class="badge <?//= PriorityHelper::badge($req->priority) ?>">
-    <?//= $req->priority ?>
-</span> -->

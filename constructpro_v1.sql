@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 23, 2026 at 11:35 AM
+-- Generation Time: Oct 25, 2026 at 05:12 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -288,7 +288,7 @@ INSERT INTO `inventory` (`id`, `name`, `description`, `category`, `sku`, `quanti
 (113, 'Ready Mix Concrete C25', 'Ready-mix concrete, C25', 'BUILDING & FINISHING', 'CON-C25-001', 25.00, NULL, 5, 95.00, 'M3', 15, 1, NULL, 12),
 (114, 'Concrete Block 20cm', 'Concrete block, 20 cm thickness', 'BUILDING & FINISHING', 'BLK-20-001', 4685.00, NULL, 500, 2.45, 'PCS', 1, 0, 36, 12),
 (115, 'Concrete Block 15cm', 'Concrete block, 15 cm thickness', 'BUILDING & FINISHING', 'BLK-15-001', 5285.00, NULL, 500, 1.55, 'PCS', 1, 0, NULL, 12),
-(117, 'Coarse Aggregate 20mm', 'Coarse aggregate, 20 mm', 'BUILDING & FINISHING', 'AGR-20-001', 100.00, NULL, 15, 120.00, 'M3', 15, 1, NULL, 12),
+(117, 'Coarse Aggregate 20mm', 'Coarse aggregate, 20 mm', 'BUILDING & FINISHING', 'AGR-20-001', 40.00, NULL, 15, 120.00, 'M3', 15, 1, NULL, 12),
 (118, 'Construction Gravel', 'Construction gravel', 'BUILDING & FINISHING', 'GRV-001', 43.00, NULL, 10, 80.00, 'M3', 15, 1, NULL, 12),
 (119, 'Red Brick', 'Red clay brick', 'BUILDING & FINISHING', 'BRK-RED-001', 5000.00, NULL, 1000, 0.65, 'PCS', 1, 0, NULL, 12),
 (120, 'Plastering Cement', 'Plastering cement', 'BUILDING & FINISHING', 'PLS-CEM-001', 500.00, NULL, 50, 11.50, 'BAG', 3, 0, 36, 12),
@@ -324,7 +324,7 @@ INSERT INTO `inventory` (`id`, `name`, `description`, `category`, `sku`, `quanti
 (153, 'PPR Pipe 25mm', 'PPR pipe, 25 mm', 'PLUMBING & DRAINAGE', 'PPR-25-001', 400.00, NULL, 80, 4.80, 'MTR', 10, 1, NULL, 12),
 (154, 'PVC Elbow 90° 25mm', 'PVC elbow, 90°, 25 mm', 'PLUMBING & DRAINAGE', 'ELB-25-90-001', 300.00, NULL, 50, 1.20, 'PCS', 1, 0, NULL, 12),
 (155, 'Brass Ball Valve 1\"', 'Brass ball valve, 1 inch', 'PLUMBING & DRAINAGE', 'VAL-BV-1-001', 89.00, NULL, 15, 3.75, 'PCS', 1, 0, NULL, 12),
-(156, 'Bearing 6204', 'Ball bearing, 6204', 'OTHER', 'BRG-6204-001', 13.00, NULL, 10, 35.00, 'PCS', 1, 0, 6, 3),
+(156, 'Bearing 6204', 'Ball bearing, 6204', 'OTHER', 'BRG-6204-001', 11.00, NULL, 10, 35.00, 'PCS', 1, 0, 6, 3),
 (157, 'Bearing 6205', 'Ball bearing, 6205', 'OTHER', 'BRG-6205-001', 26.00, NULL, 10, 21.00, 'PCS', 1, 0, 6, 3),
 (158, 'V-Belt A-42', 'V-belt, A-42', 'OTHER', 'VBT-A42-001', 25.00, NULL, 5, 9.50, 'PCS', 1, 0, NULL, 12),
 (159, 'Hydraulic Hose 1/2\"', 'Hydraulic hose, 1/2 inch', 'OTHER', 'HYD-HS-12-001', 250.00, NULL, 50, 8.50, 'MTR', 10, 1, NULL, 12),
@@ -336,7 +336,7 @@ INSERT INTO `inventory` (`id`, `name`, `description`, `category`, `sku`, `quanti
 (165, 'Hex Nut M10', 'Hex nut, M10', 'OTHER', 'NUT-M10-001', 1200.00, NULL, 200, 0.12, 'PCS', 1, 0, NULL, 12),
 (166, 'Washer M10', 'Flat washer, M10', 'OTHER', 'WSR-M10-001', 1500.00, NULL, 300, 0.06, 'PCS', 1, 0, NULL, 12),
 (167, 'Anchor Bolt M16', 'Anchor bolt, M16', 'OTHER', 'ANC-M16-001', 271.00, NULL, 50, 3.00, 'PCS', 1, 0, NULL, 12),
-(168, 'Acrylic Wall Paint White', 'Acrylic wall paint, white', 'BUILDING & FINISHING', 'PNT-WHT-001', 316.00, NULL, 50, 18.00, 'LTR', 16, 0, NULL, 12),
+(168, 'Acrylic Wall Paint White', 'Acrylic wall paint, white', 'BUILDING & FINISHING', 'PNT-WHT-001', 299.00, NULL, 50, 18.00, 'LTR', 16, 0, NULL, 12),
 (169, 'Exterior Paint White', 'Exterior paint, white', 'BUILDING & FINISHING', 'PNT-EXT-WHT-001', 180.00, NULL, 30, 21.00, 'LTR', 16, 1, NULL, 12),
 (170, 'Epoxy Primer', 'Epoxy primer', 'CONSUMABLES', 'EPX-PRM-001', 99.00, NULL, 20, 24.00, 'LTR', 5, 0, NULL, 12),
 (171, 'Silicone Sealant', 'Silicone sealant', 'CONSUMABLES', 'SIL-001', 126.00, NULL, 20, 3.80, 'PCS', 1, 0, NULL, 12),
@@ -430,9 +430,9 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (271, 116, 1, 20.00),
 (272, 116, 2, 12.00),
 (273, 116, 3, 8.00),
-(274, 117, 1, 30.00),
+(274, 117, 1, 20.00),
 (275, 117, 2, 18.00),
-(276, 117, 3, 12.00),
+(276, 117, 3, 2.00),
 (277, 118, 1, 20.00),
 (278, 118, 2, 8.00),
 (279, 118, 3, 10.00),
@@ -545,10 +545,10 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (386, 154, 2, 90.00),
 (387, 154, 3, 60.00),
 (388, 155, 1, 34.00),
-(389, 155, 2, 39.00),
+(389, 155, 2, 38.00),
 (390, 155, 3, 16.00),
 (391, 156, 1, 5.00),
-(392, 156, 2, 8.00),
+(392, 156, 2, 6.00),
 (393, 156, 3, 0.00),
 (394, 157, 1, 2.00),
 (395, 157, 2, 12.00),
@@ -585,7 +585,7 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (426, 167, 3, 31.00),
 (427, 168, 1, 139.00),
 (428, 168, 2, 68.00),
-(429, 168, 3, 109.00),
+(429, 168, 3, 92.00),
 (430, 169, 1, 90.00),
 (431, 169, 2, 54.00),
 (432, 169, 3, 36.00),
@@ -643,7 +643,8 @@ INSERT INTO `inventory_location_stock` (`id`, `inventory_id`, `location_id`, `qu
 (488, 187, 1, 70.00),
 (489, 187, 2, 5.00),
 (503, 193, 3, 500.00),
-(525, 198, 3, 15.00);
+(525, 198, 3, 15.00),
+(528, 155, 42, 1.00);
 
 -- --------------------------------------------------------
 
@@ -674,34 +675,11 @@ CREATE TABLE `inventory_movements` (
 --
 
 INSERT INTO `inventory_movements` (`id`, `inventory_id`, `location_id`, `type`, `quantity`, `unit_cost`, `supplier_id`, `supplier`, `movement_by`, `balance_after`, `global_balance_after`, `reference`, `notes`, `created_by`, `created_at`) VALUES
-(515, 187, 1, 'OUT', 5.00, NULL, NULL, NULL, NULL, 50.00, 60.00, 'Transfer from main wh to the project wh', 'Warehouse Transfer #91', 1, '2026-10-21 11:48:14'),
-(516, 187, 42, 'IN', 5.00, NULL, NULL, NULL, NULL, 5.00, 60.00, 'Transfer from main wh to the project wh', 'Warehouse Transfer #91', 1, '2026-10-21 11:48:14'),
-(517, 187, 42, 'OUT', 2.00, NULL, NULL, NULL, NULL, 3.00, 58.00, 'PROJECT #61', 'Construction wheelbarrow', 1, '2026-10-21 11:49:51'),
-(518, 187, 42, 'OUT', 1.00, NULL, NULL, NULL, NULL, 2.00, 57.00, 'PROJECT #61', 'Construction wheelbarrow', 1, '2026-10-21 11:57:12'),
-(519, 187, 42, 'IN', 2.00, NULL, NULL, NULL, NULL, 4.00, 59.00, 'PROJECT #61', 'Construction wheelbarrow', 1, '2026-10-21 12:01:02'),
-(520, 187, 42, 'IN', 1.00, NULL, NULL, NULL, NULL, 5.00, 60.00, 'PROJECT #61', 'Construction wheelbarrow', 1, '2026-10-21 12:09:58'),
-(521, 168, 2, 'OUT', 5.00, NULL, NULL, NULL, NULL, 70.00, 318.00, 'PROJECT #61', 'Acrylic wall paint, white', 1, '2026-10-21 12:18:17'),
-(522, 187, 1, 'OUT', 7.00, NULL, NULL, NULL, NULL, 43.00, 53.00, 'PROJECT #61', 'Construction wheelbarrow', 1, '2026-10-21 15:21:02'),
-(523, 187, 1, 'IN', 7.00, NULL, NULL, NULL, NULL, 50.00, 60.00, 'PROJECT #61', 'Construction wheelbarrow', 1, '2026-10-21 15:31:16'),
-(524, 155, 3, 'OUT', 5.00, NULL, NULL, NULL, NULL, 11.00, 85.00, 'PROJECT #61', 'Brass ball valve, 1 inch', 1, '2026-10-21 19:35:00'),
-(525, 155, 3, 'IN', 1.00, NULL, NULL, NULL, NULL, 12.00, 86.00, 'PROJECT #61', 'Brass ball valve, 1 inch', 1, '2026-10-21 19:39:01'),
-(526, 155, 3, 'OUT', 3.00, NULL, NULL, NULL, NULL, 9.00, 83.00, 'PROJECT #61', 'Brass ball valve, 1 inch', 1, '2026-10-21 19:53:45'),
-(527, 155, 3, 'IN', 7.00, NULL, NULL, NULL, NULL, 16.00, 90.00, 'PROJECT #61', 'Brass ball valve, 1 inch', 1, '2026-10-21 19:58:07'),
-(528, 156, 2, 'OUT', 2.00, NULL, NULL, NULL, NULL, 10.00, 15.00, 'PROJECT #61', 'Ball bearing, 6204', 1, '2026-10-21 20:07:42'),
-(529, 131, 3, 'ADJUSTMENT', 1.31, NULL, NULL, NULL, NULL, 80.00, 400.00, 'ADJ-261022074626', 'FOUND', 1, '2026-10-22 05:46:26'),
-(530, 135, 1, 'ADJUSTMENT', 3.44, NULL, NULL, NULL, NULL, 1250.00, 2500.00, 'ADJ-261022075211', 'PHYSICAL_COUNT_CORRECTION', 1, '2026-10-22 05:52:11'),
-(531, 187, 1, 'ADJUSTMENT', 20.00, NULL, NULL, NULL, NULL, 70.00, 75.00, 'ADJ-261022124630', 'PHYSICAL_COUNT_CORRECTION', 1, '2026-10-22 10:46:30'),
-(532, 156, 2, 'OUT', 2.00, NULL, NULL, NULL, NULL, 8.00, 13.00, 'PROJECT #61', 'Ball bearing, 6204', 1, '2026-10-22 17:09:29'),
-(533, 168, 2, 'OUT', 66.00, NULL, NULL, NULL, NULL, 4.00, 252.00, 'PROJECT #61', 'Acrylic wall paint, white Color', 1, '2026-10-22 17:17:09'),
-(534, 168, 2, 'IN', 66.00, NULL, NULL, NULL, NULL, 70.00, 318.00, 'PROJECT #61', 'Acrylic wall paint, white Color', 1, '2026-10-22 17:19:56'),
-(535, 156, 2, 'OUT', 6.00, NULL, NULL, NULL, NULL, 2.00, 7.00, 'PROJECT #61', 'Ball bearing, 6204', 1, '2026-10-22 17:25:22'),
-(536, 156, 2, 'IN', 6.00, NULL, NULL, NULL, NULL, 8.00, 13.00, 'PROJECT #61', 'Ball bearing, 6204', 1, '2026-10-22 17:25:50'),
-(537, 168, 2, 'OUT', 70.00, NULL, NULL, NULL, NULL, 0.00, 248.00, 'PROJECT #61', 'Acrylic wall paint, white Color', 1, '2026-10-22 17:28:39'),
-(538, 168, 2, 'IN', 70.00, NULL, NULL, NULL, NULL, 70.00, 318.00, 'PROJECT #61', 'Acrylic wall paint, white Color', 1, '2026-10-22 17:29:45'),
-(539, 168, 2, 'OUT', 5.00, NULL, NULL, NULL, NULL, 65.00, 313.00, 'PROJECT #61', 'Acrylic wall paint, white Color', 1, '2026-10-22 17:38:38'),
-(540, 168, 2, 'OUT', 65.00, NULL, NULL, NULL, NULL, 0.00, 248.00, 'PROJECT #61', 'Acrylic wall paint, white Color', 1, '2026-10-22 17:39:18'),
-(541, 168, 2, 'IN', 70.00, NULL, NULL, NULL, NULL, 70.00, 318.00, 'PROJECT #61', 'Acrylic wall paint, white Color', 1, '2026-10-22 17:39:29'),
-(542, 168, 2, 'OUT', 2.00, NULL, NULL, NULL, NULL, 68.00, 316.00, 'PROJECT #61', 'Acrylic wall paint, white Color', 1, '2026-10-23 09:28:52');
+(549, 155, 2, 'OUT', 1.00, NULL, NULL, NULL, NULL, 38.00, 89.00, NULL, 'Warehouse Transfer #94', 1, '2026-10-23 15:49:04'),
+(550, 155, 42, 'IN', 1.00, NULL, NULL, NULL, NULL, 1.00, 89.00, NULL, 'Warehouse Transfer #94', 1, '2026-10-23 15:49:04'),
+(551, 117, 1, 'OUT', 5.00, NULL, NULL, NULL, NULL, 25.00, 45.00, 'PROJECT #61', 'Coarse aggregate, 20 mm', 1, '2026-10-23 15:57:06'),
+(552, 117, 1, 'OUT', 5.00, NULL, NULL, NULL, NULL, 20.00, 40.00, 'PROJECT #61', 'Coarse aggregate, 20 mm', 1, '2026-10-23 15:58:12'),
+(553, 168, 3, 'OUT', 17.00, NULL, NULL, NULL, NULL, 92.00, 299.00, 'PROJECT #61', 'Acrylic wall paint, white', 1, '2026-10-23 21:06:48');
 
 -- --------------------------------------------------------
 
@@ -712,8 +690,8 @@ INSERT INTO `inventory_movements` (`id`, `inventory_id`, `location_id`, `type`, 
 CREATE TABLE `inventory_reservations` (
   `id` int(11) NOT NULL,
   `inventory_id` int(11) NOT NULL,
-  `location_id` int(11) DEFAULT NULL,
-  `project_id` int(11) DEFAULT NULL,
+  `location_id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
   `quantity` decimal(12,2) NOT NULL,
   `status` enum('ACTIVE','FULFILLED','CANCELLED') DEFAULT 'ACTIVE',
   `reference` varchar(255) DEFAULT NULL,
@@ -728,7 +706,10 @@ CREATE TABLE `inventory_reservations` (
 --
 
 INSERT INTO `inventory_reservations` (`id`, `inventory_id`, `location_id`, `project_id`, `quantity`, `status`, `reference`, `notes`, `created_by`, `created_at`, `required_by_date`) VALUES
-(58, 164, 2, 61, 100.00, 'ACTIVE', '', '', 1, '2026-10-23 05:46:47', '2026-10-26');
+(60, 148, 1, 61, 2.00, 'ACTIVE', '', '', 1, '2026-10-23 15:43:13', '2026-10-26'),
+(61, 136, 1, 61, 12.20, 'ACTIVE', '', '', 1, '2026-10-23 20:05:11', '2026-10-29'),
+(62, 155, 2, 61, 10.00, 'ACTIVE', '', '', 1, '2026-10-23 20:07:03', '2026-10-28'),
+(63, 136, 1, 61, 17.80, 'ACTIVE', '', '', 1, '2026-10-24 06:20:21', '2026-10-28');
 
 -- --------------------------------------------------------
 
@@ -757,7 +738,7 @@ CREATE TABLE `inventory_transfers` (
 --
 
 INSERT INTO `inventory_transfers` (`id`, `inventory_id`, `from_location_id`, `to_location_id`, `quantity`, `reference`, `notes`, `created_by`, `created_at`, `reversed_at`, `reversed_by`, `reversal_transfer_id`, `status`) VALUES
-(91, 187, 1, 42, 5.00, 'Transfer from main wh to the project wh', 'Transfer from main wh to the project wh', 1, '2026-10-21 11:48:14', NULL, NULL, NULL, 'COMPLETED');
+(94, 155, 2, 42, 1.00, '', '', 1, '2026-10-23 15:49:04', NULL, NULL, NULL, 'COMPLETED');
 
 -- --------------------------------------------------------
 
@@ -927,6 +908,13 @@ CREATE TABLE `project_advances` (
   `attachment` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `project_advances`
+--
+
+INSERT INTO `project_advances` (`id`, `project_id`, `amount`, `payment_method`, `reference`, `notes`, `received_by`, `advance_date`, `created_at`, `status`, `attachment`) VALUES
+(40, 61, 50000.00, 'Bank Transfer', 'ايصال 877635 مرفق مع المستندات', 'الدفعة الاولى', 1, '2026-10-22', '2026-10-24 20:45:00', 'received', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -955,8 +943,9 @@ CREATE TABLE `project_costs` (
 --
 
 INSERT INTO `project_costs` (`id`, `project_id`, `requisition_id`, `fulfillment_id`, `inventory_id`, `resource_id`, `location_id`, `cost_type`, `description`, `unit_id`, `quantity`, `unit_price`, `created_at`) VALUES
-(292, 61, NULL, NULL, 168, NULL, 2, 'MATERIALS', 'Acrylic wall paint, white Color', 16, 7.00, 18.00, '2026-10-21 12:18:17'),
-(295, 61, NULL, NULL, 156, NULL, 2, 'MATERIALS', 'Ball bearing, 6204', 1, 4.00, 35.00, '2026-10-21 20:07:42');
+(298, 61, NULL, NULL, 117, NULL, 1, 'MATERIALS', 'Coarse aggregate, 20 mm', 15, 10.00, 120.00, '2026-10-23 15:57:06'),
+(299, 61, NULL, NULL, 168, NULL, 3, 'MATERIALS', 'Acrylic wall paint, white', 16, 17.00, 18.00, '2026-10-23 21:06:48'),
+(300, 61, NULL, NULL, NULL, NULL, NULL, 'HUMAN_RESOURCES', 'عمال رديم', 17, 10.00, 100.00, '2026-10-23 21:07:47');
 
 -- --------------------------------------------------------
 
@@ -978,6 +967,14 @@ CREATE TABLE `project_documents` (
   `uploaded_by` int(11) DEFAULT NULL,
   `uploaded_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `project_documents`
+--
+
+INSERT INTO `project_documents` (`id`, `project_id`, `category`, `title`, `description`, `original_name`, `stored_name`, `file_type`, `file_size`, `document_date`, `uploaded_by`, `uploaded_at`) VALUES
+(27, 61, 'contract', 'CONTRACT - العقد المبدئي', 'CONTRACT - العقد المبدئي للمشروع تحت الدراسة', '13 Home Remedies for a Dry Cough.pdf', '6add18050c844_13 Home Remedies for a Dry Cough.pdf', 'application/pdf', 420443, '2026-10-01', 1, '2026-10-24 20:41:41'),
+(28, 61, 'contract', 'CONTRACT - العقد المبدئي', 'CONTRACT - العقد المبدئي للمشروع تحت الدراسة', 'AFFIDAVIT.pdf', '6add18050d3bc_AFFIDAVIT.pdf', 'application/pdf', 190203, '2026-10-01', 1, '2026-10-24 20:41:41');
 
 -- --------------------------------------------------------
 
@@ -1004,16 +1001,10 @@ CREATE TABLE `project_ledger` (
 --
 
 INSERT INTO `project_ledger` (`id`, `project_id`, `entry_type`, `ref_table`, `ref_id`, `description`, `quantity`, `debit`, `credit`, `balance_after`, `created_at`) VALUES
-(206, 61, 'cost', 'project_costs', 290, 'أعمال المساحة للمنطقة والشارع المزمع تعبيده', NULL, 10000.00, 0.00, -10000.00, '2026-10-21 07:43:14'),
-(207, 61, 'cost', 'project_costs', 291, 'Construction wheelbarrow', NULL, 45.00, 0.00, -10045.00, '2026-10-21 11:49:51'),
-(208, 61, 'cost', 'project_costs', 290, 'Reversal: أعمال المساحة للمنطقة والشارع المزمع تعبيده', NULL, 0.00, 10000.00, -45.00, '2026-10-21 12:04:11'),
-(209, 61, 'cost', 'project_costs', 291, 'Reversal: Construction wheelbarrow', NULL, 0.00, 45.00, 0.00, '2026-10-21 12:09:58'),
-(210, 61, 'cost', 'project_costs', 292, 'Acrylic wall paint, white Color', 7.00, 126.00, 0.00, -126.00, '2026-10-21 12:18:17'),
-(211, 61, 'cost', 'project_costs', 293, 'Construction wheelbarrow', NULL, 315.00, 0.00, -441.00, '2026-10-21 15:21:02'),
-(212, 61, 'cost', 'project_costs', 293, 'Reversal: Construction wheelbarrow', NULL, 0.00, 315.00, -126.00, '2026-10-21 15:31:16'),
-(213, 61, 'cost', 'project_costs', 294, 'Brass ball valve, 1 inch', 7.00, 26.25, 0.00, -152.25, '2026-10-21 19:35:00'),
-(214, 61, 'cost', 'project_costs', 294, 'Reversal: Brass ball valve, 1 inch', 7.00, 0.00, 26.25, -126.00, '2026-10-21 19:58:07'),
-(215, 61, 'cost', 'project_costs', 295, 'Ball bearing, 6204', 4.00, 140.00, 0.00, -266.00, '2026-10-21 20:07:42');
+(218, 61, 'cost', 'project_costs', 298, 'Coarse aggregate, 20 mm', 10.00, 1200.00, 0.00, -1200.00, '2026-10-23 15:57:06'),
+(219, 61, 'cost', 'project_costs', 299, 'Acrylic wall paint, white', 17.00, 306.00, 0.00, -1506.00, '2026-10-23 21:06:48'),
+(220, 61, 'cost', 'project_costs', 300, 'عمال رديم', 10.00, 1000.00, 0.00, -2506.00, '2026-10-23 21:07:47'),
+(221, 61, 'advance', 'project_advances', 40, 'ايصال 877635 مرفق مع المستندات', NULL, 0.00, 50000.00, 47494.00, '2026-10-24 20:45:00');
 
 -- --------------------------------------------------------
 
@@ -1032,19 +1023,8 @@ CREATE TABLE `project_scopes` (
 --
 
 INSERT INTO `project_scopes` (`id`, `project_id`, `scope`) VALUES
-(50, 55, 'MEP'),
-(49, 55, 'Structural'),
 (61, 56, 'Architectural'),
-(63, 56, 'MEP'),
-(62, 56, 'Structural'),
-(60, 57, 'Civil'),
-(67, 58, 'Architectural'),
-(66, 58, 'Civil'),
-(69, 59, 'Civil'),
-(71, 60, 'Architectural'),
-(70, 60, 'Civil'),
-(72, 60, 'Structural'),
-(74, 61, 'Civil');
+(75, 61, 'Civil');
 
 -- --------------------------------------------------------
 
@@ -1108,14 +1088,6 @@ CREATE TABLE `purchase_orders` (
   `receiving_status` enum('OPEN','PARTIAL','RECEIVED') DEFAULT 'OPEN'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `purchase_orders`
---
-
-INSERT INTO `purchase_orders` (`id`, `po_number`, `supplier_id`, `project_id`, `requisition_id`, `target_warehouse_id`, `delivery_method`, `status`, `order_date`, `expected_date`, `subtotal`, `tax_amount`, `discount_amount`, `total_amount`, `notes`, `created_by`, `approved_by`, `approved_at`, `received_at`, `created_at`, `receiving_status`) VALUES
-(77, 'PO-261022081438', 1, NULL, NULL, 1, 'WAREHOUSE', 'cancelled', '2026-10-22', NULL, 36000.00, 0.00, 0.00, 36000.00, '', 1, 1, '2026-10-22 08:47:55', NULL, '2026-10-22 06:14:38', 'OPEN'),
-(78, 'PO-261022095403', 4, NULL, NULL, 1, 'WAREHOUSE', 'draft', '2026-10-22', NULL, 219.99, 0.00, 0.00, 219.99, '', 1, NULL, NULL, NULL, '2026-10-22 07:54:03', 'OPEN');
-
 -- --------------------------------------------------------
 
 --
@@ -1133,15 +1105,6 @@ CREATE TABLE `purchase_order_items` (
   `notes` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `purchase_order_items`
---
-
-INSERT INTO `purchase_order_items` (`id`, `purchase_order_id`, `inventory_id`, `quantity`, `received_quantity`, `unit_cost`, `total_cost`, `notes`, `created_at`) VALUES
-(86, 77, 111, 200.00, 0.00, 30.00, 0.00, NULL, '2026-10-22 06:15:31'),
-(88, 78, 117, 5.70, 0.00, 5.70, 0.00, NULL, '2026-10-22 07:54:28'),
-(89, 78, 182, 50.00, 0.00, 3.75, 0.00, NULL, '2026-10-22 08:10:14');
 
 -- --------------------------------------------------------
 
@@ -1941,6 +1904,7 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `mobile` varchar(255) NOT NULL,
   `photo` varchar(255) DEFAULT NULL,
+  `sex` enum('MALE','FEMALE') DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `role_id` int(11) NOT NULL
@@ -1950,15 +1914,16 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `full_name`, `user_name`, `email`, `mobile`, `photo`, `password`, `created_at`, `role_id`) VALUES
-(1, 'Abdullah AlSahli', 'Abdullah', 'admin@ems.com', '+2189988457687', 'uploads/users/user_6aa8e7ac334196.66652294.jpg', '$2y$10$uNBYvJRdBnd5xdlc8ADmb.oCxl4EIVLmd3kuftCWcW7Epbj7CiQrK', '2026-04-07 20:11:12', 1),
-(6, 'Ahmad Sudan', 'Ahmad', 'ac@ems.com', '+218912345745', 'uploads/users/user_6ad1f40e39d824.50231873.jpg', '$2y$10$K170SUkPfIqPiRKuTo/ooOL/oxljnnW1tc6h8Tlr7JkdgNjO1UcFS', '2026-04-07 20:34:24', 5),
-(8, 'Ali Salem', 'Ali', 'tech@ems.com', '+218918762345', 'uploads/users/user_6abbb32ab44531.94162267.jpg', '$2y$10$uNBYvJRdBnd5xdlc8ADmb.oCxl4EIVLmd3kuftCWcW7Epbj7CiQrK', '2026-04-07 20:34:24', 4),
-(11, 'Abdullah Ben Amer', 'Amer', 'benamer@gmail.com', '+218972987645', NULL, '$2y$10$YSYPAjp4O/R.pe40wv4Equfr18/r70omV36YJkE5VU94iTeDCF2P6', '2026-04-20 20:29:44', 8),
-(12, 'Sumaya Abdullah', 'Sumaya', 'sumaya@ems.com', '+2189123457687', 'uploads/users/user_6abb622c124b03.34558456.png', '$2y$10$Y.8EQGCefp30HlCMXKLS2OMuMbWAxnaTRHR88HX8AzTRbHRPoYxgG', '2026-04-22 11:59:21', 5),
-(14, 'Taha Hussain', 'Taha', 'th@ems.com', '+2189343457687', 'uploads/users/user_6aaf6c9f7141e6.68874237.jpg', '$2y$10$fLhJosWCRxuPtL0C/s5dTup98BZ11Xa0n72HW4qLCBGdEGM0byvEW', '2026-06-12 15:52:02', 2),
-(16, 'abdulatif musa', 'abdelatif', 'am@ems.com', '+2189123776487', 'uploads/users/user_6aaed492527af9.10740308.jpg', '$2y$10$PlLMFxaLWxS01oXxwqpFUenxYKAHHGe32.M8yAwdh6oj8izQIvXsW', '2026-06-19 16:50:12', 7),
-(42, 'سعيد مسعود', 'said', 'said@ems.com', '+21898886543', 'uploads/users/user_6ad9ab743f6ec1.13877495.png', '$2y$10$0ejjVVL0Hh.Z0NESXuqeCe0usWFPJuhSZO/i3wKP2X7HB435G//9m', '2026-10-22 06:21:40', 8);
+INSERT INTO `users` (`id`, `full_name`, `user_name`, `email`, `mobile`, `photo`, `sex`, `password`, `created_at`, `role_id`) VALUES
+(1, 'Abdullah AlSahli', 'Abdullah', 'admin@ems.com', '+2189988457687', 'uploads/users/user_6aa8e7ac334196.66652294.jpg', 'MALE', '$2y$10$uNBYvJRdBnd5xdlc8ADmb.oCxl4EIVLmd3kuftCWcW7Epbj7CiQrK', '2026-04-07 20:11:12', 1),
+(6, 'Ahmad Sudan', 'Ahmad', 'ac@ems.com', '+218912345745', 'uploads/users/user_6ad1f40e39d824.50231873.jpg', 'MALE', '$2y$10$K170SUkPfIqPiRKuTo/ooOL/oxljnnW1tc6h8Tlr7JkdgNjO1UcFS', '2026-04-07 20:34:24', 5),
+(8, 'Ali Salem', 'Ali', 'tech@ems.com', '+218918762345', 'uploads/users/user_6adddbf733ed29.37963837.png', 'MALE', '$2y$10$uNBYvJRdBnd5xdlc8ADmb.oCxl4EIVLmd3kuftCWcW7Epbj7CiQrK', '2026-04-07 20:34:24', 4),
+(11, 'Abdullah Ben Amer', 'Amer', 'benamer@gmail.com', '+218972987645', NULL, 'MALE', '$2y$10$YSYPAjp4O/R.pe40wv4Equfr18/r70omV36YJkE5VU94iTeDCF2P6', '2026-04-20 20:29:44', 8),
+(12, 'Sumaya Abdullah', 'Sumaya', 'sumaya@ems.com', '+2189123457687', 'uploads/users/user_6abb622c124b03.34558456.png', 'FEMALE', '$2y$10$Y.8EQGCefp30HlCMXKLS2OMuMbWAxnaTRHR88HX8AzTRbHRPoYxgG', '2026-04-22 11:59:21', 5),
+(14, 'Taha Hussain', 'Taha', 'th@ems.com', '+2189343457687', 'uploads/users/user_6aaf6c9f7141e6.68874237.jpg', 'MALE', '$2y$10$fLhJosWCRxuPtL0C/s5dTup98BZ11Xa0n72HW4qLCBGdEGM0byvEW', '2026-06-12 15:52:02', 2),
+(16, 'abdulatif musa', 'abdelatif', 'am@ems.com', '+2189123776487', 'uploads/users/user_6aaed492527af9.10740308.jpg', 'MALE', '$2y$10$PlLMFxaLWxS01oXxwqpFUenxYKAHHGe32.M8yAwdh6oj8izQIvXsW', '2026-06-19 16:50:12', 7),
+(42, 'سعيد مسعود', 'said', 'said@ems.com', '+21898886543', 'uploads/users/user_6ad9ab743f6ec1.13877495.png', 'FEMALE', '$2y$10$0ejjVVL0Hh.Z0NESXuqeCe0usWFPJuhSZO/i3wKP2X7HB435G//9m', '2026-10-22 06:21:40', 8),
+(45, 'الاخ الكريم', 'user10', 'user10@mail.com', '0985348765', 'uploads/users/user_6ade23e6051547.11795811.jpg', 'MALE', '$2y$10$IuCnWahw5wcnwHVQKDV0w.H.3nrj6QFTKeSzzYA7biUis.WPGfKE6', '2026-10-25 15:33:52', 7);
 
 -- --------------------------------------------------------
 
@@ -2451,25 +2416,25 @@ ALTER TABLE `inventory_locations`
 -- AUTO_INCREMENT for table `inventory_location_stock`
 --
 ALTER TABLE `inventory_location_stock`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=528;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=529;
 
 --
 -- AUTO_INCREMENT for table `inventory_movements`
 --
 ALTER TABLE `inventory_movements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=543;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=554;
 
 --
 -- AUTO_INCREMENT for table `inventory_reservations`
 --
 ALTER TABLE `inventory_reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `inventory_transfers`
 --
 ALTER TABLE `inventory_transfers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -2487,31 +2452,31 @@ ALTER TABLE `projects`
 -- AUTO_INCREMENT for table `project_advances`
 --
 ALTER TABLE `project_advances`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `project_costs`
 --
 ALTER TABLE `project_costs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=296;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=301;
 
 --
 -- AUTO_INCREMENT for table `project_documents`
 --
 ALTER TABLE `project_documents`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `project_ledger`
 --
 ALTER TABLE `project_ledger`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=216;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=222;
 
 --
 -- AUTO_INCREMENT for table `project_scopes`
 --
 ALTER TABLE `project_scopes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT for table `project_settlements`
@@ -2649,7 +2614,7 @@ ALTER TABLE `units`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- Constraints for dumped tables
